@@ -1,0 +1,116 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>de.cwkuehl.jhh6</groupId>
+	<artifactId>Jhh</artifactId>
+	<version>1.0</version>
+	<name>Java-Haushalts-Programm</name>
+	<description>Java-Haushalts-Programm</description>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<maven.build.timestamp.format>dd.MM.yyyy HH:mm:ss</maven.build.timestamp.format>
+	</properties>
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.7.0</version>
+					<configuration>
+						<source>1.8</source>
+						<target>1.8</target>
+						<excludes>
+							<exclude>module-info.java</exclude>
+						</excludes>
+						<!-- <release>9</release> <compilerArgs> <arg>- -add-modules</arg><arg>ALL-SYSTEM</arg> 
+							</compilerArgs> -->
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<version>3.0.0</version>
+					<executions>
+						<execution>
+							<goals>
+								<goal>add-source</goal>
+							</goals>
+							<configuration>
+								<resources>
+									<resource>src/main/resources</resource>
+								</resources>
+								<sources>
+									<source>src/main/xtend-gen/</source>
+									<source>src/test/xtend-gen/</source>
+								</sources>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.eclipse.xtend</groupId>
+					<artifactId>xtend-maven-plugin</artifactId>
+					<version>2.13.0</version>
+					<executions>
+						<execution>
+							<goals>
+								<goal>compile</goal>
+								<goal>testCompile</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<outputDirectory>src/main/xtend-gen</outputDirectory>
+						<javaSourceVersion>1.8</javaSourceVersion>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>3.0.2</version>
+					<configuration>
+						<excludes>
+							<exclude>**/de/cwkuehl/jhh6/apixxx/**</exclude>
+						</excludes>
+						<archive>
+							<manifest>
+								<addClasspath>true</addClasspath>
+								<classpathPrefix>lib</classpathPrefix>
+								<mainClass>de.cwkuehl.jhh6.app.Jhh6</mainClass>
+							</manifest>
+							<manifestEntries>
+								<Class-Path>.</Class-Path>
+								<Built-Time>${maven.build.timestamp}</Built-Time>
+								<Application-Name>JHH6 Java-Haushaltsprogramm</Application-Name>
+								<Permissions>all-permissions</Permissions>
+								<Codebase>*</Codebase>
+								<Trusted-Library>false</Trusted-Library>
+							</manifestEntries>
+						</archive>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+		<!-- <sourceDirectory>src</sourceDirectory> <resources> <resource> <directory>src</directory> 
+			<excludes> <exclude>**/*.java</exclude> </excludes> </resource> <resource> 
+			<directory>xtend-gen</directory> <excludes> <exclude>**/*.java</exclude> 
+			</excludes> </resource> </resources> -->
+		<plugins>
+			<!-- <plugin> <artifactId>maven-compiler-plugin</artifactId> <version>3.7.0</version> 
+				<configuration> <release>9</release> </configuration> </plugin> -->
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.eclipse.xtend</groupId>
+			<artifactId>org.eclipse.xtend.lib</artifactId>
+			<version>2.13.0</version>
+		</dependency>
+	</dependencies>
+
+</project>

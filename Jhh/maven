@@ -1,0 +1,2 @@
+#JAVA_HOME=/usr/lib/jvm/java-8-oracle
+mvn -B -Dmaven.test.skip=true -DskipTests clean eclipse:eclipse xtend:compile install

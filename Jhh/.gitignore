@@ -45,7 +45,6 @@ nbdist/
 nbactions.xml
 nb-configuration.xml
 
-
 # OS
 .DS_Store
 
@@ -54,3 +53,10 @@ nb-configuration.xml
 release.properties
 pom.xml.releaseBackup
 pom.xml.tag
+
+# Gradle
+.gradle/
+
+# xtend
+*.java._trace
+*.xtendbin
