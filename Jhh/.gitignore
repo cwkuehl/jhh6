@@ -60,3 +60,4 @@ pom.xml.tag
 # xtend
 *.java._trace
 *.xtendbin
+xtend-gen/
