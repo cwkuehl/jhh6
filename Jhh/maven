@@ -1,2 +1,3 @@
+# Linux Maven-Build JHH6 (c) 1996-2017 W. Kuehl
 #JAVA_HOME=/usr/lib/jvm/java-8-oracle
-mvn -B -Dmaven.test.skip=true -DskipTests clean eclipse:eclipse xtend:compile install
+mvn -B -Dmaven.test.skip=true -DskipTests clean eclipse:eclipse xtend:compile install org.apache.maven.plugins:maven-dependency-plugin:copy-dependencies

@@ -4,8 +4,8 @@
 	<groupId>de.cwkuehl.jhh6</groupId>
 	<artifactId>Jhh</artifactId>
 	<version>1.0</version>
-	<name>Java-Haushalts-Programm</name>
-	<description>Java-Haushalts-Programm</description>
+	<name>JHH6 Java-Haushaltsprogramm</name>
+	<description>JHH6 Java Budget Program is easy to install without registration and use.</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
