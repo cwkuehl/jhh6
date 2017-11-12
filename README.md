@@ -2,12 +2,7 @@
 
 JHH6 is a new version of the useful Java Program.
 It is easy to install without registration and use.
-
-## Overview
-* Java 8 Runtime
-* Maven Build Tool
-* Xtend Generator
-* HSQLDB - 100% Java Database
+Here are the some of the Features:
 
 ## Features
 * Financial management with double-entry bookkeeping, the opening and closing balance sheet and income statement (Menu household)
@@ -28,6 +23,13 @@ It is easy to install without registration and use.
 * Messdienerordnungen erstellen (Bereich Messdiener)
 
 You can download the actual version [JHH5](http://cwkuehl.de/jhh5).
+
+## Technical Overview
+* Java 8 Runtime
+* Maven Build Tool
+* Xtend Generator
+* HSQLDB - 100% Java Database
+
 
 ## License
 
