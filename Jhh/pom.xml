@@ -16,8 +16,30 @@
 		<maven.build.timestamp.format>dd.MM.yyyy HH:mm:ss</maven.build.timestamp.format>
 	</properties>
 	<build>
+		<!-- outputDirectory>target/classes</outputDirectory>
+		<testOutputDirectory>target/classes</testOutputDirectory -->
 		<pluginManagement>
 			<plugins>
+				<plugin>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>3.0.0</version>
+					<configuration>
+						<filesets>
+							<fileset>
+								<directory>src/main/xtend-gen</directory>
+								<includes>
+									<include>**</include>
+								</includes>
+							</fileset>
+							<fileset>
+								<directory>src/test/xtend-gen</directory>
+								<includes>
+									<include>**</include>
+								</includes>
+							</fileset>
+						</filesets>
+					</configuration>
+				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
@@ -38,16 +60,26 @@
 					<version>3.0.0</version>
 					<executions>
 						<execution>
+							<id>add-source</id>
+							<phase>generate-sources</phase>
 							<goals>
 								<goal>add-source</goal>
 							</goals>
 							<configuration>
-								<resources>
-									<resource>src/main/resources</resource>
-								</resources>
 								<sources>
-									<source>src/main/xtend-gen/</source>
-									<source>src/test/xtend-gen/</source>
+									<source>src/main/xtend-gen</source>
+								</sources>
+							</configuration>
+						</execution>
+						<execution>
+							<id>add-test-source</id>
+							<phase>generate-test-sources</phase>
+							<goals>
+								<goal>add-test-source</goal>
+							</goals>
+							<configuration>
+								<sources>
+									<source>src/test/xtend-gen</source>
 								</sources>
 							</configuration>
 						</execution>
@@ -67,7 +99,11 @@
 					</executions>
 					<configuration>
 						<outputDirectory>src/main/xtend-gen</outputDirectory>
+						<testOutputDirectory>src/test/xtend-gen</testOutputDirectory>
 						<javaSourceVersion>1.8</javaSourceVersion>
+						<generatedAnnotationComment>Hallo</generatedAnnotationComment>
+						<generateGeneratedAnnotation>true</generateGeneratedAnnotation>
+						<generateSyntheticSuppressWarnings>false</generateSyntheticSuppressWarnings>
 					</configuration>
 				</plugin>
 				<plugin>
@@ -119,6 +155,20 @@
 			<version>1.0</version>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>de.cwkuehl.jhh6</groupId>
+			<artifactId>Jhh</artifactId>
+			<version>1.0</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 </project>
+<!-- Goals Build: clean eclipse:eclipse xtend:compile install org.apache.maven.plugins:maven-dependency-plugin:copy-dependencies -->
+<!-- Goals Test: xtend:testCompile test -->
