@@ -10,6 +10,7 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.Date
 import java.util.List
+import java.util.Locale
 import java.util.MissingResourceException
 import java.util.ResourceBundle
 import org.eclipse.xtend.lib.macro.AbstractClassProcessor
@@ -108,10 +109,22 @@ class ExternalizedProcessor extends AbstractClassProcessor implements CodeGenera
 			]
 		]
 
+		annotatedClass.addMethod("clearCache") [
+			addParameter("l", Locale.newTypeReference)
+			docComment = "Clear Cache and reload bundle."
+			static = true
+			body = [
+				'''
+					BUNDLE.clearCache();
+					BUNDLE = ResourceBundle.getBundle("«annotatedClass.qualifiedName»", l);
+				'''
+			]
+		]
+
 		// private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
 		annotatedClass.addField("BUNDLE") [
 			static = true
-			final = true
+			final = false
 			type = ResourceBundle.newTypeReference
 			initializer = ['''ResourceBundle.getBundle("«annotatedClass.qualifiedName»")''']
 			primarySourceElement = annotatedClass
@@ -126,9 +139,9 @@ class ExternalizedProcessor extends AbstractClassProcessor implements CodeGenera
 			val filePath = clazz.compilationUnit.filePath
 			val file = filePath.projectFolder.append('/src/main/resources').append(
 				clazz.qualifiedName.replace('.', '/') + ".properties")
+			// #TargetFolder = «filePath.targetFolder»
+			// #ProjectFolder = «filePath.projectFolder»
 			var s = '''
-				#TargetFolder = «filePath.targetFolder»
-				#ProjectFolder = «filePath.projectFolder»
 				«FOR field : clazz.declaredFields»
 					«field.simpleName» = «field.initializerAsString»
 				«ENDFOR»
