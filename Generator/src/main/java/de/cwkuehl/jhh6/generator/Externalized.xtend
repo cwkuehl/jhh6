@@ -37,14 +37,12 @@ class ExternalizedProcessor extends AbstractClassProcessor implements CodeGenera
 			val msgFormat = try {
 					new MessageFormat(initializer)
 				} catch (IllegalArgumentException e) {
-					field.initializer.addError("invalid format : " + e.message)
+					field.initializer.addError("invalid format: " + e.message)
 					new MessageFormat("")
 				}
 			val formats = msgFormat.formatsByArgumentIndex
 			if (msgFormat.formats.length != formats.length) {
-				// field.initializer.addWarning('Unused placeholders. They should start at index 0.')
-				field.initializer.
-					addWarning('''Falsche Anzahl von Platzhaltern («msgFormat.formats.length», «formats.length»).''')
+				field.initializer.addWarning('''Unused placeholders («msgFormat.formats.length», «formats.length»).''')
 			}
 
 			annotatedClass.addMethod(field.simpleName) [
@@ -82,7 +80,7 @@ class ExternalizedProcessor extends AbstractClassProcessor implements CodeGenera
 		annotatedClass.addMethod("c") [
 			addParameter("p", string)
 			returnType = string
-			docComment = "Konvertierung."
+			docComment = "Convert."
 			static = true
 			body = '''return p;'''
 		]
@@ -90,7 +88,7 @@ class ExternalizedProcessor extends AbstractClassProcessor implements CodeGenera
 		annotatedClass.addMethod("c") [
 			addParameter("p", primitiveInt)
 			returnType = primitiveInt
-			docComment = "Konvertierung."
+			docComment = "Convert."
 			static = true
 			body = '''return p;'''
 		]
@@ -98,7 +96,7 @@ class ExternalizedProcessor extends AbstractClassProcessor implements CodeGenera
 		annotatedClass.addMethod("c") [
 			addParameter("p", LocalDateTime.newTypeReference)
 			returnType = Date.newTypeReference
-			docComment = "Konvertierung."
+			docComment = "Convert."
 			static = true
 			body = [
 				'''
@@ -126,9 +124,11 @@ class ExternalizedProcessor extends AbstractClassProcessor implements CodeGenera
 
 		for (clazz : annotatedSourceElements) {
 			val filePath = clazz.compilationUnit.filePath
-			val file = filePath.targetFolder.append('../../../src/main/resources').append(
+			val file = filePath.projectFolder.append('/src/main/resources').append(
 				clazz.qualifiedName.replace('.', '/') + ".properties")
 			var s = '''
+				#TargetFolder = «filePath.targetFolder»
+				#ProjectFolder = «filePath.projectFolder»
 				«FOR field : clazz.declaredFields»
 					«field.simpleName» = «field.initializerAsString»
 				«ENDFOR»
