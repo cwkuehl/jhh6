@@ -1,0 +1,173 @@
+.root {
+	/* @SuppressWarning */
+    -fx-background-color: linear-gradient(to right, #ecf4fa 0.0%, #ced4d9 100.0%);
+	/* @SuppressWarning */
+    -fx-font-size: 15.0;
+}
+
+.button {
+	/* @SuppressWarning */
+    -fx-text-fill: white;
+	/* @SuppressWarning */
+    -fx-font-family: "Arial Narrow";
+	/* @SuppressWarning */
+    -fx-font-weight: bold;
+	/* @SuppressWarning */
+    -fx-background-color: linear-gradient(#61a2b1, #2A5058);
+	/* @SuppressWarning */
+    -fx-effect: dropshadow( three-pass-box , rgba(0.0,0.0,0.0,0.6) , 5.0, 0.0 , 0.0 , 1.0 );
+}
+
+.tool-bar .button {
+	/* @SuppressWarning */
+    -fx-background-color: lightgray;
+}
+
+.text {
+	/* @SuppressWarning */
+    -fx-font-size: 14.0; /* Label, Menüpunkte */
+}
+
+.label-bold {
+	/* @SuppressWarning */
+	-fx-font-weight: bold;
+}
+
+.menu-bar {
+	/* @SuppressWarning */
+    -fx-background-color: #aeb5ba, linear-gradient(to bottom, #ecf4fa 0.0%, #ced4d9 100.0%);
+	/* @SuppressWarning */
+    -fx-background-insets: 0.0, 0.0 0.0 1.0 0.0;
+}
+
+.menu-bar .menu .label {
+	/* @SuppressWarning */
+    -fx-text-fill: #2d3e4c;
+}
+
+.split-pane > .split-pane-divider {
+	/* @SuppressWarning */
+    -fx-background-color: linear-gradient(to right, #ecf4fa 0.0%, #ced4d9 100.0%);
+	/* @SuppressWarning */
+    -fx-padding: 0.0 3.0 0.0 3.0;
+}
+
+.scroll-pane {
+	/* @SuppressWarning */
+    -fx-background-insets: 0.0, 0.0;
+	/* @SuppressWarning */
+    -fx-padding: 0.0;
+}
+
+#leftStatus {
+	/* @SuppressWarning */
+	-fx-text-fill: red
+}
+
+.combo-box-base:disabled .list-cell:disabled {
+	/* @SuppressWarning */
+    -fx-opacity: 1.0;
+	/* @SuppressWarning */
+    -fx-text-fill: black;
+	/* @SuppressWarning */
+    -fx-background-color: lightgray;
+}
+
+.date-picker > .date-picker-display-node:disabled {
+	/* @SuppressWarning */
+    -fx-opacity: 1.0;
+	/* @SuppressWarning */
+    -fx-text-fill: black;
+	/* @SuppressWarning */
+    -fx-background-color: lightgray;
+}
+
+.auto-editor {
+	/* @SuppressWarning */
+    -fx-font-size: 17.0;
+}
+
+.auto-ueberschrift {
+	/* @SuppressWarning */
+    -fx-fill: blue;
+	/* @SuppressWarning */
+    -fx-font-weight: bold;
+	/* @SuppressWarning */
+    -fx-font-size: 24.0;
+}
+
+.auto-beobachtung {
+	/* @SuppressWarning blau */
+    -fx-fill: #0080ff;
+	/* @SuppressWarning */
+    -fx-font-weight: normal;
+	/* @SuppressWarning */
+    -fx-font-size: 20.0;
+}
+
+.auto-aussage {
+	/* @SuppressWarning */
+    -fx-fill: red;
+	/* @SuppressWarning */
+    -fx-font-weight: normal;
+	/* @SuppressWarning */
+    -fx-font-size: 20.0;
+}
+
+.auto-frage {
+	/* @SuppressWarning */
+    -fx-fill: green;
+	/* @SuppressWarning */
+    -fx-font-weight: normal;
+	/* @SuppressWarning */
+    -fx-font-style: italic;
+	/* @SuppressWarning */
+    -fx-font-size: 20.0;
+}
+
+.auto-hypothese {
+	/* @SuppressWarning */
+    -fx-fill: violet;
+	/* @SuppressWarning */
+    -fx-font-weight: normal;
+	/* @SuppressWarning */
+    -fx-font-size: 20.0;
+}
+
+.auto-kontrolle {
+	/* @SuppressWarning */
+    -fx-fill: brown;
+	/* @SuppressWarning */
+    -fx-font-weight: normal;
+	/* @SuppressWarning */
+    -fx-font-size: 20.0;
+}
+
+.auto-parameter {
+	/* @SuppressWarning */
+    -fx-fill: brown;
+	/* @SuppressWarning */
+    -fx-font-weight: normal;
+	/* @SuppressWarning */
+    -fx-font-style: italic;
+	/* @SuppressWarning */
+    -fx-font-size: 20.0;
+}
+
+.auto-symptom {
+	/* @SuppressWarning */
+    -fx-fill: black;
+	/* @SuppressWarning */
+    -fx-font-weight: bold;
+	/* @SuppressWarning */
+    -fx-font-size: 20.0;
+}
+
+.auto-normal {
+	/* @SuppressWarning */
+    -fx-fill: black;
+	/* @SuppressWarning */
+    -fx-font-weight: normal;
+	/* @SuppressWarning */
+    -fx-font-size: 18.0;
+}

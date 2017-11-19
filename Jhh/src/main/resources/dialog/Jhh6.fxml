@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="de.cwkuehl.jhh6.app.controller.Jhh6Controller">
+	<children>
+		<MenuBar fx:id="menue" VBox.vgrow="NEVER">
+			<menus>
+				<Menu mnemonicParsing="false" text="%menu.title.file">
+					<items>
+						<MenuItem mnemonicParsing="false" text="%menu.title.new" visible="false" />
+						<MenuItem mnemonicParsing="false" text="%menu.title.open" visible="false" />
+						<Menu mnemonicParsing="false" text="%menu.title.open.recent" visible="false" />
+						<SeparatorMenuItem mnemonicParsing="false" visible="false" />
+						<MenuItem mnemonicParsing="false" text="%menu.title.close" visible="false" />
+						<MenuItem mnemonicParsing="false" text="%menu.title.save" visible="false" />
+						<MenuItem mnemonicParsing="false" text="%menu.title.save.as" visible="false" />
+						<MenuItem mnemonicParsing="false" text="%menu.title.revert" visible="false" />
+						<SeparatorMenuItem mnemonicParsing="false" visible="false" />
+						<MenuItem mnemonicParsing="false" text="%menu.title.preferences" visible="false" />
+						<MenuItem fx:id="menueUndo" mnemonicParsing="false" onAction="#handleUndo" text="%menu.title.undo" />
+						<MenuItem fx:id="menueRedo" mnemonicParsing="false" onAction="#handleRedo" text="%menu.title.redo" />
+						<SeparatorMenuItem fx:id="sepFi1" mnemonicParsing="false" visible="true" />
+						<MenuItem fx:id="menueAG100" mnemonicParsing="true" onAction="#handleAG100" text="%menu.title.clients"
+							visible="false" />
+						<MenuItem fx:id="menueAG200" mnemonicParsing="true" onAction="#handleAG200" text="%menu.title.users"
+							visible="false" />
+						<MenuItem fx:id="menueAG400" mnemonicParsing="true" onAction="#handleAG400" text="%menu.title.backups"
+							visible="false" />
+						<SeparatorMenuItem fx:id="sepFi2" mnemonicParsing="false" visible="true" />
+						<MenuItem accelerator="ESC" mnemonicParsing="false" onAction="#handleBeenden" text="%menu.title.quit" />
+					</items>
+				</Menu>
+				<Menu mnemonicParsing="true" text="%menu.title.user">
+					<items>
+						<MenuItem fx:id="menueAnmelden" mnemonicParsing="true" onAction="#handleAnmelden" text="%menu.title.login" />
+						<MenuItem fx:id="menueAbmelden" mnemonicParsing="true" onAction="#handleAnmelden" text="%menu.title.logout"
+							visible="false" />
+						<MenuItem fx:id="menueAM100" mnemonicParsing="true" onAction="#handleAM100" text="%menu.title.pwchange"
+							visible="false" />
+						<MenuItem fx:id="menueAM500" mnemonicParsing="true" onAction="#handleAM500" text="%menu.title.options"
+							visible="false" />
+						<SeparatorMenuItem fx:id="sepAm1" mnemonicParsing="false" visible="true" />
+						<MenuItem fx:id="menueAM510" mnemonicParsing="true" onAction="#handleAM510" text="%menu.title.dialogs"
+							visible="false" />
+						<MenuItem fx:id="menueReset" mnemonicParsing="true" onAction="#handleReset" text="%menu.title.reset" />
+					</items>
+				</Menu>
+				<Menu mnemonicParsing="true" text="%menu.title.private">
+					<items>
+						<MenuItem fx:id="menueTB100" mnemonicParsing="true" onAction="#handleTB100" text="%menu.title.diary"
+							visible="false" />
+						<MenuItem fx:id="menueFZ700" mnemonicParsing="true" onAction="#handleFZ700" text="%menu.title.notes"
+							visible="false" />
+						<MenuItem fx:id="menueAD100" mnemonicParsing="true" onAction="#handleAD100" text="%menu.title.persons"
+							visible="false" />
+						<SeparatorMenuItem fx:id="sepFz1" mnemonicParsing="false" visible="false" />
+						<MenuItem fx:id="menueFZ250" mnemonicParsing="true" onAction="#handleFZ250" text="%menu.title.milages"
+							visible="false" />
+						<MenuItem fx:id="menueFZ200" mnemonicParsing="true" onAction="#handleFZ200" text="%menu.title.bikes"
+							visible="false" />
+						<SeparatorMenuItem fx:id="sepFz2" mnemonicParsing="false" visible="false" />
+						<MenuItem fx:id="menueFZ340" mnemonicParsing="true" onAction="#handleFZ340" text="%menu.title.books"
+							visible="false" />
+						<MenuItem fx:id="menueFZ300" mnemonicParsing="true" onAction="#handleFZ300" text="%menu.title.authors"
+							visible="false" />
+						<MenuItem fx:id="menueFZ320" mnemonicParsing="true" onAction="#handleFZ320" text="%menu.title.series"
+							visible="false" />
+						<SeparatorMenuItem fx:id="sepFz3" mnemonicParsing="false" visible="false" />
+						<MenuItem fx:id="menueFZ100" mnemonicParsing="true" onAction="#handleFZ100" text="%menu.title.statistic"
+							visible="false" />
+						<SeparatorMenuItem fx:id="sepFz4" mnemonicParsing="false" visible="false" />
+						<MenuItem fx:id="menueSO100" mnemonicParsing="true" onAction="#handleSO100" text="%menu.title.sudoku"
+							visible="false" />
+						<MenuItem fx:id="menueSO200" mnemonicParsing="true" onAction="#handleSO200" text="%menu.title.detective"
+							visible="false" />
+					</items>
+				</Menu>
+				<Menu mnemonicParsing="true" text="%menu.title.household">
+					<items>
+						<MenuItem fx:id="menueHH400" mnemonicParsing="true" onAction="#handleHH400" text="%menu.title.bookings"
+							visible="false" />
+						<MenuItem fx:id="menueHH300" mnemonicParsing="true" onAction="#handleHH300" text="%menu.title.events"
+							visible="false" />
+						<MenuItem fx:id="menueHH200" mnemonicParsing="true" onAction="#handleHH200" text="%menu.title.accounts"
+							visible="false" />
+						<MenuItem fx:id="menueHH100" mnemonicParsing="true" onAction="#handleHH100" text="%menu.title.periods"
+							visible="false" />
+						<SeparatorMenuItem fx:id="sepHh1" mnemonicParsing="false" visible="false" />
+						<MenuItem fx:id="menueHH500SB" mnemonicParsing="true" onAction="#handleHH500SB" text="%menu.title.finalbalance"
+							visible="false" />
+						<MenuItem fx:id="menueHH500GV" mnemonicParsing="true" onAction="#handleHH500GV" text="%menu.title.plbalance"
+							visible="false" />
+						<MenuItem fx:id="menueHH500EB" mnemonicParsing="true" onAction="#handleHH500EB" text="%menu.title.openingbalance"
+							visible="false" />
+					</items>
+				</Menu>
+				<Menu fx:id="menueVm" mnemonicParsing="true" text="%menu.title.renting">
+					<items>
+						<MenuItem fx:id="menueVM500" mnemonicParsing="true" onAction="#handleVM500" text="%menu.title.bookings2"
+							visible="false" />
+						<MenuItem fx:id="menueVM700" mnemonicParsing="true" onAction="#handleVM700" text="%menu.title.events2"
+							visible="false" />
+						<MenuItem fx:id="menueVM600" mnemonicParsing="true" onAction="#handleVM600" text="%menu.title.accounts2"
+							visible="false" />
+						<MenuItem fx:id="menueVMHH100" mnemonicParsing="true" onAction="#handleVMHH100" text="%menu.title.periods2"
+							visible="false" />
+						<SeparatorMenuItem fx:id="sepVm1" mnemonicParsing="false" visible="false" />
+						<MenuItem fx:id="menueVM800" mnemonicParsing="true" onAction="#handleVM800" text="%menu.title.claims"
+							visible="false" />
+						<SeparatorMenuItem fx:id="sepVm2" mnemonicParsing="false" visible="false" />
+						<MenuItem fx:id="menueVM100" mnemonicParsing="true" onAction="#handleVM100" text="%menu.title.houses"
+							visible="false" />
+						<MenuItem fx:id="menueVM200" mnemonicParsing="true" onAction="#handleVM200" text="%menu.title.flats"
+							visible="false" />
+						<MenuItem fx:id="menueVM300" mnemonicParsing="true" onAction="#handleVM300" text="%menu.title.renters"
+							visible="false" />
+						<MenuItem fx:id="menueVM400" mnemonicParsing="true" onAction="#handleVM400" text="%menu.title.rents"
+							visible="false" />
+						<SeparatorMenuItem fx:id="sepVm3" mnemonicParsing="false" visible="false" />
+						<MenuItem fx:id="menueVM900" mnemonicParsing="true" onAction="#handleVM900" text="%menu.title.houseaccountings"
+							visible="false" />
+						<MenuItem fx:id="menueVM920" mnemonicParsing="true" onAction="#handleVM920" text="%menu.title.accountings"
+							visible="false" />
+					</items>
+				</Menu>
+				<Menu fx:id="menueHp" mnemonicParsing="true" text="%menu.title.practitioner">
+					<items>
+						<MenuItem fx:id="menueHP200" mnemonicParsing="true" onAction="#handleHP200" text="%menu.title.treatments"
+							visible="false" />
+						<MenuItem fx:id="menueHP400" mnemonicParsing="true" onAction="#handleHP400" text="%menu.title.invoices"
+							visible="false" />
+						<MenuItem fx:id="menueHP100" mnemonicParsing="true" onAction="#handleHP100" text="%menu.title.patients"
+							visible="false" />
+						<MenuItem fx:id="menueHP150" mnemonicParsing="true" onAction="#handleHP150" text="%menu.title.status"
+							visible="false" />
+						<MenuItem fx:id="menueHP300" mnemonicParsing="true" onAction="#handleHP300" text="%menu.title.services"
+							visible="false" />
+						<MenuItem fx:id="menueHP350" mnemonicParsing="true" onAction="#handleHP350" text="%menu.title.servicegroups"
+							visible="false" />
+					</items>
+				</Menu>
+				<Menu fx:id="menueHp" mnemonicParsing="true" text="%menu.title.pedigree">
+					<items>
+						<MenuItem fx:id="menueSB200" mnemonicParsing="true" onAction="#handleSB200" text="%menu.title.ancestors"
+							visible="false" />
+						<MenuItem fx:id="menueSB300" mnemonicParsing="true" onAction="#handleSB300" text="%menu.title.families"
+							visible="false" />
+						<MenuItem fx:id="menueSB400" mnemonicParsing="true" onAction="#handleSB400" text="%menu.title.sources"
+							visible="false" />
+					</items>
+				</Menu>
+				<Menu fx:id="menueWp" mnemonicParsing="true" text="%menu.title.stock">
+					<items>
+						<MenuItem fx:id="menueWP200" mnemonicParsing="true" onAction="#handleWP200" text="%menu.title.stocks"
+							visible="false" />
+						<MenuItem fx:id="menueWP300" mnemonicParsing="true" onAction="#handleWP300" text="%menu.title.configuration"
+							visible="false" />
+						<SeparatorMenuItem fx:id="sepWp1" mnemonicParsing="false" visible="false" />
+						<MenuItem fx:id="menueWP100" mnemonicParsing="true" onAction="#handleWP100" text="%menu.title.chart"
+							visible="false" />
+						<MenuItem fx:id="menueWP110" mnemonicParsing="true" onAction="#handleWP110" text="%menu.title.charts"
+							visible="false" />
+						<SeparatorMenuItem fx:id="sepWp2" mnemonicParsing="false" visible="false" />
+						<MenuItem fx:id="menueWP250" mnemonicParsing="true" onAction="#handleWP250" text="%menu.title.investments"
+							visible="false" />
+						<MenuItem fx:id="menueWP400" mnemonicParsing="true" onAction="#handleWP400" text="%menu.title.bookings3"
+							visible="false" />
+						<MenuItem fx:id="menueWP500" mnemonicParsing="true" onAction="#handleWP500" text="%menu.title.prices"
+							visible="false" />
+					</items>
+				</Menu>
+				<Menu fx:id="menueMo" mnemonicParsing="true" text="%menu.title.acolyte">
+					<items>
+						<MenuItem fx:id="menueMO200" mnemonicParsing="true" onAction="#handleMO200" text="%menu.title.holymass"
+							visible="false" />
+						<MenuItem fx:id="menueMO100" mnemonicParsing="true" onAction="#handleMO100" text="%menu.title.acolytes"
+							visible="false" />
+						<MenuItem fx:id="menueMO300" mnemonicParsing="true" onAction="#handleMO300" text="%menu.title.profiles"
+							visible="false" />
+					</items>
+				</Menu>
+				<!-- <Menu mnemonicParsing="false" text="%menu.title.edit"> <items> <SeparatorMenuItem mnemonicParsing="false" /> <MenuItem 
+					mnemonicParsing="false" text="%menu.title.cut" /> <MenuItem mnemonicParsing="false" text="%menu.title.copy" /> <MenuItem 
+					mnemonicParsing="false" text="%menu.title.paste" /> <MenuItem mnemonicParsing="false" text="%menu.title.delete" /> <SeparatorMenuItem 
+					mnemonicParsing="false" /> <MenuItem mnemonicParsing="false" text="%menu.title.select.all" /> <MenuItem mnemonicParsing="false" 
+					text="%menu.title.unselect.all" /> </items> </Menu> -->
+				<Menu mnemonicParsing="false" text="%menu.title.help">
+					<items>
+						<MenuItem mnemonicParsing="false" onAction="#handleAG000" text="%menu.title.about" />
+						<MenuItem mnemonicParsing="false" onAction="#handleAG010" text="%menu.title.help" />
+					</items>
+				</Menu>
+			</menus>
+		</MenuBar>
+		<TabPane fx:id="tabs" tabClosingPolicy="ALL_TABS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+			AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" VBox.vgrow="ALWAYS">
+			<tabs>
+			</tabs>
+		</TabPane>
+		<HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
+			<children>
+				<Label fx:id="leftStatus" accessibleText="Linker Status zeigt Fehlermeldungen an." maxHeight="1.7976931348623157E308"
+					maxWidth="-1.0" text="%label.text.left.status" HBox.hgrow="ALWAYS">
+					<font>
+						<Font size="11.0" fx:id="x3" />
+					</font>
+					<textFill>
+						<Color blue="0.625" green="0.625" red="0.625" fx:id="x4" />
+					</textFill>
+				</Label>
+				<Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
+				<Label font="$x3" maxWidth="-1.0" text="%label.text.right.status" textFill="$x4" HBox.hgrow="NEVER" />
+			</children>
+			<padding>
+				<Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+			</padding>
+		</HBox>
+	</children>
+	<stylesheets>
+		<URL value="@Jhh6.css" />
+	</stylesheets>
+</VBox>

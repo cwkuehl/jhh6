@@ -20,6 +20,8 @@ class Constant {
 	/** Zahl 1000000.0 als Konstante. */
 	public static final double ZAHL_1000000_0 = 1000000.0
 
+	/** Zeit in Millisekunden für Änderungsintervall. */
+	public static final int AEND_ZEIT = 60000
 	/** Faktor für EURO-DM-Umrechnung. */
 	public static final double EUROFAKTOR = 1.95583
 
