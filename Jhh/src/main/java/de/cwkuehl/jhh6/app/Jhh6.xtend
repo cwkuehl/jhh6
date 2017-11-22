@@ -85,7 +85,7 @@ class Jhh6 extends Application {
 		if (Jhh6::stage === null) {
 			Jhh6::stage = stage
 		}
-		var Groesse g = Werkzeug.getDialogGroesse("Rahmen")
+		var g = Werkzeug.getDialogGroesse("Rahmen")
 		stage.setX(g.getX())
 		stage.setY(g.getY())
 		stage.setWidth(g.getWidth())

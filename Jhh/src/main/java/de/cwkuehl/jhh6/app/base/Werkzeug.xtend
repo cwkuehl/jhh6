@@ -26,7 +26,6 @@ import javafx.scene.layout.Priority
 import javafx.stage.Screen
 import javafx.stage.Stage
 import org.apache.log4j.Logger
-import org.eclipse.xtend.lib.annotations.Accessors
 
 class Werkzeug {
 
@@ -187,7 +186,7 @@ class Werkzeug {
 
 	def public static Groesse getDialogGroesse(String key) {
 
-		var g = Jhh6.getEinstellungen().getDialogGroesse(key)
+		var g = Jhh6::einstellungen.getDialogGroesse(key)
 		if (g.leer) {
 			var b = Screen.getPrimary().getVisualBounds()
 			if (key === null) {
@@ -360,23 +359,4 @@ class Werkzeug {
 		return w
 	}
 
-}
-
-/**
- * Klasse zur Weitergabe von Fenstergrößen.
- */
-@Accessors
-public class Groesse {
-	/** Breite. */
-	double width = 0
-	/** Höhe. */
-	double height = 0
-	/** x-Position. */
-	double x = 0
-	/** y-Position. */
-	double y = 0
-
-	def boolean leer() {
-		return width == 0 && height == 0 && x == 0 && y == 0
-	}
 }
