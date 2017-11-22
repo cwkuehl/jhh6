@@ -1,5 +1,12 @@
 package de.cwkuehl.jhh6.app.controller
 
+import de.cwkuehl.jhh6.api.global.Global
+import de.cwkuehl.jhh6.api.service.ServiceDaten
+import de.cwkuehl.jhh6.app.Jhh6
+import de.cwkuehl.jhh6.app.base.BaseController
+import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
+import de.cwkuehl.jhh6.app.base.StartDialog
+import de.cwkuehl.jhh6.app.controller.ag.AG000InfoController
 import java.net.URL
 import java.util.ArrayList
 import java.util.HashMap
@@ -8,12 +15,6 @@ import java.util.ResourceBundle
 import java.util.Timer
 import java.util.TimerTask
 import java.util.regex.Pattern
-import de.cwkuehl.jhh6.api.global.Global
-import de.cwkuehl.jhh6.api.service.ServiceDaten
-import de.cwkuehl.jhh6.app.Jhh6
-import de.cwkuehl.jhh6.app.base.BaseController
-import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
-import de.cwkuehl.jhh6.app.base.StartDialog
 import javafx.application.Platform
 import javafx.beans.value.ChangeListener
 import javafx.beans.value.ObservableValue
@@ -114,16 +115,17 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		// StyleManager.getInstance().addUserAgentStylesheet("com/sun/javafx/scene/control/skin/modena/whiteOnBlack.css");
 		var Timer timer = new Timer()
 		timer.schedule(([|
-			tabs.getSelectionModel().selectedItemProperty().addListener(([ObservableValue<? extends Tab> ov, Tab alt, Tab neu|
-				if (alt !== null && alt.getUserData() instanceof BaseController<?>) {
-					var BaseController<?> bc = (alt.getUserData() as BaseController<?>)
-					bc.removeAccelerators()
-				}
-				if (neu !== null && neu.getUserData() instanceof BaseController<?>) {
-					var BaseController<?> bc = (neu.getUserData() as BaseController<?>)
-					bc.addAccelerators()
-				}
-			] as ChangeListener<Tab>))
+			tabs.getSelectionModel().selectedItemProperty().addListener(
+				([ ObservableValue<? extends Tab> ov, Tab alt, Tab neu |
+					if (alt !== null && alt.getUserData() instanceof BaseController<?>) {
+						var BaseController<?> bc = (alt.getUserData() as BaseController<?>)
+						bc.removeAccelerators()
+					}
+					if (neu !== null && neu.getUserData() instanceof BaseController<?>) {
+						var BaseController<?> bc = (neu.getUserData() as BaseController<?>)
+						bc.addAccelerators()
+					}
+				] as ChangeListener<Tab>))
 		] as TimerTask), // ServiceDaten daten0 = new ServiceDaten(1, "(initDatenbank)");
 		// ServiceErgebnis<Void> r0 = FactoryService.getAnmeldungService().initDatenbank(daten0);
 		// get(r0);
@@ -295,23 +297,6 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		])
 	}
 
-	static ResourceBundle bundle = null
-
-	def static ResourceBundle getBundle() {
-		if (bundle === null) {
-			bundle = ResourceBundle::getBundle("Jhh6")
-		}
-		return bundle
-	}
-
-	def private static String g(String s) {
-		var String w = getBundle().getString(s)
-		if (!Global::nes(w)) {
-			w = w.replace("_", "")
-		}
-		return w
-	}
-
 	def static List<StartDialog> getDialogListe() {
 		var List<StartDialog> l = new ArrayList<StartDialog>()
 		// l.add(new StartDialog("#AG100", g("menu.title.clients"), AG100MandantenController.class, null));
@@ -357,6 +342,17 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		get(Jhh6::redo())
 	}
 
+	@FXML def void handleReset() {
+		Jhh6::getEinstellungen().reset()
+	}
+
+	@FXML def void handleAG000() {
+		starteFormular(typeof(AG000InfoController), DialogAufrufEnum.OHNE);
+	}
+
+	@FXML def void handleAG010() { // starteFormular(AG010HilfeController.class, DialogAufrufEnum.OHNE);
+	}
+
 	@FXML def void handleAG100() { // starteFormular(AG100MandantenController.class, DialogAufrufEnum.OHNE);
 	}
 
@@ -376,16 +372,6 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 	}
 
 	@FXML def void handleAM510() { // starteFormular(AM510DialogeController.class, DialogAufrufEnum.OHNE);
-	}
-
-	@FXML def void handleReset() {
-		Jhh6::getEinstellungen().reset()
-	}
-
-	@FXML def void handleAG000() { // starteFormular(AG000InfoController.class, DialogAufrufEnum.OHNE);
-	}
-
-	@FXML def void handleAG010() { // starteFormular(AG010HilfeController.class, DialogAufrufEnum.OHNE);
 	}
 
 	@FXML def void handleFZ100() { // starteFormular(FZ100StatistikController.class, DialogAufrufEnum.OHNE);

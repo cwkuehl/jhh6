@@ -1,5 +1,7 @@
 package de.cwkuehl.jhh6.app.control
 
+import de.cwkuehl.jhh6.api.global.Global
+import de.cwkuehl.jhh6.app.base.Werkzeug
 import java.io.IOException
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -7,7 +9,6 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.HashMap
 import java.util.Map.Entry
-import de.cwkuehl.jhh6.api.global.Global
 import javafx.application.Platform
 import javafx.event.ActionEvent
 import javafx.event.EventHandler
@@ -49,7 +50,7 @@ class Datum extends HBox {
 	HashMap<KeyCodeCombination, Runnable> accelators = new HashMap()
 
 	new() {
-		var FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/control/Datum.fxml"))
+		var FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/control/Datum.fxml"), Werkzeug::bundle)
 		fxmlLoader.setRoot(this)
 		fxmlLoader.setController(this)
 		try {

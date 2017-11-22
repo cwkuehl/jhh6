@@ -237,7 +237,8 @@ public abstract class BaseController<R> {
         try {
             String name = getName(clazz);
             String ns = name.substring(0, 2).toLowerCase();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/dialog/" + ns + "/" + name + ".fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/dialog/" + ns + "/" + name + ".fxml"),
+                    Werkzeug.getBundle());
             root = loader.load();
             c = loader.getController();
             c.parent = this;
@@ -370,10 +371,10 @@ public abstract class BaseController<R> {
         speichereResourceDaten();
     }
 
-    protected abstract String getTitel();
+    protected String getTitel() {
 
-    protected String getTitelAufruf(String titel) {
-
+        String name = getNameKurz(getClass());
+        String titel = Werkzeug.g(name + ".title");
         if (aufruf != null && !DialogAufrufEnum.OHNE.equals(aufruf)) {
             return titel + " - " + aufruf.toString();
         }
@@ -598,8 +599,8 @@ public abstract class BaseController<R> {
         }
         StringBuilder sb = new StringBuilder();
         cb.addEventHandler(KeyEvent.KEY_RELEASED, e -> {
-            if (e.getCode() == KeyCode.DOWN || e.getCode() == KeyCode.UP || e.isAltDown() || e.isControlDown()
-                    || e.isMetaDown() || e.isShiftDown() || e.isShortcutDown()) {
+            if (e.getCode() == KeyCode.DOWN || e.getCode() == KeyCode.UP || e.isAltDown() || e.isControlDown() || e
+                    .isMetaDown() || e.isShiftDown() || e.isShortcutDown()) {
                 return;
             } else if (e.getCode() == KeyCode.ENTER) {
                 if (b != null) {
@@ -649,8 +650,8 @@ public abstract class BaseController<R> {
         }
         StringBuilder sb = new StringBuilder();
         lv.addEventHandler(KeyEvent.KEY_RELEASED, e -> {
-            if (e.getCode() == KeyCode.DOWN || e.getCode() == KeyCode.UP || e.isAltDown() || e.isControlDown()
-                    || e.isMetaDown() || e.isShiftDown() || e.isShortcutDown()) {
+            if (e.getCode() == KeyCode.DOWN || e.getCode() == KeyCode.UP || e.isAltDown() || e.isControlDown() || e
+                    .isMetaDown() || e.isShiftDown() || e.isShortcutDown()) {
                 return;
             } else if (e.getCode() == KeyCode.ENTER) {
                 if (b != null) {
@@ -698,7 +699,7 @@ public abstract class BaseController<R> {
         // return o.startsWith(s);
         int i = 0;
         for (char c : s.toCharArray()) {
-            if (i==0 && c != o.charAt(0)) {
+            if (i == 0 && c != o.charAt(0)) {
                 return false;
             }
             i = o.indexOf(c, i) + 1;
@@ -940,6 +941,15 @@ public abstract class BaseController<R> {
         String name = clazz.getSimpleName();
         if (name.endsWith("Controller")) {
             name = name.substring(0, name.length() - 10);
+        }
+        return name;
+    }
+
+    private String getNameKurz(Class<?> clazz) {
+
+        String name = clazz.getSimpleName();
+        if (name != null && name.length() >= 5) {
+            name = name.substring(0, 5);
         }
         return name;
     }

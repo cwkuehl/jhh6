@@ -1,9 +1,13 @@
-# Linux Maven-Build JHH6 (c) 1996-2017 W. Kuehl
+# Linux Maven Build JHH6 (c) 1996-2017 W. Kuehl
 #JAVA_HOME=/usr/lib/jvm/java-8-oracle
+# Copy Properties
 if test ! -e ./src/main/resources/ServerConfig.properties
 then
   cp ./src/main/resources/ServerConfig.properties.example ./src/main/resources/ServerConfig.properties
 fi
+# Build Generator
 mvn -B -f ../Generator/pom.xml -Dmaven.test.skip=true -DskipTests clean eclipse:eclipse xtend:compile install
+# Build Jhh
 mvn -B -Dmaven.test.skip=true -DskipTests clean eclipse:eclipse xtend:compile install org.apache.maven.plugins:maven-dependency-plugin:copy-dependencies
+# Test
 mvn -B xtend:testCompile test

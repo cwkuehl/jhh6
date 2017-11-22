@@ -208,8 +208,11 @@
 		</TabPane>
 		<HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
 			<children>
-				<Label fx:id="leftStatus" accessibleText="Linker Status zeigt Fehlermeldungen an." maxHeight="1.7976931348623157E308"
-					maxWidth="-1.0" text="%label.text.left.status" HBox.hgrow="ALWAYS">
+				<Label fx:id="leftStatus" accessibleText="%main.leftstatus.tt" maxHeight="-1.0"
+					maxWidth="-1.0" text="%main.leftstatus" HBox.hgrow="ALWAYS">
+					<tooltip>
+						<Tooltip text="%main.leftstatus.tt" />
+					</tooltip>
 					<font>
 						<Font size="11.0" fx:id="x3" />
 					</font>
@@ -218,7 +221,7 @@
 					</textFill>
 				</Label>
 				<Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
-				<Label font="$x3" maxWidth="-1.0" text="%label.text.right.status" textFill="$x4" HBox.hgrow="NEVER" />
+				<Label font="$x3" maxWidth="-1.0" text="%main.rightstatus" textFill="$x4" HBox.hgrow="NEVER" />
 			</children>
 			<padding>
 				<Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />

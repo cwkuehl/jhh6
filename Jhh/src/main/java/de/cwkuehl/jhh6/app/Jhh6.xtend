@@ -70,7 +70,7 @@ class Jhh6 extends Application {
 		])
 		var ClassLoader classLoader = Thread::currentThread().getContextClassLoader()
 		var URL fxmlURL = classLoader.getResource("dialog/Jhh6.fxml")
-		var FXMLLoader loader = new FXMLLoader(fxmlURL, Jhh6Controller::bundle)
+		var FXMLLoader loader = new FXMLLoader(fxmlURL, Werkzeug::bundle)
 		var Parent p = loader.load
 		controller = loader.getController()
 		controller.init(stage, null)

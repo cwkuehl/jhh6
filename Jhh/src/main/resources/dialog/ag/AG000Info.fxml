@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.web.*?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.151" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.cwkuehl.jhh6.app.controller.ag.AG000InfoController">
+
+	<padding>
+		<Insets bottom="10" left="10" right="10" top="10" />
+	</padding>
+	<Label fx:id="client0" mnemonicParsing="true" text="%AG000.runtime" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+	<WebView fx:id="client" maxHeight="250.0" minHeight="250.0" GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+	</WebView>
+	<Label fx:id="anmeldung0" mnemonicParsing="true" text="%AG000.login" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+	<WebView fx:id="anmeldung" maxHeight="55.0" minHeight="55.0" GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="NEVER">
+	</WebView>
+	<Label fx:id="lizenz0" mnemonicParsing="true" text="%AG000.license" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+	<WebView fx:id="lizenz" GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS">
+	</WebView>
+	<HBox spacing="10.0" alignment="CENTER" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="4">
+		<Button fx:id="ok" cancelButton="true" defaultButton="true" mnemonicParsing="true" onAction="#onOk" text="%Ok">
+			<tooltip>
+				<Tooltip text="%Ok.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="back" mnemonicParsing="true" onAction="#onBack" text="%AG000.back">
+			<tooltip>
+				<Tooltip text="%AG000.back.tt" />
+			</tooltip>
+		</Button>
+	</HBox>
+
+	<stylesheets>
+		<URL value="@../Jhh6.css" />
+	</stylesheets>
+	<columnConstraints>
+		<ColumnConstraints />
+		<ColumnConstraints />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+      <RowConstraints />
+	</rowConstraints>
+</GridPane>

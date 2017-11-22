@@ -1,6 +1,7 @@
 package de.cwkuehl.jhh6.app.base
 
 import de.cwkuehl.jhh6.api.global.Global
+import de.cwkuehl.jhh6.api.service.ServiceDaten
 import de.cwkuehl.jhh6.app.Jhh6
 import java.awt.Desktop
 import java.io.BufferedReader
@@ -13,6 +14,7 @@ import java.io.Writer
 import java.util.ArrayList
 import java.util.List
 import java.util.Properties
+import java.util.ResourceBundle
 import javafx.scene.control.Alert
 import javafx.scene.control.Alert.AlertType
 import javafx.scene.control.ButtonType
@@ -29,39 +31,91 @@ import org.eclipse.xtend.lib.annotations.Accessors
 class Werkzeug {
 
 	var static log = Logger.getLogger(typeof(Werkzeug))
+	private static ResourceBundle bundle = null;
 
 	/**
-	 * Liefert einen String mit Information über das Programm.
+	 * Liefert einen HTML-String mit Informationen über das Programm.
 	 * @return String.
 	 */
-	def public static String getInfoListe() {
+	def public static String getProgramInfo() {
 
 		var sb = new StringBuffer
 		sb.append("<html>")
 		sb.append("<table>")
-		sb.append("<tr><td>").append("Programm-Version:").append("</td><td>").append("5.1 vom 01.07.2016").append(
+		sb.append("<tr><td>").append(g("AG000.version")).append("</td><td>").append("6.0 (01.01.2018)").append(
 			"</td></tr>")
-		sb.append("<tr><td>").append("Erstellung am:").append("</td><td>").append(
+		sb.append("<tr><td>").append(g("AG000.creation")).append("</td><td>").append(
 			Global.getManifestProperty(typeof(Werkzeug), "/META-INF/MANIFEST.MF", "Built-Time")).append("</td></tr>")
-		sb.append("<tr><td>").append("Betriebssystem:").append("</td><td>").append(System.getProperty("os.name")).
+		sb.append("<tr><td>").append(g("AG000.os")).append("</td><td>").append(System.getProperty("os.name")).
 			append(" (").append(System.getProperty("os.version")).append(")").append("</td></tr>")
-		sb.append("<tr><td>").append("Java-Version:").append("</td><td>").append(System.getProperty("java.vm.version")).
+		sb.append("<tr><td>").append(g("AG000.java")).append("</td><td>").append(System.getProperty("java.vm.version")).
 			append("</td></tr>")
-		sb.append("<tr><td>").append("Java-Verzeichnis:").append("</td><td>").append(System.getProperty("java.home")).
+		sb.append("<tr><td>").append(g("AG000.javahome")).append("</td><td>").append(System.getProperty("java.home")).
 			append("</td></tr>")
-		sb.append("<tr><td>").append("Benutzer-Verz.:").append("</td><td>").append(System.getProperty("user.dir")).
+		sb.append("<tr><td>").append(g("AG000.userhome")).append("</td><td>").append(System.getProperty("user.dir")).
 			append("</td></tr>")
 		val props = new Properties()
 		val input = typeof(Werkzeug).getClassLoader().getResourceAsStream("ServerConfig.properties")
 		props.load(input)
 		var jdbcUrl = props.getProperty("DB_DRIVER_CONNECT")
 		if (!Global.nes(jdbcUrl)) {
-			sb.append("<tr><td>").append("Datenbank:").append("</td><td>").append(jdbcUrl).append("</td></tr>")
+			sb.append("<tr><td>").append(g("AG000.db")).append("</td><td>").append(jdbcUrl).append("</td></tr>")
 		}
 		if (Global.isWebStart) {
-			sb.append("<tr><td>").append("JNLP-Verzeichnis:").append("</td><td>").append(
+			sb.append("<tr><td>").append(g("AG000.jnlphome")).append("</td><td>").append(
 				System.getProperty("jnlpx.home")).append("</td></tr>")
 		}
+		sb.append("</table>")
+		sb.append("</html>")
+		return sb.toString
+	}
+
+	/**
+	 * Liefert einen HTML-String mit Anmelde-Status.
+	 * @parm daten Service-Daten für Datenbank-Zugriff.
+	 * @return String.
+	 */
+	def public static String getLoginInfo(ServiceDaten daten) {
+
+		var sb = new StringBuffer
+		sb.append("<html>")
+		if (daten.mandantNr <= -10) {
+			sb.append(g("AG000.init"))
+		} else {
+			sb.append("<table>")
+			sb.append("<tr><td>").append(g("AG000.client")).append("</td><td>").append(daten.mandantNr).append(
+				"</td></tr>")
+			sb.append("<tr><td>").append(g("AG000.user")).append("</td><td>").append(daten.benutzerId).append(
+				"</td></tr>")
+			sb.append("</table>")
+		}
+		sb.append("</html>")
+		return sb.toString
+	}
+
+	/**
+	 * Liefert einen HTML-String mit Anmelde-Status.
+	 * @return String.
+	 */
+	def public static String getLicenseInfo() {
+
+		var sb = new StringBuffer
+		sb.append("<html>")
+		sb.append("<h1>").append(g("AG000.header")).append("</h1>")
+		sb.append("<p>").append(g("AG000.mit")).append("</p>")
+		sb.append("<p>").append(g("AG000.libs")).append("</p>")
+		sb.append("<table>")
+		var ende = false
+		var i = 1
+		do {
+			var key = '''AG000.lib«i»'''
+			if (bundle.containsKey(key)) {
+				sb.append("<tr><td>").append(g(key)).append("</td><td>").append(g(key + ".1")).append("</td><td>").
+					append(g(key + ".2")).append("</td></tr>")
+				i++
+			} else
+				ende = true
+		} while (!ende)
 		sb.append("</table>")
 		sb.append("</html>")
 		return sb.toString
@@ -288,6 +342,24 @@ class Werkzeug {
 		}
 		return zeilen
 	}
+
+	def public static ResourceBundle getBundle() {
+
+		if (bundle === null) {
+			bundle = ResourceBundle.getBundle("Jhh6")
+		}
+		return bundle
+	}
+
+	def public static String g(String s) {
+
+		var w = getBundle().getString(s)
+		if (!Global.nes(w)) {
+			w = w.replace("_", "")
+		}
+		return w
+	}
+
 }
 
 /**
