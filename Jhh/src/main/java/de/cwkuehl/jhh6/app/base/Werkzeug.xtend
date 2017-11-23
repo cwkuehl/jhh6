@@ -345,7 +345,7 @@ class Werkzeug {
 	def public static ResourceBundle getBundle() {
 
 		if (bundle === null) {
-			bundle = ResourceBundle.getBundle("Jhh6")
+			bundle = ResourceBundle.getBundle("dialog.Jhh6")
 		}
 		return bundle
 	}

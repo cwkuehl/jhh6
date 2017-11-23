@@ -299,38 +299,38 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 
 	def static List<StartDialog> getDialogListe() {
 		var List<StartDialog> l = new ArrayList<StartDialog>()
-		// l.add(new StartDialog("#AG100", g("menu.title.clients"), AG100MandantenController.class, null));
-		// l.add(new StartDialog("#AG200", g("menu.title.users"), AG200BenutzerController.class, null));
-		// l.add(new StartDialog("#AG400", g("menu.title.backups"), AG400SicherungenController.class, null));
-		// l.add(new StartDialog("#TB100", g("menu.title.diary"), TB100TagebuchController.class, null));
-		// l.add(new StartDialog("#FZ700", g("menu.title.notes"), FZ700NotizenController.class, null));
-		// l.add(new StartDialog("#AD100", g("menu.title.persons"), AD100PersonenController.class, null));
-		// l.add(new StartDialog("#FZ250", g("menu.title.milages"), FZ250FahrradstaendeController.class, null));
-		// l.add(new StartDialog("#FZ200", g("menu.title.bikes"), FZ200FahrraederController.class, null));
-		// l.add(new StartDialog("#FZ300", g("menu.title.authors"), FZ300AutorenController.class, null));
-		// l.add(new StartDialog("#FZ320", g("menu.title.series"), FZ320SerienController.class, null));
-		// l.add(new StartDialog("#FZ340", g("menu.title.books"), FZ340BuecherController.class, null));
-		// l.add(new StartDialog("#SO100", g("menu.title.sudoku"), SO100SudokuController.class, null));
-		// l.add(new StartDialog("#SO200", g("menu.title.detective"), SO200DetektivController.class, null));
-		// l.add(new StartDialog("#FZ100", g("menu.title.statistic"), FZ100StatistikController.class, null));
-		// l.add(new StartDialog("#HH400", g("menu.title.bookings"), HH400BuchungenController.class, null));
-		// l.add(new StartDialog("#HH300", g("menu.title.events"), HH300EreignisseController.class, null));
-		// l.add(new StartDialog("#HH200", g("menu.title.accounts"), HH200KontenController.class, null));
-		// l.add(new StartDialog("#HH100", g("menu.title.periods"), HH100PeriodenController.class, null));
-		// l.add(new StartDialog("#HH500;EB", g("menu.title.openingbalance"), HH500BilanzenController.class, "EB"));
-		// l.add(new StartDialog("#HH500;GV", g("menu.title.plbalance"), HH500BilanzenController.class, "GV"));
-		// l.add(new StartDialog("#HH500;SB", g("menu.title.finalbalance"), HH500BilanzenController.class, "SB"));
-		// l.add(new StartDialog("#VM500", g("menu.title.bookings2"), VM500BuchungenController.class, null));
-		// l.add(new StartDialog("#VM920", g("menu.title.accountings"), VM920AbrechnungenController.class, null));
-		// l.add(new StartDialog("#HP200", g("menu.title.treatments"), HP200BehandlungenController.class, null));
-		// l.add(new StartDialog("#SB200", g("menu.title.ancestors"), SB200AhnenController.class, null));
-		// l.add(new StartDialog("#SB300", g("menu.title.families"), SB300FamilienController.class, null));
-		// l.add(new StartDialog("#VM300", g("menu.title.renters"), VM300MieterController.class, null));
-		// l.add(new StartDialog("#WP200", g("menu.title.stocks"), WP200WertpapiereController.class, null));
-		// l.add(new StartDialog("#WP250", g("menu.title.investments"), WP250AnlagenController.class, null));
-		// l.add(new StartDialog("#WP400", g("menu.title.bookings3"), WP400BuchungenController.class, null));
-		// l.add(new StartDialog("#WP500", g("menu.title.prices"), WP500StaendeController.class, null));
-		// l.add(new StartDialog("#MO200", g("menu.title.holymass"), MO200GottesdiensteController.class, null));
+		// l.add(new StartDialog("#AG100", g("menu.clients"), AG100MandantenController.class, null));
+		// l.add(new StartDialog("#AG200", g("menu.users"), AG200BenutzerController.class, null));
+		// l.add(new StartDialog("#AG400", g("menu.backups"), AG400SicherungenController.class, null));
+		// l.add(new StartDialog("#TB100", g("menu.diary"), TB100TagebuchController.class, null));
+		// l.add(new StartDialog("#FZ700", g("menu.notes"), FZ700NotizenController.class, null));
+		// l.add(new StartDialog("#AD100", g("menu.persons"), AD100PersonenController.class, null));
+		// l.add(new StartDialog("#FZ250", g("menu.milages"), FZ250FahrradstaendeController.class, null));
+		// l.add(new StartDialog("#FZ200", g("menu.bikes"), FZ200FahrraederController.class, null));
+		// l.add(new StartDialog("#FZ300", g("menu.authors"), FZ300AutorenController.class, null));
+		// l.add(new StartDialog("#FZ320", g("menu.series"), FZ320SerienController.class, null));
+		// l.add(new StartDialog("#FZ340", g("menu.books"), FZ340BuecherController.class, null));
+		// l.add(new StartDialog("#SO100", g("menu.sudoku"), SO100SudokuController.class, null));
+		// l.add(new StartDialog("#SO200", g("menu.detective"), SO200DetektivController.class, null));
+		// l.add(new StartDialog("#FZ100", g("menu.statistic"), FZ100StatistikController.class, null));
+		// l.add(new StartDialog("#HH400", g("menu.bookings"), HH400BuchungenController.class, null));
+		// l.add(new StartDialog("#HH300", g("menu.events"), HH300EreignisseController.class, null));
+		// l.add(new StartDialog("#HH200", g("menu.accounts"), HH200KontenController.class, null));
+		// l.add(new StartDialog("#HH100", g("menu.periods"), HH100PeriodenController.class, null));
+		// l.add(new StartDialog("#HH500;EB", g("menu.openingbalance"), HH500BilanzenController.class, "EB"));
+		// l.add(new StartDialog("#HH500;GV", g("menu.plbalance"), HH500BilanzenController.class, "GV"));
+		// l.add(new StartDialog("#HH500;SB", g("menu.finalbalance"), HH500BilanzenController.class, "SB"));
+		// l.add(new StartDialog("#VM500", g("menu.bookings2"), VM500BuchungenController.class, null));
+		// l.add(new StartDialog("#VM920", g("menu.accountings"), VM920AbrechnungenController.class, null));
+		// l.add(new StartDialog("#HP200", g("menu.treatments"), HP200BehandlungenController.class, null));
+		// l.add(new StartDialog("#SB200", g("menu.ancestors"), SB200AhnenController.class, null));
+		// l.add(new StartDialog("#SB300", g("menu.families"), SB300FamilienController.class, null));
+		// l.add(new StartDialog("#VM300", g("menu.renters"), VM300MieterController.class, null));
+		// l.add(new StartDialog("#WP200", g("menu.stocks"), WP200WertpapiereController.class, null));
+		// l.add(new StartDialog("#WP250", g("menu.investments"), WP250AnlagenController.class, null));
+		// l.add(new StartDialog("#WP400", g("menu.bookings3"), WP400BuchungenController.class, null));
+		// l.add(new StartDialog("#WP500", g("menu.prices"), WP500StaendeController.class, null));
+		// l.add(new StartDialog("#MO200", g("menu.holymass"), MO200GottesdiensteController.class, null));
 		return l
 	}
 
