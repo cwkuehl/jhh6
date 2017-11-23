@@ -17,7 +17,7 @@ class Meldungen {
 	val M1008 = "Bericht vom: {0,date,dd.MM.yyyy HH:mm:ss}{1}"
 	val M1009 = "Suche nach: (/{0}/ oder /{1}/ oder /{2}/) und (/{3}/ oder /{4}/ oder /{5}/) und nicht (/{6}/ oder /{7}/ oder /{8}/){9}"
 	val M1010 = "Falscher Zähler am {0,date,dd.MM.yyyy}: {1}, erwartet: {2}"
-	val M1011 = "{0,date,dd.MM.yyyy HH:mm:ss} von {1}"
+	val M1011 = "{0,date,yyyy-MM-dd HH:mm:ss} of {1}"
 	// val M1012 = "Bitte geben Sie einen Benutzer ein."
 	// val M1013 = "Die Kennwortwiederholung ist falsch."
 	// val M1014 = "Sind Sie sicher, die %1$s zu löschen?"
