@@ -1,0 +1,55 @@
+package de.cwkuehl.jhh6.app.controller.am
+
+import de.cwkuehl.jhh6.api.global.Global
+import de.cwkuehl.jhh6.app.base.BaseController
+import de.cwkuehl.jhh6.app.base.Profil
+import javafx.application.Platform
+import javafx.event.ActionEvent
+import javafx.fxml.FXML
+import javafx.scene.control.Button
+import javafx.scene.control.Label
+import javafx.scene.control.PasswordField
+import javafx.scene.control.TextField
+
+class AM000AnmeldungController extends BaseController<String> {
+
+	@FXML Label mandant0
+	@FXML @Profil TextField mandant
+	@FXML Label benutzer0
+	@FXML @Profil TextField benutzer
+	@FXML Label kennwort0
+	@FXML PasswordField kennwort
+	@FXML Button anmelden
+
+	// @FXML CheckBox speichern
+	@FXML def void onAnmelden() {
+		// ServiceDaten daten = new ServiceDaten(Global.strInt(mandant.getText()), benutzer.getText());
+		// ServiceErgebnis<Void> r = FactoryService.getAnmeldungService().anmelden(daten, kennwort.getText(),
+		// speichern.isSelected());
+		// get(r);
+		// if (r.ok()) {
+		// setServiceDaten(daten);
+		// close("Anmelden");
+		// }
+	}
+
+	@FXML def void onAbbrechen(ActionEvent event) {
+		close("Abbrechen")
+	}
+
+	override protected void initialize() {
+
+		mandant0.setLabelFor(mandant)
+		benutzer0.setLabelFor(benutzer)
+		kennwort0.setLabelFor(kennwort)
+		if (Global.nes(mandant.text)) {
+			mandant.text = "1"
+		}
+		anmelden.disableProperty.bind(mandant.textProperty.isEmpty.or(benutzer.textProperty.isEmpty))
+		Platform.runLater([
+			{
+				if(Global.nes(mandant.getText())) mandant.requestFocus() else kennwort.requestFocus()
+			}
+		])
+	}
+}

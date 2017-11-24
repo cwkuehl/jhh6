@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.45" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="de.cwkuehl.jhh6.app.controller.am.AM000AnmeldungController">
+
+	<padding>
+		<Insets bottom="10" left="10" right="10" top="10" />
+	</padding>
+
+	<Label fx:id="mandant0" mnemonicParsing="true" text="%AM000.client" GridPane.columnIndex="0" GridPane.rowIndex="0">
+		<labelFor></labelFor>
+	</Label>
+	<TextField fx:id="mandant" accessibleText="%AM000.client.tt" promptText="%AM000.client.tt"
+		GridPane.columnIndex="1" GridPane.rowIndex="0">
+		<tooltip>
+			<Tooltip text="%AM000.client.tt" />
+		</tooltip>
+	</TextField>
+
+	<Label fx:id="benutzer0" mnemonicParsing="true" text="%AM000.user" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+	<TextField fx:id="benutzer" accessibleText="%AM000.user.tt" promptText="%AM000.user.tt" GridPane.columnIndex="1"
+		GridPane.rowIndex="1">
+		<tooltip>
+			<Tooltip text="%AM000.user.tt" />
+		</tooltip>
+	</TextField>
+
+	<Label fx:id="kennwort0" mnemonicParsing="true" text="%AM000.password" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+	<PasswordField fx:id="kennwort" accessibleText="%AM000.password.tt" promptText="%AM000.password.tt"
+		GridPane.columnIndex="1" GridPane.rowIndex="2">
+		<tooltip>
+			<Tooltip text="%AM000.password.tt" />
+		</tooltip>
+	</PasswordField>
+
+	<CheckBox fx:id="speichern" mnemonicParsing="true" text="Kennwort _speichern" GridPane.columnIndex="1"
+		GridPane.rowIndex="3">
+		<tooltip>
+			<Tooltip text="Soll das Kennwort gespeichert werden?" />
+		</tooltip>
+	</CheckBox>
+
+	<HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="4">
+		<Button fx:id="anmelden" defaultButton="true" onAction="#onAnmelden" text="%AM000.login">
+			<tooltip>
+				<Tooltip text="%AM000.login.tt" />
+			</tooltip>
+		</Button>
+		<Button cancelButton="true" onAction="#onAbbrechen" text="%AM000.cancel">
+			<tooltip>
+				<Tooltip text="%AM000.cancel.tt" />
+			</tooltip>
+		</Button>
+	</HBox>
+
+	<stylesheets>
+		<URL value="@../Jhh6.css" />
+	</stylesheets>
+	<columnConstraints>
+		<ColumnConstraints />
+		<ColumnConstraints />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+	</rowConstraints>
+</GridPane>

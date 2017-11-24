@@ -1,13 +1,13 @@
 package de.cwkuehl.jhh6.app.controller
 
 import de.cwkuehl.jhh6.api.global.Global
-import de.cwkuehl.jhh6.api.service.ServiceDaten
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.app.base.StartDialog
 import de.cwkuehl.jhh6.app.controller.ag.AG000InfoController
 import de.cwkuehl.jhh6.app.controller.ag.AG010HilfeController
+import de.cwkuehl.jhh6.app.controller.am.AM000AnmeldungController
 import java.net.URL
 import java.util.ArrayList
 import java.util.HashMap
@@ -163,14 +163,16 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 	}
 
 	@FXML def protected void handleAnmelden(ActionEvent e) {
-		var ServiceDaten daten = getServiceDaten()
-		if (menueAnmelden.isVisible()) { // String s = (String) starteDialog(AM000AnmeldungController), DialogAufrufEnum.OHNE);
-			// if ("Anmelden".equals(s)) {
-			// daten = getServiceDaten();
-			// setRechte(daten.getMandantNr(), true);
-			// startDialoge(daten.getMandantNr());
-			// // System.out.println("Angemeldet.");
-			// }
+
+		var daten = getServiceDaten()
+		if (menueAnmelden.isVisible()) {
+			var s = starteDialog(typeof(AM000AnmeldungController), DialogAufrufEnum.OHNE)
+			if ("Anmelden".equals(s)) {
+				daten = getServiceDaten()
+				setRechte(daten.getMandantNr(), true)
+				startDialoge(daten.getMandantNr())
+			// System.out.println("Angemeldet.")
+			}
 		} else {
 			// FactoryService.getAnmeldungService().abmelden(daten);
 			Jhh6::getEinstellungen().refreshMandant()
