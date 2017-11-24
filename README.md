@@ -4,7 +4,7 @@ JHH6 is a new version of the useful Java Program.
 It is easy to install without registration and use.
 Here are the some of the Features:
 
-## Features
+## Features (EN)
 * Financial management with double-entry bookkeeping, the opening and closing balance sheet and income statement (Menu household)
 * Address management with as many addresses per person and birthday list at the start (Menu Private)
 * Diary stores per day a text of any length (Menu Private)
@@ -13,7 +13,7 @@ Here are the some of the Features:
 * Stocks with Point and Figure charts (Menu Stocks)
 * Altar Servers with easy scheduling (Menu Altar Servers)
 
-## Funktionen
+## Funktionen (DE)
 * Haushaltsführung mit doppelter Buchführung, Eröffnungs- und Schlussbilanz sowie Gewinn- und Verlustrechnung (Bereich Haushalt)
 * Adressenverwaltung mit beliebig vielen Adressen pro Person und Geburtstagsliste beim Start (Bereich Privat)
 * Tagebuch speichert pro Tag einen beliebig langen Text (Bereich Privat)
@@ -25,7 +25,7 @@ Here are the some of the Features:
 You can download the actual version [JHH5](http://cwkuehl.de/jhh5).
 
 ## Technical Overview
-* Java 8 Runtime
+* Java 8 Runtime with JavaFX
 * Maven Build Tool
 * Xtend Generator
 * HSQLDB - 100% Java Database
