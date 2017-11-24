@@ -1,6 +1,7 @@
 package de.cwkuehl.jhh6.app.base
 
 import de.cwkuehl.jhh6.api.global.Global
+import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.api.service.ServiceDaten
 import de.cwkuehl.jhh6.app.Jhh6
 import java.awt.Desktop
@@ -23,6 +24,7 @@ import javafx.scene.control.TextArea
 import javafx.scene.control.TextInputDialog
 import javafx.scene.layout.GridPane
 import javafx.scene.layout.Priority
+import javafx.scene.web.WebEngine
 import javafx.stage.Screen
 import javafx.stage.Stage
 import org.apache.log4j.Logger
@@ -118,6 +120,27 @@ class Werkzeug {
 		sb.append("</table>")
 		sb.append("</html>")
 		return sb.toString
+	}
+
+	/**
+	 * Setzt die Hilfe-Datei in eine WebEngine.
+	 * @param Betroffene WebEngine, die die Hilfe anzeigen soll.
+	 */
+	def public static void setHelp(WebEngine we) {
+
+		var html = "/JHaushalt-Hilfe.html"
+		var url = Werkzeug.getClass().getResource(html)
+		if (url === null) {
+			html = Jhh6.einstellungen.hilfeDatei
+			url = Werkzeug.getClass().getResource(html)
+			if (url === null)
+				url = new File(html).toURI.toURL
+		}
+		if (url === null) {
+			we.loadContent('''<html>«Meldungen.M3000(html)»</html>''')
+		} else {
+			we.load(url.toExternalForm())
+		}
 	}
 
 	def public static void showError(String str) {

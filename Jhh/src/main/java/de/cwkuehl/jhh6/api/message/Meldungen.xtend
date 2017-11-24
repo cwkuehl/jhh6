@@ -81,4 +81,5 @@ class Meldungen {
 	val M2093 = "Für den Dienst {0} sind zu wenige Messdiener eingeteilt."
 	val M2094 = "Bitte ein Wertpapier auswählen."
 	val M2095 = "Bitte eine Konfiguration auswählen."
+	val M3000 = "The help file ({0}) is missing."
 }

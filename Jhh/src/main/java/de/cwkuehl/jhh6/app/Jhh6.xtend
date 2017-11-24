@@ -5,7 +5,6 @@ import de.cwkuehl.jhh6.api.message.MeldungException
 import de.cwkuehl.jhh6.api.service.ServiceDaten
 import de.cwkuehl.jhh6.api.service.ServiceErgebnis
 import de.cwkuehl.jhh6.app.base.Einstellungen
-import de.cwkuehl.jhh6.app.base.Groesse
 import de.cwkuehl.jhh6.app.base.Werkzeug
 import de.cwkuehl.jhh6.app.controller.Jhh6Controller
 import java.io.IOException
