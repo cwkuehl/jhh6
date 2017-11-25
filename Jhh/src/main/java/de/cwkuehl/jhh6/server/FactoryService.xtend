@@ -1,20 +1,21 @@
 package de.cwkuehl.jhh6.server
 
+import de.cwkuehl.jhh6.api.service.IAnmeldungService
 import de.cwkuehl.jhh6.server.base.WkInjector
 
 class FactoryService {
 
 	// Guice-Like-Injector
-	val static injector = WkInjector.createInjector(new de.cwkuehl.jhh6.server.ServiceInjector())
-/*
-	def static IAdresseService getAdresseService() {
-		return injector.getInstance(typeof(IAdresseService))
-	}
+	val static injector = WkInjector.createInjector(new ServiceInjector())
+
+	//def static IAdresseService getAdresseService() {
+	//	return injector.getInstance(typeof(IAdresseService))
+	//}
 
 	def static IAnmeldungService getAnmeldungService() {
 		return injector.getInstance(typeof(IAnmeldungService))
 	}
-
+/*
 	def static IFreizeitService getFreizeitService() {
 		return injector.getInstance(typeof(IFreizeitService))
 	}

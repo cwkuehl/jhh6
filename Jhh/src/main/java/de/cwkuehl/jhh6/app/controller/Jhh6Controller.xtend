@@ -24,7 +24,6 @@ import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.control.Label
 import javafx.scene.control.Menu
-import javafx.scene.control.MenuBar
 import javafx.scene.control.MenuItem
 import javafx.scene.control.SeparatorMenuItem
 import javafx.scene.control.Tab
@@ -32,7 +31,7 @@ import javafx.scene.control.TabPane
 
 class Jhh6Controller extends BaseController<String> implements Initializable {
 
-	@FXML MenuBar menue
+	// @FXML MenuBar menue
 	@FXML MenuItem menueAnmelden
 	@FXML MenuItem menueAbmelden
 	@FXML Label leftStatus
@@ -48,7 +47,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 	@FXML MenuItem menueAM100
 	@FXML MenuItem menueAM500
 	@FXML MenuItem menueAM510
-	@FXML MenuItem menueReset
+	// @FXML MenuItem menueReset
 	@FXML MenuItem menueFZ100
 	@FXML MenuItem menueFZ200
 	@FXML MenuItem menueFZ250

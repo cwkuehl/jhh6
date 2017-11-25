@@ -27,4 +27,30 @@ class Constant {
 
 	/** Zeilenumbruch bei Windows. */
 	public static final String CRLF = "\r\n"
+
+	/** Einstellung: DB_INIT. */
+	public static final String EINST_DB_INIT = "DB_INIT"
+	/** Einstellung: DB_VERSION. */
+	public static final String EINST_DB_VERSION = "DB_VERSION"
+	/** Einstellung: DATENBANK. */
+	public static final String EINST_DATENBANK = "DATENBANK"
+	/** Mandant-Einstellung: REPLIKATION_UID. */
+	public static final String EINST_MA_REPLIKATION_UID = "REPLIKATION_UID"
+	/** Mandant-Einstellung: REPLIKATION_BEGINN. */
+	public static final String EINST_MA_REPLIKATION_BEGINN = "REPLIKATION_BEGINN"
+	/** Mandant-Einstellung: OHNE_ANMELDUNG. */
+	public static final String EINST_MA_OHNE_ANMELDUNG = "OHNE_ANMELDUNG"
+
+	/** kleinster Autowert. */
+	public static final int AW_MIN = 1
+	/** kleinster Autowert mit 0. */
+	public static final int AW_MIN0 = 0
+
+	/** Kleinste Perioden-Nummer. */
+	public static final int MIN_PERIODE = 0
+	/** Erste zu vergebende Perioden-Nummer. */
+	public static final int START_PERIODE = 10000
+	/** Größte Perioden-Nummer. */
+	public static final int MAX_PERIODE = 99999
+
 }
