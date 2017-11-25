@@ -139,15 +139,6 @@
 				</plugin>
 			</plugins>
 		</pluginManagement>
-
-		<!-- <sourceDirectory>src</sourceDirectory> <resources> <resource> <directory>src</directory> 
-			<excludes> <exclude>**/*.java</exclude> </excludes> </resource> <resource> 
-			<directory>xtend-gen</directory> <excludes> <exclude>**/*.java</exclude> 
-			</excludes> </resource> </resources> -->
-		<plugins>
-			<!-- <plugin> <artifactId>maven-compiler-plugin</artifactId> <version>3.7.0</version> 
-				<configuration> <release>9</release> </configuration> </plugin> -->
-		</plugins>
 	</build>
 
 	<dependencies>
@@ -169,6 +160,12 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
+			<groupId>de.cwkuehl.jhh6</groupId>
+			<artifactId>Jhh</artifactId>
+			<version>1.0</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
@@ -177,4 +174,4 @@
 	</dependencies>
 
 </project>
-<!-- Goals Build: clean eclipse:eclipse xtend:compile install org.apache.maven.plugins:maven-dependency-plugin:copy-dependencies -->
+<!-- Goals Test: xtend:testCompile test -->
