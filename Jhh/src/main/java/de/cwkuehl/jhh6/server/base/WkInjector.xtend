@@ -1,5 +1,6 @@
 package de.cwkuehl.jhh6.server.base
 
+import de.cwkuehl.jhh6.generator.annotation.Inject
 import java.util.Hashtable
 
 class WkInjector {

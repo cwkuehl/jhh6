@@ -36,7 +36,7 @@ public class Global {
 	}
 
 	def static Path serviceInterfacePfad(Path pf) {
-		val f = pf.append("../Schnittstelle/src/main/java").append(schnittstelleServicePackage.replace('.', '/'))
+		val f = pf.append("src/main/java").append(schnittstelleServicePackage.replace('.', '/'))
 		return f
 	}
 

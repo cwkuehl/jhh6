@@ -1,4 +1,4 @@
-package de.cwkuehl.jhh6.server.base
+package de.cwkuehl.jhh6.generator.annotation
 
 import java.lang.annotation.Documented
 import java.lang.annotation.Retention
