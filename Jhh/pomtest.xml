@@ -159,6 +159,11 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>2.3.4</version>
+		</dependency>
+		<dependency>
 			<groupId>de.cwkuehl.jhh6</groupId>
 			<artifactId>Generator</artifactId>
 			<version>1.0</version>

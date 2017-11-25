@@ -164,19 +164,22 @@ class Jhh6 extends Application {
 	def static void setLeftStatus(String str) {
 
 		if (!Global::nes(str)) {
-			Werkzeug.showError(str)
+			Platform.runLater([
+				Werkzeug.showError(str)
+			])
 		}
-		if (controller !== null) {
-			controller.setLeftStatus(str)
-		}
+		setLeftStatus2(str)
 	}
 
 	/** 
 	 * Anzeige einer Meldung in der Statuszeile. 
 	 */
 	def static void setLeftStatus2(String str) {
+
 		if (controller !== null) {
-			controller.setLeftStatus(str)
+			Platform.runLater([
+				controller.setLeftStatus(str)
+			])
 		}
 	}
 

@@ -1,6 +1,7 @@
 package de.cwkuehl.jhh6.app.controller
 
 import de.cwkuehl.jhh6.api.global.Global
+import de.cwkuehl.jhh6.api.service.ServiceDaten
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
@@ -8,6 +9,7 @@ import de.cwkuehl.jhh6.app.base.StartDialog
 import de.cwkuehl.jhh6.app.controller.ag.AG000InfoController
 import de.cwkuehl.jhh6.app.controller.ag.AG010HilfeController
 import de.cwkuehl.jhh6.app.controller.am.AM000AnmeldungController
+import de.cwkuehl.jhh6.server.FactoryService
 import java.net.URL
 import java.util.ArrayList
 import java.util.HashMap
@@ -112,6 +114,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 	@FXML TabPane tabs
 
 	override void initialize(URL location, ResourceBundle resources) {
+
 		// StyleManager.getInstance().addUserAgentStylesheet("com/sun/javafx/scene/control/skin/modena/whiteOnBlack.css");
 		var Timer timer = new Timer()
 		timer.schedule(([|
@@ -126,25 +129,25 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 						bc.addAccelerators()
 					}
 				] as ChangeListener<Tab>))
-		] as TimerTask), // ServiceDaten daten0 = new ServiceDaten(1, "(initDatenbank)");
-		// ServiceErgebnis<Void> r0 = FactoryService.getAnmeldungService().initDatenbank(daten0);
-		// get(r0);
-		// if (!r0.ok()) {
-		// return;
-		// }
-		// int mandantNr = Global.strInt(Jhh6.getEinstellungen().getDateiParameter("AM000Anmeldung_Mandant"));
-		// ServiceDaten daten = new ServiceDaten(mandantNr, Jhh6.getEinstellungen().getBenutzer());
-		// ServiceErgebnis<Boolean> r = FactoryService.getAnmeldungService().istOhneAnmelden(daten);
-		// if (get(r)) {
-		// Jhh6.setServiceDaten(daten);
-		// setRechte(daten.getMandantNr(), true);
-		// startDialoge(daten.getMandantNr());
-		// } else {
-		// Platform.runLater(() -> {
-		// handleAnmelden(null);
-		// });
-		// }
-		100)
+			var daten0 = new ServiceDaten(1, "(initDatenbank)")
+			var r0 = FactoryService.anmeldungService.initDatenbank(daten0)
+			get(r0)
+			if (!r0.ok) {
+				return
+			}
+			var mandantNr = Global.strInt(Jhh6::einstellungen.getDateiParameter("AM000Anmeldung_Mandant"))
+			var daten = new ServiceDaten(mandantNr, Jhh6::einstellungen.benutzer)
+			var r = FactoryService.getAnmeldungService().istOhneAnmelden(daten)
+			if (get(r)) {
+				Jhh6.setServiceDaten(daten)
+				setRechte(daten.mandantNr, true)
+				startDialoge(daten.mandantNr)
+			} else {
+				Platform.runLater([
+					handleAnmelden(null)
+				])
+			}
+		] as TimerTask), 100)
 	}
 
 	override protected String getTitel() {
@@ -173,18 +176,18 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 			// System.out.println("Angemeldet.")
 			}
 		} else {
-			// FactoryService.getAnmeldungService().abmelden(daten);
+			FactoryService.anmeldungService.abmelden(daten);
 			Jhh6::getEinstellungen().refreshMandant()
 			setServiceDaten(null)
 			setRechte(daten.getMandantNr(), false)
 			// alle Tabs schließen
-			for (Tab t : getTabs().getTabs()) {
+			for (Tab t : getTabs.tabs) {
 				if (t.getOnClosed() !== null) {
 					t.getOnClosed().handle(null)
 				}
 			}
-			getTabs().getTabs().clear()
-			Jhh6::getEinstellungen().refreshMandant()
+			getTabs.tabs.clear
+			Jhh6::einstellungen.refreshMandant
 			// System.out.println("Abgemeldet.");
 			handleAnmelden(null)
 		}

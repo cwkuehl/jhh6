@@ -2,7 +2,7 @@
 # JDBC Connections
 ################################################################################
 DB_DRIVER_CLASS=org.hsqldb.jdbc.JDBCDriver
-DB_DRIVER_CONNECT=jdbc:hsqldb:file:/home/user/temp/hsqldb/JHH6
+DB_DRIVER_CONNECT=jdbc:hsqldb:file:/home/user/hsqldb/JHH6
 DB_DRIVER_USERNAME=SA
 DB_DRIVER_PASSWORD=
 
@@ -10,6 +10,6 @@ DB_DRIVER_PASSWORD=
 # 2. Connection
 ################################################################################
 REPLIKATION_CLASS=org.hsqldb.jdbc.JDBCDriver
-REPLIKATION_CONNECT=jdbc:hsqldb:file:/home/user/temp/hsqldb/JHH6_Rep
+REPLIKATION_CONNECT=jdbc:hsqldb:file:/home/user/hsqldb/JHH6_Rep
 REPLIKATION_USERNAME=SA
 REPLIKATION_PASSWORD=
