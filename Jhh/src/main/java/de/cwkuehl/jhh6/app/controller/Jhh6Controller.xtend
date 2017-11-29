@@ -9,6 +9,7 @@ import de.cwkuehl.jhh6.app.base.StartDialog
 import de.cwkuehl.jhh6.app.controller.ag.AG000InfoController
 import de.cwkuehl.jhh6.app.controller.ag.AG010HilfeController
 import de.cwkuehl.jhh6.app.controller.am.AM000AnmeldungController
+import de.cwkuehl.jhh6.app.controller.am.AM100AenderungController
 import de.cwkuehl.jhh6.server.FactoryService
 import java.net.URL
 import java.util.ArrayList
@@ -115,7 +116,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 
 	override void initialize(URL location, ResourceBundle resources) {
 
-		// StyleManager.getInstance().addUserAgentStylesheet("com/sun/javafx/scene/control/skin/modena/whiteOnBlack.css");
+		// StyleManager.getInstance().addUserAgentStylesheet("com/sun/javafx/scene/control/skin/modena/whiteOnBlack.css")
 		var Timer timer = new Timer()
 		timer.schedule(([|
 			tabs.getSelectionModel().selectedItemProperty().addListener(
@@ -176,7 +177,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 			// System.out.println("Angemeldet.")
 			}
 		} else {
-			FactoryService.anmeldungService.abmelden(daten);
+			FactoryService.anmeldungService.abmelden(daten)
 			Jhh6::getEinstellungen().refreshMandant()
 			setServiceDaten(null)
 			setRechte(daten.getMandantNr(), false)
@@ -188,7 +189,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 			}
 			getTabs.tabs.clear
 			Jhh6::einstellungen.refreshMandant
-			// System.out.println("Abgemeldet.");
+			// System.out.println("Abgemeldet.")
 			handleAnmelden(null)
 		}
 	}
@@ -278,7 +279,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 			{
 				Jhh6::aktualisiereTitel()
 				var boolean g = Global::objBool(Jhh6::getEinstellungen().getDateiParameter("AD120Geburtstage_Starten"))
-				if (ok && g) { // starteFormular(typeof(AD120GeburtstageController), DialogAufrufEnum.OHNE);
+				if (ok && g) { // starteFormular(typeof(AD120GeburtstageController), DialogAufrufEnum.OHNE)
 				}
 			}
 		])
@@ -304,47 +305,47 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 
 	def static List<StartDialog> getDialogListe() {
 		var List<StartDialog> l = new ArrayList<StartDialog>()
-		// l.add(new StartDialog("#AG100", g("menu.clients"), typeof(AG100MandantenController), null));
-		// l.add(new StartDialog("#AG200", g("menu.users"), typeof(AG200BenutzerController), null));
-		// l.add(new StartDialog("#AG400", g("menu.backups"), typeof(AG400SicherungenController), null));
-		// l.add(new StartDialog("#TB100", g("menu.diary"), typeof(TB100TagebuchController), null));
-		// l.add(new StartDialog("#FZ700", g("menu.notes"), typeof(FZ700NotizenController), null));
-		// l.add(new StartDialog("#AD100", g("menu.persons"), typeof(AD100PersonenController), null));
-		// l.add(new StartDialog("#FZ250", g("menu.milages"), typeof(FZ250FahrradstaendeController), null));
-		// l.add(new StartDialog("#FZ200", g("menu.bikes"), typeof(FZ200FahrraederController), null));
-		// l.add(new StartDialog("#FZ300", g("menu.authors"), typeof(FZ300AutorenController), null));
-		// l.add(new StartDialog("#FZ320", g("menu.series"), typeof(FZ320SerienController), null));
-		// l.add(new StartDialog("#FZ340", g("menu.books"), typeof(FZ340BuecherController), null));
-		// l.add(new StartDialog("#SO100", g("menu.sudoku"), typeof(SO100SudokuController), null));
-		// l.add(new StartDialog("#SO200", g("menu.detective"), typeof(SO200DetektivController), null));
-		// l.add(new StartDialog("#FZ100", g("menu.statistic"), typeof(FZ100StatistikController), null));
-		// l.add(new StartDialog("#HH400", g("menu.bookings"), typeof(HH400BuchungenController), null));
-		// l.add(new StartDialog("#HH300", g("menu.events"), typeof(HH300EreignisseController), null));
-		// l.add(new StartDialog("#HH200", g("menu.accounts"), typeof(HH200KontenController), null));
-		// l.add(new StartDialog("#HH100", g("menu.periods"), typeof(HH100PeriodenController), null));
-		// l.add(new StartDialog("#HH500;EB", g("menu.openingbalance"), typeof(HH500BilanzenController), "EB"));
-		// l.add(new StartDialog("#HH500;GV", g("menu.plbalance"), typeof(HH500BilanzenController), "GV"));
-		// l.add(new StartDialog("#HH500;SB", g("menu.finalbalance"), typeof(HH500BilanzenController), "SB"));
-		// l.add(new StartDialog("#VM500", g("menu.bookings2"), typeof(VM500BuchungenController), null));
-		// l.add(new StartDialog("#VM920", g("menu.accountings"), typeof(VM920AbrechnungenController), null));
-		// l.add(new StartDialog("#HP200", g("menu.treatments"), typeof(HP200BehandlungenController), null));
-		// l.add(new StartDialog("#SB200", g("menu.ancestors"), typeof(SB200AhnenController), null));
-		// l.add(new StartDialog("#SB300", g("menu.families"), typeof(SB300FamilienController), null));
-		// l.add(new StartDialog("#VM300", g("menu.renters"), typeof(VM300MieterController), null));
-		// l.add(new StartDialog("#WP200", g("menu.stocks"), typeof(WP200WertpapiereController), null));
-		// l.add(new StartDialog("#WP250", g("menu.investments"), typeof(WP250AnlagenController), null));
-		// l.add(new StartDialog("#WP400", g("menu.bookings3"), typeof(WP400BuchungenController), null));
-		// l.add(new StartDialog("#WP500", g("menu.prices"), typeof(WP500StaendeController), null));
-		// l.add(new StartDialog("#MO200", g("menu.holymass"), typeof(MO200GottesdiensteController), null));
+		// l.add(new StartDialog("#AG100", g("menu.clients"), typeof(AG100MandantenController), null))
+		// l.add(new StartDialog("#AG200", g("menu.users"), typeof(AG200BenutzerController), null))
+		// l.add(new StartDialog("#AG400", g("menu.backups"), typeof(AG400SicherungenController), null))
+		// l.add(new StartDialog("#TB100", g("menu.diary"), typeof(TB100TagebuchController), null))
+		// l.add(new StartDialog("#FZ700", g("menu.notes"), typeof(FZ700NotizenController), null))
+		// l.add(new StartDialog("#AD100", g("menu.persons"), typeof(AD100PersonenController), null))
+		// l.add(new StartDialog("#FZ250", g("menu.milages"), typeof(FZ250FahrradstaendeController), null))
+		// l.add(new StartDialog("#FZ200", g("menu.bikes"), typeof(FZ200FahrraederController), null))
+		// l.add(new StartDialog("#FZ300", g("menu.authors"), typeof(FZ300AutorenController), null))
+		// l.add(new StartDialog("#FZ320", g("menu.series"), typeof(FZ320SerienController), null))
+		// l.add(new StartDialog("#FZ340", g("menu.books"), typeof(FZ340BuecherController), null))
+		// l.add(new StartDialog("#SO100", g("menu.sudoku"), typeof(SO100SudokuController), null))
+		// l.add(new StartDialog("#SO200", g("menu.detective"), typeof(SO200DetektivController), null))
+		// l.add(new StartDialog("#FZ100", g("menu.statistic"), typeof(FZ100StatistikController), null))
+		// l.add(new StartDialog("#HH400", g("menu.bookings"), typeof(HH400BuchungenController), null))
+		// l.add(new StartDialog("#HH300", g("menu.events"), typeof(HH300EreignisseController), null))
+		// l.add(new StartDialog("#HH200", g("menu.accounts"), typeof(HH200KontenController), null))
+		// l.add(new StartDialog("#HH100", g("menu.periods"), typeof(HH100PeriodenController), null))
+		// l.add(new StartDialog("#HH500;EB", g("menu.openingbalance"), typeof(HH500BilanzenController), "EB"))
+		// l.add(new StartDialog("#HH500;GV", g("menu.plbalance"), typeof(HH500BilanzenController), "GV"))
+		// l.add(new StartDialog("#HH500;SB", g("menu.finalbalance"), typeof(HH500BilanzenController), "SB"))
+		// l.add(new StartDialog("#VM500", g("menu.bookings2"), typeof(VM500BuchungenController), null))
+		// l.add(new StartDialog("#VM920", g("menu.accountings"), typeof(VM920AbrechnungenController), null))
+		// l.add(new StartDialog("#HP200", g("menu.treatments"), typeof(HP200BehandlungenController), null))
+		// l.add(new StartDialog("#SB200", g("menu.ancestors"), typeof(SB200AhnenController), null))
+		// l.add(new StartDialog("#SB300", g("menu.families"), typeof(SB300FamilienController), null))
+		// l.add(new StartDialog("#VM300", g("menu.renters"), typeof(VM300MieterController), null))
+		// l.add(new StartDialog("#WP200", g("menu.stocks"), typeof(WP200WertpapiereController), null))
+		// l.add(new StartDialog("#WP250", g("menu.investments"), typeof(WP250AnlagenController), null))
+		// l.add(new StartDialog("#WP400", g("menu.bookings3"), typeof(WP400BuchungenController), null))
+		// l.add(new StartDialog("#WP500", g("menu.prices"), typeof(WP500StaendeController), null))
+		// l.add(new StartDialog("#MO200", g("menu.holymass"), typeof(MO200GottesdiensteController), null))
 		return l
 	}
 
 	@FXML def void handleUndo() {
-		get(Jhh6::rollback())
+		get(Jhh6::rollback)
 	}
 
 	@FXML def void handleRedo() {
-		get(Jhh6::redo())
+		get(Jhh6::redo)
 	}
 
 	@FXML def void handleReset() {
@@ -352,173 +353,174 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 	}
 
 	@FXML def void handleAG000() {
-		starteFormular(typeof(AG000InfoController), DialogAufrufEnum.OHNE);
+		starteFormular(typeof(AG000InfoController), DialogAufrufEnum.OHNE)
 	}
 
 	@FXML def void handleAG010() {
-		starteFormular(typeof(AG010HilfeController), DialogAufrufEnum.OHNE);
+		starteFormular(typeof(AG010HilfeController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleAG100() { // starteFormular(typeof(AG100MandantenController), DialogAufrufEnum.OHNE);
+	@FXML def void handleAG100() { // starteFormular(typeof(AG100MandantenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleAG200() { // starteFormular(typeof(AG200BenutzerController), DialogAufrufEnum.OHNE);
+	@FXML def void handleAG200() { // starteFormular(typeof(AG200BenutzerController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleAG400() { // starteFormular(typeof(AG400SicherungenController), DialogAufrufEnum.OHNE);
+	@FXML def void handleAG400() { // starteFormular(typeof(AG400SicherungenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleAD100() { // starteFormular(typeof(AD100PersonenController), DialogAufrufEnum.OHNE);
+	@FXML def void handleAD100() { // starteFormular(typeof(AD100PersonenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleAM100() { // starteDialog(AM100AenderungController), DialogAufrufEnum.OHNE);
+	@FXML def void handleAM100() {
+		starteDialog(typeof(AM100AenderungController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleAM500() { // starteFormular(typeof(AM500EinstellungenController), DialogAufrufEnum.OHNE);
+	@FXML def void handleAM500() { // starteFormular(typeof(AM500EinstellungenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleAM510() { // starteFormular(typeof(AM510DialogeController), DialogAufrufEnum.OHNE);
+	@FXML def void handleAM510() { // starteFormular(typeof(AM510DialogeController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleFZ100() { // starteFormular(typeof(FZ100StatistikController), DialogAufrufEnum.OHNE);
+	@FXML def void handleFZ100() { // starteFormular(typeof(FZ100StatistikController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleFZ200() { // starteFormular(typeof(FZ200FahrraederController), DialogAufrufEnum.OHNE);
+	@FXML def void handleFZ200() { // starteFormular(typeof(FZ200FahrraederController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleFZ250() { // starteFormular(typeof(FZ250FahrradstaendeController), DialogAufrufEnum.OHNE);
+	@FXML def void handleFZ250() { // starteFormular(typeof(FZ250FahrradstaendeController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleFZ300() { // starteFormular(typeof(FZ300AutorenController), DialogAufrufEnum.OHNE);
+	@FXML def void handleFZ300() { // starteFormular(typeof(FZ300AutorenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleFZ320() { // starteFormular(typeof(FZ320SerienController), DialogAufrufEnum.OHNE);
+	@FXML def void handleFZ320() { // starteFormular(typeof(FZ320SerienController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleFZ340() { // starteFormular(typeof(FZ340BuecherController), DialogAufrufEnum.OHNE);
+	@FXML def void handleFZ340() { // starteFormular(typeof(FZ340BuecherController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleFZ700() { // starteFormular(typeof(FZ700NotizenController), DialogAufrufEnum.OHNE);
+	@FXML def void handleFZ700() { // starteFormular(typeof(FZ700NotizenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleHH100() { // starteFormular(typeof(HH100PeriodenController), DialogAufrufEnum.OHNE);
+	@FXML def void handleHH100() { // starteFormular(typeof(HH100PeriodenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleHH200() { // starteFormular(typeof(HH200KontenController), DialogAufrufEnum.OHNE);
+	@FXML def void handleHH200() { // starteFormular(typeof(HH200KontenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleHH300() { // starteFormular(typeof(HH300EreignisseController), DialogAufrufEnum.OHNE);
+	@FXML def void handleHH300() { // starteFormular(typeof(HH300EreignisseController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleHH400() { // starteFormular(typeof(HH400BuchungenController), DialogAufrufEnum.OHNE);
+	@FXML def void handleHH400() { // starteFormular(typeof(HH400BuchungenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleHH500EB() { // starteFormular(typeof(HH500BilanzenController), DialogAufrufEnum.OHNE, Constant.KZBI_EROEFFNUNG);
+	@FXML def void handleHH500EB() { // starteFormular(typeof(HH500BilanzenController), DialogAufrufEnum.OHNE, Constant.KZBI_EROEFFNUNG)
 	}
 
-	@FXML def void handleHH500GV() { // starteFormular(typeof(HH500BilanzenController), DialogAufrufEnum.OHNE, Constant.KZBI_GV);
+	@FXML def void handleHH500GV() { // starteFormular(typeof(HH500BilanzenController), DialogAufrufEnum.OHNE, Constant.KZBI_GV)
 	}
 
-	@FXML def void handleHH500SB() { // starteFormular(typeof(HH500BilanzenController), DialogAufrufEnum.OHNE, Constant.KZBI_SCHLUSS);
+	@FXML def void handleHH500SB() { // starteFormular(typeof(HH500BilanzenController), DialogAufrufEnum.OHNE, Constant.KZBI_SCHLUSS)
 	}
 
-	@FXML def void handleHP100() { // starteFormular(typeof(HP100PatientenController), DialogAufrufEnum.OHNE);
+	@FXML def void handleHP100() { // starteFormular(typeof(HP100PatientenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleHP150() { // starteFormular(typeof(HP150StatusController), DialogAufrufEnum.OHNE);
+	@FXML def void handleHP150() { // starteFormular(typeof(HP150StatusController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleHP200() { // starteFormular(typeof(HP200BehandlungenController), DialogAufrufEnum.OHNE);
+	@FXML def void handleHP200() { // starteFormular(typeof(HP200BehandlungenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleHP300() { // starteFormular(typeof(HP300LeistungenController), DialogAufrufEnum.OHNE);
+	@FXML def void handleHP300() { // starteFormular(typeof(HP300LeistungenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleHP350() { // starteFormular(typeof(HP350LeistungsgruppenController), DialogAufrufEnum.OHNE);
+	@FXML def void handleHP350() { // starteFormular(typeof(HP350LeistungsgruppenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleHP400() { // starteFormular(typeof(HP400RechnungenController), DialogAufrufEnum.OHNE);
+	@FXML def void handleHP400() { // starteFormular(typeof(HP400RechnungenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleMO100() { // starteFormular(typeof(MO100MessdienerController), DialogAufrufEnum.OHNE);
+	@FXML def void handleMO100() { // starteFormular(typeof(MO100MessdienerController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleMO200() { // starteFormular(typeof(MO200GottesdiensteController), DialogAufrufEnum.OHNE);
+	@FXML def void handleMO200() { // starteFormular(typeof(MO200GottesdiensteController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleMO300() { // starteFormular(typeof(MO300ProfileController), DialogAufrufEnum.OHNE);
+	@FXML def void handleMO300() { // starteFormular(typeof(MO300ProfileController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleSB200() { // starteFormular(typeof(SB200AhnenController), DialogAufrufEnum.OHNE);
+	@FXML def void handleSB200() { // starteFormular(typeof(SB200AhnenController), DialogAufrufEnum.OHNE)
 	}
 
-	def void handleSB300() { // starteFormular(typeof(SB300FamilienController), DialogAufrufEnum.OHNE);
+	def void handleSB300() { // starteFormular(typeof(SB300FamilienController), DialogAufrufEnum.OHNE)
 	}
 
-	def void handleSB400() { // starteFormular(typeof(SB400QuellenController), DialogAufrufEnum.OHNE);
+	def void handleSB400() { // starteFormular(typeof(SB400QuellenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleSO100() { // starteFormular(typeof(SO100SudokuController), DialogAufrufEnum.OHNE);
+	@FXML def void handleSO100() { // starteFormular(typeof(SO100SudokuController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleSO200() { // starteFormular(typeof(SO200DetektivController), DialogAufrufEnum.OHNE);
+	@FXML def void handleSO200() { // starteFormular(typeof(SO200DetektivController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleTB100() { // starteFormular(typeof(TB100TagebuchController), DialogAufrufEnum.OHNE);
+	@FXML def void handleTB100() { // starteFormular(typeof(TB100TagebuchController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleVM100() { // starteFormular(typeof(VM100HaeuserController), DialogAufrufEnum.OHNE);
+	@FXML def void handleVM100() { // starteFormular(typeof(VM100HaeuserController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleVM200() { // starteFormular(typeof(VM200WohnungenController), DialogAufrufEnum.OHNE);
+	@FXML def void handleVM200() { // starteFormular(typeof(VM200WohnungenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleVM300() { // starteFormular(typeof(VM300MieterController), DialogAufrufEnum.OHNE);
+	@FXML def void handleVM300() { // starteFormular(typeof(VM300MieterController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleVM400() { // starteFormular(typeof(VM400MietenController), DialogAufrufEnum.OHNE);
+	@FXML def void handleVM400() { // starteFormular(typeof(VM400MietenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleVM500() { // starteFormular(typeof(VM500BuchungenController), DialogAufrufEnum.OHNE);
+	@FXML def void handleVM500() { // starteFormular(typeof(VM500BuchungenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleVM600() { // starteFormular(typeof(VM600KontenController), DialogAufrufEnum.OHNE);
+	@FXML def void handleVM600() { // starteFormular(typeof(VM600KontenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleVM700() { // starteFormular(typeof(VM700EreignisseController), DialogAufrufEnum.OHNE);
+	@FXML def void handleVM700() { // starteFormular(typeof(VM700EreignisseController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleVM800() { // starteFormular(typeof(VM800ForderungenController), DialogAufrufEnum.OHNE);
+	@FXML def void handleVM800() { // starteFormular(typeof(VM800ForderungenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleVM900() { // starteFormular(typeof(VM900AbrechnungenController), DialogAufrufEnum.OHNE);
+	@FXML def void handleVM900() { // starteFormular(typeof(VM900AbrechnungenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleVM920() { // starteFormular(typeof(VM920AbrechnungenController), DialogAufrufEnum.OHNE);
+	@FXML def void handleVM920() { // starteFormular(typeof(VM920AbrechnungenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleVMHH100() { // starteFormular(typeof(HH100PeriodenController), DialogAufrufEnum.OHNE);
+	@FXML def void handleVMHH100() { // starteFormular(typeof(HH100PeriodenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleWP100() { // starteFormular(typeof(WP100ChartController), DialogAufrufEnum.OHNE);
+	@FXML def void handleWP100() { // starteFormular(typeof(WP100ChartController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleWP110() { // starteFormular(typeof(WP110ChartsController), DialogAufrufEnum.OHNE);
+	@FXML def void handleWP110() { // starteFormular(typeof(WP110ChartsController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleWP200() { // starteFormular(typeof(WP200WertpapiereController), DialogAufrufEnum.OHNE);
+	@FXML def void handleWP200() { // starteFormular(typeof(WP200WertpapiereController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleWP250() { // starteFormular(typeof(WP250AnlagenController), DialogAufrufEnum.OHNE);
+	@FXML def void handleWP250() { // starteFormular(typeof(WP250AnlagenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleWP300() { // starteFormular(typeof(WP300KonfigurationenController), DialogAufrufEnum.OHNE);
+	@FXML def void handleWP300() { // starteFormular(typeof(WP300KonfigurationenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleWP400() { // starteFormular(typeof(WP400BuchungenController), DialogAufrufEnum.OHNE);
+	@FXML def void handleWP400() { // starteFormular(typeof(WP400BuchungenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleWP500() { // starteFormular(typeof(WP500StaendeController), DialogAufrufEnum.OHNE);
+	@FXML def void handleWP500() { // starteFormular(typeof(WP500StaendeController), DialogAufrufEnum.OHNE)
 	}
 
 	def TabPane getTabs() {

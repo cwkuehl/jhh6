@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.45" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="de.cwkuehl.jhh6.app.controller.am.AM100AenderungController">
+
+	<padding>
+		<Insets bottom="10" left="10" right="10" top="10" />
+	</padding>
+
+	<Label fx:id="mandant0" text="%AM100.mandant" />
+	<TextField fx:id="mandant" accessibleText="%AM100.mandant.tt" promptText="%AM100.mandant.tt" GridPane.columnIndex="1">
+		<tooltip>
+			<Tooltip text="%AM100.mandant.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="benutzer0" text="%AM100.benutzer" GridPane.rowIndex="1" />
+	<TextField fx:id="benutzer" accessibleText="%AM100.benutzer.tt" promptText="%AM100.benutzer.tt" GridPane.columnIndex="1"
+		GridPane.rowIndex="1">
+		<tooltip>
+			<Tooltip text="%AM100.benutzer.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="kennwortAlt0" mnemonicParsing="true" text="%AM100.kennwortAlt" GridPane.rowIndex="2" />
+	<PasswordField fx:id="kennwortAlt" accessibleText="%AM100.kennwortAlt.tt" promptText="%AM100.kennwortAlt.tt"
+		GridPane.columnIndex="1" GridPane.rowIndex="2">
+		<tooltip>
+			<Tooltip text="%AM100.kennwortAlt.tt" />
+		</tooltip>
+	</PasswordField>
+	<Label fx:id="kennwortNeu0" mnemonicParsing="true" text="%AM100.kennwortNeu" GridPane.rowIndex="3" />
+	<PasswordField fx:id="kennwortNeu" accessibleText="%AM100.kennwortNeu.tt" promptText="%AM100.kennwortNeu.tt"
+		GridPane.columnIndex="1" GridPane.rowIndex="3">
+		<tooltip>
+			<Tooltip text="%AM100.kennwortNeu.tt" />
+		</tooltip>
+	</PasswordField>
+	<Label fx:id="kennwortNeu20" mnemonicParsing="true" text="%AM100.kennwortNeu2" GridPane.rowIndex="4" />
+	<PasswordField fx:id="kennwortNeu2" accessibleText="%AM100.kennwortNeu2.tt" promptText="%AM100.kennwortNeu2.tt"
+		GridPane.columnIndex="1" GridPane.rowIndex="4">
+		<tooltip>
+			<Tooltip text="%AM100.kennwortNeu2.tt" />
+		</tooltip>
+	</PasswordField>
+	<CheckBox fx:id="speichern" text="%AM100.save" GridPane.columnIndex="1" GridPane.rowIndex="5">
+		<tooltip>
+			<Tooltip text="%AM100.save.tt" />
+		</tooltip>
+	</CheckBox>
+	<HBox GridPane.columnIndex="1" GridPane.rowIndex="10">
+		<Button fx:id="ok" defaultButton="true" mnemonicParsing="true" onAction="#onOk" text="%Ok">
+			<tooltip>
+				<Tooltip text="%Ok.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="abbrechen" cancelButton="true" onAction="#onAbbrechen" text="%Cancel">
+			<tooltip>
+				<Tooltip text="%Cancel.tt" />
+			</tooltip>
+			<HBox.margin>
+				<Insets left="10.0" />
+			</HBox.margin>
+		</Button>
+	</HBox>
+
+	<stylesheets>
+		<URL value="@../Jhh6.css" />
+	</stylesheets>
+</GridPane>
