@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import de.cwkuehl.jhh6.app.control.Datum?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.45" fx:controller="de.cwkuehl.jhh6.app.controller.am.AM500EinstellungenController">
+
+	<padding>
+		<Insets bottom="10" left="10" right="10" top="10" />
+	</padding>
+
+	<Label fx:id="einstellungen0" text="%AM500.einstellungen" mnemonicParsing="true" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+	<TableView fx:id="einstellungen" accessibleText="%AM500.einstellungen.tt" GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+		<tooltip><Tooltip text="%AM500.einstellungen.tt" /></tooltip>
+		<columns>
+			<TableColumn fx:id="colMandant" prefWidth="40.0" text="%AM500.colMandant" />
+			<TableColumn fx:id="colSchluessel" prefWidth="200.0" text="%AM500.colSchluessel" />
+			<TableColumn fx:id="colWert" prefWidth="200.0" text="%AM500.colWert" />
+			<TableColumn fx:id="colAv" prefWidth="400.0" text="%AM500.colAv" />
+			<TableColumn fx:id="colGv" prefWidth="200.0" text="%AM500.colGv" />
+			<!-- <TableColumn fx:id="colGa" prefWidth="170.0" text="%AM500.colGa" />
+			<TableColumn fx:id="colAa" prefWidth="170.0" text="%AM500.colAa" /> -->
+		</columns>
+	</TableView>
+	<HBox spacing="10.0" GridPane.columnIndex="0" GridPane.rowIndex="3">
+	<Button fx:id="ok" text="%Ok" mnemonicParsing="true" onAction="#onOk" defaultButton="true">
+		<tooltip><Tooltip text="%Ok.tt" /></tooltip>
+	</Button>
+	<Button fx:id="abbrechen" text="%Cancel" onAction="#onAbbrechen" cancelButton="true">
+		<tooltip><Tooltip text="%Cancel.tt" /></tooltip>
+	</Button>
+	</HBox>
+
+	<stylesheets>
+		<URL value="@../Jhh6.css" />
+	</stylesheets>
+</GridPane>

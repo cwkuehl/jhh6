@@ -27,7 +27,8 @@ class JavaFxParserTest {
 		// parse("ag/AG000Info.fxml")
 		// parse("ag/AG010Hilfe.fxml")
 		// parse("am/AM000Anmeldung.fxml")
-		parse("am/AM100Aenderung.fxml")
+		// parse("am/AM100Aenderung.fxml")
+		parse("am/AM500Einstellungen.fxml")
 	}
 
 	def private void parse(String datei) {
@@ -42,6 +43,9 @@ class JavaFxParserTest {
 		var String pt
 		var props = new Vector<String>
 		while ((str = in.readLine) !== null) {
+			if (str.contains("<?import de.cwkuehl.jhh5.anwendung.control.Datum?>")) {
+				str = "<?import de.cwkuehl.jhh6.app.control.Datum?>"
+			}
 			var m = pform.matcher(str)
 			if (m.matches) {
 				form = m.group(3)
