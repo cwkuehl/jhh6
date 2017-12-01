@@ -33,6 +33,7 @@ You can download the actual version [JHH5](http://cwkuehl.de/jhh5).
 
 ## License
 
-Copyright (c) Wolfgang Kuehl. All rights reserved.
+Copyright (c) 2017 cwkuehl.de
+All rights reserved.
 
-Licensed under the [MIT](LICENSE.txt) License.
+Licensed under the [MIT License](LICENSE).
