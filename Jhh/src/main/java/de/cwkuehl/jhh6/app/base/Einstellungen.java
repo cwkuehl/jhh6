@@ -21,7 +21,9 @@ import org.apache.log4j.Logger;
 import de.cwkuehl.jhh6.api.dto.MaParameter;
 import de.cwkuehl.jhh6.api.global.Global;
 import de.cwkuehl.jhh6.api.service.ServiceDaten;
+import de.cwkuehl.jhh6.api.service.ServiceErgebnis;
 import de.cwkuehl.jhh6.app.Jhh6;
+import de.cwkuehl.jhh6.server.FactoryService;
 
 public class Einstellungen {
 
@@ -195,11 +197,11 @@ public class Einstellungen {
                 value = Global.encryptString(value);
             }
             if (p.inDatenbank) {
-                //ServiceErgebnis<Void> r = FactoryService.getAnmeldungService().setParameter(Jhh6.getServiceDaten(),
-                //        mandantNr, key, value);
-                //if (r == null) {
-                //    Global.machNichts();
-                //}
+                ServiceErgebnis<Void> r = FactoryService.getAnmeldungService().setParameter(Jhh6.getServiceDaten(),
+                        mandantNr, key, value);
+                if (r == null) {
+                    Global.machNichts();
+                }
             }
             if (p.inDatei) {
                 properties.setProperty(key, value);
@@ -288,11 +290,11 @@ public class Einstellungen {
 
         // Parameter aus Datenbank geht vor
         if (p.inDatenbank) {
-            //ServiceErgebnis<MaParameter> r = FactoryService.getAnmeldungService().getParameter(Jhh6.getServiceDaten(),
-            //        mandantNr, key);
-            //if (r.getErgebnis() != null) {
-            //    str = r.getErgebnis().getWert();
-            //}
+            ServiceErgebnis<MaParameter> r = FactoryService.getAnmeldungService().getParameter(Jhh6.getServiceDaten(),
+                    mandantNr, key);
+            if (r.getErgebnis() != null) {
+                str = r.getErgebnis().getWert();
+            }
         }
         if (Global.nes(str) && p.inDatei) {
             str = properties.getProperty(key);

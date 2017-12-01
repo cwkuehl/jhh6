@@ -28,7 +28,8 @@ class JavaFxParserTest {
 		// parse("ag/AG010Hilfe.fxml")
 		// parse("am/AM000Anmeldung.fxml")
 		// parse("am/AM100Aenderung.fxml")
-		parse("am/AM500Einstellungen.fxml")
+		// parse("am/AM500Einstellungen.fxml")
+		parse("am/AM510Dialoge.fxml")
 	}
 
 	def private void parse(String datei) {

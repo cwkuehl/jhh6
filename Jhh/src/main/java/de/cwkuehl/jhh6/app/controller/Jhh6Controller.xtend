@@ -11,6 +11,7 @@ import de.cwkuehl.jhh6.app.controller.ag.AG010HilfeController
 import de.cwkuehl.jhh6.app.controller.am.AM000AnmeldungController
 import de.cwkuehl.jhh6.app.controller.am.AM100AenderungController
 import de.cwkuehl.jhh6.app.controller.am.AM500EinstellungenController
+import de.cwkuehl.jhh6.app.controller.am.AM510DialogeController
 import de.cwkuehl.jhh6.server.FactoryService
 import java.net.URL
 import java.util.ArrayList
@@ -381,7 +382,8 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		starteFormular(typeof(AM500EinstellungenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleAM510() { // starteFormular(typeof(AM510DialogeController), DialogAufrufEnum.OHNE)
+	@FXML def void handleAM510() {
+		starteFormular(typeof(AM510DialogeController), DialogAufrufEnum.OHNE)
 	}
 
 	@FXML def void handleFZ100() { // starteFormular(typeof(FZ100StatistikController), DialogAufrufEnum.OHNE)
