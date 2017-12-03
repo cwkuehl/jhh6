@@ -34,6 +34,7 @@ You can download the actual version [JHH5](http://cwkuehl.de/jhh5).
 ## License
 
 Copyright (c) 2017 cwkuehl.de
+
 All rights reserved.
 
 Licensed under the [MIT License](LICENSE).

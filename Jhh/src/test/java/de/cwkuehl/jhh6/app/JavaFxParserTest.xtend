@@ -1,12 +1,13 @@
 package de.cwkuehl.jhh6.app
 
+import de.cwkuehl.jhh6.api.global.Global
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import java.util.Vector
 import java.util.regex.Pattern
 import org.junit.Test
 
 import static org.junit.Assert.*
-import java.util.Vector
 
 class JavaFxParserTest {
 
@@ -20,16 +21,19 @@ class JavaFxParserTest {
 	static Pattern ptt = Pattern.compile(".+<Tooltip .*", Pattern.CASE_INSENSITIVE)
 	static Pattern plbl = Pattern.compile(".+<Label .*", Pattern.CASE_INSENSITIVE)
 	static Pattern pcss = Pattern.compile(".+ value=\\\"@../Jhh\\d.css\\\".*", Pattern.CASE_INSENSITIVE)
+	static Pattern pimg = Pattern.compile(".+<Image url=.*", Pattern.CASE_INSENSITIVE)
 
 	/* Change JavaFX files for JHH6. */
 	@Test def void parse() {
 
 		// parse("ag/AG000Info.fxml")
 		// parse("ag/AG010Hilfe.fxml")
+		parse("ag/AG100Mandanten.fxml")
 		// parse("am/AM000Anmeldung.fxml")
 		// parse("am/AM100Aenderung.fxml")
 		// parse("am/AM500Einstellungen.fxml")
-		parse("am/AM510Dialoge.fxml")
+		// parse("am/AM510Dialoge.fxml")
+		Global.machNichts
 	}
 
 	def private void parse(String datei) {
@@ -68,8 +72,28 @@ class JavaFxParserTest {
 			if (m2.matches) {
 				text = m2.group(1)
 				// System.out.println(text)
-				str = str.replace('''text="«text»"''', '''text="%«form».«id»«IF tt».tt«ENDIF»"''')
-				props.add('''«form».«id»«IF tt».tt«ENDIF» = «text»''')
+				if (tt && id == 'aktuell')
+					str = str.replace('''text="«text»"''', '''text="%Refresh"''')
+				else if (tt && id == 'rueckgaengig')
+					str = str.replace('''text="«text»"''', '''text="%Undo"''')
+				else if (tt && id == 'wiederherstellen')
+					str = str.replace('''text="«text»"''', '''text="%Redo"''')
+				else if (tt && id == 'neu')
+					str = str.replace('''text="«text»"''', '''text="%New"''')
+				else if (tt && id == 'kopieren')
+					str = str.replace('''text="«text»"''', '''text="%Copy"''')
+				else if (tt && id == 'aendern')
+					str = str.replace('''text="«text»"''', '''text="%Edit"''')
+				else if (tt && id == 'loeschen')
+					str = str.replace('''text="«text»"''', '''text="%Delete"''')
+				else if (tt && id == 'einstellung')
+					str = str.replace('''text="«text»"''', '''text="%Settings"''')
+				else if (tt && id == 'tab')
+					str = str.replace('''text="«text»"''', '''text="%Tab"''')
+				else {
+					str = str.replace('''text="«text»"''', '''text="%«form».«id»«IF tt».tt«ENDIF»"''')
+					props.add('''«form».«id»«IF tt».tt«ENDIF» = «text»''')
+				}
 			}
 			var m3 = pat.matcher(str)
 			if (m3.matches) {
@@ -87,8 +111,19 @@ class JavaFxParserTest {
 			}
 			var m5 = pcss.matcher(str)
 			if (m5.matches) {
-				// System.out.println(pt)
 				str = str.replace('''Jhh5''', '''Jhh6''')
+			}
+			var m6 = pimg.matcher(str)
+			if (m6.matches) {
+				str = str.replace('''refresh_48.png''', '''icons8-refresh.png''')
+				str = str.replace('''arrow_left_48.png''', '''icons8-undo.png''')
+				str = str.replace('''arrow_right_48.png''', '''icons8-redo.png''')
+				str = str.replace('''document-new-4.png''', '''icons8-new-document.png''')
+				str = str.replace('''edit-copy-4.png''', '''icons8-copy.png''')
+				str = str.replace('''paper_content_pencil_48.png''', '''icons8-edit.png''')
+				str = str.replace('''edit-delete-3.png''', '''icons8-remove.png''')
+				str = str.replace('''document-properties-3.png''', '''icons8-settings.png''')
+				str = str.replace('''tabs_48.png''', '''icons8-tab.png''')
 			}
 			System.out.println(str)
 		}

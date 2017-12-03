@@ -118,6 +118,19 @@ class Werkzeug {
 				ende = true
 		} while (!ende)
 		sb.append("</table>")
+		sb.append("<p>").append(g("AG000.icons")).append("</p>")
+		sb.append("<table>")
+		ende = false
+		i = 1
+		do {
+			var key = '''AG000.icon«i»'''
+			if (bundle.containsKey(key)) {
+				sb.append("<tr><td>").append(g(key)).append("</td><td>").append(g(key + ".1")).append("</td></tr>")
+				i++
+			} else
+				ende = true
+		} while (!ende)
+		sb.append("</table>")
 		sb.append("</html>")
 		return sb.toString
 	}

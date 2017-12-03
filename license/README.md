@@ -36,6 +36,10 @@ The software is using libraries, to which different licenses may apply:
    - License: BSD License (license/third_party/hsqldb_license.txt)
    - Origin: Copyright (c) 2001-2016, The HSQL Development Group
 
+The software is using icons, to which different licenses may apply:
+ - Icos in toolbars are downloaded from [Icons8.com](https://icons8.com)
+   - License: Creative Commons Attribution-NoDerivs 3.0 Unported [CC BY-ND 3.0](https://creativecommons.org/licenses/by-nd/3.0/)
+
 The following sections of the repository contain third-party code, to which different licenses may apply:
 
 [INFO] Copying hsqldb-2.3.4.jar to /home/wolfgang/git/jhh6/Jhh/target/dependency/hsqldb-2.3.4.jar

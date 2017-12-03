@@ -8,6 +8,7 @@ import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.app.base.StartDialog
 import de.cwkuehl.jhh6.app.controller.ag.AG000InfoController
 import de.cwkuehl.jhh6.app.controller.ag.AG010HilfeController
+import de.cwkuehl.jhh6.app.controller.ag.AG100MandantenController
 import de.cwkuehl.jhh6.app.controller.am.AM000AnmeldungController
 import de.cwkuehl.jhh6.app.controller.am.AM100AenderungController
 import de.cwkuehl.jhh6.app.controller.am.AM500EinstellungenController
@@ -33,6 +34,8 @@ import javafx.scene.control.MenuItem
 import javafx.scene.control.SeparatorMenuItem
 import javafx.scene.control.Tab
 import javafx.scene.control.TabPane
+
+import static de.cwkuehl.jhh6.app.base.Werkzeug.g
 
 class Jhh6Controller extends BaseController<String> implements Initializable {
 
@@ -307,7 +310,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 
 	def static List<StartDialog> getDialogListe() {
 		var List<StartDialog> l = new ArrayList<StartDialog>()
-		// l.add(new StartDialog("#AG100", g("menu.clients"), typeof(AG100MandantenController), null))
+		l.add(new StartDialog("#AG100", g("menu.clients"), typeof(AG100MandantenController), null))
 		// l.add(new StartDialog("#AG200", g("menu.users"), typeof(AG200BenutzerController), null))
 		// l.add(new StartDialog("#AG400", g("menu.backups"), typeof(AG400SicherungenController), null))
 		// l.add(new StartDialog("#TB100", g("menu.diary"), typeof(TB100TagebuchController), null))
@@ -362,7 +365,8 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		starteFormular(typeof(AG010HilfeController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleAG100() { // starteFormular(typeof(AG100MandantenController), DialogAufrufEnum.OHNE)
+	@FXML def void handleAG100() {
+		starteFormular(typeof(AG100MandantenController), DialogAufrufEnum.OHNE)
 	}
 
 	@FXML def void handleAG200() { // starteFormular(typeof(AG200BenutzerController), DialogAufrufEnum.OHNE)
