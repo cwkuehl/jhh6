@@ -1,13 +1,13 @@
 package de.cwkuehl.jhh6.app.controller.ag
 
-import java.time.LocalDateTime
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.MaMandant
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.app.controller.am.AM500EinstellungenController
 import de.cwkuehl.jhh6.server.FactoryService
+import java.time.LocalDateTime
+import java.util.List
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -66,9 +66,8 @@ class AG100MandantenController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return '''«nr.get()»'''
-		} // stufe = 0;
-		// starteFormular(AG110MandantController.class, aufruf, k);
+			return '''«nr.get»'''
+		}
 	}
 
 	/** 
@@ -98,6 +97,7 @@ class AG100MandantenController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
+			// stufe = 0;
 		}
 		if (stufe <= 1) {
 			var List<MaMandant> l = get(FactoryService.getAnmeldungService().getMandantListe(getServiceDaten(), false))
@@ -112,6 +112,7 @@ class AG100MandantenController extends BaseController<String> {
 	 * Tabellen-Daten initialisieren.
 	 */
 	def protected void initDatenTable() {
+
 		mandanten.setItems(mandantenData)
 		colNr.setCellValueFactory([c|c.getValue().nr])
 		colBeschreibung.setCellValueFactory([c|c.getValue().beschreibung])
@@ -127,8 +128,8 @@ class AG100MandantenController extends BaseController<String> {
 
 	def private void starteDialog(DialogAufrufEnum aufruf) {
 
-		// var MaMandant k = getValue(mandanten, !DialogAufrufEnum.NEU.equals(aufruf))
-		// starteFormular(typeof(AG110MandantController), aufruf, k)
+		var MaMandant k = getValue(mandanten, !DialogAufrufEnum.NEU.equals(aufruf))
+		starteFormular(typeof(AG110MandantController), aufruf, k)
 	}
 
 	/** 

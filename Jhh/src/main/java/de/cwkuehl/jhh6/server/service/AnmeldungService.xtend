@@ -443,18 +443,19 @@ class AnmeldungService {
 		}
 		var e = mandantRep.iuMaMandant(daten, null, mnr, beschreibung, null, null, null, null)
 		if (insert) {
-			// einen Benutzer anlegen
-			var b = new Benutzer
-			b.mandantNr = mnr
-			b.aktPeriode = 0
-			b.angelegtVon = daten.benutzerId
-			b.angelegtAm = daten.jetzt
-			b.benutzerId = "Benutzer-ID"
-			b.passwort = null
-			b.berechtigung = BerechtigungEnum.ADMIN.intValue
-			b.personNr = 1
-			benutzerRep.insert(daten, b)
-
+			if (benutzerRep.get(daten, new BenutzerKey(mnr, "Benutzer-ID")) === null) {
+				// einen Benutzer anlegen
+				var b = new Benutzer
+				b.mandantNr = mnr
+				b.aktPeriode = 0
+				b.angelegtVon = daten.benutzerId
+				b.angelegtAm = daten.jetzt
+				b.benutzerId = "Benutzer-ID"
+				b.passwort = null
+				b.berechtigung = BerechtigungEnum.ADMIN.intValue
+				b.personNr = 1
+				benutzerRep.insert(daten, b)
+			}
 			// Mandanten-Einstellungen anlegen
 			// maEinstellungRep.iuMaEinstellung(daten, mnr, Constant.EINST_MA_MANDANT_INIT, "1")
 			// maEinstellungRep.iuMaEinstellung(daten, mnr, Constant.EINST_MA_REPLIKATION_UID, null)

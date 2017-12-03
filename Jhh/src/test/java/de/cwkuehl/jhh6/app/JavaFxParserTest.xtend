@@ -28,7 +28,8 @@ class JavaFxParserTest {
 
 		// parse("ag/AG000Info.fxml")
 		// parse("ag/AG010Hilfe.fxml")
-		parse("ag/AG100Mandanten.fxml")
+		// parse("ag/AG100Mandanten.fxml")
+		parse("ag/AG110Mandant.fxml")
 		// parse("am/AM000Anmeldung.fxml")
 		// parse("am/AM100Aenderung.fxml")
 		// parse("am/AM500Einstellungen.fxml")
