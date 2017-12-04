@@ -64,3 +64,4 @@ pom.xml.tag
 xtend-gen/
 
 *.log
+*.log.1

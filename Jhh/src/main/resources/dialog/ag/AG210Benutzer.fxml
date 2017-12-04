@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import de.cwkuehl.jhh5.anwendung.control.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import de.cwkuehl.jhh6.app.control.Datum?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.66" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.cwkuehl.jhh6.app.controller.ag.AG210BenutzerController">
+
+	<padding>
+		<Insets bottom="10" left="10" right="10" top="10" />
+	</padding>
+
+	<Label fx:id="nr0" text="%AG210.nr" GridPane.columnIndex="0" />
+	<TextField fx:id="nr" accessibleText="%AG210.nr.tt" promptText="%AG210.nr.tt" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%AG210.nr.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="benutzerId0" mnemonicParsing="true" text="%AG210.benutzerId" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+	<TextField fx:id="benutzerId" accessibleText="%AG210.benutzerId.tt" promptText="%AG210.benutzerId.tt" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
+		<tooltip>
+			<Tooltip text="%AG210.benutzerId.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="kennwort0" mnemonicParsing="true" text="%AG210.kennwort" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+	<PasswordField fx:id="kennwort" accessibleText="%AG210.kennwort.tt" promptText="%AG210.kennwort.tt" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
+		<tooltip>
+			<Tooltip text="%AG210.kennwort.tt" />
+		</tooltip>
+	</PasswordField>
+	<Label fx:id="berechtigung0" text="%AG210.berechtigung" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
+		<fx:define>
+			<ToggleGroup fx:id="berechtigung" />
+		</fx:define>
+		<children>
+			<RadioButton accessibleText="%AG210.berechtigung1.tt" text="%AG210.berechtigung1" userData="0">
+				<tooltip>
+					<Tooltip text="%AG210.berechtigung1.tt" />
+				</tooltip>
+            <toggleGroup>
+               <ToggleGroup fx:id="berechtigung" />
+            </toggleGroup>
+			</RadioButton>
+			<RadioButton accessibleText="%AG210.berechtigung2.tt" text="%AG210.berechtigung2" toggleGroup="$berechtigung" userData="1">
+				<tooltip>
+					<Tooltip text="%AG210.berechtigung2.tt" />
+				</tooltip>
+			</RadioButton>
+			<RadioButton accessibleText="%AG210.berechtigung3.tt" text="%AG210.berechtigung3" toggleGroup="$berechtigung" userData="2">
+				<tooltip>
+					<Tooltip text="%AG210.berechtigung3.tt" />
+				</tooltip>
+			</RadioButton>
+		</children>
+	</HBox>
+	<Label fx:id="geburt0" mnemonicParsing="true" text="%AG210.geburt" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+	<Datum fx:id="geburt" accessibleText="%AG210.geburt.tt" nullText="%Date.unknown" promptText="%AG210.geburt.tt" schalterText="mhp" uhrzeitGroesse="0" wochentagGroesse="80" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
+		<tooltip>
+			<Tooltip text="%AG210.geburt.tt" />
+		</tooltip>
+	</Datum>
+	<Label fx:id="angelegt0" text="%AG210.angelegt" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+	<TextField fx:id="angelegt" accessibleText="%AG210.angelegt.tt" promptText="%AG210.angelegt.tt" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5">
+		<tooltip>
+			<Tooltip text="%AG210.angelegt.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="geaendert0" text="%AG210.geaendert" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+	<TextField fx:id="geaendert" accessibleText="%AG210.geaendert.tt" promptText="%AG210.geaendert.tt" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6">
+		<tooltip>
+			<Tooltip text="%AG210.geaendert.tt" />
+		</tooltip>
+	</TextField>
+	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7">
+		<Button fx:id="ok" defaultButton="true" mnemonicParsing="true" onAction="#onOk" text="%Ok">
+			<tooltip>
+				<Tooltip text="%Ok.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="abbrechen" cancelButton="true" onAction="#onAbbrechen" text="%Cancel">
+			<tooltip>
+				<Tooltip text="%Cancel.tt" />
+			</tooltip>
+		</Button>
+	</HBox>
+
+	<stylesheets>
+		<URL value="@../Jhh6.css" />
+	</stylesheets>
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+</GridPane>

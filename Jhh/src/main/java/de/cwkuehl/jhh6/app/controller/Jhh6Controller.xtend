@@ -9,6 +9,7 @@ import de.cwkuehl.jhh6.app.base.StartDialog
 import de.cwkuehl.jhh6.app.controller.ag.AG000InfoController
 import de.cwkuehl.jhh6.app.controller.ag.AG010HilfeController
 import de.cwkuehl.jhh6.app.controller.ag.AG100MandantenController
+import de.cwkuehl.jhh6.app.controller.ag.AG200BenutzerController
 import de.cwkuehl.jhh6.app.controller.am.AM000AnmeldungController
 import de.cwkuehl.jhh6.app.controller.am.AM100AenderungController
 import de.cwkuehl.jhh6.app.controller.am.AM500EinstellungenController
@@ -311,7 +312,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 	def static List<StartDialog> getDialogListe() {
 		var List<StartDialog> l = new ArrayList<StartDialog>()
 		l.add(new StartDialog("#AG100", g("menu.clients"), typeof(AG100MandantenController), null))
-		// l.add(new StartDialog("#AG200", g("menu.users"), typeof(AG200BenutzerController), null))
+		l.add(new StartDialog("#AG200", g("menu.users"), typeof(AG200BenutzerController), null))
 		// l.add(new StartDialog("#AG400", g("menu.backups"), typeof(AG400SicherungenController), null))
 		// l.add(new StartDialog("#TB100", g("menu.diary"), typeof(TB100TagebuchController), null))
 		// l.add(new StartDialog("#FZ700", g("menu.notes"), typeof(FZ700NotizenController), null))
@@ -369,7 +370,8 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		starteFormular(typeof(AG100MandantenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleAG200() { // starteFormular(typeof(AG200BenutzerController), DialogAufrufEnum.OHNE)
+	@FXML def void handleAG200() {
+		starteFormular(typeof(AG200BenutzerController), DialogAufrufEnum.OHNE)
 	}
 
 	@FXML def void handleAG400() { // starteFormular(typeof(AG400SicherungenController), DialogAufrufEnum.OHNE)

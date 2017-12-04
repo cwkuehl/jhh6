@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.HBox?>
+
+<fx:root alignment="CENTER_LEFT" type="HBox" xmlns="http://javafx.com/javafx/8.0.66" xmlns:fx="http://javafx.com/fxml/1">
+	<CheckBox fx:id="ohne" mnemonicParsing="false" text="%Date.unknown">
+		<padding>
+			<Insets right="5.0" />
+		</padding>
+		<tooltip>
+			<Tooltip text="%Date.unknown.tt" />
+		</tooltip>
+	</CheckBox>
+	<DatePicker fx:id="datum" prefWidth="138.0">
+		<HBox.margin>
+			<Insets />
+		</HBox.margin>
+	</DatePicker>
+	<TextField fx:id="zeit" prefWidth="60.0" visible="false">
+		<HBox.margin>
+			<Insets left="5.0" />
+		</HBox.margin>
+		<tooltip>
+			<Tooltip text="%Date.time" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="text" prefWidth="85.0">
+		<HBox.margin>
+			<Insets left="5.0" right="5.0" />
+		</HBox.margin>
+	</Label>
+	<Button fx:id="minus" focusTraversable="false" mnemonicParsing="true" onAction="#onMinus" text="-">
+		<tooltip>
+			<Tooltip text="%Date.yesterday" />
+		</tooltip>
+	</Button>
+	<Button fx:id="heute" focusTraversable="false" mnemonicParsing="true" onAction="#onHeute" text="h">
+		<tooltip>
+			<Tooltip text="%Date.today" />
+		</tooltip>
+	</Button>
+	<Button fx:id="plus" focusTraversable="false" mnemonicParsing="true" onAction="#onPlus" text="+">
+		<tooltip>
+			<Tooltip text="%Date.tomorrow" />
+		</tooltip>
+	</Button>
+</fx:root>
