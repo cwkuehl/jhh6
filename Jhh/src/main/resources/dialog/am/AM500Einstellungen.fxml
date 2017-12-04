@@ -29,13 +29,13 @@
 			<TableColumn fx:id="colAa" prefWidth="170.0" text="%AM500.colAa" /> -->
 		</columns>
 	</TableView>
-	<HBox spacing="10.0" GridPane.columnIndex="0" GridPane.rowIndex="3">
-	<Button fx:id="ok" text="%Ok" mnemonicParsing="true" onAction="#onOk" defaultButton="true">
-		<tooltip><Tooltip text="%Ok.tt" /></tooltip>
-	</Button>
-	<Button fx:id="abbrechen" text="%Cancel" onAction="#onAbbrechen" cancelButton="true">
-		<tooltip><Tooltip text="%Cancel.tt" /></tooltip>
-	</Button>
+	<HBox alignment="CENTER" spacing="10.0" GridPane.columnIndex="0" GridPane.rowIndex="3">
+		<Button fx:id="ok" text="%Ok" mnemonicParsing="true" onAction="#onOk" defaultButton="true">
+			<tooltip><Tooltip text="%Ok.tt" /></tooltip>
+		</Button>
+		<Button fx:id="abbrechen" text="%Cancel" onAction="#onAbbrechen" cancelButton="true">
+			<tooltip><Tooltip text="%Cancel.tt" /></tooltip>
+		</Button>
 	</HBox>
 
 	<stylesheets>

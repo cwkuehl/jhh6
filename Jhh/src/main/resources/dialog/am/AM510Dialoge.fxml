@@ -51,7 +51,7 @@
 			</tooltip>
 		</Button>
 	</VBox>
-	<HBox spacing="10.0" GridPane.columnIndex="0" GridPane.columnSpan="3" GridPane.rowIndex="2">
+	<HBox alignment="CENTER" spacing="10.0" GridPane.columnIndex="0" GridPane.columnSpan="3" GridPane.rowIndex="2">
 		<Button fx:id="ok" defaultButton="true" mnemonicParsing="true" onAction="#onOk" text="%Ok">
 			<tooltip>
 				<Tooltip text="%Ok.tt" />

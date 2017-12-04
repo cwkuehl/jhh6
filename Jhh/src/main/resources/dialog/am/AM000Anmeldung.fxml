@@ -48,7 +48,7 @@
 		</tooltip>
 	</CheckBox>
 
-	<HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="4">
+	<HBox spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="4">
 		<Button fx:id="anmelden" defaultButton="true" onAction="#onAnmelden" text="%AM000.login">
 			<tooltip>
 				<Tooltip text="%AM000.login.tt" />
