@@ -10,6 +10,7 @@ import de.cwkuehl.jhh6.app.controller.ag.AG000InfoController
 import de.cwkuehl.jhh6.app.controller.ag.AG010HilfeController
 import de.cwkuehl.jhh6.app.controller.ag.AG100MandantenController
 import de.cwkuehl.jhh6.app.controller.ag.AG200BenutzerController
+import de.cwkuehl.jhh6.app.controller.ag.AG400SicherungenController
 import de.cwkuehl.jhh6.app.controller.am.AM000AnmeldungController
 import de.cwkuehl.jhh6.app.controller.am.AM100AenderungController
 import de.cwkuehl.jhh6.app.controller.am.AM500EinstellungenController
@@ -313,7 +314,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		var List<StartDialog> l = new ArrayList<StartDialog>()
 		l.add(new StartDialog("#AG100", g("menu.clients"), typeof(AG100MandantenController), null))
 		l.add(new StartDialog("#AG200", g("menu.users"), typeof(AG200BenutzerController), null))
-		// l.add(new StartDialog("#AG400", g("menu.backups"), typeof(AG400SicherungenController), null))
+		l.add(new StartDialog("#AG400", g("menu.backups"), typeof(AG400SicherungenController), null))
 		// l.add(new StartDialog("#TB100", g("menu.diary"), typeof(TB100TagebuchController), null))
 		// l.add(new StartDialog("#FZ700", g("menu.notes"), typeof(FZ700NotizenController), null))
 		// l.add(new StartDialog("#AD100", g("menu.persons"), typeof(AD100PersonenController), null))
@@ -358,6 +359,9 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		Jhh6::einstellungen.reset
 	}
 
+	@FXML def void handleAD100() { // starteFormular(typeof(AD100PersonenController), DialogAufrufEnum.OHNE)
+	}
+
 	@FXML def void handleAG000() {
 		starteFormular(typeof(AG000InfoController), DialogAufrufEnum.OHNE)
 	}
@@ -374,10 +378,8 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		starteFormular(typeof(AG200BenutzerController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleAG400() { // starteFormular(typeof(AG400SicherungenController), DialogAufrufEnum.OHNE)
-	}
-
-	@FXML def void handleAD100() { // starteFormular(typeof(AD100PersonenController), DialogAufrufEnum.OHNE)
+	@FXML def void handleAG400() {
+		starteFormular(typeof(AG400SicherungenController), DialogAufrufEnum.OHNE)
 	}
 
 	@FXML def void handleAM100() {

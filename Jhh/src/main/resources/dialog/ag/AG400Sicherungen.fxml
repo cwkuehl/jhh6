@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.66" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="de.cwkuehl.jhh6.app.controller.ag.AG400SicherungenController">
+
+	<padding>
+		<Insets bottom="10" left="10" right="10" top="10" />
+	</padding>
+
+	<ToolBar prefHeight="40.0" prefWidth="200.0" GridPane.hgrow="ALWAYS">
+		<items>
+			<Button fx:id="aktuell" mnemonicParsing="false" onAction="#onAktuell">
+				<tooltip>
+					<Tooltip text="%Refresh" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-refresh.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="neu" mnemonicParsing="false" onAction="#onNeu">
+				<tooltip>
+					<Tooltip text="%New" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-new-document.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="kopieren" mnemonicParsing="false" onAction="#onKopieren">
+				<tooltip>
+					<Tooltip text="%Copy" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-copy.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="aendern" mnemonicParsing="false" onAction="#onAendern">
+				<tooltip>
+					<Tooltip text="%Edit" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-edit.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="loeschen" mnemonicParsing="false" onAction="#onLoeschen">
+				<tooltip>
+					<Tooltip text="%Delete" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-remove.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="tab" mnemonicParsing="false" onAction="#onTab">
+				<tooltip>
+					<Tooltip text="%Tab" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-tab.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+		</items>
+	</ToolBar>
+	<Label fx:id="verzeichnisse0" mnemonicParsing="true" text="%AG400.verzeichnisse" GridPane.columnIndex="0"
+		GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+	<TableView fx:id="verzeichnisse" accessibleText="%AG400.verzeichnisse.tt" onMouseClicked="#onVerzeichnisseMouseClick"
+		GridPane.columnIndex="0" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%AG400.verzeichnisse.tt" />
+		</tooltip>
+		<columns>
+			<TableColumn fx:id="colNr" prefWidth="75.0" text="%AG400.colNr" />
+			<TableColumn fx:id="colSchluessel" prefWidth="200.0" text="%AG400.colSchluessel" />
+			<TableColumn fx:id="colWert" prefWidth="300.0" text="%AG400.colWert" />
+			<TableColumn fx:id="colGa" prefWidth="170.0" text="%AG400.colGa" />
+			<TableColumn fx:id="colGv" prefWidth="120.0" text="%AG400.colGv" />
+			<TableColumn fx:id="colAa" prefWidth="170.0" text="%AG400.colAa" />
+			<TableColumn fx:id="colAv" prefWidth="120.0" text="%AG400.colAv" />
+		</columns>
+	</TableView>
+	<HBox spacing="10.0" GridPane.columnIndex="0" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
+		<Button fx:id="sicherung" mnemonicParsing="true" onAction="#onSicherung" text="%AG400.sicherung">
+			<tooltip>
+				<Tooltip text="%AG400.sicherung.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="diffSicherung" mnemonicParsing="true" onAction="#onDiffSicherung" text="%AG400.diffSicherung">
+			<tooltip>
+				<Tooltip text="%AG400.diffSicherung.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="rueckSicherung" mnemonicParsing="true" onAction="#onRueckSicherung" text="%AG400.rueckSicherung">
+			<tooltip>
+				<Tooltip text="%AG400.rueckSicherung.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="abbrechen" mnemonicParsing="true" onAction="#onAbbrechen" text="%Cancel">
+			<tooltip>
+				<Tooltip text="%Cancel.tt" />
+			</tooltip>
+		</Button>
+	</HBox>
+	<Label fx:id="status0" text="%AG400.status" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" />
+	<TextArea fx:id="statusText" accessibleText="%AG400.statusText.tt" editable="false" promptText="%AG400.statusText.tt"
+		wrapText="true" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%AG400.statusText.tt" />
+		</tooltip>
+	</TextArea>
+	<HBox spacing="10.0" GridPane.columnIndex="0" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
+		<Button fx:id="mandantKopieren" mnemonicParsing="true" onAction="#onMandantKopieren" text="%AG400.mandantKopieren">
+			<tooltip>
+				<Tooltip text="%AG400.mandantKopieren.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="mandantRepKopieren" mnemonicParsing="true" onAction="#onMandantRepKopieren" text="%AG400.mandantRepKopieren">
+			<tooltip>
+				<Tooltip text="%AG400.mandantRepKopieren.tt" />
+			</tooltip>
+		</Button>
+		<Label fx:id="mandant0" text="%AG400.mandant" />
+		<TextField fx:id="mandant">
+			<tooltip>
+				<Tooltip text="%AG400.mandant.tt" />
+			</tooltip>
+		</TextField>
+	</HBox>
+
+	<stylesheets>
+		<URL value="@../Jhh6.css" />
+	</stylesheets>
+	<columnConstraints>
+		<ColumnConstraints />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+	</rowConstraints>
+</GridPane>
