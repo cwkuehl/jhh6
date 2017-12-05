@@ -32,6 +32,8 @@ class JavaFxParserTest {
 		// parse("ag/AG110Mandant.fxml")
 		// parse("ag/AG200Benutzer.fxml")
 		parse("ag/AG210Benutzer.fxml")
+		// parse("ag/AG400Sicherungen.fxml")
+		// parse("ag/AG410Sicherung.fxml")
 		// parse("am/AM000Anmeldung.fxml")
 		// parse("am/AM100Aenderung.fxml")
 		// parse("am/AM500Einstellungen.fxml")
@@ -97,6 +99,10 @@ class JavaFxParserTest {
 					str = str.replace('''text="«text»"''', '''text="%Ok«IF tt».tt«ENDIF»"''')
 				else if (id == 'abbrechen')
 					str = str.replace('''text="«text»"''', '''text="%Cancel«IF tt».tt«ENDIF»"''')
+				else if (id == 'angelegt')
+					str = str.replace('''text="«text»"''', '''text="%Creation«IF tt».tt«ENDIF»"''')
+				else if (id == 'geaendert')
+					str = str.replace('''text="«text»"''', '''text="%Change«IF tt».tt«ENDIF»"''')
 				else {
 					str = str.replace('''text="«text»"''', '''text="%«form».«id»«IF tt».tt«ENDIF»"''')
 					props.add('''«form».«id»«IF tt».tt«ENDIF» = «text»''')
@@ -106,15 +112,27 @@ class JavaFxParserTest {
 			if (m3.matches) {
 				at = m3.group(1)
 				// System.out.println(at)
-				str = str.replace('''accessibleText="«at»"''', '''accessibleText="%«form».«id».tt"''')
-				props.add('''«form».«id».at = «at»''')
+				if (id == 'angelegt')
+					str = str.replace('''accessibleText="«at»"''', '''accessibleText="%Creation.tt"''')
+				else if (id == 'geaendert')
+					str = str.replace('''accessibleText="«at»"''', '''accessibleText="%Change.tt"''')
+				else {
+					str = str.replace('''accessibleText="«at»"''', '''accessibleText="%«form».«id».tt"''')
+					props.add('''«form».«id».at = «at»''')
+				}
 			}
 			var m4 = ppt.matcher(str)
 			if (m4.matches) {
 				pt = m4.group(1)
 				// System.out.println(pt)
-				str = str.replace('''promptText="«pt»"''', '''promptText="%«form».«id».tt"''')
-				props.add('''«form».«id».pt = «pt»''')
+				if (id == 'angelegt')
+					str = str.replace('''promptText="«pt»"''', '''promptText="%Creation.tt"''')
+				else if (id == 'geaendert')
+					str = str.replace('''promptText="«pt»"''', '''promptText="%Change.tt"''')
+				else {
+					str = str.replace('''promptText="«pt»"''', '''promptText="%«form».«id».tt"''')
+					props.add('''«form».«id».pt = «pt»''')
+				}
 			}
 			var m5 = pcss.matcher(str)
 			if (m5.matches) {

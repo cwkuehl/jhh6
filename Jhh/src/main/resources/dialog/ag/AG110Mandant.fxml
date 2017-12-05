@@ -27,16 +27,16 @@
 			<Tooltip text="%AG110.beschreibung.tt" />
 		</tooltip>
 	</TextField>
-	<Label fx:id="angelegt0" text="%AG110.angelegt" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-	<TextField fx:id="angelegt" accessibleText="%AG110.angelegt.tt" promptText="%AG110.angelegt.tt" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
+	<Label fx:id="angelegt0" text="%Creation" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+	<TextField fx:id="angelegt" accessibleText="%Creation.tt" promptText="%Creation.tt" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
 		<tooltip>
-			<Tooltip text="%AG110.angelegt.tt" />
+			<Tooltip text="%Creation.tt" />
 		</tooltip>
 	</TextField>
-	<Label fx:id="geaendert0" text="%AG110.geaendert" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-	<TextField fx:id="geaendert" accessibleText="%AG110.geaendert.tt" promptText="%AG110.geaendert.tt" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
+	<Label fx:id="geaendert0" text="%Change" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+	<TextField fx:id="geaendert" accessibleText="%Change.tt" promptText="%Change.tt" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
 		<tooltip>
-			<Tooltip text="%AG110.geaendert.tt" />
+			<Tooltip text="%Change.tt" />
 		</tooltip>
 	</TextField>
 	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
