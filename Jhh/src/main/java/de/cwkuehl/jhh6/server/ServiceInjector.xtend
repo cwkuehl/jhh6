@@ -3,6 +3,7 @@ package de.cwkuehl.jhh6.server
 import de.cwkuehl.jhh6.api.service.IAdresseService
 import de.cwkuehl.jhh6.api.service.IAnmeldungService
 import de.cwkuehl.jhh6.api.service.IHaushaltService
+import de.cwkuehl.jhh6.api.service.ITagebuchService
 import de.cwkuehl.jhh6.server.base.AbstractModule
 import de.cwkuehl.jhh6.server.rep.IAdAdresseRep
 import de.cwkuehl.jhh6.server.rep.IAdPersonRep
@@ -18,6 +19,7 @@ import de.cwkuehl.jhh6.server.rep.IHpBehandlungRep
 import de.cwkuehl.jhh6.server.rep.IMaEinstellungRep
 import de.cwkuehl.jhh6.server.rep.IMaMandantRep
 import de.cwkuehl.jhh6.server.rep.IMaParameterRep
+import de.cwkuehl.jhh6.server.rep.ITbEintragRep
 import de.cwkuehl.jhh6.server.rep.IVmBuchungRep
 import de.cwkuehl.jhh6.server.rep.IVmEreignisRep
 import de.cwkuehl.jhh6.server.rep.IVmKontoRep
@@ -36,6 +38,7 @@ import de.cwkuehl.jhh6.server.rep.impl.HpBehandlungRep
 import de.cwkuehl.jhh6.server.rep.impl.MaEinstellungRep
 import de.cwkuehl.jhh6.server.rep.impl.MaMandantRep
 import de.cwkuehl.jhh6.server.rep.impl.MaParameterRep
+import de.cwkuehl.jhh6.server.rep.impl.TbEintragRep
 import de.cwkuehl.jhh6.server.rep.impl.VmBuchungRep
 import de.cwkuehl.jhh6.server.rep.impl.VmEreignisRep
 import de.cwkuehl.jhh6.server.rep.impl.VmKontoRep
@@ -43,6 +46,7 @@ import de.cwkuehl.jhh6.server.rep.impl.ZeinstellungRep
 import de.cwkuehl.jhh6.server.service.AdresseService
 import de.cwkuehl.jhh6.server.service.AnmeldungService
 import de.cwkuehl.jhh6.server.service.HaushaltService
+import de.cwkuehl.jhh6.server.service.TagebuchService
 
 class ServiceInjector extends AbstractModule {
 
@@ -57,7 +61,7 @@ class ServiceInjector extends AbstractModule {
 //		bind(typeof(IMessdienerService)).to(typeof(MessdienerService))
 //		bind(typeof(IReplikationService)).to(typeof(ReplikationService))
 //		bind(typeof(IStammbaumService)).to(typeof(StammbaumService))
-//		bind(typeof(ITagebuchService)).to(typeof(TagebuchService))
+		bind(typeof(ITagebuchService)).to(typeof(TagebuchService))
 //		bind(typeof(IVermietungService)).to(typeof(VermietungService))
 //		bind(typeof(IWertpapierService)).to(typeof(WertpapierService))
 //		bind(typeof(ITestService)).to(typeof(TestService))
@@ -99,7 +103,7 @@ class ServiceInjector extends AbstractModule {
 //		bind(typeof(ISbKindRep)).to(typeof(SbKindRep))
 //		bind(typeof(ISbPersonRep)).to(typeof(SbPersonRep))
 //		bind(typeof(ISbQuelleRep)).to(typeof(SbQuelleRep))
-//		bind(typeof(ITbEintragRep)).to(typeof(TbEintragRep))
+		bind(typeof(ITbEintragRep)).to(typeof(TbEintragRep))
 //		bind(typeof(IVmAbrechnungRep)).to(typeof(VmAbrechnungRep))
 		bind(typeof(IVmBuchungRep)).to(typeof(VmBuchungRep))
 		bind(typeof(IVmEreignisRep)).to(typeof(VmEreignisRep))

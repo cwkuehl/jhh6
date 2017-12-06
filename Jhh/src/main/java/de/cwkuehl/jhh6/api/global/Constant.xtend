@@ -89,4 +89,13 @@ class Constant {
 	public static final String KZSH_A = "A"
 	/** Soll-Haben-Kennzeichen in Bilanz: Passiv, rechte Seite. */
 	public static final String KZSH_P = "P"
+
+	/** Suche am Anfang. */
+	public static final int TB_ANFANG = 1
+	/** Suche rückwärts. */
+	public static final int TB_ZURUECK = 2
+	/** Suche vorwärts. */
+	public static final int TB_VOR = 3
+	/** Suche am Ende. */
+	public static final int TB_ENDE = 4
 }
