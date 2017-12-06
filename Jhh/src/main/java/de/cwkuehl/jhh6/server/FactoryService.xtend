@@ -1,6 +1,7 @@
 package de.cwkuehl.jhh6.server
 
 import de.cwkuehl.jhh6.api.service.IAnmeldungService
+import de.cwkuehl.jhh6.api.service.IHaushaltService
 import de.cwkuehl.jhh6.server.base.WkInjector
 
 class FactoryService {
@@ -15,15 +16,15 @@ class FactoryService {
 	def static IAnmeldungService getAnmeldungService() {
 		return injector.getInstance(typeof(IAnmeldungService))
 	}
-/*
-	def static IFreizeitService getFreizeitService() {
-		return injector.getInstance(typeof(IFreizeitService))
-	}
+
+	//def static IFreizeitService getFreizeitService() {
+	//	return injector.getInstance(typeof(IFreizeitService))
+	//}
 
 	def static IHaushaltService getHaushaltService() {
 		return injector.getInstance(typeof(IHaushaltService))
 	}
-
+/*
 	def static IHeilpraktikerService getHeilpraktikerService() {
 		return injector.getInstance(typeof(IHeilpraktikerService))
 	}

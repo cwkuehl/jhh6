@@ -53,4 +53,40 @@ class Constant {
 	/** Größte Perioden-Nummer. */
 	public static final int MAX_PERIODE = 99999
 
+	/** Periodennummer, unter der die berechnete Periode gespeichert wird. */
+	public static final int PN_BERECHNET = -1
+
+	/** Kontoart: Aktivkonto. */
+	public static final String ARTK_AKTIVKONTO = "AK"
+	/** Kontoart: Passivkonto. */
+	public static final String ARTK_PASSIVKONTO = "PK"
+	/** Kontoart: Aufwandskonto. */
+	public static final String ARTK_AUFWANDSKONTO = "AW"
+	/** Kontoart: Ertragskonto. */
+	public static final String ARTK_ERTRAGSKONTO = "ER"
+
+	/** Kennzeichen Konto: Eigenkapital. */
+	public static final String KZK_EK = "E"
+	/** Kennzeichen Konto: Gewinn oder Verlust. */
+	public static final String KZK_GV = "G"
+	/** Kennzeichen Buchung: Aktiv. */
+	public static final String KZB_AKTIV = "A"
+	/** Kennzeichen Buchung: Storniert. */
+	public static final String KZB_STORNO = "S"
+
+	/** Kennzeichen Bilanz: Eröffnungbilanz. */
+	public static final String KZBI_EROEFFNUNG = "EB"
+	/** Kennzeichen Bilanz: Schlussbilanz. */
+	public static final String KZBI_SCHLUSS = "SB"
+	/** Kennzeichen Bilanz: Gewinn- und Verlust-Rechnung. */
+	public static final String KZBI_GV = "GV"
+	/** Kennzeichen Bilanz: Einzelnes Konto. */
+	public static final String KZBI_KONTO = "KO"
+	/** Kennzeichen Bilanz: Plan für Folgejahr. */
+	public static final String KZBI_PLAN = "PL"
+
+	/** Soll-Haben-Kennzeichen in Bilanz: Aktiv, linke Seite. */
+	public static final String KZSH_A = "A"
+	/** Soll-Haben-Kennzeichen in Bilanz: Passiv, rechte Seite. */
+	public static final String KZSH_P = "P"
 }
