@@ -1,8 +1,12 @@
 package de.cwkuehl.jhh6.server
 
+import de.cwkuehl.jhh6.api.service.IAdresseService
 import de.cwkuehl.jhh6.api.service.IAnmeldungService
 import de.cwkuehl.jhh6.api.service.IHaushaltService
 import de.cwkuehl.jhh6.server.base.AbstractModule
+import de.cwkuehl.jhh6.server.rep.IAdAdresseRep
+import de.cwkuehl.jhh6.server.rep.IAdPersonRep
+import de.cwkuehl.jhh6.server.rep.IAdSitzRep
 import de.cwkuehl.jhh6.server.rep.IBenutzerRep
 import de.cwkuehl.jhh6.server.rep.IHhBilanzRep
 import de.cwkuehl.jhh6.server.rep.IHhBuchungRep
@@ -18,6 +22,9 @@ import de.cwkuehl.jhh6.server.rep.IVmBuchungRep
 import de.cwkuehl.jhh6.server.rep.IVmEreignisRep
 import de.cwkuehl.jhh6.server.rep.IVmKontoRep
 import de.cwkuehl.jhh6.server.rep.IZeinstellungRep
+import de.cwkuehl.jhh6.server.rep.impl.AdAdresseRep
+import de.cwkuehl.jhh6.server.rep.impl.AdPersonRep
+import de.cwkuehl.jhh6.server.rep.impl.AdSitzRep
 import de.cwkuehl.jhh6.server.rep.impl.BenutzerRep
 import de.cwkuehl.jhh6.server.rep.impl.HhBilanzRep
 import de.cwkuehl.jhh6.server.rep.impl.HhBuchungRep
@@ -33,6 +40,7 @@ import de.cwkuehl.jhh6.server.rep.impl.VmBuchungRep
 import de.cwkuehl.jhh6.server.rep.impl.VmEreignisRep
 import de.cwkuehl.jhh6.server.rep.impl.VmKontoRep
 import de.cwkuehl.jhh6.server.rep.impl.ZeinstellungRep
+import de.cwkuehl.jhh6.server.service.AdresseService
 import de.cwkuehl.jhh6.server.service.AnmeldungService
 import de.cwkuehl.jhh6.server.service.HaushaltService
 
@@ -41,7 +49,7 @@ class ServiceInjector extends AbstractModule {
 	override protected configure() {
 
 		// Services
-		// bind(typeof(IAdresseService)).to(typeof(AdresseService))
+		bind(typeof(IAdresseService)).to(typeof(AdresseService))
 		bind(typeof(IAnmeldungService)).to(typeof(AnmeldungService))
 //		bind(typeof(IFreizeitService)).to(typeof(FreizeitService))
 		bind(typeof(IHaushaltService)).to(typeof(HaushaltService))
@@ -54,9 +62,9 @@ class ServiceInjector extends AbstractModule {
 //		bind(typeof(IWertpapierService)).to(typeof(WertpapierService))
 //		bind(typeof(ITestService)).to(typeof(TestService))
 		// Repositories
-//		bind(typeof(IAdAdresseRep)).to(typeof(AdAdresseRep))
-//		bind(typeof(IAdPersonRep)).to(typeof(AdPersonRep))
-//		bind(typeof(IAdSitzRep)).to(typeof(AdSitzRep))
+		bind(typeof(IAdAdresseRep)).to(typeof(AdAdresseRep))
+		bind(typeof(IAdPersonRep)).to(typeof(AdPersonRep))
+		bind(typeof(IAdSitzRep)).to(typeof(AdSitzRep))
 		bind(typeof(IBenutzerRep)).to(typeof(BenutzerRep))
 //		bind(typeof(IByteDatenRep)).to(typeof(ByteDatenRep))
 //		bind(typeof(IFzBuchRep)).to(typeof(FzBuchRep))
