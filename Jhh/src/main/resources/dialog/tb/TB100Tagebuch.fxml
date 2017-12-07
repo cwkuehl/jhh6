@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import de.cwkuehl.jhh5.anwendung.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import de.cwkuehl.jhh6.app.control.Datum?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.66" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="de.cwkuehl.jhh6.app.controller.tb.TB100TagebuchController">
+
+	<padding>
+		<Insets bottom="10" left="10" right="10" top="10" />
+	</padding>
+
+	<ToolBar prefHeight="40.0" prefWidth="200.0" GridPane.columnSpan="3">
+		<items>
+			<Button fx:id="kopieren" mnemonicParsing="false" onAction="#onKopieren">
+				<tooltip>
+					<Tooltip text="%Copy" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-copy.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="einfuegen" mnemonicParsing="false" onAction="#onEinfuegen">
+				<tooltip>
+					<Tooltip text="%Paste" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-paste.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="rueckgaengig" mnemonicParsing="false" onAction="#onRueckgaengig">
+				<tooltip>
+					<Tooltip text="%Undo" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-undo.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="wiederherstellen" mnemonicParsing="false" onAction="#onWiederherstellen">
+				<tooltip>
+					<Tooltip text="%Redo" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-redo.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="export" mnemonicParsing="false" onAction="#onExport">
+				<tooltip>
+					<Tooltip text="%Export" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-save.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="tab" mnemonicParsing="false" onAction="#onTab">
+				<tooltip>
+					<Tooltip text="%Tab" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-tab.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+		</items>
+	</ToolBar>
+	<Label fx:id="zurueck10" text="%TB100.zurueck1" GridPane.rowIndex="1" />
+	<TextArea fx:id="zurueck1" accessibleText="%TB100.zurueck1.tt" editable="false" promptText="%TB100.zurueck1.tt"
+		wrapText="true" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.rowSpan="1" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%TB100.zurueck1.tt" />
+		</tooltip>
+	</TextArea>
+	<Label fx:id="zurueck20" text="%TB100.zurueck2" GridPane.rowIndex="3" />
+	<TextArea fx:id="zurueck2" accessibleText="%TB100.zurueck2.tt" editable="false" promptText="%TB100.zurueck2.tt"
+		wrapText="true" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.rowSpan="1">
+		<tooltip>
+			<Tooltip text="%TB100.zurueck2.tt" />
+		</tooltip>
+	</TextArea>
+	<Label fx:id="zurueck30" text="%TB100.zurueck3" GridPane.rowIndex="5" />
+	<TextArea fx:id="zurueck3" accessibleText="%TB100.zurueck3.tt" editable="false" focusTraversable="true"
+		promptText="%TB100.zurueck3.tt" wrapText="true" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6" GridPane.rowSpan="1">
+		<tooltip>
+			<Tooltip text="%TB100.zurueck3.tt" />
+		</tooltip>
+	</TextArea>
+	<GridPane GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="6">
+		<Label fx:id="datum0" mnemonicParsing="true" text="%TB100.datum" GridPane.columnIndex="0" GridPane.columnSpan="2"
+			GridPane.rowIndex="0" />
+		<Datum fx:id="datum" nullText="" onAction="#onDatumChanged" promptText="%TB100.datum.tt"
+			schalterText="mhp" wochentagGroesse="120" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="1">
+			<tooltip>
+				<Tooltip text="%TB100.datum.tt" />
+			</tooltip>
+		</Datum>
+		<Label fx:id="eintrag0" mnemonicParsing="true" text="%TB100.eintrag" GridPane.columnIndex="0" GridPane.columnSpan="2"
+			GridPane.rowIndex="2" />
+		<TextArea fx:id="eintrag" accessibleText="%TB100.eintrag.tt" prefHeight="400.0" promptText="%TB100.eintrag.tt"
+			wrapText="true" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.hgrow="NEVER" GridPane.rowIndex="3"
+			GridPane.rowSpan="1" GridPane.vgrow="ALWAYS">
+			<tooltip>
+				<Tooltip text="%TB100.eintrag.tt" />
+			</tooltip>
+		</TextArea>
+		<Label fx:id="angelegt0" text="%Creation" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+		<TextField fx:id="angelegt" accessibleText="%Creation.tt"
+			editable="false" promptText="%Creation.tt" GridPane.columnIndex="1"
+			GridPane.columnSpan="3" GridPane.rowIndex="4">
+			<tooltip>
+				<Tooltip text="%Creation.tt" />
+			</tooltip>
+		</TextField>
+		<Label fx:id="geaendert0" text="%Change" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+		<TextField fx:id="geaendert" accessibleText="%Change.tt"
+			editable="false" promptText="%Change.tt" GridPane.columnIndex="1"
+			GridPane.columnSpan="3" GridPane.rowIndex="5">
+			<tooltip>
+				<Tooltip text="%Change.tt" />
+			</tooltip>
+		</TextField>
+		<GridPane GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="6">
+			<Label fx:id="suche00" mnemonicParsing="true" text="%TB100.suche0"
+				GridPane.columnIndex="0" GridPane.columnSpan="7" GridPane.rowIndex="0" />
+			<Label fx:id="suche10" text="%TB100.suche1" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+			<TextField fx:id="suche1" GridPane.columnIndex="1" GridPane.rowIndex="1">
+			</TextField>
+			<Label fx:id="suche20" text="%TB100.suche2" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+			<TextField fx:id="suche2" GridPane.columnIndex="3" GridPane.rowIndex="1">
+			</TextField>
+			<Label fx:id="suche30" text="%TB100.suche3" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+			<TextField fx:id="suche3" GridPane.columnIndex="5" GridPane.rowIndex="1">
+			</TextField>
+			<Label fx:id="suche40" text="%TB100.suche4" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+			<Label fx:id="suche50" text="%TB100.suche5" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+			<TextField fx:id="suche4" GridPane.columnIndex="1" GridPane.rowIndex="2">
+			</TextField>
+			<Label fx:id="suche60" text="%TB100.suche6" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+			<TextField fx:id="suche5" GridPane.columnIndex="3" GridPane.rowIndex="2">
+			</TextField>
+			<Label fx:id="suche70" text="%TB100.suche7" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+			<TextField fx:id="suche6" GridPane.columnIndex="5" GridPane.rowIndex="2">
+			</TextField>
+			<Label fx:id="suche80" text="%TB100.suche8" GridPane.columnIndex="6" GridPane.rowIndex="2" />
+			<Label fx:id="suche90" text="%TB100.suche9" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+			<TextField fx:id="suche7" GridPane.columnIndex="1" GridPane.rowIndex="3">
+			</TextField>
+			<Label fx:id="suche100" text="%TB100.suche10" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+			<TextField fx:id="suche8" GridPane.columnIndex="3" GridPane.rowIndex="3">
+			</TextField>
+			<Label fx:id="suche110" text="%TB100.suche11" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+			<TextField fx:id="suche9" GridPane.columnIndex="5" GridPane.rowIndex="3">
+			</TextField>
+			<Label fx:id="suche120" text="%TB100.suche12" GridPane.columnIndex="6" GridPane.rowIndex="3" />
+			<columnConstraints>
+				<ColumnConstraints minWidth="80.0" />
+				<ColumnConstraints />
+				<ColumnConstraints minWidth="45.0" />
+				<ColumnConstraints />
+				<ColumnConstraints minWidth="45.0" />
+				<ColumnConstraints />
+				<ColumnConstraints />
+			</columnConstraints>
+			<rowConstraints>
+				<RowConstraints />
+				<RowConstraints />
+				<RowConstraints />
+				<RowConstraints />
+			</rowConstraints>
+		</GridPane>
+		<HBox GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="7">
+			<Button fx:id="anfang" onAction="#onAnfang" text="%TB100.anfang">
+				<tooltip>
+					<Tooltip text="%TB100.anfang.tt" />
+				</tooltip>
+			</Button>
+			<Button fx:id="zurueck" onAction="#onZurueck" text="%TB100.zurueck">
+				<tooltip>
+					<Tooltip text="%TB100.zurueck.tt" />
+				</tooltip>
+			</Button>
+			<Button fx:id="vor" onAction="#onVor" text="%TB100.vor">
+				<tooltip>
+					<Tooltip text="%TB100.vor.tt" />
+				</tooltip>
+			</Button>
+			<Button fx:id="ende" onAction="#onEnde" text="%TB100.ende">
+				<tooltip>
+					<Tooltip text="%TB100.ende.tt" />
+				</tooltip>
+			</Button>
+			<Button fx:id="leeren" mnemonicParsing="true" onAction="#onLeeren" text="%TB100.leeren">
+				<tooltip>
+					<Tooltip text="%TB100.leeren.tt" />
+				</tooltip>
+			</Button>
+		</HBox>
+		<columnConstraints>
+			<ColumnConstraints />
+			<ColumnConstraints />
+			<ColumnConstraints />
+			<ColumnConstraints />
+		</columnConstraints>
+		<rowConstraints>
+			<RowConstraints />
+			<RowConstraints />
+			<RowConstraints />
+			<RowConstraints />
+			<RowConstraints />
+			<RowConstraints />
+			<RowConstraints />
+			<RowConstraints />
+		</rowConstraints>
+	</GridPane>
+	<Label fx:id="vor10" text="%TB100.vor1" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+	<TextArea fx:id="vor1" accessibleText="%TB100.vor1.tt" editable="false" promptText="%TB100.vor1.tt"
+		wrapText="true" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.rowSpan="1"
+		GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%TB100.vor1.tt" />
+		</tooltip>
+	</TextArea>
+	<Label fx:id="vor20" text="%TB100.vor2" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+	<TextArea fx:id="vor2" accessibleText="%TB100.vor2.tt" editable="false" promptText="%TB100.vor2.tt"
+		wrapText="true" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.rowSpan="1">
+		<tooltip>
+			<Tooltip text="%TB100.vor2.tt" />
+		</tooltip>
+	</TextArea>
+	<Label fx:id="vor30" text="%TB100.vor3" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+	<TextArea fx:id="vor3" accessibleText="%TB100.vor3.tt" editable="false" promptText="%TB100.vor3.tt"
+		wrapText="true" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6" GridPane.rowSpan="1">
+		<tooltip>
+			<Tooltip text="%TB100.vor3.tt" />
+		</tooltip>
+	</TextArea>
+
+	<stylesheets>
+		<URL value="@../Jhh6.css" />
+	</stylesheets>
+	<columnConstraints>
+		<ColumnConstraints />
+		<ColumnConstraints />
+		<ColumnConstraints />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+	</rowConstraints>
+</GridPane>

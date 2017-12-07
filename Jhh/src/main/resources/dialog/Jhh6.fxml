@@ -53,7 +53,7 @@
 						<MenuItem fx:id="menueAD100" mnemonicParsing="true" onAction="#handleAD100" text="%menu.persons"
 							visible="false" />
 						<SeparatorMenuItem fx:id="sepFz1" mnemonicParsing="false" visible="false" />
-						<MenuItem fx:id="menueFZ250" mnemonicParsing="true" onAction="#handleFZ250" text="%menu.milages"
+						<MenuItem fx:id="menueFZ250" mnemonicParsing="true" onAction="#handleFZ250" text="%menu.mileages"
 							visible="false" />
 						<MenuItem fx:id="menueFZ200" mnemonicParsing="true" onAction="#handleFZ200" text="%menu.bikes"
 							visible="false" />

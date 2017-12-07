@@ -15,6 +15,7 @@ import de.cwkuehl.jhh6.app.controller.am.AM000AnmeldungController
 import de.cwkuehl.jhh6.app.controller.am.AM100AenderungController
 import de.cwkuehl.jhh6.app.controller.am.AM500EinstellungenController
 import de.cwkuehl.jhh6.app.controller.am.AM510DialogeController
+import de.cwkuehl.jhh6.app.controller.tb.TB100TagebuchController
 import de.cwkuehl.jhh6.server.FactoryService
 import java.net.URL
 import java.util.ArrayList
@@ -315,10 +316,10 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		l.add(new StartDialog("#AG100", g("menu.clients"), typeof(AG100MandantenController), null))
 		l.add(new StartDialog("#AG200", g("menu.users"), typeof(AG200BenutzerController), null))
 		l.add(new StartDialog("#AG400", g("menu.backups"), typeof(AG400SicherungenController), null))
-		// l.add(new StartDialog("#TB100", g("menu.diary"), typeof(TB100TagebuchController), null))
+		l.add(new StartDialog("#TB100", g("menu.diary"), typeof(TB100TagebuchController), null))
 		// l.add(new StartDialog("#FZ700", g("menu.notes"), typeof(FZ700NotizenController), null))
 		// l.add(new StartDialog("#AD100", g("menu.persons"), typeof(AD100PersonenController), null))
-		// l.add(new StartDialog("#FZ250", g("menu.milages"), typeof(FZ250FahrradstaendeController), null))
+		// l.add(new StartDialog("#FZ250", g("menu.mileages"), typeof(FZ250FahrradstaendeController), null))
 		// l.add(new StartDialog("#FZ200", g("menu.bikes"), typeof(FZ200FahrraederController), null))
 		// l.add(new StartDialog("#FZ300", g("menu.authors"), typeof(FZ300AutorenController), null))
 		// l.add(new StartDialog("#FZ320", g("menu.series"), typeof(FZ320SerienController), null))
@@ -478,7 +479,8 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 	@FXML def void handleSO200() { // starteFormular(typeof(SO200DetektivController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleTB100() { // starteFormular(typeof(TB100TagebuchController), DialogAufrufEnum.OHNE)
+	@FXML def void handleTB100() {
+		starteFormular(typeof(TB100TagebuchController), DialogAufrufEnum.OHNE)
 	}
 
 	@FXML def void handleVM100() { // starteFormular(typeof(VM100HaeuserController), DialogAufrufEnum.OHNE)

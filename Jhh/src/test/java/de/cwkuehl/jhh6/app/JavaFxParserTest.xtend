@@ -16,8 +16,8 @@ class JavaFxParserTest {
 		Pattern.CASE_INSENSITIVE)
 	static Pattern pid = Pattern.compile(".+ fx:id=\\\"([\\w\\d]+)\\\".*", Pattern.CASE_INSENSITIVE)
 	static Pattern ptext = Pattern.compile(".+ text=\\\"([^\\\"]+)\\\".*", Pattern.CASE_INSENSITIVE)
-	static Pattern pat = Pattern.compile(".+ accessibleText=\\\"([^\\\"]+)\\\".*", Pattern.CASE_INSENSITIVE)
-	static Pattern ppt = Pattern.compile(".+ promptText=\\\"([^\\\"]+)\\\".*", Pattern.CASE_INSENSITIVE)
+	static Pattern pat = Pattern.compile(".+accessibleText=\\\"([^\\\"]+)\\\".*", Pattern.CASE_INSENSITIVE)
+	static Pattern ppt = Pattern.compile(".+promptText=\\\"([^\\\"]+)\\\".*", Pattern.CASE_INSENSITIVE)
 	static Pattern ptt = Pattern.compile(".+<Tooltip .*", Pattern.CASE_INSENSITIVE)
 	static Pattern plbl = Pattern.compile(".+<Label .*", Pattern.CASE_INSENSITIVE)
 	static Pattern pcss = Pattern.compile(".+ value=\\\"@../Jhh\\d.css\\\".*", Pattern.CASE_INSENSITIVE)
@@ -33,11 +33,12 @@ class JavaFxParserTest {
 		// parse("ag/AG200Benutzer.fxml")
 		// parse("ag/AG210Benutzer.fxml")
 		// parse("ag/AG400Sicherungen.fxml")
-		parse("ag/AG410Sicherung.fxml")
+		// parse("ag/AG410Sicherung.fxml")
 		// parse("am/AM000Anmeldung.fxml")
 		// parse("am/AM100Aenderung.fxml")
 		// parse("am/AM500Einstellungen.fxml")
 		// parse("am/AM510Dialoge.fxml")
+		parse("tb/TB100Tagebuch.fxml")
 		Global.machNichts
 	}
 
@@ -95,6 +96,10 @@ class JavaFxParserTest {
 					str = str.replace('''text="«text»"''', '''text="%Settings"''')
 				else if (tt && id == 'tab')
 					str = str.replace('''text="«text»"''', '''text="%Tab"''')
+				else if (tt && id == 'einfuegen')
+					str = str.replace('''text="«text»"''', '''text="%Paste"''')
+				else if (tt && id == 'export')
+					str = str.replace('''text="«text»"''', '''text="%Export"''')
 				else if (id == 'ok')
 					str = str.replace('''text="«text»"''', '''text="%Ok«IF tt».tt«ENDIF»"''')
 				else if (id == 'abbrechen')
@@ -149,6 +154,8 @@ class JavaFxParserTest {
 				str = str.replace('''edit-delete-3.png''', '''icons8-remove.png''')
 				str = str.replace('''document-properties-3.png''', '''icons8-settings.png''')
 				str = str.replace('''tabs_48.png''', '''icons8-tab.png''')
+				str = str.replace('''edit-paste-4.png''', '''icons8-paste.png''')
+				str = str.replace('''floppy_disk_48.png''', '''icons8-save.png''')
 			}
 			System.out.println(str)
 		}
