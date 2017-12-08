@@ -250,7 +250,7 @@ class AdresseService {
 			name1 = "Person " + uid
 		}
 		if (geburt !== null) {
-			geburtk = geburt.monthValue * 100 + geburt.year
+			geburtk = geburt.monthValue * 100 + geburt.dayOfMonth
 		}
 		if (Global.nes(geschlecht) ||
 			!(GeschlechtEnum.MANN.toString.equals(geschlecht) || GeschlechtEnum.FRAU.toString.equals(geschlecht))) {

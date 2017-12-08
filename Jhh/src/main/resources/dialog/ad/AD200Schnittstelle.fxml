@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane alignment="center" hgap="10" vgap="10" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
+	AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="de.cwkuehl.jhh6.app.controller.ad.AD200SchnittstelleController">
+
+	<padding>
+		<Insets bottom="10" left="10" right="10" top="10" />
+	</padding>
+
+	<Label fx:id="datei0" mnemonicParsing="true" text="%AD200.datei" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+	<TextField fx:id="datei" accessibleText="%AD200.datei.tt" promptText="%AD200.datei.tt"
+		GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1">
+		<tooltip>
+			<Tooltip text="%AD200.datei.tt" />
+		</tooltip>
+	</TextField>
+	<Button fx:id="dateiAuswahl" onAction="#onDateiAuswahl" text="%AD200.dateiAuswahl" GridPane.columnIndex="3" GridPane.columnSpan="1"
+		GridPane.rowIndex="1">
+		<tooltip>
+			<Tooltip text="%AD200.dateiAuswahl.tt" />
+		</tooltip>
+	</Button>
+	<CheckBox fx:id="loeschen" text="%AD200.loeschen" GridPane.columnIndex="0" GridPane.columnSpan="2" />
+	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2">
+		<Button fx:id="export" defaultButton="true" mnemonicParsing="true" onAction="#onExport" text="%AD200.export">
+			<tooltip>
+				<Tooltip text="%AD200.export.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="importieren" mnemonicParsing="true" onAction="#onImport" text="%AD200.importieren">
+			<tooltip>
+				<Tooltip text="%AD200.importieren.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="abbrechen" cancelButton="true" onAction="#onAbbrechen" text="%Cancel">
+			<tooltip>
+				<Tooltip text="%Cancel.tt" />
+			</tooltip>
+		</Button>
+	</HBox>
+
+	<stylesheets>
+		<URL value="@../Jhh6.css" />
+	</stylesheets>
+	<columnConstraints>
+		<ColumnConstraints />
+		<ColumnConstraints />
+		<ColumnConstraints />
+		<ColumnConstraints />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+	</rowConstraints>
+</GridPane>

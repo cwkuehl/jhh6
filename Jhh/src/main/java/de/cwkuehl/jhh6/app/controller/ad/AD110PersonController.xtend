@@ -1,6 +1,6 @@
 package de.cwkuehl.jhh6.app.controller.ad
 
-import java.util.List
+import de.cwkuehl.jhh6.api.dto.AdAdresse
 import de.cwkuehl.jhh6.api.dto.AdPersonSitzAdresse
 import de.cwkuehl.jhh6.api.global.Global
 import de.cwkuehl.jhh6.api.message.Meldungen
@@ -78,8 +78,8 @@ class AD110PersonController extends BaseController<String> {
 	@FXML Button ok
 	@FXML Button adresseDupl
 	@FXML Button adresseWechseln
-	// @FXML Button abbrechen
 
+	// @FXML Button abbrechen
 	/** 
 	 * Initialisierung des Dialogs.
 	 */
@@ -112,48 +112,47 @@ class AD110PersonController extends BaseController<String> {
 		adresseAnzahl0.setLabelFor(adresseAnzahl)
 		angelegt0.setLabelFor(angelegt)
 		geaendert0.setLabelFor(geaendert)
-		var boolean neu = DialogAufrufEnum.NEU.equals(getAufruf())
-		var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(getAufruf())
+		var neu = DialogAufrufEnum.NEU.equals(aufruf)
+		var loeschen = DialogAufrufEnum.LOESCHEN.equals(aufruf)
 		var AdPersonSitzAdresse k = getParameter1()
 		if (!neu && k !== null) {
-			var List<AdPersonSitzAdresse> l = get(
-				FactoryService.getAdresseService().getPersonenSitzAdresseListe(getServiceDaten(), false, false, null,
-					null, k.getUid(), k.getSiUid()))
-			if (l !== null && l.size() > 0) {
+			var l = get(
+				FactoryService.adresseService.getPersonenSitzAdresseListe(serviceDaten, false, false, null, null, k.uid,
+					k.siUid))
+			if (l !== null && l.size > 0) {
 				k = l.get(0)
-				nr.setText(k.getUid())
-				sitzNr.setText(k.getSiUid())
-				adressNr.setText(k.getAdresseUid())
-				titel.setText(k.getTitel())
-				vorname.setText(k.getVorname())
-				praedikat.setText(k.getPraedikat())
-				name1.setText(k.getName1())
-				name2.setText(k.getName2())
-				setText(geschlecht, k.getGeschlecht())
-				geburt.setValue(k.getGeburt())
-				setText(personStatus, Global.intStr(k.getPersonStatus()))
-				name.setText(k.getName())
-				strasse.setText(k.getStrasse())
-				hausnr.setText(k.getHausnr())
-				postfach.setText(k.getPostfach())
-				staat.setText(k.getStaat())
-				plz.setText(k.getPlz())
-				ort.setText(k.getOrt())
-				telefon.setText(k.getTelefon())
-				fax.setText(k.getFax())
-				mobil.setText(k.getMobil())
-				homepage.setText(k.getHomepage())
-				email.setText(k.getEmail())
-				notiz.setText(k.getBemerkung())
-				setText(sitzStatus, Global.intStr(k.getSitzStatus()))
-				adresseAnzahl.setText(
-					Global.intStr(
-						get(FactoryService.getAdresseService().getAdresseAnzahl(getServiceDaten(), k.getAdresseUid()))))
-				angelegt.setText(k.formatDatumVon(k.getAngelegtAm(), k.getAngelegtVon()))
-				geaendert.setText(k.formatDatumVon(k.getGeaendertAm(), k.getGeaendertVon()))
-				if (DialogAufrufEnum.KOPIEREN2.equals(getAufruf())) {
-					sitzNr.setText(null)
-					adressNr.setText(null)
+				nr.text = k.getUid
+				sitzNr.text = k.getSiUid
+				adressNr.text = k.getAdresseUid
+				titel.text = k.getTitel
+				vorname.text = k.getVorname
+				praedikat.text = k.getPraedikat
+				name1.text = k.getName1
+				name2.text = k.getName2
+				setText(geschlecht, k.getGeschlecht)
+				geburt.value = k.getGeburt
+				setText(personStatus, Global.intStr(k.getPersonStatus))
+				name.text = k.getName
+				strasse.text = k.getStrasse
+				hausnr.text = k.getHausnr
+				postfach.text = k.getPostfach
+				staat.text = k.getStaat
+				plz.text = k.getPlz
+				ort.text = k.getOrt
+				telefon.text = k.getTelefon
+				fax.text = k.getFax
+				mobil.text = k.getMobil
+				homepage.text = k.getHomepage
+				email.text = k.getEmail
+				notiz.text = k.getBemerkung
+				setText(sitzStatus, Global.intStr(k.getSitzStatus))
+				adresseAnzahl.text = Global.intStr(
+					get(FactoryService.adresseService.getAdresseAnzahl(serviceDaten, k.getAdresseUid)))
+				angelegt.text = k.formatDatumVon(k.getAngelegtAm, k.getAngelegtVon)
+				geaendert.text = k.formatDatumVon(k.getGeaendertAm, k.getGeaendertVon)
+				if (DialogAufrufEnum.KOPIEREN2.equals(aufruf)) {
+					sitzNr.text = null
+					adressNr.text = null
 				}
 			}
 		}
@@ -188,10 +187,10 @@ class AD110PersonController extends BaseController<String> {
 		adresseDupl.setVisible(!loeschen)
 		adresseWechseln.setVisible(!loeschen)
 		if (loeschen) {
-			ok.setText(Meldungen.M2001())
+			ok.text = Meldungen.M2001
 		}
 		initDaten(0)
-		titel.requestFocus()
+		titel.requestFocus
 	}
 
 	/** 
@@ -210,31 +209,31 @@ class AD110PersonController extends BaseController<String> {
 
 	def private AdPersonSitzAdresse getData() {
 
-		var AdPersonSitzAdresse e = new AdPersonSitzAdresse()
-		e.setUid(nr.getText())
-		e.setSiUid(sitzNr.getText())
-		e.setAdresseUid(adressNr.getText())
-		e.setTitel(titel.getText())
-		e.setVorname(vorname.getText())
-		e.setPraedikat(praedikat.getText())
-		e.setName1(name1.getText())
-		e.setName2(name2.getText())
+		var e = new AdPersonSitzAdresse
+		e.setUid(nr.text)
+		e.setSiUid(sitzNr.text)
+		e.setAdresseUid(adressNr.text)
+		e.setTitel(titel.text)
+		e.setVorname(vorname.text)
+		e.setPraedikat(praedikat.text)
+		e.setName1(name1.text)
+		e.setName2(name2.text)
 		e.setGeschlecht(getText(geschlecht))
 		e.setGeburt(geburt.getValue())
 		e.setPersonStatus(Global.strInt(getText(personStatus)))
-		e.setName(name.getText())
-		e.setStrasse(strasse.getText())
-		e.setHausnr(hausnr.getText())
-		e.setPostfach(postfach.getText())
-		e.setStaat(staat.getText())
-		e.setPlz(plz.getText())
-		e.setOrt(ort.getText())
-		e.setTelefon(telefon.getText())
-		e.setFax(fax.getText())
-		e.setMobil(mobil.getText())
-		e.setHomepage(homepage.getText())
-		e.setEmail(email.getText())
-		e.setBemerkung(notiz.getText())
+		e.setName(name.text)
+		e.setStrasse(strasse.text)
+		e.setHausnr(hausnr.text)
+		e.setPostfach(postfach.text)
+		e.setStaat(staat.text)
+		e.setPlz(plz.text)
+		e.setOrt(ort.text)
+		e.setTelefon(telefon.text)
+		e.setFax(fax.text)
+		e.setMobil(mobil.text)
+		e.setHomepage(homepage.text)
+		e.setEmail(email.text)
+		e.setBemerkung(notiz.text)
 		e.setSitzStatus(Global.strInt(getText(sitzStatus)))
 		return e
 	}
@@ -244,26 +243,24 @@ class AD110PersonController extends BaseController<String> {
 	 */
 	@SuppressWarnings("unchecked") @FXML def void onOk() {
 
-		var DialogAufrufEnum aufruf = getAufruf()
-		/*FIXME Cannot add Annotation to Variable declaration. Java code: @SuppressWarnings("rawtypes")*/
 		var ServiceErgebnis<?> r = null
 		if (DialogAufrufEnum.NEU.equals(aufruf) || DialogAufrufEnum.KOPIEREN.equals(aufruf)) {
 			var AdPersonSitzAdresse p = getData()
 			p.setUid(null)
 			p.setSiUid(null)
 			p.setAdresseUid(null)
-			r = FactoryService.getAdresseService().insertUpdatePerson(getServiceDaten(), p)
+			r = FactoryService.adresseService.insertUpdatePerson(serviceDaten, p)
 		} else if (DialogAufrufEnum.AENDERN.equals(aufruf) || DialogAufrufEnum.KOPIEREN2.equals(aufruf)) {
 			var AdPersonSitzAdresse p = getData()
-			r = FactoryService.getAdresseService().insertUpdatePerson(getServiceDaten(), p)
+			r = FactoryService.adresseService.insertUpdatePerson(serviceDaten, p)
 		} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
-			r = FactoryService.getAdresseService().deleteSitz(getServiceDaten(), nr.getText(), sitzNr.getText())
+			r = FactoryService.adresseService.deleteSitz(serviceDaten, nr.text, sitzNr.text)
 		}
 		if (r !== null) {
 			get(r)
-			if (r.getFehler().isEmpty()) {
-				updateParent()
-				close()
+			if (r.fehler.isEmpty) {
+				updateParent
+				close
 			}
 		}
 	}
@@ -272,31 +269,31 @@ class AD110PersonController extends BaseController<String> {
 	 * Event für AdresseDupl.
 	 */
 	@FXML def void onAdresseDupl() {
-		adressNr.setText(null)
-		adresseAnzahl.setText("0")
+		adressNr.text = null
+		adresseAnzahl.text = "0"
 	}
 
 	/** 
 	 * Event für AdresseWechseln.
 	 */
-	@FXML def void onAdresseWechseln() { // AdAdresse k = (AdAdresse) starteDialog(AD130AdressenController.class, DialogAufrufEnum.OHNE);
+	@FXML def void onAdresseWechseln() {
 
-		// if (k != null) {
-		// int diff = 0;
-		// if (Global.compString(k.getUid(), adressNr.getText()) != 0) {
-		// // Falls sich Nummer ändert, wird neue Nummer einmal mehr benutzt.
-		// diff = 1;
-		// }
-		// adressNr.setText(k.getUid());
-		// strasse.setText(k.getStrasse());
-		// hausnr.setText(k.getHausnr());
-		// staat.setText(k.getStaat());
-		// plz.setText(k.getPlz());
-		// ort.setText(k.getOrt());
-		// adresseAnzahl.setText(Global.intStr(get(FactoryService.getAdresseService().getAdresseAnzahl(getServiceDaten(),
-		// k
-		// .getUid())) + diff));
-		// }
+		var AdAdresse k = starteDialog(typeof(AD130AdressenController), DialogAufrufEnum.OHNE)
+		if (k !== null) {
+			var diff = 0
+			if (Global.compString(k.uid, adressNr.text) != 0) {
+				// Falls sich Nummer ändert, wird neue Nummer einmal mehr benutzt.
+				diff = 1
+			}
+			adressNr.text = k.uid
+			strasse.text = k.strasse
+			hausnr.text = k.hausnr
+			staat.text = k.staat
+			plz.text = k.plz
+			ort.text = k.ort
+			adresseAnzahl.text = Global.intStr(
+				get(FactoryService.adresseService.getAdresseAnzahl(serviceDaten, k.uid)) + diff)
+		}
 	}
 
 	/** 

@@ -1,13 +1,13 @@
 package de.cwkuehl.jhh6.app.controller.ad
 
-import java.time.LocalDateTime
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.AdPersonSitzAdresse
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.app.base.Werkzeug
 import de.cwkuehl.jhh6.server.FactoryService
+import java.time.LocalDateTime
+import java.util.List
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -51,12 +51,13 @@ class AD100PersonenController extends BaseController<String> {
 	@FXML TableColumn<PersonenData, String> colGv
 	@FXML TableColumn<PersonenData, LocalDateTime> colAa
 	@FXML TableColumn<PersonenData, String> colAv
-	ObservableList<PersonenData> personenData = FXCollections.observableArrayList()
+	ObservableList<PersonenData> personenData = FXCollections.observableArrayList
 
 	/** 
 	 * Daten für Tabelle Personen.
 	 */
 	static class PersonenData extends BaseController.TableViewData<AdPersonSitzAdresse> {
+
 		SimpleStringProperty uid
 		SimpleStringProperty name1
 		SimpleStringProperty name
@@ -67,17 +68,17 @@ class AD100PersonenController extends BaseController<String> {
 
 		new(AdPersonSitzAdresse v) {
 			super(v)
-			uid = new SimpleStringProperty(v.getUid())
-			name1 = new SimpleStringProperty(v.getName1())
-			name = new SimpleStringProperty(v.getName())
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm())
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon())
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm())
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon())
+			uid = new SimpleStringProperty(v.getUid)
+			name1 = new SimpleStringProperty(v.getName1)
+			name = new SimpleStringProperty(v.getName)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
+			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
+			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
 		}
 
 		override String getId() {
-			return uid.get()
+			return uid.get
 		}
 	}
 
@@ -87,21 +88,21 @@ class AD100PersonenController extends BaseController<String> {
 	override protected void initialize() {
 
 		tabbar = 1
-		super.initialize()
+		super.initialize
 		personen0.setLabelFor(personen)
 		name0.setLabelFor(name)
 		vorname0.setLabelFor(vorname)
-		name.focusedProperty().addListener([ p, alt, neu |
+		name.focusedProperty.addListener([ p, alt, neu |
 			{
 				if (neu === false) {
-					onAktuell()
+					onAktuell
 				}
 			}
 		])
-		vorname.focusedProperty().addListener([ p, alt, neu |
+		vorname.focusedProperty.addListener([ p, alt, neu |
 			{
 				if (neu === false) {
-					onAktuell()
+					onAktuell
 				}
 			}
 		])
@@ -116,7 +117,7 @@ class AD100PersonenController extends BaseController<String> {
 		initAccelerator("X", imExport)
 		initDaten(0)
 		personen.setPrefWidth(9999)
-		personen.requestFocus()
+		personen.requestFocus
 	}
 
 	/** 
@@ -131,12 +132,12 @@ class AD100PersonenController extends BaseController<String> {
 		}
 		if (stufe <= 1) {
 			var List<AdPersonSitzAdresse> l = get(
-				FactoryService.getAdresseService().getPersonenSitzAdresseListe(getServiceDaten(), true, false,
-					name.getText(), vorname.getText(), null, null))
+				FactoryService.getAdresseService.getPersonenSitzAdresseListe(getServiceDaten, true, false,
+					name.getText, vorname.getText, null, null))
 			getItems(l, null, [a|new PersonenData(a)], personenData)
 		}
 		if (stufe <= 2) {
-			initDatenTable()
+			initDatenTable
 		}
 	}
 
@@ -146,13 +147,13 @@ class AD100PersonenController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		personen.setItems(personenData)
-		colUid.setCellValueFactory([c|c.getValue().uid])
-		colName1.setCellValueFactory([c|c.getValue().name1])
-		colSitz.setCellValueFactory([c|c.getValue().name])
-		colGv.setCellValueFactory([c|c.getValue().geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue().geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue().angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue().angelegtAm])
+		colUid.setCellValueFactory([c|c.getValue.uid])
+		colName1.setCellValueFactory([c|c.getValue.name1])
+		colSitz.setCellValueFactory([c|c.getValue.name])
+		colGv.setCellValueFactory([c|c.getValue.geaendertVon])
+		colGa.setCellValueFactory([c|c.getValue.geaendertAm])
+		colAv.setCellValueFactory([c|c.getValue.angelegtVon])
+		colAa.setCellValueFactory([c|c.getValue.angelegtAm])
 	}
 
 	override protected void updateParent() {
@@ -219,7 +220,7 @@ class AD100PersonenController extends BaseController<String> {
 	 * Event für Drucken.
 	 */
 	@FXML def void onDrucken() {
-		var byte[] pdf = get(FactoryService.getAdresseService().getReportAdresse(getServiceDaten()))
+		var byte[] pdf = get(FactoryService.getAdresseService.getReportAdresse(getServiceDaten))
 		Werkzeug.speicherReport(pdf, "Adressenliste", true)
 	}
 
@@ -227,7 +228,7 @@ class AD100PersonenController extends BaseController<String> {
 	 * Event für ImExport.
 	 */
 	@FXML def void onImExport() {
-		// starteFormular(AD200SchnittstelleController.class, DialogAufrufEnum.OHNE);
+		 starteFormular(typeof(AD200SchnittstelleController), DialogAufrufEnum.OHNE);
 	}
 
 	/** 
@@ -257,9 +258,10 @@ class AD100PersonenController extends BaseController<String> {
 	 * Event für SitzEins.
 	 */
 	@FXML def void onSitzEins() {
+
 		var AdPersonSitzAdresse e = getValue(personen, true)
 		if (e !== null) {
-			get(FactoryService.getAdresseService().machSitzEins(getServiceDaten(), e.getPersonUid(), e.getSiUid()))
+			get(FactoryService.getAdresseService.machSitzEins(getServiceDaten, e.getPersonUid, e.getSiUid))
 			onAktuell
 		}
 	}
@@ -268,6 +270,6 @@ class AD100PersonenController extends BaseController<String> {
 	 * Event für GebListe.
 	 */
 	@FXML def void onGebListe() {
-		// starteFormular(AD120GeburtstageController.class, DialogAufrufEnum.OHNE);
+		 starteFormular(typeof(AD120GeburtstageController), DialogAufrufEnum.OHNE);
 	}
 }

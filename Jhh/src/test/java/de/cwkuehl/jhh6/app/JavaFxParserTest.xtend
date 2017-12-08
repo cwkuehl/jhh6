@@ -27,7 +27,10 @@ class JavaFxParserTest {
 	@Test def void parse() {
 
 		// parse("ad/AD100Personen.fxml")
-		parse("ad/AD110Person.fxml")
+		// parse("ad/AD110Person.fxml")
+		// parse("ad/AD120Geburtstage.fxml")
+		// parse("ad/AD130Adressen.fxml")
+		parse("ad/AD200Schnittstelle.fxml")
 		// parse("ag/AG000Info.fxml")
 		// parse("ag/AG010Hilfe.fxml")
 		// parse("ag/AG100Mandanten.fxml")

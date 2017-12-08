@@ -7,6 +7,7 @@ import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.app.base.StartDialog
 import de.cwkuehl.jhh6.app.controller.ad.AD100PersonenController
+import de.cwkuehl.jhh6.app.controller.ad.AD120GeburtstageController
 import de.cwkuehl.jhh6.app.controller.ag.AG000InfoController
 import de.cwkuehl.jhh6.app.controller.ag.AG010HilfeController
 import de.cwkuehl.jhh6.app.controller.ag.AG100MandantenController
@@ -288,7 +289,8 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 			{
 				Jhh6::aktualisiereTitel()
 				var boolean g = Global::objBool(Jhh6::getEinstellungen().getDateiParameter("AD120Geburtstage_Starten"))
-				if (ok && g) { // starteFormular(typeof(AD120GeburtstageController), DialogAufrufEnum.OHNE)
+				if (ok && g) {
+					starteFormular(typeof(AD120GeburtstageController), DialogAufrufEnum.OHNE)
 				}
 			}
 		])

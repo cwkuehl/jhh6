@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import de.cwkuehl.jhh5.anwendung.control.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import de.cwkuehl.jhh6.app.control.Datum?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.45" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="de.cwkuehl.jhh6.app.controller.ad.AD120GeburtstageController">
+
+	<padding>
+		<Insets bottom="10" left="10" right="10" top="10" />
+	</padding>
+
+	<Label fx:id="datum0" mnemonicParsing="true" text="%AD120.datum" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+	<Datum fx:id="datum" schalterText="mhp" onAction="#onTage" accessibleText="%AD120.datum.tt" promptText="%AD120.datum.tt"
+		wochentagGroesse="100.0" GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.rowIndex="0">
+		<tooltip>
+			<Tooltip text="%AD120.datum.tt" />
+		</tooltip>
+	</Datum>
+	<Label fx:id="tage0" mnemonicParsing="true" text="%AD120.tage" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+	<TextField fx:id="tage" onKeyReleased="#onTage" accessibleText="%AD120.tage.tt"
+		promptText="%AD120.tage.tt" GridPane.columnIndex="3" GridPane.columnSpan="1"
+		GridPane.rowIndex="0">
+		<tooltip>
+			<Tooltip text="%AD120.tage.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="geburtstage0" mnemonicParsing="true" text="%AD120.geburtstage" GridPane.columnIndex="0"
+		GridPane.columnSpan="3" GridPane.rowIndex="1" />
+	<TextArea fx:id="geburtstage" accessibleText="%AD120.geburtstage.tt"
+		editable="false" promptText="%AD120.geburtstage.tt" wrapText="true"
+		GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%AD120.geburtstage.tt" />
+		</tooltip>
+	</TextArea>
+	<HBox alignment="CENTER" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.hgrow="ALWAYS"
+		GridPane.rowIndex="3">
+		<CheckBox fx:id="starten" mnemonicParsing="true" text="%AD120.starten" />
+		<Button fx:id="ok" cancelButton="true" defaultButton="true" mnemonicParsing="true" onAction="#onOk" text="%Ok">
+			<tooltip>
+				<Tooltip text="%Ok.tt" />
+			</tooltip>
+		</Button>
+	</HBox>
+
+	<stylesheets>
+		<URL value="@../Jhh6.css" />
+	</stylesheets>
+	<columnConstraints>
+		<ColumnConstraints />
+		<ColumnConstraints />
+		<ColumnConstraints />
+		<ColumnConstraints />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+	</rowConstraints>
+</GridPane>
