@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import de.cwkuehl.jhh5.anwendung.control.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import de.cwkuehl.jhh6.app.control.Datum?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="de.cwkuehl.jhh6.app.controller.ad.AD110PersonController">
+
+	<padding>
+		<Insets bottom="10" left="10" right="10" top="10" />
+	</padding>
+
+	<Label fx:id="nr0" text="%AD110.nr" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+	<TextField fx:id="nr" accessibleText="%AD110.nr.tt" promptText="%AD110.nr.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="1" GridPane.rowIndex="1">
+		<tooltip>
+			<Tooltip text="%AD110.nr.tt" />
+		</tooltip>
+	</TextField>
+	<TextField fx:id="sitzNr" accessibleText="%AD110.sitzNr.tt" promptText="%AD110.sitzNr.tt" GridPane.columnIndex="2"
+		GridPane.columnSpan="1" GridPane.rowIndex="1">
+		<tooltip>
+			<Tooltip text="%AD110.sitzNr.tt" />
+		</tooltip>
+	</TextField>
+	<TextField fx:id="adressNr" accessibleText="%AD110.adressNr.tt" promptText="%AD110.adressNr.tt" GridPane.columnIndex="3"
+		GridPane.columnSpan="1" GridPane.rowIndex="1">
+		<tooltip>
+			<Tooltip text="%AD110.adressNr.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="titel0" mnemonicParsing="true" text="%AD110.titel" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+	<TextField fx:id="titel" accessibleText="%AD110.titel.tt" promptText="%AD110.titel.tt"
+		GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.rowIndex="2">
+		<tooltip>
+			<Tooltip text="%AD110.titel.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="vorname0" mnemonicParsing="true" text="%AD110.vorname" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+	<TextField fx:id="vorname" accessibleText="%AD110.vorname.tt" promptText="%AD110.vorname.tt" GridPane.columnIndex="3"
+		GridPane.columnSpan="1" GridPane.rowIndex="2">
+		<tooltip>
+			<Tooltip text="%AD110.vorname.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="praedikat0" mnemonicParsing="true" text="%AD110.praedikat" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+	<TextField fx:id="praedikat" accessibleText="%AD110.praedikat.tt" promptText="%AD110.praedikat.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="1" GridPane.rowIndex="3">
+		<tooltip>
+			<Tooltip text="%AD110.praedikat.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="name10" mnemonicParsing="true" text="%AD110.name1" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+	<TextField fx:id="name1" accessibleText="%AD110.name1.tt" promptText="%AD110.name1.tt"
+		GridPane.columnIndex="3" GridPane.columnSpan="1" GridPane.rowIndex="3">
+		<tooltip>
+			<Tooltip text="%AD110.name1.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="name20" text="%AD110.name2" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+	<TextField fx:id="name2" accessibleText="%AD110.name2.tt" promptText="%AD110.name2.tt"
+		GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4">
+		<tooltip>
+			<Tooltip text="%AD110.name2.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="geschlecht0" text="%AD110.geschlecht" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="5">
+		<fx:define>
+			<ToggleGroup fx:id="geschlecht" />
+		</fx:define>
+		<children>
+			<RadioButton fx:id="neutrum" accessibleText="%AD110.neutrum.tt" selected="true"
+				text="neutrum" toggleGroup="$geschlecht" userData="N">
+				<tooltip>
+					<Tooltip text="%AD110.neutrum.tt" />
+				</tooltip>
+			</RadioButton>
+			<RadioButton fx:id="mann" accessibleText="%AD110.mann.tt" text="%AD110.mann" toggleGroup="$geschlecht" userData="M">
+				<tooltip>
+					<Tooltip text="%AD110.mann.tt" />
+				</tooltip>
+			</RadioButton>
+			<RadioButton fx:id="frau" accessibleText="%AD110.frau.tt" text="%AD110.frau" toggleGroup="$geschlecht" userData="F">
+				<tooltip>
+					<Tooltip text="%AD110.frau.tt" />
+				</tooltip>
+			</RadioButton>
+		</children>
+	</HBox>
+	<Label fx:id="geburt0" mnemonicParsing="true" text="%AD110.geburt" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+	<Datum fx:id="geburt" accessibleText="%AD110.geburt.tt" promptText="%AD110.geburt.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="3" GridPane.rowIndex="6">
+		<tooltip>
+			<Tooltip text="%AD110.geburt.tt" />
+		</tooltip>
+	</Datum>
+	<Label fx:id="personStatus0" text="%AD110.personStatus" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="7">
+		<fx:define>
+			<ToggleGroup fx:id="personStatus" />
+		</fx:define>
+		<children>
+			<RadioButton fx:id="personAktuell" accessibleText="%AD110.personAktuell.tt" text="%AD110.personAktuell" toggleGroup="$personStatus"
+				userData="0">
+				<tooltip>
+					<Tooltip text="%AD110.personAktuell.tt" />
+				</tooltip>
+			</RadioButton>
+			<RadioButton fx:id="personAlt" accessibleText="%AD110.personAlt.tt" text="%AD110.personAlt"
+				toggleGroup="$personStatus" userData="1">
+				<tooltip>
+					<Tooltip text="%AD110.personAlt.tt" />
+				</tooltip>
+			</RadioButton>
+		</children>
+	</HBox>
+	<Label fx:id="name0" mnemonicParsing="true" text="%AD110.name" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+	<TextField fx:id="name" accessibleText="%AD110.name.tt" promptText="%AD110.name.tt"
+		GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="8">
+		<tooltip>
+			<Tooltip text="%AD110.name.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="strasse0" mnemonicParsing="true" text="%AD110.strasse" GridPane.columnIndex="0" GridPane.rowIndex="9" />
+	<TextField fx:id="strasse" accessibleText="%AD110.strasse.tt" promptText="%AD110.strasse.tt"
+		GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.rowIndex="9">
+		<tooltip>
+			<Tooltip text="%AD110.strasse.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="hausnr0" text="%AD110.hausnr" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+	<TextField fx:id="hausnr" accessibleText="%AD110.hausnr.tt" promptText="%AD110.hausnr.tt" GridPane.columnIndex="3"
+		GridPane.columnSpan="1" GridPane.rowIndex="9">
+		<tooltip>
+			<Tooltip text="%AD110.hausnr.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="postfach0" text="%AD110.postfach" GridPane.columnIndex="0" GridPane.rowIndex="10" />
+	<TextField fx:id="postfach" accessibleText="%AD110.postfach.tt" promptText="%AD110.postfach.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="1" GridPane.rowIndex="10">
+		<tooltip>
+			<Tooltip text="%AD110.postfach.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="staat0" text="%AD110.staat" GridPane.columnIndex="2" GridPane.rowIndex="10" />
+	<TextField fx:id="staat" accessibleText="%AD110.staat.tt" promptText="%AD110.staat.tt"
+		GridPane.columnIndex="3" GridPane.columnSpan="1" GridPane.rowIndex="10">
+		<tooltip>
+			<Tooltip text="%AD110.staat.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="plz0" text="%AD110.plz" GridPane.columnIndex="0" GridPane.rowIndex="11" />
+	<TextField fx:id="plz" accessibleText="%AD110.plz.tt" promptText="%AD110.plz.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="1" GridPane.rowIndex="11">
+		<tooltip>
+			<Tooltip text="%AD110.plz.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="ort0" text="%AD110.ort" GridPane.columnIndex="2" GridPane.rowIndex="11" />
+	<TextField fx:id="ort" accessibleText="%AD110.ort.tt" promptText="%AD110.ort.tt" GridPane.columnIndex="3" GridPane.columnSpan="1"
+		GridPane.rowIndex="11">
+		<tooltip>
+			<Tooltip text="%AD110.ort.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="telefon0" text="%AD110.telefon" GridPane.columnIndex="0" GridPane.rowIndex="12" />
+	<TextField fx:id="telefon" accessibleText="%AD110.telefon.tt" promptText="%AD110.telefon.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="1" GridPane.rowIndex="12">
+		<tooltip>
+			<Tooltip text="%AD110.telefon.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="fax0" text="%AD110.fax" GridPane.columnIndex="2" GridPane.rowIndex="12" />
+	<TextField fx:id="fax" accessibleText="%AD110.fax.tt" promptText="%AD110.fax.tt"
+		GridPane.columnIndex="3" GridPane.columnSpan="1" GridPane.rowIndex="12">
+		<tooltip>
+			<Tooltip text="%AD110.fax.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="mobil0" text="%AD110.mobil" GridPane.columnIndex="0" GridPane.rowIndex="13" />
+	<TextField fx:id="mobil" accessibleText="%AD110.mobil.tt" promptText="%AD110.mobil.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="1" GridPane.rowIndex="13">
+		<tooltip>
+			<Tooltip text="%AD110.mobil.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="homepage0" text="%AD110.homepage" GridPane.columnIndex="2" GridPane.rowIndex="13" />
+	<TextField fx:id="homepage" accessibleText="%AD110.homepage.tt" promptText="%AD110.homepage.tt"
+		GridPane.columnIndex="3" GridPane.columnSpan="1" GridPane.rowIndex="13">
+		<tooltip>
+			<Tooltip text="%AD110.homepage.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="email0" text="%AD110.email" GridPane.columnIndex="0" GridPane.rowIndex="14" />
+	<TextField fx:id="email" accessibleText="%AD110.email.tt" promptText="%AD110.email.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="3" GridPane.rowIndex="14">
+		<tooltip>
+			<Tooltip text="%AD110.email.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="notiz0" text="%AD110.notiz" GridPane.columnIndex="0" GridPane.rowIndex="15" />
+	<TextArea fx:id="notiz" accessibleText="%AD110.notiz.tt" promptText="%AD110.notiz.tt" wrapText="true"
+		GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="15" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%AD110.notiz.tt" />
+		</tooltip>
+	</TextArea>
+	<Label fx:id="sitzStatus0" text="%AD110.sitzStatus" GridPane.columnIndex="0" GridPane.rowIndex="16" />
+	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="16">
+		<fx:define>
+			<ToggleGroup fx:id="sitzStatus" />
+		</fx:define>
+		<children>
+			<RadioButton fx:id="sitzAktuell" accessibleText="%AD110.sitzAktuell.tt" text="%AD110.sitzAktuell" toggleGroup="$sitzStatus" userData="0">
+				<tooltip>
+					<Tooltip text="%AD110.sitzAktuell.tt" />
+				</tooltip>
+			</RadioButton>
+			<RadioButton fx:id="sitzAlt" accessibleText="%AD110.sitzAlt.tt" text="%AD110.sitzAlt" toggleGroup="$sitzStatus" userData="1">
+				<tooltip>
+					<Tooltip text="%AD110.sitzAlt.tt" />
+				</tooltip>
+			</RadioButton>
+		</children>
+	</HBox>
+	<Label fx:id="adresseAnzahl0" text="%AD110.adresseAnzahl" GridPane.columnIndex="0" GridPane.rowIndex="17" />
+	<TextField fx:id="adresseAnzahl" accessibleText="%AD110.adresseAnzahl.tt" promptText="%AD110.adresseAnzahl.tt"
+		GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.rowIndex="17">
+		<tooltip>
+			<Tooltip text="%AD110.adresseAnzahl.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="angelegt0" text="%Creation" GridPane.columnIndex="0" GridPane.rowIndex="18" />
+	<TextField fx:id="angelegt" accessibleText="%Creation.tt"
+		promptText="%Creation.tt" GridPane.columnIndex="1" GridPane.columnSpan="3"
+		GridPane.rowIndex="18">
+		<tooltip>
+			<Tooltip text="%Creation.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="geaendert0" text="%Change" GridPane.columnIndex="0" GridPane.rowIndex="19" />
+	<TextField fx:id="geaendert" accessibleText="%Change.tt"
+		promptText="%Change.tt" GridPane.columnIndex="1" GridPane.columnSpan="3"
+		GridPane.rowIndex="19">
+		<tooltip>
+			<Tooltip text="%Change.tt" />
+		</tooltip>
+	</TextField>
+	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="20">
+		<Button fx:id="ok" defaultButton="true" mnemonicParsing="true" onAction="#onOk" text="%Ok">
+			<tooltip>
+				<Tooltip text="%Ok.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="adresseDupl" onAction="#onAdresseDupl" text="%AD110.adresseDupl">
+			<tooltip>
+				<Tooltip text="%AD110.adresseDupl.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="adresseWechseln" mnemonicParsing="true" onAction="#onAdresseWechseln" text="%AD110.adresseWechseln">
+			<tooltip>
+				<Tooltip text="%AD110.adresseWechseln.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="abbrechen" cancelButton="true" onAction="#onAbbrechen" text="%Cancel">
+			<tooltip>
+				<Tooltip text="%Cancel.tt" />
+			</tooltip>
+		</Button>
+	</HBox>
+
+	<stylesheets>
+		<URL value="@../Jhh6.css" />
+	</stylesheets>
+	<columnConstraints>
+		<ColumnConstraints />
+		<ColumnConstraints />
+		<ColumnConstraints />
+		<ColumnConstraints />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+	</rowConstraints>
+</GridPane>

@@ -26,6 +26,8 @@ class JavaFxParserTest {
 	/* Change JavaFX files for JHH6. */
 	@Test def void parse() {
 
+		// parse("ad/AD100Personen.fxml")
+		parse("ad/AD110Person.fxml")
 		// parse("ag/AG000Info.fxml")
 		// parse("ag/AG010Hilfe.fxml")
 		// parse("ag/AG100Mandanten.fxml")
@@ -38,7 +40,7 @@ class JavaFxParserTest {
 		// parse("am/AM100Aenderung.fxml")
 		// parse("am/AM500Einstellungen.fxml")
 		// parse("am/AM510Dialoge.fxml")
-		parse("tb/TB100Tagebuch.fxml")
+		// parse("tb/TB100Tagebuch.fxml")
 		Global.machNichts
 	}
 
@@ -100,6 +102,10 @@ class JavaFxParserTest {
 					str = str.replace('''text="«text»"''', '''text="%Paste"''')
 				else if (tt && id == 'export')
 					str = str.replace('''text="«text»"''', '''text="%Export"''')
+				else if (tt && id == 'drucken')
+					str = str.replace('''text="«text»"''', '''text="%Print"''')
+				else if (tt && id == 'imExport')
+					str = str.replace('''text="«text»"''', '''text="%ImExport"''')
 				else if (id == 'ok')
 					str = str.replace('''text="«text»"''', '''text="%Ok«IF tt».tt«ENDIF»"''')
 				else if (id == 'abbrechen')
@@ -156,6 +162,7 @@ class JavaFxParserTest {
 				str = str.replace('''tabs_48.png''', '''icons8-tab.png''')
 				str = str.replace('''edit-paste-4.png''', '''icons8-paste.png''')
 				str = str.replace('''floppy_disk_48.png''', '''icons8-save.png''')
+				str = str.replace('''printer_48.png''', '''icons8-print.png''')
 			}
 			System.out.println(str)
 		}
