@@ -55,8 +55,8 @@ class Werkzeug {
 			append("</td></tr>")
 		sb.append("<tr><td>").append(g("AG000.userhome")).append("</td><td>").append(System.getProperty("user.dir")).
 			append("</td></tr>")
-		val props = new Properties()
-		val input = typeof(Werkzeug).getClassLoader().getResourceAsStream("ServerConfig.properties")
+		val props = new Properties
+		val input = typeof(Werkzeug).classLoader.getResourceAsStream("ServerConfig.properties")
 		props.load(input)
 		var jdbcUrl = props.getProperty("DB_DRIVER_CONNECT")
 		if (!Global.nes(jdbcUrl)) {
@@ -142,17 +142,17 @@ class Werkzeug {
 	def public static void setHelp(WebEngine we) {
 
 		var html = "/JHaushalt-Hilfe.html"
-		var url = Werkzeug.getClass().getResource(html)
+		var url = Werkzeug.getClass.getResource(html)
 		if (url === null) {
 			html = Jhh6.einstellungen.hilfeDatei
-			url = Werkzeug.getClass().getResource(html)
+			url = Werkzeug.getClass.getResource(html)
 			if (url === null)
 				url = new File(html).toURI.toURL
 		}
 		if (url === null) {
 			we.loadContent('''<html>«Meldungen.M3000(html)»</html>''')
 		} else {
-			we.load(url.toExternalForm())
+			we.load(url.toExternalForm)
 		}
 	}
 
@@ -177,9 +177,11 @@ class Werkzeug {
 		var alert = new Alert(typ)
 		alert.setTitle(Jhh6.titelKurz)
 		if (typ == AlertType.INFORMATION) {
-			alert.setHeaderText("Hinweis")
+			alert.setHeaderText(g("alert.info"))
+		} else if (typ == AlertType.CONFIRMATION){
+			alert.setHeaderText(g("alert.confirm"))
 		} else {
-			alert.setHeaderText("Fehler")
+			alert.setHeaderText(g("alert.error"))
 		}
 		// alert.setContentText(str)
 		var label = new Label("")
@@ -190,14 +192,14 @@ class Werkzeug {
 		textArea.setMaxHeight(Double.MAX_VALUE)
 		GridPane.setVgrow(textArea, Priority.ALWAYS)
 		GridPane.setHgrow(textArea, Priority.ALWAYS)
-		var expContent = new GridPane()
+		var expContent = new GridPane
 		expContent.setMaxWidth(Double.MAX_VALUE)
 		expContent.add(label, 0, 0)
 		expContent.add(textArea, 0, 1)
-		// alert.getDialogPane().setExpandableContent(expContent)
-		alert.getDialogPane().setContent(expContent)
+		// alert.getDialogPane.setExpandableContent(expContent)
+		alert.dialogPane.setContent(expContent)
 		var r = alert.showAndWait
-		if (r.present && r.get() == ButtonType.OK) {
+		if (r.present && r.get == ButtonType.OK) {
 			return 1
 		}
 		return 0
@@ -224,17 +226,17 @@ class Werkzeug {
 
 		var g = Jhh6::einstellungen.getDialogGroesse(key)
 		if (g.leer) {
-			var b = Screen.getPrimary().getVisualBounds()
+			var b = Screen.primary.visualBounds
 			if (key === null) {
-				g.setX(b.getWidth() / 8)
-				g.setY(b.getHeight() / 8)
-				g.setWidth(b.getWidth() * 3 / 4)
-				g.setHeight(b.getHeight() * 3 / 4)
+				g.setX(b.width / 8)
+				g.setY(b.height / 8)
+				g.setWidth(b.width * 3 / 4)
+				g.setHeight(b.height * 3 / 4)
 			} else {
-				g.setX(b.getWidth() / 4)
-				g.setY(b.getHeight() / 4)
-				g.setWidth(b.getWidth() * 2 / 4)
-				g.setHeight(b.getHeight() * 2 / 4)
+				g.setX(b.width / 4)
+				g.setY(b.height / 4)
+				g.setWidth(b.width * 2 / 4)
+				g.setHeight(b.height * 2 / 4)
 			}
 		}
 		// log.info('''getDialogGroesse «key» x «g.x» y «g.y» w «g.width» h «g.height»''')
@@ -273,7 +275,7 @@ class Werkzeug {
 			}
 		} finally {
 			if (f !== null) {
-				f.close()
+				f.close
 			}
 		}
 	}
@@ -303,7 +305,7 @@ class Werkzeug {
 			}
 		} finally {
 			if (f !== null) {
-				f.close()
+				f.close
 			}
 		}
 	}
@@ -319,9 +321,9 @@ class Werkzeug {
 
 		try {
 			if (!Global.nes(dateiname)) {
-				if (Desktop.isDesktopSupported()) {
+				if (Desktop.isDesktopSupported) {
 					var t = new Thread [
-						Desktop.getDesktop().open(new File(dateiname))
+						Desktop.desktop.open(new File(dateiname))
 					]
 					t.start
 				} else {
@@ -357,7 +359,7 @@ class Werkzeug {
 		} else {
 			f = new File(new File(pfad), datei)
 		}
-		return f.getPath()
+		return f.path
 	}
 
 	def public static List<String> leseDatei(String datei) {
@@ -367,12 +369,12 @@ class Werkzeug {
 		try {
 			f = new BufferedReader(new FileReader(datei))
 			var String zeile = null
-			while ((zeile = f.readLine()) !== null) {
+			while ((zeile = f.readLine) !== null) {
 				zeilen.add(zeile)
 			}
 		} finally {
 			if (f !== null) {
-				f.close()
+				f.close
 			}
 		}
 		return zeilen
@@ -388,7 +390,7 @@ class Werkzeug {
 
 	def public static String g(String s) {
 
-		var w = getBundle().getString(s)
+		var w = getBundle.getString(s)
 		if (!Global.nes(w)) {
 			w = w.replace("_", "")
 		}

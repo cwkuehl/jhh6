@@ -11,34 +11,34 @@ class DateiAuswahl {
 
 	def static String auswaehlen(boolean tempVerz, String dateiname, String ok, String endung, String endungLang) {
 
-		var String pfad = ""
+		var pfad = ""
 		var File theFile = null
 		if (tempVerz) {
-			pfad += Jhh6.getEinstellungen().getTempVerzeichnis()
+			pfad += Jhh6.einstellungen.getTempVerzeichnis
 		}
 		if (!Global.nes(pfad) && !pfad.endsWith(File.separator)) {
 			pfad += File.separator
 		}
 		if (!Global.nes(dateiname)) {
-			pfad += dateiname
+			pfad += Werkzeug::g(dateiname)
 		}
 		theFile = new File(pfad)
-		var JFileChooser chooser = new JFileChooser()
-		chooser.setApproveButtonText(ok)
+		var chooser = new JFileChooser
+		chooser.setApproveButtonText(Werkzeug::g(ok))
 		chooser.setSelectedFile(theFile)
-		var FileFilter filter = new FileFilter() {
-			/** 
-			 * Whether the given file is accepted by this filter. 
-			 */
+		var filter = new FileFilter {
+
+			/** Whether the given file is accepted by this filter. */
 			override boolean accept(File f) {
+
 				if (f !== null) {
-					if (f.isDirectory()) {
+					if (f.isDirectory) {
 						return true
 					}
-					var String filename = f.getName()
+					var String filename = f.getName
 					var String ^extension = null
 					var int i = filename.lastIndexOf(Character.valueOf('.').charValue)
-					if (i > 0 && i < filename.length() - 1) {
+					if (i > 0 && i < filename.length - 1) {
 						^extension = filename.substring(i + 1)
 					}
 					if (^extension !== null && (^extension.equalsIgnoreCase(endung))) {
@@ -53,18 +53,18 @@ class DateiAuswahl {
 			 */
 
 			override String getDescription() {
-				return endungLang
+				return Werkzeug::g(endungLang)
 			}
 		}
 		chooser.setFileFilter(filter)
 		var int retval = chooser.showDialog(null, null)
 		if (retval === JFileChooser.APPROVE_OPTION) {
-			theFile = chooser.getSelectedFile()
+			theFile = chooser.selectedFile
 			if (theFile !== null) {
 				if (tempVerz) {
-					Jhh6.getEinstellungen().setTempVerzeichnis(theFile.getParent())
+					Jhh6.getEinstellungen.setTempVerzeichnis(theFile.parent)
 				}
-				return theFile.getPath()
+				return theFile.path
 			}
 		}
 		return null

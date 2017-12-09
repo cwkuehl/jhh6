@@ -59,7 +59,7 @@ class AD200SchnittstelleController extends BaseController<String> {
 	 */
 	@FXML def void onDateiAuswahl() {
 
-		var d = DateiAuswahl.auswaehlen(true, "adressen.csv", "Datei auswählen", "csv", "CSV-Dateien (.csv)")
+		var d = DateiAuswahl.auswaehlen(true, "AD200.select.file", "AD200.select.ok", "csv", "AD200.select.ext")
 		if (!Global.nes(d)) {
 			datei.setText(d)
 		}
