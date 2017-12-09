@@ -18,6 +18,7 @@ import de.cwkuehl.jhh6.app.controller.am.AM100AenderungController
 import de.cwkuehl.jhh6.app.controller.am.AM500EinstellungenController
 import de.cwkuehl.jhh6.app.controller.am.AM510DialogeController
 import de.cwkuehl.jhh6.app.controller.hh.HH100PeriodenController
+import de.cwkuehl.jhh6.app.controller.hh.HH200KontenController
 import de.cwkuehl.jhh6.app.controller.tb.TB100TagebuchController
 import de.cwkuehl.jhh6.server.FactoryService
 import java.net.URL
@@ -333,7 +334,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		// l.add(new StartDialog("#FZ100", g("menu.statistic"), typeof(FZ100StatistikController), null))
 		// l.add(new StartDialog("#HH400", g("menu.bookings"), typeof(HH400BuchungenController), null))
 		// l.add(new StartDialog("#HH300", g("menu.events"), typeof(HH300EreignisseController), null))
-		// l.add(new StartDialog("#HH200", g("menu.accounts"), typeof(HH200KontenController), null))
+		l.add(new StartDialog("#HH200", g("menu.accounts"), typeof(HH200KontenController), null))
 		l.add(new StartDialog("#HH100", g("menu.periods"), typeof(HH100PeriodenController), null))
 		// l.add(new StartDialog("#HH500;EB", g("menu.openingbalance"), typeof(HH500BilanzenController), "EB"))
 		// l.add(new StartDialog("#HH500;GV", g("menu.plbalance"), typeof(HH500BilanzenController), "GV"))
@@ -425,7 +426,8 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		starteFormular(typeof(HH100PeriodenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleHH200() { // starteFormular(typeof(HH200KontenController), DialogAufrufEnum.OHNE)
+	@FXML def void handleHH200() {
+		starteFormular(typeof(HH200KontenController), DialogAufrufEnum.OHNE)
 	}
 
 	@FXML def void handleHH300() { // starteFormular(typeof(HH300EreignisseController), DialogAufrufEnum.OHNE)
