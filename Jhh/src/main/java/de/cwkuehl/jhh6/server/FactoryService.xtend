@@ -3,6 +3,7 @@ package de.cwkuehl.jhh6.server
 import de.cwkuehl.jhh6.api.service.IAdresseService
 import de.cwkuehl.jhh6.api.service.IAnmeldungService
 import de.cwkuehl.jhh6.api.service.IHaushaltService
+import de.cwkuehl.jhh6.api.service.IReplikationService
 import de.cwkuehl.jhh6.api.service.ITagebuchService
 import de.cwkuehl.jhh6.server.base.WkInjector
 
@@ -35,9 +36,9 @@ class FactoryService {
 	//	return injector.getInstance(typeof(IMessdienerService))
 	//}
 
-	//def static IReplikationService getReplikationService() {
-	//	return injector.getInstance(typeof(IReplikationService))
-	//}
+	def static IReplikationService getReplikationService() {
+		return injector.getInstance(typeof(IReplikationService))
+	}
 
 	def static ITagebuchService getTagebuchService() {
 		return injector.getInstance(typeof(ITagebuchService))

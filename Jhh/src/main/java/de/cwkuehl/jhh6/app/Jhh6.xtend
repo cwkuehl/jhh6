@@ -7,6 +7,7 @@ import de.cwkuehl.jhh6.api.service.ServiceErgebnis
 import de.cwkuehl.jhh6.app.base.Einstellungen
 import de.cwkuehl.jhh6.app.base.Werkzeug
 import de.cwkuehl.jhh6.app.controller.Jhh6Controller
+import de.cwkuehl.jhh6.server.FactoryService
 import java.io.IOException
 import java.lang.reflect.InvocationTargetException
 import java.net.URL
@@ -36,7 +37,7 @@ class Jhh6 extends Application {
 	// }
 	def static void main(String[] args) {
 		// Locale.setDefault(Locale.ENGLISH);
-		if (Global::isWebStart()) {
+		if (Global::isWebStart) {
 			if (args !== null) {
 				log.error('''JHH6-Argumente: «String::join(" ", args)»'''.toString)
 			}
@@ -45,17 +46,17 @@ class Jhh6 extends Application {
 	}
 
 	override void start(Stage stage) throws IOException {
-		Thread::currentThread().setUncaughtExceptionHandler([ thread, t0 |
+		Thread::currentThread.setUncaughtExceptionHandler([ thread, t0 |
 			{
 				var Throwable t = t0
 				if (t instanceof RuntimeException) {
 					var RuntimeException ex = (t as RuntimeException)
-					if (ex.getCause() !== null) {
-						t = ex.getCause()
+					if (ex.getCause !== null) {
+						t = ex.getCause
 						if (t instanceof InvocationTargetException) {
 							var InvocationTargetException ex2 = (t as InvocationTargetException)
-							if (ex2.getTargetException() !== null) {
-								t = ex2.getTargetException()
+							if (ex2.getTargetException !== null) {
+								t = ex2.getTargetException
 							}
 						}
 					}
@@ -67,31 +68,31 @@ class Jhh6 extends Application {
 				setLeftStatus(s)
 			}
 		])
-		var ClassLoader classLoader = Thread::currentThread().getContextClassLoader()
+		var ClassLoader classLoader = Thread::currentThread.getContextClassLoader
 		var URL fxmlURL = classLoader.getResource("dialog/Jhh6.fxml")
 		var FXMLLoader loader = new FXMLLoader(fxmlURL, Werkzeug::bundle)
 		var Parent p = loader.load
-		controller = loader.getController()
+		controller = loader.getController
 		controller.init(stage, null)
 		var Scene scene = new Scene(p)
 		stage.setScene(scene)
-		stage.setTitle(getTitel())
+		stage.setTitle(getTitel)
 		if (Global::istLinux) {
 			// Absturz verhindern: https://bugs.openjdk.java.net/browse/JDK-8141687
-			stage.getIcons().add(new Image(classLoader.getResourceAsStream("WKHH.gif")))
+			stage.getIcons.add(new Image(classLoader.getResourceAsStream("WKHH.gif")))
 		}
-		stage.show()
+		stage.show
 		if (Jhh6::stage === null) {
 			Jhh6::stage = stage
 		}
 		var g = Werkzeug.getDialogGroesse("Rahmen")
-		stage.setX(g.getX())
-		stage.setY(g.getY())
-		stage.setWidth(g.getWidth())
-		stage.setHeight(g.getHeight())
+		stage.setX(g.getX)
+		stage.setY(g.getY)
+		stage.setWidth(g.getWidth)
+		stage.setHeight(g.getHeight)
 		stage.setOnCloseRequest([ event |
 			{
-				Platform::exit() // Anwendung beenden
+				Platform::exit // Anwendung beenden
 			}
 		])
 	}
@@ -100,7 +101,7 @@ class Jhh6 extends Application {
 
 		controller.closeTabs
 		Werkzeug.setDialogGroesse("Rahmen", stage)
-		getEinstellungen().save
+		getEinstellungen.save
 	}
 
 	def static Einstellungen getEinstellungen() {
@@ -112,7 +113,7 @@ class Jhh6 extends Application {
 	}
 
 	def static ServiceDaten getServiceDaten() {
-		return new ServiceDaten(serviceDaten.getMandantNr(), serviceDaten.getBenutzerId())
+		return new ServiceDaten(serviceDaten.getMandantNr, serviceDaten.getBenutzerId)
 	}
 
 	def static void setServiceDaten(ServiceDaten daten) {
@@ -120,7 +121,7 @@ class Jhh6 extends Application {
 		if (daten === null) {
 			serviceDaten = new ServiceDaten(0, "Benutzer-ID")
 		} else {
-			serviceDaten = new ServiceDaten(daten.getMandantNr(), daten.getBenutzerId())
+			serviceDaten = new ServiceDaten(daten.getMandantNr, daten.getBenutzerId)
 		}
 	}
 
@@ -128,21 +129,21 @@ class Jhh6 extends Application {
 
 		var str = new StringBuffer
 		str.append("JHH6 ")
-		str.append(getEinstellungen().getAnwendungsTitel(serviceDaten.mandantNr))
+		str.append(getEinstellungen.getAnwendungsTitel(serviceDaten.mandantNr))
 		str.append(" W. Kuehl")
-		return str.toString()
+		return str.toString
 	}
 
 	def private static String getTitel() {
 
 		var str = new StringBuffer
-		if (getEinstellungen().isTest) {
+		if (getEinstellungen.isTest) {
 			str.append("Test-")
 		}
 		str.append("JHH6 ")
-		str.append(getEinstellungen().getAnwendungsTitel(serviceDaten.mandantNr))
+		str.append(getEinstellungen.getAnwendungsTitel(serviceDaten.mandantNr))
 		str.append(" W. Kuehl")
-		var mandantNr = getServiceDaten().getMandantNr()
+		var mandantNr = getServiceDaten.getMandantNr
 		if (mandantNr <= 0) {
 			str.append(" (nicht angemeldet)")
 		} else if (mandantNr !== 1) {
@@ -154,7 +155,7 @@ class Jhh6 extends Application {
 	def static void aktualisiereTitel() {
 
 		if (stage !== null) {
-			stage.setTitle(getTitel())
+			stage.setTitle(getTitel)
 		}
 	}
 
@@ -184,20 +185,20 @@ class Jhh6 extends Application {
 	}
 
 	def static ServiceErgebnis<Void> rollback() {
-		// var ServiceErgebnis<Void> r = FactoryService.getReplikationService().rollback(getServiceDaten())
-		// if (r.ok()) {
-		// getEinstellungen().refreshMandant()
-		// }
-		// return r
-		return null
+
+		var ServiceErgebnis<Void> r = FactoryService.getReplikationService.rollback(getServiceDaten)
+		if (r.ok) {
+			getEinstellungen.refreshMandant
+		}
+		return r
 	}
 
 	def static ServiceErgebnis<Void> redo() {
-		// var ServiceErgebnis<Void> r = FactoryService.getReplikationService().redo(getServiceDaten())
-		// if (r.ok()) {
-		// getEinstellungen().refreshMandant()
-		// }
-		// return r
-		return null
+
+		var ServiceErgebnis<Void> r = FactoryService.getReplikationService.redo(getServiceDaten)
+		if (r.ok) {
+			getEinstellungen.refreshMandant
+		}
+		return r
 	}
 }

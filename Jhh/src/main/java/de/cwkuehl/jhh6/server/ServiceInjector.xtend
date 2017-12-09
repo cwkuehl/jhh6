@@ -3,6 +3,7 @@ package de.cwkuehl.jhh6.server
 import de.cwkuehl.jhh6.api.service.IAdresseService
 import de.cwkuehl.jhh6.api.service.IAnmeldungService
 import de.cwkuehl.jhh6.api.service.IHaushaltService
+import de.cwkuehl.jhh6.api.service.IReplikationService
 import de.cwkuehl.jhh6.api.service.ITagebuchService
 import de.cwkuehl.jhh6.server.base.AbstractModule
 import de.cwkuehl.jhh6.server.rep.IAdAdresseRep
@@ -46,6 +47,7 @@ import de.cwkuehl.jhh6.server.rep.impl.ZeinstellungRep
 import de.cwkuehl.jhh6.server.service.AdresseService
 import de.cwkuehl.jhh6.server.service.AnmeldungService
 import de.cwkuehl.jhh6.server.service.HaushaltService
+import de.cwkuehl.jhh6.server.service.ReplikationService
 import de.cwkuehl.jhh6.server.service.TagebuchService
 
 class ServiceInjector extends AbstractModule {
@@ -59,7 +61,7 @@ class ServiceInjector extends AbstractModule {
 		bind(typeof(IHaushaltService)).to(typeof(HaushaltService))
 //		bind(typeof(IHeilpraktikerService)).to(typeof(HeilpraktikerService))
 //		bind(typeof(IMessdienerService)).to(typeof(MessdienerService))
-//		bind(typeof(IReplikationService)).to(typeof(ReplikationService))
+		bind(typeof(IReplikationService)).to(typeof(ReplikationService))
 //		bind(typeof(IStammbaumService)).to(typeof(StammbaumService))
 		bind(typeof(ITagebuchService)).to(typeof(TagebuchService))
 //		bind(typeof(IVermietungService)).to(typeof(VermietungService))
