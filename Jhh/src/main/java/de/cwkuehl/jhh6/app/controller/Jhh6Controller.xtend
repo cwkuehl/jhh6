@@ -17,6 +17,7 @@ import de.cwkuehl.jhh6.app.controller.am.AM000AnmeldungController
 import de.cwkuehl.jhh6.app.controller.am.AM100AenderungController
 import de.cwkuehl.jhh6.app.controller.am.AM500EinstellungenController
 import de.cwkuehl.jhh6.app.controller.am.AM510DialogeController
+import de.cwkuehl.jhh6.app.controller.hh.HH100PeriodenController
 import de.cwkuehl.jhh6.app.controller.tb.TB100TagebuchController
 import de.cwkuehl.jhh6.server.FactoryService
 import java.net.URL
@@ -126,18 +127,18 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 
 	override void initialize(URL location, ResourceBundle resources) {
 
-		// StyleManager.getInstance().addUserAgentStylesheet("com/sun/javafx/scene/control/skin/modena/whiteOnBlack.css")
-		var Timer timer = new Timer()
+		// StyleManager.getInstance.addUserAgentStylesheet("com/sun/javafx/scene/control/skin/modena/whiteOnBlack.css")
+		var Timer timer = new Timer
 		timer.schedule(([|
-			tabs.getSelectionModel().selectedItemProperty().addListener(
+			tabs.getSelectionModel.selectedItemProperty.addListener(
 				([ ObservableValue<? extends Tab> ov, Tab alt, Tab neu |
-					if (alt !== null && alt.getUserData() instanceof BaseController<?>) {
-						var BaseController<?> bc = (alt.getUserData() as BaseController<?>)
-						bc.removeAccelerators()
+					if (alt !== null && alt.getUserData instanceof BaseController<?>) {
+						var BaseController<?> bc = (alt.getUserData as BaseController<?>)
+						bc.removeAccelerators
 					}
-					if (neu !== null && neu.getUserData() instanceof BaseController<?>) {
-						var BaseController<?> bc = (neu.getUserData() as BaseController<?>)
-						bc.addAccelerators()
+					if (neu !== null && neu.getUserData instanceof BaseController<?>) {
+						var BaseController<?> bc = (neu.getUserData as BaseController<?>)
+						bc.addAccelerators
 					}
 				] as ChangeListener<Tab>))
 			var daten0 = new ServiceDaten(1, "(initDatenbank)")
@@ -148,7 +149,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 			}
 			var mandantNr = Global.strInt(Jhh6::einstellungen.getDateiParameter("AM000Anmeldung_Mandant"))
 			var daten = new ServiceDaten(mandantNr, Jhh6::einstellungen.benutzer)
-			var r = FactoryService.getAnmeldungService().istOhneAnmelden(daten)
+			var r = FactoryService.getAnmeldungService.istOhneAnmelden(daten)
 			if (get(r)) {
 				Jhh6.setServiceDaten(daten)
 				setRechte(daten.mandantNr, true)
@@ -177,24 +178,24 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 
 	@FXML def protected void handleAnmelden(ActionEvent e) {
 
-		var daten = getServiceDaten()
-		if (menueAnmelden.isVisible()) {
+		var daten = getServiceDaten
+		if (menueAnmelden.isVisible) {
 			var s = starteDialog(typeof(AM000AnmeldungController), DialogAufrufEnum.OHNE)
 			if ("Anmelden".equals(s)) {
-				daten = getServiceDaten()
-				setRechte(daten.getMandantNr(), true)
-				startDialoge(daten.getMandantNr())
+				daten = getServiceDaten
+				setRechte(daten.getMandantNr, true)
+				startDialoge(daten.getMandantNr)
 			// System.out.println("Angemeldet.")
 			}
 		} else {
 			FactoryService.anmeldungService.abmelden(daten)
-			Jhh6::getEinstellungen().refreshMandant()
+			Jhh6::einstellungen.refreshMandant
 			setServiceDaten(null)
-			setRechte(daten.getMandantNr(), false)
+			setRechte(daten.getMandantNr, false)
 			// alle Tabs schließen
 			for (Tab t : getTabs.tabs) {
-				if (t.getOnClosed() !== null) {
-					t.getOnClosed().handle(null)
+				if (t.getOnClosed !== null) {
+					t.getOnClosed.handle(null)
 				}
 			}
 			getTabs.tabs.clear
@@ -205,7 +206,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 	}
 
 	@FXML def protected void handleBeenden(ActionEvent e) {
-		Platform::exit() // Anwendung beenden
+		Platform::exit // Anwendung beenden
 	}
 
 	def private void setRechte(int mandantNr, boolean ok) {
@@ -224,7 +225,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		menueAM100.setVisible(ok)
 		menueAM500.setVisible(ok)
 		menueAM510.setVisible(ok)
-		menueHp.setVisible(Jhh6::getEinstellungen().getMenuHeilpraktiker(mandantNr))
+		menueHp.setVisible(Jhh6::einstellungen.getMenuHeilpraktiker(mandantNr))
 		menueHP100.setVisible(ok)
 		menueHH100.setVisible(ok)
 		menueHH200.setVisible(ok)
@@ -239,7 +240,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		menueHP300.setVisible(ok)
 		menueHP350.setVisible(ok)
 		menueHP400.setVisible(ok)
-		menueMo.setVisible(Jhh6::getEinstellungen().getMenuMessdiener(mandantNr))
+		menueMo.setVisible(Jhh6::einstellungen.getMenuMessdiener(mandantNr))
 		menueMO100.setVisible(ok)
 		menueMO200.setVisible(ok)
 		menueMO300.setVisible(ok)
@@ -260,7 +261,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		menueFZ320.setVisible(ok)
 		menueFZ340.setVisible(ok)
 		menueFZ700.setVisible(ok)
-		menueVm.setVisible(Jhh6::getEinstellungen().getMenuVermietung(mandantNr))
+		menueVm.setVisible(Jhh6::einstellungen.getMenuVermietung(mandantNr))
 		sepVm1.setVisible(ok)
 		sepVm2.setVisible(ok)
 		sepVm3.setVisible(ok)
@@ -287,8 +288,8 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		sepWp2.setVisible(ok)
 		Platform::runLater([
 			{
-				Jhh6::aktualisiereTitel()
-				var boolean g = Global::objBool(Jhh6::getEinstellungen().getDateiParameter("AD120Geburtstage_Starten"))
+				Jhh6::aktualisiereTitel
+				var boolean g = Global::objBool(Jhh6::einstellungen.getDateiParameter("AD120Geburtstage_Starten"))
 				if (ok && g) {
 					starteFormular(typeof(AD120GeburtstageController), DialogAufrufEnum.OHNE)
 				}
@@ -299,15 +300,15 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 	def private void startDialoge(int mandantNr) {
 		Platform::runLater([
 			{
-				var List<StartDialog> dliste = Jhh6Controller::getDialogListe()
-				var String str = Global::nn(Jhh6::getEinstellungen().getStartdialoge(mandantNr))
+				var List<StartDialog> dliste = Jhh6Controller::getDialogListe
+				var String str = Global::nn(Jhh6::einstellungen.getStartdialoge(mandantNr))
 				var String[] array = str.split(Pattern::quote("|"))
-				val HashMap<String, StartDialog> map = new HashMap()
-				dliste.stream().forEach([a|map.put(a.getId(), a)])
+				val HashMap<String, StartDialog> map = new HashMap
+				dliste.stream.forEach([a|map.put(a.getId, a)])
 				for (String s : array) {
 					var StartDialog d = map.get(s)
 					if (d !== null) {
-						starteFormular(d.getClazz(), DialogAufrufEnum::OHNE, d.getParameter())
+						starteFormular(d.getClazz, DialogAufrufEnum::OHNE, d.getParameter)
 					}
 				}
 			}
@@ -315,7 +316,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 	}
 
 	def static List<StartDialog> getDialogListe() {
-		var List<StartDialog> l = new ArrayList<StartDialog>()
+		var List<StartDialog> l = new ArrayList<StartDialog>
 		l.add(new StartDialog("#AG100", g("menu.clients"), typeof(AG100MandantenController), null))
 		l.add(new StartDialog("#AG200", g("menu.users"), typeof(AG200BenutzerController), null))
 		l.add(new StartDialog("#AG400", g("menu.backups"), typeof(AG400SicherungenController), null))
@@ -333,7 +334,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		// l.add(new StartDialog("#HH400", g("menu.bookings"), typeof(HH400BuchungenController), null))
 		// l.add(new StartDialog("#HH300", g("menu.events"), typeof(HH300EreignisseController), null))
 		// l.add(new StartDialog("#HH200", g("menu.accounts"), typeof(HH200KontenController), null))
-		// l.add(new StartDialog("#HH100", g("menu.periods"), typeof(HH100PeriodenController), null))
+		l.add(new StartDialog("#HH100", g("menu.periods"), typeof(HH100PeriodenController), null))
 		// l.add(new StartDialog("#HH500;EB", g("menu.openingbalance"), typeof(HH500BilanzenController), "EB"))
 		// l.add(new StartDialog("#HH500;GV", g("menu.plbalance"), typeof(HH500BilanzenController), "GV"))
 		// l.add(new StartDialog("#HH500;SB", g("menu.finalbalance"), typeof(HH500BilanzenController), "SB"))
@@ -420,7 +421,8 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 	@FXML def void handleFZ700() { // starteFormular(typeof(FZ700NotizenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleHH100() { // starteFormular(typeof(HH100PeriodenController), DialogAufrufEnum.OHNE)
+	@FXML def void handleHH100() {
+		starteFormular(typeof(HH100PeriodenController), DialogAufrufEnum.OHNE)
 	}
 
 	@FXML def void handleHH200() { // starteFormular(typeof(HH200KontenController), DialogAufrufEnum.OHNE)
@@ -546,10 +548,10 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 	}
 
 	def void closeTabs() {
-		for (Tab t : tabs.getTabs()) {
+		for (Tab t : tabs.getTabs) {
 			// Close-Event händisch aufrufen
-			t.getOnClosed().handle(null)
+			t.getOnClosed.handle(null)
 		}
-		tabs.getTabs().removeAll(tabs.getTabs())
+		tabs.getTabs.removeAll(tabs.getTabs)
 	}
 }

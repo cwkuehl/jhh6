@@ -30,7 +30,7 @@ class JavaFxParserTest {
 		// parse("ad/AD110Person.fxml")
 		// parse("ad/AD120Geburtstage.fxml")
 		// parse("ad/AD130Adressen.fxml")
-		parse("ad/AD200Schnittstelle.fxml")
+		// parse("ad/AD200Schnittstelle.fxml")
 		// parse("ag/AG000Info.fxml")
 		// parse("ag/AG010Hilfe.fxml")
 		// parse("ag/AG100Mandanten.fxml")
@@ -43,6 +43,7 @@ class JavaFxParserTest {
 		// parse("am/AM100Aenderung.fxml")
 		// parse("am/AM500Einstellungen.fxml")
 		// parse("am/AM510Dialoge.fxml")
+		parse("hh/HH100Perioden.fxml")
 		// parse("tb/TB100Tagebuch.fxml")
 		Global.machNichts
 	}
