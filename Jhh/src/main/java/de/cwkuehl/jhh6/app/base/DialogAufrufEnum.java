@@ -43,19 +43,19 @@ public enum DialogAufrufEnum {
     public String toString() {
 
         if (equals(OHNE)) {
-            return "OHNE";
+            return Werkzeug.g("dialog.without");
         } else if (equals(NEU)) {
-            return "Neu";
+            return Werkzeug.g("dialog.new");
         } else if (equals(KOPIEREN)) {
-            return "Kopieren";
+            return Werkzeug.g("dialog.copy");
         } else if (equals(KOPIEREN2)) {
-            return "Kopieren ";
+            return Werkzeug.g("dialog.copy2");
         } else if (equals(AENDERN)) {
-            return "Ändern";
+            return Werkzeug.g("dialog.edit");
         } else if (equals(LOESCHEN)) {
-            return "Löschen";
+            return Werkzeug.g("dialog.delete");
         }
-        return "Stornieren"; // STORNO
+        return Werkzeug.g("dialog.reverse"); // STORNO
 
     }
 
