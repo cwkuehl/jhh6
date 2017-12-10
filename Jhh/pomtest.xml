@@ -164,6 +164,11 @@
 			<version>2.3.4</version>
 		</dependency>
 		<dependency>
+			<groupId>org.apache.xmlgraphics</groupId>
+			<artifactId>fop</artifactId>
+			<version>2.2</version>
+		</dependency>
+		<dependency>
 			<groupId>de.cwkuehl.jhh6</groupId>
 			<artifactId>Generator</artifactId>
 			<version>1.0</version>

@@ -10,6 +10,9 @@ import de.cwkuehl.jhh6.api.rollback.RollbackListe
 import de.cwkuehl.jhh6.api.service.ServiceDaten
 import de.cwkuehl.jhh6.api.service.ServiceErgebnis
 import de.cwkuehl.jhh6.server.db.DatenbankArt
+import de.cwkuehl.jhh6.server.fop.impl.JhhFop
+import de.cwkuehl.jhh6.server.fop.impl.JhhFopDokumentImpl
+import java.io.File
 import java.lang.reflect.Method
 import java.util.ArrayList
 import java.util.Hashtable
@@ -17,6 +20,8 @@ import java.util.List
 import java.util.Properties
 import java.util.Stack
 import javax.sql.DataSource
+import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder
+import org.apache.fop.apps.FopFactoryBuilder
 import org.slf4j.LoggerFactory
 
 class ServiceBase {
@@ -34,7 +39,7 @@ class ServiceBase {
 	/** Mapping zwischen DTOs und Repository. */
 	val protected static reps = new Hashtable<Class<?>, RbRepository>
 	/** Instanz zur Dokument-Erzeugung. */
-	//private static JhhFop jhhFop
+	private static JhhFop jhhFop
 	/** Datenbankart. */
 	private DatenbankArt dbart = DatenbankArt.KEINE
 
@@ -241,21 +246,21 @@ class ServiceBase {
 		return ctx
 	}
 
-//	def protected JhhFopDokumentImpl newFopDokument() {
-//
-//		if (jhhFop == null) {
-//			var stream = getClass().getResourceAsStream("/fop.xconf")
-//			var cfgBuilder = new DefaultConfigurationBuilder
-//			var cfg = cfgBuilder.build(stream)
-//			var baseUri = new File(".").toURI
-//			var fopFactoryBuilder = new FopFactoryBuilder(baseUri).setConfiguration(cfg)
-//			var fopFactory = fopFactoryBuilder.build
-//			jhhFop = new JhhFop
-//			jhhFop.fopFactory = fopFactory
-//		}
-//		var doc = new JhhFopDokumentImpl(jhhFop)
-//		return doc
-//	}
+	def protected JhhFopDokumentImpl newFopDokument() {
+
+		if (jhhFop === null) {
+			var stream = getClass().getResourceAsStream("/fop.xconf")
+			var cfgBuilder = new DefaultConfigurationBuilder
+			var cfg = cfgBuilder.build(stream)
+			var baseUri = new File(".").toURI
+			var fopFactoryBuilder = new FopFactoryBuilder(baseUri).setConfiguration(cfg)
+			var fopFactory = fopFactoryBuilder.build
+			jhhFop = new JhhFop
+			jhhFop.fopFactory = fopFactory
+		}
+		var doc = new JhhFopDokumentImpl(jhhFop)
+		return doc
+	}
 
 	def protected <R extends DtoBase> exportListeFuellen(List<String> spaltennamen, List<R> zeilen, R dto,
 		List<String> l) {

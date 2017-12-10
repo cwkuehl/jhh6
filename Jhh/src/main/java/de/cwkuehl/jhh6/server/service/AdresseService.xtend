@@ -40,9 +40,9 @@ class AdresseService {
 	@Transaction(false)
 	override ServiceErgebnis<List<String>> getGeburtstagListe(ServiceDaten daten, LocalDate datum, int tage) {
 
-		// getBerechService().pruefeBerechtigungAktuellerMandant(daten, mandantNr)
+		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var r = new ServiceErgebnis<List<String>>(null)
-		var v = new ArrayList<String>()
+		var v = new ArrayList<String>
 		var dvon = datum.minusDays(tage)
 		var dbis = datum.plusDays(tage)
 		var j = datum.year
@@ -85,36 +85,36 @@ class AdresseService {
 	override ServiceErgebnis<List<AdPersonSitzAdresse>> getPersonenSitzAdresseListe(ServiceDaten daten,
 		boolean zusammengesetzt, boolean nurAktuelle, String name, String vorname, String puid, String suid) {
 
-		// getBerechService().pruefeBerechtigungAktuellerMandant(daten, mandantNr)
+		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var r = new ServiceErgebnis<List<AdPersonSitzAdresse>>(null)
 		var l = personRep.getPersonenSitzAdresseListe(daten, nurAktuelle, name, vorname, puid, suid)
 		if (zusammengesetzt) {
 			var String pnr = null
 			for (AdPersonSitzAdresse e : l) {
-				var strB = new StringBuffer()
-				if (Global.compString(pnr, e.getUid()) != 0) {
-					pnr = e.getUid()
-					if (e.getPersonStatus() != PersonStatusEnum.AKTUELL.intValue()) {
+				var strB = new StringBuffer
+				if (Global.compString(pnr, e.getUid) != 0) {
+					pnr = e.getUid
+					if (e.getPersonStatus != PersonStatusEnum.AKTUELL.intValue) {
 						strB.append("(")
 					}
-					strB.append(e.getName1())
-					Global.anhaengen(strB, ", ", e.getVorname())
-					if (e.getPersonStatus() != PersonStatusEnum.AKTUELL.intValue()) {
+					strB.append(e.getName1)
+					Global.anhaengen(strB, ", ", e.getVorname)
+					if (e.getPersonStatus != PersonStatusEnum.AKTUELL.intValue) {
 						strB.append(")")
 					}
 				}
-				e.setName1(strB.toString())
-				strB = new StringBuffer()
-				if (e.sitzStatus != PersonStatusEnum.AKTUELL.intValue()) {
+				e.setName1(strB.toString)
+				strB = new StringBuffer
+				if (e.sitzStatus != PersonStatusEnum.AKTUELL.intValue) {
 					strB.append("(")
 				}
-				strB.append(e.getName())
-				Global.anhaengen(strB, ", ", e.getOrt())
-				if (e.sitzStatus != PersonStatusEnum.AKTUELL.intValue()) {
+				strB.append(e.getName)
+				Global.anhaengen(strB, ", ", e.getOrt)
+				if (e.sitzStatus != PersonStatusEnum.AKTUELL.intValue) {
 					strB.append(")")
 				}
-				e.setName(strB.toString())
-				if (Global.excelNes(e.getName())) {
+				e.setName(strB.toString)
+				if (Global.excelNes(e.getName)) {
 					e.setName("")
 				}
 			}
@@ -126,7 +126,7 @@ class AdresseService {
 	@Transaction(false)
 	override ServiceErgebnis<Integer> getAdresseAnzahl(ServiceDaten daten, String adressUid) {
 
-		// getBerechService().pruefeBerechtigungAktuellerMandant(daten, mandantNr)
+		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var r = new ServiceErgebnis<Integer>(sitzRep.getAdresseAnzahl(daten, adressUid))
 		return r
 	}
@@ -138,7 +138,7 @@ class AdresseService {
 	@Transaction(false)
 	override ServiceErgebnis<List<AdAdresse>> getAdresseListe(ServiceDaten daten) {
 
-		// getBerechService().pruefeBerechtigungAktuellerMandant(daten, mandantNr)
+		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var r = new ServiceErgebnis<List<AdAdresse>>(null)
 		r.ergebnis = adresseRep.getListe(daten, daten.mandantNr, null, null)
 		return r
@@ -147,32 +147,32 @@ class AdresseService {
 	@Transaction(false)
 	override ServiceErgebnis<byte[]> getReportAdresse(ServiceDaten daten) {
 
-		// getBerechService().pruefeBerechtigungAktuellerMandant(daten, mandantNr)
-		// var ueberschrift = "Adressenliste vom " + Global.dateTimeStringForm(daten.getJetzt())
-		// var liste = personRep.getPersonenSitzAdresseListe(daten, true, null, null, null, null)
-		// var doc = newFopDokument
-		// doc.addAdressenliste(true, ueberschrift, liste)
+		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
+		var ueberschrift = "Adressenliste vom " + Global.dateTimeStringForm(daten.getJetzt)
+		var liste = personRep.getPersonenSitzAdresseListe(daten, true, null, null, null, null)
+		var doc = newFopDokument
+		doc.addAdressenliste(true, ueberschrift, liste)
 		var r = new ServiceErgebnis<byte[]>
-		// r.ergebnis = doc.erzeugePdf()
+		r.ergebnis = doc.erzeugePdf
 		return r
 	}
 
 	@Transaction(true)
 	override ServiceErgebnis<Void> machSitzEins(ServiceDaten daten, String personUid, String sitzUid) {
 
-		// getBerechService().pruefeBerechtigungAktuellerMandant(daten, mandantNr)
+		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var liste = sitzRep.getSitzListe(daten, personUid, null, null)
 		var int reihenfolge = 1
 		for (AdSitz e : liste) {
 			var voU = new AdSitzUpdate(e)
-			if (Global.compString(sitzUid, e.getUid()) == 0) {
+			if (Global.compString(sitzUid, e.getUid) == 0) {
 				voU.setReihenfolge(1)
 			} else {
 				reihenfolge = reihenfolge + 1
 				voU.setReihenfolge(reihenfolge)
 			}
-			if (voU.isChanged()) {
-				voU.machGeaendert(daten.getJetzt(), daten.getBenutzerId())
+			if (voU.isChanged) {
+				voU.machGeaendert(daten.getJetzt, daten.getBenutzerId)
 				sitzRep.update(daten, voU)
 			}
 		}
@@ -192,8 +192,8 @@ class AdresseService {
 
 	def private boolean isAdresseLeer(AdPersonSitzAdresse adresse) {
 
-		if ((Global.nes(adresse.getStaat()) || "D".equals(adresse.getStaat())) && Global.nes(adresse.getPlz()) &&
-			Global.nes(adresse.getOrt()) && Global.nes(adresse.getStrasse()) && Global.nes(adresse.getHausnr())) {
+		if ((Global.nes(adresse.getStaat) || "D".equals(adresse.getStaat)) && Global.nes(adresse.getPlz) &&
+			Global.nes(adresse.getOrt) && Global.nes(adresse.getStrasse) && Global.nes(adresse.getHausnr)) {
 			return true
 		}
 		return false
@@ -210,10 +210,10 @@ class AdresseService {
 
 	def private boolean isSitzLeer(AdPersonSitzAdresse sitz) {
 
-		if (sitz.getTyp() == 0 && Global.nes(sitz.getName()) && Global.nes(sitz.getTelefon()) &&
-			Global.nes(sitz.getFax()) && Global.nes(sitz.getMobil()) && Global.nes(sitz.getEmail()) &&
-			Global.nes(sitz.getHomepage()) && Global.nes(sitz.getPostfach()) && Global.nes(sitz.getBemerkung()) &&
-			sitz.getSitzStatus() == 0) {
+		if (sitz.getTyp == 0 && Global.nes(sitz.getName) && Global.nes(sitz.getTelefon) &&
+			Global.nes(sitz.getFax) && Global.nes(sitz.getMobil) && Global.nes(sitz.getEmail) &&
+			Global.nes(sitz.getHomepage) && Global.nes(sitz.getPostfach) && Global.nes(sitz.getBemerkung) &&
+			sitz.getSitzStatus == 0) {
 			return true
 		}
 		return false
@@ -349,12 +349,12 @@ class AdresseService {
 	@Transaction(true)
 	override ServiceErgebnis<Void> deleteSitz(ServiceDaten daten, String personUid, String sitzUid) {
 
-		// getBerechService().pruefeBerechtigungAktuellerMandant(daten, mandantNr)
+		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var liste = sitzRep.getSitzListe(daten, personUid, sitzUid, null)
 		var AdSitz adSitz = null
 		if (liste !== null && liste.size > 0) {
 			adSitz = liste.get(0)
-			if (!Global.nes(adSitz.getAdresseUid())) {
+			if (!Global.nes(adSitz.getAdresseUid)) {
 				liste = sitzRep.getSitzListe(daten, null, null, adSitz.adresseUid)
 				if (liste.size <= 1) {
 					// nicht mehr verwendete Adresse löschen
@@ -392,8 +392,8 @@ class AdresseService {
 	@Transaction(false)
 	override ServiceErgebnis<List<String>> exportAdresseListe(ServiceDaten daten) {
 
-		// getBerechService().pruefeBerechtigungAktuellerMandant(daten, mandantNr)
-		var felder = getAdresseSpalten()
+		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
+		var felder = getAdresseSpalten
 		var liste = personRep.getListeSitzAdresse(daten, daten.mandantNr, null, null)
 		var l = new ArrayList<String>
 		l.add(Global.encodeCSV(felder))
@@ -406,12 +406,12 @@ class AdresseService {
 	@Transaction(true)
 	override ServiceErgebnis<String> importAdresseListe(ServiceDaten daten, List<String> zeilen, boolean loeschen) {
 
-		// getBerechService().pruefeBerechtigungAktuellerMandant(daten, mandantNr)
-		var person = new AdPerson()
-		var sitz = new AdSitz()
-		var adresse = new AdAdresse()
+		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
+		var person = new AdPerson
+		var sitz = new AdSitz
+		var adresse = new AdAdresse
 		var List<String> felder = null
-		var werte = new Vector<Object>()
+		var werte = new Vector<Object>
 		var pAnzahl = 0
 		var sAnzahl = 0
 		var aAnzahl = 0
@@ -490,7 +490,7 @@ class AdresseService {
 			for (String zeile : zeilen) {
 				felder = Global.decodeCSV(zeile)
 				if (geprueft) {
-					werte.clear()
+					werte.clear
 					pnr = null
 					snr = null
 					anr = null
@@ -539,7 +539,7 @@ class AdresseService {
 								person.geburt, person.geburtk, person.anrede, person.fanrede, person.name1,
 								person.name2, person.praedikat, person.vorname, person.titel, person.personStatus,
 								person.angelegtVon, person.angelegtAm, person.geaendertVon, person.geaendertAm)
-							pnr = person.getUid()
+							pnr = person.getUid
 						} else {
 							personRep.iuAdPerson(daten, personEvent, pnr, person.typ, person.geschlecht, person.geburt,
 								person.geburtk, person.anrede, person.fanrede, person.name1, person.name2,
@@ -591,7 +591,7 @@ class AdresseService {
 						sitz.setGeaendertVon(Global.nesString(feld))
 						feld = felder.get(sGeaendertAm)
 						sitz.setGeaendertAm(Global.objDat(feld))
-						if (felder.size() > sReihenfolge) {
+						if (felder.size > sReihenfolge) {
 							feld = felder.get(sReihenfolge)
 							sitz.setReihenfolge(Global.strInt(feld))
 						}
@@ -628,7 +628,7 @@ class AdresseService {
 									adresse = adresseRep.iuAdAdresse(daten, adresseEvent, null, adresse.staat,
 										adresse.plz, adresse.ort, adresse.strasse, adresse.hausnr, adresse.angelegtVon,
 										adresse.angelegtAm, adresse.geaendertVon, adresse.geaendertAm)
-									anr = adresse.getUid()
+									anr = adresse.getUid
 								}
 							} else {
 								adresse = adresseRep.iuAdAdresse(daten, adresseEvent, anr, adresse.staat, adresse.plz,
@@ -672,12 +672,12 @@ class AdresseService {
 						}
 					}
 				} else {
-					var spaltennamen = getAdresseSpalten()
+					var spaltennamen = getAdresseSpalten
 					var spalten = spaltennamen.length
-					if (spalten - 1 <= felder.size() && felder.size() <= spalten) {
+					if (spalten - 1 <= felder.size && felder.size <= spalten) {
 						var j = 0
 						var x = true
-						for (; j < felder.size() && x; j++) {
+						for (; j < felder.size && x; j++) {
 							if (!felder.get(j).equals(spaltennamen.get(j))) {
 								x = false
 							}
@@ -698,7 +698,7 @@ class AdresseService {
 				throw new Exception("Spaltenüberschriften in der 1. Zeile fehlen.")
 			}
 		} finally {
-			Global.machNichts()
+			Global.machNichts
 		}
 		var r = new ServiceErgebnis<String>(
 			Global.format(
