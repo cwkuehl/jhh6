@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import de.cwkuehl.jhh5.anwendung.control.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import de.cwkuehl.jhh6.app.control.Datum?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.cwkuehl.jhh6.app.controller.hh.HH410BuchungController">
+
+	<padding>
+		<Insets bottom="10" left="10" right="10" top="10" />
+	</padding>
+
+	<Label fx:id="nr0" text="%HH410.nr" GridPane.columnIndex="0" />
+	<TextField fx:id="nr" accessibleText="%HH410.nr.tt" promptText="%HH410.nr.tt" GridPane.columnIndex="1" GridPane.columnSpan="3">
+		<tooltip>
+			<Tooltip text="%HH410.nr.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="valuta0" mnemonicParsing="true" styleClass="label-bold" text="%HH410.valuta" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+	<Datum fx:id="valuta" accessibleText="%HH410.valuta.tt" nullText="" onAction="#onValuta" promptText="%HH410.valuta.tt" schalterText="mhp" uhrzeitGroesse="0" wochentagGroesse="80" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
+		<tooltip>
+			<Tooltip text="%HH410.valuta.tt" />
+		</tooltip>
+	</Datum>
+	<Label fx:id="betrag0" mnemonicParsing="true" styleClass="label-bold" text="%HH410.betrag" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+	<TextField fx:id="betrag" accessibleText="%HH410.betrag.tt" promptText="%HH410.betrag.tt" GridPane.columnIndex="1" GridPane.rowIndex="2">
+		<tooltip>
+			<Tooltip text="%HH410.betrag.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="summe0" text="%HH410.summe" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+	<TextField fx:id="summe" accessibleText="%HH410.summe.tt" focusTraversable="false" promptText="%HH410.summe.tt" GridPane.columnIndex="3" GridPane.rowIndex="2">
+		<tooltip>
+			<Tooltip text="%HH410.summe.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="ereignis0" mnemonicParsing="true" text="%HH410.ereignis" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+	<ListView fx:id="ereignis" accessibleText="%HH410.ereignis.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%HH410.ereignis.tt" />
+		</tooltip>
+	</ListView>
+	<Label fx:id="sollkonto0" mnemonicParsing="true" styleClass="label-bold" text="%HH410.sollkonto" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+	<ListView fx:id="sollkonto" accessibleText="%HH410.sollkonto.tt" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%HH410.sollkonto.tt" />
+		</tooltip>
+	</ListView>
+	<Label fx:id="habenkonto0" mnemonicParsing="true" styleClass="label-bold" text="%HH410.habenkonto" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+	<ListView fx:id="habenkonto" accessibleText="%HH410.habenkonto.tt" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%HH410.habenkonto.tt" />
+		</tooltip>
+	</ListView>
+	<Label fx:id="bText0" mnemonicParsing="true" styleClass="label-bold" text="%HH410.bText" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+	<TextField fx:id="bText" accessibleText="%HH410.bText.tt" promptText="%HH410.bText.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="5">
+		<tooltip>
+			<Tooltip text="%HH410.bText.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="belegNr0" mnemonicParsing="true" text="%HH410.belegNr" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+	<TextField fx:id="belegNr" accessibleText="%HH410.belegNr.tt" promptText="%HH410.belegNr.tt" GridPane.columnIndex="1" GridPane.rowIndex="6">
+		<tooltip>
+			<Tooltip text="%HH410.belegNr.tt" />
+		</tooltip>
+	</TextField>
+	<Button fx:id="neueNr" mnemonicParsing="true" onAction="#onNeueNr" text="%HH410.neueNr" GridPane.columnIndex="2" GridPane.rowIndex="6">
+		<tooltip>
+			<Tooltip text="%HH410.neueNr.tt" />
+		</tooltip>
+	</Button>
+	<HBox spacing="10.0" alignment="CENTER_LEFT" GridPane.columnIndex="3" GridPane.rowIndex="6">
+		<Label fx:id="belegDatum0" text="%HH410.belegDatum" />
+		<Datum fx:id="belegDatum" accessibleText="%HH410.belegDatum.tt" nullText="" promptText="%HH410.belegDatum.tt" schalterText="" uhrzeitGroesse="0" wochentagGroesse="80">
+			<tooltip>
+				<Tooltip text="%HH410.belegDatum.tt" />
+			</tooltip>
+		</Datum>
+	</HBox>
+	<Label fx:id="angelegt0" text="%Creation" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+	<TextField fx:id="angelegt" accessibleText="%Creation.tt" promptText="%Creation.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="7">
+		<tooltip>
+			<Tooltip text="%Creation.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="geaendert0" text="%Change" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+	<TextField fx:id="geaendert" accessibleText="%Change.tt" promptText="%Change.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="8">
+		<tooltip>
+			<Tooltip text="%Change.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="buchung0" text="%HH410.buchung" GridPane.columnIndex="0" GridPane.rowIndex="9" />
+	<TextField fx:id="buchung" accessibleText="%HH410.buchung.tt" promptText="%HH410.buchung.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="9">
+		<tooltip>
+			<Tooltip text="%HH410.buchung.tt" />
+		</tooltip>
+	</TextField>
+	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="10">
+		<Button fx:id="ok" defaultButton="true" mnemonicParsing="true" onAction="#onOk" text="%Ok">
+			<tooltip>
+				<Tooltip text="%Ok.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="kontentausch" mnemonicParsing="true" onAction="#onKontentausch" text="%HH410.kontentausch">
+			<tooltip>
+				<Tooltip text="%HH410.kontentausch.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="addition" mnemonicParsing="true" onAction="#onAddition" text="%HH410.addition">
+			<tooltip>
+				<Tooltip text="%HH410.addition.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="abbrechen" cancelButton="true" onAction="#onAbbrechen" text="%Cancel">
+			<tooltip>
+				<Tooltip text="%Cancel.tt" />
+			</tooltip>
+		</Button>
+	</HBox>
+
+	<stylesheets>
+		<URL value="@../Jhh6.css" />
+	</stylesheets>
+	<columnConstraints>
+		<ColumnConstraints />
+		<ColumnConstraints />
+		<ColumnConstraints />
+		<ColumnConstraints />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+	</rowConstraints>
+</GridPane>
