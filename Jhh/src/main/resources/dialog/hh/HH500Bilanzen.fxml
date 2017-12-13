@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import de.cwkuehl.jhh5.anwendung.control.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import de.cwkuehl.jhh6.app.control.Datum?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.66" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.cwkuehl.jhh6.app.controller.hh.HH500BilanzenController">
+
+	<padding>
+		<Insets bottom="10" left="10" right="10" top="10" />
+	</padding>
+
+	<ToolBar prefHeight="40.0" prefWidth="200.0" GridPane.columnSpan="5" GridPane.hgrow="ALWAYS">
+		<items>
+			<Button fx:id="berechnen" mnemonicParsing="false" onAction="#onBerechnen">
+				<tooltip>
+					<Tooltip text="%HH500.berechnen.tt" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-refresh.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="rueckgaengig" mnemonicParsing="false" onAction="#onRueckgaengig">
+				<tooltip>
+					<Tooltip text="%Undo" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-undo.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="wiederherstellen" mnemonicParsing="false" onAction="#onWiederherstellen">
+				<tooltip>
+					<Tooltip text="%Redo" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-redo.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="drucken" mnemonicParsing="false" onAction="#onDrucken">
+				<tooltip>
+					<Tooltip text="%Print" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-print.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="tab" mnemonicParsing="false" onAction="#onTab">
+				<tooltip>
+					<Tooltip text="%Tab" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-tab.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+		</items>
+	</ToolBar>
+	<Label fx:id="soll0" mnemonicParsing="true" text="%HH500.soll" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+	<TableView fx:id="soll" accessibleText="%HH500.soll.tt" onMouseClicked="#onSollMouseClick" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%HH500.soll.tt" />
+		</tooltip>
+		<columns>
+			<TableColumn fx:id="colKontoUid" prefWidth="75.0" text="%HH500.colKontoUid" />
+			<TableColumn fx:id="colName" prefWidth="200.0" text="%HH500.colName" />
+			<TableColumn fx:id="colBetrag" prefWidth="130.0" text="%HH500.colBetrag" />
+		</columns>
+	</TableView>
+	<Label fx:id="haben0" mnemonicParsing="true" text="%HH500.haben" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+	<TableView fx:id="haben" accessibleText="%HH500.haben.tt" onMouseClicked="#onHabenMouseClick" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%HH500.haben.tt" />
+		</tooltip>
+		<columns>
+			<TableColumn fx:id="colhKontoUid" prefWidth="75.0" text="%HH500.colhKontoUid" />
+			<TableColumn fx:id="colhName" prefWidth="200.0" text="%HH500.colhName" />
+			<TableColumn fx:id="colhBetrag" prefWidth="130.0" text="%HH500.colhBetrag" />
+		</columns>
+	</TableView>
+	<Label fx:id="sollSumme0" text="%HH500.sollSumme" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+	<Label fx:id="sollBetrag0" text="" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+	<Label fx:id="habenSumme0" text="%HH500.habenSumme" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+	<Label fx:id="habenBetrag0" text="" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+	<GridPane hgap="10.0" vgap="10.0" GridPane.columnIndex="4" GridPane.rowIndex="1" GridPane.rowSpan="4">
+		<Label fx:id="von0" mnemonicParsing="true" text="%HH500.von" GridPane.columnIndex="0" GridPane.columnSpan="3" GridPane.rowIndex="1">
+			<GridPane.margin>
+				<Insets />
+			</GridPane.margin>
+		</Label>
+		<Datum fx:id="von" accessibleText="%HH500.von.tt" nullText="" uhrzeitGroesse="0" onAction="#onVon" promptText="%HH500.von.tt" schalterText="mhp" GridPane.columnIndex="0" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
+			<tooltip>
+				<Tooltip text="%HH500.von.tt" />
+			</tooltip>
+		</Datum>
+		<Label fx:id="bis0" mnemonicParsing="true" text="%HH500.bis" GridPane.columnIndex="0" GridPane.columnSpan="3" GridPane.rowIndex="3" />
+		<Datum fx:id="bis" accessibleText="%HH500.bis.tt" nullText="" uhrzeitGroesse="0" onAction="#onBis" promptText="%HH500.bis.tt" schalterText="" GridPane.columnIndex="0" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
+			<tooltip>
+				<Tooltip text="%HH500.bis.tt" />
+			</tooltip>
+		</Datum>
+		<Label fx:id="konto0" text="%HH500.konto" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+		<Button fx:id="oben" onAction="#onOben" text="%HH500.oben" GridPane.columnIndex="1" GridPane.rowIndex="5">
+			<tooltip>
+				<Tooltip text="%HH500.oben.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="unten" onAction="#onUnten" text="%HH500.unten" GridPane.columnIndex="2" GridPane.rowIndex="5">
+			<tooltip>
+				<Tooltip text="%HH500.unten.tt" />
+			</tooltip>
+		</Button>
+		<columnConstraints>
+			<ColumnConstraints />
+			<ColumnConstraints />
+			<ColumnConstraints />
+		</columnConstraints>
+		<rowConstraints>
+			<RowConstraints />
+			<RowConstraints />
+			<RowConstraints />
+			<RowConstraints />
+			<RowConstraints />
+			<RowConstraints />
+		</rowConstraints>
+	</GridPane>
+
+	<stylesheets>
+		<URL value="@../Jhh6.css" />
+	</stylesheets>
+	<columnConstraints>
+		<ColumnConstraints />
+		<ColumnConstraints />
+		<ColumnConstraints />
+		<ColumnConstraints />
+		<ColumnConstraints />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+	</rowConstraints>
+</GridPane>

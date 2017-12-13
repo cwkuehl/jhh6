@@ -44,7 +44,7 @@ class AG400SicherungenController extends BaseController<String> {
 	@FXML TableColumn<VerzeichnisseData, String> colGv
 	@FXML TableColumn<VerzeichnisseData, LocalDateTime> colAa
 	@FXML TableColumn<VerzeichnisseData, String> colAv
-	ObservableList<VerzeichnisseData> verzeichnisseData = FXCollections::observableArrayList()
+	ObservableList<VerzeichnisseData> verzeichnisseData = FXCollections::observableArrayList
 	// @FXML Button sicherung
 	// @FXML Button diffSicherung
 	// @FXML Button rueckSicherung
@@ -59,15 +59,15 @@ class AG400SicherungenController extends BaseController<String> {
 	/** 
 	 * Abbruch-Objekt. 
 	 */
-	StringBuffer abbruch = new StringBuffer()
+	StringBuffer abbruch = new StringBuffer
 	/** 
 	 * Status zum Anzeigen. 
 	 */
-	StringBuffer status = new StringBuffer()
+	StringBuffer status = new StringBuffer
 	/** 
 	 * Liste für Kopier-Fehler. 
 	 */
-	package List<String> kopierFehler = new ArrayList<String>()
+	package List<String> kopierFehler = new ArrayList<String>
 	/** 
 	 * Maximale Anzahl Fehler. 
 	 */
@@ -93,17 +93,17 @@ class AG400SicherungenController extends BaseController<String> {
 		new(MaEinstellung v) {
 
 			super(v)
-			nr = new SimpleObjectProperty<Integer>(v.getMandantNr())
-			schluessel = new SimpleStringProperty(v.getSchluessel())
-			wert = new SimpleStringProperty(v.getWert())
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm())
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon())
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm())
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon())
+			nr = new SimpleObjectProperty<Integer>(v.getMandantNr)
+			schluessel = new SimpleStringProperty(v.getSchluessel)
+			wert = new SimpleStringProperty(v.getWert)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
+			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
+			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
 		}
 
 		override String getId() {
-			return '''«nr.get()»'''.toString
+			return '''«nr.get»'''.toString
 		}
 	}
 
@@ -113,7 +113,7 @@ class AG400SicherungenController extends BaseController<String> {
 	override protected void initialize() {
 
 		tabbar = 1
-		super.initialize()
+		super.initialize
 		verzeichnisse0.setLabelFor(verzeichnisse)
 		status0.setLabelFor(statusText)
 		mandant0.setLabelFor(mandant)
@@ -123,7 +123,7 @@ class AG400SicherungenController extends BaseController<String> {
 		initAccelerator("E", aendern)
 		initAccelerator("L", loeschen)
 		initDaten(0)
-		verzeichnisse.requestFocus()
+		verzeichnisse.requestFocus
 	}
 
 	/** 
@@ -133,15 +133,15 @@ class AG400SicherungenController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			mandant.setText(Global::intStr(getServiceDaten().getMandantNr()))
+			mandant.setText(Global::intStr(getServiceDaten.getMandantNr))
 		// mandant.setText("3")
 		}
 		if (stufe <= 1) {
-			var List<MaEinstellung> l = getSicherungen()
+			var List<MaEinstellung> l = getSicherungen
 			getItems(l, null, [a|new VerzeichnisseData(a)], verzeichnisseData)
 		}
 		if (stufe <= 2) {
-			initDatenTable()
+			initDatenTable
 		}
 	}
 
@@ -151,13 +151,13 @@ class AG400SicherungenController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		verzeichnisse.setItems(verzeichnisseData)
-		colNr.setCellValueFactory([c|c.getValue().nr])
-		colSchluessel.setCellValueFactory([c|c.getValue().schluessel])
-		colWert.setCellValueFactory([c|c.getValue().wert])
-		colGv.setCellValueFactory([c|c.getValue().geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue().geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue().angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue().angelegtAm])
+		colNr.setCellValueFactory([c|c.getValue.nr])
+		colSchluessel.setCellValueFactory([c|c.getValue.schluessel])
+		colWert.setCellValueFactory([c|c.getValue.wert])
+		colGv.setCellValueFactory([c|c.getValue.geaendertVon])
+		colGa.setCellValueFactory([c|c.getValue.geaendertAm])
+		colAv.setCellValueFactory([c|c.getValue.angelegtVon])
+		colAa.setCellValueFactory([c|c.getValue.angelegtAm])
 	}
 
 	override protected void updateParent() {
@@ -168,20 +168,20 @@ class AG400SicherungenController extends BaseController<String> {
 	def private void starteDialog(DialogAufrufEnum aufruf) {
 
 		var VerzeichnisseData k = getValue2(verzeichnisse, !DialogAufrufEnum::NEU.equals(aufruf))
-		var MaEinstellung e = if(k === null) null else k.getData()
+		var MaEinstellung e = if(k === null) null else k.getData
 		e = starteDialog(typeof(AG410SicherungController), aufruf, e)
 		if (e !== null) {
 			if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
-				e.setMandantNr(verzeichnisseData.size() + 1)
+				e.setMandantNr(verzeichnisseData.size + 1)
 				verzeichnisseData.add(new VerzeichnisseData(e))
 			} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
-				k.schluessel.set(e.getSchluessel())
-				k.wert.set(e.getWert())
+				k.schluessel.set(e.getSchluessel)
+				k.wert.set(e.getWert)
 			} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
-				verzeichnisse.getItems().remove(k)
+				verzeichnisse.getItems.remove(k)
 			}
 		}
-		speichern()
+		speichern
 	}
 
 	/** 
@@ -239,8 +239,8 @@ class AG400SicherungenController extends BaseController<String> {
 	 * Event für Verzeichnisse.
 	 */
 	@FXML def void onVerzeichnisseMouseClick(MouseEvent e) {
-		if (e.getClickCount() > 1) {
-			onAendern()
+		if (e.clickCount > 1) {
+			onAendern
 		}
 	}
 
@@ -274,7 +274,7 @@ class AG400SicherungenController extends BaseController<String> {
 
 	def private List<MaEinstellung> getSicherungen() {
 
-		var List<MaEinstellung> v = new ArrayList<MaEinstellung>()
+		var List<MaEinstellung> v = new ArrayList<MaEinstellung>
 		var MaEinstellung e = null
 		var String str = null
 		var String wert = null
@@ -282,11 +282,11 @@ class AG400SicherungenController extends BaseController<String> {
 		var boolean ende = false
 		for (var int i = 1; !ende; i++) {
 			str = '''Sicherung_«i»'''.toString
-			wert = Jhh6::getEinstellungen().holeResourceDaten(str)
+			wert = Jhh6::getEinstellungen.holeResourceDaten(str)
 			if (Global::nes(wert)) {
 				ende = true
 			} else {
-				e = new MaEinstellung()
+				e = new MaEinstellung
 				e.setMandantNr(i)
 				array = Sicherung::splitQuelleZiel(wert, false)
 				e.setSchluessel(array.get(0))
@@ -300,12 +300,12 @@ class AG400SicherungenController extends BaseController<String> {
 	def private void speichern() {
 
 		var int i = 1
-		for (VerzeichnisseData e : verzeichnisse.getItems()) {
-			Jhh6::getEinstellungen().setzeResourceDaten('''Sicherung_«i»'''.toString,
-				'''«e.getData().getSchluessel()»<«e.getData().getWert()»'''.toString)
+		for (VerzeichnisseData e : verzeichnisse.getItems) {
+			Jhh6::getEinstellungen.setzeResourceDaten('''Sicherung_«i»'''.toString,
+				'''«e.getData.getSchluessel»<«e.getData.getWert»'''.toString)
 			i++
 		}
-		Jhh6::getEinstellungen().setzeResourceDaten('''Sicherung_«(i + 1)»'''.toString, "")
+		Jhh6::getEinstellungen.setzeResourceDaten('''Sicherung_«(i + 1)»'''.toString, "")
 	}
 
 	def private void onSicherungTimer(boolean diffSicherung, boolean zurueck) {
@@ -314,14 +314,14 @@ class AG400SicherungenController extends BaseController<String> {
 		val Task<Void> task = ([|
 			status.setLength(0)
 			abbruch.setLength(0)
-			kopierFehler.clear()
-			onSicherungStatus()
-			var String sicherung0 = '''«k.getSchluessel()»<«k.getWert()»'''.toString
+			kopierFehler.clear
+			onSicherungStatus
+			var String sicherung0 = '''«k.getSchluessel»<«k.getWert»'''.toString
 			var String[] sicherungen = (#[sicherung0] as String[])
-			onSicherungStatusTimer()
+			onSicherungStatusTimer
 			try {
 				var Sicherung sicherung = new Sicherung(diffZeit, kopierFehler, status, maxFehler, abbruch,
-					diffSicherung, zurueck, LocalDateTime::now())
+					diffSicherung, zurueck, LocalDateTime::now)
 				status.append("Vorbereitung ...")
 				for (var int i = 0; sicherungen !== null && i < sicherungen.length; i++) {
 					sicherung.machSicherungVorbereitung({
@@ -331,10 +331,10 @@ class AG400SicherungenController extends BaseController<String> {
 				}
 				status.setLength(0)
 				status.append("Kopieren ...")
-				sicherung.machSicherung()
+				sicherung.machSicherung
 			} catch (Exception ex) {
 				status.setLength(0)
-				status.append('''Fehler: «ex.getMessage()»'''.toString)
+				status.append('''Fehler: «ex.getMessage»'''.toString)
 			} finally {
 				abbruch.append("Ende")
 			}
@@ -342,15 +342,15 @@ class AG400SicherungenController extends BaseController<String> {
 		] as Task<Void>)
 		var Thread th = new Thread(task)
 		th.setDaemon(true)
-		th.start()
+		th.start
 	}
 
 	def private void onSicherungStatus() {
 
-		// Platform.runLater(() -> statusText.setText(status.toString()));
-		statusText.setText(status.toString())
-		// view.setKopierFehler(model.getDaten().getKopierFehler());
-		if (abbruch.length() > 0) {
+		// Platform.runLater(() -> statusText.setText(status.toString))
+		statusText.setText(status.toString)
+		// view.setKopierFehler(model.getDaten.getKopierFehler)
+		if (abbruch.length > 0) {
 			throw new RuntimeException("")
 		}
 	}
@@ -360,11 +360,11 @@ class AG400SicherungenController extends BaseController<String> {
 		var Task<Void> task = ([|
 			try {
 				while (true) {
-					onSicherungStatus()
+					onSicherungStatus
 					Thread::sleep(1000)
 				}
 			} catch (Exception ex) {
-				Global::machNichts()
+				Global::machNichts
 			}
 			return null as Void
 		] as Task<Void>)
@@ -375,7 +375,7 @@ class AG400SicherungenController extends BaseController<String> {
 
 	def private void onMandantKopierenTimer(boolean vonRep) {
 
-		if (0 === Werkzeug::showYesNoQuestion(Meldungen::M2057())) {
+		if (0 === Werkzeug::showYesNoQuestion(Meldungen::M2057)) {
 			return;
 		}
 		var Task<Void> task = ([|
@@ -385,12 +385,12 @@ class AG400SicherungenController extends BaseController<String> {
 			onSicherungStatus
 			onSicherungStatusTimer
 			try {
-				// ServiceErgebnis<Void> r = FactoryService.getReplikationService().copyMandant(getServiceDaten(),
-				// vonRep, Global.strInt(mandant.getText()), status, abbruch);
-				// r.throwErstenFehler();
+				// ServiceErgebnis<Void> r = FactoryService.getReplikationService.copyMandant(getServiceDaten,
+				// vonRep, Global.strInt(mandant.getText), status, abbruch);
+				// r.throwErstenFehler
 			} catch (Exception ex) {
 				status.setLength(0)
-				status.append('''Fehler: «ex.getMessage()»'''.toString)
+				status.append('''Fehler: «ex.getMessage»'''.toString)
 			} finally {
 				abbruch.append("Ende")
 			}
@@ -398,7 +398,7 @@ class AG400SicherungenController extends BaseController<String> {
 		] as Task<Void>)
 		var Thread th = new Thread(task)
 		th.setDaemon(true)
-		th.start()
+		th.start
 	}
 
 	/** 

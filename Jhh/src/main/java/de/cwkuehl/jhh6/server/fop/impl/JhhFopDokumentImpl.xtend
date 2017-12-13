@@ -1,9 +1,16 @@
 package de.cwkuehl.jhh6.server.fop.impl
 
-import java.io.ByteArrayOutputStream
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.AdPersonSitzAdresse
+import de.cwkuehl.jhh6.api.dto.HhBilanzDruck
+import de.cwkuehl.jhh6.api.dto.HhBilanzSb
+import de.cwkuehl.jhh6.api.dto.HhBuchungLang
+import de.cwkuehl.jhh6.api.dto.HhKonto
 import de.cwkuehl.jhh6.server.fop.doc.FoAdressenliste
+import de.cwkuehl.jhh6.server.fop.doc.FoJahresbericht
+import de.cwkuehl.jhh6.server.fop.doc.FoKassenbericht
+import java.io.ByteArrayOutputStream
+import java.time.LocalDate
+import java.util.List
 
 /** 
  * Diese Klasse die Erzeugung aller möglichen Dokumente bereit.
@@ -72,26 +79,25 @@ class JhhFopDokumentImpl {
 // multiDoc.add(doc, reset);
 // doc.generate(ueberschrift, untertitel, liste);
 // }
-//
-// public void addJahresbericht(boolean reset, String ueberschrift, List<HhBilanzDruck> ebListe,
-// List<HhBilanzDruck> gvListe, List<HhBilanzDruck> sbListe) {
-//
-// FoJahresbericht doc = new FoJahresbericht;
-// multiDoc.add(doc, reset);
-// doc.generate(ueberschrift, ebListe, gvListe, sbListe);
-// }
-//
-// public void addKassenbericht(boolean reset, boolean monatlich, String ueberschrift, LocalDate dVon, LocalDate dBis,
-// String titel, String periode, double vortrag, double einnahmen, double ausgaben, double saldo,
-// List<HhKonto> kListe, List<HhBilanzSb> gvListe, List<HhBuchungLang> bListeE, List<HhBuchungLang> bListeA,
-// List<HhBuchungLang> bListe) {
-//
-// FoKassenbericht doc = new FoKassenbericht;
-// multiDoc.add(doc, reset);
-// doc.generate(monatlich, ueberschrift, dVon, dBis, titel, vortrag, einnahmen, ausgaben, saldo, kListe, gvListe,
-// bListeE, bListeA, bListe);
-// }
-//
+	def void addJahresbericht(boolean reset, String ueberschrift, List<HhBilanzDruck> ebListe,
+		List<HhBilanzDruck> gvListe, List<HhBilanzDruck> sbListe) {
+
+		var doc = new FoJahresbericht
+		multiDoc.add(doc, reset)
+		doc.generate(ueberschrift, ebListe, gvListe, sbListe)
+	}
+
+	def void addKassenbericht(boolean reset, boolean monatlich, String ueberschrift, LocalDate dVon, LocalDate dBis,
+		String titel, String periode, double vortrag, double einnahmen, double ausgaben, double saldo,
+		List<HhKonto> kListe, List<HhBilanzSb> gvListe, List<HhBuchungLang> bListeE, List<HhBuchungLang> bListeA,
+		List<HhBuchungLang> bListe) {
+
+		var doc = new FoKassenbericht
+		multiDoc.add(doc, reset)
+		doc.generate(monatlich, ueberschrift, dVon, dBis, titel, vortrag, einnahmen, ausgaben, saldo, kListe, gvListe,
+			bListeE, bListeA, bListe)
+	}
+
 // public void addRechnung(boolean reset, HpRechnung rechnung, HpPatient patient, HpPatient patientAdresse,
 // LocalDate zahldatum, List<HpBehandlungDruck> behandlungen, Map<String, String> einstellungen) {
 //

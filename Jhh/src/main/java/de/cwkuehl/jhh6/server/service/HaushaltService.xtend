@@ -1495,10 +1495,10 @@ class HaushaltService {
 		var List<HhBilanzDruck> ebListe = null
 		var List<HhBilanzDruck> gvListe = null
 		var List<HhBilanzDruck> sbListe = null
-		//var periode = Global.getPeriodeString(dVon, dBis, false)
+		var periode = Global.getPeriodeString(dVon, dBis, false)
 		var euro = isEuroIntern
-		//var ueberschrift = "Jahresbericht " + periode + " für " + titel + " vom " +
-		//	Global.dateTimeStringForm(daten.jetzt)
+		var ueberschrift = "Jahresbericht " + periode + " für " + titel + " vom " +
+			Global.dateTimeStringForm(daten.jetzt)
 		var HhBilanzDruck z = null
 		if (eb) {
 			z = new HhBilanzDruck
@@ -1518,10 +1518,10 @@ class HaushaltService {
 			liste = getBilanzZeilenIntern(daten, Constant.KZBI_SCHLUSS, dVon, dBis)
 			sbListe = getBilanzDruckListe(liste, euro)
 		}
-		//var doc = newFopDokument
-		//doc.addJahresbericht(true, ueberschrift, ebListe, gvListe, sbListe)
+		var doc = newFopDokument
+		doc.addJahresbericht(true, ueberschrift, ebListe, gvListe, sbListe)
 		var r = new ServiceErgebnis<byte[]>
-		//r.ergebnis = doc.erzeugePdf
+		r.ergebnis = doc.erzeugePdf
 		return r
 	}
 
@@ -1583,15 +1583,15 @@ class HaushaltService {
 		if (Global.nes(titel)) {
 			throw new MeldungException("Bitte einen Titel angeben.")
 		}
-		//var periode = Global.getPeriodeString(dVon, dBis, false)
+		var periode = Global.getPeriodeString(dVon, dBis, false)
 		var euro = isEuroIntern
-		//var monatlich = false
+		var monatlich = false
 		var dbV = 0.0
 		var dbE = 0.0
 		var dbA = 0.0
 		var dbS = 0.0
-		//var ueberschrift = "Kassenbericht " + periode + " für " + titel + " vom " +
-		//	Global.dateTimeStringForm(daten.jetzt)
+		var ueberschrift = "Kassenbericht " + periode + " für " + titel + " vom " +
+			Global.dateTimeStringForm(daten.jetzt)
 		var ek = holeEkKonto(daten, true)
 		var gv = holeGvKonto(daten, true)
 		var ebListe = getBilanzZeilenIntern(daten, Constant.KZBI_EROEFFNUNG, dVon, dBis)
@@ -1618,8 +1618,8 @@ class HaushaltService {
 			k.setBetrag(-getKontoStandIntern(daten, k.uid, dVon))
 			k.setEbetrag(-getKontoStandIntern(daten, k.uid, dBis))
 		}
-		var bListe = buchungRep.getBuchungLangListe(daten, euro, true, dVon, dBis, null, null, null,
-			Constant.KZB_AKTIV, false)
+		var bListe = buchungRep.getBuchungLangListe(daten, euro, true, dVon, dBis, null, null, null, Constant.KZB_AKTIV,
+			false)
 		for (HhBuchungLang b : bListe) {
 			var db = Global.iif(euro, b.ebetrag, b.betrag)
 			b.ebetrag = db
@@ -1643,7 +1643,7 @@ class HaushaltService {
 				}
 			}
 		}
-		//var bListeE2 = new ArrayList<HhBuchungLang>(bMap.values)
+		var bListeE2 = new ArrayList<HhBuchungLang>(bMap.values)
 		bMap = new HashMap<String, HhBuchungLang>
 		for (HhBuchungLang b : bListe) {
 			if (KontoartEnum.ERTRAGSKONTO.toString.equals(b.sollArt) ||
@@ -1658,12 +1658,12 @@ class HaushaltService {
 				}
 			}
 		}
-		//var bListeA2 = new ArrayList<HhBuchungLang>(bMap.values)
-		//var doc = newFopDokument
-		//doc.addKassenbericht(true, monatlich, ueberschrift, dVon, dBis, titel, periode, dbV, dbE, dbA, dbS, kListe,
-		//	gvListe, bListeE2, bListeA2, bListe)
+		var bListeA2 = new ArrayList<HhBuchungLang>(bMap.values)
+		var doc = newFopDokument
+		doc.addKassenbericht(true, monatlich, ueberschrift, dVon, dBis, titel, periode, dbV, dbE, dbA, dbS, kListe,
+			gvListe, bListeE2, bListeA2, bListe)
 		var r = new ServiceErgebnis<byte[]>
-		//r.ergebnis = doc.erzeugePdf
+		r.ergebnis = doc.erzeugePdf
 		return r
 	}
 
@@ -1730,8 +1730,7 @@ class HaushaltService {
 		var pnr = p.nr
 		var kontoUid = holeEkKonto(daten, true)
 		while (anzahl > 0 && pnr > Constant.PN_BERECHNET) {
-			var hhBilanz = bilanzRep.get(daten,
-				new HhBilanzKey(daten.mandantNr, pnr, Constant.KZBI_SCHLUSS, kontoUid))
+			var hhBilanz = bilanzRep.get(daten, new HhBilanzKey(daten.mandantNr, pnr, Constant.KZBI_SCHLUSS, kontoUid))
 			if (hhBilanz !== null) {
 				var hhPeriode = periodeRep.get(daten, new HhPeriodeKey(daten.mandantNr, pnr))
 				if (hhPeriode !== null) {

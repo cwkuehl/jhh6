@@ -237,8 +237,8 @@ public abstract class BaseController<R> {
         try {
             String name = getName(clazz);
             String ns = name.substring(0, 2).toLowerCase();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/dialog/" + ns + "/" + name + ".fxml"),
-                    Werkzeug.getBundle());
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/dialog/" + ns + "/" + name + ".fxml"), Werkzeug
+                    .getBundle());
             root = loader.load();
             c = loader.getController();
             c.parent = this;
@@ -372,9 +372,13 @@ public abstract class BaseController<R> {
     }
 
     protected String getTitel() {
+        return getTitel(null);
+    }
+
+    protected String getTitel(String ext) {
 
         String name = getNameKurz(getClass());
-        String titel = Werkzeug.g(name + ".title");
+        String titel = Werkzeug.g(name + ".title" + (Global.nes(ext) ? "" : "." + ext));
         if (aufruf != null && !DialogAufrufEnum.OHNE.equals(aufruf)) {
             return titel + " - " + aufruf.toString();
         }

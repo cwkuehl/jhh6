@@ -1,5 +1,6 @@
 package de.cwkuehl.jhh6.app.controller
 
+import de.cwkuehl.jhh6.api.global.Constant
 import de.cwkuehl.jhh6.api.global.Global
 import de.cwkuehl.jhh6.api.service.ServiceDaten
 import de.cwkuehl.jhh6.app.Jhh6
@@ -21,6 +22,7 @@ import de.cwkuehl.jhh6.app.controller.hh.HH100PeriodenController
 import de.cwkuehl.jhh6.app.controller.hh.HH200KontenController
 import de.cwkuehl.jhh6.app.controller.hh.HH300EreignisseController
 import de.cwkuehl.jhh6.app.controller.hh.HH400BuchungenController
+import de.cwkuehl.jhh6.app.controller.hh.HH500BilanzenController
 import de.cwkuehl.jhh6.app.controller.tb.TB100TagebuchController
 import de.cwkuehl.jhh6.server.FactoryService
 import java.net.URL
@@ -338,9 +340,9 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		l.add(new StartDialog("#HH300", g("menu.events"), typeof(HH300EreignisseController), null))
 		l.add(new StartDialog("#HH200", g("menu.accounts"), typeof(HH200KontenController), null))
 		l.add(new StartDialog("#HH100", g("menu.periods"), typeof(HH100PeriodenController), null))
-		// l.add(new StartDialog("#HH500;EB", g("menu.openingbalance"), typeof(HH500BilanzenController), "EB"))
-		// l.add(new StartDialog("#HH500;GV", g("menu.plbalance"), typeof(HH500BilanzenController), "GV"))
-		// l.add(new StartDialog("#HH500;SB", g("menu.finalbalance"), typeof(HH500BilanzenController), "SB"))
+		l.add(new StartDialog("#HH500;EB", g("menu.openingbalance"), typeof(HH500BilanzenController), "EB"))
+		l.add(new StartDialog("#HH500;GV", g("menu.plbalance"), typeof(HH500BilanzenController), "GV"))
+		l.add(new StartDialog("#HH500;SB", g("menu.finalbalance"), typeof(HH500BilanzenController), "SB"))
 		// l.add(new StartDialog("#VM500", g("menu.bookings2"), typeof(VM500BuchungenController), null))
 		// l.add(new StartDialog("#VM920", g("menu.accountings"), typeof(VM920AbrechnungenController), null))
 		// l.add(new StartDialog("#HP200", g("menu.treatments"), typeof(HP200BehandlungenController), null))
@@ -440,13 +442,16 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		starteFormular(typeof(HH400BuchungenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleHH500EB() { // starteFormular(typeof(HH500BilanzenController), DialogAufrufEnum.OHNE, Constant.KZBI_EROEFFNUNG)
+	@FXML def void handleHH500EB() {
+		starteFormular(typeof(HH500BilanzenController), DialogAufrufEnum.OHNE, Constant.KZBI_EROEFFNUNG)
 	}
 
-	@FXML def void handleHH500GV() { // starteFormular(typeof(HH500BilanzenController), DialogAufrufEnum.OHNE, Constant.KZBI_GV)
+	@FXML def void handleHH500GV() {
+		starteFormular(typeof(HH500BilanzenController), DialogAufrufEnum.OHNE, Constant.KZBI_GV)
 	}
 
-	@FXML def void handleHH500SB() { // starteFormular(typeof(HH500BilanzenController), DialogAufrufEnum.OHNE, Constant.KZBI_SCHLUSS)
+	@FXML def void handleHH500SB() {
+		starteFormular(typeof(HH500BilanzenController), DialogAufrufEnum.OHNE, Constant.KZBI_SCHLUSS)
 	}
 
 	@FXML def void handleHP100() { // starteFormular(typeof(HP100PatientenController), DialogAufrufEnum.OHNE)
