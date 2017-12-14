@@ -2,6 +2,7 @@ package de.cwkuehl.jhh6.server
 
 import de.cwkuehl.jhh6.api.service.IAdresseService
 import de.cwkuehl.jhh6.api.service.IAnmeldungService
+import de.cwkuehl.jhh6.api.service.IFreizeitService
 import de.cwkuehl.jhh6.api.service.IHaushaltService
 import de.cwkuehl.jhh6.api.service.IReplikationService
 import de.cwkuehl.jhh6.api.service.ITagebuchService
@@ -20,9 +21,9 @@ class FactoryService {
 		return injector.getInstance(typeof(IAnmeldungService))
 	}
 
-	//def static IFreizeitService getFreizeitService() {
-	//	return injector.getInstance(typeof(IFreizeitService))
-	//}
+	def static IFreizeitService getFreizeitService() {
+		return injector.getInstance(typeof(IFreizeitService))
+	}
 
 	def static IHaushaltService getHaushaltService() {
 		return injector.getInstance(typeof(IHaushaltService))

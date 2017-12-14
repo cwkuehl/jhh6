@@ -2,6 +2,7 @@ package de.cwkuehl.jhh6.server
 
 import de.cwkuehl.jhh6.api.service.IAdresseService
 import de.cwkuehl.jhh6.api.service.IAnmeldungService
+import de.cwkuehl.jhh6.api.service.IFreizeitService
 import de.cwkuehl.jhh6.api.service.IHaushaltService
 import de.cwkuehl.jhh6.api.service.IReplikationService
 import de.cwkuehl.jhh6.api.service.ITagebuchService
@@ -10,6 +11,12 @@ import de.cwkuehl.jhh6.server.rep.IAdAdresseRep
 import de.cwkuehl.jhh6.server.rep.IAdPersonRep
 import de.cwkuehl.jhh6.server.rep.IAdSitzRep
 import de.cwkuehl.jhh6.server.rep.IBenutzerRep
+import de.cwkuehl.jhh6.server.rep.IFzBuchRep
+import de.cwkuehl.jhh6.server.rep.IFzBuchautorRep
+import de.cwkuehl.jhh6.server.rep.IFzBuchserieRep
+import de.cwkuehl.jhh6.server.rep.IFzBuchstatusRep
+import de.cwkuehl.jhh6.server.rep.IFzFahrradRep
+import de.cwkuehl.jhh6.server.rep.IFzFahrradstandRep
 import de.cwkuehl.jhh6.server.rep.IHhBilanzRep
 import de.cwkuehl.jhh6.server.rep.IHhBuchungRep
 import de.cwkuehl.jhh6.server.rep.IHhEreignisRep
@@ -29,6 +36,12 @@ import de.cwkuehl.jhh6.server.rep.impl.AdAdresseRep
 import de.cwkuehl.jhh6.server.rep.impl.AdPersonRep
 import de.cwkuehl.jhh6.server.rep.impl.AdSitzRep
 import de.cwkuehl.jhh6.server.rep.impl.BenutzerRep
+import de.cwkuehl.jhh6.server.rep.impl.FzBuchRep
+import de.cwkuehl.jhh6.server.rep.impl.FzBuchautorRep
+import de.cwkuehl.jhh6.server.rep.impl.FzBuchserieRep
+import de.cwkuehl.jhh6.server.rep.impl.FzBuchstatusRep
+import de.cwkuehl.jhh6.server.rep.impl.FzFahrradRep
+import de.cwkuehl.jhh6.server.rep.impl.FzFahrradstandRep
 import de.cwkuehl.jhh6.server.rep.impl.HhBilanzRep
 import de.cwkuehl.jhh6.server.rep.impl.HhBuchungRep
 import de.cwkuehl.jhh6.server.rep.impl.HhEreignisRep
@@ -46,6 +59,7 @@ import de.cwkuehl.jhh6.server.rep.impl.VmKontoRep
 import de.cwkuehl.jhh6.server.rep.impl.ZeinstellungRep
 import de.cwkuehl.jhh6.server.service.AdresseService
 import de.cwkuehl.jhh6.server.service.AnmeldungService
+import de.cwkuehl.jhh6.server.service.FreizeitService
 import de.cwkuehl.jhh6.server.service.HaushaltService
 import de.cwkuehl.jhh6.server.service.ReplikationService
 import de.cwkuehl.jhh6.server.service.TagebuchService
@@ -57,7 +71,7 @@ class ServiceInjector extends AbstractModule {
 		// Services
 		bind(typeof(IAdresseService)).to(typeof(AdresseService))
 		bind(typeof(IAnmeldungService)).to(typeof(AnmeldungService))
-//		bind(typeof(IFreizeitService)).to(typeof(FreizeitService))
+		bind(typeof(IFreizeitService)).to(typeof(FreizeitService))
 		bind(typeof(IHaushaltService)).to(typeof(HaushaltService))
 //		bind(typeof(IHeilpraktikerService)).to(typeof(HeilpraktikerService))
 //		bind(typeof(IMessdienerService)).to(typeof(MessdienerService))
@@ -73,12 +87,12 @@ class ServiceInjector extends AbstractModule {
 		bind(typeof(IAdSitzRep)).to(typeof(AdSitzRep))
 		bind(typeof(IBenutzerRep)).to(typeof(BenutzerRep))
 //		bind(typeof(IByteDatenRep)).to(typeof(ByteDatenRep))
-//		bind(typeof(IFzBuchRep)).to(typeof(FzBuchRep))
-//		bind(typeof(IFzBuchautorRep)).to(typeof(FzBuchautorRep))
-//		bind(typeof(IFzBuchserieRep)).to(typeof(FzBuchserieRep))
-//		bind(typeof(IFzBuchstatusRep)).to(typeof(FzBuchstatusRep))
-//		bind(typeof(IFzFahrradRep)).to(typeof(FzFahrradRep))
-//		bind(typeof(IFzFahrradstandRep)).to(typeof(FzFahrradstandRep))
+		bind(typeof(IFzBuchRep)).to(typeof(FzBuchRep))
+		bind(typeof(IFzBuchautorRep)).to(typeof(FzBuchautorRep))
+		bind(typeof(IFzBuchserieRep)).to(typeof(FzBuchserieRep))
+		bind(typeof(IFzBuchstatusRep)).to(typeof(FzBuchstatusRep))
+		bind(typeof(IFzFahrradRep)).to(typeof(FzFahrradRep))
+		bind(typeof(IFzFahrradstandRep)).to(typeof(FzFahrradstandRep))
 //		bind(typeof(IFzNotizRep)).to(typeof(FzNotizRep))
 		bind(typeof(IHhBilanzRep)).to(typeof(HhBilanzRep))
 		bind(typeof(IHhBuchungRep)).to(typeof(HhBuchungRep))

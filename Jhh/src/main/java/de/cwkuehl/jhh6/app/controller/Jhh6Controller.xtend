@@ -18,6 +18,7 @@ import de.cwkuehl.jhh6.app.controller.am.AM000AnmeldungController
 import de.cwkuehl.jhh6.app.controller.am.AM100AenderungController
 import de.cwkuehl.jhh6.app.controller.am.AM500EinstellungenController
 import de.cwkuehl.jhh6.app.controller.am.AM510DialogeController
+import de.cwkuehl.jhh6.app.controller.fz.FZ100StatistikController
 import de.cwkuehl.jhh6.app.controller.hh.HH100PeriodenController
 import de.cwkuehl.jhh6.app.controller.hh.HH200KontenController
 import de.cwkuehl.jhh6.app.controller.hh.HH300EreignisseController
@@ -303,6 +304,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 	}
 
 	def private void startDialoge(int mandantNr) {
+
 		Platform::runLater([
 			{
 				var List<StartDialog> dliste = Jhh6Controller::getDialogListe
@@ -321,6 +323,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 	}
 
 	def static List<StartDialog> getDialogListe() {
+
 		var List<StartDialog> l = new ArrayList<StartDialog>
 		l.add(new StartDialog("#AG100", g("menu.clients"), typeof(AG100MandantenController), null))
 		l.add(new StartDialog("#AG200", g("menu.users"), typeof(AG200BenutzerController), null))
@@ -335,7 +338,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		// l.add(new StartDialog("#FZ340", g("menu.books"), typeof(FZ340BuecherController), null))
 		// l.add(new StartDialog("#SO100", g("menu.sudoku"), typeof(SO100SudokuController), null))
 		// l.add(new StartDialog("#SO200", g("menu.detective"), typeof(SO200DetektivController), null))
-		// l.add(new StartDialog("#FZ100", g("menu.statistic"), typeof(FZ100StatistikController), null))
+		l.add(new StartDialog("#FZ100", g("menu.statistic"), typeof(FZ100StatistikController), null))
 		l.add(new StartDialog("#HH400", g("menu.bookings"), typeof(HH400BuchungenController), null))
 		l.add(new StartDialog("#HH300", g("menu.events"), typeof(HH300EreignisseController), null))
 		l.add(new StartDialog("#HH200", g("menu.accounts"), typeof(HH200KontenController), null))
@@ -405,7 +408,8 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		starteFormular(typeof(AM510DialogeController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleFZ100() { // starteFormular(typeof(FZ100StatistikController), DialogAufrufEnum.OHNE)
+	@FXML def void handleFZ100() {
+		starteFormular(typeof(FZ100StatistikController), DialogAufrufEnum.OHNE)
 	}
 
 	@FXML def void handleFZ200() { // starteFormular(typeof(FZ200FahrraederController), DialogAufrufEnum.OHNE)
@@ -559,6 +563,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 	}
 
 	def void closeTabs() {
+
 		for (Tab t : tabs.getTabs) {
 			// Close-Event händisch aufrufen
 			t.getOnClosed.handle(null)

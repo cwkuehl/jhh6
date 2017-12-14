@@ -43,6 +43,7 @@ class JavaFxParserTest {
 		// parse("am/AM100Aenderung.fxml")
 		// parse("am/AM500Einstellungen.fxml")
 		// parse("am/AM510Dialoge.fxml")
+		 parse("fz/FZ100Statistik.fxml")
 		// parse("hh/HH100Perioden.fxml")
 		// parse("hh/HH200Konten.fxml")
 		// parse("hh/HH210Konto.fxml")
@@ -51,7 +52,7 @@ class JavaFxParserTest {
 		// parse("hh/HH400Buchungen.fxml")
 		// parse("hh/HH410Buchung.fxml")
 		// parse("hh/HH500Bilanzen.fxml")
-		 parse("hh/HH510Drucken.fxml")
+		// parse("hh/HH510Drucken.fxml")
 		// parse("tb/TB100Tagebuch.fxml")
 		Global.machNichts
 	}
