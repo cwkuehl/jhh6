@@ -12,6 +12,27 @@ import de.cwkuehl.jhh6.api.dto.AdSitzUpdate
 import de.cwkuehl.jhh6.api.dto.Benutzer
 import de.cwkuehl.jhh6.api.dto.BenutzerKey
 import de.cwkuehl.jhh6.api.dto.BenutzerUpdate
+import de.cwkuehl.jhh6.api.dto.FzBuch
+import de.cwkuehl.jhh6.api.dto.FzBuchKey
+import de.cwkuehl.jhh6.api.dto.FzBuchUpdate
+import de.cwkuehl.jhh6.api.dto.FzBuchautor
+import de.cwkuehl.jhh6.api.dto.FzBuchautorKey
+import de.cwkuehl.jhh6.api.dto.FzBuchautorUpdate
+import de.cwkuehl.jhh6.api.dto.FzBuchserie
+import de.cwkuehl.jhh6.api.dto.FzBuchserieKey
+import de.cwkuehl.jhh6.api.dto.FzBuchserieUpdate
+import de.cwkuehl.jhh6.api.dto.FzBuchstatus
+import de.cwkuehl.jhh6.api.dto.FzBuchstatusKey
+import de.cwkuehl.jhh6.api.dto.FzBuchstatusUpdate
+import de.cwkuehl.jhh6.api.dto.FzFahrrad
+import de.cwkuehl.jhh6.api.dto.FzFahrradKey
+import de.cwkuehl.jhh6.api.dto.FzFahrradUpdate
+import de.cwkuehl.jhh6.api.dto.FzFahrradstand
+import de.cwkuehl.jhh6.api.dto.FzFahrradstandKey
+import de.cwkuehl.jhh6.api.dto.FzFahrradstandUpdate
+import de.cwkuehl.jhh6.api.dto.FzNotiz
+import de.cwkuehl.jhh6.api.dto.FzNotizKey
+import de.cwkuehl.jhh6.api.dto.FzNotizUpdate
 import de.cwkuehl.jhh6.api.dto.HhBilanz
 import de.cwkuehl.jhh6.api.dto.HhBilanzKey
 import de.cwkuehl.jhh6.api.dto.HhBilanzUpdate
@@ -73,6 +94,13 @@ import de.cwkuehl.jhh6.server.rep.IAdAdresseRep
 import de.cwkuehl.jhh6.server.rep.IAdPersonRep
 import de.cwkuehl.jhh6.server.rep.IAdSitzRep
 import de.cwkuehl.jhh6.server.rep.IBenutzerRep
+import de.cwkuehl.jhh6.server.rep.IFzBuchRep
+import de.cwkuehl.jhh6.server.rep.IFzBuchautorRep
+import de.cwkuehl.jhh6.server.rep.IFzBuchserieRep
+import de.cwkuehl.jhh6.server.rep.IFzBuchstatusRep
+import de.cwkuehl.jhh6.server.rep.IFzFahrradRep
+import de.cwkuehl.jhh6.server.rep.IFzFahrradstandRep
+import de.cwkuehl.jhh6.server.rep.IFzNotizRep
 import de.cwkuehl.jhh6.server.rep.IHhBilanzRep
 import de.cwkuehl.jhh6.server.rep.IHhBuchungRep
 import de.cwkuehl.jhh6.server.rep.IHhEreignisRep
@@ -92,6 +120,13 @@ import de.cwkuehl.jhh6.server.rep.impl.AdAdresseRep
 import de.cwkuehl.jhh6.server.rep.impl.AdPersonRep
 import de.cwkuehl.jhh6.server.rep.impl.AdSitzRep
 import de.cwkuehl.jhh6.server.rep.impl.BenutzerRep
+import de.cwkuehl.jhh6.server.rep.impl.FzBuchRep
+import de.cwkuehl.jhh6.server.rep.impl.FzBuchautorRep
+import de.cwkuehl.jhh6.server.rep.impl.FzBuchserieRep
+import de.cwkuehl.jhh6.server.rep.impl.FzBuchstatusRep
+import de.cwkuehl.jhh6.server.rep.impl.FzFahrradRep
+import de.cwkuehl.jhh6.server.rep.impl.FzFahrradstandRep
+import de.cwkuehl.jhh6.server.rep.impl.FzNotizRep
 import de.cwkuehl.jhh6.server.rep.impl.HhBilanzRep
 import de.cwkuehl.jhh6.server.rep.impl.HhBuchungRep
 import de.cwkuehl.jhh6.server.rep.impl.HhEreignisRep
@@ -118,13 +153,13 @@ class ReplikationService {
 	@RepositoryRef AdSitzRep sitzRep
 	@RepositoryRef BenutzerRep benutzerRep
 	// @RepositoryRef ByteDatenRep byteRep
-	// @RepositoryRef FzBuchRep buchRep
-	// @RepositoryRef FzBuchautorRep buchautorRep
-	// @RepositoryRef FzBuchserieRep buchserieRep
-	// @RepositoryRef FzBuchstatusRep buchstatusRep
-	// @RepositoryRef FzFahrradRep fahrradRep
-	// @RepositoryRef FzFahrradstandRep fahrradstandRep
-	// @RepositoryRef FzNotizRep notizRep
+	@RepositoryRef FzBuchRep buchRep
+	@RepositoryRef FzBuchautorRep buchautorRep
+	@RepositoryRef FzBuchserieRep buchserieRep
+	@RepositoryRef FzBuchstatusRep buchstatusRep
+	@RepositoryRef FzFahrradRep fahrradRep
+	@RepositoryRef FzFahrradstandRep fahrradstandRep
+	@RepositoryRef FzNotizRep notizRep
 	@RepositoryRef HhBilanzRep bilanzRep
 	@RepositoryRef HhBuchungRep buchungRep
 	@RepositoryRef HhEreignisRep ereignisRep
@@ -238,34 +273,41 @@ class ReplikationService {
 //				typeof(ByteDatenUpdate))
 //			reps.put(typeof(ByteDaten), by)
 //			reps.put(typeof(ByteDatenUpdate), by)
-//			var bc = new RbRepository(buchRep, typeof(IFzBuchRep), typeof(FzBuchKey), typeof(FzBuch),
-//				typeof(FzBuchUpdate))
-//			reps.put(typeof(FzBuch), bc)
-//			reps.put(typeof(FzBuchUpdate), bc)
-//			var ba = new RbRepository(buchautorRep, typeof(IFzBuchautorRep), typeof(FzBuchautorKey),
-//				typeof(FzBuchautor), typeof(FzBuchautorUpdate))
-//			reps.put(typeof(FzBuchautor), ba)
-//			reps.put(typeof(FzBuchautorUpdate), ba)
-//			var bs = new RbRepository(buchserieRep, typeof(IFzBuchserieRep), typeof(FzBuchserieKey),
-//				typeof(FzBuchserie), typeof(FzBuchserieUpdate))
-//			reps.put(typeof(FzBuchserie), bs)
-//			reps.put(typeof(FzBuchserieUpdate), bs)
-//			var bt = new RbRepository(buchstatusRep, typeof(IFzBuchstatusRep), typeof(FzBuchstatusKey),
-//				typeof(FzBuchstatus), typeof(FzBuchstatusUpdate))
-//			reps.put(typeof(FzBuchstatus), bt)
-//			reps.put(typeof(FzBuchstatusUpdate), bt)
-//			var fa = new RbRepository(fahrradRep, typeof(IFzFahrradRep), typeof(FzFahrradKey), typeof(FzFahrrad),
-//				typeof(FzFahrradUpdate))
-//			reps.put(typeof(FzFahrrad), fa)
-//			reps.put(typeof(FzFahrradUpdate), fa)
-//			var fs = new RbRepository(fahrradstandRep, typeof(IFzFahrradstandRep), typeof(FzFahrradstandKey),
-//				typeof(FzFahrradstand), typeof(FzFahrradstandUpdate))
-//			reps.put(typeof(FzFahrradstand), fs)
-//			reps.put(typeof(FzFahrradstandUpdate), fs)
-//			var nz = new RbRepository(notizRep, typeof(IFzNotizRep), typeof(FzNotizKey), typeof(FzNotiz),
-//				typeof(FzNotizUpdate))
-//			reps.put(typeof(FzNotiz), nz)
-//			reps.put(typeof(FzNotizUpdate), nz)
+			var bc = new RbRepository(buchRep, typeof(IFzBuchRep), typeof(FzBuchKey), typeof(FzBuch),
+				typeof(FzBuchUpdate))
+			reps.put(typeof(FzBuch), bc)
+			reps.put(typeof(FzBuchUpdate), bc)
+			
+			var ba = new RbRepository(buchautorRep, typeof(IFzBuchautorRep), typeof(FzBuchautorKey),
+				typeof(FzBuchautor), typeof(FzBuchautorUpdate))
+			reps.put(typeof(FzBuchautor), ba)
+			reps.put(typeof(FzBuchautorUpdate), ba)
+			
+			var bs = new RbRepository(buchserieRep, typeof(IFzBuchserieRep), typeof(FzBuchserieKey),
+				typeof(FzBuchserie), typeof(FzBuchserieUpdate))
+			reps.put(typeof(FzBuchserie), bs)
+			reps.put(typeof(FzBuchserieUpdate), bs)
+			
+			var bt = new RbRepository(buchstatusRep, typeof(IFzBuchstatusRep), typeof(FzBuchstatusKey),
+				typeof(FzBuchstatus), typeof(FzBuchstatusUpdate))
+			reps.put(typeof(FzBuchstatus), bt)
+			reps.put(typeof(FzBuchstatusUpdate), bt)
+			
+			var fa = new RbRepository(fahrradRep, typeof(IFzFahrradRep), typeof(FzFahrradKey), typeof(FzFahrrad),
+				typeof(FzFahrradUpdate))
+			reps.put(typeof(FzFahrrad), fa)
+			reps.put(typeof(FzFahrradUpdate), fa)
+			
+			var fs = new RbRepository(fahrradstandRep, typeof(IFzFahrradstandRep), typeof(FzFahrradstandKey),
+				typeof(FzFahrradstand), typeof(FzFahrradstandUpdate))
+			reps.put(typeof(FzFahrradstand), fs)
+			reps.put(typeof(FzFahrradstandUpdate), fs)
+
+			var nz = new RbRepository(notizRep, typeof(IFzNotizRep), typeof(FzNotizKey), typeof(FzNotiz),
+				typeof(FzNotizUpdate))
+			reps.put(typeof(FzNotiz), nz)
+			reps.put(typeof(FzNotizUpdate), nz)
+
 			var bi = new RbRepository(bilanzRep, typeof(IHhBilanzRep), typeof(HhBilanzKey), typeof(HhBilanz),
 				typeof(HhBilanzUpdate))
 			reps.put(typeof(HhBilanz), bi)

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.66" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="de.cwkuehl.jhh6.app.controller.fz.FZ210FahrradController">
+
+	<padding>
+		<Insets bottom="10" left="10" right="10" top="10" />
+	</padding>
+
+	<Label fx:id="nr0" text="%FZ210.nr" GridPane.columnIndex="0" />
+	<TextField fx:id="nr" accessibleText="%FZ210.nr.tt" promptText="%FZ210.nr.tt" GridPane.columnIndex="1"
+		GridPane.hgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%FZ210.nr.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="bezeichnung0" mnemonicParsing="true" text="%FZ210.bezeichnung" GridPane.columnIndex="0"
+		GridPane.rowIndex="1" />
+	<TextField fx:id="bezeichnung" accessibleText="%FZ210.bezeichnung.tt" promptText="%FZ210.bezeichnung.tt" GridPane.columnIndex="1"
+		GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
+		<tooltip>
+			<Tooltip text="%FZ210.bezeichnung.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="typ0" mnemonicParsing="true" text="%FZ210.typ" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
+		<fx:define>
+			<ToggleGroup fx:id="typ" />
+		</fx:define>
+		<children>
+			<RadioButton accessibleText="%FZ210.typ1.tt" text="%FZ210.typ1" userData="1">
+				<tooltip>
+					<Tooltip text="%FZ210.typ1.tt" />
+				</tooltip>
+				<toggleGroup>
+					<ToggleGroup fx:id="typ" />
+				</toggleGroup>
+			</RadioButton>
+			<RadioButton accessibleText="%FZ210.typ2.tt" text="%FZ210.typ2" toggleGroup="$typ" userData="2">
+				<tooltip>
+					<Tooltip text="%FZ210.typ2.tt" />
+				</tooltip>
+			</RadioButton>
+		</children>
+	</HBox>
+	<Label fx:id="angelegt0" text="%Creation" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+	<TextField fx:id="angelegt" accessibleText="%Creation.tt"
+		promptText="%Creation.tt" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS"
+		GridPane.rowIndex="3">
+		<tooltip>
+			<Tooltip text="%Creation.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="geaendert0" text="%Change" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+	<TextField fx:id="geaendert" accessibleText="%Change.tt"
+		promptText="%Change.tt" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS"
+		GridPane.rowIndex="4">
+		<tooltip>
+			<Tooltip text="%Change.tt" />
+		</tooltip>
+	</TextField>
+	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5">
+		<Button fx:id="ok" defaultButton="true" mnemonicParsing="true" onAction="#onOk" text="%Ok">
+			<tooltip>
+				<Tooltip text="%Ok.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="abbrechen" cancelButton="true" onAction="#onAbbrechen" text="%Cancel">
+			<tooltip>
+				<Tooltip text="%Cancel.tt" />
+			</tooltip>
+		</Button>
+	</HBox>
+
+	<stylesheets>
+		<URL value="@../Jhh6.css" />
+	</stylesheets>
+	<columnConstraints>
+		<ColumnConstraints />
+		<ColumnConstraints />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+	</rowConstraints>
+</GridPane>

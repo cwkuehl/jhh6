@@ -19,6 +19,7 @@ import de.cwkuehl.jhh6.app.controller.am.AM100AenderungController
 import de.cwkuehl.jhh6.app.controller.am.AM500EinstellungenController
 import de.cwkuehl.jhh6.app.controller.am.AM510DialogeController
 import de.cwkuehl.jhh6.app.controller.fz.FZ100StatistikController
+import de.cwkuehl.jhh6.app.controller.fz.FZ200FahrraederController
 import de.cwkuehl.jhh6.app.controller.hh.HH100PeriodenController
 import de.cwkuehl.jhh6.app.controller.hh.HH200KontenController
 import de.cwkuehl.jhh6.app.controller.hh.HH300EreignisseController
@@ -412,7 +413,8 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		starteFormular(typeof(FZ100StatistikController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleFZ200() { // starteFormular(typeof(FZ200FahrraederController), DialogAufrufEnum.OHNE)
+	@FXML def void handleFZ200() {
+		starteFormular(typeof(FZ200FahrraederController), DialogAufrufEnum.OHNE)
 	}
 
 	@FXML def void handleFZ250() { // starteFormular(typeof(FZ250FahrradstaendeController), DialogAufrufEnum.OHNE)
