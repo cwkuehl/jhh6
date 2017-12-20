@@ -45,9 +45,9 @@ class AG210BenutzerController extends BaseController<String> {
 
 		tabbar = 0
 		nr0.setLabelFor(nr)
-		benutzerId0.setLabelFor(benutzerId)
-		kennwort0.setLabelFor(kennwort)
-		setLabelFor(berechtigung0, berechtigung)
+		benutzerId0.setLabelFor(benutzerId, true)
+		kennwort0.setLabelFor(kennwort, true)
+		berechtigung0.setLabelFor(berechtigung, true)
 		geburt0.setLabelFor(geburt)
 		angelegt0.setLabelFor(angelegt)
 		geaendert0.setLabelFor(geaendert)

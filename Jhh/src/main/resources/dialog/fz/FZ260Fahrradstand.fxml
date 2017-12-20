@@ -23,25 +23,25 @@
 			<Tooltip text="%FZ260.nr.tt" />
 		</tooltip>
 	</TextField>
-	<Label fx:id="fahrrad0" mnemonicParsing="true" styleClass="label-bold" text="%FZ260.fahrrad" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+	<Label fx:id="fahrrad0" mnemonicParsing="true" text="%FZ260.fahrrad" GridPane.columnIndex="0" GridPane.rowIndex="1" />
 	<ComboBox fx:id="fahrrad" accessibleText="%FZ260.fahrrad.tt" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
 		<tooltip>
 			<Tooltip text="%FZ260.fahrrad.tt" />
 		</tooltip>
 	</ComboBox>
-	<Label fx:id="datum0" mnemonicParsing="true" styleClass="label-bold" text="%FZ260.datum" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+	<Label fx:id="datum0" mnemonicParsing="true" text="%FZ260.datum" GridPane.columnIndex="0" GridPane.rowIndex="2" />
 	<Datum fx:id="datum" accessibleText="%FZ260.datum.tt" nullText="" promptText="%FZ260.datum.tt" schalterText="mhp" uhrzeitGroesse="0" wochentagGroesse="80" GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
 		<tooltip>
 			<Tooltip text="%FZ260.datum.tt" />
 		</tooltip>
 	</Datum>
-	<Label fx:id="zaehler0" mnemonicParsing="true" styleClass="label-bold" text="%FZ260.zaehler" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+	<Label fx:id="zaehler0" mnemonicParsing="true" text="%FZ260.zaehler" GridPane.columnIndex="0" GridPane.rowIndex="3" />
 	<TextField fx:id="zaehler" onKeyTyped="#onZaehler" accessibleText="%FZ260.zaehler.tt" promptText="%FZ260.zaehler.tt" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
 		<tooltip>
 			<Tooltip text="%FZ260.zaehler.tt" />
 		</tooltip>
 	</TextField>
-	<Label fx:id="km0" mnemonicParsing="true" styleClass="label-bold" text="%FZ260.km" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+	<Label fx:id="km0" mnemonicParsing="true" text="%FZ260.km" GridPane.columnIndex="0" GridPane.rowIndex="4" />
 	<TextField fx:id="km" onKeyTyped="#onKm" accessibleText="%FZ260.km.tt" promptText="%FZ260.km.tt" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
 		<tooltip>
 			<Tooltip text="%FZ260.km.tt" />

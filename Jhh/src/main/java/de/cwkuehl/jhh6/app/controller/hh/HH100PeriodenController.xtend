@@ -92,8 +92,8 @@ class HH100PeriodenController extends BaseController<String> {
 		tabbar = 1
 		super.initialize
 		perioden0.setLabelFor(perioden)
-		setLabelFor(laenge0, laenge)
-		setLabelFor(art0, art)
+		laenge0.setLabelFor(laenge, false)
+		art0.setLabelFor(art, false)
 		initAccelerator("A", aktuell)
 		initAccelerator("U", rueckgaengig)
 		initAccelerator("W", wiederherstellen)

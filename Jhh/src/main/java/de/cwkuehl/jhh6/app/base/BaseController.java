@@ -30,6 +30,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -499,6 +500,15 @@ public abstract class BaseController<R> {
         }
     }
 
+    protected void setLabelFor(Label l, Node v, boolean mandatory) {
+
+        if (l != null && v != null) {
+            l.setLabelFor(v);
+            if (mandatory)
+                l.getStyleClass().add("label-bold");
+        }
+    }
+
     protected String getText(ToggleGroup tg) {
 
         if (tg != null) {
@@ -522,10 +532,12 @@ public abstract class BaseController<R> {
         }
     }
 
-    protected void setLabelFor(Label l, ToggleGroup tg) {
+    protected void setLabelFor(Label l, ToggleGroup tg, boolean mandatory) {
 
         if (l != null && tg != null && !tg.getToggles().isEmpty()) {
             l.setLabelFor((RadioButton) tg.getToggles().get(0));
+            if (mandatory)
+                l.getStyleClass().add("label-bold");
         }
     }
 

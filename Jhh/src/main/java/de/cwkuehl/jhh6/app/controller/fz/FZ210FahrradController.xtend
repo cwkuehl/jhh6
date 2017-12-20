@@ -39,8 +39,8 @@ class FZ210FahrradController extends BaseController<String> {
 
 		tabbar = 0
 		nr0.setLabelFor(nr)
-		bezeichnung0.setLabelFor(bezeichnung)
-		setLabelFor(typ0, typ)
+		bezeichnung0.setLabelFor(bezeichnung, true)
+		typ0.setLabelFor(typ, true)
 		angelegt0.setLabelFor(angelegt)
 		geaendert0.setLabelFor(geaendert)
 		initDaten(0)

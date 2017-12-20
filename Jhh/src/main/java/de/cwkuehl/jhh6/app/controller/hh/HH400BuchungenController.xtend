@@ -145,7 +145,7 @@ class HH400BuchungenController extends BaseController<String> {
 		tabbar = 1
 		super.initialize
 		buchungen0.setLabelFor(buchungen)
-		setLabelFor(kennzeichen0, kennzeichen)
+		kennzeichen0.setLabelFor(kennzeichen, false)
 		von0.setLabelFor(von.getLabelForNode)
 		bis0.setLabelFor(bis.getLabelForNode)
 		bText0.setLabelFor(bText)

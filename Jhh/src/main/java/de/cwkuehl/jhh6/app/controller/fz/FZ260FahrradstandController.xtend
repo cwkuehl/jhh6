@@ -67,11 +67,11 @@ class FZ260FahrradstandController extends BaseController<String> {
 
 		tabbar = 0
 		nr0.setLabelFor(nr)
-		fahrrad0.setLabelFor(fahrrad)
+		fahrrad0.setLabelFor(fahrrad, true)
 		initComboBox(fahrrad, null)
-		datum0.setLabelFor(datum.getLabelForNode)
-		zaehler0.setLabelFor(zaehler)
-		km0.setLabelFor(km)
+		datum0.setLabelFor(datum.getLabelForNode, true)
+		zaehler0.setLabelFor(zaehler, true)
+		km0.setLabelFor(km, true)
 		schnitt0.setLabelFor(schnitt)
 		beschreibung0.setLabelFor(beschreibung)
 		angelegt0.setLabelFor(angelegt)

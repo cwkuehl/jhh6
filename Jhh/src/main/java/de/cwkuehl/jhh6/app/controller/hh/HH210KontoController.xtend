@@ -48,9 +48,9 @@ class HH210KontoController extends BaseController<String> {
 
 		tabbar = 0
 		nr0.setLabelFor(nr)
-		bezeichnung0.setLabelFor(bezeichnung)
-		setLabelFor(kennzeichen0, kennzeichen)
-		setLabelFor(kontoart0, kontoart)
+		bezeichnung0.setLabelFor(bezeichnung, true)
+		kennzeichen0.setLabelFor(kennzeichen, false)
+		kontoart0.setLabelFor(kontoart, true)
 		von0.setLabelFor(von.getLabelForNode)
 		bis0.setLabelFor(bis.getLabelForNode)
 		angelegt0.setLabelFor(angelegt)

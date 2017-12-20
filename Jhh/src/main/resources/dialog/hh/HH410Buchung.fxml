@@ -23,13 +23,13 @@
 			<Tooltip text="%HH410.nr.tt" />
 		</tooltip>
 	</TextField>
-	<Label fx:id="valuta0" mnemonicParsing="true" styleClass="label-bold" text="%HH410.valuta" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+	<Label fx:id="valuta0" mnemonicParsing="true" text="%HH410.valuta" GridPane.columnIndex="0" GridPane.rowIndex="1" />
 	<Datum fx:id="valuta" accessibleText="%HH410.valuta.tt" nullText="" onAction="#onValuta" promptText="%HH410.valuta.tt" schalterText="mhp" uhrzeitGroesse="0" wochentagGroesse="80" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
 		<tooltip>
 			<Tooltip text="%HH410.valuta.tt" />
 		</tooltip>
 	</Datum>
-	<Label fx:id="betrag0" mnemonicParsing="true" styleClass="label-bold" text="%HH410.betrag" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+	<Label fx:id="betrag0" mnemonicParsing="true" text="%HH410.betrag" GridPane.columnIndex="0" GridPane.rowIndex="2" />
 	<TextField fx:id="betrag" accessibleText="%HH410.betrag.tt" promptText="%HH410.betrag.tt" GridPane.columnIndex="1" GridPane.rowIndex="2">
 		<tooltip>
 			<Tooltip text="%HH410.betrag.tt" />
@@ -47,19 +47,19 @@
 			<Tooltip text="%HH410.ereignis.tt" />
 		</tooltip>
 	</ListView>
-	<Label fx:id="sollkonto0" mnemonicParsing="true" styleClass="label-bold" text="%HH410.sollkonto" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+	<Label fx:id="sollkonto0" mnemonicParsing="true" text="%HH410.sollkonto" GridPane.columnIndex="0" GridPane.rowIndex="4" />
 	<ListView fx:id="sollkonto" accessibleText="%HH410.sollkonto.tt" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.vgrow="ALWAYS">
 		<tooltip>
 			<Tooltip text="%HH410.sollkonto.tt" />
 		</tooltip>
 	</ListView>
-	<Label fx:id="habenkonto0" mnemonicParsing="true" styleClass="label-bold" text="%HH410.habenkonto" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+	<Label fx:id="habenkonto0" mnemonicParsing="true" text="%HH410.habenkonto" GridPane.columnIndex="2" GridPane.rowIndex="4" />
 	<ListView fx:id="habenkonto" accessibleText="%HH410.habenkonto.tt" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.vgrow="ALWAYS">
 		<tooltip>
 			<Tooltip text="%HH410.habenkonto.tt" />
 		</tooltip>
 	</ListView>
-	<Label fx:id="bText0" mnemonicParsing="true" styleClass="label-bold" text="%HH410.bText" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+	<Label fx:id="bText0" mnemonicParsing="true" text="%HH410.bText" GridPane.columnIndex="0" GridPane.rowIndex="5" />
 	<TextField fx:id="bText" accessibleText="%HH410.bText.tt" promptText="%HH410.bText.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="5">
 		<tooltip>
 			<Tooltip text="%HH410.bText.tt" />

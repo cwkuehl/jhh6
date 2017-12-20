@@ -23,7 +23,7 @@
 			<Tooltip text="%FZ210.nr.tt" />
 		</tooltip>
 	</TextField>
-	<Label fx:id="bezeichnung0" mnemonicParsing="true" styleClass="label-bold" text="%FZ210.bezeichnung" GridPane.columnIndex="0"
+	<Label fx:id="bezeichnung0" mnemonicParsing="true" text="%FZ210.bezeichnung" GridPane.columnIndex="0"
 		GridPane.rowIndex="1" />
 	<TextField fx:id="bezeichnung" accessibleText="%FZ210.bezeichnung.tt" promptText="%FZ210.bezeichnung.tt" GridPane.columnIndex="1"
 		GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
@@ -31,7 +31,7 @@
 			<Tooltip text="%FZ210.bezeichnung.tt" />
 		</tooltip>
 	</TextField>
-	<Label fx:id="typ0" mnemonicParsing="true" styleClass="label-bold" text="%FZ210.typ" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+	<Label fx:id="typ0" mnemonicParsing="true" text="%FZ210.typ" GridPane.columnIndex="0" GridPane.rowIndex="2" />
 	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
 		<fx:define>
 			<ToggleGroup fx:id="typ" />
