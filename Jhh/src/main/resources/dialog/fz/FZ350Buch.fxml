@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import de.cwkuehl.jhh5.anwendung.control.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import de.cwkuehl.jhh6.app.control.Datum?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.66" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="de.cwkuehl.jhh6.app.controller.fz.FZ350BuchController">
+
+	<padding>
+		<Insets bottom="10" left="10" right="10" top="10" />
+	</padding>
+
+	<Label fx:id="nr0" text="%FZ350.nr" GridPane.columnIndex="0" />
+	<TextField fx:id="nr" accessibleText="%FZ350.nr.tt" promptText="%FZ350.nr.tt" GridPane.columnIndex="1"
+		GridPane.hgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%FZ350.nr.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="titel0" mnemonicParsing="true" text="%FZ350.titel" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+	<TextField fx:id="titel" accessibleText="%FZ350.titel.tt" promptText="%FZ350.titel.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
+		<tooltip>
+			<Tooltip text="%FZ350.titel.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="autor0" mnemonicParsing="true" text="%FZ350.autor" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+	<ComboBox fx:id="autor" accessibleText="%FZ350.autor.tt" GridPane.columnIndex="1" GridPane.columnSpan="1"
+		GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
+		<tooltip>
+			<Tooltip text="%FZ350.autor.tt" />
+		</tooltip>
+	</ComboBox>
+	<Button fx:id="autorNeu" mnemonicParsing="true" onAction="#onAutorNeu" text="%FZ350.autorNeu" GridPane.columnIndex="2"
+		GridPane.rowIndex="2">
+		<tooltip>
+			<Tooltip text="%FZ350.autorNeu.tt" />
+		</tooltip>
+	</Button>
+	<Label fx:id="serie0" mnemonicParsing="true" text="%FZ350.serie" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+	<ComboBox fx:id="serie" accessibleText="%FZ350.serie.tt" GridPane.columnIndex="1" GridPane.columnSpan="1"
+		GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
+		<tooltip>
+			<Tooltip text="%FZ350.serie.tt" />
+		</tooltip>
+	</ComboBox>
+	<Button fx:id="serieNeu" mnemonicParsing="true" onAction="#onSerieNeu" text="%FZ350.serieNeu" GridPane.columnIndex="2"
+		GridPane.rowIndex="3">
+		<tooltip>
+			<Tooltip text="%FZ350.serieNeu.tt" />
+		</tooltip>
+	</Button>
+	<Label fx:id="seriennummer0" text="%FZ350.seriennummer" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+	<TextField fx:id="seriennummer" accessibleText="%FZ350.seriennummer.tt" promptText="%FZ350.seriennummer.tt"
+		GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
+		<tooltip>
+			<Tooltip text="%FZ350.seriennummer.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="seiten0" text="%FZ350.seiten" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+	<TextField fx:id="seiten" accessibleText="%FZ350.seiten.tt" promptText="%FZ350.seiten.tt"
+		GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5">
+		<tooltip>
+			<Tooltip text="%FZ350.seiten.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="sprache0" mnemonicParsing="true" text="%FZ350.sprache" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6">
+		<fx:define>
+			<ToggleGroup fx:id="sprache" />
+		</fx:define>
+		<children>
+			<RadioButton accessibleText="%FZ350.sprache1.tt" text="%FZ350.sprache1" userData="1">
+				<tooltip>
+					<Tooltip text="%FZ350.sprache1.tt" />
+				</tooltip>
+				<toggleGroup>
+					<ToggleGroup fx:id="sprache" />
+				</toggleGroup>
+			</RadioButton>
+			<RadioButton accessibleText="%FZ350.sprache2.tt" text="%FZ350.sprache2" toggleGroup="$sprache" userData="2">
+				<tooltip>
+					<Tooltip text="%FZ350.sprache2.tt" />
+				</tooltip>
+			</RadioButton>
+			<RadioButton accessibleText="%FZ350.sprache3.tt" text="%FZ350.sprache3" toggleGroup="$sprache" userData="0">
+				<tooltip>
+					<Tooltip text="%FZ350.sprache3.tt" />
+				</tooltip>
+			</RadioButton>
+		</children>
+	</HBox>
+	<Label fx:id="besitz0" mnemonicParsing="true" text="%FZ350.besitz" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+	<CheckBox fx:id="besitz" accessibleText="%FZ350.besitz.tt" text="" GridPane.columnIndex="1"
+		GridPane.hgrow="ALWAYS" GridPane.rowIndex="7">
+		<tooltip>
+			<Tooltip text="%FZ350.besitz.tt" />
+		</tooltip>
+	</CheckBox>
+	<Label fx:id="lesedatum0" mnemonicParsing="true" text="%FZ350.lesedatum" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+	<Datum fx:id="lesedatum" accessibleText="%FZ350.lesedatum.tt" nullText="%FZ350.lesedatum.null" promptText="%FZ350.lesedatum.tt" schalterText="mhp"
+		uhrzeitGroesse="0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="8">
+		<tooltip>
+			<Tooltip text="%FZ350.lesedatum.tt" />
+		</tooltip>
+	</Datum>
+	<Label fx:id="hoerdatum0" mnemonicParsing="true" text="%FZ350.hoerdatum" GridPane.columnIndex="0" GridPane.rowIndex="9" />
+	<Datum fx:id="hoerdatum" accessibleText="%FZ350.hoerdatum.tt" nullText="%FZ350.hoerdatum.null" promptText="%FZ350.hoerdatum.tt" schalterText="mhp"
+		uhrzeitGroesse="0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="9">
+		<tooltip>
+			<Tooltip text="%FZ350.hoerdatum.tt" />
+		</tooltip>
+	</Datum>
+	<Label fx:id="angelegt0" text="%Creation" GridPane.columnIndex="0" GridPane.rowIndex="10" />
+	<TextField fx:id="angelegt" accessibleText="%Creation.tt"
+		promptText="%Creation.tt" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS"
+		GridPane.rowIndex="10">
+		<tooltip>
+			<Tooltip text="%Creation.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="geaendert0" text="%Change" GridPane.columnIndex="0" GridPane.rowIndex="11" />
+	<TextField fx:id="geaendert" accessibleText="%Change.tt"
+		promptText="%Change.tt" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS"
+		GridPane.rowIndex="11">
+		<tooltip>
+			<Tooltip text="%Change.tt" />
+		</tooltip>
+	</TextField>
+	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="12">
+		<Button fx:id="ok" defaultButton="true" mnemonicParsing="true" onAction="#onOk" text="%Ok">
+			<tooltip>
+				<Tooltip text="%Ok.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="abbrechen" cancelButton="true" onAction="#onAbbrechen" text="%Cancel">
+			<tooltip>
+				<Tooltip text="%Cancel.tt" />
+			</tooltip>
+		</Button>
+	</HBox>
+
+	<stylesheets>
+		<URL value="@../Jhh6.css" />
+	</stylesheets>
+	<columnConstraints>
+		<ColumnConstraints />
+		<ColumnConstraints />
+		<ColumnConstraints />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+	</rowConstraints>
+</GridPane>

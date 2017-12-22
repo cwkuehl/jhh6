@@ -87,13 +87,13 @@
 		</children>
 	</HBox>
 	<Label fx:id="von0" mnemonicParsing="true" text="%HH210.von" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-	<Datum fx:id="von" schalterText="mhp" accessibleText="%HH210.von.tt" nullText="unbegrenzt" uhrzeitGroesse="0" promptText="%HH210.von.tt" GridPane.columnIndex="1" GridPane.rowIndex="4">
+	<Datum fx:id="von" schalterText="mhp" accessibleText="%HH210.von.tt" nullText="%HH210.von.null" uhrzeitGroesse="0" promptText="%HH210.von.tt" GridPane.columnIndex="1" GridPane.rowIndex="4">
 		<tooltip>
 			<Tooltip text="%HH210.von.tt" />
 		</tooltip>
 	</Datum>
 	<Label fx:id="bis0" mnemonicParsing="true" text="%HH210.bis" GridPane.columnIndex="0" GridPane.rowIndex="5" />
-	<Datum fx:id="bis" schalterText="mhp" accessibleText="%HH210.bis.tt" nullText="unbegrenzt" uhrzeitGroesse="0" promptText="%HH210.bis.tt" GridPane.columnIndex="1" GridPane.rowIndex="5">
+	<Datum fx:id="bis" schalterText="mhp" accessibleText="%HH210.bis.tt" nullText="%HH210.bis.null" uhrzeitGroesse="0" promptText="%HH210.bis.tt" GridPane.columnIndex="1" GridPane.rowIndex="5">
 		<tooltip>
 			<Tooltip text="%HH210.bis.tt" />
 		</tooltip>
