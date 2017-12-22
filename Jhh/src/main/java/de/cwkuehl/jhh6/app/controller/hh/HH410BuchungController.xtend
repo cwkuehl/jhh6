@@ -283,7 +283,7 @@ class HH410BuchungController extends BaseController<String> {
 	/** 
 	 * Event für Ok.
 	 */
-	@SuppressWarnings("unchecked") @FXML def void onOk() {
+	@FXML def void onOk() {
 
 		var ServiceErgebnis<?> r = null
 		var double dbB

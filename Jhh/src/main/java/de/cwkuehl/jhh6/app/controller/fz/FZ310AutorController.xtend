@@ -1,7 +1,6 @@
-package de.cwkuehl.jhh6.app.controller.ag
+package de.cwkuehl.jhh6.app.controller.fz
 
-import de.cwkuehl.jhh6.api.dto.MaMandant
-import de.cwkuehl.jhh6.api.global.Global
+import de.cwkuehl.jhh6.api.dto.FzBuchautor
 import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.api.service.ServiceErgebnis
 import de.cwkuehl.jhh6.app.base.BaseController
@@ -13,21 +12,23 @@ import javafx.scene.control.Label
 import javafx.scene.control.TextField
 
 /** 
- * Controller für Dialog AG110Mandant.
+ * Controller für Dialog FZ310Autor.
  */
-class AG110MandantController extends BaseController<String> {
+class FZ310AutorController extends BaseController<FzBuchautor> {
 
 	@FXML Label nr0
 	@FXML TextField nr
-	@FXML Label beschreibung0
-	@FXML TextField beschreibung
+	@FXML Label name0
+	@FXML TextField name
+	@FXML Label vorname0
+	@FXML TextField vorname
 	@FXML Label angelegt0
 	@FXML TextField angelegt
 	@FXML Label geaendert0
 	@FXML TextField geaendert
 	@FXML Button ok
+	//@FXML Button abbrechen
 
-	// @FXML Button abbrechen
 	/** 
 	 * Initialisierung des Dialogs.
 	 */
@@ -35,11 +36,12 @@ class AG110MandantController extends BaseController<String> {
 
 		tabbar = 0
 		nr0.setLabelFor(nr)
-		beschreibung0.setLabelFor(beschreibung)
+		name0.setLabelFor(name, true)
+		vorname0.setLabelFor(vorname)
 		angelegt0.setLabelFor(angelegt)
 		geaendert0.setLabelFor(geaendert)
 		initDaten(0)
-		beschreibung.requestFocus()
+		name.requestFocus
 	}
 
 	/** 
@@ -49,33 +51,29 @@ class AG110MandantController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var boolean neu = DialogAufrufEnum.NEU.equals(aufruf)
-			var boolean kopieren = DialogAufrufEnum.KOPIEREN.equals(aufruf)
-			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(aufruf)
-			var MaMandant k = getParameter1()
+			var boolean neu = DialogAufrufEnum.NEU.equals(getAufruf)
+			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(getAufruf)
+			var FzBuchautor k = getParameter1
 			if (!neu && k !== null) {
-				k = get(FactoryService.anmeldungService.getMandant(serviceDaten, k.nr))
-				if (k !== null) {
-					nr.text = Global.intStr(k.nr)
-					beschreibung.text = k.beschreibung
-					angelegt.text = k.formatDatumVon(k.angelegtAm, k.angelegtVon)
-					geaendert.text = k.formatDatumVon(k.geaendertAm, k.geaendertVon)
-				}
+				k = get(FactoryService.getFreizeitService.getAutor(getServiceDaten, k.getUid))
+				nr.setText(k.getUid)
+				name.setText(k.getName)
+				vorname.setText(k.getVorname)
+				angelegt.setText(k.formatDatumVon(k.getAngelegtAm, k.getAngelegtVon))
+				geaendert.setText(k.formatDatumVon(k.getGeaendertAm, k.getGeaendertVon))
 			}
-			if (kopieren) {
-				nr.setText(null)
-			}
-			nr.setEditable(neu || kopieren)
-			beschreibung.setEditable(!loeschen)
+			nr.setEditable(false)
+			name.setEditable(!loeschen)
+			vorname.setEditable(!loeschen)
 			angelegt.setEditable(false)
 			geaendert.setEditable(false)
 			if (loeschen) {
 				ok.setText(Meldungen.M2001)
 			}
 		}
-		if (stufe <= 1) { // stufe = 0;
+		if (stufe <= 1) { // stufe = 0
 		}
-		if (stufe <= 2) { // initDatenTable();
+		if (stufe <= 2) { // initDatenTable
 		}
 	}
 
@@ -91,20 +89,23 @@ class AG110MandantController extends BaseController<String> {
 	@FXML def void onOk() {
 
 		var ServiceErgebnis<?> r = null
+		var FzBuchautor s = null
 		if (DialogAufrufEnum.NEU.equals(aufruf) || DialogAufrufEnum.KOPIEREN.equals(aufruf)) {
-			r = FactoryService.anmeldungService.insertUpdateMandant(serviceDaten, Global.strInt(nr.text),
-				beschreibung.text, true)
+			var ServiceErgebnis<FzBuchautor> r1 = FactoryService.getFreizeitService.insertUpdateAutor(
+				getServiceDaten, null, name.getText, vorname.getText)
+			s = r1.getErgebnis
+			r = r1
 		} else if (DialogAufrufEnum.AENDERN.equals(aufruf)) {
-			r = FactoryService.getAnmeldungService().insertUpdateMandant(serviceDaten, Global.strInt(nr.text),
-				beschreibung.text, false)
+			r = FactoryService.getFreizeitService.insertUpdateAutor(getServiceDaten, nr.getText, name.getText,
+				vorname.getText)
 		} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
-			r = FactoryService.getAnmeldungService().deleteMandant(serviceDaten, Global.strInt(nr.text))
+			r = FactoryService.getFreizeitService.deleteAutor(getServiceDaten, nr.getText)
 		}
 		if (r !== null) {
 			get(r)
-			if (r.fehler.isEmpty) {
+			if (r.getFehler.isEmpty) {
 				updateParent
-				close
+				close(s)
 			}
 		}
 	}
