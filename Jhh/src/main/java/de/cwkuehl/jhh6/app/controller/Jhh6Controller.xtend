@@ -22,6 +22,7 @@ import de.cwkuehl.jhh6.app.controller.fz.FZ100StatistikController
 import de.cwkuehl.jhh6.app.controller.fz.FZ200FahrraederController
 import de.cwkuehl.jhh6.app.controller.fz.FZ250FahrradstaendeController
 import de.cwkuehl.jhh6.app.controller.fz.FZ300AutorenController
+import de.cwkuehl.jhh6.app.controller.fz.FZ320SerienController
 import de.cwkuehl.jhh6.app.controller.hh.HH100PeriodenController
 import de.cwkuehl.jhh6.app.controller.hh.HH200KontenController
 import de.cwkuehl.jhh6.app.controller.hh.HH300EreignisseController
@@ -337,7 +338,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		l.add(new StartDialog("#FZ250", g("menu.mileages"), typeof(FZ250FahrradstaendeController), null))
 		l.add(new StartDialog("#FZ200", g("menu.bikes"), typeof(FZ200FahrraederController), null))
 		l.add(new StartDialog("#FZ300", g("menu.authors"), typeof(FZ300AutorenController), null))
-		// l.add(new StartDialog("#FZ320", g("menu.series"), typeof(FZ320SerienController), null))
+		l.add(new StartDialog("#FZ320", g("menu.series"), typeof(FZ320SerienController), null))
 		// l.add(new StartDialog("#FZ340", g("menu.books"), typeof(FZ340BuecherController), null))
 		// l.add(new StartDialog("#SO100", g("menu.sudoku"), typeof(SO100SudokuController), null))
 		// l.add(new StartDialog("#SO200", g("menu.detective"), typeof(SO200DetektivController), null))
@@ -423,10 +424,12 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		starteFormular(typeof(FZ250FahrradstaendeController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleFZ300() {  starteFormular(typeof(FZ300AutorenController), DialogAufrufEnum.OHNE)
+	@FXML def void handleFZ300() {
+		starteFormular(typeof(FZ300AutorenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleFZ320() { // starteFormular(typeof(FZ320SerienController), DialogAufrufEnum.OHNE)
+	@FXML def void handleFZ320() {
+		starteFormular(typeof(FZ320SerienController), DialogAufrufEnum.OHNE)
 	}
 
 	@FXML def void handleFZ340() { // starteFormular(typeof(FZ340BuecherController), DialogAufrufEnum.OHNE)
