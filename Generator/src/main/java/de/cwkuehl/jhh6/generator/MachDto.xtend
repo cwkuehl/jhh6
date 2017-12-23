@@ -90,10 +90,17 @@ class MachDto {
 				jdbcJavaTyp = 'java.sql.Date'
 				conv1 = 'conv('
 				conv2 = ')'
+				convget = 'getDate'
 			} else if (javaTyp.simpleName == 'LocalDateTime') {
 				jdbcJavaTyp = 'java.sql.Timestamp'
 				conv1 = 'conv('
 				conv2 = ')'
+				convget = 'getTimestamp'
+			} else if (javaTyp.simpleName == 'String') {
+				jdbcJavaTyp = 'String'
+				conv1 = ''
+				conv2 = ''
+				convget = 'getString'
 			} else if (javaTyp.simpleName == 'int') {
 				jdbcJavaTyp = 'int'
 				conv1 = 'conv('

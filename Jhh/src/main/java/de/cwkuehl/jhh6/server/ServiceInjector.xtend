@@ -6,6 +6,7 @@ import de.cwkuehl.jhh6.api.service.IFreizeitService
 import de.cwkuehl.jhh6.api.service.IHaushaltService
 import de.cwkuehl.jhh6.api.service.IReplikationService
 import de.cwkuehl.jhh6.api.service.ITagebuchService
+import de.cwkuehl.jhh6.api.service.ITestService
 import de.cwkuehl.jhh6.server.base.AbstractModule
 import de.cwkuehl.jhh6.server.rep.IAdAdresseRep
 import de.cwkuehl.jhh6.server.rep.IAdPersonRep
@@ -63,6 +64,7 @@ import de.cwkuehl.jhh6.server.service.FreizeitService
 import de.cwkuehl.jhh6.server.service.HaushaltService
 import de.cwkuehl.jhh6.server.service.ReplikationService
 import de.cwkuehl.jhh6.server.service.TagebuchService
+import de.cwkuehl.jhh6.server.service.TestService
 
 class ServiceInjector extends AbstractModule {
 
@@ -80,7 +82,7 @@ class ServiceInjector extends AbstractModule {
 		bind(typeof(ITagebuchService)).to(typeof(TagebuchService))
 //		bind(typeof(IVermietungService)).to(typeof(VermietungService))
 //		bind(typeof(IWertpapierService)).to(typeof(WertpapierService))
-//		bind(typeof(ITestService)).to(typeof(TestService))
+		bind(typeof(ITestService)).to(typeof(TestService))
 		// Repositories
 		bind(typeof(IAdAdresseRep)).to(typeof(AdAdresseRep))
 		bind(typeof(IAdPersonRep)).to(typeof(AdPersonRep))

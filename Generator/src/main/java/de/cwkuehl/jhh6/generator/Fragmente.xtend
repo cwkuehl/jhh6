@@ -143,7 +143,8 @@ class Fragmente {
 		]
 	}
 
-	def static void fragmentGetCloneUpdate(MutableClassDeclaration c, extension TransformationContext context, Dtos d, boolean umgekehrt) {
+	def static void fragmentGetCloneUpdate(MutableClassDeclaration c, extension TransformationContext context, Dtos d,
+		boolean umgekehrt) {
 
 		c.addMethod('''getClone«IF umgekehrt»2«ENDIF»''') [
 			returnType = d.dtoUpdateType.newTypeReference
@@ -214,141 +215,146 @@ class Fragmente {
 				Liefert den alten Wert der Spalte «a.name».
 				@return alter Wert der Spalte «a.name».''', null, null)
 			c.fragmentAttributeBean(context, a.javaTyp, a.attName + "New", null, a.getterName,
-				a.
-					setterName
-				, '''Neuer Wert der Spalte «a.name».''', '''
+				a.setterName, '''Neuer Wert der Spalte «a.name».''', '''
 				Liefert den neuen Wert der Spalte «a.name».
 				@return neuer Wert der Spalte «a.name».''', '''
 				Setzen des neuen Wertes für Spalte «a.name».
-				@param v Neuer Wert der Spalte «a.name».''', '''«a.attName»Changed = unequals(«a.attName»Old, «a.attName»New);''')
-				c.fragmentAttributeBean(context, boolean.newTypeReference, a.attName + "Changed", null,
-					a.getterName + "Changed", null, '''Wurde Spalte «a.name» geändert?''', '''
-					Ist alter Wert der Spalte «a.name» null?.
-					@return true, wenn alter Wert der Spalte «a.name» null ist.''', null, null)
-				c.addMethod(a.getterName + "OldNull") [
-					returnType = boolean.newTypeReference
-					docComment = '''
-					Ist alter Wert der Spalte «a.name» null?.
-					@return true, wenn alter Wert der Spalte «a.name» null ist.'''
-					body = ['''return isNull0(«a.attName»Old);''']
-				]
-			}
+				@param v Neuer Wert der Spalte «a.name».''', //
+				'''«a.attName»Changed = unequals(«a.attName»Old, «a.attName»New);''')
+			c.fragmentAttributeBean(context, boolean.newTypeReference, a.attName + "Changed", null,
+				a.getterName + "Changed", null, '''Wurde Spalte «a.name» geändert?''', '''
+				Ist alter Wert der Spalte «a.name» null?.
+				@return true, wenn alter Wert der Spalte «a.name» null ist.''', null, null)
+			c.addMethod(a.getterName + "OldNull") [
+				returnType = boolean.newTypeReference
+				docComment = '''
+				Ist alter Wert der Spalte «a.name» null?.
+				@return true, wenn alter Wert der Spalte «a.name» null ist.'''
+				body = ['''return isNull0(«a.attName»Old);''']
+			]
 		}
+	}
 
-		def static void fragmentIuEntity(MutableTypeDeclaration c, extension TransformationContext context, Dtos d,
-			boolean impl) {
+	def static void fragmentIuEntity(MutableTypeDeclaration c, extension TransformationContext context, Dtos d,
+		boolean impl) {
 
-			if (d.insert && d.update) {
-				c.addMethod("iu" + d.dtoType.simpleName) [
-					if (impl) {
-						visibility = Visibility.PUBLIC
-					}
-					returnType = d.dtoType.newTypeReference
-					docComment = '''
-					Anlegen oder Ändern eines Datensatzes in die Tabelle «d.tablename».
-					«IF !impl»
-						@param daten Service-Daten mit Mandantennummer.
-						«FOR a : d.getIuAttribute»
-							@param «a.attName» Wert der Spalte «a.name».
-						«ENDFOR»
-					«ENDIF»
-					@return Daten als DTO.'''
-					addParameter("daten", d.serviceDaten)
-					addParameter("beforeEvent", BiConsumer.newTypeReference(d.dtoType.newTypeReference, d.dtoUpdateType.newTypeReference))
-					for (a : d.iuAttribute) {
-						addParameter(a.attName, a.javaTyp)
-					}
-					if (impl) {
-						body = [
-							'''
-							«d.dtoKeyType.newTypeReference» key = new «d.dtoKeyType.newTypeReference»();
-							«d.dtoType.newTypeReference» vo2 = null;
-							«IF d.hasMandantNr»
-								int mandantNr = daten.getMandantNr();
-							«ENDIF»
-							«IF d.replicationNr > 0 && d.replicationPrimaryKey»
-								if (!nes(«d.replicationAttr.attName»)) {
-									«FOR a : d.keyAttribute»
-										key.«a.setterName»(«a.attName»);
-									«ENDFOR»
-									vo2 = get(daten, key);
-								}
-							«ELSE»
+		if (d.insert && d.update) {
+			c.addMethod("iu" + d.dtoType.simpleName) [
+				if (impl) {
+					visibility = Visibility.PUBLIC
+				}
+				returnType = d.dtoType.newTypeReference
+				docComment = '''
+				Anlegen oder Ändern eines Datensatzes in die Tabelle «d.tablename».
+				«IF !impl»
+					@param daten Service-Daten mit Mandantennummer.
+					«FOR a : d.getIuAttribute»
+						@param «a.attName» Wert der Spalte «a.name».
+					«ENDFOR»
+				«ENDIF»
+				@return Daten als DTO.'''
+				addParameter("daten", d.serviceDaten)
+				addParameter("beforeEvent",
+					BiConsumer.newTypeReference(d.dtoType.newTypeReference, d.dtoUpdateType.newTypeReference))
+				for (a : d.iuAttribute) {
+					addParameter(a.attName, a.javaTyp)
+				}
+				if (impl) {
+					body = [
+						'''
+						«d.dtoKeyType.newTypeReference» key = new «d.dtoKeyType.newTypeReference»();
+						«d.dtoType.newTypeReference» vo2 = null;
+						«IF d.hasMandantNr»
+							int mandantNr = daten.getMandantNr();
+						«ENDIF»
+						«IF d.replicationNr > 0 && d.replicationPrimaryKey»
+							if (!nes(«d.replicationAttr.attName»)) {
 								«FOR a : d.keyAttribute»
 									key.«a.setterName»(«a.attName»);
 								«ENDFOR»
 								vo2 = get(daten, key);
-							«ENDIF»
-							if (vo2 == null) {
-								«IF d.replicationNr > 0 && d.replicationPrimaryKey»
-									«IF d.uidAbhaengig»
+							}
+						«ELSE»
+							«FOR a : d.keyAttribute»
+								key.«a.setterName»(«a.attName»);
+							«ENDFOR»
+							vo2 = get(daten, key);
+						«ENDIF»
+						if (vo2 == null) {
+							«IF d.replicationNr > 0 && d.replicationPrimaryKey»
+								«IF d.uidAbhaengig»
 									if (nes(«d.replicationAttr.attName»)) {
 										throw new «RuntimeException.newTypeReference»("«d.dtoType.simpleName.substring(2)»-Nr. nicht vorhanden.");
 									}
-									«ELSE»
+								«ELSE»
 									if (!nes(«d.replicationAttr.attName»)) {
 										throw new «RuntimeException.newTypeReference»("«d.dtoType.simpleName.substring(2)»-Nr. " + «d.replicationAttr.attName» + " nicht vorhanden.");
 									}
-									«ENDIF»
 								«ENDIF»
-								«d.dtoType.newTypeReference» vo = new «d.dtoType.newTypeReference»();
-								«IF d.hasMandantNr»
-									vo.setMandantNr(mandantNr);
-								«ENDIF»
-								«FOR a : d.getIuAttribute»
-									«IF d.replicationNr > 0 && d.replicationAttr.attName == a.attName && !d.uidAbhaengig»
-										if (nes(«a.attName»)) {
-											vo.«a.setterName»(getUid());
-										}
-									«ELSE»
-										vo.«a.setterName»(«a.attName»);
-									«ENDIF»
-								«ENDFOR»
-								«IF d.replicationAttr !== null && !d.replicationPrimaryKey»
-									vo.«d.replicationAttr.setterName»(getUid());
-								«ENDIF»
-								if (beforeEvent != null) {
-									beforeEvent.accept(vo, null);
-								}
-								insert(daten, vo«IF d.revision>0», angelegtVon == null«ENDIF»);
-								return vo;
-							} else {
-								«d.dtoUpdateType.newTypeReference» voU = new «d.dtoUpdateType.newTypeReference»(vo2);
-								«IF d.hasMandantNr»
-									voU.setMandantNr(mandantNr);
-								«ENDIF»
-								«FOR a : d.iuAttribute.filter[x|x.name!='Angelegt_Von' && x.name!='Angelegt_Am' && x.name!='Geaendert_Von' && x.name!='Geaendert_Am']»
-									«IF d.replicationNr > 0 && d.replicationAttr.attName == a.attName»
-										if (nes(voU.«a.getterName»())) {
-											voU.«a.setterName»(getUid());
-										}
-									«ELSE»
-										voU.«a.setterName»(«a.attName»);
-									«ENDIF»
-								«ENDFOR»
-								«IF d.revision>0»
-									if (angelegtVon != null) {
-										voU.setAngelegtVon(angelegtVon);
-										voU.setAngelegtAm(angelegtAm);
-										voU.setGeaendertVon(geaendertVon);
-										voU.setGeaendertAm(geaendertAm);
+							«ENDIF»
+							«d.dtoType.newTypeReference» vo = new «d.dtoType.newTypeReference»();
+							«IF d.hasMandantNr»
+								vo.setMandantNr(mandantNr);
+							«ENDIF»
+							«FOR a : d.getIuAttribute»
+								«IF d.replicationNr > 0 && d.replicationAttr.attName == a.attName && !d.uidAbhaengig»
+									if (nes(«a.attName»)) {
+										vo.«a.setterName»(getUid());
 									}
+								«ELSE»
+									vo.«a.setterName»(«a.attName»);
 								«ENDIF»
-								«IF d.replicationAttr !== null && !d.replicationPrimaryKey»
-									if (nes(voU.«d.replicationAttr.getterName»())) {
-										voU.«d.replicationAttr.setterName»(getUid());
+							«ENDFOR»
+							«IF d.replicationAttr !== null && !d.replicationPrimaryKey»
+								vo.«d.replicationAttr.setterName»(getUid());
+							«ENDIF»
+							if (beforeEvent != null) {
+								beforeEvent.accept(vo, null);
+							}
+							insert(daten, vo«IF d.revision>0», angelegtVon == null«ENDIF»);
+							return vo;
+						} else {
+							«d.dtoUpdateType.newTypeReference» voU = new «d.dtoUpdateType.newTypeReference»(vo2);
+							«IF d.hasMandantNr»
+								voU.setMandantNr(mandantNr);
+							«ENDIF»
+							«FOR a : d.iuAttribute.filter[x|x.name!='Angelegt_Von' && x.name!='Angelegt_Am' && x.name!='Geaendert_Von' && x.name!='Geaendert_Am']»
+								«IF d.replicationNr > 0 && d.replicationAttr.attName == a.attName»
+									if (nes(voU.«a.getterName»())) {
+										voU.«a.setterName»(getUid());
 									}
+								«ELSE»
+									voU.«a.setterName»(«a.attName»);
 								«ENDIF»
-								if (beforeEvent != null) {
-									beforeEvent.accept(null, voU);
+							«ENDFOR»
+							«IF d.revision>0»
+								if (angelegtVon != null) {
+									voU.setAngelegtVon(angelegtVon);
+									voU.setAngelegtAm(angelegtAm);
+									voU.setGeaendertVon(geaendertVon);
+									voU.setGeaendertAm(geaendertAm);
 								}
-								update(daten, voU«IF d.revision>0», angelegtVon == null«ENDIF»);
-								return voU.getCloneDto();
-							}'''
-						]
-					}
-				]
-			}
+							«ENDIF»
+							«IF d.replicationAttr !== null && !d.replicationPrimaryKey»
+								if (nes(voU.«d.replicationAttr.getterName»())) {
+									voU.«d.replicationAttr.setterName»(getUid());
+								}
+							«ENDIF»
+							if (beforeEvent != null) {
+								beforeEvent.accept(null, voU);
+							}
+							update(daten, voU«IF d.revision>0», angelegtVon == null«ENDIF»);
+							return voU.getCloneDto();
+						}'''
+					]
+				}
+			]
 		}
-
 	}
+
+	def static String fragmentResultsetGet(MutableClassDeclaration c, extension TransformationContext context,
+		ListItem<Attribute> a) {
+
+		return '''«a.v.conv1»rs.«IF a.v.convget===null»getObject(«a.index1», «IF a.v.jdbcJavaTyp===null»«a.v.javaTyp»«ELSE»«a.v.jdbcJavaTyp»«ENDIF».class)«ELSE»«a.v.convget»(«a.index1»)«ENDIF»«a.v.conv2»'''
+	}
+}

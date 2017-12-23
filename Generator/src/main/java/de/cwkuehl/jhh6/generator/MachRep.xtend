@@ -413,7 +413,7 @@ class MachRep {
 					«IF d.attribute.size > 0»
 						try {
 							«FOR a : d.attribute.indexed»
-							d.«a.v.setterName»(«a.v.conv1»rs.«IF a.v.convget===null»getObject(«a.index1», «IF a.v.jdbcJavaTyp===null»«a.v.javaTyp»«ELSE»«a.v.jdbcJavaTyp»«ENDIF».class)«ELSE»«a.v.convget»(«a.index1»)«ENDIF»«a.v.conv2»);
+							d.«a.v.setterName»(«c.fragmentResultsetGet(context, a)»);
 						«ENDFOR»
 						} catch (java.sql.«SQLException.newTypeReference» ex) {
 							throw new «RuntimeException.newTypeReference»(ex);
@@ -473,7 +473,7 @@ class MachRep {
 						«IF x.attribute.size > 0»
 							try {
 								«FOR a : x.attribute.indexed»
-									d.«a.v.setterName»(«a.v.conv1»rs.getObject(«a.index1», «IF a.v.jdbcJavaTyp===null»«a.v.javaTyp»«ELSE»«a.v.jdbcJavaTyp»«ENDIF».class)«a.v.conv2»);
+									d.«a.v.setterName»(«c.fragmentResultsetGet(context, a)»);
 								«ENDFOR»
 							} catch (java.sql.«SQLException.newTypeReference» ex) {
 								throw new «RuntimeException.newTypeReference»(ex);
