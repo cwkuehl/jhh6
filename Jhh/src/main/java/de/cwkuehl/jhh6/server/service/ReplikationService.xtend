@@ -277,27 +277,27 @@ class ReplikationService {
 				typeof(FzBuchUpdate))
 			reps.put(typeof(FzBuch), bc)
 			reps.put(typeof(FzBuchUpdate), bc)
-			
+
 			var ba = new RbRepository(buchautorRep, typeof(IFzBuchautorRep), typeof(FzBuchautorKey),
 				typeof(FzBuchautor), typeof(FzBuchautorUpdate))
 			reps.put(typeof(FzBuchautor), ba)
 			reps.put(typeof(FzBuchautorUpdate), ba)
-			
+
 			var bs = new RbRepository(buchserieRep, typeof(IFzBuchserieRep), typeof(FzBuchserieKey),
 				typeof(FzBuchserie), typeof(FzBuchserieUpdate))
 			reps.put(typeof(FzBuchserie), bs)
 			reps.put(typeof(FzBuchserieUpdate), bs)
-			
+
 			var bt = new RbRepository(buchstatusRep, typeof(IFzBuchstatusRep), typeof(FzBuchstatusKey),
 				typeof(FzBuchstatus), typeof(FzBuchstatusUpdate))
 			reps.put(typeof(FzBuchstatus), bt)
 			reps.put(typeof(FzBuchstatusUpdate), bt)
-			
+
 			var fa = new RbRepository(fahrradRep, typeof(IFzFahrradRep), typeof(FzFahrradKey), typeof(FzFahrrad),
 				typeof(FzFahrradUpdate))
 			reps.put(typeof(FzFahrrad), fa)
 			reps.put(typeof(FzFahrradUpdate), fa)
-			
+
 			var fs = new RbRepository(fahrradstandRep, typeof(IFzFahrradstandRep), typeof(FzFahrradstandKey),
 				typeof(FzFahrradstand), typeof(FzFahrradstandUpdate))
 			reps.put(typeof(FzFahrradstand), fs)
@@ -669,6 +669,14 @@ class ReplikationService {
 			}
 		}
 		var r = new ServiceErgebnis<Void>(null)
+		return r
+	}
+
+	@Transaction(false)
+	override public ServiceErgebnis<List<String>> getAlleTabellen(ServiceDaten daten) {
+
+		var l = alleTabellen.map[t|t.name].toList
+		var r = new ServiceErgebnis<List<String>>(l)
 		return r
 	}
 }

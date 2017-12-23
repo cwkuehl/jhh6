@@ -45,6 +45,7 @@ import java.util.List
 
 import static de.cwkuehl.jhh6.api.global.Constant.*
 import static de.cwkuehl.jhh6.api.global.Global.*
+import de.cwkuehl.jhh6.server.FactoryService
 
 @Service
 class AnmeldungService {
@@ -172,7 +173,7 @@ class AnmeldungService {
 		var dbInit = new DbInit
 
 		// Datenbank aktualisieren
-		dbInit.machEs(daten, dbArt, zeinstellungRep, behandlungRep, behleistRep)
+		dbInit.machEs(daten, dbArt, zeinstellungRep, behandlungRep, behleistRep, FactoryService.replikationService)
 
 		var key = new ZeinstellungKey(Constant.EINST_DB_INIT)
 		var e = zeinstellungRep.get(daten, key)

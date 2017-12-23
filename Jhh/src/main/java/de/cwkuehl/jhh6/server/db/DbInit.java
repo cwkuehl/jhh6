@@ -20,6 +20,7 @@ import de.cwkuehl.jhh6.api.global.Constant;
 import de.cwkuehl.jhh6.api.global.Global;
 import de.cwkuehl.jhh6.api.message.MeldungException;
 import de.cwkuehl.jhh6.api.message.Meldungen;
+import de.cwkuehl.jhh6.api.service.IReplikationService;
 import de.cwkuehl.jhh6.api.service.ServiceDaten;
 import de.cwkuehl.jhh6.server.base.DbContext;
 import de.cwkuehl.jhh6.server.rep.IHpBehandlungLeistungRep;
@@ -36,7 +37,7 @@ public class DbInit {
      * @param behandlungRep Repository für Behandlungen.
      */
     public final void machEs(ServiceDaten daten, DatenbankArt dbart, IZeinstellungRep zeinstellungDao,
-            IHpBehandlungRep behandlungRep, IHpBehandlungLeistungRep behleistRep) {
+            IHpBehandlungRep behandlungRep, IHpBehandlungLeistungRep behleistRep, IReplikationService replService) {
 
         int version = 0;
         if (version != 0 && dbart.equals(DatenbankArt.HSQLDB)) {
@@ -1045,6 +1046,17 @@ public class DbInit {
                 dba.addTab2(mout, tabelle, "Mandant_Nr, Uid", "Mandant_Nr, Uid");
                 execute(daten, zeinstellungDao, mout);
                 version = 48;
+            } else if (version <= 48) {
+                if (dbart.equals(DatenbankArt.HSQLDB)) {
+                    Vector<String> mout = new Vector<String>();
+                    List<String> tabliste = replService.getAlleTabellen(daten).getErgebnis();
+                    for (String t : tabliste) {
+                        mout.add(Global.format("SET TABLE {0} TYPE MEMORY", t));
+                        // mout.add(Global.format("SET TABLE {0} TYPE CACHED", t));
+                    }
+                    execute(daten, zeinstellungDao, mout);
+                }
+                version = 49;
             }
             if (version > versionAlt) {
                 // log.error("Version " + version);
