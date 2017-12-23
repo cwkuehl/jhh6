@@ -17,8 +17,7 @@ import de.cwkuehl.jhh6.server.rep.impl.AdAdresseRep
 import de.cwkuehl.jhh6.server.rep.impl.FzBuchstatusRep
 import de.cwkuehl.jhh6.server.rep.impl.MaMandantRep
 
-import static org.junit.Assert.*
-
+// import static org.junit.Assert.*
 @Service
 class TestService {
 
@@ -55,6 +54,16 @@ class TestService {
 		testBuchstatusRep(daten, statusRep)
 		val r = new ServiceErgebnis<Boolean>(true)
 		return r
+	}
+
+	def private void assertTrue(boolean b) {
+		if (!b)
+			throw new RuntimeException("assertTrue == false")
+	}
+
+	def private void assertEquals(int expected, int actual) {
+		if (expected != actual)
+			throw new RuntimeException('''assertEquals: expected «expected» != actual «actual»''')
 	}
 
 	def private void testAdresseRep(ServiceDaten daten, IAdAdresseRep rep) {

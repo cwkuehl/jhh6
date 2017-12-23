@@ -18,6 +18,7 @@ import de.cwkuehl.jhh6.server.rep.IFzBuchserieRep
 import de.cwkuehl.jhh6.server.rep.IFzBuchstatusRep
 import de.cwkuehl.jhh6.server.rep.IFzFahrradRep
 import de.cwkuehl.jhh6.server.rep.IFzFahrradstandRep
+import de.cwkuehl.jhh6.server.rep.IFzNotizRep
 import de.cwkuehl.jhh6.server.rep.IHhBilanzRep
 import de.cwkuehl.jhh6.server.rep.IHhBuchungRep
 import de.cwkuehl.jhh6.server.rep.IHhEreignisRep
@@ -43,6 +44,7 @@ import de.cwkuehl.jhh6.server.rep.impl.FzBuchserieRep
 import de.cwkuehl.jhh6.server.rep.impl.FzBuchstatusRep
 import de.cwkuehl.jhh6.server.rep.impl.FzFahrradRep
 import de.cwkuehl.jhh6.server.rep.impl.FzFahrradstandRep
+import de.cwkuehl.jhh6.server.rep.impl.FzNotizRep
 import de.cwkuehl.jhh6.server.rep.impl.HhBilanzRep
 import de.cwkuehl.jhh6.server.rep.impl.HhBuchungRep
 import de.cwkuehl.jhh6.server.rep.impl.HhEreignisRep
@@ -95,7 +97,7 @@ class ServiceInjector extends AbstractModule {
 		bind(typeof(IFzBuchstatusRep)).to(typeof(FzBuchstatusRep))
 		bind(typeof(IFzFahrradRep)).to(typeof(FzFahrradRep))
 		bind(typeof(IFzFahrradstandRep)).to(typeof(FzFahrradstandRep))
-//		bind(typeof(IFzNotizRep)).to(typeof(FzNotizRep))
+		bind(typeof(IFzNotizRep)).to(typeof(FzNotizRep))
 		bind(typeof(IHhBilanzRep)).to(typeof(HhBilanzRep))
 		bind(typeof(IHhBuchungRep)).to(typeof(HhBuchungRep))
 		bind(typeof(IHhEreignisRep)).to(typeof(HhEreignisRep))

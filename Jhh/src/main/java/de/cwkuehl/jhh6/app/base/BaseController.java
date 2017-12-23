@@ -431,8 +431,8 @@ public abstract class BaseController<R> {
         return r;
     }
 
-    protected void setMandatory(Label l) {
-        l.setStyle("-fx-font-weight: bold;");
+    private void setMandatory(Label l) {
+        l.getStyleClass().add("label-bold");
     }
 
     /**
@@ -505,7 +505,7 @@ public abstract class BaseController<R> {
         if (l != null && v != null) {
             l.setLabelFor(v);
             if (mandatory)
-                l.getStyleClass().add("label-bold");
+                setMandatory(l);
         }
     }
 
@@ -537,7 +537,7 @@ public abstract class BaseController<R> {
         if (l != null && tg != null && !tg.getToggles().isEmpty()) {
             l.setLabelFor((RadioButton) tg.getToggles().get(0));
             if (mandatory)
-                l.getStyleClass().add("label-bold");
+                setMandatory(l);
         }
     }
 

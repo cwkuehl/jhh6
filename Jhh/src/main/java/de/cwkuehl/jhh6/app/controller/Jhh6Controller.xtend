@@ -24,6 +24,7 @@ import de.cwkuehl.jhh6.app.controller.fz.FZ250FahrradstaendeController
 import de.cwkuehl.jhh6.app.controller.fz.FZ300AutorenController
 import de.cwkuehl.jhh6.app.controller.fz.FZ320SerienController
 import de.cwkuehl.jhh6.app.controller.fz.FZ340BuecherController
+import de.cwkuehl.jhh6.app.controller.fz.FZ700NotizenController
 import de.cwkuehl.jhh6.app.controller.hh.HH100PeriodenController
 import de.cwkuehl.jhh6.app.controller.hh.HH200KontenController
 import de.cwkuehl.jhh6.app.controller.hh.HH300EreignisseController
@@ -334,7 +335,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		l.add(new StartDialog("#AG200", g("menu.users"), typeof(AG200BenutzerController), null))
 		l.add(new StartDialog("#AG400", g("menu.backups"), typeof(AG400SicherungenController), null))
 		l.add(new StartDialog("#TB100", g("menu.diary"), typeof(TB100TagebuchController), null))
-		// l.add(new StartDialog("#FZ700", g("menu.notes"), typeof(FZ700NotizenController), null))
+		l.add(new StartDialog("#FZ700", g("menu.notes"), typeof(FZ700NotizenController), null))
 		l.add(new StartDialog("#AD100", g("menu.persons"), typeof(AD100PersonenController), null))
 		l.add(new StartDialog("#FZ250", g("menu.mileages"), typeof(FZ250FahrradstaendeController), null))
 		l.add(new StartDialog("#FZ200", g("menu.bikes"), typeof(FZ200FahrraederController), null))
@@ -437,7 +438,8 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		starteFormular(typeof(FZ340BuecherController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleFZ700() { // starteFormular(typeof(FZ700NotizenController), DialogAufrufEnum.OHNE)
+	@FXML def void handleFZ700() {
+		starteFormular(typeof(FZ700NotizenController), DialogAufrufEnum.OHNE)
 	}
 
 	@FXML def void handleHH100() {

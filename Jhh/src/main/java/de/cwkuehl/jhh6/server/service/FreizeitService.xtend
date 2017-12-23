@@ -83,6 +83,9 @@ class FreizeitService {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var r = new ServiceErgebnis<FzNotiz>(null)
+		if (Global.nes(thema)) {
+			throw new MeldungException("Das Thema darf nicht leer sein.")
+		}
 		r.ergebnis = notizRep.iuFzNotiz(daten, null, uid, thema, notiz, null, null, null, null)
 		return r
 

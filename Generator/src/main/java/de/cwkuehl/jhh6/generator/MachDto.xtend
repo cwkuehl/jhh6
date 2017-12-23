@@ -103,8 +103,9 @@ class MachDto {
 				convget = 'getString'
 			} else if (javaTyp.simpleName == 'int') {
 				jdbcJavaTyp = 'int'
-				conv1 = 'conv('
-				conv2 = ')'
+				conv1 = ''
+				conv2 = ''
+				convget = 'getInt'
 			} else if (javaTyp.simpleName == 'double') {
 				jdbcJavaTyp = 'java.math.BigDecimal'
 				conv1 = 'conv('
@@ -287,6 +288,7 @@ class MachDto {
 							ka.jdbcJavaTyp = att.jdbcJavaTyp
 							ka.conv1 = att.conv1
 							ka.conv2 = att.conv2
+							ka.convget = att.convget
 						}
 						ka.selectString = a.getStringValue("name").nn
 						ka.namenbehalten = true
