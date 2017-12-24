@@ -40,6 +40,8 @@ class Constant {
 	public static final String EINST_MA_REPLIKATION_BEGINN = "REPLIKATION_BEGINN"
 	/** Mandant-Einstellung: OHNE_ANMELDUNG. */
 	public static final String EINST_MA_OHNE_ANMELDUNG = "OHNE_ANMELDUNG"
+	/** Mandant-Einstellung: EXAMPLES. */
+	public static final String EINST_MA_EXAMPLES = "EXAMPLES"
 
 	/** kleinster Autowert. */
 	public static final int AW_MIN = 1

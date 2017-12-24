@@ -39,22 +39,22 @@ class AM100AenderungController extends BaseController<String> {
 
 		mandant0.setLabelFor(mandant)
 		benutzer0.setLabelFor(benutzer)
-		kennwortAlt0.setLabelFor(kennwortAlt)
-		kennwortNeu0.setLabelFor(kennwortNeu)
-		kennwortNeu20.setLabelFor(kennwortNeu2)
+		kennwortAlt0.setLabelFor(kennwortAlt, true)
+		kennwortNeu0.setLabelFor(kennwortNeu, true)
+		kennwortNeu20.setLabelFor(kennwortNeu2, true)
 		mandant.setEditable(false)
 		benutzer.setEditable(false)
-		var ServiceDaten daten = getServiceDaten()
+		var ServiceDaten daten = getServiceDaten
 		if (daten !== null) {
-			mandant.setText(Global.intStr(daten.getMandantNr()))
-			benutzer.setText(daten.getBenutzerId())
+			mandant.setText(Global.intStr(daten.getMandantNr))
+			benutzer.setText(daten.getBenutzerId)
 			Platform.runLater([
 				{
-					kennwortAlt.requestFocus()
+					kennwortAlt.requestFocus
 				}
 			])
 		}
-		ok.disableProperty().bind(kennwortNeu.textProperty().isEqualTo(kennwortNeu2.textProperty()).not())
+		ok.disableProperty.bind(kennwortNeu.textProperty.isEqualTo(kennwortNeu2.textProperty).not)
 	}
 
 	/** 
@@ -63,7 +63,7 @@ class AM100AenderungController extends BaseController<String> {
 	 */
 	def void onOk() {
 
-		var ServiceDaten daten = getServiceDaten()
+		var ServiceDaten daten = getServiceDaten
 		var ServiceErgebnis<Void> r = FactoryService.anmeldungService.aendern(daten, daten.mandantNr, daten.benutzerId,
 			kennwortAlt.text, kennwortNeu.text, speichern.isSelected)
 		get(r)

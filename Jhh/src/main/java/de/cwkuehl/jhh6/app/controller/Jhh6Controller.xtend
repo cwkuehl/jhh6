@@ -153,13 +153,15 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 						bc.addAccelerators
 					}
 				] as ChangeListener<Tab>))
-			var daten0 = new ServiceDaten(1, "(initDatenbank)")
+			var mandantNr = Global.strInt(Jhh6::einstellungen.getDateiParameter("AM000Anmeldung_Mandant"))
+			if (mandantNr <= 0)
+				mandantNr = 1
+			var daten0 = new ServiceDaten(mandantNr, "(initDatenbank)")
 			var r0 = FactoryService.anmeldungService.initDatenbank(daten0)
 			get(r0)
 			if (!r0.ok) {
 				return
 			}
-			var mandantNr = Global.strInt(Jhh6::einstellungen.getDateiParameter("AM000Anmeldung_Mandant"))
 			var daten = new ServiceDaten(mandantNr, Jhh6::einstellungen.benutzer)
 			var r = FactoryService.getAnmeldungService.istOhneAnmelden(daten)
 			if (get(r)) {

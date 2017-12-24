@@ -27,12 +27,13 @@ class AM000AnmeldungController extends BaseController<String> {
 
 	@FXML def void onAnmelden() {
 
-		var daten = new ServiceDaten(Global.strInt(mandant.getText()), benutzer.getText());
-		var r = FactoryService.getAnmeldungService().anmelden(daten, kennwort.getText(), speichern.isSelected());
-		get(r);
-		if (r.ok()) {
-			setServiceDaten(daten);
-			close("Anmelden");
+		var daten = new ServiceDaten(Global.strInt(mandant.getText), benutzer.getText)
+		var r = FactoryService.anmeldungService.anmelden(daten, kennwort.getText, speichern.isSelected)
+		get(r)
+		if (r.ok) {
+			setServiceDaten(daten)
+			get(FactoryService.replikationService.createExamples(daten))
+			close("Anmelden")
 		}
 	}
 
@@ -42,9 +43,9 @@ class AM000AnmeldungController extends BaseController<String> {
 
 	override protected void initialize() {
 
-		mandant0.setLabelFor(mandant)
-		benutzer0.setLabelFor(benutzer)
-		kennwort0.setLabelFor(kennwort)
+		mandant0.setLabelFor(mandant, true)
+		benutzer0.setLabelFor(benutzer, true)
+		kennwort0.setLabelFor(kennwort, true)
 		if (Global.nes(mandant.text)) {
 			mandant.text = "1"
 		}

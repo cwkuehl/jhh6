@@ -5,6 +5,7 @@ import de.cwkuehl.jhh6.api.dto.AdAdresseKey
 import de.cwkuehl.jhh6.api.dto.AdAdresseUpdate
 import de.cwkuehl.jhh6.api.dto.AdPerson
 import de.cwkuehl.jhh6.api.dto.AdPersonKey
+import de.cwkuehl.jhh6.api.dto.AdPersonSitzAdresse
 import de.cwkuehl.jhh6.api.dto.AdPersonUpdate
 import de.cwkuehl.jhh6.api.dto.AdSitz
 import de.cwkuehl.jhh6.api.dto.AdSitzKey
@@ -78,15 +79,21 @@ import de.cwkuehl.jhh6.api.dto.VmKontoUpdate
 import de.cwkuehl.jhh6.api.dto.Zeinstellung
 import de.cwkuehl.jhh6.api.dto.ZeinstellungKey
 import de.cwkuehl.jhh6.api.dto.ZeinstellungUpdate
+import de.cwkuehl.jhh6.api.enums.FzFahrradTypEnum
+import de.cwkuehl.jhh6.api.enums.KontoartEnum
+import de.cwkuehl.jhh6.api.enums.KontokennzeichenEnum
+import de.cwkuehl.jhh6.api.enums.SpracheEnum
 import de.cwkuehl.jhh6.api.global.Constant
 import de.cwkuehl.jhh6.api.global.Global
 import de.cwkuehl.jhh6.api.message.MeldungException
+import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.api.rollback.RollbackArtEnum
 import de.cwkuehl.jhh6.api.rollback.RollbackListe
 import de.cwkuehl.jhh6.api.service.ServiceDaten
 import de.cwkuehl.jhh6.api.service.ServiceErgebnis
 import de.cwkuehl.jhh6.generator.RepositoryRef
 import de.cwkuehl.jhh6.generator.Service
+import de.cwkuehl.jhh6.generator.ServiceRef
 import de.cwkuehl.jhh6.generator.Transaction
 import de.cwkuehl.jhh6.server.base.RbRepository
 import de.cwkuehl.jhh6.server.base.RemoteDb
@@ -148,6 +155,10 @@ import java.util.List
 @Service
 class ReplikationService {
 
+	@ServiceRef AdresseService adresseService
+	@ServiceRef FreizeitService freizeitService
+	@ServiceRef HaushaltService haushaltService
+	@ServiceRef TagebuchService tagebuchService
 	@RepositoryRef AdAdresseRep adresseRep
 	@RepositoryRef AdPersonRep personRep
 	@RepositoryRef AdSitzRep sitzRep
@@ -199,6 +210,68 @@ class ReplikationService {
 	// @RepositoryRef WpStandRep standRep
 	// @RepositoryRef WpWertpapierRep wertpapierRep
 	@RepositoryRef ZeinstellungRep zeinstellungRep
+
+	/**
+	 * Create example database entries.
+	 * @param daten Service-Daten für Datenbankzugriff.
+	 */
+	@Transaction
+	override ServiceErgebnis<Void> createExamples(ServiceDaten daten) {
+
+		var r = new ServiceErgebnis<Void>(null)
+		var mnr = daten.mandantNr
+		var e = maeinstellungRep.get(daten, new MaEinstellungKey(mnr, Constant.EINST_MA_EXAMPLES))
+		if (e !== null && Global.strInt(e.wert) > 0) {
+			// maeinstellungRep.iuMaEinstellung(daten, null, Constant.EINST_MA_EXAMPLES, "0", null, null, null, null)
+			return r
+		}
+		var pl = personRep.getListe(daten, mnr, null, null)
+		if (pl.size <= 0) {
+			var p = new AdPersonSitzAdresse
+			p.name1 = Meldungen.M9000
+			p.name = Meldungen.M9000
+			p.ort = Meldungen.M9000
+			adresseService.insertUpdatePerson(daten, p)
+		}
+		var fl = fahrradRep.getListe(daten, mnr, null, null)
+		if (fl.size <= 0) {
+			var f = freizeitService.insertUpdateFahrrad(daten, null, Meldungen.M9000,
+				Global.strInt(FzFahrradTypEnum.TOUR.toString)).ergebnis
+			freizeitService.insertUpdateFahrradstand(daten, f.uid, daten.heute.atStartOfDay, 0, 10, 0, 20.5,
+				Meldungen.M9000)
+		}
+		var bl = buchRep.getListe(daten, mnr, null, null)
+		if (bl.size <= 0) {
+			var a = freizeitService.insertUpdateAutor(daten, null, Meldungen.M9000, Meldungen.M9000).ergebnis
+			var s = freizeitService.insertUpdateSerie(daten, null, Meldungen.M9000).ergebnis
+			freizeitService.insertUpdateBuch(daten, null, a.uid, s.uid, 1, Meldungen.M9000, 200,
+				SpracheEnum.ENGLISCH.toString, false, daten.heute, null)
+		}
+		var nl = notizRep.getListe(daten, mnr, null, null)
+		if (nl.size <= 0) {
+			freizeitService.insertUpdateNotiz(daten, null, Meldungen.M9000, Meldungen.M9000)
+		}
+		var kl = kontoRep.getListe(daten, mnr, null, null)
+		if (kl.size <= 2) {
+			haushaltService.anlegenPeriode(daten, 12, true)
+			var ak = haushaltService.insertUpdateKonto(daten, null, KontoartEnum.AKTIVKONTO.toString,
+				KontokennzeichenEnum.OHNE.toString, Meldungen.M9000 + " AK", null, null, null, null, null, null, //
+				null, false).ergebnis
+			var aw = haushaltService.insertUpdateKonto(daten, null, KontoartEnum.AUFWANDSKONTO.toString,
+				KontokennzeichenEnum.OHNE.toString, Meldungen.M9000 + " AW", null, null, null, null, null, null, //
+				null, false).ergebnis
+			haushaltService.insertUpdateEreignis(daten, null, null, ak.uid, aw.uid, Meldungen.M9000, Meldungen.M9000,
+				null, null, null, null, null, false)
+			haushaltService.insertUpdateBuchung(daten, null, daten.heute, 1, 2.5, ak.uid, aw.uid, Meldungen.M9000,
+				Meldungen.M9000, daten.heute, null, null, null, null, null, false)
+		}
+		var tl = tagebuchRep.getListe(daten, mnr, null, null)
+		if (tl.size <= 0) {
+			tagebuchService.speichereEintrag(daten, daten.heute, Meldungen.M9000)
+		}
+		maeinstellungRep.iuMaEinstellung(daten, null, Constant.EINST_MA_EXAMPLES, "1", null, null, null, null)
+		return r
+	}
 
 	/**
 	 * Durchführen eines Rollbacks.
@@ -614,7 +687,7 @@ class ReplikationService {
 		}
 	}
 
-	@Transaction(true)
+	@Transaction
 	override public ServiceErgebnis<Void> copyMandant(ServiceDaten daten, boolean vonRep, int repmandant,
 		StringBuffer status, StringBuffer abbruch) {
 

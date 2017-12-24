@@ -82,4 +82,5 @@ class Meldungen {
 	val M2094 = "Bitte ein Wertpapier auswählen."
 	val M2095 = "Bitte eine Konfiguration auswählen."
 	val M3000 = "The help file ({0}) is missing."
+	val M9000 = "Example"
 }

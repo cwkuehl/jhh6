@@ -81,7 +81,7 @@ class HaushaltService {
 	 * @param iMonate Anzahl der Monate, die die Periode umfassen soll.
 	 * @param bEnde True, wenn Periode nach der letzten Perioden anschließen soll; sonst vor der ersten.
 	 */
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> anlegenPeriode(ServiceDaten daten, int iMonate, boolean bEnde) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
@@ -142,7 +142,7 @@ class HaushaltService {
 	 * @param daten Service-Daten für Datenbankzugriff.
 	 * @param bEnde True, wenn die letzte Periode gelöscht werden soll; sonst die erste.
 	 */
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> loeschePeriode(ServiceDaten daten, boolean bEnde) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
@@ -356,7 +356,7 @@ class HaushaltService {
 	 * @param dBis Enddatum.
 	 * @return Konto.
 	 */
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<HhKonto> insertUpdateKonto(ServiceDaten daten, String uid, String strA, String strK,
 		String strName, LocalDate dVon, LocalDate dBis, String s, String huid, String wuid, String muid, String n,
 		boolean vermietung) {
@@ -576,7 +576,7 @@ class HaushaltService {
 	 * @param rbListe Rollback-Liste.
 	 * @param uid Konto-Nummer.
 	 */
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> deleteKonto(ServiceDaten daten, String uid) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
@@ -698,7 +698,7 @@ class HaushaltService {
 		}
 	]
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<HhEreignis> insertUpdateEreignis(ServiceDaten daten, String uid, String kz, String sollUid,
 		String habUid, String bez, String text, String s, String huid, String wuid, String muid, String n, boolean v) {
 
@@ -717,7 +717,7 @@ class HaushaltService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> deleteEreignis(ServiceDaten daten, String uid) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
@@ -923,7 +923,7 @@ class HaushaltService {
 	 * @param muid Mieter-Nummer.
 	 * @param vermietung Handelt es sich um eine Vermietungsbuchung?
 	 */
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<HhBuchung> insertUpdateBuchung(ServiceDaten daten, String uid, LocalDate v, double b,
 		double eb, String sollUid, String habenUid, String text, String bn, LocalDate bd, String s, String huid,
 		String wuid, String muid, String n, boolean vermietung) {
@@ -1005,7 +1005,7 @@ class HaushaltService {
 	 * @param daten Service-Daten für Datenbankzugriff.
 	 * @param uid Buchungs-Nummer.
 	 */
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> storniereBuchung(ServiceDaten daten, String uid) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
@@ -1031,7 +1031,7 @@ class HaushaltService {
 	 * @param daten Service-Daten für Datenbankzugriff.
 	 * @param uid Buchungs-Nummer.
 	 */
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> deleteBuchung(ServiceDaten daten, String uid) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
@@ -1185,7 +1185,7 @@ class HaushaltService {
 	 * @param alles True, wenn alle neu zu berechnenden Perioden in einer Schleife berechnet werden; sonst nur eine.
 	 * @return 0 alles aktuell; 1 eine Periode aktualisiert; 2 noch eine weitere kann Periode aktualisiert werden.
 	 */
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<String[]> aktualisiereBilanz(ServiceDaten daten, boolean alles, LocalDate von) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
@@ -1449,7 +1449,7 @@ class HaushaltService {
 		aktualisierenEK(daten, pnr, strK, ek, gv)
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> tauscheKontoSortierung(ServiceDaten daten, String uid, String uid2) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)

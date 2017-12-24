@@ -28,6 +28,7 @@ import de.cwkuehl.jhh6.api.service.ServiceDaten
 import de.cwkuehl.jhh6.api.service.ServiceErgebnis
 import de.cwkuehl.jhh6.generator.RepositoryRef
 import de.cwkuehl.jhh6.generator.Service
+import de.cwkuehl.jhh6.generator.ServiceRef
 import de.cwkuehl.jhh6.generator.Transaction
 import de.cwkuehl.jhh6.server.base.SqlBuilder
 import de.cwkuehl.jhh6.server.db.DbInit
@@ -45,11 +46,11 @@ import java.util.List
 
 import static de.cwkuehl.jhh6.api.global.Constant.*
 import static de.cwkuehl.jhh6.api.global.Global.*
-import de.cwkuehl.jhh6.server.FactoryService
 
 @Service
 class AnmeldungService {
 
+	@ServiceRef ReplikationService replikationService
 	@RepositoryRef BenutzerRep benutzerRep
 	@RepositoryRef HhKontoRep kontoRep
 	@RepositoryRef HpBehandlungRep behandlungRep
@@ -166,14 +167,14 @@ class AnmeldungService {
 		throw new MeldungException(Meldungen.M1003)
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> initDatenbank(ServiceDaten daten) {
 
 		var r = new ServiceErgebnis<Void>(null)
 		var dbInit = new DbInit
 
 		// Datenbank aktualisieren
-		dbInit.machEs(daten, dbArt, zeinstellungRep, behandlungRep, behleistRep, FactoryService.replikationService)
+		dbInit.machEs(daten, dbArt, zeinstellungRep, behandlungRep, behleistRep, replikationService)
 
 		var key = new ZeinstellungKey(Constant.EINST_DB_INIT)
 		var e = zeinstellungRep.get(daten, key)
@@ -192,7 +193,7 @@ class AnmeldungService {
 		}
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Boolean> istOhneAnmelden(ServiceDaten daten) {
 
 		var r = new ServiceErgebnis<Boolean>(false)
@@ -257,7 +258,7 @@ class AnmeldungService {
 		return 2 // Tabelle MA_PARAMETER
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<MaParameter> getParameter(ServiceDaten daten, int mandantNr, String schluessel) {
 
 		var r = new ServiceErgebnis<MaParameter>(null)
@@ -283,7 +284,7 @@ class AnmeldungService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> setParameter(ServiceDaten daten, int mandantNr, String schluessel, String wert) {
 
 		var r = new ServiceErgebnis<Void>(null)
@@ -429,7 +430,7 @@ class AnmeldungService {
 		}
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<MaMandant> insertUpdateMandant(ServiceDaten daten, int nr, String beschreibung,
 		boolean insert) {
 
@@ -472,7 +473,7 @@ class AnmeldungService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> deleteMandant(ServiceDaten daten, int nr) {
 
 		pruefeBerechtigungAlleMandanten(daten, nr)
@@ -528,7 +529,7 @@ class AnmeldungService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Benutzer> insertUpdateBenutzer(ServiceDaten daten, String benutzerId, String passwort,
 		int berechtigung, int personNr, LocalDate geburt) {
 
@@ -559,7 +560,7 @@ class AnmeldungService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> deleteBenutzer(ServiceDaten daten, String id) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
@@ -577,7 +578,7 @@ class AnmeldungService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> updateParameterListe(ServiceDaten daten, List<MaParameter> liste) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)

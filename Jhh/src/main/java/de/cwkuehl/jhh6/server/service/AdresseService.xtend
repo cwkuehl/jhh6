@@ -157,7 +157,7 @@ class AdresseService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> machSitzEins(ServiceDaten daten, String personUid, String sitzUid) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
@@ -309,7 +309,7 @@ class AdresseService {
 		}
 	]
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<String> insertUpdatePerson(ServiceDaten daten, AdPersonSitzAdresse p) {
 
 		var r = new ServiceErgebnis<String>(p.uid)
@@ -346,7 +346,7 @@ class AdresseService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> deleteSitz(ServiceDaten daten, String personUid, String sitzUid) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
@@ -403,7 +403,7 @@ class AdresseService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<String> importAdresseListe(ServiceDaten daten, List<String> zeilen, boolean loeschen) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)

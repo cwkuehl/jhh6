@@ -46,7 +46,7 @@ class TestService {
 
 	override Void rollback(ServiceDaten daten, RollbackListe liste, int anzahl) {}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Boolean> testRep(ServiceDaten daten) {
 
 		log.error("testRep")
@@ -96,7 +96,7 @@ class TestService {
 		assertEquals(anz - 1, liste.size)
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Boolean> testTransaktion(ServiceDaten daten, int stufe) {
 
 		if (stufe == 0) {

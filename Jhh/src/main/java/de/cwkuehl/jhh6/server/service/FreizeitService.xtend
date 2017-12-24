@@ -78,7 +78,7 @@ class FreizeitService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<FzNotiz> insertUpdateNotiz(ServiceDaten daten, String uid, String thema, String notiz) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
@@ -91,7 +91,7 @@ class FreizeitService {
 
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> deleteNotiz(ServiceDaten daten, String uid) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
@@ -296,7 +296,7 @@ class FreizeitService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<FzFahrrad> insertUpdateFahrrad(ServiceDaten daten, String uid, String bez, int typ) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
@@ -310,7 +310,7 @@ class FreizeitService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> deleteFahrrad(ServiceDaten daten, String uid) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
@@ -356,7 +356,7 @@ class FreizeitService {
 	 * @param besch0 Beschreibung.
 	 * @return Benutzte Stand-Nummer.
 	 */
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<FzFahrradstand> insertUpdateFahrradstand(ServiceDaten daten, String fahrradUid,
 		LocalDateTime datum, int nr0, double zaehler, double periode, double schnitt, String besch0) {
 
@@ -518,7 +518,7 @@ class FreizeitService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> deleteFahrradstand(ServiceDaten daten, String fuid, LocalDateTime datum, int nr) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
@@ -561,7 +561,7 @@ class FreizeitService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<FzBuchautor> insertUpdateAutor(ServiceDaten daten, String uid, String name,
 		String vorname) {
 
@@ -574,7 +574,7 @@ class FreizeitService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> deleteAutor(ServiceDaten daten, String uid) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
@@ -604,7 +604,7 @@ class FreizeitService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<FzBuchserie> insertUpdateSerie(ServiceDaten daten, String uid, String name) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
@@ -616,7 +616,7 @@ class FreizeitService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> deleteSerie(ServiceDaten daten, String uid) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
@@ -655,7 +655,7 @@ class FreizeitService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<FzBuch> insertUpdateBuch(ServiceDaten daten, String uid, String autorUid, String serieUid,
 		int seriennr, String titel, int seit, String sp, boolean besitz, LocalDate lesedatum, LocalDate hoerdatum) {
 
@@ -713,7 +713,7 @@ class FreizeitService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> deleteBuch(ServiceDaten daten, String uid) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
