@@ -110,6 +110,7 @@ class MachDto {
 				jdbcJavaTyp = 'java.math.BigDecimal'
 				conv1 = 'conv('
 				conv2 = ')'
+				convget = 'getBigDecimal'
 			} else if (javaTyp.simpleName == 'byte[]') {
 				jdbcJavaTyp = 'byte[]'
 				conv1 = 'conv('
@@ -119,6 +120,7 @@ class MachDto {
 				jdbcJavaTyp = null
 				conv1 = ''
 				conv2 = ''
+				convget = null
 			}
 		}
 	}
