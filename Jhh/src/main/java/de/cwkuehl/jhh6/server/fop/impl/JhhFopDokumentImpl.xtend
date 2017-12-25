@@ -10,13 +10,16 @@ import de.cwkuehl.jhh6.api.dto.HpPatient
 import de.cwkuehl.jhh6.api.dto.HpRechnung
 import de.cwkuehl.jhh6.api.dto.MoGottesdienstLang
 import de.cwkuehl.jhh6.api.dto.SbPerson
+import de.cwkuehl.jhh6.server.fop.doc.FoAbrechnung
 import de.cwkuehl.jhh6.server.fop.doc.FoAdressenliste
 import de.cwkuehl.jhh6.server.fop.doc.FoJahresbericht
 import de.cwkuehl.jhh6.server.fop.doc.FoKassenbericht
 import de.cwkuehl.jhh6.server.fop.doc.FoMessdienerordnung
+import de.cwkuehl.jhh6.server.fop.doc.FoMieterliste
 import de.cwkuehl.jhh6.server.fop.doc.FoNachfahrenliste
 import de.cwkuehl.jhh6.server.fop.doc.FoPatientenakte
 import de.cwkuehl.jhh6.server.fop.doc.FoRechnung
+import de.cwkuehl.jhh6.server.fop.dto.FoHaus
 import java.io.ByteArrayOutputStream
 import java.time.LocalDate
 import java.util.List
@@ -117,19 +120,20 @@ class JhhFopDokumentImpl {
 		doc.generate(rechnung, patient, patientAdresse, zahldatum, behandlungen, einstellungen)
 	}
 
-// public void addAbrechnung(boolean reset, FoHaus haus) {
-//
-// FoAbrechnung doc = new FoAbrechnung;
-// multiDoc.add(doc, reset);
-// doc.generate(haus);
-// }
-//
-// public void addMieterliste(boolean reset, String ueberschrift, LocalDate von, LocalDate bis, List<FoHaus> haeuser) {
-//
-// FoMieterliste doc = new FoMieterliste;
-// multiDoc.add(doc, reset);
-// doc.generate(ueberschrift, von, bis, haeuser);
-// }
+	def void addAbrechnung(boolean reset, FoHaus haus) {
+
+		var doc = new FoAbrechnung
+		multiDoc.add(doc, reset)
+		doc.generate(haus)
+	}
+
+	def void addMieterliste(boolean reset, String ueberschrift, LocalDate von, LocalDate bis, List<FoHaus> haeuser) {
+
+		var doc = new FoMieterliste
+		multiDoc.add(doc, reset)
+		doc.generate(ueberschrift, von, bis, haeuser)
+	}
+
 	def void addPatientenakte(boolean reset, LocalDate von, LocalDate bis, HpPatient patient,
 		List<HpBehandlungDruck> behandlungen) {
 

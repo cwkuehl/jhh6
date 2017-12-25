@@ -112,15 +112,30 @@ import de.cwkuehl.jhh6.api.dto.SbQuelleUpdate
 import de.cwkuehl.jhh6.api.dto.TbEintrag
 import de.cwkuehl.jhh6.api.dto.TbEintragKey
 import de.cwkuehl.jhh6.api.dto.TbEintragUpdate
+import de.cwkuehl.jhh6.api.dto.VmAbrechnung
+import de.cwkuehl.jhh6.api.dto.VmAbrechnungKey
+import de.cwkuehl.jhh6.api.dto.VmAbrechnungUpdate
 import de.cwkuehl.jhh6.api.dto.VmBuchung
 import de.cwkuehl.jhh6.api.dto.VmBuchungKey
 import de.cwkuehl.jhh6.api.dto.VmBuchungUpdate
 import de.cwkuehl.jhh6.api.dto.VmEreignis
 import de.cwkuehl.jhh6.api.dto.VmEreignisKey
 import de.cwkuehl.jhh6.api.dto.VmEreignisUpdate
+import de.cwkuehl.jhh6.api.dto.VmHaus
+import de.cwkuehl.jhh6.api.dto.VmHausKey
+import de.cwkuehl.jhh6.api.dto.VmHausUpdate
 import de.cwkuehl.jhh6.api.dto.VmKonto
 import de.cwkuehl.jhh6.api.dto.VmKontoKey
 import de.cwkuehl.jhh6.api.dto.VmKontoUpdate
+import de.cwkuehl.jhh6.api.dto.VmMiete
+import de.cwkuehl.jhh6.api.dto.VmMieteKey
+import de.cwkuehl.jhh6.api.dto.VmMieteUpdate
+import de.cwkuehl.jhh6.api.dto.VmMieter
+import de.cwkuehl.jhh6.api.dto.VmMieterKey
+import de.cwkuehl.jhh6.api.dto.VmMieterUpdate
+import de.cwkuehl.jhh6.api.dto.VmWohnung
+import de.cwkuehl.jhh6.api.dto.VmWohnungKey
+import de.cwkuehl.jhh6.api.dto.VmWohnungUpdate
 import de.cwkuehl.jhh6.api.dto.Zeinstellung
 import de.cwkuehl.jhh6.api.dto.ZeinstellungKey
 import de.cwkuehl.jhh6.api.dto.ZeinstellungUpdate
@@ -179,9 +194,14 @@ import de.cwkuehl.jhh6.server.rep.ISbKindRep
 import de.cwkuehl.jhh6.server.rep.ISbPersonRep
 import de.cwkuehl.jhh6.server.rep.ISbQuelleRep
 import de.cwkuehl.jhh6.server.rep.ITbEintragRep
+import de.cwkuehl.jhh6.server.rep.IVmAbrechnungRep
 import de.cwkuehl.jhh6.server.rep.IVmBuchungRep
 import de.cwkuehl.jhh6.server.rep.IVmEreignisRep
+import de.cwkuehl.jhh6.server.rep.IVmHausRep
 import de.cwkuehl.jhh6.server.rep.IVmKontoRep
+import de.cwkuehl.jhh6.server.rep.IVmMieteRep
+import de.cwkuehl.jhh6.server.rep.IVmMieterRep
+import de.cwkuehl.jhh6.server.rep.IVmWohnungRep
 import de.cwkuehl.jhh6.server.rep.IZeinstellungRep
 import de.cwkuehl.jhh6.server.rep.impl.AdAdresseRep
 import de.cwkuehl.jhh6.server.rep.impl.AdPersonRep
@@ -220,9 +240,14 @@ import de.cwkuehl.jhh6.server.rep.impl.SbKindRep
 import de.cwkuehl.jhh6.server.rep.impl.SbPersonRep
 import de.cwkuehl.jhh6.server.rep.impl.SbQuelleRep
 import de.cwkuehl.jhh6.server.rep.impl.TbEintragRep
+import de.cwkuehl.jhh6.server.rep.impl.VmAbrechnungRep
 import de.cwkuehl.jhh6.server.rep.impl.VmBuchungRep
 import de.cwkuehl.jhh6.server.rep.impl.VmEreignisRep
+import de.cwkuehl.jhh6.server.rep.impl.VmHausRep
 import de.cwkuehl.jhh6.server.rep.impl.VmKontoRep
+import de.cwkuehl.jhh6.server.rep.impl.VmMieteRep
+import de.cwkuehl.jhh6.server.rep.impl.VmMieterRep
+import de.cwkuehl.jhh6.server.rep.impl.VmWohnungRep
 import de.cwkuehl.jhh6.server.rep.impl.ZeinstellungRep
 import de.cwkuehl.jhh6.server.service.impl.ReplTabelle
 import java.util.List
@@ -271,14 +296,14 @@ class ReplikationService {
 	@RepositoryRef SbPersonRep sbpersonRep
 	@RepositoryRef SbQuelleRep quelleRep
 	@RepositoryRef TbEintragRep tagebuchRep
-	// @RepositoryRef VmAbrechnungRep abrechnungRep
+	@RepositoryRef VmAbrechnungRep abrechnungRep
 	@RepositoryRef VmBuchungRep vmbuchungRep
 	@RepositoryRef VmEreignisRep vmereignisRep
-	// @RepositoryRef VmHausRep hausRep
+	@RepositoryRef VmHausRep hausRep
 	@RepositoryRef VmKontoRep vmkontoRep
-	// @RepositoryRef VmMieteRep mieteRep
-	// @RepositoryRef VmMieterRep mieterRep
-	// @RepositoryRef VmWohnungRep wohnungRep
+	@RepositoryRef VmMieteRep mieteRep
+	@RepositoryRef VmMieterRep mieterRep
+	@RepositoryRef VmWohnungRep wohnungRep
 	// @RepositoryRef WpAnlageRep anlageRep
 	// @RepositoryRef WpBuchungRep wpbuchungRep
 	// @RepositoryRef WpKonfigurationRep konfigurationRep
@@ -579,10 +604,11 @@ class ReplikationService {
 		reps.put(typeof(TbEintrag), tb)
 		reps.put(typeof(TbEintragUpdate), tb)
 
-//			var ab = new RbRepository(abrechnungRep, typeof(IVmAbrechnungRep), typeof(VmAbrechnungKey),
-//				typeof(VmAbrechnung), typeof(VmAbrechnungUpdate))
-//			reps.put(typeof(VmAbrechnung), ab)
-//			reps.put(typeof(VmAbrechnungUpdate), ab)
+		var ab = new RbRepository(abrechnungRep, typeof(IVmAbrechnungRep), typeof(VmAbrechnungKey),
+			typeof(VmAbrechnung), typeof(VmAbrechnungUpdate))
+		reps.put(typeof(VmAbrechnung), ab)
+		reps.put(typeof(VmAbrechnungUpdate), ab)
+
 		var vb = new RbRepository(vmbuchungRep, typeof(IVmBuchungRep), typeof(VmBuchungKey), typeof(VmBuchung),
 			typeof(VmBuchungUpdate))
 		reps.put(typeof(VmBuchung), vb)
@@ -593,27 +619,30 @@ class ReplikationService {
 		reps.put(typeof(VmEreignis), ve)
 		reps.put(typeof(VmEreignisUpdate), ve)
 
-//			var ha = new RbRepository(hausRep, typeof(IVmHausRep), typeof(VmHausKey), typeof(VmHaus),
-//				typeof(VmHausUpdate))
-//			reps.put(typeof(VmHaus), ha)
-//			reps.put(typeof(VmHausUpdate), ha)
+		var ha = new RbRepository(hausRep, typeof(IVmHausRep), typeof(VmHausKey), typeof(VmHaus), typeof(VmHausUpdate))
+		reps.put(typeof(VmHaus), ha)
+		reps.put(typeof(VmHausUpdate), ha)
+
 		var vk = new RbRepository(vmkontoRep, typeof(IVmKontoRep), typeof(VmKontoKey), typeof(VmKonto),
 			typeof(VmKontoUpdate))
 		reps.put(typeof(VmKonto), vk)
 		reps.put(typeof(VmKontoUpdate), vk)
 
-//			var mi = new RbRepository(mieteRep, typeof(IVmMieteRep), typeof(VmMieteKey), typeof(VmMiete),
-//				typeof(VmMieteUpdate))
-//			reps.put(typeof(VmMiete), mi)
-//			reps.put(typeof(VmMieteUpdate), mi)
-//			var mr = new RbRepository(mieterRep, typeof(IVmMieterRep), typeof(VmMieterKey), typeof(VmMieter),
-//				typeof(VmMieterUpdate))
-//			reps.put(typeof(VmMieter), mr)
-//			reps.put(typeof(VmMieterUpdate), mr)
-//			var wo = new RbRepository(wohnungRep, typeof(IVmWohnungRep), typeof(VmWohnungKey), typeof(VmWohnung),
-//				typeof(VmWohnungUpdate))
-//			reps.put(typeof(VmWohnung), wo)
-//			reps.put(typeof(VmWohnungUpdate), wo)
+		var mi = new RbRepository(mieteRep, typeof(IVmMieteRep), typeof(VmMieteKey), typeof(VmMiete),
+			typeof(VmMieteUpdate))
+		reps.put(typeof(VmMiete), mi)
+		reps.put(typeof(VmMieteUpdate), mi)
+
+		var mr = new RbRepository(mieterRep, typeof(IVmMieterRep), typeof(VmMieterKey), typeof(VmMieter),
+			typeof(VmMieterUpdate))
+		reps.put(typeof(VmMieter), mr)
+		reps.put(typeof(VmMieterUpdate), mr)
+
+		var wo = new RbRepository(wohnungRep, typeof(IVmWohnungRep), typeof(VmWohnungKey), typeof(VmWohnung),
+			typeof(VmWohnungUpdate))
+		reps.put(typeof(VmWohnung), wo)
+		reps.put(typeof(VmWohnungUpdate), wo)
+
 //			var an = new RbRepository(anlageRep, typeof(IWpAnlageRep), typeof(WpAnlageKey),
 //				typeof(WpAnlage), typeof(WpAnlageUpdate))
 //			reps.put(typeof(WpAnlage), an)

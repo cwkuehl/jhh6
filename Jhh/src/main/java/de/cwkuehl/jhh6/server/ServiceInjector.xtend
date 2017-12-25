@@ -10,6 +10,7 @@ import de.cwkuehl.jhh6.api.service.IReplikationService
 import de.cwkuehl.jhh6.api.service.IStammbaumService
 import de.cwkuehl.jhh6.api.service.ITagebuchService
 import de.cwkuehl.jhh6.api.service.ITestService
+import de.cwkuehl.jhh6.api.service.IVermietungService
 import de.cwkuehl.jhh6.server.base.AbstractModule
 import de.cwkuehl.jhh6.server.rep.IAdAdresseRep
 import de.cwkuehl.jhh6.server.rep.IAdPersonRep
@@ -48,9 +49,14 @@ import de.cwkuehl.jhh6.server.rep.ISbKindRep
 import de.cwkuehl.jhh6.server.rep.ISbPersonRep
 import de.cwkuehl.jhh6.server.rep.ISbQuelleRep
 import de.cwkuehl.jhh6.server.rep.ITbEintragRep
+import de.cwkuehl.jhh6.server.rep.IVmAbrechnungRep
 import de.cwkuehl.jhh6.server.rep.IVmBuchungRep
 import de.cwkuehl.jhh6.server.rep.IVmEreignisRep
+import de.cwkuehl.jhh6.server.rep.IVmHausRep
 import de.cwkuehl.jhh6.server.rep.IVmKontoRep
+import de.cwkuehl.jhh6.server.rep.IVmMieteRep
+import de.cwkuehl.jhh6.server.rep.IVmMieterRep
+import de.cwkuehl.jhh6.server.rep.IVmWohnungRep
 import de.cwkuehl.jhh6.server.rep.IZeinstellungRep
 import de.cwkuehl.jhh6.server.rep.impl.AdAdresseRep
 import de.cwkuehl.jhh6.server.rep.impl.AdPersonRep
@@ -89,9 +95,14 @@ import de.cwkuehl.jhh6.server.rep.impl.SbKindRep
 import de.cwkuehl.jhh6.server.rep.impl.SbPersonRep
 import de.cwkuehl.jhh6.server.rep.impl.SbQuelleRep
 import de.cwkuehl.jhh6.server.rep.impl.TbEintragRep
+import de.cwkuehl.jhh6.server.rep.impl.VmAbrechnungRep
 import de.cwkuehl.jhh6.server.rep.impl.VmBuchungRep
 import de.cwkuehl.jhh6.server.rep.impl.VmEreignisRep
+import de.cwkuehl.jhh6.server.rep.impl.VmHausRep
 import de.cwkuehl.jhh6.server.rep.impl.VmKontoRep
+import de.cwkuehl.jhh6.server.rep.impl.VmMieteRep
+import de.cwkuehl.jhh6.server.rep.impl.VmMieterRep
+import de.cwkuehl.jhh6.server.rep.impl.VmWohnungRep
 import de.cwkuehl.jhh6.server.rep.impl.ZeinstellungRep
 import de.cwkuehl.jhh6.server.service.AdresseService
 import de.cwkuehl.jhh6.server.service.AnmeldungService
@@ -103,6 +114,7 @@ import de.cwkuehl.jhh6.server.service.ReplikationService
 import de.cwkuehl.jhh6.server.service.StammbaumService
 import de.cwkuehl.jhh6.server.service.TagebuchService
 import de.cwkuehl.jhh6.server.service.TestService
+import de.cwkuehl.jhh6.server.service.VermietungService
 
 class ServiceInjector extends AbstractModule {
 
@@ -118,7 +130,7 @@ class ServiceInjector extends AbstractModule {
 		bind(typeof(IReplikationService)).to(typeof(ReplikationService))
 		bind(typeof(IStammbaumService)).to(typeof(StammbaumService))
 		bind(typeof(ITagebuchService)).to(typeof(TagebuchService))
-//		bind(typeof(IVermietungService)).to(typeof(VermietungService))
+		bind(typeof(IVermietungService)).to(typeof(VermietungService))
 //		bind(typeof(IWertpapierService)).to(typeof(WertpapierService))
 		bind(typeof(ITestService)).to(typeof(TestService))
 
@@ -160,14 +172,14 @@ class ServiceInjector extends AbstractModule {
 		bind(typeof(ISbPersonRep)).to(typeof(SbPersonRep))
 		bind(typeof(ISbQuelleRep)).to(typeof(SbQuelleRep))
 		bind(typeof(ITbEintragRep)).to(typeof(TbEintragRep))
-//		bind(typeof(IVmAbrechnungRep)).to(typeof(VmAbrechnungRep))
+		bind(typeof(IVmAbrechnungRep)).to(typeof(VmAbrechnungRep))
 		bind(typeof(IVmBuchungRep)).to(typeof(VmBuchungRep))
 		bind(typeof(IVmEreignisRep)).to(typeof(VmEreignisRep))
-//		bind(typeof(IVmHausRep)).to(typeof(VmHausRep))
+		bind(typeof(IVmHausRep)).to(typeof(VmHausRep))
 		bind(typeof(IVmKontoRep)).to(typeof(VmKontoRep))
-//		bind(typeof(IVmMieteRep)).to(typeof(VmMieteRep))
-//		bind(typeof(IVmMieterRep)).to(typeof(VmMieterRep))
-//		bind(typeof(IVmWohnungRep)).to(typeof(VmWohnungRep))
+		bind(typeof(IVmMieteRep)).to(typeof(VmMieteRep))
+		bind(typeof(IVmMieterRep)).to(typeof(VmMieterRep))
+		bind(typeof(IVmWohnungRep)).to(typeof(VmWohnungRep))
 //		bind(typeof(IWpAnlageRep)).to(typeof(WpAnlageRep))
 //		bind(typeof(IWpBuchungRep)).to(typeof(WpBuchungRep))
 //		bind(typeof(IWpKonfigurationRep)).to(typeof(WpKonfigurationRep))

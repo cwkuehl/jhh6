@@ -10,6 +10,7 @@ import de.cwkuehl.jhh6.api.service.IReplikationService
 import de.cwkuehl.jhh6.api.service.IStammbaumService
 import de.cwkuehl.jhh6.api.service.ITagebuchService
 import de.cwkuehl.jhh6.api.service.ITestService
+import de.cwkuehl.jhh6.api.service.IVermietungService
 import de.cwkuehl.jhh6.server.base.WkInjector
 
 class FactoryService {
@@ -57,9 +58,10 @@ class FactoryService {
 		return injector.getInstance(typeof(ITestService))
 	}
 
-// def static IVermietungService getVermietungService() {
-// return injector.getInstance(typeof(IVermietungService))
-// }
+	def static IVermietungService getVermietungService() {
+		return injector.getInstance(typeof(IVermietungService))
+	}
+
 // def static IWertpapierService getWertpapierService() {
 // return injector.getInstance(typeof(IWertpapierService))
 // }
