@@ -11,10 +11,15 @@ import java.util.function.Function
 import org.junit.Test
 
 import static extension org.junit.Assert.*
+import de.cwkuehl.jhh6.TestBase
 
-class HsqldbTest {
+class HsqldbTest extends TestBase {
 
 	@Test def void testHsqldb234() {
+
+		if (skipForBuild) {
+			return
+		}
 
 		// using hsqldb-2.3.4: OK
 		// using hsqldb-2.3.5:

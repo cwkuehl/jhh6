@@ -8,8 +8,9 @@ import java.util.regex.Pattern
 import org.junit.Test
 
 import static org.junit.Assert.*
+import de.cwkuehl.jhh6.TestBase
 
-class JavaFxParserTest {
+class JavaFxParserTest extends TestBase {
 
 	static Pattern pform = Pattern.compile(
 		".+fx:controller=\\\"(de.cwkuehl.jhh\\d.(anwendung|app).controller.\\w\\w.(\\w\\w[\\d]{3})[^\\\"]+)\\\".*",
@@ -25,6 +26,10 @@ class JavaFxParserTest {
 
 	/* Change JavaFX files for JHH6. */
 	@Test def void parse() {
+
+		if (skipForBuild) {
+			return
+		}
 
 		// parse("ad/AD100Personen.fxml")
 		// parse("ad/AD110Person.fxml")
