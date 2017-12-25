@@ -1057,6 +1057,14 @@ public class DbInit {
                     execute(daten, zeinstellungDao, mout);
                 }
                 version = 49;
+            } else if (version <= 49) {
+                Vector<String> mout = new Vector<String>();
+                mout.add("DROP TABLE HP_Anamnese");
+                mout.add("DROP TABLE HP_Symptom");
+                mout.add("DROP TABLE HP_Symptom_Anamnese");
+                mout.add("DROP TABLE HP_Fragenkatalog");
+                execute(daten, zeinstellungDao, mout);
+                version = 50;
             }
             if (version > versionAlt) {
                 // log.error("Version " + version);

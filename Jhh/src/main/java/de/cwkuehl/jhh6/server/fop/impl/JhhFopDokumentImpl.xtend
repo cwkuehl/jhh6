@@ -5,12 +5,18 @@ import de.cwkuehl.jhh6.api.dto.HhBilanzDruck
 import de.cwkuehl.jhh6.api.dto.HhBilanzSb
 import de.cwkuehl.jhh6.api.dto.HhBuchungLang
 import de.cwkuehl.jhh6.api.dto.HhKonto
+import de.cwkuehl.jhh6.api.dto.HpBehandlungDruck
+import de.cwkuehl.jhh6.api.dto.HpPatient
+import de.cwkuehl.jhh6.api.dto.HpRechnung
 import de.cwkuehl.jhh6.server.fop.doc.FoAdressenliste
 import de.cwkuehl.jhh6.server.fop.doc.FoJahresbericht
 import de.cwkuehl.jhh6.server.fop.doc.FoKassenbericht
+import de.cwkuehl.jhh6.server.fop.doc.FoPatientenakte
+import de.cwkuehl.jhh6.server.fop.doc.FoRechnung
 import java.io.ByteArrayOutputStream
 import java.time.LocalDate
 import java.util.List
+import java.util.Map
 
 /** 
  * Diese Klasse die Erzeugung aller möglichen Dokumente bereit.
@@ -98,14 +104,14 @@ class JhhFopDokumentImpl {
 			bListeE, bListeA, bListe)
 	}
 
-// public void addRechnung(boolean reset, HpRechnung rechnung, HpPatient patient, HpPatient patientAdresse,
-// LocalDate zahldatum, List<HpBehandlungDruck> behandlungen, Map<String, String> einstellungen) {
-//
-// FoRechnung doc = new FoRechnung;
-// multiDoc.add(doc, reset);
-// doc.generate(rechnung, patient, patientAdresse, zahldatum, behandlungen, einstellungen);
-// }
-//
+	def void addRechnung(boolean reset, HpRechnung rechnung, HpPatient patient, HpPatient patientAdresse,
+		LocalDate zahldatum, List<HpBehandlungDruck> behandlungen, Map<String, String> einstellungen) {
+
+		var doc = new FoRechnung
+		multiDoc.add(doc, reset)
+		doc.generate(rechnung, patient, patientAdresse, zahldatum, behandlungen, einstellungen)
+	}
+
 // public void addAbrechnung(boolean reset, FoHaus haus) {
 //
 // FoAbrechnung doc = new FoAbrechnung;
@@ -119,15 +125,14 @@ class JhhFopDokumentImpl {
 // multiDoc.add(doc, reset);
 // doc.generate(ueberschrift, von, bis, haeuser);
 // }
-//
-// public void addPatientenakte(boolean reset, LocalDate von, LocalDate bis, HpPatient patient,
-// List<HpBehandlungDruck> behandlungen) {
-//
-// FoPatientenakte doc = new FoPatientenakte;
-// multiDoc.add(doc, reset);
-// doc.generate(von, bis, patient, behandlungen);
-// }
-//
+	def void addPatientenakte(boolean reset, LocalDate von, LocalDate bis, HpPatient patient,
+		List<HpBehandlungDruck> behandlungen) {
+
+		var doc = new FoPatientenakte
+		multiDoc.add(doc, reset)
+		doc.generate(von, bis, patient, behandlungen)
+	}
+
 // public void addMessdienerordnung(boolean reset, LocalDate von, LocalDate bis, List<MoGottesdienstLang> einteilungen) {
 //
 // FoMessdienerordnung doc = new FoMessdienerordnung;

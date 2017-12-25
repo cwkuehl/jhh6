@@ -13,6 +13,9 @@ import de.cwkuehl.jhh6.api.dto.AdSitzUpdate
 import de.cwkuehl.jhh6.api.dto.Benutzer
 import de.cwkuehl.jhh6.api.dto.BenutzerKey
 import de.cwkuehl.jhh6.api.dto.BenutzerUpdate
+import de.cwkuehl.jhh6.api.dto.ByteDaten
+import de.cwkuehl.jhh6.api.dto.ByteDatenKey
+import de.cwkuehl.jhh6.api.dto.ByteDatenUpdate
 import de.cwkuehl.jhh6.api.dto.FzBuch
 import de.cwkuehl.jhh6.api.dto.FzBuchKey
 import de.cwkuehl.jhh6.api.dto.FzBuchUpdate
@@ -55,6 +58,21 @@ import de.cwkuehl.jhh6.api.dto.HpBehandlungLeistung
 import de.cwkuehl.jhh6.api.dto.HpBehandlungLeistungKey
 import de.cwkuehl.jhh6.api.dto.HpBehandlungLeistungUpdate
 import de.cwkuehl.jhh6.api.dto.HpBehandlungUpdate
+import de.cwkuehl.jhh6.api.dto.HpLeistung
+import de.cwkuehl.jhh6.api.dto.HpLeistungKey
+import de.cwkuehl.jhh6.api.dto.HpLeistungUpdate
+import de.cwkuehl.jhh6.api.dto.HpLeistungsgruppe
+import de.cwkuehl.jhh6.api.dto.HpLeistungsgruppeKey
+import de.cwkuehl.jhh6.api.dto.HpLeistungsgruppeUpdate
+import de.cwkuehl.jhh6.api.dto.HpPatient
+import de.cwkuehl.jhh6.api.dto.HpPatientKey
+import de.cwkuehl.jhh6.api.dto.HpPatientUpdate
+import de.cwkuehl.jhh6.api.dto.HpRechnung
+import de.cwkuehl.jhh6.api.dto.HpRechnungKey
+import de.cwkuehl.jhh6.api.dto.HpRechnungUpdate
+import de.cwkuehl.jhh6.api.dto.HpStatus
+import de.cwkuehl.jhh6.api.dto.HpStatusKey
+import de.cwkuehl.jhh6.api.dto.HpStatusUpdate
 import de.cwkuehl.jhh6.api.dto.MaEinstellung
 import de.cwkuehl.jhh6.api.dto.MaEinstellungKey
 import de.cwkuehl.jhh6.api.dto.MaEinstellungUpdate
@@ -101,6 +119,7 @@ import de.cwkuehl.jhh6.server.rep.IAdAdresseRep
 import de.cwkuehl.jhh6.server.rep.IAdPersonRep
 import de.cwkuehl.jhh6.server.rep.IAdSitzRep
 import de.cwkuehl.jhh6.server.rep.IBenutzerRep
+import de.cwkuehl.jhh6.server.rep.IByteDatenRep
 import de.cwkuehl.jhh6.server.rep.IFzBuchRep
 import de.cwkuehl.jhh6.server.rep.IFzBuchautorRep
 import de.cwkuehl.jhh6.server.rep.IFzBuchserieRep
@@ -115,6 +134,11 @@ import de.cwkuehl.jhh6.server.rep.IHhKontoRep
 import de.cwkuehl.jhh6.server.rep.IHhPeriodeRep
 import de.cwkuehl.jhh6.server.rep.IHpBehandlungLeistungRep
 import de.cwkuehl.jhh6.server.rep.IHpBehandlungRep
+import de.cwkuehl.jhh6.server.rep.IHpLeistungRep
+import de.cwkuehl.jhh6.server.rep.IHpLeistungsgruppeRep
+import de.cwkuehl.jhh6.server.rep.IHpPatientRep
+import de.cwkuehl.jhh6.server.rep.IHpRechnungRep
+import de.cwkuehl.jhh6.server.rep.IHpStatusRep
 import de.cwkuehl.jhh6.server.rep.IMaEinstellungRep
 import de.cwkuehl.jhh6.server.rep.IMaMandantRep
 import de.cwkuehl.jhh6.server.rep.IMaParameterRep
@@ -127,6 +151,7 @@ import de.cwkuehl.jhh6.server.rep.impl.AdAdresseRep
 import de.cwkuehl.jhh6.server.rep.impl.AdPersonRep
 import de.cwkuehl.jhh6.server.rep.impl.AdSitzRep
 import de.cwkuehl.jhh6.server.rep.impl.BenutzerRep
+import de.cwkuehl.jhh6.server.rep.impl.ByteDatenRep
 import de.cwkuehl.jhh6.server.rep.impl.FzBuchRep
 import de.cwkuehl.jhh6.server.rep.impl.FzBuchautorRep
 import de.cwkuehl.jhh6.server.rep.impl.FzBuchserieRep
@@ -141,6 +166,11 @@ import de.cwkuehl.jhh6.server.rep.impl.HhKontoRep
 import de.cwkuehl.jhh6.server.rep.impl.HhPeriodeRep
 import de.cwkuehl.jhh6.server.rep.impl.HpBehandlungLeistungRep
 import de.cwkuehl.jhh6.server.rep.impl.HpBehandlungRep
+import de.cwkuehl.jhh6.server.rep.impl.HpLeistungRep
+import de.cwkuehl.jhh6.server.rep.impl.HpLeistungsgruppeRep
+import de.cwkuehl.jhh6.server.rep.impl.HpPatientRep
+import de.cwkuehl.jhh6.server.rep.impl.HpRechnungRep
+import de.cwkuehl.jhh6.server.rep.impl.HpStatusRep
 import de.cwkuehl.jhh6.server.rep.impl.MaEinstellungRep
 import de.cwkuehl.jhh6.server.rep.impl.MaMandantRep
 import de.cwkuehl.jhh6.server.rep.impl.MaParameterRep
@@ -163,7 +193,7 @@ class ReplikationService {
 	@RepositoryRef AdPersonRep personRep
 	@RepositoryRef AdSitzRep sitzRep
 	@RepositoryRef BenutzerRep benutzerRep
-	// @RepositoryRef ByteDatenRep byteRep
+	@RepositoryRef ByteDatenRep byteRep
 	@RepositoryRef FzBuchRep buchRep
 	@RepositoryRef FzBuchautorRep buchautorRep
 	@RepositoryRef FzBuchserieRep buchserieRep
@@ -178,11 +208,11 @@ class ReplikationService {
 	@RepositoryRef HhPeriodeRep periodeRep
 	@RepositoryRef HpBehandlungRep behandlungRep
 	@RepositoryRef HpBehandlungLeistungRep behleistRep
-	// @RepositoryRef HpLeistungRep leistungRep
-	// @RepositoryRef HpLeistungsgruppeRep leistgruppeRep
-	// @RepositoryRef HpPatientRep patientRep
-	// @RepositoryRef HpRechnungRep rechnungRep
-	// @RepositoryRef HpStatusRep statusRep
+	@RepositoryRef HpLeistungRep leistungRep
+	@RepositoryRef HpLeistungsgruppeRep leistgruppeRep
+	@RepositoryRef HpPatientRep patientRep
+	@RepositoryRef HpRechnungRep rechnungRep
+	@RepositoryRef HpStatusRep statusRep
 	@RepositoryRef MaEinstellungRep maeinstellungRep
 	@RepositoryRef MaMandantRep mandantRep
 	@RepositoryRef MaParameterRep parameterRep
@@ -321,135 +351,140 @@ class ReplikationService {
 
 	def private void init() {
 
-		if (reps.size <= 0) {
-			var ad = new RbRepository(adresseRep, typeof(IAdAdresseRep), typeof(AdAdresseKey), typeof(AdAdresse),
-				typeof(AdAdresseUpdate))
-			reps.put(typeof(AdAdresse), ad)
-			reps.put(typeof(AdAdresseUpdate), ad)
+		if (reps.size > 0)
+			return
+		var ad = new RbRepository(adresseRep, typeof(IAdAdresseRep), typeof(AdAdresseKey), typeof(AdAdresse),
+			typeof(AdAdresseUpdate))
+		reps.put(typeof(AdAdresse), ad)
+		reps.put(typeof(AdAdresseUpdate), ad)
 
-			var ps = new RbRepository(personRep, typeof(IAdPersonRep), typeof(AdPersonKey), typeof(AdPerson),
-				typeof(AdPersonUpdate))
-			reps.put(typeof(AdPerson), ps)
-			reps.put(typeof(AdPersonUpdate), ps)
+		var ps = new RbRepository(personRep, typeof(IAdPersonRep), typeof(AdPersonKey), typeof(AdPerson),
+			typeof(AdPersonUpdate))
+		reps.put(typeof(AdPerson), ps)
+		reps.put(typeof(AdPersonUpdate), ps)
 
-			var si = new RbRepository(sitzRep, typeof(IAdSitzRep), typeof(AdSitzKey), typeof(AdSitz),
-				typeof(AdSitzUpdate))
-			reps.put(typeof(AdSitz), si)
-			reps.put(typeof(AdSitzUpdate), si)
+		var si = new RbRepository(sitzRep, typeof(IAdSitzRep), typeof(AdSitzKey), typeof(AdSitz), typeof(AdSitzUpdate))
+		reps.put(typeof(AdSitz), si)
+		reps.put(typeof(AdSitzUpdate), si)
 
-			var bn = new RbRepository(benutzerRep, typeof(IBenutzerRep), typeof(BenutzerKey), typeof(Benutzer),
-				typeof(BenutzerUpdate))
-			reps.put(typeof(Benutzer), bn)
-			reps.put(typeof(BenutzerUpdate), bn)
+		var bn = new RbRepository(benutzerRep, typeof(IBenutzerRep), typeof(BenutzerKey), typeof(Benutzer),
+			typeof(BenutzerUpdate))
+		reps.put(typeof(Benutzer), bn)
+		reps.put(typeof(BenutzerUpdate), bn)
 
-//			var by = new RbRepository(byteRep, typeof(IByteDatenRep), typeof(ByteDatenKey), typeof(ByteDaten),
-//				typeof(ByteDatenUpdate))
-//			reps.put(typeof(ByteDaten), by)
-//			reps.put(typeof(ByteDatenUpdate), by)
-			var bc = new RbRepository(buchRep, typeof(IFzBuchRep), typeof(FzBuchKey), typeof(FzBuch),
-				typeof(FzBuchUpdate))
-			reps.put(typeof(FzBuch), bc)
-			reps.put(typeof(FzBuchUpdate), bc)
+		var by = new RbRepository(byteRep, typeof(IByteDatenRep), typeof(ByteDatenKey), typeof(ByteDaten),
+			typeof(ByteDatenUpdate))
+		reps.put(typeof(ByteDaten), by)
+		reps.put(typeof(ByteDatenUpdate), by)
 
-			var ba = new RbRepository(buchautorRep, typeof(IFzBuchautorRep), typeof(FzBuchautorKey),
-				typeof(FzBuchautor), typeof(FzBuchautorUpdate))
-			reps.put(typeof(FzBuchautor), ba)
-			reps.put(typeof(FzBuchautorUpdate), ba)
+		var bc = new RbRepository(buchRep, typeof(IFzBuchRep), typeof(FzBuchKey), typeof(FzBuch), typeof(FzBuchUpdate))
+		reps.put(typeof(FzBuch), bc)
+		reps.put(typeof(FzBuchUpdate), bc)
 
-			var bs = new RbRepository(buchserieRep, typeof(IFzBuchserieRep), typeof(FzBuchserieKey),
-				typeof(FzBuchserie), typeof(FzBuchserieUpdate))
-			reps.put(typeof(FzBuchserie), bs)
-			reps.put(typeof(FzBuchserieUpdate), bs)
+		var ba = new RbRepository(buchautorRep, typeof(IFzBuchautorRep), typeof(FzBuchautorKey), typeof(FzBuchautor),
+			typeof(FzBuchautorUpdate))
+		reps.put(typeof(FzBuchautor), ba)
+		reps.put(typeof(FzBuchautorUpdate), ba)
 
-			var bt = new RbRepository(buchstatusRep, typeof(IFzBuchstatusRep), typeof(FzBuchstatusKey),
-				typeof(FzBuchstatus), typeof(FzBuchstatusUpdate))
-			reps.put(typeof(FzBuchstatus), bt)
-			reps.put(typeof(FzBuchstatusUpdate), bt)
+		var bs = new RbRepository(buchserieRep, typeof(IFzBuchserieRep), typeof(FzBuchserieKey), typeof(FzBuchserie),
+			typeof(FzBuchserieUpdate))
+		reps.put(typeof(FzBuchserie), bs)
+		reps.put(typeof(FzBuchserieUpdate), bs)
 
-			var fa = new RbRepository(fahrradRep, typeof(IFzFahrradRep), typeof(FzFahrradKey), typeof(FzFahrrad),
-				typeof(FzFahrradUpdate))
-			reps.put(typeof(FzFahrrad), fa)
-			reps.put(typeof(FzFahrradUpdate), fa)
+		var bt = new RbRepository(buchstatusRep, typeof(IFzBuchstatusRep), typeof(FzBuchstatusKey),
+			typeof(FzBuchstatus), typeof(FzBuchstatusUpdate))
+		reps.put(typeof(FzBuchstatus), bt)
+		reps.put(typeof(FzBuchstatusUpdate), bt)
 
-			var fs = new RbRepository(fahrradstandRep, typeof(IFzFahrradstandRep), typeof(FzFahrradstandKey),
-				typeof(FzFahrradstand), typeof(FzFahrradstandUpdate))
-			reps.put(typeof(FzFahrradstand), fs)
-			reps.put(typeof(FzFahrradstandUpdate), fs)
+		var fa = new RbRepository(fahrradRep, typeof(IFzFahrradRep), typeof(FzFahrradKey), typeof(FzFahrrad),
+			typeof(FzFahrradUpdate))
+		reps.put(typeof(FzFahrrad), fa)
+		reps.put(typeof(FzFahrradUpdate), fa)
 
-			var nz = new RbRepository(notizRep, typeof(IFzNotizRep), typeof(FzNotizKey), typeof(FzNotiz),
-				typeof(FzNotizUpdate))
-			reps.put(typeof(FzNotiz), nz)
-			reps.put(typeof(FzNotizUpdate), nz)
+		var fs = new RbRepository(fahrradstandRep, typeof(IFzFahrradstandRep), typeof(FzFahrradstandKey),
+			typeof(FzFahrradstand), typeof(FzFahrradstandUpdate))
+		reps.put(typeof(FzFahrradstand), fs)
+		reps.put(typeof(FzFahrradstandUpdate), fs)
 
-			var bi = new RbRepository(bilanzRep, typeof(IHhBilanzRep), typeof(HhBilanzKey), typeof(HhBilanz),
-				typeof(HhBilanzUpdate))
-			reps.put(typeof(HhBilanz), bi)
-			reps.put(typeof(HhBilanzUpdate), bi)
+		var nz = new RbRepository(notizRep, typeof(IFzNotizRep), typeof(FzNotizKey), typeof(FzNotiz),
+			typeof(FzNotizUpdate))
+		reps.put(typeof(FzNotiz), nz)
+		reps.put(typeof(FzNotizUpdate), nz)
 
-			var bu = new RbRepository(buchungRep, typeof(IHhBuchungRep), typeof(HhBuchungKey), typeof(HhBuchung),
-				typeof(HhBuchungUpdate))
-			reps.put(typeof(HhBuchung), bu)
-			reps.put(typeof(HhBuchungUpdate), bu)
+		var bi = new RbRepository(bilanzRep, typeof(IHhBilanzRep), typeof(HhBilanzKey), typeof(HhBilanz),
+			typeof(HhBilanzUpdate))
+		reps.put(typeof(HhBilanz), bi)
+		reps.put(typeof(HhBilanzUpdate), bi)
 
-			var er = new RbRepository(ereignisRep, typeof(IHhEreignisRep), typeof(HhEreignisKey), typeof(HhEreignis),
-				typeof(HhEreignisUpdate))
-			reps.put(typeof(HhEreignis), er)
-			reps.put(typeof(HhEreignisUpdate), er)
+		var bu = new RbRepository(buchungRep, typeof(IHhBuchungRep), typeof(HhBuchungKey), typeof(HhBuchung),
+			typeof(HhBuchungUpdate))
+		reps.put(typeof(HhBuchung), bu)
+		reps.put(typeof(HhBuchungUpdate), bu)
 
-			var ko = new RbRepository(kontoRep, typeof(IHhKontoRep), typeof(HhKontoKey), typeof(HhKonto),
-				typeof(HhKontoUpdate))
-			reps.put(typeof(HhKonto), ko)
-			reps.put(typeof(HhKontoUpdate), ko)
+		var er = new RbRepository(ereignisRep, typeof(IHhEreignisRep), typeof(HhEreignisKey), typeof(HhEreignis),
+			typeof(HhEreignisUpdate))
+		reps.put(typeof(HhEreignis), er)
+		reps.put(typeof(HhEreignisUpdate), er)
 
-			var pe = new RbRepository(periodeRep, typeof(IHhPeriodeRep), typeof(HhPeriodeKey), typeof(HhPeriode),
-				typeof(HhPeriodeUpdate))
-			reps.put(typeof(HhPeriode), pe)
-			reps.put(typeof(HhPeriodeUpdate), pe)
+		var ko = new RbRepository(kontoRep, typeof(IHhKontoRep), typeof(HhKontoKey), typeof(HhKonto),
+			typeof(HhKontoUpdate))
+		reps.put(typeof(HhKonto), ko)
+		reps.put(typeof(HhKontoUpdate), ko)
 
-			var be = new RbRepository(behandlungRep, typeof(IHpBehandlungRep), typeof(HpBehandlungKey),
-				typeof(HpBehandlung), typeof(HpBehandlungUpdate))
-			reps.put(typeof(HpBehandlung), be)
-			reps.put(typeof(HpBehandlungUpdate), be)
+		var pe = new RbRepository(periodeRep, typeof(IHhPeriodeRep), typeof(HhPeriodeKey), typeof(HhPeriode),
+			typeof(HhPeriodeUpdate))
+		reps.put(typeof(HhPeriode), pe)
+		reps.put(typeof(HhPeriodeUpdate), pe)
 
-			var bl = new RbRepository(behleistRep, typeof(IHpBehandlungLeistungRep), typeof(HpBehandlungLeistungKey),
-				typeof(HpBehandlungLeistung), typeof(HpBehandlungLeistungUpdate))
-			reps.put(typeof(HpBehandlungLeistung), bl)
-			reps.put(typeof(HpBehandlungLeistungUpdate), bl)
+		var be = new RbRepository(behandlungRep, typeof(IHpBehandlungRep), typeof(HpBehandlungKey),
+			typeof(HpBehandlung), typeof(HpBehandlungUpdate))
+		reps.put(typeof(HpBehandlung), be)
+		reps.put(typeof(HpBehandlungUpdate), be)
 
-//			var le = new RbRepository(leistungRep, typeof(IHpLeistungRep), typeof(HpLeistungKey), typeof(HpLeistung),
-//				typeof(HpLeistungUpdate))
-//			reps.put(typeof(HpLeistung), le)
-//			reps.put(typeof(HpLeistungUpdate), le)
-//			var lg = new RbRepository(leistgruppeRep, typeof(IHpLeistungsgruppeRep), typeof(HpLeistungsgruppeKey),
-//				typeof(HpLeistungsgruppe), typeof(HpLeistungsgruppeUpdate))
-//			reps.put(typeof(HpLeistungsgruppe), lg)
-//			reps.put(typeof(HpLeistungsgruppeUpdate), lg)
-//			var pt = new RbRepository(patientRep, typeof(IHpPatientRep), typeof(HpPatientKey), typeof(HpPatient),
-//				typeof(HpPatientUpdate))
-//			reps.put(typeof(HpPatient), pt)
-//			reps.put(typeof(HpPatientUpdate), pt)
-//			var re = new RbRepository(rechnungRep, typeof(IHpRechnungRep), typeof(HpRechnungKey), typeof(HpRechnung),
-//				typeof(HpRechnungUpdate))
-//			reps.put(typeof(HpRechnung), re)
-//			reps.put(typeof(HpRechnungUpdate), re)
-//			var st = new RbRepository(statusRep, typeof(IHpStatusRep), typeof(HpStatusKey), typeof(HpStatus),
-//				typeof(HpStatusUpdate))
-//			reps.put(typeof(HpStatus), st)
-//			reps.put(typeof(HpStatusUpdate), st)
-			var en = new RbRepository(maeinstellungRep, typeof(IMaEinstellungRep), typeof(MaEinstellungKey),
-				typeof(MaEinstellung), typeof(MaEinstellungUpdate))
-			reps.put(typeof(MaEinstellung), en)
-			reps.put(typeof(MaEinstellungUpdate), en)
+		var bl = new RbRepository(behleistRep, typeof(IHpBehandlungLeistungRep), typeof(HpBehandlungLeistungKey),
+			typeof(HpBehandlungLeistung), typeof(HpBehandlungLeistungUpdate))
+		reps.put(typeof(HpBehandlungLeistung), bl)
+		reps.put(typeof(HpBehandlungLeistungUpdate), bl)
 
-			var ma = new RbRepository(mandantRep, typeof(IMaMandantRep), typeof(MaMandantKey), typeof(MaMandant),
-				typeof(MaMandantUpdate))
-			reps.put(typeof(MaMandant), ma)
-			reps.put(typeof(MaMandantUpdate), ma)
+		var le = new RbRepository(leistungRep, typeof(IHpLeistungRep), typeof(HpLeistungKey), typeof(HpLeistung),
+			typeof(HpLeistungUpdate))
+		reps.put(typeof(HpLeistung), le)
+		reps.put(typeof(HpLeistungUpdate), le)
 
-			var pa = new RbRepository(parameterRep, typeof(IMaParameterRep), typeof(MaParameterKey),
-				typeof(MaParameter), typeof(MaParameterUpdate))
-			reps.put(typeof(MaParameter), pa)
-			reps.put(typeof(MaParameterUpdate), pa)
+		var lg = new RbRepository(leistgruppeRep, typeof(IHpLeistungsgruppeRep), typeof(HpLeistungsgruppeKey),
+			typeof(HpLeistungsgruppe), typeof(HpLeistungsgruppeUpdate))
+		reps.put(typeof(HpLeistungsgruppe), lg)
+		reps.put(typeof(HpLeistungsgruppeUpdate), lg)
+
+		var pt = new RbRepository(patientRep, typeof(IHpPatientRep), typeof(HpPatientKey), typeof(HpPatient),
+			typeof(HpPatientUpdate))
+		reps.put(typeof(HpPatient), pt)
+		reps.put(typeof(HpPatientUpdate), pt)
+
+		var re = new RbRepository(rechnungRep, typeof(IHpRechnungRep), typeof(HpRechnungKey), typeof(HpRechnung),
+			typeof(HpRechnungUpdate))
+		reps.put(typeof(HpRechnung), re)
+		reps.put(typeof(HpRechnungUpdate), re)
+
+		var st = new RbRepository(statusRep, typeof(IHpStatusRep), typeof(HpStatusKey), typeof(HpStatus),
+			typeof(HpStatusUpdate))
+		reps.put(typeof(HpStatus), st)
+		reps.put(typeof(HpStatusUpdate), st)
+
+		var en = new RbRepository(maeinstellungRep, typeof(IMaEinstellungRep), typeof(MaEinstellungKey),
+			typeof(MaEinstellung), typeof(MaEinstellungUpdate))
+		reps.put(typeof(MaEinstellung), en)
+		reps.put(typeof(MaEinstellungUpdate), en)
+
+		var ma = new RbRepository(mandantRep, typeof(IMaMandantRep), typeof(MaMandantKey), typeof(MaMandant),
+			typeof(MaMandantUpdate))
+		reps.put(typeof(MaMandant), ma)
+		reps.put(typeof(MaMandantUpdate), ma)
+
+		var pa = new RbRepository(parameterRep, typeof(IMaParameterRep), typeof(MaParameterKey), typeof(MaParameter),
+			typeof(MaParameterUpdate))
+		reps.put(typeof(MaParameter), pa)
+		reps.put(typeof(MaParameterUpdate), pa)
 
 //			var et = new RbRepository(einteilungRep, typeof(IMoEinteilungRep), typeof(MoEinteilungKey),
 //				typeof(MoEinteilung), typeof(MoEinteilungUpdate))
@@ -487,33 +522,33 @@ class ReplikationService {
 //				typeof(SbQuelleUpdate))
 //			reps.put(typeof(SbQuelle), sq)
 //			reps.put(typeof(SbQuelleUpdate), sq)
-			var tb = new RbRepository(tagebuchRep, typeof(ITbEintragRep), typeof(TbEintragKey), typeof(TbEintrag),
-				typeof(TbEintragUpdate))
-			reps.put(typeof(TbEintrag), tb)
-			reps.put(typeof(TbEintragUpdate), tb)
+		var tb = new RbRepository(tagebuchRep, typeof(ITbEintragRep), typeof(TbEintragKey), typeof(TbEintrag),
+			typeof(TbEintragUpdate))
+		reps.put(typeof(TbEintrag), tb)
+		reps.put(typeof(TbEintragUpdate), tb)
 
 //			var ab = new RbRepository(abrechnungRep, typeof(IVmAbrechnungRep), typeof(VmAbrechnungKey),
 //				typeof(VmAbrechnung), typeof(VmAbrechnungUpdate))
 //			reps.put(typeof(VmAbrechnung), ab)
 //			reps.put(typeof(VmAbrechnungUpdate), ab)
-			var vb = new RbRepository(vmbuchungRep, typeof(IVmBuchungRep), typeof(VmBuchungKey), typeof(VmBuchung),
-				typeof(VmBuchungUpdate))
-			reps.put(typeof(VmBuchung), vb)
-			reps.put(typeof(VmBuchungUpdate), vb)
+		var vb = new RbRepository(vmbuchungRep, typeof(IVmBuchungRep), typeof(VmBuchungKey), typeof(VmBuchung),
+			typeof(VmBuchungUpdate))
+		reps.put(typeof(VmBuchung), vb)
+		reps.put(typeof(VmBuchungUpdate), vb)
 
-			var ve = new RbRepository(vmereignisRep, typeof(IVmEreignisRep), typeof(VmEreignisKey), typeof(VmEreignis),
-				typeof(VmEreignisUpdate))
-			reps.put(typeof(VmEreignis), ve)
-			reps.put(typeof(VmEreignisUpdate), ve)
+		var ve = new RbRepository(vmereignisRep, typeof(IVmEreignisRep), typeof(VmEreignisKey), typeof(VmEreignis),
+			typeof(VmEreignisUpdate))
+		reps.put(typeof(VmEreignis), ve)
+		reps.put(typeof(VmEreignisUpdate), ve)
 
 //			var ha = new RbRepository(hausRep, typeof(IVmHausRep), typeof(VmHausKey), typeof(VmHaus),
 //				typeof(VmHausUpdate))
 //			reps.put(typeof(VmHaus), ha)
 //			reps.put(typeof(VmHausUpdate), ha)
-			var vk = new RbRepository(vmkontoRep, typeof(IVmKontoRep), typeof(VmKontoKey), typeof(VmKonto),
-				typeof(VmKontoUpdate))
-			reps.put(typeof(VmKonto), vk)
-			reps.put(typeof(VmKontoUpdate), vk)
+		var vk = new RbRepository(vmkontoRep, typeof(IVmKontoRep), typeof(VmKontoKey), typeof(VmKonto),
+			typeof(VmKontoUpdate))
+		reps.put(typeof(VmKonto), vk)
+		reps.put(typeof(VmKontoUpdate), vk)
 
 //			var mi = new RbRepository(mieteRep, typeof(IVmMieteRep), typeof(VmMieteKey), typeof(VmMiete),
 //				typeof(VmMieteUpdate))
@@ -547,11 +582,10 @@ class ReplikationService {
 //				typeof(WpWertpapier), typeof(WpWertpapierUpdate))
 //			reps.put(typeof(WpWertpapier), wp)
 //			reps.put(typeof(WpWertpapierUpdate), wp)
-			var ei = new RbRepository(zeinstellungRep, typeof(IZeinstellungRep), typeof(ZeinstellungKey),
-				typeof(Zeinstellung), typeof(ZeinstellungUpdate))
-			reps.put(typeof(Zeinstellung), ei)
-			reps.put(typeof(ZeinstellungUpdate), ei)
-		}
+		var ei = new RbRepository(zeinstellungRep, typeof(IZeinstellungRep), typeof(ZeinstellungKey),
+			typeof(Zeinstellung), typeof(ZeinstellungUpdate))
+		reps.put(typeof(Zeinstellung), ei)
+		reps.put(typeof(ZeinstellungUpdate), ei)
 	}
 
 	def private void rollbackIntern(ServiceDaten daten, RollbackListe rbListe) {
@@ -623,17 +657,13 @@ class ReplikationService {
 			new ReplTabelle("HH_Ereignis", "Mandant_Nr", "Mandant_Nr, Uid", true, true),
 			new ReplTabelle("HH_Konto", "Mandant_Nr", "Mandant_Nr, Uid", true, true),
 			new ReplTabelle("HH_Periode", "Mandant_Nr", "Mandant_Nr, Nr", true, true),
-			new ReplTabelle("HP_Anamnese", "Mandant_Nr", "Mandant_Nr, Uid", true, false),
 			new ReplTabelle("HP_Behandlung", "Mandant_Nr", "Mandant_Nr, Uid", true, true),
 			new ReplTabelle("HP_Behandlung_Leistung", "Mandant_Nr", "Mandant_Nr, Uid", true, true),
-			new ReplTabelle("HP_Fragenkatalog", "Mandant_Nr", "Mandant_Nr, Uid", true, false),
 			new ReplTabelle("HP_Leistung", "Mandant_Nr", "Mandant_Nr, Uid", true, true),
 			new ReplTabelle("HP_Leistungsgruppe", "Mandant_Nr", "Mandant_Nr, Uid", true, true),
 			new ReplTabelle("HP_Patient", "Mandant_Nr", "Mandant_Nr, Uid", true, true),
 			new ReplTabelle("HP_Rechnung", "Mandant_Nr", "Mandant_Nr, Uid", true, true),
 			new ReplTabelle("HP_Status", "Mandant_Nr", "Mandant_Nr, Uid", true, true),
-			new ReplTabelle("HP_Symptom_Anamnese", "Mandant_Nr", "Mandant_Nr, Uid", true, false),
-			new ReplTabelle("HP_Symptom", "Mandant_Nr", "Mandant_Nr, Uid", true, false),
 			new ReplTabelle("MA_Einstellung", "Mandant_Nr", "Mandant_Nr, Schluessel", false, false),
 			new ReplTabelle("MA_Mandant", "Nr", "Nr", true, true), //
 			new ReplTabelle("MA_Parameter", "Mandant_Nr", "Mandant_Nr, Schluessel", true, true),

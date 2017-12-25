@@ -4,6 +4,7 @@ import de.cwkuehl.jhh6.api.service.IAdresseService
 import de.cwkuehl.jhh6.api.service.IAnmeldungService
 import de.cwkuehl.jhh6.api.service.IFreizeitService
 import de.cwkuehl.jhh6.api.service.IHaushaltService
+import de.cwkuehl.jhh6.api.service.IHeilpraktikerService
 import de.cwkuehl.jhh6.api.service.IReplikationService
 import de.cwkuehl.jhh6.api.service.ITagebuchService
 import de.cwkuehl.jhh6.api.service.ITestService
@@ -12,6 +13,7 @@ import de.cwkuehl.jhh6.server.rep.IAdAdresseRep
 import de.cwkuehl.jhh6.server.rep.IAdPersonRep
 import de.cwkuehl.jhh6.server.rep.IAdSitzRep
 import de.cwkuehl.jhh6.server.rep.IBenutzerRep
+import de.cwkuehl.jhh6.server.rep.IByteDatenRep
 import de.cwkuehl.jhh6.server.rep.IFzBuchRep
 import de.cwkuehl.jhh6.server.rep.IFzBuchautorRep
 import de.cwkuehl.jhh6.server.rep.IFzBuchserieRep
@@ -26,6 +28,11 @@ import de.cwkuehl.jhh6.server.rep.IHhKontoRep
 import de.cwkuehl.jhh6.server.rep.IHhPeriodeRep
 import de.cwkuehl.jhh6.server.rep.IHpBehandlungLeistungRep
 import de.cwkuehl.jhh6.server.rep.IHpBehandlungRep
+import de.cwkuehl.jhh6.server.rep.IHpLeistungRep
+import de.cwkuehl.jhh6.server.rep.IHpLeistungsgruppeRep
+import de.cwkuehl.jhh6.server.rep.IHpPatientRep
+import de.cwkuehl.jhh6.server.rep.IHpRechnungRep
+import de.cwkuehl.jhh6.server.rep.IHpStatusRep
 import de.cwkuehl.jhh6.server.rep.IMaEinstellungRep
 import de.cwkuehl.jhh6.server.rep.IMaMandantRep
 import de.cwkuehl.jhh6.server.rep.IMaParameterRep
@@ -38,6 +45,7 @@ import de.cwkuehl.jhh6.server.rep.impl.AdAdresseRep
 import de.cwkuehl.jhh6.server.rep.impl.AdPersonRep
 import de.cwkuehl.jhh6.server.rep.impl.AdSitzRep
 import de.cwkuehl.jhh6.server.rep.impl.BenutzerRep
+import de.cwkuehl.jhh6.server.rep.impl.ByteDatenRep
 import de.cwkuehl.jhh6.server.rep.impl.FzBuchRep
 import de.cwkuehl.jhh6.server.rep.impl.FzBuchautorRep
 import de.cwkuehl.jhh6.server.rep.impl.FzBuchserieRep
@@ -52,6 +60,11 @@ import de.cwkuehl.jhh6.server.rep.impl.HhKontoRep
 import de.cwkuehl.jhh6.server.rep.impl.HhPeriodeRep
 import de.cwkuehl.jhh6.server.rep.impl.HpBehandlungLeistungRep
 import de.cwkuehl.jhh6.server.rep.impl.HpBehandlungRep
+import de.cwkuehl.jhh6.server.rep.impl.HpLeistungRep
+import de.cwkuehl.jhh6.server.rep.impl.HpLeistungsgruppeRep
+import de.cwkuehl.jhh6.server.rep.impl.HpPatientRep
+import de.cwkuehl.jhh6.server.rep.impl.HpRechnungRep
+import de.cwkuehl.jhh6.server.rep.impl.HpStatusRep
 import de.cwkuehl.jhh6.server.rep.impl.MaEinstellungRep
 import de.cwkuehl.jhh6.server.rep.impl.MaMandantRep
 import de.cwkuehl.jhh6.server.rep.impl.MaParameterRep
@@ -64,6 +77,7 @@ import de.cwkuehl.jhh6.server.service.AdresseService
 import de.cwkuehl.jhh6.server.service.AnmeldungService
 import de.cwkuehl.jhh6.server.service.FreizeitService
 import de.cwkuehl.jhh6.server.service.HaushaltService
+import de.cwkuehl.jhh6.server.service.HeilpraktikerService
 import de.cwkuehl.jhh6.server.service.ReplikationService
 import de.cwkuehl.jhh6.server.service.TagebuchService
 import de.cwkuehl.jhh6.server.service.TestService
@@ -77,7 +91,7 @@ class ServiceInjector extends AbstractModule {
 		bind(typeof(IAnmeldungService)).to(typeof(AnmeldungService))
 		bind(typeof(IFreizeitService)).to(typeof(FreizeitService))
 		bind(typeof(IHaushaltService)).to(typeof(HaushaltService))
-//		bind(typeof(IHeilpraktikerService)).to(typeof(HeilpraktikerService))
+		bind(typeof(IHeilpraktikerService)).to(typeof(HeilpraktikerService))
 //		bind(typeof(IMessdienerService)).to(typeof(MessdienerService))
 		bind(typeof(IReplikationService)).to(typeof(ReplikationService))
 //		bind(typeof(IStammbaumService)).to(typeof(StammbaumService))
@@ -90,7 +104,7 @@ class ServiceInjector extends AbstractModule {
 		bind(typeof(IAdPersonRep)).to(typeof(AdPersonRep))
 		bind(typeof(IAdSitzRep)).to(typeof(AdSitzRep))
 		bind(typeof(IBenutzerRep)).to(typeof(BenutzerRep))
-//		bind(typeof(IByteDatenRep)).to(typeof(ByteDatenRep))
+		bind(typeof(IByteDatenRep)).to(typeof(ByteDatenRep))
 		bind(typeof(IFzBuchRep)).to(typeof(FzBuchRep))
 		bind(typeof(IFzBuchautorRep)).to(typeof(FzBuchautorRep))
 		bind(typeof(IFzBuchserieRep)).to(typeof(FzBuchserieRep))
@@ -103,14 +117,13 @@ class ServiceInjector extends AbstractModule {
 		bind(typeof(IHhEreignisRep)).to(typeof(HhEreignisRep))
 		bind(typeof(IHhKontoRep)).to(typeof(HhKontoRep))
 		bind(typeof(IHhPeriodeRep)).to(typeof(HhPeriodeRep))
-//		bind(typeof(IHpAnamneseRep)).to(typeof(HpAnamneseRep))
 		bind(typeof(IHpBehandlungRep)).to(typeof(HpBehandlungRep))
 		bind(typeof(IHpBehandlungLeistungRep)).to(typeof(HpBehandlungLeistungRep))
-//		bind(typeof(IHpLeistungRep)).to(typeof(HpLeistungRep))
-//		bind(typeof(IHpLeistungsgruppeRep)).to(typeof(HpLeistungsgruppeRep))
-//		bind(typeof(IHpPatientRep)).to(typeof(HpPatientRep))
-//		bind(typeof(IHpRechnungRep)).to(typeof(HpRechnungRep))
-//		bind(typeof(IHpStatusRep)).to(typeof(HpStatusRep))
+		bind(typeof(IHpLeistungRep)).to(typeof(HpLeistungRep))
+		bind(typeof(IHpLeistungsgruppeRep)).to(typeof(HpLeistungsgruppeRep))
+		bind(typeof(IHpPatientRep)).to(typeof(HpPatientRep))
+		bind(typeof(IHpRechnungRep)).to(typeof(HpRechnungRep))
+		bind(typeof(IHpStatusRep)).to(typeof(HpStatusRep))
 		bind(typeof(IMaEinstellungRep)).to(typeof(MaEinstellungRep))
 		bind(typeof(IMaParameterRep)).to(typeof(MaParameterRep))
 		bind(typeof(IMaMandantRep)).to(typeof(MaMandantRep))
