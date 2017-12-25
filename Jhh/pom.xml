@@ -178,6 +178,11 @@
 			<version>2.2</version>
 		</dependency>
 		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20171018</version>
+		</dependency>
+		<dependency>
 			<groupId>de.cwkuehl.jhh6</groupId>
 			<artifactId>Generator</artifactId>
 			<version>1.0</version>
