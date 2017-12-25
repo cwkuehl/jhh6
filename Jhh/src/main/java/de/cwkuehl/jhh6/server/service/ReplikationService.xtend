@@ -94,6 +94,21 @@ import de.cwkuehl.jhh6.api.dto.MoMessdienerUpdate
 import de.cwkuehl.jhh6.api.dto.MoProfil
 import de.cwkuehl.jhh6.api.dto.MoProfilKey
 import de.cwkuehl.jhh6.api.dto.MoProfilUpdate
+import de.cwkuehl.jhh6.api.dto.SbEreignis
+import de.cwkuehl.jhh6.api.dto.SbEreignisKey
+import de.cwkuehl.jhh6.api.dto.SbEreignisUpdate
+import de.cwkuehl.jhh6.api.dto.SbFamilie
+import de.cwkuehl.jhh6.api.dto.SbFamilieKey
+import de.cwkuehl.jhh6.api.dto.SbFamilieUpdate
+import de.cwkuehl.jhh6.api.dto.SbKind
+import de.cwkuehl.jhh6.api.dto.SbKindKey
+import de.cwkuehl.jhh6.api.dto.SbKindUpdate
+import de.cwkuehl.jhh6.api.dto.SbPerson
+import de.cwkuehl.jhh6.api.dto.SbPersonKey
+import de.cwkuehl.jhh6.api.dto.SbPersonUpdate
+import de.cwkuehl.jhh6.api.dto.SbQuelle
+import de.cwkuehl.jhh6.api.dto.SbQuelleKey
+import de.cwkuehl.jhh6.api.dto.SbQuelleUpdate
 import de.cwkuehl.jhh6.api.dto.TbEintrag
 import de.cwkuehl.jhh6.api.dto.TbEintragKey
 import de.cwkuehl.jhh6.api.dto.TbEintragUpdate
@@ -158,6 +173,11 @@ import de.cwkuehl.jhh6.server.rep.IMoEinteilungRep
 import de.cwkuehl.jhh6.server.rep.IMoGottesdienstRep
 import de.cwkuehl.jhh6.server.rep.IMoMessdienerRep
 import de.cwkuehl.jhh6.server.rep.IMoProfilRep
+import de.cwkuehl.jhh6.server.rep.ISbEreignisRep
+import de.cwkuehl.jhh6.server.rep.ISbFamilieRep
+import de.cwkuehl.jhh6.server.rep.ISbKindRep
+import de.cwkuehl.jhh6.server.rep.ISbPersonRep
+import de.cwkuehl.jhh6.server.rep.ISbQuelleRep
 import de.cwkuehl.jhh6.server.rep.ITbEintragRep
 import de.cwkuehl.jhh6.server.rep.IVmBuchungRep
 import de.cwkuehl.jhh6.server.rep.IVmEreignisRep
@@ -194,6 +214,11 @@ import de.cwkuehl.jhh6.server.rep.impl.MoEinteilungRep
 import de.cwkuehl.jhh6.server.rep.impl.MoGottesdienstRep
 import de.cwkuehl.jhh6.server.rep.impl.MoMessdienerRep
 import de.cwkuehl.jhh6.server.rep.impl.MoProfilRep
+import de.cwkuehl.jhh6.server.rep.impl.SbEreignisRep
+import de.cwkuehl.jhh6.server.rep.impl.SbFamilieRep
+import de.cwkuehl.jhh6.server.rep.impl.SbKindRep
+import de.cwkuehl.jhh6.server.rep.impl.SbPersonRep
+import de.cwkuehl.jhh6.server.rep.impl.SbQuelleRep
 import de.cwkuehl.jhh6.server.rep.impl.TbEintragRep
 import de.cwkuehl.jhh6.server.rep.impl.VmBuchungRep
 import de.cwkuehl.jhh6.server.rep.impl.VmEreignisRep
@@ -240,11 +265,11 @@ class ReplikationService {
 	@RepositoryRef MoGottesdienstRep gottesdienstRep
 	@RepositoryRef MoMessdienerRep messdienerRep
 	@RepositoryRef MoProfilRep profilRep
-	// @RepositoryRef SbEreignisRep sbereignisRep
-	// @RepositoryRef SbFamilieRep familieRep
-	// @RepositoryRef SbKindRep kindRep
-	// @RepositoryRef SbPersonRep sbpersonRep
-	// @RepositoryRef SbQuelleRep quelleRep
+	@RepositoryRef SbEreignisRep sbereignisRep
+	@RepositoryRef SbFamilieRep familieRep
+	@RepositoryRef SbKindRep kindRep
+	@RepositoryRef SbPersonRep sbpersonRep
+	@RepositoryRef SbQuelleRep quelleRep
 	@RepositoryRef TbEintragRep tagebuchRep
 	// @RepositoryRef VmAbrechnungRep abrechnungRep
 	@RepositoryRef VmBuchungRep vmbuchungRep
@@ -526,26 +551,29 @@ class ReplikationService {
 		reps.put(typeof(MoProfil), pr)
 		reps.put(typeof(MoProfilUpdate), pr)
 
-//			var se = new RbRepository(sbereignisRep, typeof(ISbEreignisRep), typeof(SbEreignisKey), typeof(SbEreignis),
-//				typeof(SbEreignisUpdate))
-//			reps.put(typeof(SbEreignis), se)
-//			reps.put(typeof(SbEreignisUpdate), se)
-//			var sf = new RbRepository(familieRep, typeof(ISbFamilieRep), typeof(SbFamilieKey), typeof(SbFamilie),
-//				typeof(SbFamilieUpdate))
-//			reps.put(typeof(SbFamilie), sf)
-//			reps.put(typeof(SbFamilieUpdate), sf)
-//			var sk = new RbRepository(kindRep, typeof(ISbKindRep), typeof(SbKindKey), typeof(SbKind),
-//				typeof(SbKindUpdate))
-//			reps.put(typeof(SbKind), sk)
-//			reps.put(typeof(SbKindUpdate), sk)
-//			var sp = new RbRepository(sbpersonRep, typeof(ISbPersonRep), typeof(SbPersonKey), typeof(SbPerson),
-//				typeof(SbPersonUpdate))
-//			reps.put(typeof(SbPerson), sp)
-//			reps.put(typeof(SbPersonUpdate), sp)
-//			var sq = new RbRepository(quelleRep, typeof(ISbQuelleRep), typeof(SbQuelleKey), typeof(SbQuelle),
-//				typeof(SbQuelleUpdate))
-//			reps.put(typeof(SbQuelle), sq)
-//			reps.put(typeof(SbQuelleUpdate), sq)
+		var se = new RbRepository(sbereignisRep, typeof(ISbEreignisRep), typeof(SbEreignisKey), typeof(SbEreignis),
+			typeof(SbEreignisUpdate))
+		reps.put(typeof(SbEreignis), se)
+		reps.put(typeof(SbEreignisUpdate), se)
+
+		var sf = new RbRepository(familieRep, typeof(ISbFamilieRep), typeof(SbFamilieKey), typeof(SbFamilie),
+			typeof(SbFamilieUpdate))
+		reps.put(typeof(SbFamilie), sf)
+		reps.put(typeof(SbFamilieUpdate), sf)
+
+		var sk = new RbRepository(kindRep, typeof(ISbKindRep), typeof(SbKindKey), typeof(SbKind), typeof(SbKindUpdate))
+		reps.put(typeof(SbKind), sk)
+		reps.put(typeof(SbKindUpdate), sk)
+
+		var sp = new RbRepository(sbpersonRep, typeof(ISbPersonRep), typeof(SbPersonKey), typeof(SbPerson),
+			typeof(SbPersonUpdate))
+		reps.put(typeof(SbPerson), sp)
+		reps.put(typeof(SbPersonUpdate), sp)
+		var sq = new RbRepository(quelleRep, typeof(ISbQuelleRep), typeof(SbQuelleKey), typeof(SbQuelle),
+			typeof(SbQuelleUpdate))
+		reps.put(typeof(SbQuelle), sq)
+		reps.put(typeof(SbQuelleUpdate), sq)
+
 		var tb = new RbRepository(tagebuchRep, typeof(ITbEintragRep), typeof(TbEintragKey), typeof(TbEintrag),
 			typeof(TbEintragUpdate))
 		reps.put(typeof(TbEintrag), tb)

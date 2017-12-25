@@ -7,6 +7,7 @@ import de.cwkuehl.jhh6.api.service.IHaushaltService
 import de.cwkuehl.jhh6.api.service.IHeilpraktikerService
 import de.cwkuehl.jhh6.api.service.IMessdienerService
 import de.cwkuehl.jhh6.api.service.IReplikationService
+import de.cwkuehl.jhh6.api.service.IStammbaumService
 import de.cwkuehl.jhh6.api.service.ITagebuchService
 import de.cwkuehl.jhh6.api.service.ITestService
 import de.cwkuehl.jhh6.server.base.WkInjector
@@ -44,20 +45,21 @@ class FactoryService {
 		return injector.getInstance(typeof(IReplikationService))
 	}
 
+	def static IStammbaumService getStammbaumService() {
+		return injector.getInstance(typeof(IStammbaumService))
+	}
+
 	def static ITagebuchService getTagebuchService() {
 		return injector.getInstance(typeof(ITagebuchService))
 	}
 
-	// def static IVermietungService getVermietungService() {
-	// return injector.getInstance(typeof(IVermietungService))
-	// }
-	// def static IStammbaumService getStammbaumService() {
-	// return injector.getInstance(typeof(IStammbaumService))
-	// }
 	def static ITestService getTestService() {
 		return injector.getInstance(typeof(ITestService))
 	}
 
+// def static IVermietungService getVermietungService() {
+// return injector.getInstance(typeof(IVermietungService))
+// }
 // def static IWertpapierService getWertpapierService() {
 // return injector.getInstance(typeof(IWertpapierService))
 // }

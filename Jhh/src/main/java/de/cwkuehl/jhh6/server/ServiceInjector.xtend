@@ -7,6 +7,7 @@ import de.cwkuehl.jhh6.api.service.IHaushaltService
 import de.cwkuehl.jhh6.api.service.IHeilpraktikerService
 import de.cwkuehl.jhh6.api.service.IMessdienerService
 import de.cwkuehl.jhh6.api.service.IReplikationService
+import de.cwkuehl.jhh6.api.service.IStammbaumService
 import de.cwkuehl.jhh6.api.service.ITagebuchService
 import de.cwkuehl.jhh6.api.service.ITestService
 import de.cwkuehl.jhh6.server.base.AbstractModule
@@ -41,6 +42,11 @@ import de.cwkuehl.jhh6.server.rep.IMoEinteilungRep
 import de.cwkuehl.jhh6.server.rep.IMoGottesdienstRep
 import de.cwkuehl.jhh6.server.rep.IMoMessdienerRep
 import de.cwkuehl.jhh6.server.rep.IMoProfilRep
+import de.cwkuehl.jhh6.server.rep.ISbEreignisRep
+import de.cwkuehl.jhh6.server.rep.ISbFamilieRep
+import de.cwkuehl.jhh6.server.rep.ISbKindRep
+import de.cwkuehl.jhh6.server.rep.ISbPersonRep
+import de.cwkuehl.jhh6.server.rep.ISbQuelleRep
 import de.cwkuehl.jhh6.server.rep.ITbEintragRep
 import de.cwkuehl.jhh6.server.rep.IVmBuchungRep
 import de.cwkuehl.jhh6.server.rep.IVmEreignisRep
@@ -77,6 +83,11 @@ import de.cwkuehl.jhh6.server.rep.impl.MoEinteilungRep
 import de.cwkuehl.jhh6.server.rep.impl.MoGottesdienstRep
 import de.cwkuehl.jhh6.server.rep.impl.MoMessdienerRep
 import de.cwkuehl.jhh6.server.rep.impl.MoProfilRep
+import de.cwkuehl.jhh6.server.rep.impl.SbEreignisRep
+import de.cwkuehl.jhh6.server.rep.impl.SbFamilieRep
+import de.cwkuehl.jhh6.server.rep.impl.SbKindRep
+import de.cwkuehl.jhh6.server.rep.impl.SbPersonRep
+import de.cwkuehl.jhh6.server.rep.impl.SbQuelleRep
 import de.cwkuehl.jhh6.server.rep.impl.TbEintragRep
 import de.cwkuehl.jhh6.server.rep.impl.VmBuchungRep
 import de.cwkuehl.jhh6.server.rep.impl.VmEreignisRep
@@ -89,6 +100,7 @@ import de.cwkuehl.jhh6.server.service.HaushaltService
 import de.cwkuehl.jhh6.server.service.HeilpraktikerService
 import de.cwkuehl.jhh6.server.service.MessdienerService
 import de.cwkuehl.jhh6.server.service.ReplikationService
+import de.cwkuehl.jhh6.server.service.StammbaumService
 import de.cwkuehl.jhh6.server.service.TagebuchService
 import de.cwkuehl.jhh6.server.service.TestService
 
@@ -104,11 +116,12 @@ class ServiceInjector extends AbstractModule {
 		bind(typeof(IHeilpraktikerService)).to(typeof(HeilpraktikerService))
 		bind(typeof(IMessdienerService)).to(typeof(MessdienerService))
 		bind(typeof(IReplikationService)).to(typeof(ReplikationService))
-//		bind(typeof(IStammbaumService)).to(typeof(StammbaumService))
+		bind(typeof(IStammbaumService)).to(typeof(StammbaumService))
 		bind(typeof(ITagebuchService)).to(typeof(TagebuchService))
 //		bind(typeof(IVermietungService)).to(typeof(VermietungService))
 //		bind(typeof(IWertpapierService)).to(typeof(WertpapierService))
 		bind(typeof(ITestService)).to(typeof(TestService))
+
 		// Repositories
 		bind(typeof(IAdAdresseRep)).to(typeof(AdAdresseRep))
 		bind(typeof(IAdPersonRep)).to(typeof(AdPersonRep))
@@ -141,11 +154,11 @@ class ServiceInjector extends AbstractModule {
 		bind(typeof(IMoGottesdienstRep)).to(typeof(MoGottesdienstRep))
 		bind(typeof(IMoMessdienerRep)).to(typeof(MoMessdienerRep))
 		bind(typeof(IMoProfilRep)).to(typeof(MoProfilRep))
-//		bind(typeof(ISbEreignisRep)).to(typeof(SbEreignisRep))
-//		bind(typeof(ISbFamilieRep)).to(typeof(SbFamilieRep))
-//		bind(typeof(ISbKindRep)).to(typeof(SbKindRep))
-//		bind(typeof(ISbPersonRep)).to(typeof(SbPersonRep))
-//		bind(typeof(ISbQuelleRep)).to(typeof(SbQuelleRep))
+		bind(typeof(ISbEreignisRep)).to(typeof(SbEreignisRep))
+		bind(typeof(ISbFamilieRep)).to(typeof(SbFamilieRep))
+		bind(typeof(ISbKindRep)).to(typeof(SbKindRep))
+		bind(typeof(ISbPersonRep)).to(typeof(SbPersonRep))
+		bind(typeof(ISbQuelleRep)).to(typeof(SbQuelleRep))
 		bind(typeof(ITbEintragRep)).to(typeof(TbEintragRep))
 //		bind(typeof(IVmAbrechnungRep)).to(typeof(VmAbrechnungRep))
 		bind(typeof(IVmBuchungRep)).to(typeof(VmBuchungRep))

@@ -9,10 +9,12 @@ import de.cwkuehl.jhh6.api.dto.HpBehandlungDruck
 import de.cwkuehl.jhh6.api.dto.HpPatient
 import de.cwkuehl.jhh6.api.dto.HpRechnung
 import de.cwkuehl.jhh6.api.dto.MoGottesdienstLang
+import de.cwkuehl.jhh6.api.dto.SbPerson
 import de.cwkuehl.jhh6.server.fop.doc.FoAdressenliste
 import de.cwkuehl.jhh6.server.fop.doc.FoJahresbericht
 import de.cwkuehl.jhh6.server.fop.doc.FoKassenbericht
 import de.cwkuehl.jhh6.server.fop.doc.FoMessdienerordnung
+import de.cwkuehl.jhh6.server.fop.doc.FoNachfahrenliste
 import de.cwkuehl.jhh6.server.fop.doc.FoPatientenakte
 import de.cwkuehl.jhh6.server.fop.doc.FoRechnung
 import java.io.ByteArrayOutputStream
@@ -74,19 +76,20 @@ class JhhFopDokumentImpl {
 		doc.generate(ueberschrift, liste)
 	}
 
-// public void addNachfahrenliste(boolean reset, String ueberschrift, String untertitel, List<SbPerson> liste) {
-//
-// FoNachfahrenliste doc = new FoNachfahrenliste;
-// multiDoc.add(doc, reset);
-// doc.generate(ueberschrift, untertitel, liste);
-// }
-//
-// public void addVorfahrenliste(boolean reset, String ueberschrift, String untertitel, List<SbPerson> liste) {
-//
-// FoNachfahrenliste doc = new FoNachfahrenliste;
-// multiDoc.add(doc, reset);
-// doc.generate(ueberschrift, untertitel, liste);
-// }
+	def void addNachfahrenliste(boolean reset, String ueberschrift, String untertitel, List<SbPerson> liste) {
+
+		var doc = new FoNachfahrenliste
+		multiDoc.add(doc, reset)
+		doc.generate(ueberschrift, untertitel, liste)
+	}
+
+	def void addVorfahrenliste(boolean reset, String ueberschrift, String untertitel, List<SbPerson> liste) {
+
+		var doc = new FoNachfahrenliste
+		multiDoc.add(doc, reset)
+		doc.generate(ueberschrift, untertitel, liste)
+	}
+
 	def void addJahresbericht(boolean reset, String ueberschrift, List<HhBilanzDruck> ebListe,
 		List<HhBilanzDruck> gvListe, List<HhBilanzDruck> sbListe) {
 
