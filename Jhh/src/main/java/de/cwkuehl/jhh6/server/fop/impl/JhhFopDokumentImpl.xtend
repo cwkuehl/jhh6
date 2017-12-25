@@ -8,9 +8,11 @@ import de.cwkuehl.jhh6.api.dto.HhKonto
 import de.cwkuehl.jhh6.api.dto.HpBehandlungDruck
 import de.cwkuehl.jhh6.api.dto.HpPatient
 import de.cwkuehl.jhh6.api.dto.HpRechnung
+import de.cwkuehl.jhh6.api.dto.MoGottesdienstLang
 import de.cwkuehl.jhh6.server.fop.doc.FoAdressenliste
 import de.cwkuehl.jhh6.server.fop.doc.FoJahresbericht
 import de.cwkuehl.jhh6.server.fop.doc.FoKassenbericht
+import de.cwkuehl.jhh6.server.fop.doc.FoMessdienerordnung
 import de.cwkuehl.jhh6.server.fop.doc.FoPatientenakte
 import de.cwkuehl.jhh6.server.fop.doc.FoRechnung
 import java.io.ByteArrayOutputStream
@@ -133,10 +135,10 @@ class JhhFopDokumentImpl {
 		doc.generate(von, bis, patient, behandlungen)
 	}
 
-// public void addMessdienerordnung(boolean reset, LocalDate von, LocalDate bis, List<MoGottesdienstLang> einteilungen) {
-//
-// FoMessdienerordnung doc = new FoMessdienerordnung;
-// multiDoc.add(doc, reset);
-// doc.generate(von, bis, einteilungen);
-// }
+	def void addMessdienerordnung(boolean reset, LocalDate von, LocalDate bis, List<MoGottesdienstLang> einteilungen) {
+
+		var doc = new FoMessdienerordnung
+		multiDoc.add(doc, reset)
+		doc.generate(von, bis, einteilungen)
+	}
 }

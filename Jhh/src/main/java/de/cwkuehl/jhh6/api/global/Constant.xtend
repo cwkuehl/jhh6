@@ -100,4 +100,7 @@ class Constant {
 	public static final int TB_VOR = 3
 	/** Suche am Ende. */
 	public static final int TB_ENDE = 4
+
+	/** Jahr für Monatsbestimmung. */
+	public static final int JAHR_MONAT = 2000
 }

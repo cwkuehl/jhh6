@@ -5,6 +5,7 @@ import de.cwkuehl.jhh6.api.service.IAnmeldungService
 import de.cwkuehl.jhh6.api.service.IFreizeitService
 import de.cwkuehl.jhh6.api.service.IHaushaltService
 import de.cwkuehl.jhh6.api.service.IHeilpraktikerService
+import de.cwkuehl.jhh6.api.service.IMessdienerService
 import de.cwkuehl.jhh6.api.service.IReplikationService
 import de.cwkuehl.jhh6.api.service.ITagebuchService
 import de.cwkuehl.jhh6.api.service.ITestService
@@ -35,9 +36,10 @@ class FactoryService {
 		return injector.getInstance(typeof(IHeilpraktikerService))
 	}
 
-	// def static IMessdienerService getMessdienerService() {
-	// return injector.getInstance(typeof(IMessdienerService))
-	// }
+	def static IMessdienerService getMessdienerService() {
+		return injector.getInstance(typeof(IMessdienerService))
+	}
+
 	def static IReplikationService getReplikationService() {
 		return injector.getInstance(typeof(IReplikationService))
 	}

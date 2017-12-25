@@ -82,6 +82,18 @@ import de.cwkuehl.jhh6.api.dto.MaMandantUpdate
 import de.cwkuehl.jhh6.api.dto.MaParameter
 import de.cwkuehl.jhh6.api.dto.MaParameterKey
 import de.cwkuehl.jhh6.api.dto.MaParameterUpdate
+import de.cwkuehl.jhh6.api.dto.MoEinteilung
+import de.cwkuehl.jhh6.api.dto.MoEinteilungKey
+import de.cwkuehl.jhh6.api.dto.MoEinteilungUpdate
+import de.cwkuehl.jhh6.api.dto.MoGottesdienst
+import de.cwkuehl.jhh6.api.dto.MoGottesdienstKey
+import de.cwkuehl.jhh6.api.dto.MoGottesdienstUpdate
+import de.cwkuehl.jhh6.api.dto.MoMessdiener
+import de.cwkuehl.jhh6.api.dto.MoMessdienerKey
+import de.cwkuehl.jhh6.api.dto.MoMessdienerUpdate
+import de.cwkuehl.jhh6.api.dto.MoProfil
+import de.cwkuehl.jhh6.api.dto.MoProfilKey
+import de.cwkuehl.jhh6.api.dto.MoProfilUpdate
 import de.cwkuehl.jhh6.api.dto.TbEintrag
 import de.cwkuehl.jhh6.api.dto.TbEintragKey
 import de.cwkuehl.jhh6.api.dto.TbEintragUpdate
@@ -142,6 +154,10 @@ import de.cwkuehl.jhh6.server.rep.IHpStatusRep
 import de.cwkuehl.jhh6.server.rep.IMaEinstellungRep
 import de.cwkuehl.jhh6.server.rep.IMaMandantRep
 import de.cwkuehl.jhh6.server.rep.IMaParameterRep
+import de.cwkuehl.jhh6.server.rep.IMoEinteilungRep
+import de.cwkuehl.jhh6.server.rep.IMoGottesdienstRep
+import de.cwkuehl.jhh6.server.rep.IMoMessdienerRep
+import de.cwkuehl.jhh6.server.rep.IMoProfilRep
 import de.cwkuehl.jhh6.server.rep.ITbEintragRep
 import de.cwkuehl.jhh6.server.rep.IVmBuchungRep
 import de.cwkuehl.jhh6.server.rep.IVmEreignisRep
@@ -174,6 +190,10 @@ import de.cwkuehl.jhh6.server.rep.impl.HpStatusRep
 import de.cwkuehl.jhh6.server.rep.impl.MaEinstellungRep
 import de.cwkuehl.jhh6.server.rep.impl.MaMandantRep
 import de.cwkuehl.jhh6.server.rep.impl.MaParameterRep
+import de.cwkuehl.jhh6.server.rep.impl.MoEinteilungRep
+import de.cwkuehl.jhh6.server.rep.impl.MoGottesdienstRep
+import de.cwkuehl.jhh6.server.rep.impl.MoMessdienerRep
+import de.cwkuehl.jhh6.server.rep.impl.MoProfilRep
 import de.cwkuehl.jhh6.server.rep.impl.TbEintragRep
 import de.cwkuehl.jhh6.server.rep.impl.VmBuchungRep
 import de.cwkuehl.jhh6.server.rep.impl.VmEreignisRep
@@ -216,10 +236,10 @@ class ReplikationService {
 	@RepositoryRef MaEinstellungRep maeinstellungRep
 	@RepositoryRef MaMandantRep mandantRep
 	@RepositoryRef MaParameterRep parameterRep
-	// @RepositoryRef MoEinteilungRep einteilungRep
-	// @RepositoryRef MoGottesdienstRep gottesdienstRep
-	// @RepositoryRef MoMessdienerRep messdienerRep
-	// @RepositoryRef MoProfilRep profilRep
+	@RepositoryRef MoEinteilungRep einteilungRep
+	@RepositoryRef MoGottesdienstRep gottesdienstRep
+	@RepositoryRef MoMessdienerRep messdienerRep
+	@RepositoryRef MoProfilRep profilRep
 	// @RepositoryRef SbEreignisRep sbereignisRep
 	// @RepositoryRef SbFamilieRep familieRep
 	// @RepositoryRef SbKindRep kindRep
@@ -486,22 +506,26 @@ class ReplikationService {
 		reps.put(typeof(MaParameter), pa)
 		reps.put(typeof(MaParameterUpdate), pa)
 
-//			var et = new RbRepository(einteilungRep, typeof(IMoEinteilungRep), typeof(MoEinteilungKey),
-//				typeof(MoEinteilung), typeof(MoEinteilungUpdate))
-//			reps.put(typeof(MoEinteilung), et)
-//			reps.put(typeof(MoEinteilungUpdate), et)
-//			var go = new RbRepository(gottesdienstRep, typeof(IMoGottesdienstRep), typeof(MoGottesdienstKey),
-//				typeof(MoGottesdienst), typeof(MoGottesdienstUpdate))
-//			reps.put(typeof(MoGottesdienst), go)
-//			reps.put(typeof(MoGottesdienstUpdate), go)
-//			var me = new RbRepository(messdienerRep, typeof(IMoMessdienerRep), typeof(MoMessdienerKey),
-//				typeof(MoMessdiener), typeof(MoMessdienerUpdate))
-//			reps.put(typeof(MoMessdiener), me)
-//			reps.put(typeof(MoMessdienerUpdate), me)
-//			var pr = new RbRepository(profilRep, typeof(IMoProfilRep), typeof(MoProfilKey), typeof(MoProfil),
-//				typeof(MoProfilUpdate))
-//			reps.put(typeof(MoProfil), pr)
-//			reps.put(typeof(MoProfilUpdate), pr)
+		var et = new RbRepository(einteilungRep, typeof(IMoEinteilungRep), typeof(MoEinteilungKey),
+			typeof(MoEinteilung), typeof(MoEinteilungUpdate))
+		reps.put(typeof(MoEinteilung), et)
+		reps.put(typeof(MoEinteilungUpdate), et)
+
+		var go = new RbRepository(gottesdienstRep, typeof(IMoGottesdienstRep), typeof(MoGottesdienstKey),
+			typeof(MoGottesdienst), typeof(MoGottesdienstUpdate))
+		reps.put(typeof(MoGottesdienst), go)
+		reps.put(typeof(MoGottesdienstUpdate), go)
+
+		var me = new RbRepository(messdienerRep, typeof(IMoMessdienerRep), typeof(MoMessdienerKey),
+			typeof(MoMessdiener), typeof(MoMessdienerUpdate))
+		reps.put(typeof(MoMessdiener), me)
+		reps.put(typeof(MoMessdienerUpdate), me)
+
+		var pr = new RbRepository(profilRep, typeof(IMoProfilRep), typeof(MoProfilKey), typeof(MoProfil),
+			typeof(MoProfilUpdate))
+		reps.put(typeof(MoProfil), pr)
+		reps.put(typeof(MoProfilUpdate), pr)
+
 //			var se = new RbRepository(sbereignisRep, typeof(ISbEreignisRep), typeof(SbEreignisKey), typeof(SbEreignis),
 //				typeof(SbEreignisUpdate))
 //			reps.put(typeof(SbEreignis), se)
