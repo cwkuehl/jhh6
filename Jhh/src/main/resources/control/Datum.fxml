@@ -36,19 +36,19 @@
 			<Insets left="5.0" right="5.0" />
 		</HBox.margin>
 	</Label>
-	<Button fx:id="minus" focusTraversable="false" mnemonicParsing="true" onAction="#onMinus" text="-">
+	<Button fx:id="minus" focusTraversable="false" mnemonicParsing="true" onAction="#onMinus" text="%Date.yesterday">
 		<tooltip>
-			<Tooltip text="%Date.yesterday" />
+			<Tooltip text="%Date.yesterday.tt" />
 		</tooltip>
 	</Button>
-	<Button fx:id="heute" focusTraversable="false" mnemonicParsing="true" onAction="#onHeute" text="h">
+	<Button fx:id="heute" focusTraversable="false" mnemonicParsing="true" onAction="#onHeute" text="%Date.today">
 		<tooltip>
-			<Tooltip text="%Date.today" />
+			<Tooltip text="%Date.today.tt" />
 		</tooltip>
 	</Button>
-	<Button fx:id="plus" focusTraversable="false" mnemonicParsing="true" onAction="#onPlus" text="+">
+	<Button fx:id="plus" focusTraversable="false" mnemonicParsing="true" onAction="#onPlus" text="%Date.tomorrow">
 		<tooltip>
-			<Tooltip text="%Date.tomorrow" />
+			<Tooltip text="%Date.tomorrow.tt" />
 		</tooltip>
 	</Button>
 </fx:root>
