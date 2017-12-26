@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.cwkuehl.jhh6.app.controller.hp.HP160StatusController">
+
+	<padding>
+		<Insets bottom="10" left="10" right="10" top="10" />
+	</padding>
+
+	<Label fx:id="nr0" text="%HP160.nr" GridPane.columnIndex="0" />
+	<TextField fx:id="nr" accessibleText="%HP160.nr.tt" promptText="%HP160.nr.tt" GridPane.columnIndex="1" GridPane.columnSpan="3">
+		<tooltip><Tooltip text="%HP160.nr.tt" /></tooltip>
+	</TextField>
+	<Label fx:id="status0" mnemonicParsing="true" text="%HP160.status" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+	<TextField fx:id="status" accessibleText="%HP160.status.tt" promptText="%HP160.status.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
+		<tooltip><Tooltip text="%HP160.status.tt" /></tooltip>
+	</TextField>
+	<Label fx:id="beschreibung0" mnemonicParsing="true" text="%HP160.beschreibung" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+	<TextField fx:id="beschreibung" accessibleText="%HP160.beschreibung.tt" promptText="%HP160.beschreibung.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2">
+		<tooltip><Tooltip text="%HP160.beschreibung.tt" /></tooltip>
+	</TextField>
+	<Label fx:id="sortierung0" text="%HP160.sortierung" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+	<TextField fx:id="sortierung" accessibleText="%HP160.sortierung.tt" promptText="%HP160.sortierung.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3">
+		<tooltip><Tooltip text="%HP160.sortierung.tt" /></tooltip>
+	</TextField>
+	<Label fx:id="standard0" mnemonicParsing="true" text="%HP160.standard" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+	<ComboBox fx:id="standard" accessibleText="%HP160.standard.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4">
+		<tooltip><Tooltip text="%HP160.standard.tt" /></tooltip>
+	</ComboBox>
+	<Label fx:id="notiz0" text="%HP160.notiz" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+	<TextArea fx:id="notiz" accessibleText="%HP160.notiz.tt" promptText="%HP160.notiz.tt" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.vgrow="ALWAYS">
+		<tooltip><Tooltip text="%HP160.notiz.tt" /></tooltip>
+	</TextArea>
+	<Label fx:id="angelegt0" text="%Creation" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+	<TextField fx:id="angelegt" accessibleText="%Creation.tt" promptText="%Creation.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="6">
+		<tooltip><Tooltip text="%Creation.tt" /></tooltip>
+	</TextField>
+	<Label fx:id="geaendert0" text="%Change" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+	<TextField fx:id="geaendert" accessibleText="%Change.tt" promptText="%Change.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="7">
+		<tooltip><Tooltip text="%Change.tt" /></tooltip>
+	</TextField>
+	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="8">
+	<Button fx:id="ok" defaultButton="true" mnemonicParsing="true" onAction="#onOk" text="%Ok">
+		<tooltip><Tooltip text="%Ok.tt" /></tooltip>
+	</Button>
+	<Button fx:id="abbrechen" cancelButton="true" onAction="#onAbbrechen" text="%Cancel">
+		<tooltip><Tooltip text="%Cancel.tt" /></tooltip>
+	</Button>
+	</HBox>
+
+	<stylesheets>
+		<URL value="@../Jhh6.css" />
+	</stylesheets>
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+</GridPane>

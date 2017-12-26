@@ -258,6 +258,7 @@ class ReplikationService {
 	@ServiceRef AdresseService adresseService
 	@ServiceRef FreizeitService freizeitService
 	@ServiceRef HaushaltService haushaltService
+	@ServiceRef HeilpraktikerService hpService
 	@ServiceRef TagebuchService tagebuchService
 	@RepositoryRef AdAdresseRep adresseRep
 	@RepositoryRef AdPersonRep personRep
@@ -364,6 +365,16 @@ class ReplikationService {
 				null, null, null, null, null, false)
 			haushaltService.insertUpdateBuchung(daten, null, daten.heute, 1, 2.5, ak.uid, aw.uid, Meldungen.M9000,
 				Meldungen.M9000, daten.heute, null, null, null, null, null, false)
+		}
+		var pal = patientRep.getListe(daten, mnr, null, null)
+		if (pal.size <= 0) {
+			var s = hpService.insertUpdateStatus(daten, null, Meldungen.M9000, Meldungen.M9000, 10, 10, null).ergebnis
+			var l = hpService.insertUpdateLeistung(daten, null, Meldungen.M9000, null, Meldungen.M9000, null, 2, 10,
+				null, null).ergebnis
+			var p = hpService.insertUpdatePatient(daten, null, Meldungen.M9000, null, null, null, null, null, null,
+				null, null, null, null).ergebnis
+			hpService.insertUpdateBehandlung(daten, null, p.uid, daten.heute, 10, Meldungen.M9000, l.uid, s.uid, null,
+				null, null, null, null, null)
 		}
 		var tl = tagebuchRep.getListe(daten, mnr, null, null)
 		if (tl.size <= 0) {
