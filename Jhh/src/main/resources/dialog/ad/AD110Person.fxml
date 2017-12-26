@@ -79,7 +79,7 @@
 		</fx:define>
 		<children>
 			<RadioButton fx:id="neutrum" accessibleText="%AD110.neutrum.tt" selected="true"
-				text="neutrum" toggleGroup="$geschlecht" userData="N">
+				text="%AD110.neutrum" toggleGroup="$geschlecht" userData="N">
 				<tooltip>
 					<Tooltip text="%AD110.neutrum.tt" />
 				</tooltip>

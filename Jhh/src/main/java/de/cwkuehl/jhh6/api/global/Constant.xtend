@@ -27,6 +27,8 @@ class Constant {
 
 	/** Zeilenumbruch bei Windows. */
 	public static final String CRLF = "\r\n"
+	/** Zeilenumbruch bei Linux. */
+	public static final String LF = "\n"
 
 	/** Einstellung: DB_INIT. */
 	public static final String EINST_DB_INIT = "DB_INIT"
