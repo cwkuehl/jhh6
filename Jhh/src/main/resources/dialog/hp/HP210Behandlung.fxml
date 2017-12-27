@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import javafx.scene.web.*?>
+<?import de.cwkuehl.jhh5.anwendung.control.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import de.cwkuehl.jhh6.app.control.Datum?>
+<?import org.fxmisc.richtext.StyleClassedTextArea?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.66" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="de.cwkuehl.jhh6.app.controller.hp.HP210BehandlungController">
+
+	<padding>
+		<Insets bottom="10" left="10" right="10" top="10" />
+	</padding>
+
+	<Label fx:id="nr0" text="%HP210.nr" GridPane.columnIndex="0" />
+	<TextField fx:id="nr" accessibleText="%HP210.nr.tt" promptText="%HP210.nr.tt" GridPane.columnIndex="1">
+		<tooltip>
+			<Tooltip text="%HP210.nr.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="patient0" mnemonicParsing="true" text="%HP210.patient" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+	<ComboBox fx:id="patient" accessibleText="%HP210.patient.tt" GridPane.columnIndex="1" GridPane.columnSpan="3"
+		GridPane.rowIndex="1">
+		<tooltip>
+			<Tooltip text="%HP210.patient.tt" />
+		</tooltip>
+	</ComboBox>
+	<Label fx:id="datum0" mnemonicParsing="true" text="%HP210.datum" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+	<Datum fx:id="datum" nullText="" schalterText="mhp" uhrzeitGroesse="0" accessibleText="%HP210.datum.tt" promptText="%HP210.datum.tt" wochentagGroesse="80" GridPane.columnIndex="1"
+		GridPane.columnSpan="1" GridPane.rowIndex="2">
+		<tooltip>
+			<Tooltip text="%HP210.datum.tt" />
+		</tooltip>
+	</Datum>
+	<Label fx:id="leistung0" mnemonicParsing="true" text="%HP210.leistung" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+	<ComboBox fx:id="leistung" accessibleText="%HP210.leistung.tt" GridPane.columnIndex="1" GridPane.columnSpan="3"
+		GridPane.rowIndex="3">
+		<tooltip>
+			<Tooltip text="%HP210.leistung.tt" />
+		</tooltip>
+	</ComboBox>
+	<Label fx:id="dauer0" mnemonicParsing="true" text="%HP210.dauer" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+	<TextField fx:id="dauer" accessibleText="%HP210.dauer.tt" promptText="%HP210.dauer.tt"
+		GridPane.columnIndex="3" GridPane.rowIndex="3">
+		<tooltip>
+			<Tooltip text="%HP210.dauer.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="leistungen0" text="%HP210.leistungen" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+	<ListView fx:id="leistungen" prefHeight="60.0" GridPane.columnIndex="3" GridPane.columnSpan="3"
+		GridPane.rowIndex="1" GridPane.rowSpan="2" />
+	<HBox spacing="10.0" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="3">
+		<children>
+			<Button fx:id="hinzufuegen" mnemonicParsing="true" text="%HP210.hinzufuegen" onAction="#onHinzufuegen">
+				<tooltip>
+					<Tooltip text="%HP210.hinzufuegen.tt" />
+				</tooltip>
+			</Button>
+			<Button fx:id="entfernen" mnemonicParsing="true" text="%HP210.entfernen" onAction="#onEntfernen">
+				<tooltip>
+					<Tooltip text="%HP210.entfernen.tt" />
+				</tooltip>
+			</Button>
+		</children>
+	</HBox>
+	<Label fx:id="diagnose0" mnemonicParsing="true" text="%HP210.diagnose" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+	<TextField fx:id="diagnose" accessibleText="%HP210.diagnose.tt" promptText="%HP210.diagnose.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="5" GridPane.rowIndex="4">
+		<tooltip>
+			<Tooltip text="%HP210.diagnose.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="status0" mnemonicParsing="true" text="%HP210.status" GridPane.columnIndex="2" />
+	<ComboBox fx:id="status" accessibleText="%HP210.status.tt" GridPane.columnIndex="3" GridPane.columnSpan="3">
+		<tooltip>
+			<Tooltip text="%HP210.status.tt" />
+		</tooltip>
+	</ComboBox>
+	<Label fx:id="mittel0" mnemonicParsing="true" text="%HP210.mittel" GridPane.rowIndex="5" />
+	<TextField fx:id="mittel" accessibleText="%HP210.mittel.tt" promptText="%HP210.mittel.tt"
+		GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5">
+		<tooltip>
+			<Tooltip text="%HP210.mittel.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="potenz0" mnemonicParsing="true" text="%HP210.potenz" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+	<TextField fx:id="potenz" accessibleText="%HP210.potenz.tt" promptText="%HP210.potenz.tt" GridPane.columnIndex="3"
+		GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5">
+		<tooltip>
+			<Tooltip text="%HP210.potenz.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="dosierung0" mnemonicParsing="true" text="%HP210.dosierung" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+	<TextField fx:id="dosierung" accessibleText="%HP210.dosierung.tt" promptText="%HP210.dosierung.tt" GridPane.columnIndex="5"
+		GridPane.rowIndex="5">
+		<tooltip>
+			<Tooltip text="%HP210.dosierung.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="verordnung0" mnemonicParsing="true" text="%HP210.verordnung" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+	<TextField fx:id="verordnung" accessibleText="%HP210.verordnung.tt" promptText="%HP210.verordnung.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="5" GridPane.rowIndex="6">
+		<tooltip>
+			<Tooltip text="%HP210.verordnung.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="notiz0" text="%HP210.notiz" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+	<StyleClassedTextArea fx:id="notiz" accessibleText="%HP210.notiz.tt" wrapText="true" prefHeight="200.0"
+		prefWidth="506.0" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS"
+		GridPane.vgrow="ALWAYS">
+	</StyleClassedTextArea>
+	<StyleClassedTextArea fx:id="notiz2" accessibleText="%HP210.notiz2.tt" wrapText="true" prefHeight="200.0"
+		prefWidth="100.0" GridPane.columnIndex="4" GridPane.rowIndex="7" GridPane.columnSpan="2" GridPane.vgrow="ALWAYS">
+	</StyleClassedTextArea>
+	<Label fx:id="angelegt0" text="%Creation" GridPane.columnIndex="0" GridPane.rowIndex="9" />
+	<TextField fx:id="angelegt" accessibleText="%Creation.tt"
+		promptText="%Creation.tt" GridPane.columnIndex="1" GridPane.rowIndex="9">
+		<tooltip>
+			<Tooltip text="%Creation.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="geaendert0" text="%Change" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+	<TextField fx:id="geaendert" accessibleText="%Change.tt"
+		promptText="%Change.tt" GridPane.columnIndex="3" GridPane.columnSpan="3"
+		GridPane.rowIndex="9">
+		<tooltip>
+			<Tooltip text="%Change.tt" />
+		</tooltip>
+	</TextField>
+	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="10">
+		<Button fx:id="ok" defaultButton="false" mnemonicParsing="true" onAction="#onOk" text="%Ok">
+			<tooltip>
+				<Tooltip text="%Ok.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="drucken" mnemonicParsing="true" onAction="#onDrucken" text="%HP210.drucken">
+			<tooltip>
+				<Tooltip text="%HP210.drucken.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="abbrechen" cancelButton="true" onAction="#onAbbrechen" text="%Cancel">
+			<tooltip>
+				<Tooltip text="%Cancel.tt" />
+			</tooltip>
+		</Button>
+	</HBox>
+
+	<stylesheets>
+		<URL value="@../Jhh6.css" />
+	</stylesheets>
+	<columnConstraints>
+		<ColumnConstraints />
+		<ColumnConstraints />
+		<ColumnConstraints maxWidth="90.0" />
+		<ColumnConstraints maxWidth="100.0" />
+		<ColumnConstraints />
+		<ColumnConstraints minWidth="150.0" />
+		<ColumnConstraints />
+		<ColumnConstraints />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+	</rowConstraints>
+</GridPane>

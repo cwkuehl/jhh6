@@ -180,6 +180,11 @@
 			<version>20171018</version>
 		</dependency>
 		<dependency>
+			<groupId>org.fxmisc.richtext</groupId>
+			<artifactId>richtextfx</artifactId>
+			<version>0.8.1</version>
+		</dependency>
+		<dependency>
 			<groupId>de.cwkuehl.jhh6</groupId>
 			<artifactId>Jhh</artifactId>
 			<version>1.0</version>

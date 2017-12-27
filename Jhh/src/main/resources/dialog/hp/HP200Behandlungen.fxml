@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import de.cwkuehl.jhh5.anwendung.control.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import de.cwkuehl.jhh6.app.control.Datum?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.cwkuehl.jhh6.app.controller.hp.HP200BehandlungenController">
+
+	<padding>
+		<Insets bottom="10" left="10" right="10" top="10" />
+	</padding>
+
+	<ToolBar prefHeight="40.0" prefWidth="200.0" GridPane.columnSpan="4">
+		<items>
+			<Button fx:id="aktuell" mnemonicParsing="false" onAction="#onAktuell">
+				<tooltip><Tooltip text="%Refresh" /></tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image><Image url="@../../icon/icons8-refresh.png" /></image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="rueckgaengig" mnemonicParsing="false" onAction="#onRueckgaengig">
+				<tooltip><Tooltip text="%Undo" /></tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image><Image url="@../../icon/icons8-undo.png" /></image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="wiederherstellen" mnemonicParsing="false" onAction="#onWiederherstellen">
+				<tooltip><Tooltip text="%Redo" /></tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image><Image url="@../../icon/icons8-redo.png" /></image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="neu" mnemonicParsing="false" onAction="#onNeu">
+				<tooltip><Tooltip text="%New" /></tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image><Image url="@../../icon/icons8-new-document.png" /></image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="kopieren" mnemonicParsing="false" onAction="#onKopieren">
+				<tooltip><Tooltip text="%Copy" /></tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image><Image url="@../../icon/icons8-copy.png" /></image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="aendern" mnemonicParsing="false" onAction="#onAendern">
+				<tooltip><Tooltip text="%Edit" /></tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image><Image url="@../../icon/icons8-edit.png" /></image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="loeschen" mnemonicParsing="false" onAction="#onLoeschen">
+				<tooltip><Tooltip text="%Delete" /></tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image><Image url="@../../icon/icons8-remove.png" /></image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="drucken" mnemonicParsing="false" onAction="#onDrucken">
+				<tooltip><Tooltip text="%Print" /></tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image><Image url="@../../icon/icons8-print.png" /></image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="tab" mnemonicParsing="false" onAction="#onTab">
+				<tooltip>
+					<Tooltip text="%Tab" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-tab.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+		</items>
+	</ToolBar>
+	<Label fx:id="behandlungen0" mnemonicParsing="true" text="%HP200.behandlungen" GridPane.columnSpan="4" GridPane.rowIndex="1" />
+	<TableView fx:id="behandlungen" accessibleText="%HP200.behandlungen.tt" onMouseClicked="#onBehandlungenMouseClick" GridPane.columnSpan="4" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+		<tooltip><Tooltip text="%HP200.behandlungen.tt" /></tooltip>
+		<columns>
+			<TableColumn fx:id="colPatientUid" prefWidth="75.0" text="%HP200.colPatientUid" />
+			<TableColumn fx:id="colPatientName" prefWidth="200.0" text="%HP200.colPatientName" />
+			<TableColumn fx:id="colDatum" prefWidth="90.0" text="%HP200.colDatum" />
+			<TableColumn fx:id="colLeistung" prefWidth="90.0" text="%HP200.colLeistung" />
+			<TableColumn fx:id="colDauer" prefWidth="60.0" text="%HP200.colDauer" />
+			<TableColumn fx:id="colDiagnose" prefWidth="150.0" text="%HP200.colDiagnose" />
+			<TableColumn fx:id="colStatus" prefWidth="100.0" text="%HP200.colStatus" />
+			<TableColumn fx:id="colGa" prefWidth="170.0" text="%HP200.colGa" />
+			<TableColumn fx:id="colGv" prefWidth="120.0" text="%HP200.colGv" />
+			<TableColumn fx:id="colAa" prefWidth="170.0" text="%HP200.colAa" />
+			<TableColumn fx:id="colAv" prefWidth="120.0" text="%HP200.colAv" />
+		</columns>
+	</TableView>
+	<Label fx:id="patient0" mnemonicParsing="true" text="%HP200.patient" GridPane.rowIndex="4" />
+	<ComboBox fx:id="patient" accessibleText="%HP200.patient.tt" onAction="#onPatient" GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
+		<tooltip><Tooltip text="%HP200.patient.tt" /></tooltip>
+	</ComboBox>
+	<Label fx:id="von0" mnemonicParsing="true" text="%HP200.von" GridPane.rowIndex="3" />
+	<Datum fx:id="von" schalterText="mhp" accessibleText="%HP200.von.tt" promptText="%HP200.von.tt" GridPane.columnIndex="1" GridPane.rowIndex="3">
+		<tooltip><Tooltip text="%HP200.von.tt" /></tooltip>
+	</Datum>
+	<Label fx:id="bis0" mnemonicParsing="true" text="%HP200.bis" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+	<Datum fx:id="bis" schalterText="mhp" accessibleText="%HP200.bis.tt" promptText="%HP200.bis.tt" GridPane.columnIndex="3" GridPane.rowIndex="3">
+		<tooltip><Tooltip text="%HP200.bis.tt" /></tooltip>
+	</Datum>
+	<Button fx:id="alle" mnemonicParsing="true" onAction="#onAlle" text="%HP200.alle" GridPane.columnIndex="2" GridPane.rowIndex="4">
+		<tooltip><Tooltip text="%HP200.alle.tt" /></tooltip>
+	</Button>
+
+	<stylesheets>
+		<URL value="@../Jhh6.css" />
+	</stylesheets>
+   <columnConstraints>
+      <ColumnConstraints minWidth="56.0" />
+      <ColumnConstraints />
+      <ColumnConstraints minWidth="30.0" />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+</GridPane>

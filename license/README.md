@@ -76,6 +76,10 @@ The software is using libraries, to which different licenses may apply:
    - License: License (license/third_party/json_license.txt)
    - Origin: Copyright (c) 2002 JSON.org
 
+ - Richtextfx libraries richtextfx-0.8.1.jar, flowless-0.6.jar, wellbehavedfx-0.3.jar, undofx-1.3.1.jar, reactfx-2.0-M5.jar
+   - License: The 2-Clause BSD License (license/third_party/richtextfx_license.txt)
+   - Origin: Copyright (c) 2013-2017, Tomas Mikula and contributors
+
 The software is using icons, to which different licenses may apply:
  - Icos in toolbars are downloaded from [Icons8.com](https://icons8.com)
    - License: Creative Commons Attribution-NoDerivs 3.0 Unported [CC BY-ND 3.0](https://creativecommons.org/licenses/by-nd/3.0/)
