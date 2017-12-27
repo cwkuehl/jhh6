@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.cwkuehl.jhh6.app.controller.hp.HP310LeistungController">
+
+	<padding>
+		<Insets bottom="10" left="10" right="10" top="10" />
+	</padding>
+
+	<Label fx:id="nr0" text="%HP310.nr" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+	<TextField fx:id="nr" accessibleText="%HP310.nr.tt" promptText="%HP310.nr.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
+		<tooltip><Tooltip text="%HP310.nr.tt" /></tooltip>
+	</TextField>
+	<Label fx:id="ziffer0" mnemonicParsing="true" text="%HP310.ziffer" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+	<TextField fx:id="ziffer" accessibleText="%HP310.ziffer.tt" promptText="%HP310.ziffer.tt" GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
+		<tooltip><Tooltip text="%HP310.ziffer.tt" /></tooltip>
+	</TextField>
+	<Label fx:id="ziffer20" mnemonicParsing="true" text="%HP310.ziffer2" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+	<TextField fx:id="ziffer2" accessibleText="%HP310.ziffer2.tt" promptText="%HP310.ziffer2.tt" GridPane.columnIndex="3" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
+		<tooltip><Tooltip text="%HP310.ziffer2.tt" /></tooltip>
+	</TextField>
+	<Label fx:id="beschreibungFett0" mnemonicParsing="true" text="%HP310.beschreibungFett" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+	<TextField fx:id="beschreibungFett" accessibleText="%HP310.beschreibungFett.tt" promptText="%HP310.beschreibungFett.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3">
+		<tooltip><Tooltip text="%HP310.beschreibungFett.tt" /></tooltip>
+	</TextField>
+	<Label fx:id="beschreibung0" text="%HP310.beschreibung" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+	<TextArea fx:id="beschreibung" accessibleText="%HP310.beschreibung.tt" promptText="%HP310.beschreibung.tt" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.vgrow="ALWAYS">
+		<tooltip><Tooltip text="%HP310.beschreibung.tt" /></tooltip>
+	</TextArea>
+	<Label fx:id="faktor0" mnemonicParsing="true" text="%HP310.faktor" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+	<TextField fx:id="faktor" accessibleText="%HP310.faktor.tt" promptText="%HP310.faktor.tt" GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.rowIndex="5">
+		<tooltip><Tooltip text="%HP310.faktor.tt" /></tooltip>
+	</TextField>
+	<Label fx:id="betrag0" mnemonicParsing="true" text="%HP310.betrag" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+	<TextField fx:id="betrag" accessibleText="%HP310.betrag.tt" promptText="%HP310.betrag.tt" GridPane.columnIndex="3" GridPane.columnSpan="1" GridPane.rowIndex="5">
+		<tooltip><Tooltip text="%HP310.betrag.tt" /></tooltip>
+	</TextField>
+	<Label fx:id="notiz0" text="%HP310.notiz" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+	<TextArea fx:id="notiz" accessibleText="%HP310.notiz.tt" promptText="%HP310.notiz.tt" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6" GridPane.vgrow="ALWAYS">
+		<tooltip><Tooltip text="%HP310.notiz.tt" /></tooltip>
+	</TextArea>
+	<Label fx:id="angelegt0" text="%Creation" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+	<TextField fx:id="angelegt" accessibleText="%Creation.tt" promptText="%Creation.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="7">
+		<tooltip><Tooltip text="%Creation.tt" /></tooltip>
+	</TextField>
+	<Label fx:id="geaendert0" text="%Change" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+	<TextField fx:id="geaendert" accessibleText="%Change.tt" promptText="%Change.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="8">
+		<tooltip><Tooltip text="%Change.tt" /></tooltip>
+	</TextField>
+	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="9">
+	<Button fx:id="ok" defaultButton="true" mnemonicParsing="true" onAction="#onOk" text="%Ok">
+		<tooltip><Tooltip text="%Ok.tt" /></tooltip>
+	</Button>
+	<Button fx:id="abbrechen" cancelButton="true" onAction="#onAbbrechen" text="%Cancel">
+		<tooltip><Tooltip text="%Cancel.tt" /></tooltip>
+	</Button>
+	</HBox>
+
+	<stylesheets>
+		<URL value="@../Jhh6.css" />
+	</stylesheets>
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+</GridPane>

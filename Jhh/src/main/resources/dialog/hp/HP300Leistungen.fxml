@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.45" fx:controller="de.cwkuehl.jhh6.app.controller.hp.HP300LeistungenController">
+
+	<padding>
+		<Insets bottom="10" left="10" right="10" top="10" />
+	</padding>
+
+	<ToolBar prefHeight="40.0" prefWidth="200.0" GridPane.columnSpan="3" >
+		<items>
+			<Button fx:id="aktuell" mnemonicParsing="false" onAction="#onAktuell">
+				<tooltip><Tooltip text="%Refresh" /></tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image><Image url="@../../icon/icons8-refresh.png" /></image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="rueckgaengig" mnemonicParsing="false" onAction="#onRueckgaengig">
+				<tooltip><Tooltip text="%Undo" /></tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image><Image url="@../../icon/icons8-undo.png" /></image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="wiederherstellen" mnemonicParsing="false" onAction="#onWiederherstellen">
+				<tooltip><Tooltip text="%Redo" /></tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image><Image url="@../../icon/icons8-redo.png" /></image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="neu" mnemonicParsing="false" onAction="#onNeu">
+				<tooltip><Tooltip text="%New" /></tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image><Image url="@../../icon/icons8-new-document.png" /></image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="kopieren" mnemonicParsing="false" onAction="#onKopieren">
+				<tooltip><Tooltip text="%Copy" /></tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image><Image url="@../../icon/icons8-copy.png" /></image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="aendern" mnemonicParsing="false" onAction="#onAendern">
+				<tooltip><Tooltip text="%Edit" /></tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image><Image url="@../../icon/icons8-edit.png" /></image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="loeschen" mnemonicParsing="false" onAction="#onLoeschen">
+				<tooltip><Tooltip text="%Delete" /></tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image><Image url="@../../icon/icons8-remove.png" /></image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="tab" mnemonicParsing="false" onAction="#onTab">
+				<tooltip>
+					<Tooltip text="%Tab" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-tab.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+		</items>
+	</ToolBar>
+	<Label fx:id="leistungen0" text="%HP300.leistungen" mnemonicParsing="true" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+	<TableView fx:id="leistungen" onMouseClicked="#onLeistungenMouseClick" accessibleText="%HP300.leistungen.tt" GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+		<tooltip><Tooltip text="%HP300.leistungen.tt" /></tooltip>
+		<columns>
+			<TableColumn fx:id="colUid" prefWidth="75.0" text="%HP300.colUid" />
+			<TableColumn fx:id="colZiffer" prefWidth="75.0" text="%HP300.colZiffer" />
+			<TableColumn fx:id="colZifferAlt" prefWidth="75.0" text="%HP300.colZifferAlt" />
+			<TableColumn fx:id="colBeschreibungFett" prefWidth="300.0" text="%HP300.colBeschreibungFett" />
+			<TableColumn fx:id="colFaktor" prefWidth="75.0" text="%HP300.colFaktor" />
+			<TableColumn fx:id="colFestbetrag" prefWidth="75.0" text="%HP300.colFestbetrag" />
+			<TableColumn fx:id="colGa" prefWidth="170.0" text="%HP300.colGa" />
+			<TableColumn fx:id="colGv" prefWidth="120.0" text="%HP300.colGv" />
+			<TableColumn fx:id="colAa" prefWidth="170.0" text="%HP300.colAa" />
+			<TableColumn fx:id="colAv" prefWidth="120.0" text="%HP300.colAv" />
+		</columns>
+	</TableView>
+
+	<stylesheets>
+		<URL value="@../Jhh6.css" />
+	</stylesheets>
+</GridPane>
