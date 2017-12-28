@@ -34,6 +34,7 @@ import de.cwkuehl.jhh6.app.controller.hp.HP100PatientenController
 import de.cwkuehl.jhh6.app.controller.hp.HP150StatusController
 import de.cwkuehl.jhh6.app.controller.hp.HP200BehandlungenController
 import de.cwkuehl.jhh6.app.controller.hp.HP300LeistungenController
+import de.cwkuehl.jhh6.app.controller.hp.HP350LeistungsgruppenController
 import de.cwkuehl.jhh6.app.controller.tb.TB100TagebuchController
 import de.cwkuehl.jhh6.server.FactoryService
 import java.net.URL
@@ -493,7 +494,8 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		starteFormular(typeof(HP300LeistungenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleHP350() { // starteFormular(typeof(HP350LeistungsgruppenController), DialogAufrufEnum.OHNE)
+	@FXML def void handleHP350() {
+		starteFormular(typeof(HP350LeistungsgruppenController), DialogAufrufEnum.OHNE)
 	}
 
 	@FXML def void handleHP400() { // starteFormular(typeof(HP400RechnungenController), DialogAufrufEnum.OHNE)

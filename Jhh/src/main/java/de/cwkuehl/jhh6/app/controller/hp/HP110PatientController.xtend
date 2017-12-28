@@ -175,7 +175,7 @@ class HP110PatientController extends BaseController<String> {
 	/** 
 	 * Event für Ok.
 	 */
-	@SuppressWarnings("unchecked") @FXML def void onOk() {
+	@FXML def void onOk() {
 
 		var ServiceErgebnis<?> r = null
 		if (DialogAufrufEnum.NEU.equals(aufruf) || DialogAufrufEnum.KOPIEREN.equals(aufruf)) {
