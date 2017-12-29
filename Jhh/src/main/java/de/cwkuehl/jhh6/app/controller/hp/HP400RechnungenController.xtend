@@ -1,12 +1,14 @@
 package de.cwkuehl.jhh6.app.controller.hp
 
-import de.cwkuehl.jhh6.api.dto.HpPatient
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.List
+import de.cwkuehl.jhh6.api.dto.HpRechnungLang
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
+import de.cwkuehl.jhh6.app.base.Werkzeug
 import de.cwkuehl.jhh6.server.FactoryService
-import java.time.LocalDateTime
-import java.util.List
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -19,9 +21,9 @@ import javafx.scene.control.TableView
 import javafx.scene.input.MouseEvent
 
 /** 
- * Controller für Dialog HP100Patienten.
+ * Controller für Dialog HP400Rechnungen.
  */
-class HP100PatientenController extends BaseController<String> {
+class HP400RechnungenController extends BaseController<String> {
 
 	@FXML Button aktuell
 	@FXML Button rueckgaengig
@@ -30,38 +32,43 @@ class HP100PatientenController extends BaseController<String> {
 	@FXML Button kopieren
 	@FXML Button aendern
 	@FXML Button loeschen
-	@FXML package Button behandeln
-	@FXML package Button abrechnen
-	@FXML Label patienten0
-	@FXML TableView<PatientenData> patienten
-	@FXML TableColumn<PatientenData, String> colUid
-	@FXML TableColumn<PatientenData, String> colVorname
-	@FXML TableColumn<PatientenData, String> colName1
-	@FXML TableColumn<PatientenData, LocalDateTime> colGa
-	@FXML TableColumn<PatientenData, String> colGv
-	@FXML TableColumn<PatientenData, LocalDateTime> colAa
-	@FXML TableColumn<PatientenData, String> colAv
-	ObservableList<PatientenData> patientenData = FXCollections::observableArrayList
+	@FXML Button drucken
+	@FXML Label rechnungen0
+	@FXML TableView<RechnungenData> rechnungen
+	@FXML TableColumn<RechnungenData, String> colUid
+	@FXML TableColumn<RechnungenData, LocalDate> colDatum
+	@FXML TableColumn<RechnungenData, String> colRechnungsnummer
+	@FXML TableColumn<RechnungenData, String> colName
+	@FXML TableColumn<RechnungenData, Double> colBetrag
+	@FXML TableColumn<RechnungenData, LocalDateTime> colGa
+	@FXML TableColumn<RechnungenData, String> colGv
+	@FXML TableColumn<RechnungenData, LocalDateTime> colAa
+	@FXML TableColumn<RechnungenData, String> colAv
+	ObservableList<RechnungenData> rechnungenData = FXCollections.observableArrayList
 
 	/** 
-	 * Daten für Tabelle Patienten.
+	 * Daten für Tabelle Rechnungen.
 	 */
-	static class PatientenData extends BaseController.TableViewData<HpPatient> {
+	static class RechnungenData extends BaseController.TableViewData<HpRechnungLang> {
 
 		SimpleStringProperty uid
-		SimpleStringProperty vorname
-		SimpleStringProperty name1
+		SimpleObjectProperty<LocalDate> datum
+		SimpleStringProperty rechnungsnummer
+		SimpleStringProperty name
+		SimpleObjectProperty<Double> betrag
 		SimpleObjectProperty<LocalDateTime> geaendertAm
 		SimpleStringProperty geaendertVon
 		SimpleObjectProperty<LocalDateTime> angelegtAm
 		SimpleStringProperty angelegtVon
 
-		new(HpPatient v) {
+		new(HpRechnungLang v) {
 
 			super(v)
 			uid = new SimpleStringProperty(v.getUid)
-			vorname = new SimpleStringProperty(v.getVorname)
-			name1 = new SimpleStringProperty(v.getName1)
+			datum = new SimpleObjectProperty<LocalDate>(v.getDatum)
+			rechnungsnummer = new SimpleStringProperty(v.getRechnungsnummer)
+			name = new SimpleStringProperty(v.getPatientName)
+			betrag = new SimpleObjectProperty<Double>(v.getBetrag)
 			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
 			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
 			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
@@ -80,7 +87,7 @@ class HP100PatientenController extends BaseController<String> {
 
 		tabbar = 1
 		super.initialize
-		patienten0.setLabelFor(patienten)
+		rechnungen0.setLabelFor(rechnungen)
 		initAccelerator("A", aktuell)
 		initAccelerator("U", rueckgaengig)
 		initAccelerator("W", wiederherstellen)
@@ -88,10 +95,9 @@ class HP100PatientenController extends BaseController<String> {
 		initAccelerator("C", kopieren)
 		initAccelerator("E", aendern)
 		initAccelerator("L", loeschen)
-		initAccelerator("B", behandeln)
-		initAccelerator("R", abrechnen)
+		initAccelerator("D", drucken)
 		initDaten(0)
-		patienten.requestFocus
+		rechnungen.requestFocus
 	}
 
 	/** 
@@ -103,8 +109,9 @@ class HP100PatientenController extends BaseController<String> {
 		if (stufe <= 0) { // stufe = 0
 		}
 		if (stufe <= 1) {
-			var List<HpPatient> l = get(FactoryService::getHeilpraktikerService.getPatientListe(getServiceDaten, false))
-			getItems(l, null, [a|new PatientenData(a)], patientenData)
+			var List<HpRechnungLang> l = get(
+				FactoryService.getHeilpraktikerService.getRechnungListe(getServiceDaten, false))
+			getItems(l, null, [a|new RechnungenData(a)], rechnungenData)
 		}
 		if (stufe <= 2) {
 			initDatenTable
@@ -116,10 +123,13 @@ class HP100PatientenController extends BaseController<String> {
 	 */
 	def protected void initDatenTable() {
 
-		patienten.setItems(patientenData)
+		rechnungen.setItems(rechnungenData)
 		colUid.setCellValueFactory([c|c.getValue.uid])
-		colVorname.setCellValueFactory([c|c.getValue.vorname])
-		colName1.setCellValueFactory([c|c.getValue.name1])
+		colDatum.setCellValueFactory([c|c.getValue.datum])
+		colRechnungsnummer.setCellValueFactory([c|c.getValue.rechnungsnummer])
+		colName.setCellValueFactory([c|c.getValue.name])
+		colBetrag.setCellValueFactory([c|c.getValue.betrag])
+		initColumnBetrag(colBetrag)
 		colGv.setCellValueFactory([c|c.getValue.geaendertVon])
 		colGa.setCellValueFactory([c|c.getValue.geaendertAm])
 		colAv.setCellValueFactory([c|c.getValue.angelegtVon])
@@ -131,22 +141,22 @@ class HP100PatientenController extends BaseController<String> {
 	}
 
 	def private void starteDialog(DialogAufrufEnum aufruf) {
-		var HpPatient k = getValue(patienten, !DialogAufrufEnum::NEU.equals(aufruf))
-		starteFormular(typeof(HP110PatientController), aufruf, k)
+		var HpRechnungLang k = getValue(rechnungen, !DialogAufrufEnum.NEU.equals(aufruf))
+		starteFormular(HP410RechnungController, aufruf, k)
 	}
 
 	/** 
 	 * Event für Aktuell.
 	 */
 	@FXML def void onAktuell() {
-		refreshTable(patienten, 1)
+		refreshTable(rechnungen, 1)
 	}
 
 	/** 
 	 * Event für Rueckgaengig.
 	 */
 	@FXML def void onRueckgaengig() {
-		get(Jhh6::rollback)
+		get(Jhh6.rollback)
 		onAktuell
 	}
 
@@ -154,7 +164,7 @@ class HP100PatientenController extends BaseController<String> {
 	 * Event für Wiederherstellen.
 	 */
 	@FXML def void onWiederherstellen() {
-		get(Jhh6::redo)
+		get(Jhh6.redo)
 		onAktuell
 	}
 
@@ -162,46 +172,45 @@ class HP100PatientenController extends BaseController<String> {
 	 * Event für Neu.
 	 */
 	@FXML def void onNeu() {
-		starteDialog(DialogAufrufEnum::NEU)
+		starteDialog(DialogAufrufEnum.NEU)
 	}
 
 	/** 
 	 * Event für Kopieren.
 	 */
 	@FXML def void onKopieren() {
-		starteDialog(DialogAufrufEnum::KOPIEREN)
+		starteDialog(DialogAufrufEnum.KOPIEREN)
 	}
 
 	/** 
 	 * Event für Aendern.
 	 */
 	@FXML def void onAendern() {
-		starteDialog(DialogAufrufEnum::AENDERN)
+		starteDialog(DialogAufrufEnum.AENDERN)
 	}
 
 	/** 
 	 * Event für Loeschen.
 	 */
 	@FXML def void onLoeschen() {
-		starteDialog(DialogAufrufEnum::LOESCHEN)
+		starteDialog(DialogAufrufEnum.LOESCHEN)
 	}
 
 	/** 
-	 * Event für Patienten.
+	 * Event für Drucken.
 	 */
-	@FXML def void onPatientenMouseClick(MouseEvent e) {
+	@FXML def void onDrucken() {
+		var HpRechnungLang k = getValue(rechnungen, true)
+		var byte[] pdf = get(FactoryService.getHeilpraktikerService.getReportRechnung(getServiceDaten, k.getUid))
+		Werkzeug.speicherReport(pdf, "Rechnung", true)
+	}
+
+	/** 
+	 * Event für Rechnungen.
+	 */
+	@FXML def void onRechnungenMouseClick(MouseEvent e) {
 		if (e.clickCount > 1) {
 			onAendern
 		}
-	}
-
-	@FXML def void onBehandeln() {
-		var HpPatient k = getValue(patienten, true)
-		starteFormular(typeof(HP200BehandlungenController), DialogAufrufEnum::OHNE, k)
-	}
-
-	@FXML def void onAbrechnen() {
-		var HpPatient k = getValue(patienten, true)
-		starteFormular(typeof(HP410RechnungController), DialogAufrufEnum::NEU, k.getUid)
 	}
 }

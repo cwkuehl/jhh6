@@ -32,8 +32,8 @@ class FZ700NotizenController extends BaseController<String> {
 	@FXML Button loeschen
 	@FXML Label notizen0
 	@FXML TableView<NotizKurz> notizen
-	@FXML TableColumn<NotizKurz, String> uidCol
-	@FXML TableColumn<NotizKurz, String> themaCol
+	@FXML TableColumn<NotizKurz, String> colUid
+	@FXML TableColumn<NotizKurz, String> colThema
 	@FXML TableColumn<NotizKurz, LocalDateTime> colGa
 	@FXML TableColumn<NotizKurz, String> colGv
 	@FXML TableColumn<NotizKurz, LocalDateTime> colAa
@@ -82,8 +82,8 @@ class FZ700NotizenController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		notizen.setItems(notizenData)
-		uidCol.setCellValueFactory([cellData|cellData.getValue.uid])
-		themaCol.setCellValueFactory([cellData|cellData.getValue.thema])
+		colUid.setCellValueFactory([cellData|cellData.getValue.uid])
+		colThema.setCellValueFactory([cellData|cellData.getValue.thema])
 		colGv.setCellValueFactory([cellData|cellData.getValue.geaendertVon])
 		colGa.setCellValueFactory([cellData|cellData.getValue.geaendertAm])
 		colAv.setCellValueFactory([cellData|cellData.getValue.angelegtVon])

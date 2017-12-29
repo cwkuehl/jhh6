@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import de.cwkuehl.jhh6.app.control.Datum?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.45"
+	fx:controller="de.cwkuehl.jhh6.app.controller.hp.HP420BehandlungenController">
+
+	<padding>
+		<Insets bottom="10" left="10" right="10" top="10" />
+	</padding>
+
+	<Label fx:id="behandlungen0" text="%HP420.behandlungen" mnemonicParsing="true" GridPane.columnIndex="0"
+		GridPane.rowIndex="0" />
+	<TableView fx:id="behandlungen" accessibleText="%HP420.behandlungen.tt" GridPane.columnIndex="0" GridPane.rowIndex="1"
+		GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%HP420.behandlungen.tt" />
+		</tooltip>
+		<columns>
+			<TableColumn fx:id="colPatientName" prefWidth="200.0" text="%HP420.colPatientName" />
+			<TableColumn fx:id="colDatum" prefWidth="90.0" text="%HP420.colDatum" />
+			<TableColumn fx:id="colLeistung" prefWidth="90.0" text="%HP420.colLeistung" />
+			<TableColumn fx:id="colDauer" prefWidth="60.0" text="%HP420.colDauer" />
+			<TableColumn fx:id="colDiagnose" prefWidth="150.0" text="%HP420.colDiagnose" />
+			<TableColumn fx:id="colStatus" prefWidth="100.0" text="%HP420.colStatus" />
+			<TableColumn fx:id="colGa" prefWidth="170.0" text="%HP420.colGa" />
+			<TableColumn fx:id="colGv" prefWidth="120.0" text="%HP420.colGv" />
+			<TableColumn fx:id="colAa" prefWidth="170.0" text="%HP420.colAa" />
+			<TableColumn fx:id="colAv" prefWidth="120.0" text="%HP420.colAv" />
+		</columns>
+	</TableView>
+	<HBox spacing="10.0" GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.columnSpan="1">
+		<Button fx:id="ok" text="%Ok" mnemonicParsing="true" onAction="#onOk" defaultButton="true">
+			<tooltip>
+				<Tooltip text="%Ok.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="abbrechen" text="%Cancel" onAction="#onAbbrechen" cancelButton="true">
+			<tooltip>
+				<Tooltip text="%Cancel.tt" />
+			</tooltip>
+		</Button>
+	</HBox>
+
+	<stylesheets>
+		<URL value="@../Jhh6.css" />
+	</stylesheets>
+</GridPane>

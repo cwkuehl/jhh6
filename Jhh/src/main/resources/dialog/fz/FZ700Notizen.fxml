@@ -123,8 +123,8 @@
 			<Tooltip text="%FZ700.notizen.tt" />
 		</tooltip>
 		<columns>
-			<TableColumn fx:id="uidCol" prefWidth="80.0" text="%FZ700.uidCol" />
-			<TableColumn fx:id="themaCol" prefWidth="250.0" text="%FZ700.themaCol" />
+			<TableColumn fx:id="colUid" prefWidth="80.0" text="%FZ700.colUid" />
+			<TableColumn fx:id="colThema" prefWidth="250.0" text="%FZ700.colThema" />
 			<TableColumn fx:id="colGa" prefWidth="170.0" text="%FZ700.colGa" />
 			<TableColumn fx:id="colGv" prefWidth="120.0" text="%FZ700.colGv" />
 			<TableColumn fx:id="colAa" prefWidth="170.0" text="%FZ700.colAa" />
