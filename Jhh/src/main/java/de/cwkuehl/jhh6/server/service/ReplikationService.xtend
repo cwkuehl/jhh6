@@ -371,10 +371,19 @@ class ReplikationService {
 			var s = hpService.insertUpdateStatus(daten, null, Meldungen.M9000, Meldungen.M9000, 10, 10, null).ergebnis
 			var l = hpService.insertUpdateLeistung(daten, null, Meldungen.M9000, null, Meldungen.M9000, null, 2, 10,
 				null, null).ergebnis
-			var p = hpService.insertUpdatePatient(daten, null, Meldungen.M9000, null, null, null, null, null, null,
-				null, null, null, null).ergebnis
-			hpService.insertUpdateBehandlung(daten, null, p.uid, daten.heute, 10, Meldungen.M9000, l.uid, s.uid, null,
+			var l2 = hpService.insertUpdateLeistung(daten, null, Meldungen.M9000, null, Meldungen.M9000, null, 2, 10,
+				null, null).ergebnis
+			hpService.insertUpdateLeistungsgruppe(daten, null, Meldungen.M9000, l2.uid, 10, null, null)
+			var p = hpService.insertUpdatePatient(daten, null, Meldungen.M9000 + "2", null, null, null, null, null,
+				null, null, null, null, null).ergebnis
+			var b = hpService.insertUpdateBehandlung(daten, null, p.uid, daten.heute, 10, Meldungen.M9000, l.uid, s.uid,
+				null, null, null, null, null, null).ergebnis
+			hpService.insertUpdateBehandlung(daten, null, p.uid, daten.heute, 20, Meldungen.M9000, l2.uid, s.uid, null,
 				null, null, null, null, null)
+			var bhl = hpService.getBehandlungLeistungListe(daten, true, p.uid, null, b.uid, null, null, false, true).
+				ergebnis
+			hpService.insertUpdateRechnung(daten, null, daten.heute.toString, daten.heute, p.uid, 22, Meldungen.M9000,
+				s.uid, null, bhl)
 		}
 		var tl = tagebuchRep.getListe(daten, mnr, null, null)
 		if (tl.size <= 0) {
