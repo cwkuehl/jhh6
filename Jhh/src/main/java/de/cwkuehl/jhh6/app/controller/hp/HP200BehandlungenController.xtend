@@ -121,8 +121,7 @@ class HP200BehandlungenController extends BaseController<String> {
 		tabbar = 1
 		super.initialize
 		behandlungen0.setLabelFor(behandlungen)
-		patient0.setLabelFor(patient)
-		initComboBox(patient, null)
+		patient0.setLabelFor(patient, false)
 		von0.setLabelFor(von.getLabelForNode)
 		bis0.setLabelFor(bis.getLabelForNode)
 		initAccelerator("A", aktuell)

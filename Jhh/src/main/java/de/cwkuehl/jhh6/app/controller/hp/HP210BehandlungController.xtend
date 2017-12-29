@@ -154,17 +154,14 @@ class HP210BehandlungController extends BaseController<String> {
 
 		tabbar = 0
 		nr0.setLabelFor(nr)
-		patient0.setLabelFor(patient)
-		initComboBox(patient, null)
+		patient0.setLabelFor(patient, true)
 		datum0.setLabelFor(datum.getLabelForNode, true)
 		leistung0.setLabelFor(leistung, true)
-		initComboBox(leistung, null)
 		dauer0.setLabelFor(dauer)
 		leistungen0.setLabelFor(leistungen)
 		initListView(leistungen, null)
 		diagnose0.setLabelFor(diagnose)
 		status0.setLabelFor(status, true)
-		initComboBox(status, null)
 		mittel0.setLabelFor(mittel)
 		potenz0.setLabelFor(potenz)
 		dosierung0.setLabelFor(dosierung)

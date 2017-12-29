@@ -117,8 +117,7 @@ class FZ250FahrradstaendeController extends BaseController<String> {
 		tabbar = 1
 		super.initialize
 		fahrradstaende0.setLabelFor(fahrradstaende)
-		fahrrad0.setLabelFor(fahrrad)
-		initComboBox(fahrrad, null)
+		fahrrad0.setLabelFor(fahrrad, false)
 		text0.setLabelFor(text)
 		initAccelerator("A", aktuell)
 		initAccelerator("U", rueckgaengig)

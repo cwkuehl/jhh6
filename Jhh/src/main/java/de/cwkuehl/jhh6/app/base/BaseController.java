@@ -608,11 +608,24 @@ public abstract class BaseController<R> {
         }
     }
 
-    protected void initComboBox(ComboBox<?> cb, Button b) {
+    protected void setLabelFor(Label l, ComboBox<?> cb, boolean mandatory) {
+        setLabelFor(l, cb, mandatory, null);
+    }
 
-        if (cb == null) {
+    protected void setLabelFor(Label l, ComboBox<?> cb, boolean mandatory, Button b) {
+        setLabelFor(l, cb, mandatory, b, 20);
+    }
+
+    protected void setLabelFor(Label l, ComboBox<?> cb, boolean mandatory, Button b, int anz) {
+
+        if (l == null || cb == null) {
             return;
         }
+        l.setLabelFor(cb);
+        if (mandatory)
+            setMandatory(l);
+        if (cb.getVisibleRowCount() < anz)
+            cb.setVisibleRowCount(anz);
         StringBuilder sb = new StringBuilder();
         cb.addEventHandler(KeyEvent.KEY_RELEASED, e -> {
             if (e.getCode() == KeyCode.DOWN || e.getCode() == KeyCode.UP || e.isAltDown() || e.isControlDown() || e

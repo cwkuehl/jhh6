@@ -129,8 +129,7 @@ class FZ340BuecherController extends BaseController<String> {
 		tabbar = 1
 		super.initialize
 		buecher0.setLabelFor(buecher)
-		autor0.setLabelFor(autor)
-		initComboBox(autor, null)
+		autor0.setLabelFor(autor, false)
 		titel0.setLabelFor(titel)
 		initAccelerator("A", aktuell)
 		initAccelerator("U", rueckgaengig)
