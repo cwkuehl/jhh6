@@ -20,7 +20,7 @@ public class Global {
 	// val static mvpPackage = "de.cwkuehl.jhh6.anwendung.mvp"
 	// junitPackage de.cwkuehl.jhh.junit
 	// val static dbVersion = "43"
-	// val static helpFile = "/home/wolfgang/workspaces/ws2015jhh6/Generator/src/help/JHaushalt-Hilfe.xml"
+	// val static helpFile = "/home/wolfgang/workspaces/ws2015jhh6/Generator/src/help/Jhh-Hilfe.xml"
 	def static String serviceInterfaceName(String simpleName) {
 		return schnittstelleServicePackage + '.I' + simpleName.toFirstUpper
 	}

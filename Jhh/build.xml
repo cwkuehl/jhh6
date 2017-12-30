@@ -1,0 +1,88 @@
+<project name="JHH6" default="copy" basedir=".">
+	<property file="build.properties" />
+	<target name="copy">
+		<echo>${ant.version}</echo>
+		<echo message="Copy JHH6." />
+		<antcall target="sign_jar"/>
+		<antcall target="copy_local"/>
+		<antcall target="create_zip"/>
+		<antcall target="copy_ftp"/>
+	</target>
+
+	<target name="sign_jar" if="jarsigner.keystore">
+		<echo message="Sign jar." />
+		<signjar alias="${jarsigner.alias}" keystore="${jarsigner.keystore}" storepass="${jarsigner.storepass}">
+			<path>
+				<fileset dir="target" includes="*.jar" />
+			</path>
+		</signjar>
+	</target>
+
+	<target name="copy_local" if="jhh.prod.dir">
+		<echo message="Copy local JHH6." />
+		<copy todir="${jhh.prod.dir}" overwrite="true">
+			<fileset dir="target">
+				<include name="*.jar" />
+			</fileset>
+		</copy>
+		<delete>
+			<fileset dir="${jhh.prod.dir}/lib">
+				<include name="*.jar" />
+			</fileset>
+		</delete>
+		<copy todir="${jhh.prod.dir}/lib" overwrite="true">
+			<fileset dir="target/dependency">
+				<include name="*.jar" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="create_zip" if="jhh.prod.dir">
+		<echo message="Create installation file." />
+		<copy todir="target/zip" overwrite="true">
+			<fileset dir="target">
+				<include name="*.jar" />
+			</fileset>
+			<fileset dir="target/classes">
+				<include name="*.gif" />
+			</fileset>
+			<fileset dir="src/main/resources/installation/doc">
+				<include name="*.html" />
+				<include name="*.txt" />
+			</fileset>
+			<fileset dir="src/main/resources/installation/db">
+				<include name="*.*" />
+			</fileset>
+			<fileset dir="src/main/resources/installation/linux">
+				<include name="*.*" />
+			</fileset>
+			<fileset dir="src/main/resources/installation/windows">
+				<include name="*.*" />
+			</fileset>
+		</copy>
+		<copy todir="target/zip/license" overwrite="true">
+			<fileset dir="../license">
+				<include name="**/*.*" />
+			</fileset>
+		</copy>
+		<copy todir="target/zip/lib" overwrite="true">
+			<fileset dir="target/dependency">
+				<include name="*.jar" />
+			</fileset>
+		</copy>
+		<zip destfile="${jhh.prod.dir}/Jhh${install.version}.zip" basedir="target/zip"
+			includes="**/*.*" />
+	</target>
+
+	<target name="copy_ftp" if="ftp.server">
+		<echo message="Copy FTP." />
+		<scp todir="${ftp.userid}:${ftp.password}@${ftp.server}:${ftp.remotedir}" sftp="true" trust="true">
+			<fileset dir="${jhh.prod.dir}">
+				<include name="Jhh${install.version}.zip" />
+				<include name="Jhh-Hilfe${install.version}.html" />
+				<!--include name="InstallUpdate.sh_.txt" />
+				<include name="InstallUpdate.cmd_.txt" /-->
+			</fileset>
+		</scp>
+	</target>
+</project>

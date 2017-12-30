@@ -137,7 +137,47 @@
 						<argLine>-Duser.language=en</argLine>
 					</configuration>
 				</plugin>
-			</plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-antrun-plugin</artifactId>
+					<version>1.8</version>
+					<executions>
+						<execution>
+							<phase>process-resources</phase>
+							<goals>
+								<goal>run</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<target>
+							<ant antfile="build.xml" />
+						</target>
+					</configuration>
+					<dependencies>
+						<dependency>
+							<groupId>commons-net</groupId>
+							<artifactId>commons-net</artifactId>
+							<version>3.6</version>
+						</dependency>
+						<dependency>
+							<groupId>org.apache.ant</groupId>
+							<artifactId>ant-commons-net</artifactId>
+							<version>1.10.1</version>
+						</dependency>
+						<dependency>
+							<groupId>org.apache.ant</groupId>
+							<artifactId>ant-jsch</artifactId>
+							<version>1.10.1</version>
+						</dependency>
+						<dependency>
+							<groupId>com.jcraft</groupId>
+							<artifactId>jsch</artifactId>
+							<version>0.1.54</version>
+						</dependency>
+					</dependencies>
+				</plugin>
+		</plugins>
 		</pluginManagement>
 
 		<!-- <sourceDirectory>src</sourceDirectory> <resources> <resource> <directory>src</directory> 
@@ -202,4 +242,4 @@
 	</dependencies>
 
 </project>
-<!-- Goals Build: clean eclipse:eclipse xtend:compile install org.apache.maven.plugins:maven-dependency-plugin:copy-dependencies -->
+<!-- Goals Build: clean eclipse:eclipse xtend:compile install org.apache.maven.plugins:maven-dependency-plugin:copy-dependencies antrun:run -->

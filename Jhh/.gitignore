@@ -65,3 +65,4 @@ xtend-gen/
 
 *.log
 *.log.1
+/build.properties

@@ -1,0 +1,16 @@
+# ubuntu
+jhh.prod.dir=/opt/Haushalt/JHH5
+# win8
+#jhh.prod.dir=D:/Haushalt/JHH5
+
+install.version=-5_0
+
+ftp.server=server
+ftp.userid=userid
+ftp.password=password
+ftp.remotedir=/remote/dir
+
+jarsigner.keystore=/dir/jhh.keystore
+jarsigner.storepass=password
+jarsigner.keypass=password
+jarsigner.alias=alias
