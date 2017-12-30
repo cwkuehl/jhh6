@@ -50,11 +50,11 @@ class Jhh6 extends Application {
 			{
 				var Throwable t = t0
 				if (t instanceof RuntimeException) {
-					var RuntimeException ex = (t as RuntimeException)
+					var ex = t
 					if (ex.getCause !== null) {
 						t = ex.getCause
 						if (t instanceof InvocationTargetException) {
-							var InvocationTargetException ex2 = (t as InvocationTargetException)
+							var ex2 = t
 							if (ex2.getTargetException !== null) {
 								t = ex2.getTargetException
 							}

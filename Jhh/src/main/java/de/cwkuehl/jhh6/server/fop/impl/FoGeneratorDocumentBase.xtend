@@ -586,7 +586,7 @@ class FoGeneratorDocumentBase {
 		var int l = text.length
 		var StringBuilder sb = new StringBuilder
 		for (var int i = 0; i < l; i++) {
-			var char c = (text.charAt(i)) as char
+			var c = text.charAt(i)
 			if(!(c === 0 || c === 2 || c === 19 || c === 24)) sb.append(c)
 		}
 		return sb.toString
