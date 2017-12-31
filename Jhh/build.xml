@@ -20,6 +20,10 @@
 
 	<target name="copy_local" if="jhh.prod.dir">
 		<echo message="Copy local JHH6." />
+	    <tstamp>
+	      <format property="updatetime" pattern="yyyy-MM-dd HH:mm:ss" locale="de,DE"/>
+	    </tstamp>
+		<echo file="${jhh.prod.dir}/update.txt" append="false">${updatetime}</echo>
 		<copy todir="${jhh.prod.dir}" overwrite="true">
 			<fileset dir="target">
 				<include name="*.jar" />
@@ -80,6 +84,7 @@
 			<fileset dir="${jhh.prod.dir}">
 				<include name="Jhh${install.version}.zip" />
 				<include name="Jhh-Hilfe${install.version}.html" />
+				<include name="update.txt" />
 				<!--include name="InstallUpdate.sh_.txt" />
 				<include name="InstallUpdate.cmd_.txt" /-->
 			</fileset>

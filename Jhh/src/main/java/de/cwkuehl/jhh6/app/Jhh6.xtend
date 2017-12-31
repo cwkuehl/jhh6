@@ -36,6 +36,7 @@ class Jhh6 extends Application {
 	// }
 	// }
 	def static void main(String[] args) {
+
 		// Locale.setDefault(Locale.ENGLISH);
 		if (Global::isWebStart) {
 			if (args !== null) {
@@ -46,6 +47,7 @@ class Jhh6 extends Application {
 	}
 
 	override void start(Stage stage) throws IOException {
+
 		Thread::currentThread.setUncaughtExceptionHandler([ thread, t0 |
 			{
 				var Throwable t = t0

@@ -67,12 +67,12 @@ class Global {
 				i = Integer.parseInt(str)
 			} catch (Exception ex) {
 				try {
-					i = Double.parseDouble(str).intValue()
+					i = Double.parseDouble(str).intValue
 				} catch (Exception ex2) {
 					try {
-						i = NumberFormat.getNumberInstance(Locale.GERMAN).parse(str).intValue()
+						i = NumberFormat.getNumberInstance(Locale.GERMAN).parse(str).intValue
 					} catch (Exception ex3) {
-						machNichts()
+						machNichts
 					}
 				}
 			}
@@ -172,7 +172,7 @@ class Global {
 				d = Double.parseDouble(str)
 			} catch (Exception ex) {
 				try {
-					d = NumberFormat.getNumberInstance(Locale.GERMAN).parse(str).doubleValue()
+					d = NumberFormat.getNumberInstance(Locale.GERMAN).parse(str).doubleValue
 				} catch (Exception ex2) {
 					return 0
 				}
@@ -401,10 +401,10 @@ class Global {
 		if (o !== null) {
 			try {
 				if (o instanceof Boolean) {
-					b = o.booleanValue()
+					b = o.booleanValue
 				} else if (o instanceof String) {
-					val str = o.toString()
-					if (str.length() > 0) {
+					val str = o.toString
+					if (str.length > 0) {
 						if (str.equals("wahr")) {
 							b = true
 						} else if (str.equals("true")) {
@@ -422,13 +422,13 @@ class Global {
 						b = true
 					}
 				} else {
-					var str = o.toString()
+					var str = o.toString
 					if (strInt(str) != 0) {
 						b = true
 					}
 				}
 			} catch (Exception e) {
-				machNichts()
+				machNichts
 			}
 		}
 		return b
@@ -462,7 +462,7 @@ class Global {
 				str = o.toString // .trim
 				var len = str.length
 				if (len > 0) {
-					var arr = str.toCharArray()
+					var arr = str.toCharArray
 					while ((0 < len) && (arr.get(len - 1) <= ' ')) {
 						len--
 					}
@@ -491,7 +491,7 @@ class Global {
 		if (objFormat instanceof Double) {
 			str = format("{0,number,0.00}", objFormat)
 		} else if (objFormat instanceof Boolean) {
-			if (objFormat.booleanValue()) {
+			if (objFormat.booleanValue) {
 				str = "wahr"
 			} else {
 				str = "falsch"
@@ -501,7 +501,7 @@ class Global {
 		} else if (objFormat instanceof LocalDate) {
 			str = dateTimeStringForm(objFormat.atStartOfDay)
 		} else {
-			str = objFormat.toString()
+			str = objFormat.toString
 		}
 		return str
 	}
@@ -760,7 +760,7 @@ class Global {
 
 		if (strB !== null) {
 			var strObj = objStr(obj)
-			if (strB.length() > 0 && strObj.length() > 0) {
+			if (strB.length > 0 && strObj.length > 0) {
 				if (!nes(filler)) {
 					strB.append(filler)
 				}
@@ -791,7 +791,7 @@ class Global {
 
 		if (strB !== null) {
 			var strObj = objStr(obj)
-			if (strB.length() > 0 && strObj.length() > 0) {
+			if (strB.length > 0 && strObj.length > 0) {
 				if (!nes(filler1)) {
 					strB.append(filler1)
 				}
@@ -819,7 +819,7 @@ class Global {
 
 		var strObjB = objStr(objB)
 		var strObj = objStr(obj)
-		if (strObjB.length() > 0 && strObj.length() > 0) {
+		if (strObjB.length > 0 && strObj.length > 0) {
 			if (!nes(filler)) {
 				strObjB += filler
 			}
@@ -846,25 +846,25 @@ class Global {
 		if (l < 0) {
 			l = 0
 		}
-		if (str !== null && str.length() < l) {
+		if (str !== null && str.length < l) {
 			var strB = new StringBuffer(str)
 			if (nes(strFuellung)) {
 				strFuellung = " "
 			}
-			while (strB.length() < l) {
+			while (strB.length < l) {
 				if (rechtsAuffuellen) {
 					strB.append(strFuellung)
 				} else {
-					if (strB.length() + strFuellung.length() > l) {
-						strB.insert(0, strFuellung.substring(0, l - strFuellung.length() + 1))
+					if (strB.length + strFuellung.length > l) {
+						strB.insert(0, strFuellung.substring(0, l - strFuellung.length + 1))
 					} else {
 						strB.insert(0, strFuellung)
 					}
 				}
 			}
-			str = strB.toString()
+			str = strB.toString
 		}
-		if (str !== null && str.length() > l) {
+		if (str !== null && str.length > l) {
 			str = str.substring(0, l)
 		}
 		return str
@@ -877,7 +877,7 @@ class Global {
 	 */
 	def public static StringBuffer appendKomma(StringBuffer strB) {
 
-		if (strB !== null && strB.length() > 0) {
+		if (strB !== null && strB.length > 0) {
 			strB.append(",")
 		}
 		return strB
@@ -911,9 +911,9 @@ class Global {
 			}
 		}
 		re.append(".*") // Ende egal
-		var p = Pattern.compile(re.toString(), Pattern.CASE_INSENSITIVE)
+		var p = Pattern.compile(re.toString, Pattern.CASE_INSENSITIVE)
 		var m = p.matcher(str)
-		if (m.find()) {
+		if (m.find) {
 			var s = m.group(1)
 			return s
 		}
@@ -992,7 +992,7 @@ class Global {
 	 */
 	def public static String dateTimeStringForm(LocalDateTime d) {
 
-		if (d === null /* || d.getTime() == datumZeit0.getTime()*/ ) {
+		if (d === null /* || d.getTime == datumZeit0.getTime*/ ) {
 			return ""
 		}
 		var str = ""
@@ -1015,7 +1015,7 @@ class Global {
 	 */
 	def public static String getPeriodeString(LocalDate von, LocalDate bis, boolean monate) {
 
-		var sb = new StringBuilder()
+		var sb = new StringBuilder
 
 		if (von !== null && bis !== null) {
 			if (von.dayOfMonth != 1 || bis.dayOfMonth != bis.lengthOfMonth) {
@@ -1050,7 +1050,7 @@ class Global {
 		} else if (von !== null) {
 			sb.append(von.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")))
 		}
-		return sb.toString()
+		return sb.toString
 	}
 
 	/**
@@ -1095,7 +1095,7 @@ class Global {
 				// parst auch 1.2.2004
 				d = LocalDate.parse(str, DateTimeFormatter.ofPattern("d.M.yy"))
 			} catch (Exception exc) {
-				machNichts()
+				machNichts
 			}
 		}
 		return d
@@ -1152,9 +1152,9 @@ class Global {
 		}
 		var bytes = s.getBytes(Charset.forName("UTF-8"))
 		// Methode 1: XOR und Base64
-		bytes = xorMessage(bytes, getXorKeybytes())
+		bytes = xorMessage(bytes, getXorKeybytes)
 		if (bytes !== null) {
-			var str = Base64.getEncoder().encodeToString(bytes)
+			var str = Base64.getEncoder.encodeToString(bytes)
 			return "1;" + str
 		}
 		return null
@@ -1173,8 +1173,8 @@ class Global {
 		if (s.startsWith("1;")) {
 			// Methode 1: XOR und Base64
 			try {
-				var bytes = Base64.getDecoder().decode(s.substring(2))
-				bytes = xorMessage(bytes, getXorKeybytes())
+				var bytes = Base64.getDecoder.decode(s.substring(2))
+				bytes = xorMessage(bytes, getXorKeybytes)
 				var str = new String(bytes, "UTF-8")
 				return str
 			} catch (UnsupportedEncodingException e) {
@@ -1245,9 +1245,9 @@ class Global {
 
 		try {
 			// Get the size of the file
-			var length = file.length()
+			var length = file.length
 			if (length > max) {
-				throw new Exception("Die Datei " + file.getName() + " ist zu groß.")
+				throw new Exception("Die Datei " + file.getName + " ist zu groß.")
 			}
 
 			// Byte-Array anlegen
@@ -1264,11 +1264,11 @@ class Global {
 			}
 			// Alles gelesen?
 			if (offset < bytes.length) {
-				throw new IOException("Die Datei " + file.getName() + " konnte nicht komplett gelesen werden.")
+				throw new IOException("Die Datei " + file.getName + " konnte nicht komplett gelesen werden.")
 			}
 		} finally {
 			// Close the input stream and return bytes
-			is.close()
+			is.close
 		}
 		return bytes
 	}
@@ -1281,8 +1281,8 @@ class Global {
 	 */
 	def public static String encodeCSV(List<String> felder) {
 
-		if (felder !== null && felder.size() > 0) {
-			var csv = new StringBuffer()
+		if (felder !== null && felder.size > 0) {
+			var csv = new StringBuffer
 			for (f : felder) {
 				if (csv.length > 0) {
 					csv.append(";")
@@ -1296,7 +1296,7 @@ class Global {
 				csv.append("\"")
 			}
 			csv.append(Constant.CRLF)
-			return csv.toString()
+			return csv.toString
 		}
 		return null
 	}
@@ -1309,7 +1309,7 @@ class Global {
 	 */
 	def private static char holZeichen(String str, int i) {
 
-		if (i < str.length()) {
+		if (i < str.length) {
 			return str.charAt(i)
 		}
 		return 0 as char
@@ -1338,11 +1338,11 @@ class Global {
 	 */
 	def public static List<String> decodeCSV(String csv) throws Exception {
 
-		if (csv === null || csv.length() <= 0) {
+		if (csv === null || csv.length <= 0) {
 			return null
 		}
 
-		var felder = new ArrayList<String>()
+		var felder = new ArrayList<String>
 		var zustand = Z_ANFANG
 		var i = 0
 		var char zeichen
@@ -1352,7 +1352,7 @@ class Global {
 		val char cr = '\r'
 		val char lf = '\n'
 		var ende = false
-		var feld = new StringBuffer()
+		var feld = new StringBuffer
 		do {
 			zeichen = holZeichen(csv, i)
 			switch (zustand) {
@@ -1363,7 +1363,7 @@ class Global {
 					} else if (zeichen == anf) {
 						zustand = Z_ZK_ANFANG
 					} else if (zeichen == semi || zeichen == komma) {
-						felder.add(feld.toString())
+						felder.add(feld.toString)
 						feld.setLength(0)
 					} else if (zeichen == cr || zeichen == lf) {
 						zustand = Z_ENDE_ANFANG // Zeilenende-Anfang
@@ -1390,7 +1390,7 @@ class Global {
 						zustand = Z_ZK_ANFANG
 					} else if (zeichen == semi || zeichen == komma) {
 						zustand = Z_ANFANG
-						felder.add(feld.toString())
+						felder.add(feld.toString)
 						feld.setLength(0)
 					} else if (zeichen == cr || zeichen == lf) {
 						i--
@@ -1401,7 +1401,7 @@ class Global {
 				// case Z_FELD_ENDE: // Feldende
 				// i--
 				// zustand = Z_ANFANG
-				// felder.add(feld.toString())
+				// felder.add(feld.toString)
 				// feld.setLength(0)
 				// break
 				case Z_ZEICHENKETTE: // Zeichenketten ohne "
@@ -1410,7 +1410,7 @@ class Global {
 						zustand = Z_ENDE_ENDE // Zeilenende-Ende
 					} else if (zeichen == semi || zeichen == komma) {
 						zustand = Z_ANFANG
-						felder.add(feld.toString())
+						felder.add(feld.toString)
 						feld.setLength(0)
 					} else {
 						feld.append(zeichen)
@@ -1423,15 +1423,15 @@ class Global {
 				case Z_ENDE_ENDE: // Zeilenende-Ende
 				{
 					ende = true
-					felder.add(feld.toString())
+					felder.add(feld.toString)
 					feld.setLength(0)
 				}
 			// default:
-			// machNichts()
+			// machNichts
 			}
 			if (!ende) {
 				i++
-				if (i > csv.length()) {
+				if (i > csv.length) {
 					throw new Exception("CSV-Parse-Error in Zeile\n" + csv)
 				}
 			}
@@ -1460,7 +1460,7 @@ class Global {
 	 */
 	def public static long getNextRandom() {
 
-		var l = random.nextLong()
+		var l = random.nextLong
 		return Math.abs(l)
 	}
 
@@ -1480,15 +1480,15 @@ class Global {
 			sb.append(name)
 		}
 		if (datum) {
-			sb.append("_").append(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")))
+			sb.append("_").append(LocalDate.now.format(DateTimeFormatter.ofPattern("yyyyMMdd")))
 		}
 		if (zufall) {
-			sb.append("_").append(getNextRandom())
+			sb.append("_").append(getNextRandom)
 		}
 		if (!nes(endung)) {
 			sb.append(".").append(endung)
 		}
-		return sb.toString()
+		return sb.toString
 	}
 
 	/**
@@ -1503,15 +1503,15 @@ class Global {
 
 		var str = "Unbekannt"
 		try {
-			var url = clazz.getProtectionDomain().getCodeSource().getLocation()
-			str += " " + url.getPath()
-			var file = new File(url.getPath())
+			var url = clazz.getProtectionDomain.getCodeSource.getLocation
+			str += " " + url.getPath
+			var file = new File(url.getPath)
 			var JarFile jar = null
 			try {
 				jar = new JarFile(file)
-				var manifest = jar.getManifest()
-				str += " " + manifest.toString()
-				var attributes = manifest.getMainAttributes()
+				var manifest = jar.getManifest
+				str += " " + manifest.toString
+				var attributes = manifest.getMainAttributes
 				str += " " + getAttributes(attributes)
 				if (attributes.getValue(key) !== null) {
 					str = attributes.getValue(key)
@@ -1519,11 +1519,11 @@ class Global {
 				}
 			} finally {
 				if (jar !== null) {
-					jar.close()
+					jar.close
 				}
 			}
 		} catch (Exception e) {
-			Global.machNichts()
+			Global.machNichts
 		}
 		return str
 	}
@@ -1531,14 +1531,14 @@ class Global {
 	def private static String getAttributes(Attributes attributes) {
 
 		var sb = new StringBuffer
-		for (i : attributes.keySet()) {
+		for (i : attributes.keySet) {
 			var k = i.toString
-			if (sb.length() > 0) {
+			if (sb.length > 0) {
 				sb.append("; ")
 			}
 			sb.append(k).append("=").append(attributes.getValue(k))
 		}
-		return sb.toString()
+		return sb.toString
 	}
 
 	/**
@@ -1551,7 +1551,7 @@ class Global {
 		if (list === null) {
 			return 0
 		}
-		return list.size()
+		return list.size
 	}
 
 	def public static String getExceptionText(Throwable ex) {
@@ -1560,10 +1560,10 @@ class Global {
 		if (ex === null) {
 			str = "Unbekannte Exception."
 		} else {
-			str = ex.getMessage()
+			str = ex.getMessage
 			if (Global.nes(str)) {
-				// ex.printStackTrace()
-				str = ex.toString()
+				// ex.printStackTrace
+				str = ex.toString
 			}
 		}
 		return str
@@ -1749,7 +1749,7 @@ class Global {
 	def private static int getBetriebssystem() {
 
 		if (betriebssystem == 0) {
-			if (getOsName().equals("linux")) {
+			if (getOsName.equals("linux")) {
 				betriebssystem = 2
 			} else {
 				betriebssystem = 1
@@ -1763,7 +1763,7 @@ class Global {
 	 * @return Liefert True, wenn Betriebssystem Windows ist.
 	 */
 	def public static boolean istWindows() {
-		return getBetriebssystem() == 1
+		return getBetriebssystem == 1
 	}
 
 	/**
@@ -1771,6 +1771,6 @@ class Global {
 	 * @return Liefert True, wenn Betriebssystem Linux ist.
 	 */
 	def public static boolean istLinux() {
-		return getBetriebssystem() == 2
+		return getBetriebssystem == 2
 	}
 }

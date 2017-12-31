@@ -5,6 +5,7 @@ import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.api.service.ServiceDaten
 import de.cwkuehl.jhh6.app.Jhh6
 import java.awt.Desktop
+import java.io.BufferedInputStream
 import java.io.BufferedReader
 import java.io.BufferedWriter
 import java.io.File
@@ -12,6 +13,7 @@ import java.io.FileOutputStream
 import java.io.FileReader
 import java.io.FileWriter
 import java.io.Writer
+import java.net.URL
 import java.util.ArrayList
 import java.util.List
 import java.util.Properties
@@ -135,6 +137,28 @@ class Werkzeug {
 		return sb.toString
 	}
 
+	/** Is an update available? */
+	def public static boolean isUpdateAvailable() {
+
+		var BufferedInputStream in = null
+		try {
+			in = new BufferedInputStream(new URL("http://cwkuehl.de/wp-content/uploads/2017/12/update.txt").openStream)
+			val data = newByteArrayOfSize(19)
+			if (in.read(data, 0, data.length) >= data.length) {
+				val sbt = Global.getManifestProperty(typeof(Werkzeug), "/META-INF/MANIFEST.MF", "Built-Time")
+				val bt = Global.objDat(sbt)
+				val up = Global.objDat(new String(data))
+				if (bt !== null && up !== null && bt.isBefore(up))
+					return true
+			}
+		} finally {
+			if (in !== null) {
+				in.close
+			}
+		}
+		return false
+	}
+
 	/**
 	 * Setzt die Hilfe-Datei in eine WebEngine.
 	 * @param Betroffene WebEngine, die die Hilfe anzeigen soll.
@@ -178,7 +202,7 @@ class Werkzeug {
 		alert.setTitle(Jhh6.titelKurz)
 		if (typ == AlertType.INFORMATION) {
 			alert.setHeaderText(g("alert.info"))
-		} else if (typ == AlertType.CONFIRMATION){
+		} else if (typ == AlertType.CONFIRMATION) {
 			alert.setHeaderText(g("alert.confirm"))
 		} else {
 			alert.setHeaderText(g("alert.error"))

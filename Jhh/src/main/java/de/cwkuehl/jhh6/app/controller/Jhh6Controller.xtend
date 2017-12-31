@@ -2,11 +2,13 @@ package de.cwkuehl.jhh6.app.controller
 
 import de.cwkuehl.jhh6.api.global.Constant
 import de.cwkuehl.jhh6.api.global.Global
+import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.api.service.ServiceDaten
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.app.base.StartDialog
+import de.cwkuehl.jhh6.app.base.Werkzeug
 import de.cwkuehl.jhh6.app.controller.ad.AD100PersonenController
 import de.cwkuehl.jhh6.app.controller.ad.AD120GeburtstageController
 import de.cwkuehl.jhh6.app.controller.ag.AG000InfoController
@@ -198,6 +200,9 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 
 	@FXML def protected void handleAnmelden(ActionEvent e) {
 
+		if (Werkzeug::isUpdateAvailable) {
+			setLeftStatus(Meldungen.M3001)
+		}
 		var daten = getServiceDaten
 		if (menueAnmelden.isVisible) {
 			var s = starteDialog(typeof(AM000AnmeldungController), DialogAufrufEnum.OHNE)
