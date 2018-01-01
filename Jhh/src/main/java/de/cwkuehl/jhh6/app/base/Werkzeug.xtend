@@ -146,8 +146,8 @@ class Werkzeug {
 			val data = newByteArrayOfSize(19)
 			if (in.read(data, 0, data.length) >= data.length) {
 				val sbt = Global.getManifestProperty(typeof(Werkzeug), "/META-INF/MANIFEST.MF", "Built-Time")
-				val bt = Global.objDat(sbt)
-				val up = Global.objDat(new String(data))
+				val bt = Global.strdat(sbt)
+				val up = Global.strdat(new String(data))
 				if (bt !== null && up !== null && bt.isBefore(up))
 					return true
 			}

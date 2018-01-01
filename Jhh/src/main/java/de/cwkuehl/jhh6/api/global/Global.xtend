@@ -1082,6 +1082,33 @@ class Global {
 	}
 
 	/**
+	 * Konvertierung eines Strings in LocalDateTime. Falls eine Exception auftritt, wird sie abgefangen und null geliefert.
+	 * @param str Beliebiger String.
+	 * @return Konvertiertes LocalDateTime.
+	 */
+	def public static LocalDateTime strdat(String str) {
+
+		var LocalDateTime d = null
+		if (str !== null) {
+			try {
+				d = LocalDateTime.parse(str, DateTimeFormatter.ofPattern("y-M-d HH:mm:ss"))
+			} catch (Exception ex) {
+				machNichts
+			}
+			if (d === null) {
+				try {
+					// parst auch 1.2.2004
+					var d2 = LocalDate.parse(str, DateTimeFormatter.ofPattern("y-M-d"))
+					d = d2.atStartOfDay
+				} catch (Exception exc) {
+					machNichts
+				}
+			}
+		}
+		return d
+	}
+
+	/**
 	 * Konvertierung eines Strings in LocalDate. Falls eine Exception auftritt, wird sie abgefangen und null geliefert.
 	 * @param obj Beliebiger String.
 	 * @return Konvertiertes LocalDate.

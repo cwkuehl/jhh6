@@ -20,10 +20,7 @@
 
 	<target name="copy_local" if="jhh.prod.dir">
 		<echo message="Copy local JHH6." />
-	    <tstamp>
-	      <format property="updatetime" pattern="yyyy-MM-dd HH:mm:ss" locale="de,DE"/>
-	    </tstamp>
-		<echo file="${jhh.prod.dir}/update.txt" append="false">${updatetime}</echo>
+		<echo file="${jhh.prod.dir}/update.txt" append="false">${maven.build.timestamp}</echo>
 		<copy todir="${jhh.prod.dir}" overwrite="true">
 			<fileset dir="target">
 				<include name="*.jar" />
