@@ -38,6 +38,7 @@ import de.cwkuehl.jhh6.app.controller.hp.HP200BehandlungenController
 import de.cwkuehl.jhh6.app.controller.hp.HP300LeistungenController
 import de.cwkuehl.jhh6.app.controller.hp.HP350LeistungsgruppenController
 import de.cwkuehl.jhh6.app.controller.hp.HP400RechnungenController
+import de.cwkuehl.jhh6.app.controller.mo.MO100MessdienerController
 import de.cwkuehl.jhh6.app.controller.tb.TB100TagebuchController
 import de.cwkuehl.jhh6.server.FactoryService
 import java.net.URL
@@ -370,6 +371,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		l.add(new StartDialog("#HP100", g("menu.patients"), typeof(HP100PatientenController), null))
 		l.add(new StartDialog("#HP200", g("menu.treatments"), typeof(HP200BehandlungenController), null))
 		l.add(new StartDialog("#HP400", g("menu.invoices"), typeof(HP400RechnungenController), null))
+		l.add(new StartDialog("#MO100", g("menu.acolytes"), typeof(MO100MessdienerController), null))
 		// l.add(new StartDialog("#SB200", g("menu.ancestors"), typeof(SB200AhnenController), null))
 		// l.add(new StartDialog("#SB300", g("menu.families"), typeof(SB300FamilienController), null))
 		// l.add(new StartDialog("#VM300", g("menu.renters"), typeof(VM300MieterController), null))
@@ -509,7 +511,8 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		starteFormular(typeof(HP400RechnungenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleMO100() { // starteFormular(typeof(MO100MessdienerController), DialogAufrufEnum.OHNE)
+	@FXML def void handleMO100() {
+		starteFormular(typeof(MO100MessdienerController), DialogAufrufEnum.OHNE)
 	}
 
 	@FXML def void handleMO200() { // starteFormular(typeof(MO200GottesdiensteController), DialogAufrufEnum.OHNE)

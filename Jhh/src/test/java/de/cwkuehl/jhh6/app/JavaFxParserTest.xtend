@@ -82,7 +82,15 @@ class JavaFxParserTest extends TestBase {
 		// parse("hp/HP360Leistungsgruppe.fxml")
 		// parse("hp/HP400Rechnungen.fxml")
 		// parse("hp/HP410Rechnung.fxml")
-		 parse("hp/HP420Behandlungen.fxml")
+		// parse("hp/HP420Behandlungen.fxml")
+		// parse("mo/MO100Messdiener.fxml")
+		// parse("mo/MO110Messdiener.fxml")
+		// parse("mo/MO200Gottesdienste.fxml")
+		// parse("mo/MO210Gottesdienst.fxml")
+		// parse("mo/MO220Einteilung.fxml")
+		// parse("mo/MO300Profile.fxml")
+		// parse("mo/MO310Profil.fxml")
+		 parse("mo/MO500Schnittstelle.fxml")
 		// parse("tb/TB100Tagebuch.fxml")
 		Global.machNichts
 	}

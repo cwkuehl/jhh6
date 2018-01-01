@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import de.cwkuehl.jhh5.anwendung.control.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import de.cwkuehl.jhh6.app.control.Datum?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.66" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="de.cwkuehl.jhh6.app.controller.mo.MO110MessdienerController">
+
+	<padding>
+		<Insets bottom="10" left="10" right="10" top="10" />
+	</padding>
+
+	<Label fx:id="nr0" text="%MO110.nr" GridPane.columnIndex="0" />
+	<TextField fx:id="nr" accessibleText="%MO110.nr.tt" promptText="%MO110.nr.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="3">
+		<tooltip>
+			<Tooltip text="%MO110.nr.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="vorname0" mnemonicParsing="true" text="%MO110.vorname" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+	<TextField fx:id="vorname" accessibleText="%MO110.vorname.tt" promptText="%MO110.vorname.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
+		<tooltip>
+			<Tooltip text="%MO110.vorname.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="name0" mnemonicParsing="true" text="%MO110.name" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+	<TextField fx:id="name" accessibleText="%MO110.name.tt" promptText="%MO110.name.tt" GridPane.columnIndex="3"
+		GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
+		<tooltip>
+			<Tooltip text="%MO110.name.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="adresse10" mnemonicParsing="true" text="%MO110.adresse1" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+	<TextField fx:id="adresse1" accessibleText="%MO110.adresse1.tt" promptText="%MO110.adresse1.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="3" GridPane.rowIndex="2">
+		<tooltip>
+			<Tooltip text="%MO110.adresse1.tt" />
+		</tooltip>
+	</TextField>
+	<TextField fx:id="adresse2" accessibleText="%MO110.adresse2.tt" promptText="%MO110.adresse2.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="3" GridPane.rowIndex="3">
+		<tooltip>
+			<Tooltip text="%MO110.adresse2.tt" />
+		</tooltip>
+	</TextField>
+	<TextField fx:id="adresse3" accessibleText="%MO110.adresse3.tt" promptText="%MO110.adresse3.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="3" GridPane.rowIndex="4">
+		<tooltip>
+			<Tooltip text="%MO110.adresse3.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="telefon10" mnemonicParsing="true" text="%MO110.telefon1" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+	<TextField fx:id="telefon1" accessibleText="%MO110.telefon1.tt" promptText="%MO110.telefon1.tt"
+		GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5">
+		<tooltip>
+			<Tooltip text="%MO110.telefon1.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="telefon20" mnemonicParsing="true" text="%MO110.telefon2" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+	<TextField fx:id="telefon2" accessibleText="%MO110.telefon2.tt" promptText="%MO110.telefon2.tt"
+		GridPane.columnIndex="3" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5">
+		<tooltip>
+			<Tooltip text="%MO110.telefon2.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="email10" mnemonicParsing="true" text="%MO110.email1" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+	<TextField fx:id="email1" accessibleText="%MO110.email1.tt" promptText="%MO110.email1.tt"
+		GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6">
+		<tooltip>
+			<Tooltip text="%MO110.email1.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="email20" mnemonicParsing="true" text="%MO110.email2" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+	<TextField fx:id="email2" accessibleText="%MO110.email2.tt" promptText="%MO110.email2.tt"
+		GridPane.columnIndex="3" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6">
+		<tooltip>
+			<Tooltip text="%MO110.email2.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="mit0" mnemonicParsing="true" text="%MO110.mit" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+	<ComboBox fx:id="mit" accessibleText="%MO110.mit.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="3" GridPane.rowIndex="7">
+		<tooltip>
+			<Tooltip text="%MO110.mit.tt" />
+		</tooltip>
+	</ComboBox>
+	<Label fx:id="von0" mnemonicParsing="true" text="%MO110.von" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+	<Datum fx:id="von" accessibleText="%MO110.von.tt" nullText="" uhrzeitGroesse="0" promptText="%MO110.von.tt" schalterText=" "
+		GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.rowIndex="8">
+		<tooltip>
+			<Tooltip text="%MO110.von.tt" />
+		</tooltip>
+	</Datum>
+	<Label fx:id="bis0" mnemonicParsing="true" text="%MO110.bis" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+	<Datum fx:id="bis" accessibleText="%MO110.bis.tt" nullText="noch aktiv" uhrzeitGroesse="0" promptText="%MO110.bis.tt" schalterText=" hp"
+		GridPane.columnIndex="3" GridPane.columnSpan="1" GridPane.rowIndex="8">
+		<tooltip>
+			<Tooltip text="%MO110.bis.tt" />
+		</tooltip>
+	</Datum>
+	<Label fx:id="dienste0" mnemonicParsing="true" text="%MO110.dienste" GridPane.columnIndex="0" GridPane.rowIndex="9" />
+	<ListView fx:id="dienste" accessibleText="%MO110.dienste.tt" GridPane.columnIndex="1" GridPane.columnSpan="1"
+		GridPane.hgrow="ALWAYS" GridPane.rowIndex="9" GridPane.rowSpan="1" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%MO110.dienste.tt" />
+		</tooltip>
+	</ListView>
+	<Label fx:id="verfuegbar0" mnemonicParsing="true" text="%MO110.verfuegbar" GridPane.columnIndex="2"
+		GridPane.rowIndex="9" />
+	<ListView fx:id="verfuegbar" accessibleText="%MO110.verfuegbar.tt"
+		GridPane.columnIndex="3" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="9" GridPane.rowSpan="1"
+		GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%MO110.verfuegbar.tt" />
+		</tooltip>
+	</ListView>
+	<Label fx:id="status0" text="%MO110.status" GridPane.columnIndex="0" GridPane.rowIndex="10" />
+	<ComboBox fx:id="status" accessibleText="%MO110.status.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="3" GridPane.rowIndex="10">
+		<tooltip>
+			<Tooltip text="%MO110.status.tt" />
+		</tooltip>
+	</ComboBox>
+	<Label fx:id="notiz0" text="%MO110.notiz" GridPane.columnIndex="0" GridPane.rowIndex="11" />
+	<TextArea fx:id="notiz" accessibleText="%MO110.notiz.tt" promptText="%MO110.notiz.tt" wrapText="true" GridPane.columnIndex="1"
+		GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="11" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%MO110.notiz.tt" />
+		</tooltip>
+	</TextArea>
+	<Label fx:id="angelegt0" text="%Creation" GridPane.columnIndex="0" GridPane.rowIndex="12" />
+	<TextField fx:id="angelegt" accessibleText="%Creation.tt"
+		promptText="%Creation.tt" GridPane.columnIndex="1" GridPane.columnSpan="3"
+		GridPane.rowIndex="12">
+		<tooltip>
+			<Tooltip text="%Creation.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="geaendert0" text="%Change" GridPane.columnIndex="0" GridPane.rowIndex="13" />
+	<TextField fx:id="geaendert" accessibleText="%Change.tt"
+		promptText="%Change.tt" GridPane.columnIndex="1" GridPane.columnSpan="3"
+		GridPane.rowIndex="13">
+		<tooltip>
+			<Tooltip text="%Change.tt" />
+		</tooltip>
+	</TextField>
+	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="14">
+		<Button fx:id="ok" defaultButton="true" mnemonicParsing="true" onAction="#onOk" text="%Ok">
+			<tooltip>
+				<Tooltip text="%Ok.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="abbrechen" cancelButton="true" onAction="#onAbbrechen" text="%Cancel">
+			<tooltip>
+				<Tooltip text="%Cancel.tt" />
+			</tooltip>
+		</Button>
+	</HBox>
+
+	<stylesheets>
+		<URL value="@../Jhh6.css" />
+	</stylesheets>
+	<columnConstraints>
+		<ColumnConstraints minWidth="90.0" />
+		<ColumnConstraints />
+		<ColumnConstraints minWidth="90.0" />
+		<ColumnConstraints />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+	</rowConstraints>
+</GridPane>
