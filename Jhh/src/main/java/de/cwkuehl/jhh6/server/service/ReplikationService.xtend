@@ -84,6 +84,7 @@ import de.cwkuehl.jhh6.api.dto.MaParameterKey
 import de.cwkuehl.jhh6.api.dto.MaParameterUpdate
 import de.cwkuehl.jhh6.api.dto.MoEinteilung
 import de.cwkuehl.jhh6.api.dto.MoEinteilungKey
+import de.cwkuehl.jhh6.api.dto.MoEinteilungLang
 import de.cwkuehl.jhh6.api.dto.MoEinteilungUpdate
 import de.cwkuehl.jhh6.api.dto.MoGottesdienst
 import de.cwkuehl.jhh6.api.dto.MoGottesdienstKey
@@ -136,6 +137,21 @@ import de.cwkuehl.jhh6.api.dto.VmMieterUpdate
 import de.cwkuehl.jhh6.api.dto.VmWohnung
 import de.cwkuehl.jhh6.api.dto.VmWohnungKey
 import de.cwkuehl.jhh6.api.dto.VmWohnungUpdate
+import de.cwkuehl.jhh6.api.dto.WpAnlage
+import de.cwkuehl.jhh6.api.dto.WpAnlageKey
+import de.cwkuehl.jhh6.api.dto.WpAnlageUpdate
+import de.cwkuehl.jhh6.api.dto.WpBuchung
+import de.cwkuehl.jhh6.api.dto.WpBuchungKey
+import de.cwkuehl.jhh6.api.dto.WpBuchungUpdate
+import de.cwkuehl.jhh6.api.dto.WpKonfiguration
+import de.cwkuehl.jhh6.api.dto.WpKonfigurationKey
+import de.cwkuehl.jhh6.api.dto.WpKonfigurationUpdate
+import de.cwkuehl.jhh6.api.dto.WpStand
+import de.cwkuehl.jhh6.api.dto.WpStandKey
+import de.cwkuehl.jhh6.api.dto.WpStandUpdate
+import de.cwkuehl.jhh6.api.dto.WpWertpapier
+import de.cwkuehl.jhh6.api.dto.WpWertpapierKey
+import de.cwkuehl.jhh6.api.dto.WpWertpapierUpdate
 import de.cwkuehl.jhh6.api.dto.Zeinstellung
 import de.cwkuehl.jhh6.api.dto.ZeinstellungKey
 import de.cwkuehl.jhh6.api.dto.ZeinstellungUpdate
@@ -202,6 +218,11 @@ import de.cwkuehl.jhh6.server.rep.IVmKontoRep
 import de.cwkuehl.jhh6.server.rep.IVmMieteRep
 import de.cwkuehl.jhh6.server.rep.IVmMieterRep
 import de.cwkuehl.jhh6.server.rep.IVmWohnungRep
+import de.cwkuehl.jhh6.server.rep.IWpAnlageRep
+import de.cwkuehl.jhh6.server.rep.IWpBuchungRep
+import de.cwkuehl.jhh6.server.rep.IWpKonfigurationRep
+import de.cwkuehl.jhh6.server.rep.IWpStandRep
+import de.cwkuehl.jhh6.server.rep.IWpWertpapierRep
 import de.cwkuehl.jhh6.server.rep.IZeinstellungRep
 import de.cwkuehl.jhh6.server.rep.impl.AdAdresseRep
 import de.cwkuehl.jhh6.server.rep.impl.AdPersonRep
@@ -248,6 +269,11 @@ import de.cwkuehl.jhh6.server.rep.impl.VmKontoRep
 import de.cwkuehl.jhh6.server.rep.impl.VmMieteRep
 import de.cwkuehl.jhh6.server.rep.impl.VmMieterRep
 import de.cwkuehl.jhh6.server.rep.impl.VmWohnungRep
+import de.cwkuehl.jhh6.server.rep.impl.WpAnlageRep
+import de.cwkuehl.jhh6.server.rep.impl.WpBuchungRep
+import de.cwkuehl.jhh6.server.rep.impl.WpKonfigurationRep
+import de.cwkuehl.jhh6.server.rep.impl.WpStandRep
+import de.cwkuehl.jhh6.server.rep.impl.WpWertpapierRep
 import de.cwkuehl.jhh6.server.rep.impl.ZeinstellungRep
 import de.cwkuehl.jhh6.server.service.impl.ReplTabelle
 import java.util.List
@@ -259,6 +285,7 @@ class ReplikationService {
 	@ServiceRef FreizeitService freizeitService
 	@ServiceRef HaushaltService haushaltService
 	@ServiceRef HeilpraktikerService hpService
+	@ServiceRef MessdienerService mdService
 	@ServiceRef TagebuchService tagebuchService
 	@RepositoryRef AdAdresseRep adresseRep
 	@RepositoryRef AdPersonRep personRep
@@ -305,11 +332,11 @@ class ReplikationService {
 	@RepositoryRef VmMieteRep mieteRep
 	@RepositoryRef VmMieterRep mieterRep
 	@RepositoryRef VmWohnungRep wohnungRep
-	// @RepositoryRef WpAnlageRep anlageRep
-	// @RepositoryRef WpBuchungRep wpbuchungRep
-	// @RepositoryRef WpKonfigurationRep konfigurationRep
-	// @RepositoryRef WpStandRep standRep
-	// @RepositoryRef WpWertpapierRep wertpapierRep
+	@RepositoryRef WpAnlageRep anlageRep
+	@RepositoryRef WpBuchungRep wpbuchungRep
+	@RepositoryRef WpKonfigurationRep konfigurationRep
+	@RepositoryRef WpStandRep standRep
+	@RepositoryRef WpWertpapierRep wertpapierRep
 	@RepositoryRef ZeinstellungRep zeinstellungRep
 
 	/**
@@ -384,6 +411,30 @@ class ReplikationService {
 				ergebnis
 			hpService.insertUpdateRechnung(daten, null, daten.heute.toString, daten.heute, p.uid, 22, Meldungen.M9000,
 				s.uid, null, bhl)
+		}
+		var ml = messdienerRep.getListe(daten, mnr, null, null)
+		if (ml.size <= 0) {
+			var dliste = mdService.getStandardDienstListe(daten).ergebnis
+			var m = mdService.insertUpdateMessdiener(daten, null, Meldungen.M9000, Meldungen.M9000,
+				daten.heute.minusYears(2), null, null, null, null, null, null, null, null, null, null, null, null, //
+				null).ergebnis
+			var m2 = mdService.insertUpdateMessdiener(daten, null, Meldungen.M9001, Meldungen.M9001,
+				daten.heute.minusYears(1), null, null, null, null, null, null, null, null, null, null, null, null, //
+				null).ergebnis
+			var MoProfil p
+			if (dliste.size > 0) {
+				var sv = '''«dliste.get(0).schluessel»;2'''
+				p = mdService.insertUpdateProfil(daten, null, Meldungen.M9000, sv, null).ergebnis
+				var e1 = new MoEinteilungLang
+				e1.messdienerUid = m.uid
+				e1.dienst = dliste.get(0).schluessel
+				var e2 = new MoEinteilungLang
+				e2.messdienerUid = m2.uid
+				e2.dienst = dliste.get(0).schluessel
+				var et = #[e1, e2]
+				mdService.insertUpdateGottesdienst(daten, null, daten.heute.atTime(8, 0), Meldungen.M9000,
+					Meldungen.M9000, p?.uid, null, null, et)
+			}
 		}
 		var tl = tagebuchRep.getListe(daten, mnr, null, null)
 		if (tl.size <= 0) {
@@ -663,26 +714,31 @@ class ReplikationService {
 		reps.put(typeof(VmWohnung), wo)
 		reps.put(typeof(VmWohnungUpdate), wo)
 
-//			var an = new RbRepository(anlageRep, typeof(IWpAnlageRep), typeof(WpAnlageKey),
-//				typeof(WpAnlage), typeof(WpAnlageUpdate))
-//			reps.put(typeof(WpAnlage), an)
-//			reps.put(typeof(WpAnlageUpdate), an)
-//			var wb = new RbRepository(wpbuchungRep, typeof(IWpBuchungRep), typeof(WpBuchungKey),
-//				typeof(WpBuchung), typeof(WpBuchungUpdate))
-//			reps.put(typeof(WpBuchung), wb)
-//			reps.put(typeof(WpBuchungUpdate), wb)
-//			var kf = new RbRepository(konfigurationRep, typeof(IWpKonfigurationRep), typeof(WpKonfigurationKey),
-//				typeof(WpKonfiguration), typeof(WpKonfigurationUpdate))
-//			reps.put(typeof(WpKonfiguration), kf)
-//			reps.put(typeof(WpKonfigurationUpdate), kf)
-//			var ws = new RbRepository(standRep, typeof(IWpStandRep), typeof(WpStandKey),
-//				typeof(WpStand), typeof(WpStandUpdate))
-//			reps.put(typeof(WpStand), ws)
-//			reps.put(typeof(WpStandUpdate), ws)
-//			var wp = new RbRepository(wertpapierRep, typeof(IWpWertpapierRep), typeof(WpWertpapierKey),
-//				typeof(WpWertpapier), typeof(WpWertpapierUpdate))
-//			reps.put(typeof(WpWertpapier), wp)
-//			reps.put(typeof(WpWertpapierUpdate), wp)
+		var an = new RbRepository(anlageRep, typeof(IWpAnlageRep), typeof(WpAnlageKey), typeof(WpAnlage),
+			typeof(WpAnlageUpdate))
+		reps.put(typeof(WpAnlage), an)
+		reps.put(typeof(WpAnlageUpdate), an)
+
+		var wb = new RbRepository(wpbuchungRep, typeof(IWpBuchungRep), typeof(WpBuchungKey), typeof(WpBuchung),
+			typeof(WpBuchungUpdate))
+		reps.put(typeof(WpBuchung), wb)
+		reps.put(typeof(WpBuchungUpdate), wb)
+
+		var kf = new RbRepository(konfigurationRep, typeof(IWpKonfigurationRep), typeof(WpKonfigurationKey),
+			typeof(WpKonfiguration), typeof(WpKonfigurationUpdate))
+		reps.put(typeof(WpKonfiguration), kf)
+		reps.put(typeof(WpKonfigurationUpdate), kf)
+
+		var ws = new RbRepository(standRep, typeof(IWpStandRep), typeof(WpStandKey), typeof(WpStand),
+			typeof(WpStandUpdate))
+		reps.put(typeof(WpStand), ws)
+		reps.put(typeof(WpStandUpdate), ws)
+
+		var wp = new RbRepository(wertpapierRep, typeof(IWpWertpapierRep), typeof(WpWertpapierKey),
+			typeof(WpWertpapier), typeof(WpWertpapierUpdate))
+		reps.put(typeof(WpWertpapier), wp)
+		reps.put(typeof(WpWertpapierUpdate), wp)
+
 		var ei = new RbRepository(zeinstellungRep, typeof(IZeinstellungRep), typeof(ZeinstellungKey),
 			typeof(Zeinstellung), typeof(ZeinstellungUpdate))
 		reps.put(typeof(Zeinstellung), ei)

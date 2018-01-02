@@ -19,6 +19,7 @@ import java.util.jar.Manifest;
 import org.apache.log4j.Logger;
 
 import de.cwkuehl.jhh6.api.dto.MaParameter;
+import de.cwkuehl.jhh6.api.enums.HpParameterEnum;
 import de.cwkuehl.jhh6.api.global.Global;
 import de.cwkuehl.jhh6.api.service.ServiceDaten;
 import de.cwkuehl.jhh6.api.service.ServiceErgebnis;
@@ -205,9 +206,9 @@ public class Einstellungen {
             }
             if (p.inDatei) {
                 properties.setProperty(key, value);
+            } else if (HpParameterEnum.fromValue(key) != null) {
+                FactoryService.getAnmeldungService().setParameter(Jhh6.getServiceDaten(), mandantNr, key, value);
             }
-            // } else if (HpParameterEnum.fromValue(key) != null || MoParameterEnum.fromValue(key) != null) {
-            // FactoryService.getAnmeldungService().setParameter(Jhh6.getServiceDaten(), mandantNr, key, value);
         } else {
             properties.setProperty(key, value);
         }
@@ -466,8 +467,10 @@ public class Einstellungen {
     public List<MaParameter> getEinstellungen(int mandantNr, boolean auchDatenbank) {
 
         ArrayList<MaParameter> liste = new ArrayList<>();
+        boolean mo = getMenuMessdiener(mandantNr);
         for (Parameter p : Parameter.getParameter().values()) {
-            if (p != null && p.inDatei && (auchDatenbank || !p.inDatenbank)) {
+            if (p != null && p.inDatei && (auchDatenbank || !p.inDatenbank) && (mo || !p.schluessel.startsWith(
+                    "MO_"))) {
                 MaParameter me = new MaParameter();
                 me.setMandantNr(mandantNr);
                 me.setSchluessel(p.schluessel);
@@ -477,20 +480,26 @@ public class Einstellungen {
                 liste.add(me);
             }
         }
-        /*
-         * if (getMenuHeilpraktiker(mandantNr)) { for (HpParameterEnum p : HpParameterEnum.values()) { MaParameter me;
-         * ServiceErgebnis<MaParameter> r = FactoryService.getAnmeldungService().getParameter( Jhh6.getServiceDaten(),
-         * mandantNr, p.toString()); if (r.getErgebnis() == null) { me = new MaParameter(); me.setMandantNr(mandantNr);
-         * me.setSchluessel(p.toString()); me.setWert(p.toString2()); me.setAngelegtVon(p.toString2());
-         * me.setGeaendertVon(p.toString2()); } else { me = r.getErgebnis(); me.setAngelegtVon(p.toString2());
-         * me.setGeaendertVon(p.toString2()); } liste.add(me); } } if (getMenuMessdiener(mandantNr)) { for
-         * (MoParameterEnum p : MoParameterEnum.values()) { MaParameter me; ServiceErgebnis<MaParameter> r =
-         * FactoryService.getAnmeldungService().getParameter( Jhh6.getServiceDaten(), mandantNr, p.toString()); if
-         * (r.getErgebnis() == null) { me = new MaParameter(); me.setMandantNr(mandantNr);
-         * me.setSchluessel(p.toString()); me.setWert(p.toString2()); me.setAngelegtVon(p.toString2());
-         * me.setGeaendertVon(p.toString2()); } else { me = r.getErgebnis(); me.setAngelegtVon(p.toString2());
-         * me.setGeaendertVon(p.toString2()); } liste.add(me); } }
-         */
+        if (getMenuHeilpraktiker(mandantNr)) {
+            for (HpParameterEnum p : HpParameterEnum.values()) {
+                MaParameter me;
+                ServiceErgebnis<MaParameter> r = FactoryService.getAnmeldungService().getParameter(Jhh6
+                        .getServiceDaten(), mandantNr, p.toString());
+                if (r.getErgebnis() == null) {
+                    me = new MaParameter();
+                    me.setMandantNr(mandantNr);
+                    me.setSchluessel(p.toString());
+                    me.setWert(p.toString2());
+                    me.setAngelegtVon(p.toString2());
+                    me.setGeaendertVon(p.toString2());
+                } else {
+                    me = r.getErgebnis();
+                    me.setAngelegtVon(p.toString2());
+                    me.setGeaendertVon(p.toString2());
+                }
+                liste.add(me);
+            }
+        }
         Collections.sort(liste, new Comparator<MaParameter>() {
             public int compare(MaParameter o1, MaParameter o2) {
                 return o1.getSchluessel().compareTo(o2.getSchluessel());

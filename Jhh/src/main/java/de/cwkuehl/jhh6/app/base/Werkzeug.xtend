@@ -413,9 +413,13 @@ class Werkzeug {
 	}
 
 	def public static String g(String s) {
+		return g0(s, true)
+	}
+
+	def public static String g0(String s, boolean no_) {
 
 		var w = getBundle.getString(s)
-		if (!Global.nes(w)) {
+		if (no_ && !Global.nes(w)) {
 			w = w.replace("_", "")
 		}
 		return w

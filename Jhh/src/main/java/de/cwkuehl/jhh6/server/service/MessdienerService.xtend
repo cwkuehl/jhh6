@@ -12,7 +12,6 @@ import de.cwkuehl.jhh6.api.dto.MoMessdienerKey
 import de.cwkuehl.jhh6.api.dto.MoMessdienerLang
 import de.cwkuehl.jhh6.api.dto.MoProfil
 import de.cwkuehl.jhh6.api.dto.MoProfilKey
-import de.cwkuehl.jhh6.api.enums.MoParameterEnum
 import de.cwkuehl.jhh6.api.enums.MoStatusEnum
 import de.cwkuehl.jhh6.api.global.Constant
 import de.cwkuehl.jhh6.api.global.Global
@@ -97,7 +96,7 @@ class MessdienerService {
 		if (array.length % 2 == 1) {
 			throw new MeldungException(Meldungen.M2089)
 		}
-		var liste = getParameterAlsListe(daten, MoParameterEnum.MO_DIENSTE)
+		var liste = getParameterAlsListe(daten, Constant.MO_DIENSTE)
 		var hash = new HashMap<String, Integer>
 		for (MaEinstellung e : liste) {
 			hash.put(e.schluessel, 0)
@@ -114,9 +113,9 @@ class MessdienerService {
 		return hash
 	}
 
-	def private MaEinstellung[] getParameterAlsListe(ServiceDaten daten, MoParameterEnum e) {
+	def private MaEinstellung[] getParameterAlsListe(ServiceDaten daten, String key) {
 
-		var p = parameterRep.get(daten, new MaParameterKey(daten.mandantNr, e.toString))
+		var p = parameterRep.get(daten, new MaParameterKey(daten.mandantNr, key))
 		if (p !== null && !Global.nes(p.wert)) {
 			var a = p.wert.split(";")
 			var MaEinstellung[] liste = newArrayOfSize(a.length)
@@ -127,7 +126,7 @@ class MessdienerService {
 			}
 			return liste
 		}
-		throw new MeldungException(Meldungen.M2090(e.toString))
+		throw new MeldungException(Meldungen.M2090(key))
 	}
 
 	@Transaction(true)
@@ -159,8 +158,7 @@ class MessdienerService {
 
 	def private LocalDate getFlamboGrenze(ServiceDaten daten) {
 
-		var p = parameterRep.get(daten,
-			new MaParameterKey(daten.mandantNr, MoParameterEnum.MO_FLAMBO_GRENZE.toString))
+		var p = parameterRep.get(daten, new MaParameterKey(daten.mandantNr, Constant.MO_FLAMBO_GRENZE))
 		if (p !== null && Global.strInt(p.wert) > 0) {
 			return LocalDate.of(Global.strInt(p.wert), 1, 1)
 		}
@@ -209,7 +207,7 @@ class MessdienerService {
 			if (!"Flambo".equals(dienst) || e.von.compareTo(flamboGrenze) >= 0) {
 				liste2.add(e)
 			}
-			// System.out.println(sb.toString)
+		// System.out.println(sb.toString)
 		}
 		liste = liste2
 		Collections.sort(liste) [ o1, o2 |
@@ -308,7 +306,7 @@ class MessdienerService {
 	override ServiceErgebnis<List<MaEinstellung>> getStandardDienstListe(ServiceDaten daten) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
-		var r = new ServiceErgebnis<List<MaEinstellung>>(getParameterAlsListe(daten, MoParameterEnum.MO_DIENSTE))
+		var r = new ServiceErgebnis<List<MaEinstellung>>(getParameterAlsListe(daten, Constant.MO_DIENSTE))
 		return r
 	}
 
@@ -316,7 +314,7 @@ class MessdienerService {
 	override ServiceErgebnis<List<MaEinstellung>> getStandardNameListe(ServiceDaten daten) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
-		var r = new ServiceErgebnis<List<MaEinstellung>>(getParameterAlsListe(daten, MoParameterEnum.MO_NAME))
+		var r = new ServiceErgebnis<List<MaEinstellung>>(getParameterAlsListe(daten, Constant.MO_NAME))
 		return r
 	}
 
@@ -324,7 +322,7 @@ class MessdienerService {
 	override ServiceErgebnis<List<MaEinstellung>> getStandardOrtListe(ServiceDaten daten) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
-		var r = new ServiceErgebnis<List<MaEinstellung>>(getParameterAlsListe(daten, MoParameterEnum.MO_ORT))
+		var r = new ServiceErgebnis<List<MaEinstellung>>(getParameterAlsListe(daten, Constant.MO_ORT))
 		return r
 	}
 
@@ -332,7 +330,7 @@ class MessdienerService {
 	override ServiceErgebnis<List<MaEinstellung>> getStandardVerfuegbarListe(ServiceDaten daten) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
-		var r = new ServiceErgebnis<List<MaEinstellung>>(getParameterAlsListe(daten, MoParameterEnum.MO_VERFUEGBAR))
+		var r = new ServiceErgebnis<List<MaEinstellung>>(getParameterAlsListe(daten, Constant.MO_VERFUEGBAR))
 		return r
 	}
 
@@ -775,7 +773,7 @@ class MessdienerService {
 				case DIENST: {
 					dienst = token.data;
 					namen.clear
-					// System.out.println(dienst)
+				// System.out.println(dienst)
 				}
 				case CRLF: {
 					zeile++

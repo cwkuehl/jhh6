@@ -13,6 +13,17 @@ class Constant {
 		throw new RuntimeException("Die Klasse Konstanten kann nicht instanziiert werden.")
 	}
 
+	/** Messdiener-Parameter für Namen der Messen. */
+	public static final String MO_NAME = "MO_NAME"
+	/** Messdiener-Parameter für Namen der Ort. */
+	public static final String MO_ORT = "MO_ORT"
+	/** Messdiener-Parameter für Namen der Dienste. */
+	public static final String MO_DIENSTE = "MO_DIENSTE"
+	/** Messdiener-Parameter für Anfangszeiten der Messen. */
+	public static final String MO_VERFUEGBAR = "MO_VERFUEGBAR"
+	/** Messdiener-Parameter für Jahr der Flambogrenze. */
+	public static final String MO_FLAMBO_GRENZE = "MO_FLAMBO_GRENZE"
+
 	/** Zahl 100.0 als Konstante. */
 	public static final double ZAHL_100_0 = 100.0
 	/** Zahl 10000.0 als Konstante. */
