@@ -23,8 +23,6 @@ import org.eclipse.xtend.lib.macro.declaration.FieldDeclaration
 import org.eclipse.xtend.lib.macro.declaration.MutableClassDeclaration
 import org.eclipse.xtend.lib.macro.declaration.TypeReference
 
-import static extension de.cwkuehl.jhh6.generator.Global.*
-
 @Active(ExternalizedProcessor)
 annotation Externalized {
 }
@@ -55,16 +53,16 @@ class ExternalizedProcessor extends AbstractClassProcessor implements CodeGenera
 				static = true
 				val params = parameters
 				body = [
+							//	«FOR f : formats.indexed»
+							//		«IF f.v.formatNullable(context) »
+							//			if (arg«f.index» == null)
+							//				return "";
+							//		«ENDIF»
+							//	«ENDFOR»
 					'''
 						try {
 							String msg = BUNDLE.getString("«field.simpleName»");
 							«IF formats.length > 0»
-								«FOR f : formats.indexed»
-									«IF f.v.formatNullable(context) »
-										if (arg«f.index» == null)
-											return "";
-									«ENDIF»
-								«ENDFOR»
 								msg = «toJavaCode(MessageFormat.newTypeReference)».format(msg, «params.map["c(" + simpleName + ")"].join(", ")»);
 							«ENDIF»
 							return msg;
@@ -83,7 +81,7 @@ class ExternalizedProcessor extends AbstractClassProcessor implements CodeGenera
 			returnType = string
 			docComment = "Convert."
 			static = true
-			body = '''return p;'''
+			body = '''return p == null ? "" : p;'''
 		]
 
 		annotatedClass.addMethod("c") [
@@ -103,7 +101,7 @@ class ExternalizedProcessor extends AbstractClassProcessor implements CodeGenera
 				'''
 					// return «toJavaCode(LocalDateTime.newTypeReference)».ofInstant(«toJavaCode(Instant.newTypeReference)».ofEpochMilli(p.getTime()), «toJavaCode(ZoneId.newTypeReference)».systemDefault());
 					if (p == null)
-						return null;
+						return new Date();
 					return «toJavaCode(Date.newTypeReference)».from(p.atZone(«toJavaCode(ZoneId.newTypeReference)».systemDefault()).toInstant());
 				'''
 			]
