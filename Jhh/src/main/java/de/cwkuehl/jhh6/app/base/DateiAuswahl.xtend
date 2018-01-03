@@ -20,11 +20,11 @@ class DateiAuswahl {
 			pfad += File.separator
 		}
 		if (!Global.nes(dateiname)) {
-			pfad += Werkzeug::g(dateiname)
+			pfad += Global::g0(dateiname)
 		}
 		theFile = new File(pfad)
 		var chooser = new JFileChooser
-		chooser.setApproveButtonText(Werkzeug::g(ok))
+		chooser.setApproveButtonText(Global::g(ok))
 		chooser.setSelectedFile(theFile)
 		var filter = new FileFilter {
 
@@ -47,13 +47,13 @@ class DateiAuswahl {
 				}
 				return false
 			}
+
 			/** 
 			 * The description of this filter. For example: "JPG and GIF Images"
 			 * @see FileView#getName
 			 */
-
 			override String getDescription() {
-				return Werkzeug::g(endungLang)
+				return Global::g0(endungLang)
 			}
 		}
 		chooser.setFileFilter(filter)

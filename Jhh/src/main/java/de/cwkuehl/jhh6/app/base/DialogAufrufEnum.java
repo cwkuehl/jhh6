@@ -1,5 +1,7 @@
 package de.cwkuehl.jhh6.app.base;
 
+import de.cwkuehl.jhh6.api.global.Global;
+
 /**
  * Generierte Datei. BITTE NICHT AENDERN!
  * Generierte Aufzählung DialogAufrufEnum.
@@ -43,19 +45,19 @@ public enum DialogAufrufEnum {
     public String toString() {
 
         if (equals(OHNE)) {
-            return Werkzeug.g("dialog.without");
+            return Global.g0("dialog.without");
         } else if (equals(NEU)) {
-            return Werkzeug.g("dialog.new");
+            return Global.g0("dialog.new");
         } else if (equals(KOPIEREN)) {
-            return Werkzeug.g("dialog.copy");
+            return Global.g0("dialog.copy");
         } else if (equals(KOPIEREN2)) {
-            return Werkzeug.g("dialog.copy2");
+            return Global.g0("dialog.copy2");
         } else if (equals(AENDERN)) {
-            return Werkzeug.g("dialog.edit");
+            return Global.g0("dialog.edit");
         } else if (equals(LOESCHEN)) {
-            return Werkzeug.g("dialog.delete");
+            return Global.g0("dialog.delete");
         }
-        return Werkzeug.g("dialog.reverse"); // STORNO
+        return Global.g0("dialog.reverse"); // STORNO
 
     }
 

@@ -28,8 +28,8 @@ import de.cwkuehl.jhh6.api.dto.MaEinstellung
 import de.cwkuehl.jhh6.api.dto.MaParameter
 import de.cwkuehl.jhh6.api.dto.MaParameterKey
 import de.cwkuehl.jhh6.api.enums.GeschlechtEnum
-import de.cwkuehl.jhh6.api.enums.HpParameterEnum
 import de.cwkuehl.jhh6.api.global.Global
+import de.cwkuehl.jhh6.api.global.Parameter
 import de.cwkuehl.jhh6.api.message.MeldungException
 import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.api.service.ServiceDaten
@@ -946,14 +946,15 @@ class HeilpraktikerService {
 
 	private def List<MaParameter> getEinstellungListeIntern(ServiceDaten daten, int mandantNr) {
 
+		var pliste = Parameter.parameter.values.filter[schluessel.startsWith("HP_")]
 		var liste = new ArrayList<MaParameter>
-		for (HpParameterEnum p : HpParameterEnum.values) {
-			var e = parameterRep.get(daten, new MaParameterKey(mandantNr, p.toString))
+		for (Parameter p : pliste) {
+			var e = parameterRep.get(daten, new MaParameterKey(mandantNr, p.schluessel))
 			if (e === null) {
 				e = new MaParameter
 				e.mandantNr = mandantNr
-				e.schluessel = p.toString
-				e.wert = p.toString2
+				e.schluessel = p.schluessel
+				e.wert = p.wert
 			}
 			liste.add(e)
 		}

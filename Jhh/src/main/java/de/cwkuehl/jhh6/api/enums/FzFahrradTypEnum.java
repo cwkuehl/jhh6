@@ -1,6 +1,6 @@
 package de.cwkuehl.jhh6.api.enums;
 
-import de.cwkuehl.jhh6.app.base.Werkzeug;
+import de.cwkuehl.jhh6.api.global.Global;
 
 /**
  * Aufzählung FzFahrradTypEnum.
@@ -28,9 +28,9 @@ public enum FzFahrradTypEnum {
     public String toString2() {
 
         if (equals(TOUR)) {
-            return Werkzeug.g("bike.tour");
+            return Global.g0("bike.tour");
         }
-        return Werkzeug.g("bike.weekly"); // WOECHENTLICH
+        return Global.g0("bike.weekly"); // WOECHENTLICH
 
     }
 

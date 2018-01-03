@@ -63,7 +63,7 @@ import javafx.scene.control.SeparatorMenuItem
 import javafx.scene.control.Tab
 import javafx.scene.control.TabPane
 
-import static de.cwkuehl.jhh6.app.base.Werkzeug.g
+import static de.cwkuehl.jhh6.api.global.Global.g
 
 class Jhh6Controller extends BaseController<String> implements Initializable {
 

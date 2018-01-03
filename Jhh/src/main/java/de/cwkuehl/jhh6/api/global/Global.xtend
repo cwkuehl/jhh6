@@ -20,6 +20,7 @@ import java.util.ArrayList
 import java.util.Base64
 import java.util.List
 import java.util.Locale
+import java.util.ResourceBundle
 import java.util.jar.Attributes
 import java.util.jar.JarFile
 import java.util.regex.Pattern
@@ -30,7 +31,8 @@ import java.util.regex.Pattern
  */
 class Global {
 
-	private static final SecureRandom random = new SecureRandom()
+	private static final SecureRandom random = new SecureRandom
+	private static ResourceBundle bundle = null
 
 	/**
 	 * Diese Funktion macht nichts und wird gebraucht, damit Checkstyle nicht leere Blocks bemängelt.
@@ -1799,5 +1801,46 @@ class Global {
 	 */
 	def public static boolean istLinux() {
 		return getBetriebssystem == 2
+	}
+
+	def public static ResourceBundle getBundle() {
+
+		if (bundle === null) {
+			bundle = ResourceBundle.getBundle("dialog.Jhh6")
+		}
+		return bundle
+	}
+
+	/**
+	 * Liefert lokalisierte String-Resource aus Bundle dialog.Jhh6.
+	 * Unterstriche werden entfernt.
+	 */
+	def public static String g(String s) {
+		return g0(s, true)
+	}
+
+	/**
+	 * Liefert lokalisierte String-Resource aus Bundle dialog.Jhh6.
+	 */
+	def public static String g0(String s) {
+		return g0(s, false)
+	}
+
+	/**
+	 * Liefert lokalisierte String-Resource aus Bundle dialog.Jhh6.
+	 * Unterstriche können entfernt werden.
+	 */
+	def public static String g0(String s, boolean no_) {
+
+		var w = getBundle.getString(s)
+		if (no_ && !Global.nes(w)) {
+			w = w.replace("_", "")
+		}
+		return w
+	}
+
+	/** Hat das Resource-Bundle den Schlüssel? */
+	def public static boolean hasg(String key) {
+		return getBundle.containsKey(key)
 	}
 }

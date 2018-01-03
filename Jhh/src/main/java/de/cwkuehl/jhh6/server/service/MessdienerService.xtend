@@ -15,6 +15,7 @@ import de.cwkuehl.jhh6.api.dto.MoProfilKey
 import de.cwkuehl.jhh6.api.enums.MoStatusEnum
 import de.cwkuehl.jhh6.api.global.Constant
 import de.cwkuehl.jhh6.api.global.Global
+import de.cwkuehl.jhh6.api.global.Parameter
 import de.cwkuehl.jhh6.api.message.MeldungException
 import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.api.service.ServiceDaten
@@ -96,7 +97,7 @@ class MessdienerService {
 		if (array.length % 2 == 1) {
 			throw new MeldungException(Meldungen.M2089)
 		}
-		var liste = getParameterAlsListe(daten, Constant.MO_DIENSTE)
+		var liste = getParameterAlsListe(daten, Parameter.MO_DIENSTE)
 		var hash = new HashMap<String, Integer>
 		for (MaEinstellung e : liste) {
 			hash.put(e.schluessel, 0)
@@ -158,7 +159,7 @@ class MessdienerService {
 
 	def private LocalDate getFlamboGrenze(ServiceDaten daten) {
 
-		var p = parameterRep.get(daten, new MaParameterKey(daten.mandantNr, Constant.MO_FLAMBO_GRENZE))
+		var p = parameterRep.get(daten, new MaParameterKey(daten.mandantNr, Parameter.MO_FLAMBO_GRENZE))
 		if (p !== null && Global.strInt(p.wert) > 0) {
 			return LocalDate.of(Global.strInt(p.wert), 1, 1)
 		}
@@ -306,7 +307,7 @@ class MessdienerService {
 	override ServiceErgebnis<List<MaEinstellung>> getStandardDienstListe(ServiceDaten daten) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
-		var r = new ServiceErgebnis<List<MaEinstellung>>(getParameterAlsListe(daten, Constant.MO_DIENSTE))
+		var r = new ServiceErgebnis<List<MaEinstellung>>(getParameterAlsListe(daten, Parameter.MO_DIENSTE))
 		return r
 	}
 
@@ -314,7 +315,7 @@ class MessdienerService {
 	override ServiceErgebnis<List<MaEinstellung>> getStandardNameListe(ServiceDaten daten) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
-		var r = new ServiceErgebnis<List<MaEinstellung>>(getParameterAlsListe(daten, Constant.MO_NAME))
+		var r = new ServiceErgebnis<List<MaEinstellung>>(getParameterAlsListe(daten, Parameter.MO_NAME))
 		return r
 	}
 
@@ -322,7 +323,7 @@ class MessdienerService {
 	override ServiceErgebnis<List<MaEinstellung>> getStandardOrtListe(ServiceDaten daten) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
-		var r = new ServiceErgebnis<List<MaEinstellung>>(getParameterAlsListe(daten, Constant.MO_ORT))
+		var r = new ServiceErgebnis<List<MaEinstellung>>(getParameterAlsListe(daten, Parameter.MO_ORT))
 		return r
 	}
 
@@ -330,7 +331,7 @@ class MessdienerService {
 	override ServiceErgebnis<List<MaEinstellung>> getStandardVerfuegbarListe(ServiceDaten daten) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
-		var r = new ServiceErgebnis<List<MaEinstellung>>(getParameterAlsListe(daten, Constant.MO_VERFUEGBAR))
+		var r = new ServiceErgebnis<List<MaEinstellung>>(getParameterAlsListe(daten, Parameter.MO_VERFUEGBAR))
 		return r
 	}
 

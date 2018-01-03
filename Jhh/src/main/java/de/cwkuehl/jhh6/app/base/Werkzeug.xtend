@@ -17,7 +17,6 @@ import java.net.URL
 import java.util.ArrayList
 import java.util.List
 import java.util.Properties
-import java.util.ResourceBundle
 import javafx.scene.control.Alert
 import javafx.scene.control.Alert.AlertType
 import javafx.scene.control.ButtonType
@@ -31,10 +30,12 @@ import javafx.stage.Screen
 import javafx.stage.Stage
 import org.apache.log4j.Logger
 
+import static de.cwkuehl.jhh6.api.global.Global.g
+import static de.cwkuehl.jhh6.api.global.Global.hasg
+
 class Werkzeug {
 
 	var static log = Logger.getLogger(typeof(Werkzeug))
-	private static ResourceBundle bundle = null;
 
 	/**
 	 * Liefert einen HTML-String mit Informationen über das Programm.
@@ -112,7 +113,7 @@ class Werkzeug {
 		var i = 1
 		do {
 			var key = '''AG000.lib«i»'''
-			if (bundle.containsKey(key)) {
+			if (hasg(key)) {
 				sb.append("<tr><td>").append(g(key)).append("</td><td>").append(g(key + ".1")).append("</td><td>").
 					append(g(key + ".2")).append("</td></tr>")
 				i++
@@ -126,7 +127,7 @@ class Werkzeug {
 		i = 1
 		do {
 			var key = '''AG000.icon«i»'''
-			if (bundle.containsKey(key)) {
+			if (hasg(key)) {
 				sb.append("<tr><td>").append(g(key)).append("</td><td>").append(g(key + ".1")).append("</td></tr>")
 				i++
 			} else
@@ -165,7 +166,7 @@ class Werkzeug {
 	 */
 	def public static void setHelp(WebEngine we) {
 
-		var html = "/JHaushalt-Hilfe.html"
+		var html = '''/«g("parm.AG_HILFE_DATEI.value")»''' // "/Jhh-Hilfe.html"
 		var url = Werkzeug.getClass.getResource(html)
 		if (url === null) {
 			html = Jhh6.einstellungen.hilfeDatei
@@ -403,26 +404,4 @@ class Werkzeug {
 		}
 		return zeilen
 	}
-
-	def public static ResourceBundle getBundle() {
-
-		if (bundle === null) {
-			bundle = ResourceBundle.getBundle("dialog.Jhh6")
-		}
-		return bundle
-	}
-
-	def public static String g(String s) {
-		return g0(s, true)
-	}
-
-	def public static String g0(String s, boolean no_) {
-
-		var w = getBundle.getString(s)
-		if (no_ && !Global.nes(w)) {
-			w = w.replace("_", "")
-		}
-		return w
-	}
-
 }

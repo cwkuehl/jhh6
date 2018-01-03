@@ -8,7 +8,6 @@ import de.cwkuehl.jhh6.api.service.ServiceErgebnis
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
-import de.cwkuehl.jhh6.app.base.Werkzeug
 import de.cwkuehl.jhh6.app.control.Datum
 import de.cwkuehl.jhh6.server.FactoryService
 import java.time.LocalDate
@@ -151,12 +150,12 @@ class HH500BilanzenController extends BaseController<String> {
 				bis.setValue(dB)
 			}
 			if (Constant.KZBI_GV.equals(parameter)) {
-				soll0.setText(Werkzeug.g("HH500.soll.GV"))
-				haben0.setText(Werkzeug.g("HH500.haben.GV"))
+				soll0.setText(Global.g("HH500.soll.GV"))
+				haben0.setText(Global.g("HH500.haben.GV"))
 			} else {
-				soll0.setText(Werkzeug.g("HH500.soll.EB"))
-				haben0.setText(Werkzeug.g("HH500.haben.EB"))
-				von0.setText(Werkzeug.g("HH500.von.EB"))
+				soll0.setText(Global.g("HH500.soll.EB"))
+				haben0.setText(Global.g("HH500.haben.EB"))
+				von0.setText(Global.g("HH500.von.EB"))
 				bis0.setVisible(false)
 				bis.setVisible(false)
 			}
@@ -234,7 +233,7 @@ class HH500BilanzenController extends BaseController<String> {
 			var LocalDate v = null
 			var ServiceErgebnis<String[]> r = null
 			try {
-				Jhh6.setLeftStatus2(Werkzeug.g("HH500.calculate1"))
+				Jhh6.setLeftStatus2(Global.g0("HH500.calculate1"))
 				if (mlBerechnen > 0) {
 					v = von.getValue
 					mlBerechnen = 0
@@ -251,7 +250,7 @@ class HH500BilanzenController extends BaseController<String> {
 							}
 						}
 						if (Global.arrayLaenge(l) >= 2 && !Global.nes(l.get(1))) {
-							Jhh6.setLeftStatus2('''«Werkzeug.g("HH500.calculate2")» «l.get(1)»''')
+							Jhh6.setLeftStatus2('''«Global.g0("HH500.calculate2")» «l.get(1)»''')
 						}
 					} else {
 						get(r)

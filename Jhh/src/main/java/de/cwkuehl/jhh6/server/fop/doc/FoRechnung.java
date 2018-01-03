@@ -9,8 +9,8 @@ import de.cwkuehl.jhh6.api.dto.HpBehandlungDruck;
 import de.cwkuehl.jhh6.api.dto.HpPatient;
 import de.cwkuehl.jhh6.api.dto.HpRechnung;
 import de.cwkuehl.jhh6.api.enums.GeschlechtEnum;
-import de.cwkuehl.jhh6.api.enums.HpParameterEnum;
 import de.cwkuehl.jhh6.api.global.Global;
+import de.cwkuehl.jhh6.api.global.Parameter;
 import de.cwkuehl.jhh6.server.fop.impl.FoGeneratorDocument;
 import de.cwkuehl.jhh6.server.fop.impl.FoUtils;
 import de.cwkuehl.jhh6.server.fop.impl.JhhFopException;
@@ -51,16 +51,16 @@ public class FoRechnung extends FoGeneratorDocument {
         try {
             String fontname = d.getFontname();
             int size = 10;
-            String hpName = einstellungen.get(HpParameterEnum.HP_NAME.toString());
-            String hpBeruf = einstellungen.get(HpParameterEnum.HP_BERUF.toString());
-            String hpStrasse = einstellungen.get(HpParameterEnum.HP_STRASSE.toString());
-            String hpOrt = einstellungen.get(HpParameterEnum.HP_ORT.toString());
-            String hpAdresse = einstellungen.get(HpParameterEnum.HP_FENSTER_ADRESSE.toString());
-            String hpTelefon = einstellungen.get(HpParameterEnum.HP_TELEFON.toString());
-            String hpSteuernummer = einstellungen.get(HpParameterEnum.HP_STEUERNUMMER.toString());
-            String briefText = einstellungen.get(HpParameterEnum.HP_BRIEFANFANG.toString());
-            String gruss = einstellungen.get(HpParameterEnum.HP_GRUSS.toString());
-            String hpBankverbindung = einstellungen.get(HpParameterEnum.HP_BANK.toString());
+            String hpName = einstellungen.get(Parameter.HP_NAME);
+            String hpBeruf = einstellungen.get(Parameter.HP_BERUF);
+            String hpStrasse = einstellungen.get(Parameter.HP_STRASSE);
+            String hpOrt = einstellungen.get(Parameter.HP_ORT);
+            String hpAdresse = einstellungen.get(Parameter.HP_FENSTER_ADRESSE);
+            String hpTelefon = einstellungen.get(Parameter.HP_TELEFON);
+            String hpSteuernummer = einstellungen.get(Parameter.HP_STEUERNUMMER);
+            String briefText = einstellungen.get(Parameter.HP_BRIEFANFANG);
+            String gruss = einstellungen.get(Parameter.HP_GRUSS);
+            String hpBankverbindung = einstellungen.get(Parameter.HP_BANK);
             String waehrung = "€";
             String anrede = null;
             String text = null;
@@ -70,7 +70,7 @@ public class FoRechnung extends FoGeneratorDocument {
             StringBuffer sb = new StringBuffer();
             double summe = 0;
 
-            text = einstellungen.get(HpParameterEnum.HP_BRIEFENDE.toString());
+            text = einstellungen.get(Parameter.HP_BRIEFENDE);
             sb.setLength(0);
             if (GeschlechtEnum.fromValue(patientAdresse.getGeschlecht()).equals(GeschlechtEnum.FRAU)) {
                 sb.append("Sehr geehrte Frau ");
@@ -85,7 +85,7 @@ public class FoRechnung extends FoGeneratorDocument {
             d.startTable(true, "71mm", "117mm");
             d.startTag("fo:table-row");
             d.startTag("fo:table-cell", "number-rows-spanned", "2");
-            if (!getGrafikDaten(einstellungen.get(HpParameterEnum.HP_LOGO_OBEN.toString()))) {
+            if (!getGrafikDaten(einstellungen.get(Parameter.HP_LOGO_OBEN))) {
                 d.addNewLine(0);
             }
             d.endTag("fo:table-cell");
@@ -276,7 +276,7 @@ public class FoRechnung extends FoGeneratorDocument {
             d.addNewLine(0, 2);
             d.startBlock(gruss, true);
             d.addNewLine(0, 3);
-            getGrafikDaten(einstellungen.get(HpParameterEnum.HP_LOGO_UNTEN.toString()));
+            getGrafikDaten(einstellungen.get(Parameter.HP_LOGO_UNTEN));
             d.startBlock(hpName, true);
 
             d.endFo();
