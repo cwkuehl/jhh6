@@ -277,6 +277,7 @@ import de.cwkuehl.jhh6.server.rep.impl.WpWertpapierRep
 import de.cwkuehl.jhh6.server.rep.impl.ZeinstellungRep
 import de.cwkuehl.jhh6.server.service.impl.ReplTabelle
 import java.util.List
+import de.cwkuehl.jhh6.api.enums.GeschlechtEnum
 
 @Service
 class ReplikationService {
@@ -286,6 +287,7 @@ class ReplikationService {
 	@ServiceRef HaushaltService haushaltService
 	@ServiceRef HeilpraktikerService hpService
 	@ServiceRef MessdienerService mdService
+	@ServiceRef StammbaumService sbService
 	@ServiceRef TagebuchService tagebuchService
 	@RepositoryRef AdAdresseRep adresseRep
 	@RepositoryRef AdPersonRep personRep
@@ -435,6 +437,22 @@ class ReplikationService {
 				mdService.insertUpdateGottesdienst(daten, null, daten.heute.atTime(8, 0), Meldungen.M9000,
 					Meldungen.M9000, p?.uid, null, null, et)
 			}
+		}
+		var al = sbpersonRep.getListe(daten, mnr, null, null)
+		if (al.size <= 0) {
+			var q = sbService.insertUpdateQuelle(daten, null, Meldungen.M9000, Meldungen.M9001, Meldungen.M9002,
+				Meldungen.M9000).ergebnis
+			var a = sbService.insertUpdatePerson(daten, null, Meldungen.M9000, null, Meldungen.M9000,
+				GeschlechtEnum.MAENNLICH.toString, null, null, null, q.uid, 0, 0, 0, null, null, null, null, null, null,
+				null, null, null, null, null, null, null, null, null, null, null, null, null, null).ergebnis
+			var a2 = sbService.insertUpdatePerson(daten, null, Meldungen.M9001, null, Meldungen.M9001,
+				GeschlechtEnum.WEIBLICH.toString, null, null, null, q.uid, 0, 0, 0, null, null, null, null, null, null,
+				null, null, null, null, null, null, null, null, null, null, null, null, null, null).ergebnis
+			var a3 = sbService.insertUpdatePerson(daten, null, Meldungen.M9002, null, Meldungen.M9002,
+				GeschlechtEnum.NEUTRUM.toString, null, null, null, q.uid, 0, 0, 0, null, null, null, null, null, null,
+				null, null, null, null, null, null, null, null, null, null, null, null, null, null).ergebnis
+			var kliste = #[a3.uid]
+			sbService.insertUpdateFamilie(daten, null, a.uid, a2.uid, null, null, Meldungen.M9000, q.uid, kliste)
 		}
 		var tl = tagebuchRep.getListe(daten, mnr, null, null)
 		if (tl.size <= 0) {

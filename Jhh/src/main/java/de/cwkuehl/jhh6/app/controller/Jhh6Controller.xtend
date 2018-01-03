@@ -41,6 +41,7 @@ import de.cwkuehl.jhh6.app.controller.hp.HP400RechnungenController
 import de.cwkuehl.jhh6.app.controller.mo.MO100MessdienerController
 import de.cwkuehl.jhh6.app.controller.mo.MO200GottesdiensteController
 import de.cwkuehl.jhh6.app.controller.mo.MO300ProfileController
+import de.cwkuehl.jhh6.app.controller.sb.SB400QuellenController
 import de.cwkuehl.jhh6.app.controller.so.SO100SudokuController
 import de.cwkuehl.jhh6.app.controller.so.SO200DetektivController
 import de.cwkuehl.jhh6.app.controller.tb.TB100TagebuchController
@@ -529,7 +530,8 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 	def void handleSB300() { // starteFormular(typeof(SB300FamilienController), DialogAufrufEnum.OHNE)
 	}
 
-	def void handleSB400() { // starteFormular(typeof(SB400QuellenController), DialogAufrufEnum.OHNE)
+	def void handleSB400() {
+		starteFormular(typeof(SB400QuellenController), DialogAufrufEnum.OHNE)
 	}
 
 	@FXML def void handleSO100() {
