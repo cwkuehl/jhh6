@@ -39,6 +39,7 @@ import de.cwkuehl.jhh6.app.controller.hp.HP300LeistungenController
 import de.cwkuehl.jhh6.app.controller.hp.HP350LeistungsgruppenController
 import de.cwkuehl.jhh6.app.controller.hp.HP400RechnungenController
 import de.cwkuehl.jhh6.app.controller.mo.MO100MessdienerController
+import de.cwkuehl.jhh6.app.controller.mo.MO200GottesdiensteController
 import de.cwkuehl.jhh6.app.controller.mo.MO300ProfileController
 import de.cwkuehl.jhh6.app.controller.tb.TB100TagebuchController
 import de.cwkuehl.jhh6.server.FactoryService
@@ -192,11 +193,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 
 	def void setLeftStatus(String str) {
 		if (leftStatus !== null) {
-			Platform::runLater([
-				{
-					leftStatus.setText(str)
-				}
-			])
+			Platform::runLater([leftStatus.text = str])
 		}
 	}
 
@@ -328,7 +325,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 
 		Platform::runLater([
 			{
-				var List<StartDialog> dliste = Jhh6Controller::getDialogListe
+				var List<StartDialog> dliste = Jhh6Controller::dialogListe
 				var String str = Global::nn(Jhh6::einstellungen.getStartdialoge(mandantNr))
 				var String[] array = str.split(Pattern::quote("|"))
 				val HashMap<String, StartDialog> map = new HashMap
@@ -336,7 +333,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 				for (String s : array) {
 					var StartDialog d = map.get(s)
 					if (d !== null) {
-						starteFormular(d.getClazz, DialogAufrufEnum::OHNE, d.getParameter)
+						starteFormular(d.clazz, DialogAufrufEnum::OHNE, d.parameter)
 					}
 				}
 			}
@@ -372,7 +369,6 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		l.add(new StartDialog("#HP100", g("menu.patients"), typeof(HP100PatientenController), null))
 		l.add(new StartDialog("#HP200", g("menu.treatments"), typeof(HP200BehandlungenController), null))
 		l.add(new StartDialog("#HP400", g("menu.invoices"), typeof(HP400RechnungenController), null))
-		l.add(new StartDialog("#MO100", g("menu.acolytes"), typeof(MO100MessdienerController), null))
 		// l.add(new StartDialog("#SB200", g("menu.ancestors"), typeof(SB200AhnenController), null))
 		// l.add(new StartDialog("#SB300", g("menu.families"), typeof(SB300FamilienController), null))
 		// l.add(new StartDialog("#VM300", g("menu.renters"), typeof(VM300MieterController), null))
@@ -380,7 +376,8 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		// l.add(new StartDialog("#WP250", g("menu.investments"), typeof(WP250AnlagenController), null))
 		// l.add(new StartDialog("#WP400", g("menu.bookings3"), typeof(WP400BuchungenController), null))
 		// l.add(new StartDialog("#WP500", g("menu.prices"), typeof(WP500StaendeController), null))
-		// l.add(new StartDialog("#MO200", g("menu.holymass"), typeof(MO200GottesdiensteController), null))
+		l.add(new StartDialog("#MO100", g("menu.acolytes"), typeof(MO100MessdienerController), null))
+		l.add(new StartDialog("#MO200", g("menu.holymass"), typeof(MO200GottesdiensteController), null))
 		return l
 	}
 
@@ -516,7 +513,8 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		starteFormular(typeof(MO100MessdienerController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleMO200() { // starteFormular(typeof(MO200GottesdiensteController), DialogAufrufEnum.OHNE)
+	@FXML def void handleMO200() {
+		starteFormular(typeof(MO200GottesdiensteController), DialogAufrufEnum.OHNE)
 	}
 
 	@FXML def void handleMO300() {
@@ -602,10 +600,10 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 
 	def void closeTabs() {
 
-		for (Tab t : tabs.getTabs) {
+		for (Tab t : tabs.tabs) {
 			// Close-Event händisch aufrufen
 			t.getOnClosed.handle(null)
 		}
-		tabs.getTabs.removeAll(tabs.getTabs)
+		tabs.tabs.removeAll(tabs.tabs)
 	}
 }
