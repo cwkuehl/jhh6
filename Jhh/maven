@@ -8,6 +8,6 @@ fi
 # Build Generator
 mvn -B -f ../Generator/pom.xml -Dmaven.test.skip=true -DskipTests clean eclipse:eclipse xtend:compile install
 # Build Jhh
-mvn -B -Dmaven.test.skip=true -DskipTests clean eclipse:eclipse xtend:compile install org.apache.maven.plugins:maven-dependency-plugin:copy-dependencies
+mvn -B -Dmaven.test.skip=true -DskipTests clean eclipse:eclipse xtend:compile install org.apache.maven.plugins:maven-dependency-plugin:copy-dependencies antrun:run
 # Test
 mvn -B -f pomtest.xml xtend:testCompile test
