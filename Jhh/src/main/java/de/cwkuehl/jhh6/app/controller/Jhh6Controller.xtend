@@ -41,6 +41,7 @@ import de.cwkuehl.jhh6.app.controller.hp.HP400RechnungenController
 import de.cwkuehl.jhh6.app.controller.mo.MO100MessdienerController
 import de.cwkuehl.jhh6.app.controller.mo.MO200GottesdiensteController
 import de.cwkuehl.jhh6.app.controller.mo.MO300ProfileController
+import de.cwkuehl.jhh6.app.controller.so.SO100SudokuController
 import de.cwkuehl.jhh6.app.controller.tb.TB100TagebuchController
 import de.cwkuehl.jhh6.server.FactoryService
 import java.net.URL
@@ -354,7 +355,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		l.add(new StartDialog("#FZ300", g("menu.authors"), typeof(FZ300AutorenController), null))
 		l.add(new StartDialog("#FZ320", g("menu.series"), typeof(FZ320SerienController), null))
 		l.add(new StartDialog("#FZ340", g("menu.books"), typeof(FZ340BuecherController), null))
-		// l.add(new StartDialog("#SO100", g("menu.sudoku"), typeof(SO100SudokuController), null))
+		l.add(new StartDialog("#SO100", g("menu.sudoku"), typeof(SO100SudokuController), null))
 		// l.add(new StartDialog("#SO200", g("menu.detective"), typeof(SO200DetektivController), null))
 		l.add(new StartDialog("#FZ100", g("menu.statistic"), typeof(FZ100StatistikController), null))
 		l.add(new StartDialog("#HH400", g("menu.bookings"), typeof(HH400BuchungenController), null))
@@ -530,7 +531,8 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 	def void handleSB400() { // starteFormular(typeof(SB400QuellenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleSO100() { // starteFormular(typeof(SO100SudokuController), DialogAufrufEnum.OHNE)
+	@FXML def void handleSO100() {
+		starteFormular(typeof(SO100SudokuController), DialogAufrufEnum.OHNE)
 	}
 
 	@FXML def void handleSO200() { // starteFormular(typeof(SO200DetektivController), DialogAufrufEnum.OHNE)

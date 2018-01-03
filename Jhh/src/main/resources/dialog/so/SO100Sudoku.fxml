@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.66" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="de.cwkuehl.jhh6.app.controller.so.SO100SudokuController">
+
+	<padding>
+		<Insets bottom="10" left="10" right="10" top="10" />
+	</padding>
+
+	<ToolBar prefHeight="40.0" prefWidth="200.0" GridPane.columnSpan="2">
+		<items>
+			<Button fx:id="aktuell" mnemonicParsing="false" onAction="#onAktuell">
+				<tooltip>
+					<Tooltip text="%Refresh" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-refresh.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="rueckgaengig" mnemonicParsing="false" onAction="#onRueckgaengig">
+				<tooltip>
+					<Tooltip text="%Undo" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-undo.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="export" mnemonicParsing="false" onAction="#onExport">
+				<tooltip>
+					<Tooltip text="%Export" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-save.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="loeschen" mnemonicParsing="false" onAction="#onLoeschen">
+				<tooltip>
+					<Tooltip text="%Delete" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-remove.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="tab" mnemonicParsing="false" onAction="#onTab">
+				<tooltip>
+					<Tooltip text="%Tab" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-tab.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+		</items>
+	</ToolBar>
+	<Label fx:id="sudoku0" mnemonicParsing="true" text="%SO100.sudoku" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+	<Label fx:id="anzahl" text="%SO100.anzahl" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
+	<HBox spacing="10.0" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="3">
+		<Button fx:id="zug" mnemonicParsing="true" onAction="#onZug" text="%SO100.zug">
+			<tooltip>
+				<Tooltip text="%SO100.zug.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="loesen" mnemonicParsing="true" onAction="#onLoesen" text="%SO100.loesen">
+			<tooltip>
+				<Tooltip text="%SO100.loesen.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="test" mnemonicParsing="true" onAction="#onTest" text="%SO100.test">
+			<tooltip>
+				<Tooltip text="%SO100.test.tt" />
+			</tooltip>
+		</Button>
+	</HBox>
+	<CheckBox fx:id="diagonal" accessibleText="%SO100.diagonal.tt"
+		text="%SO100.diagonal" GridPane.columnIndex="0" GridPane.rowIndex="4">
+		<tooltip>
+			<Tooltip text="%SO100.diagonal.tt" />
+		</tooltip>
+	</CheckBox>
+	<Label fx:id="leery" text="%SO100.leery" GridPane.columnIndex="0" GridPane.rowIndex="5" GridPane.vgrow="ALWAYS" />
+	<GridPane GridPane.rowIndex="2">
+		<children>
+			<TextField fx:id="t00" maxWidth="29.0" />
+			<TextField fx:id="t01" maxWidth="29.0" GridPane.columnIndex="1" />
+			<TextField fx:id="t02" maxWidth="29.0" GridPane.columnIndex="2" />
+			<TextField fx:id="t03" maxWidth="29.0" GridPane.columnIndex="3" />
+			<TextField fx:id="t04" maxWidth="29.0" GridPane.columnIndex="4" />
+			<TextField fx:id="t05" maxWidth="29.0" GridPane.columnIndex="5" />
+			<TextField fx:id="t06" maxWidth="29.0" GridPane.columnIndex="6" />
+			<TextField fx:id="t07" maxWidth="29.0" GridPane.columnIndex="7" />
+			<TextField fx:id="t08" maxWidth="29.0" GridPane.columnIndex="8" />
+			<TextField fx:id="t10" maxWidth="29.0" GridPane.rowIndex="1" />
+			<TextField fx:id="t11" maxWidth="29.0" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+			<TextField fx:id="t12" maxWidth="29.0" GridPane.rowIndex="1" GridPane.columnIndex="2" />
+			<TextField fx:id="t13" maxWidth="29.0" GridPane.rowIndex="1" GridPane.columnIndex="3" />
+			<TextField fx:id="t14" maxWidth="29.0" GridPane.rowIndex="1" GridPane.columnIndex="4" />
+			<TextField fx:id="t15" maxWidth="29.0" GridPane.rowIndex="1" GridPane.columnIndex="5" />
+			<TextField fx:id="t16" maxWidth="29.0" GridPane.rowIndex="1" GridPane.columnIndex="6" />
+			<TextField fx:id="t17" maxWidth="29.0" GridPane.rowIndex="1" GridPane.columnIndex="7" />
+			<TextField fx:id="t18" maxWidth="29.0" GridPane.rowIndex="1" GridPane.columnIndex="8" />
+			<TextField fx:id="t20" maxWidth="29.0" GridPane.rowIndex="2" />
+			<TextField fx:id="t21" maxWidth="29.0" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+			<TextField fx:id="t22" maxWidth="29.0" GridPane.rowIndex="2" GridPane.columnIndex="2" />
+			<TextField fx:id="t23" maxWidth="29.0" GridPane.rowIndex="2" GridPane.columnIndex="3" />
+			<TextField fx:id="t24" maxWidth="29.0" GridPane.rowIndex="2" GridPane.columnIndex="4" />
+			<TextField fx:id="t25" maxWidth="29.0" GridPane.rowIndex="2" GridPane.columnIndex="5" />
+			<TextField fx:id="t26" maxWidth="29.0" GridPane.rowIndex="2" GridPane.columnIndex="6" />
+			<TextField fx:id="t27" maxWidth="29.0" GridPane.rowIndex="2" GridPane.columnIndex="7" />
+			<TextField fx:id="t28" maxWidth="29.0" GridPane.rowIndex="2" GridPane.columnIndex="8" />
+			<TextField fx:id="t30" maxWidth="29.0" GridPane.rowIndex="3" />
+			<TextField fx:id="t31" maxWidth="29.0" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+			<TextField fx:id="t32" maxWidth="29.0" GridPane.rowIndex="3" GridPane.columnIndex="2" />
+			<TextField fx:id="t33" maxWidth="29.0" GridPane.rowIndex="3" GridPane.columnIndex="3" />
+			<TextField fx:id="t34" maxWidth="29.0" GridPane.rowIndex="3" GridPane.columnIndex="4" />
+			<TextField fx:id="t35" maxWidth="29.0" GridPane.rowIndex="3" GridPane.columnIndex="5" />
+			<TextField fx:id="t36" maxWidth="29.0" GridPane.rowIndex="3" GridPane.columnIndex="6" />
+			<TextField fx:id="t37" maxWidth="29.0" GridPane.rowIndex="3" GridPane.columnIndex="7" />
+			<TextField fx:id="t38" maxWidth="29.0" GridPane.rowIndex="3" GridPane.columnIndex="8" />
+			<TextField fx:id="t40" maxWidth="29.0" GridPane.rowIndex="4" />
+			<TextField fx:id="t41" maxWidth="29.0" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+			<TextField fx:id="t42" maxWidth="29.0" GridPane.rowIndex="4" GridPane.columnIndex="2" />
+			<TextField fx:id="t43" maxWidth="29.0" GridPane.rowIndex="4" GridPane.columnIndex="3" />
+			<TextField fx:id="t44" maxWidth="29.0" GridPane.rowIndex="4" GridPane.columnIndex="4" />
+			<TextField fx:id="t45" maxWidth="29.0" GridPane.rowIndex="4" GridPane.columnIndex="5" />
+			<TextField fx:id="t46" maxWidth="29.0" GridPane.rowIndex="4" GridPane.columnIndex="6" />
+			<TextField fx:id="t47" maxWidth="29.0" GridPane.rowIndex="4" GridPane.columnIndex="7" />
+			<TextField fx:id="t48" maxWidth="29.0" GridPane.rowIndex="4" GridPane.columnIndex="8" />
+			<TextField fx:id="t50" maxWidth="29.0" GridPane.rowIndex="5" />
+			<TextField fx:id="t51" maxWidth="29.0" GridPane.rowIndex="5" GridPane.columnIndex="1" />
+			<TextField fx:id="t52" maxWidth="29.0" GridPane.rowIndex="5" GridPane.columnIndex="2" />
+			<TextField fx:id="t53" maxWidth="29.0" GridPane.rowIndex="5" GridPane.columnIndex="3" />
+			<TextField fx:id="t54" maxWidth="29.0" GridPane.rowIndex="5" GridPane.columnIndex="4" />
+			<TextField fx:id="t55" maxWidth="29.0" GridPane.rowIndex="5" GridPane.columnIndex="5" />
+			<TextField fx:id="t56" maxWidth="29.0" GridPane.rowIndex="5" GridPane.columnIndex="6" />
+			<TextField fx:id="t57" maxWidth="29.0" GridPane.rowIndex="5" GridPane.columnIndex="7" />
+			<TextField fx:id="t58" maxWidth="29.0" GridPane.rowIndex="5" GridPane.columnIndex="8" />
+			<TextField fx:id="t60" maxWidth="29.0" GridPane.rowIndex="6" />
+			<TextField fx:id="t61" maxWidth="29.0" GridPane.rowIndex="6" GridPane.columnIndex="1" />
+			<TextField fx:id="t62" maxWidth="29.0" GridPane.rowIndex="6" GridPane.columnIndex="2" />
+			<TextField fx:id="t63" maxWidth="29.0" GridPane.rowIndex="6" GridPane.columnIndex="3" />
+			<TextField fx:id="t64" maxWidth="29.0" GridPane.rowIndex="6" GridPane.columnIndex="4" />
+			<TextField fx:id="t65" maxWidth="29.0" GridPane.rowIndex="6" GridPane.columnIndex="5" />
+			<TextField fx:id="t66" maxWidth="29.0" GridPane.rowIndex="6" GridPane.columnIndex="6" />
+			<TextField fx:id="t67" maxWidth="29.0" GridPane.rowIndex="6" GridPane.columnIndex="7" />
+			<TextField fx:id="t68" maxWidth="29.0" GridPane.rowIndex="6" GridPane.columnIndex="8" />
+			<TextField fx:id="t70" maxWidth="29.0" GridPane.rowIndex="7" />
+			<TextField fx:id="t71" maxWidth="29.0" GridPane.rowIndex="7" GridPane.columnIndex="1" />
+			<TextField fx:id="t72" maxWidth="29.0" GridPane.rowIndex="7" GridPane.columnIndex="2" />
+			<TextField fx:id="t73" maxWidth="29.0" GridPane.rowIndex="7" GridPane.columnIndex="3" />
+			<TextField fx:id="t74" maxWidth="29.0" GridPane.rowIndex="7" GridPane.columnIndex="4" />
+			<TextField fx:id="t75" maxWidth="29.0" GridPane.rowIndex="7" GridPane.columnIndex="5" />
+			<TextField fx:id="t76" maxWidth="29.0" GridPane.rowIndex="7" GridPane.columnIndex="6" />
+			<TextField fx:id="t77" maxWidth="29.0" GridPane.rowIndex="7" GridPane.columnIndex="7" />
+			<TextField fx:id="t78" maxWidth="29.0" GridPane.rowIndex="7" GridPane.columnIndex="8" />
+			<TextField fx:id="t80" maxWidth="29.0" GridPane.rowIndex="8" />
+			<TextField fx:id="t81" maxWidth="29.0" GridPane.rowIndex="8" GridPane.columnIndex="1" />
+			<TextField fx:id="t82" maxWidth="29.0" GridPane.rowIndex="8" GridPane.columnIndex="2" />
+			<TextField fx:id="t83" maxWidth="29.0" GridPane.rowIndex="8" GridPane.columnIndex="3" />
+			<TextField fx:id="t84" maxWidth="29.0" GridPane.rowIndex="8" GridPane.columnIndex="4" />
+			<TextField fx:id="t85" maxWidth="29.0" GridPane.rowIndex="8" GridPane.columnIndex="5" />
+			<TextField fx:id="t86" maxWidth="29.0" GridPane.rowIndex="8" GridPane.columnIndex="6" />
+			<TextField fx:id="t87" maxWidth="29.0" GridPane.rowIndex="8" GridPane.columnIndex="7" />
+			<TextField fx:id="t88" maxWidth="29.0" GridPane.rowIndex="8" GridPane.columnIndex="8" />
+		</children>
+	</GridPane>
+
+	<stylesheets>
+		<URL value="@../Jhh6.css" />
+	</stylesheets>
+	<columnConstraints>
+		<ColumnConstraints />
+		<ColumnConstraints />
+		<ColumnConstraints />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+	</rowConstraints>
+</GridPane>
