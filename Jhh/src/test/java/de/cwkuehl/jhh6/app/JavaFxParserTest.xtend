@@ -91,9 +91,9 @@ class JavaFxParserTest extends TestBase {
 		// parse("mo/MO300Profile.fxml")
 		// parse("mo/MO310Profil.fxml")
 		// parse("mo/MO500Schnittstelle.fxml")
-		 parse("so/SO100Sudoku.fxml")
+		// parse("so/SO100Sudoku.fxml")
 		// parse("so/SO200Detektiv.fxml")
-		// parse("so/SO210Runde.fxml")
+		 parse("so/SO210Runde.fxml")
 		// parse("tb/TB100Tagebuch.fxml")
 		Global.machNichts
 	}

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.66" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.cwkuehl.jhh6.app.controller.so.SO210RundeController">
+
+	<padding>
+		<Insets bottom="10" left="10" right="10" top="10" />
+	</padding>
+
+	<Label fx:id="nr0" text="%SO210.nr" GridPane.columnIndex="0" />
+	<TextField fx:id="nr" accessibleText="%SO210.nr.tt" promptText="%SO210.nr.tt" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%SO210.nr.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="spieler0" mnemonicParsing="true" text="%SO210.spieler" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+	<ListView fx:id="spieler" accessibleText="%SO210.spieler.tt" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.rowSpan="3" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%SO210.spieler.tt" />
+		</tooltip>
+	</ListView>
+	<Label fx:id="verdaechtiger0" mnemonicParsing="true" text="%SO210.verdaechtiger" GridPane.rowIndex="4" />
+	<ListView fx:id="verdaechtiger" accessibleText="%SO210.verdaechtiger.tt" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.rowSpan="2" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%SO210.verdaechtiger.tt" />
+		</tooltip>
+	</ListView>
+	<CheckBox fx:id="besitzv" accessibleText="%SO210.besitzv.tt" text="%SO210.besitzv" GridPane.columnIndex="2" GridPane.rowIndex="4">
+		<tooltip>
+			<Tooltip text="%SO210.besitzv.tt" />
+		</tooltip>
+	</CheckBox>
+	<Label fx:id="werkzeug0" mnemonicParsing="true" text="%SO210.werkzeug" GridPane.rowIndex="6" />
+	<ListView fx:id="werkzeug" accessibleText="%SO210.werkzeug.tt" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6" GridPane.rowSpan="3" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%SO210.werkzeug.tt" />
+		</tooltip>
+	</ListView>
+	<CheckBox fx:id="besitzw" accessibleText="%SO210.besitzw.tt" text="%SO210.besitzw" GridPane.columnIndex="2" GridPane.rowIndex="6">
+		<tooltip>
+			<Tooltip text="%SO210.besitzw.tt" />
+		</tooltip>
+	</CheckBox>
+	<Label fx:id="raum0" mnemonicParsing="true" text="%SO210.raum" GridPane.rowIndex="9" />
+	<ListView fx:id="raum" accessibleText="%SO210.raum.tt" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="9" GridPane.rowSpan="2" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%SO210.raum.tt" />
+		</tooltip>
+	</ListView>
+	<CheckBox fx:id="besitzr" accessibleText="%SO210.besitzr.tt" text="%SO210.besitzr" GridPane.columnIndex="2" GridPane.rowIndex="9">
+		<tooltip>
+			<Tooltip text="%SO210.besitzr.tt" />
+		</tooltip>
+	</CheckBox>
+	<Label fx:id="spielerOhne0" mnemonicParsing="true" text="%SO210.spielerOhne" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+	<ListView fx:id="spielerOhne" accessibleText="%SO210.spielerOhne.tt" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.rowSpan="2" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%SO210.spielerOhne.tt" />
+		</tooltip>
+	</ListView>
+	<Label fx:id="spielerMit0" contentDisplay="BOTTOM" mnemonicParsing="true" text="%SO210.spielerMit" GridPane.columnIndex="3" GridPane.rowIndex="8" />
+	<ListView fx:id="spielerMit" accessibleText="%SO210.spielerMit.tt" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="9" GridPane.rowSpan="2" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%SO210.spielerMit.tt" />
+		</tooltip>
+	</ListView>
+	<Label fx:id="angelegt0" text="%Creation" GridPane.rowIndex="11" />
+	<TextField fx:id="angelegt" accessibleText="%Creation.tt" promptText="%Creation.tt" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="11">
+		<tooltip>
+			<Tooltip text="%Creation.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="geaendert0" text="%Change" GridPane.rowIndex="12" />
+	<TextField fx:id="geaendert" accessibleText="%Change.tt" promptText="%Change.tt" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="12">
+		<tooltip>
+			<Tooltip text="%Change.tt" />
+		</tooltip>
+	</TextField>
+	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="13">
+		<Button fx:id="ok" defaultButton="true" mnemonicParsing="true" onAction="#onOk" text="%Ok">
+			<tooltip>
+				<Tooltip text="%Ok.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="abbrechen" cancelButton="true" onAction="#onAbbrechen" text="%Cancel">
+			<tooltip>
+				<Tooltip text="%Cancel.tt" />
+			</tooltip>
+		</Button>
+	</HBox>
+
+	<stylesheets>
+		<URL value="@../Jhh6.css" />
+	</stylesheets>
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+</GridPane>
