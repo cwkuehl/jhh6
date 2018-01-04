@@ -860,8 +860,7 @@ class MessdienerService {
 			// break;
 			}
 		}
-		var r = new ServiceErgebnis<String>(
-			Global.format("Es wurde(n) {0} Gottesdienste importiert.", Global.intStr(anzahl)))
+		var r = new ServiceErgebnis<String>(Meldungen.M2083(anzahl))
 		return r
 	}
 }

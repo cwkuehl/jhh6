@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.66" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="de.cwkuehl.jhh6.app.controller.sb.SB300FamilienController">
+
+	<padding>
+		<Insets bottom="10" left="10" right="10" top="10" />
+	</padding>
+
+	<ToolBar prefHeight="40.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS">
+		<items>
+			<Button fx:id="aktuell" mnemonicParsing="false" onAction="#onAktuell">
+				<tooltip>
+					<Tooltip text="%Refresh" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-refresh.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="rueckgaengig" mnemonicParsing="false" onAction="#onRueckgaengig">
+				<tooltip>
+					<Tooltip text="%Undo" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-undo.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="wiederherstellen" mnemonicParsing="false" onAction="#onWiederherstellen">
+				<tooltip>
+					<Tooltip text="%Redo" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-redo.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="neu" mnemonicParsing="false" onAction="#onNeu">
+				<tooltip>
+					<Tooltip text="%New" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-new-document.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="kopieren" mnemonicParsing="false" onAction="#onKopieren">
+				<tooltip>
+					<Tooltip text="%Copy" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-copy.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="aendern" mnemonicParsing="false" onAction="#onAendern">
+				<tooltip>
+					<Tooltip text="%Edit" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-edit.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="loeschen" mnemonicParsing="false" onAction="#onLoeschen">
+				<tooltip>
+					<Tooltip text="%Delete" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-remove.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="tab" mnemonicParsing="false" onAction="#onTab">
+				<tooltip>
+					<Tooltip text="%Tab" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-tab.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+		</items>
+	</ToolBar>
+	<Label fx:id="familien0" mnemonicParsing="true" text="%SB300.familien" GridPane.columnIndex="0" GridPane.columnSpan="2"
+		GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+	<TableView fx:id="familien" accessibleText="%SB300.familien.tt" onMouseClicked="#onFamilienMouseClick"
+		GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%SB300.familien.tt" />
+		</tooltip>
+		<columns>
+			<TableColumn fx:id="colUid" prefWidth="75.0" text="%SB300.colUid" />
+			<TableColumn fx:id="colVater" prefWidth="200.0" text="%SB300.colVater" />
+			<TableColumn fx:id="colMutter" prefWidth="200.0" text="%SB300.colMutter" />
+			<TableColumn fx:id="colGa" prefWidth="170.0" text="%SB300.colGa" />
+			<TableColumn fx:id="colGv" prefWidth="120.0" text="%SB300.colGv" />
+			<TableColumn fx:id="colAa" prefWidth="170.0" text="%SB300.colAa" />
+			<TableColumn fx:id="colAv" prefWidth="120.0" text="%SB300.colAv" />
+		</columns>
+	</TableView>
+	<Label fx:id="springen0" text="%SB300.springen" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
+		<Button fx:id="spVater" onAction="#onSpVater" text="%SB300.spVater">
+			<tooltip>
+				<Tooltip text="%SB300.spVater.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="spMutter" onAction="#onSpMutter" text="%SB300.spMutter">
+			<tooltip>
+				<Tooltip text="%SB300.spMutter.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="spKind" onAction="#onSpKind" text="%SB300.spKind">
+			<tooltip>
+				<Tooltip text="%SB300.spKind.tt" />
+			</tooltip>
+		</Button>
+	</HBox>
+
+	<stylesheets>
+		<URL value="@../Jhh6.css" />
+	</stylesheets>
+	<columnConstraints>
+		<ColumnConstraints />
+		<ColumnConstraints />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+	</rowConstraints>
+</GridPane>

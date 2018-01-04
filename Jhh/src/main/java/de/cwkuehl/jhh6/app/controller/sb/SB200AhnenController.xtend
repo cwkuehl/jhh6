@@ -8,6 +8,7 @@ import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.server.FactoryService
 import java.time.LocalDateTime
 import java.util.List
+import javafx.application.Platform
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -140,14 +141,13 @@ class SB200AhnenController extends BaseController<String> {
 		if (stufe <= 1) {
 			var List<SbPersonLang> l = get(
 				FactoryService::getStammbaumService.getPersonListe(getServiceDaten, false, true,
-					if(filtern.isSelected) name.getText else null,
-					if(filtern.isSelected) vorname.getText else null, null))
+					if(filtern.isSelected) name.text else null, if(filtern.isSelected) vorname.text else null, null))
 			getItems(l, null, [a|new AhnenData(a)], ahnenData)
 			var int anz = Global::listLaenge(l)
 			var int anzg = 0
 			if (l !== null) {
 				for (SbPersonLang b : l) {
-					if (Global::nes(b.getGeburtsdatum)) {
+					if (Global::nes(b.geburtsdatum)) {
 						anzg++
 					}
 				}
@@ -242,14 +242,14 @@ class SB200AhnenController extends BaseController<String> {
 	 * Event für Drucken.
 	 */
 	@FXML def void onDrucken() {
-		//starteFormular(typeof(SB220DruckenController), DialogAufrufEnum::OHNE)
+		// starteFormular(typeof(SB220DruckenController), DialogAufrufEnum::OHNE)
 	}
 
 	/** 
 	 * Event für ImExport.
 	 */
 	@FXML def void onImExport() {
-		//starteFormular(typeof(SB500GedcomController), DialogAufrufEnum::OHNE)
+		// starteFormular(typeof(SB500GedcomController), DialogAufrufEnum::OHNE)
 	}
 
 	/** 
@@ -274,8 +274,8 @@ class SB200AhnenController extends BaseController<String> {
 	@FXML def void onSpName() {
 		var SbPersonLang k = getValue(ahnen, false)
 		var String r = get(
-			FactoryService::getStammbaumService.getNaechstenNamen(getServiceDaten,
-				if(k === null) null else k.getUid, name.getText, vorname.getText))
+			FactoryService::stammbaumService.getNaechstenNamen(serviceDaten, if(k === null) null else k.uid, name.text,
+				vorname.text))
 		setText(ahnen, r)
 	}
 
@@ -300,7 +300,7 @@ class SB200AhnenController extends BaseController<String> {
 	 */
 	@FXML def void onSpKind() {
 		var SbPersonLang k = getValue(ahnen, true)
-		var String r = get(FactoryService::getStammbaumService.getErstesKind(getServiceDaten, k.getUid))
+		var String r = get(FactoryService::stammbaumService.getErstesKind(serviceDaten, k.uid))
 		setText(ahnen, r)
 	}
 
@@ -309,7 +309,7 @@ class SB200AhnenController extends BaseController<String> {
 	 */
 	@FXML def void onSpEhegatte() {
 		var SbPersonLang k = getValue(ahnen, true)
-		var String r = get(FactoryService::getStammbaumService.getNaechstenEhegatten(getServiceDaten, k.getUid))
+		var String r = get(FactoryService::stammbaumService.getNaechstenEhegatten(serviceDaten, k.uid))
 		setText(ahnen, r)
 	}
 
@@ -318,7 +318,7 @@ class SB200AhnenController extends BaseController<String> {
 	 */
 	@FXML def void onSpGeschwister() {
 		var SbPersonLang k = getValue(ahnen, true)
-		var String r = get(FactoryService::getStammbaumService.getNaechstenGeschwister(getServiceDaten, k.getUid))
+		var r = get(FactoryService::stammbaumService.getNaechstenGeschwister(serviceDaten, k.uid))
 		setText(ahnen, r)
 	}
 
@@ -327,12 +327,11 @@ class SB200AhnenController extends BaseController<String> {
 	 */
 	@FXML def void onSpFamilie() {
 
-//		var SbPersonLang k = getValue(ahnen, true)
-//		var SB300FamilienController c = (fokusFormular(typeof(SB300FamilienController),
-//			DialogAufrufEnum::OHNE) as SB300FamilienController)
-//		if (c !== null) {
-//			Platform::runLater([c.onSpElternFamilie(k)])
-//		}
+		val SbPersonLang k = getValue(ahnen, true)
+		val c = (fokusFormular(typeof(SB300FamilienController), DialogAufrufEnum::OHNE) as SB300FamilienController)
+		if (c !== null) {
+			Platform::runLater([c.onSpElternFamilie(k)])
+		}
 	}
 
 	/** 
@@ -340,12 +339,11 @@ class SB200AhnenController extends BaseController<String> {
 	 */
 	@FXML def void onSpFamilienKind() {
 
-//		var SbPersonLang k = getValue(ahnen, true)
-//		var SB300FamilienController c = (fokusFormular(typeof(SB300FamilienController),
-//			DialogAufrufEnum::OHNE) as SB300FamilienController)
-//		if (c !== null) {
-//			Platform::runLater([c.onSpFamilienKind(k)])
-//		}
+		val SbPersonLang k = getValue(ahnen, true)
+		val c = (fokusFormular(typeof(SB300FamilienController), DialogAufrufEnum::OHNE) as SB300FamilienController)
+		if (c !== null) {
+			Platform::runLater([c.onSpFamilienKind(k)])
+		}
 	}
 
 	/** 
@@ -367,7 +365,7 @@ class SB200AhnenController extends BaseController<String> {
 	 */
 	def void onSpFamilieKind(String uid) {
 		if (!Global::nes(uid)) {
-			var String r = get(FactoryService::getStammbaumService.getErstesFamilienKind(getServiceDaten, uid))
+			var String r = get(FactoryService::stammbaumService.getErstesFamilienKind(serviceDaten, uid))
 			setText(ahnen, r)
 		}
 	}
