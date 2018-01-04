@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.66" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="de.cwkuehl.jhh6.app.controller.sb.SB210AhnController">
+
+	<padding>
+		<Insets bottom="10" left="10" right="10" top="10" />
+	</padding>
+
+	<Label fx:id="nr0" text="%SB210.nr" GridPane.columnIndex="0" />
+	<TextField fx:id="nr" accessibleText="%SB210.nr.tt" promptText="%SB210.nr.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="2">
+		<tooltip>
+			<Tooltip text="%SB210.nr.tt" />
+		</tooltip>
+	</TextField>
+	<ScrollPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS"
+		GridPane.rowIndex="0" GridPane.rowSpan="5">
+		<HBox fx:id="bilder">
+		</HBox>
+	</ScrollPane>
+	<Label fx:id="geburtsname0" mnemonicParsing="true" text="%SB210.geburtsname" GridPane.columnIndex="0"
+		GridPane.rowIndex="1" />
+	<TextField fx:id="geburtsname" accessibleText="%SB210.geburtsname.tt" promptText="%SB210.geburtsname.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="2" GridPane.rowIndex="1">
+		<tooltip>
+			<Tooltip text="%SB210.geburtsname.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="vorname0" mnemonicParsing="true" text="%SB210.vorname" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+	<TextField fx:id="vorname" accessibleText="%SB210.vorname.tt" promptText="%SB210.vorname.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="2" GridPane.rowIndex="2">
+		<tooltip>
+			<Tooltip text="%SB210.vorname.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="name0" mnemonicParsing="true" text="%SB210.name" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+	<TextField fx:id="name" accessibleText="%SB210.name.tt" promptText="%SB210.name.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="2" GridPane.rowIndex="3">
+		<tooltip>
+			<Tooltip text="%SB210.name.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="geschlecht0" text="%SB210.geschlecht" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4">
+		<fx:define>
+			<ToggleGroup fx:id="geschlecht" />
+		</fx:define>
+		<children>
+			<RadioButton accessibleText="%SB210.geschlecht1.tt" text="%SB210.geschlecht1" userData="m">
+				<tooltip>
+					<Tooltip text="%SB210.geschlecht1.tt" />
+				</tooltip>
+				<toggleGroup>
+					<ToggleGroup fx:id="geschlecht" />
+				</toggleGroup>
+			</RadioButton>
+			<RadioButton accessibleText="%SB210.geschlecht2.tt" text="%SB210.geschlecht2" toggleGroup="$geschlecht" userData="w">
+				<tooltip>
+					<Tooltip text="%SB210.geschlecht2.tt" />
+				</tooltip>
+			</RadioButton>
+			<RadioButton accessibleText="%SB210.geschlecht3.tt" text="%SB210.geschlecht3" toggleGroup="$geschlecht" userData="N">
+				<tooltip>
+					<Tooltip text="%SB210.geschlecht3.tt" />
+				</tooltip>
+			</RadioButton>
+		</children>
+	</HBox>
+	<Label fx:id="bilddaten0" text="%SB210.bilddaten" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+	<TextArea fx:id="bilddaten" accessibleText="%SB210.bilddaten.tt" promptText="%SB210.bilddaten.tt" wrapText="true"
+		GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%SB210.bilddaten.tt" />
+		</tooltip>
+	</TextArea>
+	<Label fx:id="geburtsdatum0" text="%SB210.geburtsdatum" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+	<TextField fx:id="geburtsdatum" accessibleText="%SB210.geburtsdatum.tt" promptText="%SB210.geburtsdatum.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="1" GridPane.rowIndex="6">
+		<tooltip>
+			<Tooltip text="%SB210.geburtsdatum.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="geburtsort0" text="%SB210.geburtsort" GridPane.rowIndex="7" />
+	<TextField fx:id="geburtsort" accessibleText="%SB210.geburtsort.tt" promptText="%SB210.geburtsort.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7">
+		<tooltip>
+			<Tooltip text="%SB210.geburtsort.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="geburtsbem0" text="%SB210.geburtsbem" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+	<TextArea fx:id="geburtsbem" accessibleText="%SB210.geburtsbem.tt" promptText="%SB210.geburtsbem.tt" wrapText="true"
+		GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6" GridPane.rowSpan="2">
+		<tooltip>
+			<Tooltip text="%SB210.geburtsbem.tt" />
+		</tooltip>
+	</TextArea>
+	<Label fx:id="taufdatum0" text="%SB210.taufdatum" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+	<TextField fx:id="taufdatum" accessibleText="%SB210.taufdatum.tt" promptText="%SB210.taufdatum.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="1" GridPane.rowIndex="8">
+		<tooltip>
+			<Tooltip text="%SB210.taufdatum.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="taufort0" text="%SB210.taufort" GridPane.rowIndex="9" />
+	<TextField fx:id="taufort" accessibleText="%SB210.taufort.tt" promptText="%SB210.taufort.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="9">
+		<tooltip>
+			<Tooltip text="%SB210.taufort.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="taufbem0" text="%SB210.taufbem" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+	<TextArea fx:id="taufbem" accessibleText="%SB210.taufbem.tt" promptText="%SB210.taufbem.tt" wrapText="true"
+		GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="8" GridPane.rowSpan="2">
+		<tooltip>
+			<Tooltip text="%SB210.taufbem.tt" />
+		</tooltip>
+	</TextArea>
+	<Label fx:id="todesdatum0" text="%SB210.todesdatum" GridPane.columnIndex="0" GridPane.rowIndex="10" />
+	<TextField fx:id="todesdatum" accessibleText="%SB210.todesdatum.tt" promptText="%SB210.todesdatum.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="1" GridPane.rowIndex="10">
+		<tooltip>
+			<Tooltip text="%SB210.todesdatum.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="todesort0" text="%SB210.todesort" GridPane.rowIndex="11" />
+	<TextField fx:id="todesort" accessibleText="%SB210.todesort.tt" promptText="%SB210.todesort.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="11">
+		<tooltip>
+			<Tooltip text="%SB210.todesort.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="todesbem0" text="%SB210.todesbem" GridPane.columnIndex="2" GridPane.rowIndex="10" />
+	<TextArea fx:id="todesbem" accessibleText="%SB210.todesbem.tt" promptText="%SB210.todesbem.tt" wrapText="true"
+		GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="10" GridPane.rowSpan="2" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%SB210.todesbem.tt" />
+		</tooltip>
+	</TextArea>
+	<Label fx:id="begraebnisdatum0" text="%SB210.begraebnisdatum" GridPane.columnIndex="0" GridPane.rowIndex="12" />
+	<TextField fx:id="begraebnisdatum" accessibleText="%SB210.begraebnisdatum.tt" promptText="%SB210.begraebnisdatum.tt"
+		GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.rowIndex="12">
+		<tooltip>
+			<Tooltip text="%SB210.begraebnisdatum.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="begraebnisort0" text="%SB210.begraebnisort" GridPane.rowIndex="13" />
+	<TextField fx:id="begraebnisort" accessibleText="%SB210.begraebnisort.tt" promptText="%SB210.begraebnisort.tt"
+		GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="13">
+		<tooltip>
+			<Tooltip text="%SB210.begraebnisort.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="begraebnisbem0" text="%SB210.begraebnisbem" GridPane.columnIndex="2" GridPane.rowIndex="12" />
+	<TextArea fx:id="begraebnisbem" accessibleText="%SB210.begraebnisbem.tt" promptText="%SB210.begraebnisbem.tt" wrapText="true"
+		GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="12" GridPane.rowSpan="2" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%SB210.begraebnisbem.tt" />
+		</tooltip>
+	</TextArea>
+	<Label fx:id="konfession0" mnemonicParsing="true" text="%SB210.konfession" GridPane.columnIndex="0" GridPane.rowIndex="14" />
+	<TextField fx:id="konfession" accessibleText="%SB210.konfession.tt" promptText="%SB210.konfession.tt" GridPane.columnIndex="1"
+		GridPane.hgrow="ALWAYS" GridPane.rowIndex="14">
+		<tooltip>
+			<Tooltip text="%SB210.konfession.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="titel0" mnemonicParsing="true" text="%SB210.titel" GridPane.columnIndex="0" GridPane.rowIndex="15" />
+	<TextField fx:id="titel" accessibleText="%SB210.titel.tt" promptText="%SB210.titel.tt" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS"
+		GridPane.rowIndex="15">
+		<tooltip>
+			<Tooltip text="%SB210.titel.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="bemerkung0" text="%SB210.bemerkung" GridPane.columnIndex="2" GridPane.rowIndex="14" />
+	<TextArea fx:id="bemerkung" accessibleText="%SB210.bemerkung.tt" promptText="%SB210.bemerkung.tt" wrapText="true"
+		GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="14" GridPane.rowSpan="2">
+		<tooltip>
+			<Tooltip text="%SB210.bemerkung.tt" />
+		</tooltip>
+	</TextArea>
+	<Label fx:id="gatte0" text="%SB210.gatte" GridPane.columnIndex="0" GridPane.rowIndex="16" />
+	<TextField fx:id="gatte" accessibleText="%SB210.gatte.tt" promptText="%SB210.gatte.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="1" GridPane.rowIndex="16">
+		<tooltip>
+			<Tooltip text="%SB210.gatte.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="gatteNr0" text="%SB210.gatteNr" GridPane.columnIndex="2" GridPane.rowIndex="16" />
+	<TextField fx:id="gatteNr" accessibleText="%SB210.gatteNr.tt" promptText="%SB210.gatteNr.tt" GridPane.columnIndex="3"
+		GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="16">
+		<tooltip>
+			<Tooltip text="%SB210.gatteNr.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="vater0" text="%SB210.vater" GridPane.columnIndex="0" GridPane.rowIndex="17" />
+	<TextField fx:id="vater" accessibleText="%SB210.vater.tt" promptText="%SB210.vater.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="1" GridPane.rowIndex="17">
+		<tooltip>
+			<Tooltip text="%SB210.vater.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="vaterNr0" text="%SB210.vaterNr" GridPane.columnIndex="2" GridPane.rowIndex="17" />
+	<TextField fx:id="vaterNr" accessibleText="%SB210.vaterNr.tt" promptText="%SB210.vaterNr.tt" GridPane.columnIndex="3"
+		GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="17">
+		<tooltip>
+			<Tooltip text="%SB210.vaterNr.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="mutter0" text="%SB210.mutter" GridPane.columnIndex="0" GridPane.rowIndex="18" />
+	<TextField fx:id="mutter" accessibleText="%SB210.mutter.tt" promptText="%SB210.mutter.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="1" GridPane.rowIndex="18">
+		<tooltip>
+			<Tooltip text="%SB210.mutter.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="mutterNr0" text="%SB210.mutterNr" GridPane.columnIndex="2" GridPane.rowIndex="18" />
+	<TextField fx:id="mutterNr" accessibleText="%SB210.mutterNr.tt" promptText="%SB210.mutterNr.tt" GridPane.columnIndex="3"
+		GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="18">
+		<tooltip>
+			<Tooltip text="%SB210.mutterNr.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="quelle0" mnemonicParsing="true" text="%SB210.quelle" GridPane.columnIndex="0" GridPane.rowIndex="19" />
+	<ComboBox fx:id="quelle" accessibleText="%SB210.quelle.tt" GridPane.columnIndex="1" GridPane.columnSpan="3"
+		GridPane.rowIndex="19" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%SB210.quelle.tt" />
+		</tooltip>
+	</ComboBox>
+	<Label fx:id="status10" text="%SB210.status1" GridPane.columnIndex="0" GridPane.rowIndex="20" />
+	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="20">
+		<TextField fx:id="status1" accessibleText="%SB210.status1.tt" promptText="%SB210.status1.tt">
+			<tooltip>
+				<Tooltip text="%SB210.status1.tt" />
+			</tooltip>
+		</TextField>
+		<Label fx:id="status20" text="%SB210.status2" />
+		<TextField fx:id="status2" accessibleText="%SB210.status2.tt" promptText="%SB210.status2.tt">
+			<tooltip>
+				<Tooltip text="%SB210.status2.tt" />
+			</tooltip>
+		</TextField>
+		<Label fx:id="status30" text="%SB210.status3" />
+		<TextField fx:id="status3" accessibleText="%SB210.status3.tt" promptText="%SB210.status3.tt">
+			<tooltip>
+				<Tooltip text="%SB210.status3.tt" />
+			</tooltip>
+		</TextField>
+	</HBox>
+	<Label fx:id="angelegt0" text="%Creation" GridPane.columnIndex="0" GridPane.rowIndex="21" />
+	<TextField fx:id="angelegt" accessibleText="%Creation.tt"
+		promptText="%Creation.tt" GridPane.columnIndex="1" GridPane.rowIndex="21">
+		<tooltip>
+			<Tooltip text="%Creation.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="geaendert0" text="%Change" GridPane.columnIndex="2" GridPane.rowIndex="21" />
+	<TextField fx:id="geaendert" accessibleText="%Change.tt"
+		promptText="%Change.tt" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS"
+		GridPane.rowIndex="21">
+		<tooltip>
+			<Tooltip text="%Change.tt" />
+		</tooltip>
+	</TextField>
+	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="22">
+		<Button fx:id="ok" defaultButton="true" mnemonicParsing="true" onAction="#onOk" text="%Ok">
+			<tooltip>
+				<Tooltip text="%Ok.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="hinzufuegen" mnemonicParsing="true" onAction="#onHinzufuegen" text="%SB210.hinzufuegen">
+			<tooltip>
+				<Tooltip text="%SB210.hinzufuegen.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="abbrechen" cancelButton="true" onAction="#onAbbrechen" text="%Cancel">
+			<tooltip>
+				<Tooltip text="%Cancel.tt" />
+			</tooltip>
+		</Button>
+	</HBox>
+
+	<stylesheets>
+		<URL value="@../Jhh6.css" />
+	</stylesheets>
+	<columnConstraints>
+		<ColumnConstraints minWidth="105.0" />
+		<ColumnConstraints minWidth="200.0" />
+		<ColumnConstraints minWidth="95.0" />
+		<ColumnConstraints />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+	</rowConstraints>
+</GridPane>

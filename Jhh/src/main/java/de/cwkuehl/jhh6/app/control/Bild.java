@@ -217,7 +217,7 @@ public class Bild extends ImageView {
         if (hbox == null) {
             return;
         }
-        String text = "      Bilder hier fallen lassen.";
+        String text = Global.g0("Image.tt");
         Bild b = new Bild(hbox, text.trim(), null, textToImage(text, 300, 150), null, r0);
         b.leer = true;
         // hbox.getChildren().add(b);

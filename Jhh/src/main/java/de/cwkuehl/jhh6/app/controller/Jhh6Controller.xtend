@@ -41,6 +41,7 @@ import de.cwkuehl.jhh6.app.controller.hp.HP400RechnungenController
 import de.cwkuehl.jhh6.app.controller.mo.MO100MessdienerController
 import de.cwkuehl.jhh6.app.controller.mo.MO200GottesdiensteController
 import de.cwkuehl.jhh6.app.controller.mo.MO300ProfileController
+import de.cwkuehl.jhh6.app.controller.sb.SB200AhnenController
 import de.cwkuehl.jhh6.app.controller.sb.SB400QuellenController
 import de.cwkuehl.jhh6.app.controller.so.SO100SudokuController
 import de.cwkuehl.jhh6.app.controller.so.SO200DetektivController
@@ -372,7 +373,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		l.add(new StartDialog("#HP100", g("menu.patients"), typeof(HP100PatientenController), null))
 		l.add(new StartDialog("#HP200", g("menu.treatments"), typeof(HP200BehandlungenController), null))
 		l.add(new StartDialog("#HP400", g("menu.invoices"), typeof(HP400RechnungenController), null))
-		// l.add(new StartDialog("#SB200", g("menu.ancestors"), typeof(SB200AhnenController), null))
+		l.add(new StartDialog("#SB200", g("menu.ancestors"), typeof(SB200AhnenController), null))
 		// l.add(new StartDialog("#SB300", g("menu.families"), typeof(SB300FamilienController), null))
 		// l.add(new StartDialog("#VM300", g("menu.renters"), typeof(VM300MieterController), null))
 		// l.add(new StartDialog("#WP200", g("menu.stocks"), typeof(WP200WertpapiereController), null))
@@ -524,7 +525,8 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		starteFormular(typeof(MO300ProfileController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleSB200() { // starteFormular(typeof(SB200AhnenController), DialogAufrufEnum.OHNE)
+	@FXML def void handleSB200() {
+		starteFormular(typeof(SB200AhnenController), DialogAufrufEnum.OHNE)
 	}
 
 	def void handleSB300() { // starteFormular(typeof(SB300FamilienController), DialogAufrufEnum.OHNE)
