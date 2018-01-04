@@ -54,7 +54,12 @@
 				<Tooltip text="%AM000.login.tt" />
 			</tooltip>
 		</Button>
-		<Button cancelButton="true" onAction="#onAbbrechen" text="%AM000.cancel">
+		<Button fx:id="reset" onAction="#onReset" text="%AM000.reset">
+			<tooltip>
+				<Tooltip text="%AM000.reset.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="abbrechen" cancelButton="true" onAction="#onAbbrechen" text="%AM000.cancel">
 			<tooltip>
 				<Tooltip text="%AM000.cancel.tt" />
 			</tooltip>

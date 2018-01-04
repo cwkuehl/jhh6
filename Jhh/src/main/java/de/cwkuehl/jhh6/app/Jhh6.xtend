@@ -29,12 +29,6 @@ class Jhh6 extends Application {
 	static Jhh6Controller controller = null
 	protected static Logger log = LoggerFactory::getLogger(typeof(Jhh6))
 
-	// static final Void static_initializer = {
-	// {
-	// log.error("Static-Start")
-	// null
-	// }
-	// }
 	def static void main(String[] args) {
 
 		// Locale.setDefault(Locale.ENGLISH);
@@ -88,14 +82,12 @@ class Jhh6 extends Application {
 			Jhh6::stage = stage
 		}
 		var g = Werkzeug.getDialogGroesse("Rahmen")
-		stage.setX(g.getX)
-		stage.setY(g.getY)
-		stage.setWidth(g.getWidth)
-		stage.setHeight(g.getHeight)
+		stage.x = g.x
+		stage.y = g.y
+		stage.width = g.width
+		stage.height = g.height
 		stage.setOnCloseRequest([ event |
-			{
-				Platform::exit // Anwendung beenden
-			}
+			Platform::exit // Anwendung beenden
 		])
 	}
 
@@ -104,6 +96,16 @@ class Jhh6 extends Application {
 		controller.closeTabs
 		Werkzeug.setDialogGroesse("Rahmen", stage)
 		getEinstellungen.save
+	}
+
+	/** Position und Größe des Hauptfenster zurücksetzen. */
+	def static void reset() {
+
+		var g = Werkzeug.getDialogGroesse(null)
+		stage.x = g.x
+		stage.y = g.y
+		stage.width = g.width
+		stage.height = g.height
 	}
 
 	def static Einstellungen getEinstellungen() {
@@ -167,9 +169,7 @@ class Jhh6 extends Application {
 	def static void setLeftStatus(String str) {
 
 		if (!Global::nes(str)) {
-			Platform.runLater([
-				Werkzeug.showError(str)
-			])
+			Platform.runLater([Werkzeug.showError(str)])
 		}
 		setLeftStatus2(str)
 	}
@@ -180,9 +180,7 @@ class Jhh6 extends Application {
 	def static void setLeftStatus2(String str) {
 
 		if (controller !== null) {
-			Platform.runLater([
-				controller.setLeftStatus(str)
-			])
+			Platform.runLater([controller.setLeftStatus(str)])
 		}
 	}
 

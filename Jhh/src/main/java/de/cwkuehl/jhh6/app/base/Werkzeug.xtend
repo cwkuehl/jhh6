@@ -253,15 +253,15 @@ class Werkzeug {
 		if (g.leer) {
 			var b = Screen.primary.visualBounds
 			if (key === null) {
-				g.setX(b.width / 8)
-				g.setY(b.height / 8)
-				g.setWidth(b.width * 3 / 4)
-				g.setHeight(b.height * 3 / 4)
+				g.x = b.width / 8
+				g.y = b.height / 8
+				g.width = b.width * 3 / 4
+				g.height = b.height * 3 / 4
 			} else {
-				g.setX(b.width / 4)
-				g.setY(b.height / 4)
-				g.setWidth(b.width * 2 / 4)
-				g.setHeight(b.height * 2 / 4)
+				g.x = b.width / 4
+				g.y = b.height / 4
+				g.width = b.width * 2 / 4
+				g.height = b.height * 2 / 4
 			}
 		}
 		// log.info('''getDialogGroesse «key» x «g.x» y «g.y» w «g.width» h «g.height»''')

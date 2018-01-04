@@ -184,9 +184,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 				setRechte(daten.mandantNr, true)
 				startDialoge(daten.mandantNr)
 			} else {
-				Platform.runLater([
-					handleAnmelden(null)
-				])
+				Platform.runLater([handleAnmelden(null)])
 			}
 		] as TimerTask), 100)
 	}

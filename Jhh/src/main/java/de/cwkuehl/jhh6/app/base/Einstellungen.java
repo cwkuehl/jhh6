@@ -100,7 +100,7 @@ public class Einstellungen {
      */
     public String holeResourceDaten(final String key) {
 
-        String wert = properties.getProperty(key);
+        String wert = properties.getProperty(key == null ? "" : key);
         // System.out.println("get " + key + "=" + wert);
         return wert;
     }

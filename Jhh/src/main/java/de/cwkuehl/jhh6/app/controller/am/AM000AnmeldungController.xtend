@@ -2,11 +2,11 @@ package de.cwkuehl.jhh6.app.controller.am
 
 import de.cwkuehl.jhh6.api.global.Global
 import de.cwkuehl.jhh6.api.service.ServiceDaten
+import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.Profil
 import de.cwkuehl.jhh6.server.FactoryService
 import javafx.application.Platform
-import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.CheckBox
@@ -37,8 +37,12 @@ class AM000AnmeldungController extends BaseController<String> {
 		}
 	}
 
-	@FXML def void onAbbrechen(ActionEvent event) {
+	@FXML def void onAbbrechen() {
 		close("Abbrechen")
+	}
+
+	@FXML def void onReset() {
+		Jhh6::reset
 	}
 
 	override protected void initialize() {
