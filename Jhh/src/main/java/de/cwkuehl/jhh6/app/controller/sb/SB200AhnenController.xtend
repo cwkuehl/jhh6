@@ -2,6 +2,7 @@ package de.cwkuehl.jhh6.app.controller.sb
 
 import de.cwkuehl.jhh6.api.dto.SbPersonLang
 import de.cwkuehl.jhh6.api.global.Global
+import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
@@ -152,7 +153,7 @@ class SB200AhnenController extends BaseController<String> {
 					}
 				}
 			}
-			ahnenStatus.setText(Global::format("Datensätze: {0}  ohne Geburtsdatum: {1}", anz, anzg))
+			ahnenStatus.setText(Meldungen.M2053(anz, anzg))
 		}
 		if (stufe <= 2) {
 			initDatenTable
@@ -242,14 +243,14 @@ class SB200AhnenController extends BaseController<String> {
 	 * Event für Drucken.
 	 */
 	@FXML def void onDrucken() {
-		// starteFormular(typeof(SB220DruckenController), DialogAufrufEnum::OHNE)
+		starteFormular(typeof(SB220DruckenController), DialogAufrufEnum::OHNE)
 	}
 
 	/** 
 	 * Event für ImExport.
 	 */
 	@FXML def void onImExport() {
-		// starteFormular(typeof(SB500GedcomController), DialogAufrufEnum::OHNE)
+		starteFormular(typeof(SB500GedcomController), DialogAufrufEnum::OHNE)
 	}
 
 	/** 

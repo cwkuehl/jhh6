@@ -157,9 +157,7 @@ class SB210AhnController extends BaseController<String> {
 		angelegt0.setLabelFor(angelegt)
 		geaendert0.setLabelFor(geaendert)
 		refresh = [ s |
-			{
-				bilddaten.setText(Global::anhaengen(bilddaten.getText, Constant::CRLF, s))
-			}
+			bilddaten.setText(Global::anhaengen(bilddaten.text, Constant::CRLF, s))
 		]
 		Bild::addDragNdrop(bilder, refresh)
 		initDaten(0)
@@ -312,27 +310,23 @@ class SB210AhnController extends BaseController<String> {
 
 		var ServiceErgebnis<?> r = null
 		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
-			r = FactoryService::getStammbaumService.insertUpdatePerson(getServiceDaten, null, name.getText,
-				vorname.getText, geburtsname.getText, getText(geschlecht), titel.getText, konfession.getText,
-				bemerkung.getText, getText(quelle), Global::strInt(status1.getText),
-				Global::strInt(status2.getText), Global::strInt(status3.getText), geburtsdatum.getText,
-				geburtsort.getText, geburtsbem.getText, null, taufdatum.getText, taufort.getText,
-				taufbem.getText, null, todesdatum.getText, todesort.getText, todesbem.getText, null,
-				begraebnisdatum.getText, begraebnisort.getText, begraebnisbem.getText, null, gatteNr.getText,
-				vaterNr.getText, mutterNr.getText,
-				Bild::parseBilddaten(bilddaten.getText, Bild::getBytesListe(bilder)))
+			r = FactoryService::stammbaumService.insertUpdatePerson(getServiceDaten, null, name.text, vorname.text,
+				geburtsname.text, getText(geschlecht), titel.text, konfession.text, bemerkung.text, getText(quelle),
+				Global::strInt(status1.text), Global::strInt(status2.text), Global::strInt(status3.text),
+				geburtsdatum.text, geburtsort.text, geburtsbem.text, null, taufdatum.text, taufort.text, taufbem.text,
+				null, todesdatum.text, todesort.text, todesbem.text, null, begraebnisdatum.text, begraebnisort.text,
+				begraebnisbem.text, null, gatteNr.text, vaterNr.text, mutterNr.text,
+				Bild::parseBilddaten(bilddaten.text, Bild::getBytesListe(bilder)))
 		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
-			r = FactoryService::getStammbaumService.insertUpdatePerson(getServiceDaten, nr.getText,
-				name.getText, vorname.getText, geburtsname.getText, getText(geschlecht), titel.getText,
-				konfession.getText, bemerkung.getText, getText(quelle), Global::strInt(status1.getText),
-				Global::strInt(status2.getText), Global::strInt(status3.getText), geburtsdatum.getText,
-				geburtsort.getText, geburtsbem.getText, null, taufdatum.getText, taufort.getText,
-				taufbem.getText, null, todesdatum.getText, todesort.getText, todesbem.getText, null,
-				begraebnisdatum.getText, begraebnisort.getText, begraebnisbem.getText, null, gatteNr.getText,
-				vaterNr.getText, mutterNr.getText,
-				Bild::parseBilddaten(bilddaten.getText, Bild::getBytesListe(bilder)))
+			r = FactoryService::getStammbaumService.insertUpdatePerson(getServiceDaten, nr.text, name.text,
+				vorname.text, geburtsname.text, getText(geschlecht), titel.text, konfession.text, bemerkung.text,
+				getText(quelle), Global::strInt(status1.text), Global::strInt(status2.text),
+				Global::strInt(status3.text), geburtsdatum.text, geburtsort.text, geburtsbem.text, null, taufdatum.text,
+				taufort.text, taufbem.text, null, todesdatum.text, todesort.text, todesbem.text, null,
+				begraebnisdatum.text, begraebnisort.text, begraebnisbem.text, null, gatteNr.text, vaterNr.text,
+				mutterNr.text, Bild::parseBilddaten(bilddaten.text, Bild::getBytesListe(bilder)))
 		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
-			r = FactoryService::getStammbaumService.deletePerson(getServiceDaten, nr.getText)
+			r = FactoryService::getStammbaumService.deletePerson(getServiceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)
@@ -348,7 +342,7 @@ class SB210AhnController extends BaseController<String> {
 	 * @FXML
 	 */
 	def void onHinzufuegen() {
-		var String datei = DateiAuswahl::auswaehlen(true, "", "Bild-Datei auswählen", "png", "Bild-Dateien (.png)")
+		var datei = DateiAuswahl::auswaehlen(true, "SB210.select.file", "SB210.select.ok", "ged", "SB210.select.ext")
 		if (!Global::nes(datei)) {
 			new Bild(bilder, datei, null, null, null, refresh)
 		}

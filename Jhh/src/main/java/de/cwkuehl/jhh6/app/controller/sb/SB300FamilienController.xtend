@@ -1,14 +1,15 @@
 package de.cwkuehl.jhh6.app.controller.sb
 
-import java.time.LocalDateTime
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.SbFamilieLang
 import de.cwkuehl.jhh6.api.dto.SbPersonLang
 import de.cwkuehl.jhh6.api.global.Global
+import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.server.FactoryService
+import java.time.LocalDateTime
+import java.util.List
 import javafx.application.Platform
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
@@ -247,7 +248,7 @@ class SB300FamilienController extends BaseController<String> {
 			var String r = get(FactoryService::getStammbaumService.getElternFamilie(getServiceDaten, k.getUid))
 			setText(familien, r)
 			if (Global::nes(r)) {
-				Jhh6::setLeftStatus2("Keine Familie vorhanden.")
+				Jhh6::setLeftStatus2(Meldungen.M2050)
 			}
 		}
 	}

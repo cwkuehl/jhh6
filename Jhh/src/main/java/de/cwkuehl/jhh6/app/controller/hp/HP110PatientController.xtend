@@ -203,7 +203,7 @@ class HP110PatientController extends BaseController<String> {
 	 * Event für Hinzufuegen.
 	 */
 	@FXML def void onHinzufuegen() {
-		var String datei = DateiAuswahl.auswaehlen(true, "HP110.select.file", "HP110.select.ok", "png", "HP110.select.text")
+		var String datei = DateiAuswahl.auswaehlen(true, "HP110.select.file", "HP110.select.ok", "png", "HP110.select.ext")
 		if (!Global.nes(datei)) {
 			new Bild(bilder, datei, null, null, null, refresh)
 		}

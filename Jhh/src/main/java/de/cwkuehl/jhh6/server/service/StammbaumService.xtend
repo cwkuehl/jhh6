@@ -1527,7 +1527,7 @@ class StammbaumService {
 		}
 		var map = new HashMap<String, String>
 		var anzahl = importiereAhnen(daten, datei, map)
-		var r = new ServiceErgebnis<String>(Global.format("Es wurde(n) {0} Person(en) importiert.", anzahl))
+		var r = new ServiceErgebnis<String>(Meldungen.M2055(anzahl))
 		return r
 	}
 
