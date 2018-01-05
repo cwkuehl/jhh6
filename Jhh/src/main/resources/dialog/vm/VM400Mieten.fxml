@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.66" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.cwkuehl.jhh6.app.controller.vm.VM400MietenController">
+
+	<padding>
+		<Insets bottom="10" left="10" right="10" top="10" />
+	</padding>
+
+	<ToolBar prefHeight="40.0" prefWidth="200.0" GridPane.hgrow="ALWAYS">
+		<items>
+			<Button fx:id="aktuell" mnemonicParsing="false" onAction="#onAktuell">
+				<tooltip>
+					<Tooltip text="%Refresh" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-refresh.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="rueckgaengig" mnemonicParsing="false" onAction="#onRueckgaengig">
+				<tooltip>
+					<Tooltip text="%Undo" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-undo.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="wiederherstellen" mnemonicParsing="false" onAction="#onWiederherstellen">
+				<tooltip>
+					<Tooltip text="%Redo" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-redo.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="neu" mnemonicParsing="false" onAction="#onNeu">
+				<tooltip>
+					<Tooltip text="%New" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-new-document.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="kopieren" mnemonicParsing="false" onAction="#onKopieren">
+				<tooltip>
+					<Tooltip text="%Copy" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-copy.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="aendern" mnemonicParsing="false" onAction="#onAendern">
+				<tooltip>
+					<Tooltip text="%Edit" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-edit.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="loeschen" mnemonicParsing="false" onAction="#onLoeschen">
+				<tooltip>
+					<Tooltip text="%Delete" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-remove.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="tab" mnemonicParsing="false" onAction="#onTab">
+				<tooltip>
+					<Tooltip text="%Tab" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-tab.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+		</items>
+	</ToolBar>
+	<Label fx:id="mieten0" mnemonicParsing="true" text="%VM400.mieten" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+	<TableView fx:id="mieten" accessibleText="%VM400.mieten.tt" onMouseClicked="#onMietenMouseClick" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%VM400.mieten.tt" />
+		</tooltip>
+		<columns>
+			<TableColumn fx:id="colUid" prefWidth="75.0" text="%VM400.colUid" />
+			<TableColumn fx:id="colHaus" prefWidth="150.0" text="%VM400.colHaus" />
+			<TableColumn fx:id="colWohnung" prefWidth="150.0" text="%VM400.colWohnung" />
+			<TableColumn fx:id="colDatum" prefWidth="120.0" text="%VM400.colDatum" />
+			<TableColumn fx:id="colMiete" prefWidth="150.0" text="%VM400.colMiete" />
+			<TableColumn fx:id="colNebenkosten" prefWidth="150.0" text="%VM400.colNebenkosten" />
+			<TableColumn fx:id="colGa" prefWidth="170.0" text="%VM400.colGa" />
+			<TableColumn fx:id="colGv" prefWidth="120.0" text="%VM400.colGv" />
+			<TableColumn fx:id="colAa" prefWidth="170.0" text="%VM400.colAa" />
+			<TableColumn fx:id="colAv" prefWidth="120.0" text="%VM400.colAv" />
+		</columns>
+	</TableView>
+
+	<stylesheets>
+		<URL value="@../Jhh6.css" />
+	</stylesheets>
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+</GridPane>

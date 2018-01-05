@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import de.cwkuehl.jhh5.anwendung.control.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import de.cwkuehl.jhh6.app.control.Datum?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.66" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="de.cwkuehl.jhh6.app.controller.vm.VM410MieteController">
+
+	<padding>
+		<Insets bottom="10" left="10" right="10" top="10" />
+	</padding>
+
+	<Label fx:id="nr0" text="%VM410.nr" GridPane.columnIndex="0" />
+	<TextField fx:id="nr" accessibleText="%VM410.nr.tt" promptText="%VM410.nr.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="5" GridPane.hgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%VM410.nr.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="wohnung0" mnemonicParsing="true" text="%VM410.wohnung" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+	<ComboBox fx:id="wohnung" accessibleText="%VM410.wohnung.tt" GridPane.columnIndex="1" GridPane.columnSpan="5"
+		GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
+		<tooltip>
+			<Tooltip text="%VM410.wohnung.tt" />
+		</tooltip>
+	</ComboBox>
+	<Label fx:id="datum0" text="%VM410.datum" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+	<Datum fx:id="datum" accessibleText="%VM410.datum.tt" nullText="" promptText="%VM410.datum.tt" schalterText="mhp"
+		uhrzeitGroesse="0" wochentagGroesse="80" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.hgrow="ALWAYS"
+		GridPane.rowIndex="2">
+		<tooltip>
+			<Tooltip text="%VM410.datum.tt" />
+		</tooltip>
+	</Datum>
+	<Label fx:id="miete0" mnemonicParsing="true" text="%VM410.miete" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+	<TextField fx:id="miete" onKeyReleased="#onSummen" accessibleText="%VM410.miete.tt" promptText="%VM410.miete.tt"
+		GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
+		<tooltip>
+			<Tooltip text="%VM410.miete.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="garage0" mnemonicParsing="true" text="%VM410.garage" GridPane.columnIndex="2"
+		GridPane.rowIndex="3" />
+	<TextField fx:id="garage" onKeyReleased="#onSummen" accessibleText="%VM410.garage.tt" promptText="%VM410.garage.tt"
+		GridPane.columnIndex="3" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
+		<tooltip>
+			<Tooltip text="%VM410.garage.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="summe10" text="%VM410.summe1" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+	<TextField fx:id="summe1" accessibleText="%VM410.summe1.tt" promptText="%VM410.summe1.tt" GridPane.columnIndex="5"
+		GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
+		<tooltip>
+			<Tooltip text="%VM410.summe1.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="nebenkosten0" mnemonicParsing="true" text="%VM410.nebenkosten" GridPane.columnIndex="0"
+		GridPane.rowIndex="4" />
+	<TextField fx:id="nebenkosten" onKeyReleased="#onSummen" accessibleText="%VM410.nebenkosten.tt" promptText="%VM410.nebenkosten.tt"
+		GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
+		<tooltip>
+			<Tooltip text="%VM410.nebenkosten.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="heizung0" mnemonicParsing="true" text="%VM410.heizung" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+	<TextField fx:id="heizung" onKeyReleased="#onSummen" accessibleText="%VM410.heizung.tt" promptText="%VM410.heizung.tt"
+		GridPane.columnIndex="3" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
+		<tooltip>
+			<Tooltip text="%VM410.heizung.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="summe20" text="%VM410.summe2" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+	<TextField fx:id="summe2" accessibleText="%VM410.summe2.tt" promptText="%VM410.summe2.tt"
+		GridPane.columnIndex="5" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
+		<tooltip>
+			<Tooltip text="%VM410.summe2.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="summe30" text="%VM410.summe3" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+	<TextField fx:id="summe3" accessibleText="%VM410.summe3.tt" promptText="%VM410.summe3.tt" GridPane.columnIndex="5"
+		GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5">
+		<tooltip>
+			<Tooltip text="%VM410.summe3.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="personen0" mnemonicParsing="true" text="%VM410.personen" GridPane.columnIndex="0"
+		GridPane.rowIndex="6" />
+	<TextField fx:id="personen" accessibleText="%VM410.personen.tt" promptText="%VM410.personen.tt"
+		GridPane.columnIndex="1" GridPane.rowIndex="6">
+		<tooltip>
+			<Tooltip text="%VM410.personen.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="notiz0" text="%VM410.notiz" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+	<TextArea fx:id="notiz" accessibleText="%VM410.notiz.tt" promptText="%VM410.notiz.tt" wrapText="true" GridPane.columnIndex="1"
+		GridPane.columnSpan="5" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%VM410.notiz.tt" />
+		</tooltip>
+	</TextArea>
+	<Label fx:id="angelegt0" text="%Creation" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+	<TextField fx:id="angelegt" accessibleText="%Creation.tt"
+		promptText="%Creation.tt" GridPane.columnIndex="1" GridPane.columnSpan="5"
+		GridPane.hgrow="ALWAYS" GridPane.rowIndex="8">
+		<tooltip>
+			<Tooltip text="%Creation.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="geaendert0" text="%Change" GridPane.columnIndex="0" GridPane.rowIndex="9" />
+	<TextField fx:id="geaendert" accessibleText="%Change.tt"
+		promptText="%Change.tt" GridPane.columnIndex="1" GridPane.columnSpan="5"
+		GridPane.hgrow="ALWAYS" GridPane.rowIndex="9">
+		<tooltip>
+			<Tooltip text="%Change.tt" />
+		</tooltip>
+	</TextField>
+	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="10">
+		<Button fx:id="ok" defaultButton="true" mnemonicParsing="true" onAction="#onOk" text="%Ok">
+			<tooltip>
+				<Tooltip text="%Ok.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="abbrechen" cancelButton="true" onAction="#onAbbrechen" text="%Cancel">
+			<tooltip>
+				<Tooltip text="%Cancel.tt" />
+			</tooltip>
+		</Button>
+	</HBox>
+
+	<stylesheets>
+		<URL value="@../Jhh6.css" />
+	</stylesheets>
+	<columnConstraints>
+		<ColumnConstraints minWidth="125.0" />
+		<ColumnConstraints />
+		<ColumnConstraints minWidth="130.0" />
+		<ColumnConstraints />
+		<ColumnConstraints minWidth="115.0" />
+		<ColumnConstraints />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+	</rowConstraints>
+</GridPane>
