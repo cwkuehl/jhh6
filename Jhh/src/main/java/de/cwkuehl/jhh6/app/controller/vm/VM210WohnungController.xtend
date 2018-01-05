@@ -1,31 +1,32 @@
 package de.cwkuehl.jhh6.app.controller.vm
 
+import java.util.List
 import de.cwkuehl.jhh6.api.dto.VmHaus
+import de.cwkuehl.jhh6.api.dto.VmWohnungLang
 import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.api.service.ServiceErgebnis
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
+import de.cwkuehl.jhh6.app.controller.vm.VM210WohnungController.HausData
 import de.cwkuehl.jhh6.server.FactoryService
 import javafx.fxml.FXML
 import javafx.scene.control.Button
+import javafx.scene.control.ComboBox
 import javafx.scene.control.Label
 import javafx.scene.control.TextArea
 import javafx.scene.control.TextField
 
 /** 
- * Controller für Dialog VM110Haus.
+ * Controller für Dialog VM210Wohnung.
  */
-class VM110HausController extends BaseController<String> {
+class VM210WohnungController extends BaseController<String> {
 
 	@FXML Label nr0
 	@FXML TextField nr
+	@FXML Label haus0
+	@FXML ComboBox<HausData> haus
 	@FXML Label bezeichnung0
 	@FXML TextField bezeichnung
-	@FXML Label strasse0
-	@FXML TextField strasse
-	@FXML Label plzOrt0
-	@FXML TextField plz
-	@FXML TextField ort
 	@FXML Label notiz0
 	@FXML TextArea notiz
 	@FXML Label angelegt0
@@ -33,7 +34,25 @@ class VM110HausController extends BaseController<String> {
 	@FXML Label geaendert0
 	@FXML TextField geaendert
 	@FXML Button ok
-	//@FXML Button abbrechen
+
+	// @FXML Button abbrechen
+	/** 
+	 * Daten für ComboBox Haus.
+	 */
+	static class HausData extends BaseController.ComboBoxData<VmHaus> {
+
+		new(VmHaus v) {
+			super(v)
+		}
+
+		override String getId() {
+			return getData.getUid
+		}
+
+		override String toString() {
+			return getData.getBezeichnung
+		}
+	}
 
 	/** 
 	 * Initialisierung des Dialogs.
@@ -42,9 +61,8 @@ class VM110HausController extends BaseController<String> {
 
 		tabbar = 0
 		nr0.setLabelFor(nr)
+		haus0.setLabelFor(haus, true)
 		bezeichnung0.setLabelFor(bezeichnung, true)
-		strasse0.setLabelFor(strasse)
-		plzOrt0.setLabelFor(plz)
 		notiz0.setLabelFor(notiz)
 		angelegt0.setLabelFor(angelegt)
 		geaendert0.setLabelFor(geaendert)
@@ -59,30 +77,28 @@ class VM110HausController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var boolean neu = DialogAufrufEnum.NEU.equals(getAufruf)
-			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(getAufruf)
-			var VmHaus k = getParameter1
+			var List<VmHaus> hl = get(FactoryService::getVermietungService.getHausListe(getServiceDaten, true))
+			haus.setItems(getItems(hl, null, [a|new HausData(a)], null))
+			var boolean neu = DialogAufrufEnum::NEU.equals(getAufruf)
+			var boolean loeschen = DialogAufrufEnum::LOESCHEN.equals(getAufruf)
+			var VmWohnungLang k = getParameter1
 			if (!neu && k !== null) {
-				k = get(FactoryService.getVermietungService.getHaus(getServiceDaten, k.getUid))
+				k = get(FactoryService::getVermietungService.getWohnungLang(getServiceDaten, k.getUid))
 				nr.setText(k.getUid)
+				setText(haus, k.getHausUid)
 				bezeichnung.setText(k.getBezeichnung)
-				strasse.setText(k.getStrasse)
-				plz.setText(k.getPlz)
-				ort.setText(k.getOrt)
 				notiz.setText(k.getNotiz)
 				angelegt.setText(k.formatDatumVon(k.getAngelegtAm, k.getAngelegtVon))
 				geaendert.setText(k.formatDatumVon(k.getGeaendertAm, k.getGeaendertVon))
 			}
 			nr.setEditable(false)
+			setEditable(haus, !loeschen)
 			bezeichnung.setEditable(!loeschen)
-			strasse.setEditable(!loeschen)
-			plz.setEditable(!loeschen)
-			ort.setEditable(!loeschen)
 			notiz.setEditable(!loeschen)
 			angelegt.setEditable(false)
 			geaendert.setEditable(false)
 			if (loeschen) {
-				ok.setText(Meldungen.M2001)
+				ok.setText(Meldungen::M2001)
 			}
 		}
 		if (stufe <= 1) { // stufe = 0
@@ -103,14 +119,14 @@ class VM110HausController extends BaseController<String> {
 	@FXML def void onOk() {
 
 		var ServiceErgebnis<?> r = null
-		if (DialogAufrufEnum.NEU.equals(aufruf) || DialogAufrufEnum.KOPIEREN.equals(aufruf)) {
-			r = FactoryService.getVermietungService.insertUpdateHaus(getServiceDaten, null, bezeichnung.getText,
-				strasse.getText, plz.getText, ort.getText, notiz.getText)
-		} else if (DialogAufrufEnum.AENDERN.equals(aufruf)) {
-			r = FactoryService.getVermietungService.insertUpdateHaus(getServiceDaten, nr.getText,
-				bezeichnung.getText, strasse.getText, plz.getText, ort.getText, notiz.getText)
-		} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
-			r = FactoryService.getVermietungService.deleteHaus(getServiceDaten, nr.getText)
+		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
+			r = FactoryService::getVermietungService.insertUpdateWohnung(getServiceDaten, null, getText(haus),
+				bezeichnung.getText, notiz.getText)
+		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
+			r = FactoryService::getVermietungService.insertUpdateWohnung(getServiceDaten, nr.getText, getText(haus),
+				bezeichnung.getText, notiz.getText)
+		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
+			r = FactoryService::getVermietungService.deleteWohnung(getServiceDaten, nr.getText)
 		}
 		if (r !== null) {
 			get(r)

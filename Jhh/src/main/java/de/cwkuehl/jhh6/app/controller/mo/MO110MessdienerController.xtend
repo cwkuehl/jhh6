@@ -247,7 +247,7 @@ class MO110MessdienerController extends BaseController<String> {
 	/** 
 	 * Event für Ok.
 	 */
-	@FXML @SuppressWarnings("unchecked") def void onOk() {
+	@FXML def void onOk() {
 
 		var ServiceErgebnis<?> r = null
 		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
