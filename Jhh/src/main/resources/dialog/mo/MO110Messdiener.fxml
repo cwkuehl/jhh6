@@ -101,7 +101,7 @@
 		</tooltip>
 	</Datum>
 	<Label fx:id="bis0" mnemonicParsing="true" text="%MO110.bis" GridPane.columnIndex="2" GridPane.rowIndex="8" />
-	<Datum fx:id="bis" accessibleText="%MO110.bis.tt" nullText="noch aktiv" uhrzeitGroesse="0" promptText="%MO110.bis.tt" schalterText=" hp"
+	<Datum fx:id="bis" accessibleText="%MO110.bis.tt" nullText="%MO110.bis.null" uhrzeitGroesse="0" promptText="%MO110.bis.tt" schalterText=" hp"
 		GridPane.columnIndex="3" GridPane.columnSpan="1" GridPane.rowIndex="8">
 		<tooltip>
 			<Tooltip text="%MO110.bis.tt" />

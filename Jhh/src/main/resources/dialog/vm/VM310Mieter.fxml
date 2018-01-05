@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import de.cwkuehl.jhh5.anwendung.control.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import de.cwkuehl.jhh6.app.control.Datum?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="de.cwkuehl.jhh6.app.controller.vm.VM310MieterController">
+
+	<padding>
+		<Insets bottom="10" left="10" right="10" top="10" />
+	</padding>
+
+	<Label fx:id="nr0" text="%VM310.nr" GridPane.columnIndex="0" />
+	<TextField fx:id="nr" accessibleText="%VM310.nr.tt" promptText="%VM310.nr.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="3">
+		<tooltip>
+			<Tooltip text="%VM310.nr.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="wohnung0" mnemonicParsing="true" text="%VM310.wohnung" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+	<ComboBox fx:id="wohnung" accessibleText="%VM310.wohnung.tt" onAction="#onWohnung" GridPane.columnIndex="1"
+		GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%VM310.wohnung.tt" />
+		</tooltip>
+	</ComboBox>
+	<Label fx:id="name0" mnemonicParsing="true" text="%VM310.name" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+	<TextField fx:id="name" accessibleText="%VM310.name.tt" promptText="%VM310.name.tt" GridPane.columnIndex="1"
+		GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
+		<tooltip>
+			<Tooltip text="%VM310.name.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="vorname0" mnemonicParsing="true" text="%VM310.vorname" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+	<TextField fx:id="vorname" accessibleText="%VM310.vorname.tt" promptText="%VM310.vorname.tt" GridPane.columnIndex="3"
+		GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
+		<tooltip>
+			<Tooltip text="%VM310.vorname.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="anrede0" mnemonicParsing="true" text="%VM310.anrede" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+	<TextField fx:id="anrede" accessibleText="%VM310.anrede.tt" promptText="%VM310.anrede.tt" GridPane.columnIndex="1"
+		GridPane.rowIndex="3">
+		<tooltip>
+			<Tooltip text="%VM310.anrede.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="einzug0" mnemonicParsing="true" text="%VM310.einzug" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+	<Datum fx:id="einzug" accessibleText="%VM310.einzug.tt" nullText="" promptText="%VM310.einzug.tt" schalterText="mhp"
+		uhrzeitGroesse="0" wochentagGroesse="80" GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.rowIndex="4">
+		<tooltip>
+			<Tooltip text="%VM310.einzug.tt" />
+		</tooltip>
+	</Datum>
+	<Label fx:id="auszug0" mnemonicParsing="true" text="%VM310.auszug" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+	<Datum fx:id="auszug" accessibleText="%VM310.auszug.tt" nullText="%VM310.auszug.null" promptText="%VM310.auszug.tt" schalterText=""
+		uhrzeitGroesse="0" GridPane.columnIndex="3" GridPane.columnSpan="1" GridPane.rowIndex="4">
+		<tooltip>
+			<Tooltip text="%VM310.auszug.tt" />
+		</tooltip>
+	</Datum>
+	<Label fx:id="qm0" mnemonicParsing="true" text="%VM310.qm" GridPane.rowIndex="6" />
+	<TextField fx:id="qm" accessibleText="%VM310.qm.tt" promptText="%VM310.qm.tt"
+		GridPane.columnIndex="1" GridPane.rowIndex="6">
+		<tooltip>
+			<Tooltip text="%VM310.qm.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="grundmiete0" mnemonicParsing="true" text="%VM310.grundmiete" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+	<TextField fx:id="grundmiete" accessibleText="%VM310.grundmiete.tt" promptText="%VM310.grundmiete.tt" GridPane.columnIndex="3"
+		GridPane.rowIndex="6">
+		<tooltip>
+			<Tooltip text="%VM310.grundmiete.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="kaution0" mnemonicParsing="true" text="%VM310.kaution" GridPane.rowIndex="7" />
+	<TextField fx:id="kaution" accessibleText="%VM310.kaution.tt" promptText="%VM310.kaution.tt" GridPane.columnIndex="1"
+		GridPane.rowIndex="7">
+		<tooltip>
+			<Tooltip text="%VM310.kaution.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="antenne0" mnemonicParsing="true" text="%VM310.antenne" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+	<TextField fx:id="antenne" accessibleText="%VM310.antenne.tt" promptText="%VM310.antenne.tt"
+		GridPane.columnIndex="3" GridPane.rowIndex="7">
+		<tooltip>
+			<Tooltip text="%VM310.antenne.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="notiz0" text="%VM310.notiz" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+	<TextArea fx:id="notiz" accessibleText="%VM310.notiz.tt" promptText="%VM310.notiz.tt" wrapText="true" GridPane.columnIndex="1"
+		GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%VM310.notiz.tt" />
+		</tooltip>
+	</TextArea>
+	<Label fx:id="miete0" mnemonicParsing="true" text="%VM310.miete" GridPane.rowIndex="8" />
+	<TextField fx:id="miete" accessibleText="%VM310.miete.tt" promptText="%VM310.miete.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="3" GridPane.rowIndex="8">
+		<tooltip>
+			<Tooltip text="%VM310.miete.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="angelegt0" text="%Creation" GridPane.rowIndex="9" />
+	<TextField fx:id="angelegt" accessibleText="%Creation.tt"
+		promptText="%Creation.tt" GridPane.columnIndex="1" GridPane.columnSpan="3"
+		GridPane.rowIndex="9">
+		<tooltip>
+			<Tooltip text="%Creation.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="geaendert0" text="%Change" GridPane.rowIndex="10" />
+	<TextField fx:id="geaendert" accessibleText="%Change.tt"
+		promptText="%Change.tt" GridPane.columnIndex="1" GridPane.columnSpan="3"
+		GridPane.rowIndex="10">
+		<tooltip>
+			<Tooltip text="%Change.tt" />
+		</tooltip>
+	</TextField>
+	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="11">
+		<Button fx:id="ok" defaultButton="true" mnemonicParsing="true" onAction="#onOk" text="%Ok">
+			<tooltip>
+				<Tooltip text="%Ok.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="mieteAendern" mnemonicParsing="true" onAction="#onMieteAendern" text="%VM310.mieteAendern">
+			<tooltip>
+				<Tooltip text="%VM310.mieteAendern.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="abbrechen" cancelButton="true" onAction="#onAbbrechen" text="%Cancel">
+			<tooltip>
+				<Tooltip text="%Cancel.tt" />
+			</tooltip>
+		</Button>
+	</HBox>
+
+	<stylesheets>
+		<URL value="@../Jhh6.css" />
+	</stylesheets>
+	<columnConstraints>
+		<ColumnConstraints />
+		<ColumnConstraints />
+		<ColumnConstraints />
+		<ColumnConstraints />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+	</rowConstraints>
+</GridPane>

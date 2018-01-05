@@ -49,6 +49,7 @@ import de.cwkuehl.jhh6.app.controller.so.SO200DetektivController
 import de.cwkuehl.jhh6.app.controller.tb.TB100TagebuchController
 import de.cwkuehl.jhh6.app.controller.vm.VM100HaeuserController
 import de.cwkuehl.jhh6.app.controller.vm.VM200WohnungenController
+import de.cwkuehl.jhh6.app.controller.vm.VM300MieterController
 import de.cwkuehl.jhh6.server.FactoryService
 import java.net.URL
 import java.util.ArrayList
@@ -376,7 +377,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		l.add(new StartDialog("#HP400", g("menu.invoices"), typeof(HP400RechnungenController), null))
 		l.add(new StartDialog("#SB200", g("menu.ancestors"), typeof(SB200AhnenController), null))
 		l.add(new StartDialog("#SB300", g("menu.families"), typeof(SB300FamilienController), null))
-		// l.add(new StartDialog("#VM300", g("menu.renters"), typeof(VM300MieterController), null))
+		l.add(new StartDialog("#VM300", g("menu.renters"), typeof(VM300MieterController), null))
 		// l.add(new StartDialog("#WP200", g("menu.stocks"), typeof(WP200WertpapiereController), null))
 		// l.add(new StartDialog("#WP250", g("menu.investments"), typeof(WP250AnlagenController), null))
 		// l.add(new StartDialog("#WP400", g("menu.bookings3"), typeof(WP400BuchungenController), null))
@@ -558,7 +559,8 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		starteFormular(typeof(VM200WohnungenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleVM300() { // starteFormular(typeof(VM300MieterController), DialogAufrufEnum.OHNE)
+	@FXML def void handleVM300() {
+		starteFormular(typeof(VM300MieterController), DialogAufrufEnum.OHNE)
 	}
 
 	@FXML def void handleVM400() { // starteFormular(typeof(VM400MietenController), DialogAufrufEnum.OHNE)

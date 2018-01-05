@@ -110,9 +110,8 @@ public class DtoBase {
             if (datum == null) {
                 datum = (LocalDateTime) getClass().getMethod("getAngelegtAm", keinParameter).invoke(this);
             }
-            if (datum == null
-                    || jetzt == null
-                    || datum.toInstant(ZoneOffset.UTC).plusMillis(AEND_ZEIT).compareTo(jetzt.toInstant(ZoneOffset.UTC)) <= 0) {
+            if (datum == null || jetzt == null || datum.toInstant(ZoneOffset.UTC).plusMillis(AEND_ZEIT).compareTo(jetzt
+                    .toInstant(ZoneOffset.UTC)) <= 0) {
                 getClass().getMethod("setGeaendertVon", stringParameter).invoke(this, benutzer);
                 getClass().getMethod("setGeaendertAm", dateParameter).invoke(this, jetzt);
             }
@@ -155,7 +154,8 @@ public class DtoBase {
     }
 
     public String formatDatumVon(LocalDateTime datum, String von) {
-        // return Meldungen.getMeldung("1011", Global.dateTimeString(datum), von);
+        if (datum == null)
+            return null;
         return Meldungen.M1011(datum, von);
     }
 
@@ -171,12 +171,12 @@ public class DtoBase {
     public DtoBase getClone() {
         return this;
     }
-    
+
     /** Umgekehrte Kopie der Instanz für DTO-Update. */
     public DtoBase getClone2() {
         return getClone();
     }
-    
+
     /**
      * Rundet einen Double-Wert auf 4 Nachkommastellen.
      * <p>
