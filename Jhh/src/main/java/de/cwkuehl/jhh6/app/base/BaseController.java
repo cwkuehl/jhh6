@@ -570,19 +570,19 @@ public abstract class BaseController<R> {
 
         if (cb != null) {
             cb.getSelectionModel().clearSelection();
-            if (v != null) {
-                for (T t : cb.getItems()) {
-                    if (t instanceof ComboBoxData<?>) {
-                        ComboBoxData<?> d = (ComboBoxData<?>) t;
-                        // System.out.println(d.toString() + " " + d.getId());
-                        if (v.equals(d.getId())) {
-                            // System.out.println("Selected " + d.getId());
-                            cb.getSelectionModel().select(t);
-                            break;
-                        }
+            // if (v != null) {
+            for (T t : cb.getItems()) {
+                if (t instanceof ComboBoxData<?>) {
+                    ComboBoxData<?> d = (ComboBoxData<?>) t;
+                    // System.out.println(d.toString() + " " + d.getId());
+                    if (Global.compString(v, d.getId()) == 0) {
+                        // System.out.println("Selected " + d.getId());
+                        cb.getSelectionModel().select(t);
+                        break;
                     }
                 }
             }
+            // }
         }
     }
 

@@ -362,7 +362,7 @@ class VM500BuchungenController extends BaseController<String> {
 	 * Event für Sollstellung.
 	 */
 	@FXML def void onSollstellung() {
-		// starteDialog(typeof(VM520SollstellungController), DialogAufrufEnum::NEU)
+		starteDialog(typeof(VM520SollstellungController), DialogAufrufEnum::NEU)
 		onAktuell
 	}
 
@@ -370,6 +370,7 @@ class VM500BuchungenController extends BaseController<String> {
 	 * Event für Istzahlung.
 	 */
 	@FXML def void onIstzahlung() {
+		starteDialog(typeof(VM530IstzahlungController), DialogAufrufEnum::NEU)
 		onAktuell
 	}
 

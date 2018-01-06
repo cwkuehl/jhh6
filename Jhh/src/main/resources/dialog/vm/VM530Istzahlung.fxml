@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import de.cwkuehl.jhh5.anwendung.control.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import de.cwkuehl.jhh6.app.control.Datum?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.66" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="de.cwkuehl.jhh6.app.controller.vm.VM530IstzahlungController">
+
+	<padding>
+		<Insets bottom="10" left="10" right="10" top="10" />
+	</padding>
+
+	<Label fx:id="monat0" mnemonicParsing="true" text="%VM530.monat" GridPane.columnIndex="0" />
+	<Datum fx:id="monat" accessibleText="%VM530.monat.tt" nullText="" promptText="%VM530.monat.tt" schalterText="   "
+		uhrzeitGroesse="0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%VM530.monat.tt" />
+		</tooltip>
+	</Datum>
+	<Label fx:id="mieter0" mnemonicParsing="true" text="%VM530.mieter" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+	<ComboBox fx:id="mieter" accessibleText="%VM530.mieter.tt" onAction="#onMieter" GridPane.columnIndex="1"
+		GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
+		<tooltip>
+			<Tooltip text="%VM530.mieter.tt" />
+		</tooltip>
+	</ComboBox>
+	<Label fx:id="belegDatum0" text="%VM530.belegDatum" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+	<Datum fx:id="belegDatum" accessibleText="%VM530.belegDatum.tt" nullText="" promptText="%VM530.belegDatum.tt" schalterText="mhp"
+		uhrzeitGroesse="0" wochentagGroesse="80" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS"
+		GridPane.rowIndex="2">
+		<tooltip>
+			<Tooltip text="%VM530.belegDatum.tt" />
+		</tooltip>
+	</Datum>
+	<Label fx:id="miete0" mnemonicParsing="true" text="%VM530.miete" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+	<TextField fx:id="miete" onKeyReleased="#onSummen" accessibleText="%VM530.miete.tt" promptText="%VM530.miete.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
+		<tooltip>
+			<Tooltip text="%VM530.miete.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="garage0" mnemonicParsing="true" text="%VM530.garage" GridPane.columnIndex="2"
+		GridPane.rowIndex="3" />
+	<TextField fx:id="garage" onKeyReleased="#onSummen" accessibleText="%VM530.garage.tt" promptText="%VM530.garage.tt"
+		GridPane.columnIndex="3" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
+		<tooltip>
+			<Tooltip text="%VM530.garage.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="nebenkosten0" mnemonicParsing="true" text="%VM530.nebenkosten" GridPane.columnIndex="0"
+		GridPane.rowIndex="4" />
+	<TextField fx:id="nebenkosten" onKeyReleased="#onSummen" accessibleText="%VM530.nebenkosten.tt" promptText="%VM530.nebenkosten.tt"
+		GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
+		<tooltip>
+			<Tooltip text="%VM530.nebenkosten.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="heizung0" mnemonicParsing="true" text="%VM530.heizung" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+	<TextField fx:id="heizung" onKeyReleased="#onSummen" accessibleText="%VM530.heizung.tt" promptText="%VM530.heizung.tt" GridPane.columnIndex="3"
+		GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
+		<tooltip>
+			<Tooltip text="%VM530.heizung.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="summe0" text="%VM530.summe" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+	<TextField fx:id="summe" accessibleText="%VM530.summe.tt" promptText="%VM530.summe.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5">
+		<tooltip>
+			<Tooltip text="%VM530.summe.tt" />
+		</tooltip>
+	</TextField>
+	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6">
+		<Button fx:id="ok" defaultButton="true" mnemonicParsing="true" onAction="#onOk" text="%Ok">
+			<tooltip>
+				<Tooltip text="%Ok.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="abbrechen" cancelButton="true" onAction="#onAbbrechen" text="%Cancel">
+			<tooltip>
+				<Tooltip text="%Cancel.tt" />
+			</tooltip>
+		</Button>
+	</HBox>
+
+	<stylesheets>
+		<URL value="@../Jhh6.css" />
+	</stylesheets>
+	<columnConstraints>
+		<ColumnConstraints />
+		<ColumnConstraints />
+		<ColumnConstraints />
+		<ColumnConstraints />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+	</rowConstraints>
+</GridPane>
