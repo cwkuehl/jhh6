@@ -52,6 +52,7 @@ import de.cwkuehl.jhh6.app.controller.vm.VM200WohnungenController
 import de.cwkuehl.jhh6.app.controller.vm.VM300MieterController
 import de.cwkuehl.jhh6.app.controller.vm.VM400MietenController
 import de.cwkuehl.jhh6.app.controller.vm.VM500BuchungenController
+import de.cwkuehl.jhh6.app.controller.vm.VM600KontenController
 import de.cwkuehl.jhh6.server.FactoryService
 import java.net.URL
 import java.util.ArrayList
@@ -573,7 +574,8 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		starteFormular(typeof(VM500BuchungenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleVM600() { // starteFormular(typeof(VM600KontenController), DialogAufrufEnum.OHNE)
+	@FXML def void handleVM600() {
+		starteFormular(typeof(VM600KontenController), DialogAufrufEnum.OHNE)
 	}
 
 	@FXML def void handleVM700() { // starteFormular(typeof(VM700EreignisseController), DialogAufrufEnum.OHNE)

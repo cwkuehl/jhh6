@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import de.cwkuehl.jhh5.anwendung.control.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import de.cwkuehl.jhh6.app.control.Datum?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.66" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="de.cwkuehl.jhh6.app.controller.vm.VM610KontoController">
+
+	<padding>
+		<Insets bottom="10" left="10" right="10" top="10" />
+	</padding>
+
+	<Label fx:id="nr0" text="%VM610.nr" GridPane.columnIndex="0" />
+	<TextField fx:id="nr" accessibleText="%VM610.nr.tt" promptText="%VM610.nr.tt" GridPane.columnIndex="1"
+		GridPane.hgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%VM610.nr.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="bezeichnung0" mnemonicParsing="true" text="%VM610.bezeichnung" GridPane.columnIndex="0"
+		GridPane.rowIndex="1" />
+	<TextField fx:id="bezeichnung" accessibleText="%VM610.bezeichnung.tt" promptText="%VM610.bezeichnung.tt" GridPane.columnIndex="1"
+		GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
+		<tooltip>
+			<Tooltip text="%VM610.bezeichnung.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="kennzeichen0" mnemonicParsing="true" text="%VM610.kennzeichen" GridPane.columnIndex="0"
+		GridPane.rowIndex="2" />
+	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
+		<fx:define>
+			<ToggleGroup fx:id="kennzeichen" />
+		</fx:define>
+		<children>
+			<RadioButton accessibleText="%VM610.kennzeichen1.tt" text="%VM610.kennzeichen1" userData="">
+				<tooltip>
+					<Tooltip text="%VM610.kennzeichen1.tt" />
+				</tooltip>
+				<toggleGroup>
+					<ToggleGroup fx:id="kennzeichen" />
+				</toggleGroup>
+			</RadioButton>
+			<RadioButton accessibleText="%VM610.kennzeichen2.tt" text="%VM610.kennzeichen2" toggleGroup="$kennzeichen" userData="E">
+				<tooltip>
+					<Tooltip text="%VM610.kennzeichen2.tt" />
+				</tooltip>
+			</RadioButton>
+			<RadioButton accessibleText="%VM610.kennzeichen3.tt" text="%VM610.kennzeichen3" toggleGroup="$kennzeichen"
+				userData="G">
+				<tooltip>
+					<Tooltip text="%VM610.kennzeichen3.tt" />
+				</tooltip>
+			</RadioButton>
+		</children>
+	</HBox>
+	<Label fx:id="kontoart0" mnemonicParsing="true" text="%VM610.kontoart" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
+		<fx:define>
+			<ToggleGroup fx:id="kontoart" />
+		</fx:define>
+		<children>
+			<RadioButton accessibleText="%VM610.kontoart1.tt" text="%VM610.kontoart1" userData="AK">
+				<tooltip>
+					<Tooltip text="%VM610.kontoart1.tt" />
+				</tooltip>
+				<toggleGroup>
+					<ToggleGroup fx:id="kontoart" />
+				</toggleGroup>
+			</RadioButton>
+			<RadioButton accessibleText="%VM610.kontoart2.tt" text="%VM610.kontoart2" toggleGroup="$kontoart" userData="PK">
+				<tooltip>
+					<Tooltip text="%VM610.kontoart2.tt" />
+				</tooltip>
+			</RadioButton>
+			<RadioButton accessibleText="%VM610.kontoart3.tt" text="%VM610.kontoart3" toggleGroup="$kontoart" userData="AW">
+				<tooltip>
+					<Tooltip text="%VM610.kontoart3.tt" />
+				</tooltip>
+			</RadioButton>
+			<RadioButton accessibleText="%VM610.kontoart4.tt" text="%VM610.kontoart4" toggleGroup="$kontoart" userData="ER">
+				<tooltip>
+					<Tooltip text="%VM610.kontoart4.tt" />
+				</tooltip>
+			</RadioButton>
+		</children>
+	</HBox>
+	<Label fx:id="von0" mnemonicParsing="true" text="%VM610.von" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+	<Datum fx:id="von" accessibleText="%VM610.von.tt" nullText="%VM610.von.null" promptText="%VM610.von.tt" schalterText=""
+		uhrzeitGroesse="0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
+		<tooltip>
+			<Tooltip text="%VM610.von.tt" />
+		</tooltip>
+	</Datum>
+	<Label fx:id="bis0" mnemonicParsing="true" text="%VM610.bis" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+	<Datum fx:id="bis" accessibleText="%VM610.bis.tt" nullText="%VM610.bis.null" promptText="%VM610.bis.tt" schalterText=""
+		uhrzeitGroesse="0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5">
+		<tooltip>
+			<Tooltip text="%VM610.bis.tt" />
+		</tooltip>
+	</Datum>
+	<Label fx:id="schluessel0" mnemonicParsing="true" text="%VM610.schluessel" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+	<TextField fx:id="schluessel" accessibleText="%VM610.schluessel.tt" promptText="%VM610.schluessel.tt" GridPane.columnIndex="1"
+		GridPane.hgrow="ALWAYS" GridPane.rowIndex="6">
+		<tooltip>
+			<Tooltip text="%VM610.schluessel.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="haus0" mnemonicParsing="true" text="%VM610.haus" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+	<ComboBox fx:id="haus" accessibleText="%VM610.haus.tt" onAction="#onHaus" GridPane.columnIndex="1" GridPane.rowIndex="7"
+		GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%VM610.haus.tt" />
+		</tooltip>
+	</ComboBox>
+	<Label fx:id="wohnung0" mnemonicParsing="true" text="%VM610.wohnung" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+	<ComboBox fx:id="wohnung" accessibleText="%VM610.wohnung.tt" onAction="#onWohnung" GridPane.columnIndex="1"
+		GridPane.rowIndex="8" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%VM610.wohnung.tt" />
+		</tooltip>
+	</ComboBox>
+	<Label fx:id="mieter0" mnemonicParsing="true" text="%VM610.mieter" GridPane.columnIndex="0" GridPane.rowIndex="9" />
+	<ComboBox fx:id="mieter" accessibleText="%VM610.mieter.tt" onAction="#onMieter" GridPane.columnIndex="1"
+		GridPane.rowIndex="9" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%VM610.mieter.tt" />
+		</tooltip>
+	</ComboBox>
+	<Label fx:id="notiz0" text="%VM610.notiz" GridPane.columnIndex="0" GridPane.rowIndex="10" />
+	<TextArea fx:id="notiz" accessibleText="%VM610.notiz.tt" promptText="%VM610.notiz.tt" wrapText="true" GridPane.columnIndex="1"
+		GridPane.hgrow="ALWAYS" GridPane.rowIndex="10" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%VM610.notiz.tt" />
+		</tooltip>
+	</TextArea>
+	<Label fx:id="angelegt0" text="%Creation" GridPane.columnIndex="0" GridPane.rowIndex="11" />
+	<TextField fx:id="angelegt" accessibleText="%Creation.tt"
+		promptText="%Creation.tt" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS"
+		GridPane.rowIndex="11">
+		<tooltip>
+			<Tooltip text="%Creation.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="geaendert0" text="%Change" GridPane.columnIndex="0" GridPane.rowIndex="12" />
+	<TextField fx:id="geaendert" accessibleText="%Change.tt"
+		promptText="%Change.tt" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS"
+		GridPane.rowIndex="12">
+		<tooltip>
+			<Tooltip text="%Change.tt" />
+		</tooltip>
+	</TextField>
+	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="13">
+		<Button fx:id="ok" defaultButton="true" mnemonicParsing="true" onAction="#onOk" text="%Ok">
+			<tooltip>
+				<Tooltip text="%Ok.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="abbrechen" cancelButton="true" onAction="#onAbbrechen" text="%Cancel">
+			<tooltip>
+				<Tooltip text="%Cancel.tt" />
+			</tooltip>
+		</Button>
+	</HBox>
+
+	<stylesheets>
+		<URL value="@../Jhh6.css" />
+	</stylesheets>
+	<columnConstraints>
+		<ColumnConstraints />
+		<ColumnConstraints />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+	</rowConstraints>
+</GridPane>
