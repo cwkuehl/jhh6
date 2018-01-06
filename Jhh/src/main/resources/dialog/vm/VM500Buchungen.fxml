@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import de.cwkuehl.jhh5.anwendung.control.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import de.cwkuehl.jhh6.app.control.Datum?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.66" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.cwkuehl.jhh6.app.controller.vm.VM500BuchungenController">
+
+	<padding>
+		<Insets bottom="10" left="10" right="10" top="10" />
+	</padding>
+
+	<ToolBar prefHeight="40.0" prefWidth="200.0" GridPane.columnSpan="6" GridPane.hgrow="ALWAYS">
+		<items>
+			<Button fx:id="aktuell" mnemonicParsing="false" onAction="#onAktuell">
+				<tooltip>
+					<Tooltip text="%Refresh" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-refresh.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="rueckgaengig" mnemonicParsing="false" onAction="#onRueckgaengig">
+				<tooltip>
+					<Tooltip text="%Undo" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-undo.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="wiederherstellen" mnemonicParsing="false" onAction="#onWiederherstellen">
+				<tooltip>
+					<Tooltip text="%Redo" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-redo.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="neu" mnemonicParsing="false" onAction="#onNeu">
+				<tooltip>
+					<Tooltip text="%New" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-new-document.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="kopieren" mnemonicParsing="false" onAction="#onKopieren">
+				<tooltip>
+					<Tooltip text="%Copy" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-copy.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="aendern" mnemonicParsing="false" onAction="#onAendern">
+				<tooltip>
+					<Tooltip text="%Edit" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-edit.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="loeschen" mnemonicParsing="false" onAction="#onLoeschen">
+				<tooltip>
+					<Tooltip text="%Delete" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-remove.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="sollstellung" mnemonicParsing="false" onAction="#onSollstellung">
+				<tooltip>
+					<Tooltip text="%VM500.sollstellung.tt" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-new-document.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="istzahlung" mnemonicParsing="false" onAction="#onIstzahlung">
+				<tooltip>
+					<Tooltip text="%VM500.istzahlung.tt" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-new-document.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="tab" mnemonicParsing="false" onAction="#onTab">
+				<tooltip>
+					<Tooltip text="%Tab" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-tab.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+		</items>
+	</ToolBar>
+	<Label fx:id="buchungen0" mnemonicParsing="true" text="%VM500.buchungen" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+	<TableView fx:id="buchungen" accessibleText="%VM500.buchungen.tt" onMouseClicked="#onBuchungenMouseClick" GridPane.columnIndex="0" GridPane.columnSpan="6" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%VM500.buchungen.tt" />
+		</tooltip>
+		<columns>
+			<TableColumn fx:id="colUid" prefWidth="75.0" text="%VM500.colUid" />
+			<TableColumn fx:id="colValuta" prefWidth="120.0" text="%VM500.colValuta" />
+			<TableColumn fx:id="colKz" prefWidth="30.0" text="%VM500.colKz" />
+			<TableColumn fx:id="colBetrag" prefWidth="100.0" text="%VM500.colBetrag" />
+			<TableColumn fx:id="colText" prefWidth="200.0" text="%VM500.colText" />
+			<TableColumn fx:id="colSoll" prefWidth="150.0" text="%VM500.colSoll" />
+			<TableColumn fx:id="colHaben" prefWidth="150.0" text="%VM500.colHaben" />
+			<TableColumn fx:id="colHaus" prefWidth="120.0" text="%VM500.colHaus" />
+			<TableColumn fx:id="colWohnung" prefWidth="120.0" text="%VM500.colWohnung" />
+			<TableColumn fx:id="colMieter" prefWidth="120.0" text="%VM500.colMieter" />
+			<TableColumn fx:id="colGa" prefWidth="170.0" text="%VM500.colGa" />
+			<TableColumn fx:id="colGv" prefWidth="120.0" text="%VM500.colGv" />
+			<TableColumn fx:id="colAa" prefWidth="170.0" text="%VM500.colAa" />
+			<TableColumn fx:id="colAv" prefWidth="120.0" text="%VM500.colAv" />
+		</columns>
+	</TableView>
+	<Label fx:id="kennzeichen0" mnemonicParsing="true" text="%VM500.kennzeichen" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+		<fx:define>
+			<ToggleGroup fx:id="kennzeichen" />
+		</fx:define>
+		<children>
+			<RadioButton accessibleText="%VM500.kennzeichen1.tt" text="%VM500.kennzeichen1" userData="0">
+				<tooltip>
+					<Tooltip text="%VM500.kennzeichen1.tt" />
+				</tooltip>
+            <toggleGroup>
+               <ToggleGroup fx:id="kennzeichen" />
+            </toggleGroup>
+			</RadioButton>
+			<RadioButton accessibleText="%VM500.kennzeichen2.tt" text="%VM500.kennzeichen2" toggleGroup="$kennzeichen" userData="1">
+				<tooltip>
+					<Tooltip text="%VM500.kennzeichen2.tt" />
+				</tooltip>
+			</RadioButton>
+		</children>
+	</HBox>
+	<Label fx:id="von0" mnemonicParsing="true" text="%VM500.von" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+	<Datum fx:id="von" accessibleText="%VM500.von.tt" nullText="" onAction="#onVon" promptText="%VM500.von.tt" schalterText="" uhrzeitGroesse="0" GridPane.columnIndex="3" GridPane.rowIndex="3">
+		<tooltip>
+			<Tooltip text="%VM500.von.tt" />
+		</tooltip>
+	</Datum>
+	<Label fx:id="bis0" mnemonicParsing="true" text="%VM500.bis" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+	<Datum fx:id="bis" accessibleText="%VM500.bis.tt" nullText="" onAction="#onBis" promptText="%VM500.bis.tt" schalterText="" uhrzeitGroesse="0" GridPane.columnIndex="5" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
+		<tooltip>
+			<Tooltip text="%VM500.bis.tt" />
+		</tooltip>
+	</Datum>
+	<Label fx:id="bText0" mnemonicParsing="true" text="%VM500.bText" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+	<TextField fx:id="bText" accessibleText="%VM500.bText.tt" promptText="%VM500.bText.tt" GridPane.columnIndex="1" GridPane.rowIndex="4">
+		<tooltip>
+			<Tooltip text="%VM500.bText.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="betrag0" mnemonicParsing="true" text="%VM500.betrag" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+	<TextField fx:id="betrag" accessibleText="%VM500.betrag.tt" promptText="%VM500.betrag.tt" GridPane.columnIndex="3" GridPane.rowIndex="4">
+		<tooltip>
+			<Tooltip text="%VM500.betrag.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="konto0" mnemonicParsing="true" text="%VM500.konto" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+	<ComboBox fx:id="konto" accessibleText="%VM500.konto.tt" onAction="#onKonto" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5">
+		<tooltip>
+			<Tooltip text="%VM500.konto.tt" />
+		</tooltip>
+	</ComboBox>
+	<Label fx:id="haus0" mnemonicParsing="true" text="%VM500.haus" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+	<ComboBox fx:id="haus" accessibleText="%VM500.haus.tt" onAction="#onHaus" GridPane.columnIndex="5" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
+		<tooltip>
+			<Tooltip text="%VM500.haus.tt" />
+		</tooltip>
+	</ComboBox>
+	<Label fx:id="wohnung0" mnemonicParsing="true" text="%VM500.wohnung" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+	<ComboBox fx:id="wohnung" accessibleText="%VM500.wohnung.tt" onAction="#onWohnung" GridPane.columnIndex="5" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5">
+		<tooltip>
+			<Tooltip text="%VM500.wohnung.tt" />
+		</tooltip>
+	</ComboBox>
+	<Label fx:id="mieter0" mnemonicParsing="true" text="%VM500.mieter" GridPane.columnIndex="4" GridPane.rowIndex="6" />
+	<ComboBox fx:id="mieter" accessibleText="%VM500.mieter.tt" onAction="#onMieter" GridPane.columnIndex="5" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6">
+		<tooltip>
+			<Tooltip text="%VM500.mieter.tt" />
+		</tooltip>
+	</ComboBox>
+	<Button fx:id="alle" mnemonicParsing="true" onAction="#onAlle" text="%VM500.alle" GridPane.columnIndex="0" GridPane.rowIndex="5">
+		<tooltip>
+			<Tooltip text="%VM500.alle.tt" />
+		</tooltip>
+	</Button>
+
+	<stylesheets>
+		<URL value="@../Jhh6.css" />
+	</stylesheets>
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+      <ColumnConstraints />
+      <ColumnConstraints />
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+</GridPane>
