@@ -745,24 +745,24 @@ class VermietungService {
 		datum = bis.plusMonths(3)
 		iuAbrechnungVorlage(daten, hausUid, wohnungUid, mieterUid, von, bis, e, r++, wert, betrag, datum, true)
 		e = VmAbrechnungSchluesselEnum.VM_NAME
-		wert = "Gisela Kühl"
+		wert = "xxx yyy"
 		betrag = null
 		datum = null
 		iuAbrechnungVorlage(daten, hausUid, wohnungUid, mieterUid, von, bis, e, r++, wert, betrag, datum, false)
 		e = VmAbrechnungSchluesselEnum.VM_STRASSE
-		wert = "Gertrud-von-Le-Fort-Str. 12"
+		wert = "xxx 1"
 		betrag = null
 		datum = null
 		r++
 		iuAbrechnungVorlage(daten, hausUid, wohnungUid, mieterUid, von, bis, e, r++, wert, betrag, datum, false)
 		e = VmAbrechnungSchluesselEnum.VM_ORT
-		wert = "56077 Koblenz"
+		wert = "1 xxx"
 		betrag = null
 		datum = null
 		r++
 		iuAbrechnungVorlage(daten, hausUid, wohnungUid, mieterUid, von, bis, e, r++, wert, betrag, datum, false)
 		e = VmAbrechnungSchluesselEnum.VM_TELEFON
-		wert = "0261 - 72992"
+		wert = "0123456"
 		betrag = null
 		datum = null
 		iuAbrechnungVorlage(daten, hausUid, wohnungUid, mieterUid, von, bis, e, r++, wert, betrag, datum, false)
@@ -777,22 +777,22 @@ class VermietungService {
 		datum = null
 		iuAbrechnungVorlage(daten, hausUid, wohnungUid, mieterUid, von, bis, e, r++, wert, betrag, datum, true)
 		e = VmAbrechnungSchluesselEnum.H_GUTHABEN
-		wert = "Das Guthaben werde ich bei meinem nächsten Besuch in bar an Sie auszahlen."
+		wert = "xxx"
 		betrag = null
 		datum = null
 		iuAbrechnungVorlage(daten, hausUid, wohnungUid, mieterUid, von, bis, e, r++, wert, betrag, datum, false)
 		e = VmAbrechnungSchluesselEnum.H_NACHZAHLUNG
-		wert = "Ihre Nachzahlung überweisen Sie bitte auf mein Konto 282 792 301 bei der Postbank (BLZ 250 100 30)."
+		wert = "xxx"
 		betrag = null
 		datum = null
 		iuAbrechnungVorlage(daten, hausUid, wohnungUid, mieterUid, von, bis, e, r++, wert, betrag, datum, false)
 		e = VmAbrechnungSchluesselEnum.H_GRUESSE
-		wert = "Mit freundlichen Grüßen"
+		wert = "xxx"
 		betrag = null
 		datum = null
 		iuAbrechnungVorlage(daten, hausUid, wohnungUid, mieterUid, von, bis, e, r++, wert, betrag, datum, false)
 		e = VmAbrechnungSchluesselEnum.H_ANLAGE
-		wert = "Anlage: Heizkosten-Abrechnung der Firma BFW van Hoffs, Duisburg"
+		wert = "xxx"
 		betrag = null
 		datum = null
 		iuAbrechnungVorlage(daten, hausUid, wohnungUid, mieterUid, von, bis, e, r++, wert, betrag, datum, false)
@@ -1001,8 +1001,15 @@ class VermietungService {
 		String notiz) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
+		if (Global.nes(hausUid)) {
+			throw new MeldungException(Meldungen.M2007)
+		}
 		if (Global.nes(schluessel)) {
-			throw new MeldungException("Der Schlüssel darf nicht leer sein.")
+			throw new MeldungException(Meldungen.M2014)
+		}
+		var haus = hausRep.get(daten, new VmHausKey(daten.mandantNr, hausUid))
+		if (haus === null) {
+			throw new MeldungException(Meldungen.M2007)
 		}
 		var e = abrechnungRep.iuVmAbrechnung(daten, null, uid, hausUid, wohnungUid, mieterUid, von, bis, schluessel,
 			beschreibung, wert, betrag, datum, reihenfolge, status, funktion, notiz, null, null, null, null)
