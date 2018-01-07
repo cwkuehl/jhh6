@@ -289,6 +289,7 @@ class ReplikationService {
 	@ServiceRef MessdienerService mdService
 	@ServiceRef StammbaumService sbService
 	@ServiceRef TagebuchService tagebuchService
+	@ServiceRef VermietungService vmService
 	@RepositoryRef AdAdresseRep adresseRep
 	@RepositoryRef AdPersonRep personRep
 	@RepositoryRef AdSitzRep sitzRep
@@ -457,6 +458,18 @@ class ReplikationService {
 		var tl = tagebuchRep.getListe(daten, mnr, null, null)
 		if (tl.size <= 0) {
 			tagebuchService.speichereEintrag(daten, daten.heute, Meldungen.M9000)
+		}
+		var hl = hausRep.getListe(daten, mnr, null, null)
+		if (hl.size <= 1) {
+			var h = vmService.insertUpdateHaus(daten, null, Meldungen.M9000, null, null, null, null).ergebnis
+			var w = vmService.insertUpdateWohnung(daten, null, h.uid, Meldungen.M9000, null).ergebnis
+			var w2 = vmService.insertUpdateWohnung(daten, null, h.uid, Meldungen.M9001, null).ergebnis
+			vmService.insertUpdateMieter(daten, null, w.uid, Meldungen.M9000, null, null, daten.heute.minusYears(1),
+				null, 50, 120, 500, 5, 0, null)
+			vmService.insertUpdateMieter(daten, null, w2.uid, Meldungen.M9001, null, null, daten.heute.minusYears(2),
+				null, 60, 140, 600, 5, 0, null)
+			vmService.insertUpdateMiete(daten, null, w.uid, daten.heute.minusYears(1), 50, 120, 20, 50, 1, null)
+			vmService.insertUpdateMiete(daten, null, w2.uid, daten.heute.minusYears(2), 60, 140, 20, 50, 1, null)
 		}
 		maeinstellungRep.iuMaEinstellung(daten, null, Constant.EINST_MA_EXAMPLES, "1", null, null, null, null)
 		return r

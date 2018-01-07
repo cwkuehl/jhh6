@@ -55,6 +55,7 @@ import de.cwkuehl.jhh6.app.controller.vm.VM500BuchungenController
 import de.cwkuehl.jhh6.app.controller.vm.VM600KontenController
 import de.cwkuehl.jhh6.app.controller.vm.VM700EreignisseController
 import de.cwkuehl.jhh6.app.controller.vm.VM800ForderungenController
+import de.cwkuehl.jhh6.app.controller.vm.VM900AbrechnungenController
 import de.cwkuehl.jhh6.server.FactoryService
 import java.net.URL
 import java.util.ArrayList
@@ -383,6 +384,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		l.add(new StartDialog("#SB200", g("menu.ancestors"), typeof(SB200AhnenController), null))
 		l.add(new StartDialog("#SB300", g("menu.families"), typeof(SB300FamilienController), null))
 		l.add(new StartDialog("#VM300", g("menu.renters"), typeof(VM300MieterController), null))
+		l.add(new StartDialog("#VM900", g("menu.houseaccountings"), typeof(VM900AbrechnungenController), null))
 		// l.add(new StartDialog("#WP200", g("menu.stocks"), typeof(WP200WertpapiereController), null))
 		// l.add(new StartDialog("#WP250", g("menu.investments"), typeof(WP250AnlagenController), null))
 		// l.add(new StartDialog("#WP400", g("menu.bookings3"), typeof(WP400BuchungenController), null))
@@ -588,7 +590,8 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		starteFormular(typeof(VM800ForderungenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleVM900() { // starteFormular(typeof(VM900AbrechnungenController), DialogAufrufEnum.OHNE)
+	@FXML def void handleVM900() {
+		starteFormular(typeof(VM900AbrechnungenController), DialogAufrufEnum.OHNE)
 	}
 
 	@FXML def void handleVM920() { // starteFormular(typeof(VM920AbrechnungenController), DialogAufrufEnum.OHNE)
