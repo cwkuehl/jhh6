@@ -76,11 +76,29 @@ class Parameter {
 	/** Heilpraktiker-Parameter: Logo-Dateiname unten. */
 	public static final String HP_LOGO_UNTEN = "HP_LOGO_UNTEN"
 
+	/** Vermietung-Abrechnungs-Haus-Schlüssel: Name des Vermieters oder Mieters. */
+	public static final String VM_NAME = "VM_NAME"
+	/** Vermietung-Abrechnungs-Haus-Schlüssel: Telefonnummer des Vermieters. */
+	public static final String VM_TELEFON = "VM_TELEFON"
+	/** Vermietung-Abrechnungs-Haus-Schlüssel: Straße und Hausnummer des Vermieters. */
+	public static final String VM_STRASSE = "VM_STRASSE"
+	/** Vermietung-Abrechnungs-Haus-Schlüssel: Postleitzahl und Ort des Vermieters. */
+	public static final String VM_ORT = "VM_ORT"
+	/** Vermietung-Abrechnungs-Haus-Schlüssel: Zahlungsformel bei Guthaben. */
+	public static final String VM_H_GUTHABEN = "VM_H_GUTHABEN"
+	/** Vermietung-Abrechnungs-Haus-Schlüssel: Zahlungsformel bei Nachzahlung. */
+	public static final String VM_H_NACHZAHLUNG = "VM_H_NACHZAHLUNG"
+	/** Vermietung-Abrechnungs-Haus-Schlüssel: Grußformel am Ende. */
+	public static final String VM_H_GRUESSE = "VM_H_GRUESSE"
+	/** Vermietung-Abrechnungs-Haus-Schlüssel: Anlage für Abrechnung. */
+	public static final String VM_H_ANLAGE = "VM_H_ANLAGE"
+
 	static HashMap<String, Parameter> params = null
 
 	def static HashMap<String, Parameter> getParameter() {
+
 		if (params === null) {
-			params = new HashMap<String, Parameter>()
+			params = new HashMap<String, Parameter>
 			var liste = #[
 				new Parameter(AG_ANWENDUNGS_TITEL, true, true, false, false),
 				new Parameter(AG_HILFE_DATEI, true, false, true, false),
@@ -108,12 +126,28 @@ class Parameter {
 				new Parameter(HP_BRIEFENDE, true, true, true, false),
 				new Parameter(HP_GRUSS, true, true, true, false),
 				new Parameter(HP_BANK, true, true, true, false),
-				new Parameter(HP_LOGO_UNTEN, true, true, true, false)
+				new Parameter(HP_LOGO_UNTEN, true, true, true, false),
+				new Parameter(VM_NAME, true, true, true, false),
+				new Parameter(VM_TELEFON, true, true, true, false),
+				new Parameter(VM_STRASSE, true, true, true, false),
+				new Parameter(VM_ORT, true, true, true, false),
+				new Parameter(VM_H_GUTHABEN, true, true, true, false),
+				new Parameter(VM_H_NACHZAHLUNG, true, true, true, false),
+				new Parameter(VM_H_GRUESSE, true, true, true, false),
+				new Parameter(VM_H_ANLAGE, true, true, true, false)
 			]
 			for (Parameter p : liste) {
 				params.put(p.schluessel, p)
 			}
 		}
 		return params
+	}
+
+	def static Parameter get(String key) {
+
+		var liste = parameter
+		if (liste.containsKey(key))
+			return liste.get(key)
+		return null
 	}
 }

@@ -467,9 +467,10 @@ public class Einstellungen {
         ArrayList<MaParameter> liste = new ArrayList<>();
         boolean mo = getMenuMessdiener(mandantNr);
         boolean hp = getMenuHeilpraktiker(mandantNr);
+        boolean vm = getMenuVermietung(mandantNr);
         for (Parameter p : Parameter.getParameter().values()) {
             if (p != null && p.inDatei && (auchDatenbank || !p.inDatenbank) && (mo || !p.schluessel.startsWith("MO_"))
-                    && (hp || !p.schluessel.startsWith("HP_"))) {
+                    && (hp || !p.schluessel.startsWith("HP_")) && (vm || !p.schluessel.startsWith("VM_"))) {
                 MaParameter me = new MaParameter();
                 me.setMandantNr(mandantNr);
                 me.setSchluessel(p.schluessel);

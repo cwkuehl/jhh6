@@ -5,6 +5,8 @@ import de.cwkuehl.jhh6.api.dto.HhEreignisVm
 import de.cwkuehl.jhh6.api.dto.HhKonto
 import de.cwkuehl.jhh6.api.dto.HhKontoVm
 import de.cwkuehl.jhh6.api.dto.MaEinstellung
+import de.cwkuehl.jhh6.api.dto.MaParameter
+import de.cwkuehl.jhh6.api.dto.MaParameterKey
 import de.cwkuehl.jhh6.api.dto.VmAbrechnung
 import de.cwkuehl.jhh6.api.dto.VmAbrechnungKey
 import de.cwkuehl.jhh6.api.dto.VmAbrechnungKurz
@@ -26,6 +28,7 @@ import de.cwkuehl.jhh6.api.enums.VmBuchungSchluesselEnum
 import de.cwkuehl.jhh6.api.enums.VmKontoSchluesselEnum
 import de.cwkuehl.jhh6.api.global.Constant
 import de.cwkuehl.jhh6.api.global.Global
+import de.cwkuehl.jhh6.api.global.Parameter
 import de.cwkuehl.jhh6.api.message.MeldungException
 import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.api.service.ServiceDaten
@@ -99,7 +102,7 @@ class VermietungService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<VmHaus> insertUpdateHaus(ServiceDaten daten, String uid, String bez, String strasse,
 		String plz, String ort, String notiz) {
 
@@ -112,7 +115,7 @@ class VermietungService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> deleteHaus(ServiceDaten daten, String uid) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
@@ -151,7 +154,7 @@ class VermietungService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<VmWohnung> insertUpdateWohnung(ServiceDaten daten, String uid, String hausUid, String bez,
 		String notiz) {
 
@@ -167,7 +170,7 @@ class VermietungService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> deleteWohnung(ServiceDaten daten, String uid) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
@@ -211,7 +214,7 @@ class VermietungService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<VmMieter> insertUpdateMieter(ServiceDaten daten, String uid, String wohnungUid,
 		String name, String vorname, String anrede, LocalDate einzug, LocalDate auszug, double qm, double miete,
 		double kaution, double antenne, int status, String notiz) {
@@ -232,7 +235,7 @@ class VermietungService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> deleteMieter(ServiceDaten daten, String uid) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
@@ -389,7 +392,7 @@ class VermietungService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<VmMiete> insertUpdateMiete(ServiceDaten daten, String uid, String wohnungUid,
 		LocalDate datum, double miete, double nebenkosten, double garage, double heizung, int personen, String notiz) {
 
@@ -406,7 +409,7 @@ class VermietungService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> deleteMiete(ServiceDaten daten, String uid) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
@@ -471,7 +474,7 @@ class VermietungService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> insertSollstellung(ServiceDaten daten, LocalDate valuta, String hausUid,
 		String wohnungUid) {
 
@@ -523,7 +526,7 @@ class VermietungService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> insertIstzahlung(ServiceDaten daten, LocalDate valuta, LocalDate belegDatum,
 		String mieterUid, double miete, double nebenkosten, double garage, double heizung) {
 
@@ -605,7 +608,7 @@ class VermietungService {
 		return null
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> initKonten(ServiceDaten daten) {
 
 		var hash = new HashMap<String, VmKonto>
@@ -719,7 +722,22 @@ class VermietungService {
 		return r
 	}
 
-	@Transaction(true)
+	def private MaParameter getParameter(ServiceDaten daten, String schluessel) {
+
+		var key = new MaParameterKey(daten.mandantNr, schluessel)
+		var r = parameterRep.get(daten, key)
+		if (r === null) {
+			r = new MaParameter
+			r.mandantNr = daten.mandantNr
+			r.schluessel = schluessel
+			var p = Parameter.get(schluessel)
+			if (p !== null)
+				r.wert = p.wert
+		}
+		return r
+	}
+
+	@Transaction
 	override ServiceErgebnis<Void> insertHausAbrechnung(ServiceDaten daten, LocalDate von, LocalDate bis,
 		String hausUid) {
 
@@ -745,24 +763,22 @@ class VermietungService {
 		datum = bis.plusMonths(3)
 		iuAbrechnungVorlage(daten, hausUid, wohnungUid, mieterUid, von, bis, e, r++, wert, betrag, datum, true)
 		e = VmAbrechnungSchluesselEnum.VM_NAME
-		wert = "xxx yyy"
+		wert = getParameter(daten, Parameter.VM_NAME).wert
 		betrag = null
 		datum = null
 		iuAbrechnungVorlage(daten, hausUid, wohnungUid, mieterUid, von, bis, e, r++, wert, betrag, datum, false)
 		e = VmAbrechnungSchluesselEnum.VM_STRASSE
-		wert = "xxx 1"
+		wert = getParameter(daten, Parameter.VM_STRASSE).wert
 		betrag = null
 		datum = null
-		r++
 		iuAbrechnungVorlage(daten, hausUid, wohnungUid, mieterUid, von, bis, e, r++, wert, betrag, datum, false)
 		e = VmAbrechnungSchluesselEnum.VM_ORT
-		wert = "1 xxx"
+		wert = getParameter(daten, Parameter.VM_ORT).wert
 		betrag = null
 		datum = null
-		r++
 		iuAbrechnungVorlage(daten, hausUid, wohnungUid, mieterUid, von, bis, e, r++, wert, betrag, datum, false)
 		e = VmAbrechnungSchluesselEnum.VM_TELEFON
-		wert = "0123456"
+		wert = getParameter(daten, Parameter.VM_TELEFON).wert
 		betrag = null
 		datum = null
 		iuAbrechnungVorlage(daten, hausUid, wohnungUid, mieterUid, von, bis, e, r++, wert, betrag, datum, false)
@@ -777,22 +793,22 @@ class VermietungService {
 		datum = null
 		iuAbrechnungVorlage(daten, hausUid, wohnungUid, mieterUid, von, bis, e, r++, wert, betrag, datum, true)
 		e = VmAbrechnungSchluesselEnum.H_GUTHABEN
-		wert = "xxx"
+		wert = getParameter(daten, Parameter.VM_H_GUTHABEN).wert
 		betrag = null
 		datum = null
 		iuAbrechnungVorlage(daten, hausUid, wohnungUid, mieterUid, von, bis, e, r++, wert, betrag, datum, false)
 		e = VmAbrechnungSchluesselEnum.H_NACHZAHLUNG
-		wert = "xxx"
+		wert = getParameter(daten, Parameter.VM_H_NACHZAHLUNG).wert
 		betrag = null
 		datum = null
 		iuAbrechnungVorlage(daten, hausUid, wohnungUid, mieterUid, von, bis, e, r++, wert, betrag, datum, false)
 		e = VmAbrechnungSchluesselEnum.H_GRUESSE
-		wert = "xxx"
+		wert = getParameter(daten, Parameter.VM_H_GRUESSE).wert
 		betrag = null
 		datum = null
 		iuAbrechnungVorlage(daten, hausUid, wohnungUid, mieterUid, von, bis, e, r++, wert, betrag, datum, false)
 		e = VmAbrechnungSchluesselEnum.H_ANLAGE
-		wert = "xxx"
+		wert = getParameter(daten, Parameter.VM_H_ANLAGE).wert
 		betrag = null
 		datum = null
 		iuAbrechnungVorlage(daten, hausUid, wohnungUid, mieterUid, von, bis, e, r++, wert, betrag, datum, false)
@@ -943,7 +959,7 @@ class VermietungService {
 			a.wert, a.betrag, a.datum, a.reihenfolge, a.status, a.funktion, a.notiz, null, null, null, null)
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> deleteHausAbrechnung(ServiceDaten daten, LocalDate von, LocalDate bis,
 		String hausUid) {
 
@@ -994,7 +1010,7 @@ class VermietungService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<VmAbrechnung> insertUpdateAbrechnung(ServiceDaten daten, String uid, String hausUid,
 		String wohnungUid, String mieterUid, LocalDate von, LocalDate bis, String schluessel, String beschreibung,
 		String wert, double betrag, LocalDateTime datum, String reihenfolge, String status, String funktion, //
@@ -1017,7 +1033,7 @@ class VermietungService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> deleteAbrechnung(ServiceDaten daten, String uid) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
