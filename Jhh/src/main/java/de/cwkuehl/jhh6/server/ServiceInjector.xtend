@@ -11,6 +11,7 @@ import de.cwkuehl.jhh6.api.service.IStammbaumService
 import de.cwkuehl.jhh6.api.service.ITagebuchService
 import de.cwkuehl.jhh6.api.service.ITestService
 import de.cwkuehl.jhh6.api.service.IVermietungService
+import de.cwkuehl.jhh6.api.service.IWertpapierService
 import de.cwkuehl.jhh6.server.base.AbstractModule
 import de.cwkuehl.jhh6.server.rep.IAdAdresseRep
 import de.cwkuehl.jhh6.server.rep.IAdPersonRep
@@ -57,6 +58,11 @@ import de.cwkuehl.jhh6.server.rep.IVmKontoRep
 import de.cwkuehl.jhh6.server.rep.IVmMieteRep
 import de.cwkuehl.jhh6.server.rep.IVmMieterRep
 import de.cwkuehl.jhh6.server.rep.IVmWohnungRep
+import de.cwkuehl.jhh6.server.rep.IWpAnlageRep
+import de.cwkuehl.jhh6.server.rep.IWpBuchungRep
+import de.cwkuehl.jhh6.server.rep.IWpKonfigurationRep
+import de.cwkuehl.jhh6.server.rep.IWpStandRep
+import de.cwkuehl.jhh6.server.rep.IWpWertpapierRep
 import de.cwkuehl.jhh6.server.rep.IZeinstellungRep
 import de.cwkuehl.jhh6.server.rep.impl.AdAdresseRep
 import de.cwkuehl.jhh6.server.rep.impl.AdPersonRep
@@ -103,6 +109,11 @@ import de.cwkuehl.jhh6.server.rep.impl.VmKontoRep
 import de.cwkuehl.jhh6.server.rep.impl.VmMieteRep
 import de.cwkuehl.jhh6.server.rep.impl.VmMieterRep
 import de.cwkuehl.jhh6.server.rep.impl.VmWohnungRep
+import de.cwkuehl.jhh6.server.rep.impl.WpAnlageRep
+import de.cwkuehl.jhh6.server.rep.impl.WpBuchungRep
+import de.cwkuehl.jhh6.server.rep.impl.WpKonfigurationRep
+import de.cwkuehl.jhh6.server.rep.impl.WpStandRep
+import de.cwkuehl.jhh6.server.rep.impl.WpWertpapierRep
 import de.cwkuehl.jhh6.server.rep.impl.ZeinstellungRep
 import de.cwkuehl.jhh6.server.service.AdresseService
 import de.cwkuehl.jhh6.server.service.AnmeldungService
@@ -115,6 +126,7 @@ import de.cwkuehl.jhh6.server.service.StammbaumService
 import de.cwkuehl.jhh6.server.service.TagebuchService
 import de.cwkuehl.jhh6.server.service.TestService
 import de.cwkuehl.jhh6.server.service.VermietungService
+import de.cwkuehl.jhh6.server.service.WertpapierService
 
 class ServiceInjector extends AbstractModule {
 
@@ -131,7 +143,7 @@ class ServiceInjector extends AbstractModule {
 		bind(typeof(IStammbaumService)).to(typeof(StammbaumService))
 		bind(typeof(ITagebuchService)).to(typeof(TagebuchService))
 		bind(typeof(IVermietungService)).to(typeof(VermietungService))
-//		bind(typeof(IWertpapierService)).to(typeof(WertpapierService))
+		bind(typeof(IWertpapierService)).to(typeof(WertpapierService))
 		bind(typeof(ITestService)).to(typeof(TestService))
 
 		// Repositories
@@ -180,11 +192,11 @@ class ServiceInjector extends AbstractModule {
 		bind(typeof(IVmMieteRep)).to(typeof(VmMieteRep))
 		bind(typeof(IVmMieterRep)).to(typeof(VmMieterRep))
 		bind(typeof(IVmWohnungRep)).to(typeof(VmWohnungRep))
-//		bind(typeof(IWpAnlageRep)).to(typeof(WpAnlageRep))
-//		bind(typeof(IWpBuchungRep)).to(typeof(WpBuchungRep))
-//		bind(typeof(IWpKonfigurationRep)).to(typeof(WpKonfigurationRep))
-//		bind(typeof(IWpStandRep)).to(typeof(WpStandRep))
-//		bind(typeof(IWpWertpapierRep)).to(typeof(WpWertpapierRep))
+		bind(typeof(IWpAnlageRep)).to(typeof(WpAnlageRep))
+		bind(typeof(IWpBuchungRep)).to(typeof(WpBuchungRep))
+		bind(typeof(IWpKonfigurationRep)).to(typeof(WpKonfigurationRep))
+		bind(typeof(IWpStandRep)).to(typeof(WpStandRep))
+		bind(typeof(IWpWertpapierRep)).to(typeof(WpWertpapierRep))
 		bind(typeof(IZeinstellungRep)).to(typeof(ZeinstellungRep))
 	}
 

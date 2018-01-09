@@ -77,7 +77,7 @@ class WertpapierService {
 		var liste = konfigurationRep.getKonfigurationLangListe(daten, null, status)
 		for (WpKonfigurationLang e : liste) {
 			fillKonfiguration(e)
-			if(zusammengesetzt) {
+			if (zusammengesetzt) {
 				e.bezeichnung = PnfChart.getBezeichnung(e.bezeichnung, e.box, e.skala, e.umkehr, e.methode, e.relativ,
 					e.dauer, null, 0, 0)
 			}
@@ -88,24 +88,24 @@ class WertpapierService {
 
 	def private WpKonfigurationLang fillKonfiguration(WpKonfigurationLang e) {
 
-		if(e !== null) {
+		if (e !== null) {
 			var array = if(Global.nes(e.parameter)) null else e.parameter.split(";")
 			var l = Global.arrayLaenge(array)
-			if(l >= 4) {
+			if (l >= 4) {
 				e.box = Global.strDbl(array.get(0))
 				e.prozentual = Global.objBool(array.get(1))
 				e.skala = if(e.prozentual) 1 else 2
 				e.umkehr = Global.strInt(array.get(2))
 				e.methode = Global.strInt(array.get(3))
 			}
-			if(l >= 6) {
+			if (l >= 6) {
 				e.dauer = Global.strInt(array.get(4))
 				e.relativ = Global.objBool(array.get(5))
 			}
-			if(l >= 7) {
+			if (l >= 7) {
 				e.skala = Global.strInt(array.get(6))
 			}
-			if(e.dauer <= 0) {
+			if (e.dauer <= 0) {
 				e.dauer = 182
 			}
 		}
@@ -117,7 +117,7 @@ class WertpapierService {
 
 		var r = new ServiceErgebnis<WpKonfigurationLang>(null)
 		var l = konfigurationRep.getKonfigurationLangListe(daten, uid, null)
-		if(l.size > 0) {
+		if (l.size > 0) {
 			r.ergebnis = fillKonfiguration(l.get(0))
 		}
 		return r
@@ -129,25 +129,25 @@ class WertpapierService {
 		String notiz) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
-		if(!Global.nes(uid) && Global.nes(bez)) {
+		if (!Global.nes(uid) && Global.nes(bez)) {
 			throw new MeldungException("Die Bezeichnung darf nicht leer sein.")
 		}
-		if(!Global.nes(uid) && Global.nes(status)) {
+		if (!Global.nes(uid) && Global.nes(status)) {
 			throw new MeldungException("Der Status darf nicht leer sein.")
 		}
-		if(Global.compDouble4(box, 0) <= 0) {
+		if (Global.compDouble4(box, 0) <= 0) {
 			throw new MeldungException("Die Boxgröße muss größer 0 sein.")
 		}
-		if(umkehr <= 0) {
+		if (umkehr <= 0) {
 			throw new MeldungException("Die Umkehr muss größer 0 sein.")
 		}
-		if(!Global.in(methode, 1, 5)) {
+		if (!Global.in(methode, 1, 5)) {
 			throw new MeldungException("Falsche Methode.")
 		}
-		if(dauer <= 10) {
+		if (dauer <= 10) {
 			throw new MeldungException("Die Dauer muss größer 10 sein.")
 		}
-		if(!Global.in(methode, 0, 2)) {
+		if (!Global.in(methode, 0, 2)) {
 			throw new MeldungException("Falsche Skala.")
 		}
 		var sb = new StringBuilder
@@ -218,9 +218,9 @@ class WertpapierService {
 		StringBuffer status, StringBuffer abbruch) {
 
 		var WpKonfigurationLang k = null
-		if(!Global.nes(kuid)) {
+		if (!Global.nes(kuid)) {
 			var l = konfigurationRep.getKonfigurationLangListe(daten, kuid, null)
-			if(Global.listLaenge(l) > 0) {
+			if (Global.listLaenge(l) > 0) {
 				k = fillKonfiguration(l.get(0))
 				k.bezeichnung = PnfChart.getBezeichnung(k.bezeichnung, 0, k.skala, k.umkehr, k.methode, k.relativ,
 					k.dauer, null, 0, 0)
@@ -229,12 +229,12 @@ class WertpapierService {
 		var liste = wertpapierRep.getWertpapierLangListe(daten, bez, muster, null, uid, null, nuraktiv)
 		for (WpWertpapierLang e : liste) {
 			fillWertpapier(e, k)
-			if(zusammengesetzt && !Global.nes(e.relationBezeichnung)) {
+			if (zusammengesetzt && !Global.nes(e.relationBezeichnung)) {
 				e.bezeichnung = Global.anhaengen(new StringBuffer(e.bezeichnung), " (", e.relationBezeichnung, ")").
 					toString
 			}
 		}
-		if(bewertungsdatum !== null) {
+		if (bewertungsdatum !== null) {
 			val bis = bewertungsdatum
 			val von = bis.minusDays(if(k === null) 182 else k.dauer)
 			val l = liste.size
@@ -251,14 +251,14 @@ class WertpapierService {
 
 	def private WpWertpapierLang fillWertpapier(WpWertpapierLang e, WpKonfigurationLang k) {
 
-		if(e !== null) {
+		if (e !== null) {
 			var array = if(Global.nes(e.parameter)) null else e.parameter.split(";")
 			var l = Global.arrayLaenge(array)
 			e.aktuellerkurs = if(l <= 0) "" else array.get(0)
 			// Zielkurs wird manuell erfasst.
-			e.signalkurs1 = if(l <= 1)
+			e.signalkurs1 = if (l <= 1)
 				Double.POSITIVE_INFINITY
-			else if(Global.compDouble4(Global.strDbl(array.get(1)), 0) == 0)
+			else if (Global.compDouble4(Global.strDbl(array.get(1)), 0) == 0)
 				Double.NaN
 			else
 				Global.strDbl(array.get(1))
@@ -323,7 +323,7 @@ class WertpapierService {
 		wp.index3 = ""
 		wp.index4 = ""
 		wp.schnitt200 = ""
-		if(wp === null || !"1".equals(wp.status)) {
+		if (wp === null || !"1".equals(wp.status)) {
 			return
 		}
 		try {
@@ -343,7 +343,7 @@ class WertpapierService {
 				c.bezeichnung = wp.bezeichnung
 				c.ziel = wp.signalkurs1
 				c.stop = Global.strDbl(wp.stopkurs)
-				if(k === null) {
+				if (k === null) {
 					c.methode = 4
 					c.skala = 2 // dynamisch
 					c.umkehr = 3
@@ -358,44 +358,44 @@ class WertpapierService {
 				// letztes Signal
 				var p = c.pattern.reduce[prev, cur|cur] // .orElse(null)
 				// nur bei letzter Säule, Signal am gleichen Tag
-				if(p !== null) {
-					if(p.xpos >= c.saeulen.size - 1 && p.datum.toLocalDate.equals(kursdatum)) {
+				if (p !== null) {
+					if (p.xpos >= c.saeulen.size - 1 && p.datum.toLocalDate.equals(kursdatum)) {
 						bew.set(i, p.signal)
-						if(Global.nes(wp.muster)) {
+						if (Global.nes(wp.muster)) {
 							wp.muster = PnfPattern.getBezeichnung(p.muster)
 						}
 					}
-					if(p.datum.toLocalDate.isAfter(signaldatum) ||
+					if (p.datum.toLocalDate.isAfter(signaldatum) ||
 						(p.datum.toLocalDate.equals(signaldatum) && Math.abs(p.signal) > Math.abs(signalbew))) {
 						signalbew = p.signal
 						signaldatum = p.datum.toLocalDate
 						signalbez = PnfPattern.getBezeichnung(p.muster)
 					}
 				}
-				if(c.saeulen.size > 0 && c.saeulen.get(c.saeulen.size - 1).datum.toLocalDate.equals(kursdatum)) {
-					wp.xo = if(c.saeulen.get(c.saeulen.size - 1).
+				if (c.saeulen.size > 0 && c.saeulen.get(c.saeulen.size - 1).datum.toLocalDate.equals(kursdatum)) {
+					wp.xo = if (c.saeulen.get(c.saeulen.size - 1).
 						isO) '''xo «Global.dblStr(c.box)»''' else '''ox «Global.dblStr(c.box)»'''
 				}
-				if(i == 0) {
+				if (i == 0) {
 					wp.aktuellerkurs = Global.dblStr2l(c.kurs)
-					if(Global.compDouble4(c.stop, 0) > 0) {
+					if (Global.compDouble4(c.stop, 0) > 0) {
 						wp.stopkurs = Global.dblStr2l(c.stop)
 						wp.signalkurs2 = Global.dblStr4l(c.kurs / c.stop)
 					}
 				}
 				var tr = c.trend
 				// t.set(i, if(tr > 0) "+1" else if(tr < 0) "-1" else "0")
-				t.set(i, if(tr == 2)
+				t.set(i, if (tr == 2)
 					"+2"
-				else if(tr == 1)
+				else if (tr == 1)
 					"+1"
-				else if(tr == 0.5)
+				else if (tr == 0.5)
 					"+0,5"
-				else if(tr == -2)
+				else if (tr == -2)
 					"-2"
-				else if(tr == -1)
+				else if (tr == -1)
 					"-1"
-				else if(tr == -0.5)
+				else if (tr == -0.5)
 					"-0,5"
 				else if(tr == 0) "0" else Global.dblStr(tr))
 			}
@@ -430,13 +430,13 @@ class WertpapierService {
 				var maxi = 0.0
 				var diff = 0.0
 				for (ku : liste) {
-					if(datumi.isBefore(ku.datum)) {
+					if (datumi.isBefore(ku.datum)) {
 						// && datumi.hour == 0 && datumi.minute == 0 && datumi.second == 0) {
 						// evtl. aktuellen Kurs ignorieren
 						diff = diff + ku.open - ku.close
-						if(Global.compDouble(diff, maxi) > 0)
+						if (Global.compDouble(diff, maxi) > 0)
 							maxi = diff
-						if(Global.compDouble(diff, mini) < 0)
+						if (Global.compDouble(diff, mini) < 0)
 							mini = diff
 					}
 				}
@@ -458,31 +458,31 @@ class WertpapierService {
 			var anzahl200 = 0
 			var anzahl214 = 0
 			for (ku : liste) {
-				if(datum14.isBefore(ku.datum)) {
+				if (datum14.isBefore(ku.datum)) {
 					summe14 += ku.close
 					anzahl14++
 				}
-				if(datum200.isBefore(ku.datum)) {
+				if (datum200.isBefore(ku.datum)) {
 					summe200 += ku.close
 					anzahl200++
 				}
-				if(datum214.isBefore(ku.datum)) {
+				if (datum214.isBefore(ku.datum)) {
 					summe214 += ku.close
 					anzahl214++
 				}
 			}
 			summe214 -= summe14
 			anzahl214 -= anzahl14
-			if(anzahl200 > 0 && anzahl214 > 0) {
+			if (anzahl200 > 0 && anzahl214 > 0) {
 				var schnitt200 = summe200 / anzahl200
 				var schnitt214 = summe214 / anzahl214
 				wp.schnitt200 = Global.compDouble(schnitt200, schnitt214).toString
 			}
-		} catch(Exception ex) {
+		} catch (Exception ex) {
 			wp.bewertung = "00 Fehler: " + ex.message
 		// throw new RuntimeException(ex)
 		} finally {
-			if(speichern) {
+			if (speichern) {
 				var String[] b = #[wp.bewertung, wp.bewertung1, wp.bewertung2, wp.bewertung3, wp.bewertung4,
 					wp.bewertung5, wp.trend1, wp.trend2, wp.trend3, wp.trend4, wp.trend5, wp.trend, wp.kursdatum, wp.xo,
 					wp.signalbew, wp.signaldatum, wp.signalbez, wp.index1, wp.index2, wp.index3, //
@@ -491,7 +491,7 @@ class WertpapierService {
 					iuWertpapier(daten, wp.uid, wp.bezeichnung, wp.kuerzel, wp.aktuellerkurs,
 						Global.dblStr2l(wp.signalkurs1), wp.signalkurs2, wp.stopkurs, wp.muster, wp.sortierung, b,
 						wp.datenquelle, wp.status, wp.relationUid, wp.notiz)
-				} catch(Exception e) {
+				} catch (Exception e) {
 					Global.machNichts
 				}
 			}
@@ -499,7 +499,7 @@ class WertpapierService {
 	}
 
 	def private double ClIndex(double diff, double mini, double maxi) {
-		if(Global.compDouble(mini, maxi) == 0) {
+		if (Global.compDouble(mini, maxi) == 0) {
 			return 0
 		} else {
 			return (diff - mini) / (maxi - mini)
@@ -510,7 +510,7 @@ class WertpapierService {
 		String kursnameRelation) {
 
 		var liste = holeKurse(daten, dvon, dbis, kursname, true)
-		if(!Global.nes(kursnameRelation)) {
+		if (!Global.nes(kursnameRelation)) {
 			var rliste = new ArrayList<SoKurse>
 			var liste2 = holeKurse(daten, dvon, dbis, kursnameRelation, true)
 			var h = new HashMap<Long, SoKurse>
@@ -521,23 +521,23 @@ class WertpapierService {
 			var faktor = 0.0
 			for (SoKurse k : liste) {
 				var k2 = h.get(k.datum.toEpochSecond(ZoneOffset.UTC))
-				if(k2 !== null && Global.compDouble4(k.close, 0) != 0 && Global.compDouble4(k2.close, 0) != 0) {
-					if(anfang) {
+				if (k2 !== null && Global.compDouble4(k.close, 0) != 0 && Global.compDouble4(k2.close, 0) != 0) {
+					if (anfang) {
 						faktor = k2.close / k.close * 100
 						anfang = false
 					}
 					k.setClose(k.close / k2.close * faktor)
-					if(Global.compDouble4(k.open, 0) != 0 && Global.compDouble4(k2.open, 0) != 0) {
+					if (Global.compDouble4(k.open, 0) != 0 && Global.compDouble4(k2.open, 0) != 0) {
 						k.setOpen(k.open / k2.open * faktor)
 					} else {
 						k.setOpen(0)
 					}
-					if(Global.compDouble4(k.high, 0) != 0 && Global.compDouble4(k2.high, 0) != 0) {
+					if (Global.compDouble4(k.high, 0) != 0 && Global.compDouble4(k2.high, 0) != 0) {
 						k.setHigh(k.high / k2.high * faktor)
 					} else {
 						k.setHigh(0)
 					}
-					if(Global.compDouble4(k.low, 0) != 0 && Global.compDouble4(k2.low, 0) != 0) {
+					if (Global.compDouble4(k.low, 0) != 0 && Global.compDouble4(k2.low, 0) != 0) {
 						k.setLow(k.low / k2.low * faktor)
 					} else {
 						k.setLow(0)
@@ -555,15 +555,15 @@ class WertpapierService {
 
 		var von = dvon
 		var bis = dbis
-		if(bis === null) {
+		if (bis === null) {
 			bis = daten.heute
 		}
-		if(von === null || !von.isBefore(bis)) {
+		if (von === null || !von.isBefore(bis)) {
 			von = bis.minusDays(182)
 		}
 		// http://real-chart.finance.yahoo.com/table.csv?s=%5EGDAXI&d=1&e=10&f=2015&g=d&a=10&b=26&c=2010&ignore=.csv
 		var wp = kursname
-		if(Global.nes(wp)) {
+		if (Global.nes(wp)) {
 			wp = "^GDAXI"
 		}
 		// try {
@@ -586,12 +586,12 @@ class WertpapierService {
 		var v = executeHttp(url, null, false, null)
 		var kl = 0.0
 		var liste = new ArrayList<SoKurse>
-		if(v !== null && v.size > 0) {
+		if (v !== null && v.size > 0) {
 			try {
 				var jr = new JSONObject(v.get(0))
 				var jc = jr.getJSONObject("chart")
 				var error = jc.get("error")
-				if(error !== null) {
+				if (error !== null && error.toString !== "null") {
 					throw new Exception(error.toString)
 				}
 				var jresult = jc.getJSONArray("result").getJSONObject(0)
@@ -611,49 +611,49 @@ class WertpapierService {
 					k.low = jlow.optDouble(i, 0)
 					k.close = jclose.optDouble(i, 0)
 					k.bewertung = jmeta.getString("currency")
-					if(Global.compDouble4(kl, 0) == 0) {
+					if (Global.compDouble4(kl, 0) == 0) {
 						kl = k.close
 					}
-					if(Global.compDouble4(k.close, 0) != 0) {
+					if (Global.compDouble4(k.close, 0) != 0) {
 						k.open = if(Global.compDouble4(k.open, 0) == 0) k.close else k.open
 						k.high = if(Global.compDouble4(k.open, 0) == 0) k.close else k.high
 						k.low = if(Global.compDouble4(k.open, 0) == 0) k.close else k.low
-						while(Global.compDouble4(kl, 0) != 0 && Global.compDouble4(k.close / kl, 5) > 0) {
-							// richtig skalieren: bei WATL.L Faktor 100. 
-							k.open = k.open / 10
-							k.high = k.high / 10
-							k.low = k.low / 10
-							k.close = k.close / 10
-						}
+						// while (Global.compDouble4(kl, 0) != 0 && Global.compDouble4(k.close / kl, 5) > 0) {
+						// // richtig skalieren: bei WATL.L Faktor 100. 
+						// k.open = k.open / 10
+						// k.high = k.high / 10
+						// k.low = k.low / 10
+						// k.close = k.close / 10
+						// }
 						liste.add(k)
 					}
 				}
-			} catch(Exception ex) {
+			} catch (Exception ex) {
 				throw new RuntimeException(ex)
 			}
 		}
 
 		// Datum aufsteigend
 		Collections.sort(liste) [ k1, k2 |
-			if(k1.datum === null) {
-				if(k2.datum === null) {
+			if (k1.datum === null) {
+				if (k2.datum === null) {
 					return 0
 				}
 				return 1
-			} else if(k2.datum === null) {
+			} else if (k2.datum === null) {
 				return -1
 			}
 			return k1.datum.compareTo(k2.datum)
 		]
 
-		//if(letzter && !bis.isBefore(daten.heute)) {
-		//	var k = getAktKurs(daten, wp, daten.heute, kl, false)
-		//	if(k !== null) {
-		//		var ll = if(liste.size <= 0) null else liste.get(liste.size - 1)
-		//		if(ll === null || k.datum.isAfter(ll.datum))
-		//			liste.add(k)
-		//	}
-		//}
+		// if(letzter && !bis.isBefore(daten.heute)) {
+		// var k = getAktKurs(daten, wp, daten.heute, kl, false)
+		// if(k !== null) {
+		// var ll = if(liste.size <= 0) null else liste.get(liste.size - 1)
+		// if(ll === null || k.datum.isAfter(ll.datum))
+		// liste.add(k)
+		// }
+		// }
 		return liste
 	}
 
@@ -662,52 +662,52 @@ class WertpapierService {
 
 	def private SoKurse getAktKurs(ServiceDaten daten, String kuerzel, LocalDate heute, double kl) {
 
-		if(Global.nes(kuerzel)) {
+		if (Global.nes(kuerzel)) {
 			return null
 		}
-		//var kurz = kuerzel
-		//var url = Global.format("http://download.finance.yahoo.com/d/quotes.csv?s={0}&f=snad1t1c4", kurz) // geht nach 01.11.2017 nicht mehr
-		//var v = executeHttp(url, null, true, null)
-		//var url = Global.format("https://uk.finance.yahoo.com/quote/AAPL/history")
-		//var cookie = new StringBuffer
-		//var v = executeHttp(url, null, true, cookie)
-		//if (cookie.length > 0) {
-		//	url = Global.format("https://download.finance.yahoo.com/d/quotes.csv?s={0}&f=snad1t1c4", kurz)
-		//	v = executeHttp(url, null, true, cookie)
-		//}
-		//if(v !== null && v.size > 0) {
-		//	for (String s : v) {
-		//		if(!Global.nes(s)) {
-		//			try {
-		//				var zeile = Global.decodeCSV(s)
-		//				if(zeile.size >= 6) {
-		//					var k = new SoKurse
-		//					var d = LocalDate.parse(zeile.get(3).toUpperCase, df0)
-		//					var t = LocalTime.parse(zeile.get(4).toUpperCase, df)
-		//					k.datum = d.atTime(t.hour, t.minute)
-		//					k.open = Global.strDbl(zeile.get(2))
-		//					while(Global.compDouble4(kl, 0) != 0 && Global.compDouble4(k.open / kl, 5) > 0) {
-		//						// richtig skalieren: bei WATL.L Faktor 100. 
-		//						k.open = k.open / 10
-		//					}
-		//					k.high = k.open
-		//					k.low = k.open
-		//					k.close = k.open
-		//					k.bemerkung = Global.anhaengen(zeile.get(0), " ", zeile.get(1))
-		//					k.bewertung = zeile.get(5) // Währung
-		//					if(Global.compDouble4(k.close, 0) != 0) {
-		//						return k
-		//					}
-		//				}
-		//			} catch(Exception ex) {
-		//				// throw ex
-		//			}
-		//		}
-		//	}
-		//}
+		// var kurz = kuerzel
+		// var url = Global.format("http://download.finance.yahoo.com/d/quotes.csv?s={0}&f=snad1t1c4", kurz) // geht nach 01.11.2017 nicht mehr
+		// var v = executeHttp(url, null, true, null)
+		// var url = Global.format("https://uk.finance.yahoo.com/quote/AAPL/history")
+		// var cookie = new StringBuffer
+		// var v = executeHttp(url, null, true, cookie)
+		// if (cookie.length > 0) {
+		// url = Global.format("https://download.finance.yahoo.com/d/quotes.csv?s={0}&f=snad1t1c4", kurz)
+		// v = executeHttp(url, null, true, cookie)
+		// }
+		// if(v !== null && v.size > 0) {
+		// for (String s : v) {
+		// if(!Global.nes(s)) {
+		// try {
+		// var zeile = Global.decodeCSV(s)
+		// if(zeile.size >= 6) {
+		// var k = new SoKurse
+		// var d = LocalDate.parse(zeile.get(3).toUpperCase, df0)
+		// var t = LocalTime.parse(zeile.get(4).toUpperCase, df)
+		// k.datum = d.atTime(t.hour, t.minute)
+		// k.open = Global.strDbl(zeile.get(2))
+		// while(Global.compDouble4(kl, 0) != 0 && Global.compDouble4(k.open / kl, 5) > 0) {
+		// // richtig skalieren: bei WATL.L Faktor 100. 
+		// k.open = k.open / 10
+		// }
+		// k.high = k.open
+		// k.low = k.open
+		// k.close = k.open
+		// k.bemerkung = Global.anhaengen(zeile.get(0), " ", zeile.get(1))
+		// k.bewertung = zeile.get(5) // Währung
+		// if(Global.compDouble4(k.close, 0) != 0) {
+		// return k
+		// }
+		// }
+		// } catch(Exception ex) {
+		// // throw ex
+		// }
+		// }
+		// }
+		// }
 		var von = heute.minusDays(7)
 		var l = holeKurse(daten, von, heute, kuerzel, false)
-		if(l !== null && l.size > 0) {
+		if (l !== null && l.size > 0) {
 			return l.get(l.size - 1)
 		}
 		return null
@@ -715,10 +715,10 @@ class WertpapierService {
 
 	def private SoKurse getAktWaehrungKurs(ServiceDaten daten, String kuerzel, LocalDate heute) {
 
-		if(Global.nes(kuerzel)) {
+		if (Global.nes(kuerzel)) {
 			return null
 		}
-		if(kuerzel == "EUR") {
+		if (kuerzel == "EUR") {
 			var k = new SoKurse
 			k.close = 1
 			k.bewertung = "EUR"
@@ -726,12 +726,12 @@ class WertpapierService {
 		}
 		var url = '''https://api.fixer.io/«heute»?symbols=«kuerzel»'''
 		var v = executeHttps(url, null, false, null)
-		if(v !== null && v.size > 0) {
+		if (v !== null && v.size > 0) {
 			try {
 				var jr = new JSONObject(v.get(0))
 				// var base = jr.getString("base")
 				var jresult = jr.getJSONObject("rates")
-				if(jresult.has(kuerzel)) {
+				if (jresult.has(kuerzel)) {
 					var k = new SoKurse
 					k.datum = LocalDate.parse(jr.getString("date")).atStartOfDay
 					k.close = jresult.optDouble(kuerzel)
@@ -743,7 +743,7 @@ class WertpapierService {
 					k.bewertung = kuerzel
 					return k
 				}
-			} catch(Exception ex) {
+			} catch (Exception ex) {
 				throw new RuntimeException(ex)
 			}
 		}
@@ -758,7 +758,7 @@ class WertpapierService {
 			// Create connection
 			url = new URL(targetURL)
 			connection = url.openConnection as HttpURLConnection
-			if(!Global.nes(urlParameters)) {
+			if (!Global.nes(urlParameters)) {
 				connection.requestMethod = "POST"
 				connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded")
 				connection.setRequestProperty("Content-Length", "" + Integer.toString(urlParameters.bytes.length))
@@ -778,7 +778,7 @@ class WertpapierService {
 
 			// Send request
 			var wr = new DataOutputStream(connection.getOutputStream)
-			if(!Global.nes(urlParameters)) {
+			if (!Global.nes(urlParameters)) {
 				wr.writeBytes(urlParameters)
 			}
 			wr.flush
@@ -794,17 +794,17 @@ class WertpapierService {
 				}
 				return null
 			}
-			if(connection.responseCode != HttpURLConnection.HTTP_OK) {
+			if (connection.responseCode != HttpURLConnection.HTTP_OK) {
 				throw new Exception(Global.format("Status: {0} bei {1}", connection.responseCode, targetURL))
 			}
 			var is = connection.getInputStream
 			var rd = new BufferedReader(new InputStreamReader(is, "UTF-8"))
 			var v = new ArrayList<String>
 			var String line
-			while((line = rd.readLine) !== null) {
+			while ((line = rd.readLine) !== null) {
 				v.add(line)
 			}
-			if(!lines && v.length > 1) {
+			if (!lines && v.length > 1) {
 				var sb = new StringBuilder
 				for (s : v) {
 					sb.append(s)
@@ -814,10 +814,10 @@ class WertpapierService {
 			}
 			rd.close
 			return v
-		} catch(Exception ex) {
+		} catch (Exception ex) {
 			throw new RuntimeException(ex)
 		} finally {
-			if(connection !== null) {
+			if (connection !== null) {
 				connection.disconnect
 			}
 		}
@@ -833,17 +833,17 @@ class WertpapierService {
 			connection = url.openConnection as HttpsURLConnection
 			connection.connectTimeout = 3000
 			connection.readTimeout = 3000
-			if(connection.responseCode != HttpURLConnection.HTTP_OK) {
+			if (connection.responseCode != HttpURLConnection.HTTP_OK) {
 				throw new Exception(Global.format("Status: {0} bei {1}", connection.responseCode, targetURL))
 			}
 			var is = connection.getInputStream
 			var rd = new BufferedReader(new InputStreamReader(is, "UTF-8"))
 			var v = new ArrayList<String>
 			var String line
-			while((line = rd.readLine) !== null) {
+			while ((line = rd.readLine) !== null) {
 				v.add(line)
 			}
-			if(!lines && v.length > 1) {
+			if (!lines && v.length > 1) {
 				var sb = new StringBuilder
 				for (s : v) {
 					sb.append(s)
@@ -853,10 +853,10 @@ class WertpapierService {
 			}
 			rd.close
 			return v
-		} catch(Exception ex) {
+		} catch (Exception ex) {
 			throw new RuntimeException(ex)
 		} finally {
-			if(connection !== null) {
+			if (connection !== null) {
 				connection.disconnect
 			}
 		}
@@ -893,28 +893,28 @@ class WertpapierService {
 		var muster = muster0
 		var bew = bew0
 
-		if(Global.nes(uid)) {
-			if(Global.nes(strB)) {
+		if (Global.nes(uid)) {
+			if (Global.nes(strB)) {
 				strB = "Wertpapier" + kuerzel
 			}
-			if(Global.nes(strStatus)) {
+			if (Global.nes(strStatus)) {
 				strStatus = "0"
 			}
 		} else {
-			if(Global.nes(strB)) {
+			if (Global.nes(strB)) {
 				throw new MeldungException("Die Bezeichnung darf nicht leer sein.")
 			}
-			if(Global.nes(status)) {
+			if (Global.nes(status)) {
 				throw new MeldungException("Der Status darf nicht leer sein.")
 			}
 		}
-		if(Global.nes(kuerzel)) {
+		if (Global.nes(kuerzel)) {
 			throw new MeldungException("Das Kürzel darf nicht leer sein.")
 		}
-		if(Global.nes(strQ)) {
+		if (Global.nes(strQ)) {
 			strQ = "yahoo"
 		}
-		if(!Global.nes(uid) && bew === null) {
+		if (!Global.nes(uid) && bew === null) {
 			// Update aus Formular
 			var w = getWertpapierLangIntern(daten, uid)
 			aktkurs = w.aktuellerkurs
@@ -934,7 +934,7 @@ class WertpapierService {
 		sb.append(";").append(sort)
 		for (var i = 0; bew !== null && i < bew.length; i++) {
 			sb.append(";")
-			if(bew.get(i) !== null) {
+			if (bew.get(i) !== null) {
 				sb.append(bew.get(i))
 			}
 		}
@@ -945,7 +945,7 @@ class WertpapierService {
 	def private WpWertpapierLang getWertpapierLangIntern(ServiceDaten daten, String uid) {
 
 		var l = wertpapierRep.getWertpapierLangListe(daten, null, null, uid, null, null, false)
-		if(l.size > 0) {
+		if (l.size > 0) {
 			return fillWertpapier(l.get(0), null)
 		}
 		return null
@@ -963,12 +963,12 @@ class WertpapierService {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var liste = wertpapierRep.getWertpapierLangListe(daten, null, null, null, null, uid, false)
-		if(liste.size > 0) {
+		if (liste.size > 0) {
 			throw new MeldungException(
 				"Das Wertpapier wird in einer Relation verwendet und kann nicht gelöscht werden.")
 		}
 		var aliste = anlageRep.getAnlageLangListe(daten, null, null, uid)
-		if(aliste.size > 0) {
+		if (aliste.size > 0) {
 			throw new MeldungException("Das Wertpapier wird in einer Anlage verwendet und kann nicht gelöscht werden.")
 		}
 		wertpapierRep.delete(daten, new WpWertpapierKey(daten.mandantNr, uid))
@@ -1016,18 +1016,18 @@ class WertpapierService {
 		l.add(Global.encodeCSV(felder))
 		var LocalDate d
 		var anzahl = tage
-		if(datum !== null && tage > 0) {
+		if (datum !== null && tage > 0) {
 			d = Global.werktag(datum)
 		} else {
 			anzahl = 1
 		}
 		var array = if(Global.nes(kuid)) newArrayOfSize(1) else kuid.split(";")
-		while(anzahl > 0) {
+		while (anzahl > 0) {
 			for (k : array) {
 				var liste = getWertpapierListeIntern(daten, true, bez, muster, uid, d, k, true, false, status, abbruch)
 				exportListeFuellen(felder, liste, new WpWertpapierLang, l)
 			}
-			if(d !== null) {
+			if (d !== null) {
 				d = Global.werktag(d.minusDays(1))
 			}
 			anzahl--
@@ -1067,18 +1067,18 @@ class WertpapierService {
 		y = yoffset + c.werte.size * ygroesse
 		var aktkurs = c.kurs
 		var yakt = -1;
-		if(Global.compDouble4(aktkurs, 0) > 0) {
+		if (Global.compDouble4(aktkurs, 0) > 0) {
 			var d = c.getMax() + 1;
 			for (var i = 0; i < yanzahl; i++) {
-				if(Global.compDouble4(c.werte.get(i), d) < 0 && Global.compDouble4(c.werte.get(i), aktkurs) > 0) {
+				if (Global.compDouble4(c.werte.get(i), d) < 0 && Global.compDouble4(c.werte.get(i), aktkurs) > 0) {
 					d = c.werte.get(i)
 					yakt = i
 				}
 			}
 		}
 		for (var i = 0; i < yanzahl + 1; i++) {
-			if(i < yanzahl) {
-				if(i == yakt) {
+			if (i < yanzahl) {
+				if (i == yakt) {
 					font = fontbold
 					color = Color.black
 					drawString(p, x + 5, y, Global.dblStr(Global.round(aktkurs)), font, color)
@@ -1097,7 +1097,7 @@ class WertpapierService {
 		y = yoffset + yanzahl * ygroesse
 		for (var i = 0; i < xanzahl + 3; i++) {
 			drawLine(p, x, yoffset, x, y, color, stroke) // senkrechte Linien
-			if(i % 6 == 0 && i < xanzahl && c.getSaeulen().get(i).getDatum() !== null) {
+			if (i % 6 == 0 && i < xanzahl && c.getSaeulen().get(i).getDatum() !== null) {
 				drawString(p, x + xgroesse, y + ygroesse * 1.5,
 					Global.dateTimeStringForm(c.getSaeulen().get(i).getDatum()), font, color)
 			}
@@ -1118,11 +1118,11 @@ class WertpapierService {
 			for (char xo : array) {
 				x = b
 				y = (max - h + 1) * ygroesse + yoffset
-				if(xo == Character.valueOf('O')) {
+				if (xo == Character.valueOf('O')) {
 					color = Color.red
 					// drawOval(p, x + xd, y - xd, xd - 1, yd - 1, stroke, color)
 					drawOval(p, x + 1, y - ygroesse + 1, xgroesse - 2, ygroesse - 2, stroke, color)
-				} else if(xo == Character.valueOf('X')) {
+				} else if (xo == Character.valueOf('X')) {
 					color = Color.green
 					drawString(p, x + 1, y, "X", fontx, color)
 				} else {
@@ -1140,11 +1140,11 @@ class WertpapierService {
 			x = (t.getXpos() + 1) * xgroesse + xoffset
 			y = (max - t.getYpos()) * ygroesse + yoffset
 			b = t.getLaenge() * xgroesse
-			if(t.getBoxtyp() == 0) {
+			if (t.getBoxtyp() == 0) {
 				b += xgroesse
 				h = 0
 				color = Color.red
-			} else if(t.getBoxtyp() == 1) {
+			} else if (t.getBoxtyp() == 1) {
 				h = -t.getLaenge() * ygroesse
 				color = Color.blue
 			} else {
@@ -1240,15 +1240,14 @@ class WertpapierService {
 //		pict.resize
 //		return liste
 //	}
-
 	@Transaction(false)
 	override ServiceErgebnis<byte[]> exportWertpapierVergleichListe(ServiceDaten daten, String uid, String kuid,
 		LocalDate datum, LocalDate datum2, LocalDate datum3, StringBuffer status, StringBuffer abbruch) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var r = new ServiceErgebnis<byte[]>
-		//var warray = if(Global.nes(uid)) newArrayOfSize(1) else uid.split(";")
-		if(Global.nes(uid) || datum === null || datum2 === null || datum3 === null) {
+		// var warray = if(Global.nes(uid)) newArrayOfSize(1) else uid.split(";")
+		if (Global.nes(uid) || datum === null || datum2 === null || datum3 === null) {
 			return r
 		}
 //		var wb = new HSSFWorkbook
@@ -1367,7 +1366,7 @@ class WertpapierService {
 		String uid, String wpuid, LocalDate bewertungsdatum, StringBuffer status, StringBuffer abbruch) {
 
 		var liste = anlageRep.getAnlageLangListe(daten, bez, uid, wpuid)
-		if(bewertungsdatum !== null) {
+		if (bewertungsdatum !== null) {
 			val bis = bewertungsdatum
 			val l = liste.size
 			for (var i = 0; i < l && abbruch.length <= 0; i++) {
@@ -1376,7 +1375,7 @@ class WertpapierService {
 				status.append('''(«i+1» von «l») Berechnung von «a.wertpapierBezeichnung», «a.bezeichnung» am «bis»''')
 				var array = if(Global.nes(a.parameter)) newArrayOfSize(0) else a.parameter.split(";")
 				var waehrung = if(array.size >= 10 && !Global.excelNes(array.get(9))) array.get(9) else ''
-				var kurs = if(array.size >= 11 && !Global.excelNes(array.get(10)))
+				var kurs = if (array.size >= 11 && !Global.excelNes(array.get(10)))
 						Global.strDbl(array.get(10))
 					else
 						1
@@ -1395,13 +1394,13 @@ class WertpapierService {
 				var SoKurse k
 				try {
 					k = getAktKurs(daten, wp.kuerzel, bis, preis)
-				} catch(Exception ex) {
+				} catch (Exception ex) {
 					// ignorieren
 					Global.machNichts
 				}
-				if(k === null) {
+				if (k === null) {
 					var s = standRep.getAktStand(daten, wp.uid, null)
-					if(s !== null) {
+					if (s !== null) {
 						k = new SoKurse
 						k.close = s.stueckpreis
 						k.datum = s.datum.atStartOfDay
@@ -1409,15 +1408,15 @@ class WertpapierService {
 				} else {
 					waehrung = k.bewertung
 				}
-				if(!Global.nes(waehrung)) {
+				if (!Global.nes(waehrung)) {
 					waehrung = waehrung.toUpperCase
 					var SoKurse wk
-					//try {
-						wk = getAktWaehrungKurs(daten, waehrung, bis)
-					//} catch(Exception ex) {
-					//	// ignorieren
-					//}
-					if(wk !== null) {
+					// try {
+					wk = getAktWaehrungKurs(daten, waehrung, bis)
+					// } catch(Exception ex) {
+					// // ignorieren
+					// }
+					if (wk !== null) {
 						kurs = wk.close
 					}
 				}
@@ -1446,7 +1445,7 @@ class WertpapierService {
 		for (a : liste) {
 			var array = if(Global.nes(a.parameter)) null else a.parameter.split(";")
 			var l = Global.arrayLaenge(array)
-			if(l >= 11) {
+			if (l >= 11) {
 				a.betrag = Global.strDbl(array.get(0))
 				a.anteile = Global.strDbl(array.get(1))
 				a.preis = Global.strDbl(array.get(2))
@@ -1459,7 +1458,7 @@ class WertpapierService {
 				a.waehrung = array.get(9)
 				a.kurs = Global.strDbl(array.get(10))
 			}
-			if(zusammengesetzt) {
+			if (zusammengesetzt) {
 				// a.bezeichnung = Global.anhaengen(new StringBuffer(a.wertpapierBezeichnung), ", ", a.bezeichnung).
 				// toString
 				a.daten = '''
@@ -1492,16 +1491,16 @@ class WertpapierService {
 	override ServiceErgebnis<WpAnlage> insertUpdateAnlage(ServiceDaten daten, String uid, String wpuid, String bez,
 		String notiz) {
 
-		if(Global.nes(bez)) {
+		if (Global.nes(bez)) {
 			throw new MeldungException("Die Bezeichnung darf nicht leer sein.")
 		}
-		if(Global.nes(wpuid) || wertpapierRep.get(daten, new WpWertpapierKey(daten.mandantNr, wpuid)) === null) {
+		if (Global.nes(wpuid) || wertpapierRep.get(daten, new WpWertpapierKey(daten.mandantNr, wpuid)) === null) {
 			throw new MeldungException("Ein Wertpapier muss ausgewählt werden.")
 		}
 		var String parameter = null
-		if(!Global.nes(uid)) {
+		if (!Global.nes(uid)) {
 			var a = anlageRep.get(daten, new WpAnlageKey(daten.mandantNr, uid))
-			if(a !== null) {
+			if (a !== null) {
 				parameter = a.parameter
 			}
 		}
@@ -1514,7 +1513,7 @@ class WertpapierService {
 	override ServiceErgebnis<Void> deleteAnlage(ServiceDaten daten, String uid) {
 
 		var bliste = buchungRep.getBuchungLangListe(daten, null, null, null, uid, false)
-		if(bliste.size > 0) {
+		if (bliste.size > 0) {
 			throw new MeldungException("Die Anlage wird in einer Buchung verwendet und kann nicht gelöscht werden.")
 		}
 		anlageRep.delete(daten, new WpAnlageKey(daten.mandantNr, uid))
@@ -1541,7 +1540,7 @@ class WertpapierService {
 	def private WpBuchungLang getBuchungLangIntern(ServiceDaten daten, String uid) {
 
 		var l = buchungRep.getBuchungLangListe(daten, null, uid, null, null, false)
-		if(l.size > 0) {
+		if (l.size > 0) {
 			var b = l.get(0)
 			return b
 		}
@@ -1561,24 +1560,24 @@ class WertpapierService {
 		String notiz, double stand) {
 
 		var WpAnlage anlage
-		if(!Global.nes(auid)) {
+		if (!Global.nes(auid)) {
 			anlage = anlageRep.get(daten, new WpAnlageKey(daten.mandantNr, auid))
 		}
-		if(anlage === null) {
+		if (anlage === null) {
 			throw new MeldungException("Eine Anlage muss ausgewählt werden.")
 		}
-		if(datum === null) {
+		if (datum === null) {
 			throw new MeldungException("Es ist kein Valuta festgelegt.")
 		}
-		if(Global.nes(btext)) {
+		if (Global.nes(btext)) {
 			throw new MeldungException("Es ist kein Buchungstext erfasst.")
 		}
-		if(Global.compDouble(betrag, 0) == 0 && Global.compDouble(rabatt, 0) == 0 &&
+		if (Global.compDouble(betrag, 0) == 0 && Global.compDouble(rabatt, 0) == 0 &&
 			Global.compDouble4(anteile, 0) == 0 && Global.compDouble(zinsen, 0) == 0) {
 			throw new MeldungException("Es muss ein Betrag oder Anteil erfasst werden.")
 		}
 		var WpBuchung balt
-		if(!Global.nes(uid)) {
+		if (!Global.nes(uid)) {
 			balt = buchungRep.get(daten, new WpBuchungKey(daten.mandantNr, uid))
 		}
 		var e = buchungRep.iuWpBuchung(daten, null, uid, anlage.wertpapierUid, auid, datum, betrag, rabatt, anteile,
@@ -1586,20 +1585,20 @@ class WertpapierService {
 
 		// Stand korrigieren
 		var stand2 = stand
-		if(balt !== null && balt.datum != datum) {
-			if(balt.wertpapierUid == anlage.wertpapierUid && stand == 0) {
+		if (balt !== null && balt.datum != datum) {
+			if (balt.wertpapierUid == anlage.wertpapierUid && stand == 0) {
 				// Datum-Änderung nimmt den Stand mit
 				var st = standRep.get(daten, new WpStandKey(daten.mandantNr, balt.wertpapierUid, balt.datum))
-				if(st !== null) {
+				if (st !== null) {
 					stand2 = st.stueckpreis
 					standRep.delete(daten, new WpStandKey(daten.mandantNr, balt.wertpapierUid, balt.datum))
 				}
 			}
-			if(balt.wertpapierUid != anlage.wertpapierUid) {
+			if (balt.wertpapierUid != anlage.wertpapierUid) {
 				standRep.delete(daten, new WpStandKey(daten.mandantNr, balt.wertpapierUid, balt.datum))
 			}
 		}
-		if(Global.compDouble(stand2, 0) <= 0) {
+		if (Global.compDouble(stand2, 0) <= 0) {
 			standRep.delete(daten, new WpStandKey(daten.mandantNr, anlage.wertpapierUid, datum))
 		} else {
 			standRep.iuWpStand(daten, null, anlage.wertpapierUid, datum, stand2, null, null, null, null)
@@ -1643,7 +1642,7 @@ class WertpapierService {
 	override ServiceErgebnis<WpStand> insertUpdateStand(ServiceDaten daten, String wpuid, LocalDate datum,
 		double betrag) {
 
-		if(Global.nes(wpuid) || wertpapierRep.get(daten, new WpWertpapierKey(daten.mandantNr, wpuid)) === null) {
+		if (Global.nes(wpuid) || wertpapierRep.get(daten, new WpWertpapierKey(daten.mandantNr, wpuid)) === null) {
 			throw new MeldungException("Ein Wertpapier muss ausgewählt werden.")
 		}
 		var e = standRep.iuWpStand(daten, null, wpuid, datum, betrag, null, null, null, null)

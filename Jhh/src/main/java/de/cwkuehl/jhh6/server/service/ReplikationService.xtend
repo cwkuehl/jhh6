@@ -290,6 +290,7 @@ class ReplikationService {
 	@ServiceRef StammbaumService sbService
 	@ServiceRef TagebuchService tagebuchService
 	@ServiceRef VermietungService vmService
+	@ServiceRef WertpapierService wpService
 	@RepositoryRef AdAdresseRep adresseRep
 	@RepositoryRef AdPersonRep personRep
 	@RepositoryRef AdSitzRep sitzRep
@@ -460,7 +461,7 @@ class ReplikationService {
 			tagebuchService.speichereEintrag(daten, daten.heute, Meldungen.M9000)
 		}
 		var hl = hausRep.getListe(daten, mnr, null, null)
-		if (hl.size <= 1) {
+		if (hl.size <= 0) {
 			var h = vmService.insertUpdateHaus(daten, null, Meldungen.M9000, null, null, null, null).ergebnis
 			var w = vmService.insertUpdateWohnung(daten, null, h.uid, Meldungen.M9000, null).ergebnis
 			var w2 = vmService.insertUpdateWohnung(daten, null, h.uid, Meldungen.M9001, null).ergebnis
@@ -470,6 +471,15 @@ class ReplikationService {
 				null, 60, 140, 600, 5, 0, null)
 			vmService.insertUpdateMiete(daten, null, w.uid, daten.heute.minusYears(1), 50, 120, 20, 50, 1, null)
 			vmService.insertUpdateMiete(daten, null, w2.uid, daten.heute.minusYears(2), 60, 140, 20, 50, 1, null)
+		}
+		var wl = wertpapierRep.getListe(daten, mnr, null, null)
+		if (wl.size <= 0) {
+			wpService.insertUpdateKonfiguration(daten, null, Meldungen.M9000, 0.5, false, 3, 1, 182, false, 2, "1",
+				null)
+			var w = wpService.insertUpdateWertpapier(daten, null, Meldungen.M9000, "DBK.DE", null, "A", null, "1", null,
+				null).ergebnis
+			var a = wpService.insertUpdateAnlage(daten, null, w.uid, w.kuerzel, null).ergebnis
+			wpService.insertUpdateBuchung(daten, null, a.uid, daten.heute, 100, -5, 7, 0, Meldungen.M9000, null, 14.28)
 		}
 		maeinstellungRep.iuMaEinstellung(daten, null, Constant.EINST_MA_EXAMPLES, "1", null, null, null, null)
 		return r

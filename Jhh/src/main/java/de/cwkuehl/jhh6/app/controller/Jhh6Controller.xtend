@@ -57,6 +57,7 @@ import de.cwkuehl.jhh6.app.controller.vm.VM700EreignisseController
 import de.cwkuehl.jhh6.app.controller.vm.VM800ForderungenController
 import de.cwkuehl.jhh6.app.controller.vm.VM900AbrechnungenController
 import de.cwkuehl.jhh6.app.controller.vm.VM920AbrechnungenController
+import de.cwkuehl.jhh6.app.controller.wp.WP100ChartController
 import de.cwkuehl.jhh6.server.FactoryService
 import java.net.URL
 import java.util.ArrayList
@@ -599,10 +600,12 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		starteFormular(typeof(VM920AbrechnungenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleVMHH100() { // starteFormular(typeof(HH100PeriodenController), DialogAufrufEnum.OHNE)
+	@FXML def void handleVMHH100() {
+		starteFormular(typeof(HH100PeriodenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleWP100() { // starteFormular(typeof(WP100ChartController), DialogAufrufEnum.OHNE)
+	@FXML def void handleWP100() {
+		starteFormular(typeof(WP100ChartController), DialogAufrufEnum.OHNE)
 	}
 
 	@FXML def void handleWP110() { // starteFormular(typeof(WP110ChartsController), DialogAufrufEnum.OHNE)
