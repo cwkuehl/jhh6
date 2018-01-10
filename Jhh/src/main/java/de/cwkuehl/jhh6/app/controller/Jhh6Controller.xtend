@@ -58,6 +58,7 @@ import de.cwkuehl.jhh6.app.controller.vm.VM800ForderungenController
 import de.cwkuehl.jhh6.app.controller.vm.VM900AbrechnungenController
 import de.cwkuehl.jhh6.app.controller.vm.VM920AbrechnungenController
 import de.cwkuehl.jhh6.app.controller.wp.WP100ChartController
+import de.cwkuehl.jhh6.app.controller.wp.WP110ChartsController
 import de.cwkuehl.jhh6.app.controller.wp.WP300KonfigurationenController
 import de.cwkuehl.jhh6.server.FactoryService
 import java.net.URL
@@ -609,7 +610,8 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		starteFormular(typeof(WP100ChartController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleWP110() { // starteFormular(typeof(WP110ChartsController), DialogAufrufEnum.OHNE)
+	@FXML def void handleWP110() {
+		starteFormular(typeof(WP110ChartsController), DialogAufrufEnum.OHNE)
 	}
 
 	@FXML def void handleWP200() { // starteFormular(typeof(WP200WertpapiereController), DialogAufrufEnum.OHNE)
