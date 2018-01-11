@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import de.cwkuehl.jhh5.anwendung.control.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import de.cwkuehl.jhh6.app.control.Datum?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.72" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="de.cwkuehl.jhh6.app.controller.wp.WP200WertpapiereController">
+
+	<padding>
+		<Insets bottom="10" left="10" right="10" top="10" />
+	</padding>
+
+	<ToolBar GridPane.columnSpan="4" GridPane.hgrow="ALWAYS">
+		<items>
+			<Button fx:id="aktuell" mnemonicParsing="false" onAction="#onAktuell">
+				<tooltip>
+					<Tooltip text="%Refresh" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-refresh.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="rueckgaengig" mnemonicParsing="false" onAction="#onRueckgaengig">
+				<tooltip>
+					<Tooltip text="%Undo" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-undo.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="wiederherstellen" mnemonicParsing="false" onAction="#onWiederherstellen">
+				<tooltip>
+					<Tooltip text="%Redo" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-redo.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="neu" mnemonicParsing="false" onAction="#onNeu">
+				<tooltip>
+					<Tooltip text="%New" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-new-document.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="kopieren" mnemonicParsing="false" onAction="#onKopieren">
+				<tooltip>
+					<Tooltip text="%Copy" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-copy.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="aendern" mnemonicParsing="false" onAction="#onAendern">
+				<tooltip>
+					<Tooltip text="%Edit" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-edit.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="loeschen" mnemonicParsing="false" onAction="#onLoeschen">
+				<tooltip>
+					<Tooltip text="%Delete" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-remove.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="export" mnemonicParsing="false" onAction="#onExport">
+				<tooltip>
+					<Tooltip text="%Export" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-save.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="tab" mnemonicParsing="false" onAction="#onTab">
+				<tooltip>
+					<Tooltip text="%Tab" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-tab.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+		</items>
+	</ToolBar>
+	<Label fx:id="wertpapiere0" mnemonicParsing="true" text="%WP200.wertpapiere" GridPane.columnIndex="0"
+		GridPane.rowIndex="1" />
+	<TableView fx:id="wertpapiere" accessibleText="%WP200.wertpapiere.tt" onMouseClicked="#onWertpapiereMouseClick"
+		GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%WP200.wertpapiere.tt" />
+		</tooltip>
+		<columns>
+			<TableColumn fx:id="colSort" prefWidth="50.0" text="%WP200.colSort" />
+			<TableColumn fx:id="colBezeichnung" prefWidth="150.0" text="%WP200.colBezeichnung" />
+			<TableColumn fx:id="colRelation" prefWidth="150.0" text="%WP200.colRelation" />
+			<TableColumn fx:id="colBewertung" prefWidth="100.0" text="%WP200.colBewertung" />
+			<TableColumn fx:id="colTrend" prefWidth="60.0" text="%WP200.colTrend" />
+			<TableColumn fx:id="colBewertung1" prefWidth="65.0" text="%WP200.colBewertung1" />
+			<TableColumn fx:id="colTrend1" prefWidth="45.0" text="%WP200.colTrend1" />
+			<TableColumn fx:id="colBewertung2" prefWidth="20.0" text="%WP200.colBewertung2" />
+			<TableColumn fx:id="colTrend2" prefWidth="45.0" text="%WP200.colTrend2" />
+			<TableColumn fx:id="colBewertung3" prefWidth="20.0" text="%WP200.colBewertung3" />
+			<TableColumn fx:id="colTrend3" prefWidth="45.0" text="%WP200.colTrend3" />
+			<TableColumn fx:id="colBewertung4" prefWidth="20.0" text="%WP200.colBewertung4" />
+			<TableColumn fx:id="colTrend4" prefWidth="45.0" text="%WP200.colTrend4" />
+			<TableColumn fx:id="colBewertung5" prefWidth="20.0" text="%WP200.colBewertung5" />
+			<TableColumn fx:id="colTrend5" prefWidth="45.0" text="%WP200.colTrend5" />
+			<TableColumn fx:id="colXo" prefWidth="65.0" text="%WP200.colXo" />
+			<TableColumn fx:id="colSignalbew" prefWidth="50.0" text="%WP200.colSignalbew" />
+			<TableColumn fx:id="colSignaldatum" prefWidth="100.0" text="%WP200.colSignaldatum" />
+			<TableColumn fx:id="colSignalbez" prefWidth="160.0" text="%WP200.colSignalbez" />
+			<TableColumn fx:id="colSchnitt200" prefWidth="45.0" text="%WP200.colSchnitt200" />
+			<TableColumn fx:id="colGa" prefWidth="170.0" text="%WP200.colGa" />
+			<TableColumn fx:id="colGv" prefWidth="120.0" text="%WP200.colGv" />
+			<TableColumn fx:id="colAa" prefWidth="170.0" text="%WP200.colAa" />
+			<TableColumn fx:id="colAv" prefWidth="120.0" text="%WP200.colAv" />
+		</columns>
+	</TableView>
+	<Label fx:id="bis0" mnemonicParsing="true" text="%WP200.bis" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+	<Datum fx:id="bis" accessibleText="%WP200.bis.tt" nullText=""
+		promptText="%WP200.bis.tt" schalterText="mhp" uhrzeitGroesse="0" wochentagGroesse="100"
+		GridPane.columnIndex="1" GridPane.rowIndex="3">
+		<tooltip>
+			<Tooltip text="%WP200.bis.tt" />
+		</tooltip>
+	</Datum>
+	<Button fx:id="alle" mnemonicParsing="true" onAction="#onAlle" text="%WP200.alle" GridPane.columnIndex="2"
+		GridPane.columnSpan="1" GridPane.rowIndex="3">
+		<tooltip>
+			<Tooltip text="%WP200.alle.tt" />
+		</tooltip>
+	</Button>
+	<HBox spacing="10.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
+		<children>
+			<Button fx:id="berechnen" onAction="#onBerechnen" text="%WP200.berechnen">
+				<tooltip>
+					<Tooltip text="%WP200.berechnen.tt" />
+				</tooltip>
+			</Button>
+			<Button fx:id="abbrechen" onAction="#onAbbrechen" text="%Cancel">
+				<tooltip>
+					<Tooltip text="%Cancel.tt" />
+				</tooltip>
+			</Button>
+		</children>
+	</HBox>
+	<Label fx:id="bezeichnung0" mnemonicParsing="true" text="%WP200.bezeichnung" GridPane.columnIndex="0"
+		GridPane.rowIndex="4" />
+	<TextField fx:id="bezeichnung" accessibleText="%WP200.bezeichnung.tt" promptText="%WP200.bezeichnung.tt"
+		GridPane.columnIndex="1" GridPane.rowIndex="4">
+		<tooltip>
+			<Tooltip text="%WP200.bezeichnung.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="muster0" mnemonicParsing="true" text="%WP200.muster" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+	<TextField fx:id="muster" accessibleText="%WP200.muster.tt" promptText="%WP200.muster.tt"
+		GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
+		<tooltip>
+			<Tooltip text="%WP200.muster.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="konfiguration0" mnemonicParsing="true" text="%WP200.konfiguration" GridPane.columnIndex="0"
+		GridPane.rowIndex="5" />
+	<ComboBox fx:id="konfiguration" accessibleText="%WP200.konfiguration.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="3" GridPane.rowIndex="5" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%WP200.konfiguration.tt" />
+		</tooltip>
+	</ComboBox>
+
+	<stylesheets>
+		<URL value="@../Jhh6.css" />
+	</stylesheets>
+	<columnConstraints>
+		<ColumnConstraints />
+		<ColumnConstraints />
+		<ColumnConstraints />
+		<ColumnConstraints />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+	</rowConstraints>
+</GridPane>

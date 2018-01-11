@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.cwkuehl.jhh6.app.controller.wp.WP210WertpapierController">
+
+	<padding>
+		<Insets bottom="10" left="10" right="10" top="10" />
+	</padding>
+
+	<Label fx:id="nr0" text="%WP210.nr" GridPane.columnIndex="0" />
+	<TextField fx:id="nr" accessibleText="%WP210.nr.tt" promptText="%WP210.nr.tt" GridPane.columnIndex="1" GridPane.columnSpan="3">
+		<tooltip>
+			<Tooltip text="%WP210.nr.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="bezeichnung0" mnemonicParsing="true" styleClass="label-bold" text="%WP210.bezeichnung" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+	<TextField fx:id="bezeichnung" accessibleText="%WP210.bezeichnung.tt" promptText="%WP210.bezeichnung.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
+		<tooltip>
+			<Tooltip text="%WP210.bezeichnung.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="kuerzel0" mnemonicParsing="true" styleClass="label-bold" text="%WP210.kuerzel" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+	<TextField fx:id="kuerzel" accessibleText="%WP210.kuerzel.tt" promptText="%WP210.kuerzel.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2">
+		<tooltip>
+			<Tooltip text="%WP210.kuerzel.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="status0" mnemonicParsing="true" text="%WP210.status" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+	<ComboBox fx:id="status" accessibleText="%WP210.status.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%WP210.status.tt" />
+		</tooltip>
+	</ComboBox>
+	<Label fx:id="aktKurs0" text="%WP210.aktKurs" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+	<TextField fx:id="aktKurs" accessibleText="%WP210.aktKurs.tt" promptText="%WP210.aktKurs.tt" GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
+		<tooltip>
+			<Tooltip text="%WP210.aktKurs.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="stopKurs0" text="%WP210.stopKurs" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+	<TextField fx:id="stopKurs" accessibleText="%WP210.stopKurs.tt" promptText="%WP210.stopKurs.tt" GridPane.columnIndex="3" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
+		<tooltip>
+			<Tooltip text="%WP210.stopKurs.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="signalKurs10" mnemonicParsing="true" text="%WP210.signalKurs1" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+	<TextField fx:id="signalKurs1" accessibleText="%WP210.signalKurs1.tt" promptText="%WP210.signalKurs1.tt" GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5">
+		<tooltip>
+			<Tooltip text="%WP210.signalKurs1.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="muster0" text="%WP210.muster" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+	<TextField fx:id="muster" accessibleText="%WP210.muster.tt" promptText="%WP210.muster.tt" GridPane.columnIndex="3" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5">
+		<tooltip>
+			<Tooltip text="%WP210.muster.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="sortierung0" mnemonicParsing="true" text="%WP210.sortierung" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+	<TextField fx:id="sortierung" accessibleText="%WP210.sortierung.tt" promptText="%WP210.sortierung.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="6">
+		<tooltip>
+			<Tooltip text="%WP210.sortierung.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="relation0" mnemonicParsing="true" text="%WP210.relation" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+	<ComboBox fx:id="relation" accessibleText="%WP210.relation.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="7" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%WP210.relation.tt" />
+		</tooltip>
+	</ComboBox>
+	<Label fx:id="notiz0" text="%WP210.notiz" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+	<TextArea fx:id="notiz" accessibleText="%WP210.notiz.tt" promptText="%WP210.notiz.tt" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="8" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%WP210.notiz.tt" />
+		</tooltip>
+	</TextArea>
+	<Label fx:id="angelegt0" text="%Creation" GridPane.columnIndex="0" GridPane.rowIndex="9" />
+	<TextField fx:id="angelegt" accessibleText="%Creation.tt" promptText="%Creation.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="9">
+		<tooltip>
+			<Tooltip text="%Creation.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="geaendert0" text="%Change" GridPane.columnIndex="0" GridPane.rowIndex="10" />
+	<TextField fx:id="geaendert" accessibleText="%Change.tt" promptText="%Change.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="10">
+		<tooltip>
+			<Tooltip text="%Change.tt" />
+		</tooltip>
+	</TextField>
+	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="11">
+		<Button fx:id="ok" defaultButton="true" mnemonicParsing="true" onAction="#onOk" text="%Ok">
+			<tooltip>
+				<Tooltip text="%Ok.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="abbrechen" cancelButton="true" onAction="#onAbbrechen" text="%Cancel">
+			<tooltip>
+				<Tooltip text="%Cancel.tt" />
+			</tooltip>
+		</Button>
+	</HBox>
+
+	<stylesheets>
+		<URL value="@../Jhh6.css" />
+	</stylesheets>
+	<columnConstraints>
+		<ColumnConstraints />
+		<ColumnConstraints />
+		<ColumnConstraints />
+		<ColumnConstraints />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+	</rowConstraints>
+</GridPane>

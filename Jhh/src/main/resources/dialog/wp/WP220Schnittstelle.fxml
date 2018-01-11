@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import de.cwkuehl.jhh5.anwendung.control.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import de.cwkuehl.jhh6.app.control.Datum?>
+
+<GridPane alignment="center" hgap="10" vgap="10" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
+	AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="de.cwkuehl.jhh6.app.controller.wp.WP220SchnittstelleController">
+
+	<padding>
+		<Insets bottom="10" left="10" right="10" top="10" />
+	</padding>
+
+	<Label fx:id="datum0" mnemonicParsing="true" text="%WP220.datum" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+	<Datum fx:id="datum" accessibleText="%WP220.datum.tt" nullText="" promptText="%WP220.datum.tt" schalterText="mhp" uhrzeitGroesse="0"
+		wochentagGroesse="80" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="0">
+		<tooltip>
+			<Tooltip text="%WP220.datum.tt" />
+		</tooltip>
+	</Datum>
+	<Label fx:id="anzahl0" mnemonicParsing="true" text="%WP220.anzahl" GridPane.columnIndex="0"
+		GridPane.rowIndex="1" />
+	<TextField fx:id="anzahl" accessibleText="%WP220.anzahl.tt" promptText="%WP220.anzahl.tt" GridPane.columnIndex="1"
+		GridPane.rowIndex="1">
+		<tooltip>
+			<Tooltip text="%WP220.anzahl.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="bezeichnung0" mnemonicParsing="true" text="%WP220.bezeichnung" GridPane.columnIndex="0"
+		GridPane.rowIndex="2" />
+	<TextField fx:id="bezeichnung" accessibleText="%WP220.bezeichnung.tt" promptText="%WP220.bezeichnung.tt"
+		GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2">
+		<tooltip>
+			<Tooltip text="%WP220.bezeichnung.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="konfiguration0" mnemonicParsing="true" text="%WP220.konfiguration" GridPane.columnIndex="0"
+		GridPane.rowIndex="3" />
+	<ListView fx:id="konfiguration" accessibleText="%WP220.konfiguration.tt" GridPane.columnIndex="1" GridPane.columnSpan="3"
+		GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%WP220.konfiguration.tt" />
+		</tooltip>
+	</ListView>
+	<Label fx:id="datei0" mnemonicParsing="true" text="%WP220.datei" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+	<TextField fx:id="datei" accessibleText="%WP220.datei.tt" promptText="%WP220.datei.tt"
+		GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4">
+		<tooltip>
+			<Tooltip text="%WP220.datei.tt" />
+		</tooltip>
+	</TextField>
+	<HBox spacing="10.0" GridPane.columnIndex="3" GridPane.columnSpan="1" GridPane.rowIndex="4">
+		<Button fx:id="dateiAuswahl" onAction="#onDateiAuswahl" text="%WP220.dateiAuswahl">
+			<tooltip>
+				<Tooltip text="%WP220.dateiAuswahl.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="export" defaultButton="true" mnemonicParsing="true" onAction="#onExport" text="%WP220.export">
+			<tooltip>
+				<Tooltip text="%Export" />
+			</tooltip>
+		</Button>
+	</HBox>
+	<Label fx:id="datum20" mnemonicParsing="true" text="%WP220.datum2" GridPane.rowIndex="5" />
+	<Datum fx:id="datum2" accessibleText="%WP220.datum2.tt" nullText="" promptText="%WP220.datum2.tt" schalterText="mhp" uhrzeitGroesse="0"
+		wochentagGroesse="80" GridPane.columnIndex="1" GridPane.rowIndex="5">
+		<tooltip>
+			<Tooltip text="%WP220.datum2.tt" />
+		</tooltip>
+	</Datum>
+	<Datum fx:id="datum3" accessibleText="%WP220.datum3.tt" nullText="" promptText="%WP220.datum3.tt" schalterText="mhp" uhrzeitGroesse="0"
+		wochentagGroesse="80" GridPane.columnIndex="2" GridPane.rowIndex="5">
+		<tooltip>
+			<Tooltip text="%WP220.datum3.tt" />
+		</tooltip>
+	</Datum>
+	<Datum fx:id="datum4" accessibleText="%WP220.datum4.tt" nullText="" promptText="%WP220.datum4.tt" schalterText="mhp" uhrzeitGroesse="0"
+		wochentagGroesse="80" GridPane.columnIndex="3" GridPane.rowIndex="5">
+		<tooltip>
+			<Tooltip text="%WP220.datum4.tt" />
+		</tooltip>
+	</Datum>
+	<Label fx:id="wertpapier0" mnemonicParsing="true" text="%WP220.wertpapier" GridPane.rowIndex="6" />
+	<ListView fx:id="wertpapier" accessibleText="%WP220.wertpapier.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%WP220.wertpapier.tt" />
+		</tooltip>
+	</ListView>
+	<Label fx:id="datei20" mnemonicParsing="true" text="%WP220.datei2" GridPane.rowIndex="7" />
+	<TextField fx:id="datei2" accessibleText="%WP220.datei2.tt" promptText="%WP220.datei2.tt"
+		GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="7">
+		<tooltip>
+			<Tooltip text="%WP220.datei2.tt" />
+		</tooltip>
+	</TextField>
+	<HBox spacing="10.0" GridPane.columnIndex="3" GridPane.columnSpan="1" GridPane.rowIndex="7">
+		<Button fx:id="datei2Auswahl" onAction="#onDatei2Auswahl" text="%WP220.datei2Auswahl">
+			<tooltip>
+				<Tooltip text="%WP220.datei2Auswahl.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="export2" defaultButton="true" mnemonicParsing="true" onAction="#onExport2" text="%WP220.export2">
+			<tooltip>
+				<Tooltip text="%WP220.export2.tt" />
+			</tooltip>
+		</Button>
+	</HBox>
+	<Button fx:id="abbrechen" cancelButton="true" onAction="#onAbbrechen" text="%Cancel" GridPane.columnIndex="1"
+		GridPane.columnSpan="1" GridPane.rowIndex="8">
+		<tooltip>
+			<Tooltip text="%Cancel.tt" />
+		</tooltip>
+	</Button>
+	<TextField fx:id="statustext" accessibleText="%WP220.statustext.tt" promptText="%WP220.statustext.tt" GridPane.columnSpan="4"
+		GridPane.rowIndex="9">
+		<tooltip>
+			<Tooltip text="%WP220.statustext.tt" />
+		</tooltip>
+	</TextField>
+
+	<stylesheets>
+		<URL value="@../Jhh6.css" />
+	</stylesheets>
+	<columnConstraints>
+		<ColumnConstraints />
+		<ColumnConstraints />
+		<ColumnConstraints />
+		<ColumnConstraints />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+	</rowConstraints>
+</GridPane>

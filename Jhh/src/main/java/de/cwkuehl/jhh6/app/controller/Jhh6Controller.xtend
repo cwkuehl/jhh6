@@ -59,6 +59,7 @@ import de.cwkuehl.jhh6.app.controller.vm.VM900AbrechnungenController
 import de.cwkuehl.jhh6.app.controller.vm.VM920AbrechnungenController
 import de.cwkuehl.jhh6.app.controller.wp.WP100ChartController
 import de.cwkuehl.jhh6.app.controller.wp.WP110ChartsController
+import de.cwkuehl.jhh6.app.controller.wp.WP200WertpapiereController
 import de.cwkuehl.jhh6.app.controller.wp.WP300KonfigurationenController
 import de.cwkuehl.jhh6.server.FactoryService
 import java.net.URL
@@ -389,7 +390,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		l.add(new StartDialog("#HP400", g("menu.invoices"), typeof(HP400RechnungenController), null))
 		l.add(new StartDialog("#SB200", g("menu.ancestors"), typeof(SB200AhnenController), null))
 		l.add(new StartDialog("#SB300", g("menu.families"), typeof(SB300FamilienController), null))
-		// l.add(new StartDialog("#WP200", g("menu.stocks"), typeof(WP200WertpapiereController), null))
+		l.add(new StartDialog("#WP200", g("menu.stocks"), typeof(WP200WertpapiereController), null))
 		// l.add(new StartDialog("#WP250", g("menu.investments"), typeof(WP250AnlagenController), null))
 		// l.add(new StartDialog("#WP400", g("menu.bookings3"), typeof(WP400BuchungenController), null))
 		// l.add(new StartDialog("#WP500", g("menu.prices"), typeof(WP500StaendeController), null))
@@ -614,7 +615,8 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		starteFormular(typeof(WP110ChartsController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleWP200() { // starteFormular(typeof(WP200WertpapiereController), DialogAufrufEnum.OHNE)
+	@FXML def void handleWP200() {
+		starteFormular(typeof(WP200WertpapiereController), DialogAufrufEnum.OHNE)
 	}
 
 	@FXML def void handleWP250() { // starteFormular(typeof(WP250AnlagenController), DialogAufrufEnum.OHNE)
