@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import de.cwkuehl.jhh5.anwendung.control.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import de.cwkuehl.jhh6.app.control.Datum?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="de.cwkuehl.jhh6.app.controller.wp.WP410BuchungController">
+
+	<padding>
+		<Insets bottom="10" left="10" right="10" top="10" />
+	</padding>
+
+	<Label fx:id="nr0" text="%WP410.nr" GridPane.columnIndex="0" />
+	<TextField fx:id="nr" accessibleText="%WP410.nr.tt" promptText="%WP410.nr.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="3">
+		<tooltip>
+			<Tooltip text="%WP410.nr.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="anlage0" mnemonicParsing="true" styleClass="label-bold" text="%WP410.anlage" GridPane.rowIndex="1" />
+	<ComboBox fx:id="anlage" accessibleText="%WP410.anlage.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
+		<tooltip>
+			<Tooltip text="%WP410.anlage.tt" />
+		</tooltip>
+	</ComboBox>
+	<Label fx:id="valuta0" mnemonicParsing="true" styleClass="label-bold" text="%WP410.valuta" GridPane.rowIndex="2" />
+	<Datum fx:id="valuta" accessibleText="%WP410.valuta.tt" nullText="" onAction="#onValuta" promptText="%WP410.valuta.tt"
+		schalterText="mhp" uhrzeitGroesse="0" wochentagGroesse="80" GridPane.columnIndex="1" GridPane.rowIndex="2">
+		<tooltip>
+			<Tooltip text="%WP410.valuta.tt" />
+		</tooltip>
+	</Datum>
+	<Label fx:id="preis0" text="%WP410.preis" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+	<TextField fx:id="preis" accessibleText="%WP410.preis.tt" focusTraversable="false" promptText="%WP410.preis.tt"
+		GridPane.columnIndex="3" GridPane.rowIndex="2">
+		<tooltip>
+			<Tooltip text="%WP410.preis.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="betrag0" mnemonicParsing="true" text="%WP410.betrag" GridPane.rowIndex="3" />
+	<TextField fx:id="betrag" accessibleText="%WP410.betrag.tt" promptText="%WP410.betrag.tt" GridPane.columnIndex="1"
+		GridPane.rowIndex="3">
+		<tooltip>
+			<Tooltip text="%WP410.betrag.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="rabatt0" mnemonicParsing="true" text="%WP410.rabatt" GridPane.rowIndex="4" />
+	<TextField fx:id="rabatt" accessibleText="%WP410.rabatt.tt" promptText="%WP410.rabatt.tt" GridPane.columnIndex="1"
+		GridPane.rowIndex="4">
+		<tooltip>
+			<Tooltip text="%WP410.rabatt.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="anteile0" mnemonicParsing="true" text="%WP410.anteile" GridPane.rowIndex="5" />
+	<TextField fx:id="anteile" accessibleText="%WP410.anteile.tt" promptText="%WP410.anteile.tt"
+		GridPane.columnIndex="1" GridPane.rowIndex="5">
+		<tooltip>
+			<Tooltip text="%WP410.anteile.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="preis20" text="%WP410.preis2" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+	<TextField fx:id="preis2" accessibleText="%WP410.preis2.tt" focusTraversable="false"
+		promptText="%WP410.preis2.tt" GridPane.columnIndex="3" GridPane.rowIndex="5">
+		<tooltip>
+			<Tooltip text="%WP410.preis2.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="zinsen0" mnemonicParsing="true" text="%WP410.zinsen" GridPane.rowIndex="6" />
+	<TextField fx:id="zinsen" accessibleText="%WP410.zinsen.tt" promptText="%WP410.zinsen.tt"
+		GridPane.columnIndex="1" GridPane.rowIndex="6">
+		<tooltip>
+			<Tooltip text="%WP410.zinsen.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="bText0" mnemonicParsing="true" styleClass="label-bold" text="%WP410.bText" GridPane.rowIndex="7" />
+	<TextField fx:id="bText" accessibleText="%WP410.bText.tt" promptText="%WP410.bText.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="3" GridPane.rowIndex="7">
+		<tooltip>
+			<Tooltip text="%WP410.bText.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="angelegt0" text="%Creation" GridPane.rowIndex="8" />
+	<TextField fx:id="angelegt" accessibleText="%Creation.tt"
+		promptText="%Creation.tt" GridPane.columnIndex="1" GridPane.columnSpan="3"
+		GridPane.rowIndex="8">
+		<tooltip>
+			<Tooltip text="%Creation.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="geaendert0" text="%Change" GridPane.rowIndex="9" />
+	<TextField fx:id="geaendert" accessibleText="%Change.tt"
+		promptText="%Change.tt" GridPane.columnIndex="1" GridPane.columnSpan="3"
+		GridPane.rowIndex="9">
+		<tooltip>
+			<Tooltip text="%Change.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="buchung0" text="%WP410.buchung" GridPane.rowIndex="10" />
+	<TextField fx:id="buchung" accessibleText="%WP410.buchung.tt" promptText="%WP410.buchung.tt" GridPane.columnIndex="1"
+		GridPane.columnSpan="3" GridPane.rowIndex="10">
+		<tooltip>
+			<Tooltip text="%WP410.buchung.tt" />
+		</tooltip>
+	</TextField>
+	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="11">
+		<Button fx:id="ok" defaultButton="true" mnemonicParsing="true" onAction="#onOk" text="%Ok">
+			<tooltip>
+				<Tooltip text="%Ok.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="abbrechen" cancelButton="true" onAction="#onAbbrechen" text="%Cancel">
+			<tooltip>
+				<Tooltip text="%Cancel.tt" />
+			</tooltip>
+		</Button>
+	</HBox>
+
+	<stylesheets>
+		<URL value="@../Jhh6.css" />
+	</stylesheets>
+	<columnConstraints>
+		<ColumnConstraints />
+		<ColumnConstraints />
+		<ColumnConstraints />
+		<ColumnConstraints />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+	</rowConstraints>
+</GridPane>

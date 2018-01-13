@@ -42,12 +42,13 @@ class MO100MessdienerController extends BaseController<String> {
 	@FXML TableColumn<MessdienerData, String> colGv
 	@FXML TableColumn<MessdienerData, LocalDateTime> colAa
 	@FXML TableColumn<MessdienerData, String> colAv
-	ObservableList<MessdienerData> messdienerData = FXCollections::observableArrayList()
+	ObservableList<MessdienerData> messdienerData = FXCollections::observableArrayList
 
 	/** 
 	 * Daten für Tabelle Messdiener.
 	 */
 	static class MessdienerData extends BaseController.TableViewData<MoMessdiener> {
+
 		SimpleStringProperty uid
 		SimpleStringProperty vorname
 		SimpleStringProperty name
@@ -59,29 +60,31 @@ class MO100MessdienerController extends BaseController<String> {
 		SimpleStringProperty angelegtVon
 
 		new(MoMessdiener v) {
+
 			super(v)
-			uid = new SimpleStringProperty(v.getUid())
-			vorname = new SimpleStringProperty(v.getVorname())
-			name = new SimpleStringProperty(v.getName())
-			von = new SimpleObjectProperty<LocalDate>(v.getVon())
-			bis = new SimpleObjectProperty<LocalDate>(v.getBis())
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm())
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon())
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm())
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon())
+			uid = new SimpleStringProperty(v.getUid)
+			vorname = new SimpleStringProperty(v.getVorname)
+			name = new SimpleStringProperty(v.getName)
+			von = new SimpleObjectProperty<LocalDate>(v.getVon)
+			bis = new SimpleObjectProperty<LocalDate>(v.getBis)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
+			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
+			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
 		}
 
 		override String getId() {
-			return uid.get()
-		} // stufe = 0;
+			return uid.get
+		}
 	}
 
 	/** 
 	 * Initialisierung des Dialogs.
 	 */
 	override protected void initialize() {
+
 		tabbar = 1
-		super.initialize()
+		super.initialize
 		messdiener0.setLabelFor(messdiener)
 		initAccelerator("A", aktuell)
 		initAccelerator("U", rueckgaengig)
@@ -92,7 +95,7 @@ class MO100MessdienerController extends BaseController<String> {
 		initAccelerator("L", loeschen)
 		initAccelerator("X", imExport)
 		initDaten(0)
-		messdiener.requestFocus()
+		messdiener.requestFocus
 	}
 
 	/** 
@@ -100,15 +103,16 @@ class MO100MessdienerController extends BaseController<String> {
 	 * @param stufe 0 erstmalig, 1 aktualisieren, 2 Tabellen aktualisieren.
 	 */
 	override protected void initDaten(int stufe) {
-		if (stufe <= 0) {
+
+		if (stufe <= 0) { // stufe = 0
 		}
 		if (stufe <= 1) {
 			var List<MoMessdiener> l = get(
-				FactoryService::getMessdienerService().getMessdienerListe(getServiceDaten(), false))
+				FactoryService::getMessdienerService.getMessdienerListe(getServiceDaten, false))
 			getItems(l, null, [a|new MessdienerData(a)], messdienerData)
 		}
 		if (stufe <= 2) {
-			initDatenTable()
+			initDatenTable
 		}
 	}
 
@@ -116,20 +120,21 @@ class MO100MessdienerController extends BaseController<String> {
 	 * Tabellen-Daten initialisieren.
 	 */
 	def protected void initDatenTable() {
+
 		messdiener.setItems(messdienerData)
-		colUid.setCellValueFactory([c|c.getValue().uid])
-		colVorname.setCellValueFactory([c|c.getValue().vorname])
-		colName.setCellValueFactory([c|c.getValue().name])
-		colVon.setCellValueFactory([c|c.getValue().von])
-		colBis.setCellValueFactory([c|c.getValue().bis])
-		colGv.setCellValueFactory([c|c.getValue().geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue().geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue().angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue().angelegtAm])
+		colUid.setCellValueFactory([c|c.getValue.uid])
+		colVorname.setCellValueFactory([c|c.getValue.vorname])
+		colName.setCellValueFactory([c|c.getValue.name])
+		colVon.setCellValueFactory([c|c.getValue.von])
+		colBis.setCellValueFactory([c|c.getValue.bis])
+		colGv.setCellValueFactory([c|c.getValue.geaendertVon])
+		colGa.setCellValueFactory([c|c.getValue.geaendertAm])
+		colAv.setCellValueFactory([c|c.getValue.angelegtVon])
+		colAa.setCellValueFactory([c|c.getValue.angelegtAm])
 	}
 
 	override protected void updateParent() {
-		onAktuell()
+		onAktuell
 	}
 
 	def private void starteDialog(DialogAufrufEnum aufruf) {
@@ -148,16 +153,16 @@ class MO100MessdienerController extends BaseController<String> {
 	 * Event für Rueckgaengig.
 	 */
 	@FXML def void onRueckgaengig() {
-		get(Jhh6::rollback())
-		onAktuell()
+		get(Jhh6::rollback)
+		onAktuell
 	}
 
 	/** 
 	 * Event für Wiederherstellen.
 	 */
 	@FXML def void onWiederherstellen() {
-		get(Jhh6::redo())
-		onAktuell()
+		get(Jhh6::redo)
+		onAktuell
 	}
 
 	/** 
@@ -199,8 +204,8 @@ class MO100MessdienerController extends BaseController<String> {
 	 * Event für Messdiener.
 	 */
 	@FXML def void onMessdienerMouseClick(MouseEvent e) {
-		if (e.getClickCount() > 1) {
-			onAendern()
+		if (e.clickCount > 1) {
+			onAendern
 		}
 	}
 }

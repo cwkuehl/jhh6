@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import de.cwkuehl.jhh5.anwendung.control.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="de.cwkuehl.jhh6.app.controller.wp.WP400BuchungenController">
+
+	<padding>
+		<Insets bottom="10" left="10" right="10" top="10" />
+	</padding>
+
+	<ToolBar GridPane.columnSpan="4" GridPane.hgrow="ALWAYS">
+		<items>
+			<Button fx:id="aktuell" mnemonicParsing="false" onAction="#onAktuell">
+				<tooltip>
+					<Tooltip text="%Refresh" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-refresh.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="rueckgaengig" mnemonicParsing="false" onAction="#onRueckgaengig">
+				<tooltip>
+					<Tooltip text="%Undo" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-undo.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="wiederherstellen" mnemonicParsing="false" onAction="#onWiederherstellen">
+				<tooltip>
+					<Tooltip text="%Redo" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-redo.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="neu" mnemonicParsing="false" onAction="#onNeu">
+				<tooltip>
+					<Tooltip text="%New" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-new-document.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="kopieren" mnemonicParsing="false" onAction="#onKopieren">
+				<tooltip>
+					<Tooltip text="%Copy" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-copy.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="aendern" mnemonicParsing="false" onAction="#onAendern">
+				<tooltip>
+					<Tooltip text="%Edit" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-edit.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="loeschen" mnemonicParsing="false" onAction="#onLoeschen">
+				<tooltip>
+					<Tooltip text="%Delete" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-remove.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="tab" mnemonicParsing="false" onAction="#onTab">
+				<tooltip>
+					<Tooltip text="%Tab" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-tab.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+		</items>
+	</ToolBar>
+	<Label fx:id="buchungen0" mnemonicParsing="true" text="%WP400.buchungen" GridPane.columnIndex="0" GridPane.columnSpan="4"
+		GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+	<TableView fx:id="buchungen" accessibleText="%WP400.buchungen.tt" onMouseClicked="#onBuchungenMouseClick"
+		GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%WP400.buchungen.tt" />
+		</tooltip>
+		<columns>
+			<TableColumn fx:id="colWpbezeichnung" prefWidth="150.0" text="%WP400.colWpbezeichnung" />
+			<TableColumn fx:id="colBezeichnung" prefWidth="150.0" text="%WP400.colBezeichnung" />
+			<TableColumn fx:id="colDatum" prefWidth="120.0" text="%WP400.colDatum" />
+			<TableColumn fx:id="colText" prefWidth="200.0" text="%WP400.colText" />
+			<TableColumn fx:id="colBetrag" prefWidth="100.0" text="%WP400.colBetrag" />
+			<TableColumn fx:id="colRabatt" prefWidth="100.0" text="%WP400.colRabatt" />
+			<TableColumn fx:id="colAnteile" prefWidth="100.0" text="%WP400.colAnteile" />
+			<TableColumn fx:id="colZinsen" prefWidth="100.0" text="%WP400.colZinsen" />
+			<TableColumn fx:id="colGa" prefWidth="170.0" text="%WP400.colGa" />
+			<TableColumn fx:id="colGv" prefWidth="120.0" text="%WP400.colGv" />
+			<TableColumn fx:id="colAa" prefWidth="170.0" text="%WP400.colAa" />
+			<TableColumn fx:id="colAv" prefWidth="120.0" text="%WP400.colAv" />
+		</columns>
+	</TableView>
+	<Label fx:id="bezeichnung0" mnemonicParsing="true" text="%WP400.bezeichnung" GridPane.columnIndex="0"
+		GridPane.rowIndex="3" />
+	<TextField fx:id="bezeichnung" accessibleText="%WP400.bezeichnung.tt" promptText="%WP400.bezeichnung.tt"
+		GridPane.columnIndex="1" GridPane.rowIndex="3">
+		<tooltip>
+			<Tooltip text="%WP400.bezeichnung.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="anlage0" mnemonicParsing="true" text="%WP400.anlage" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+	<ComboBox fx:id="anlage" accessibleText="%WP400.anlage.tt" onAction="#onAnlage" GridPane.columnIndex="3"
+		GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
+		<tooltip>
+			<Tooltip text="%WP400.anlage.tt" />
+		</tooltip>
+	</ComboBox>
+	<HBox spacing="10.0" GridPane.columnSpan="1" GridPane.rowIndex="4">
+		<Button fx:id="alle" mnemonicParsing="true" onAction="#onAlle" text="%WP400.alle">
+			<tooltip>
+				<Tooltip text="%WP400.alle.tt" />
+			</tooltip>
+		</Button>
+	</HBox>
+
+	<stylesheets>
+		<URL value="@../Jhh6.css" />
+	</stylesheets>
+	<columnConstraints>
+		<ColumnConstraints />
+		<ColumnConstraints />
+		<ColumnConstraints />
+		<ColumnConstraints />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+	</rowConstraints>
+</GridPane>

@@ -189,7 +189,7 @@ class HH100PeriodenController extends BaseController<String> {
 	 * Event für Perioden.
 	 */
 	@FXML def void onPeriodenMouseClick(MouseEvent e) {
-		if (e.getClickCount > 1) {
+		if (e.clickCount > 1) {
 			// onAendern
 		}
 	}
