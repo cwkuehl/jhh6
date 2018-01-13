@@ -93,8 +93,8 @@ class WP210WertpapierController extends BaseController<String> {
 
 		tabbar = 0
 		nr0.setLabelFor(nr)
-		bezeichnung0.setLabelFor(bezeichnung)
-		kuerzel0.setLabelFor(kuerzel)
+		bezeichnung0.setLabelFor(bezeichnung, true)
+		kuerzel0.setLabelFor(kuerzel, true)
 		status0.setLabelFor(status, true)
 		aktKurs0.setLabelFor(aktKurs)
 		stopKurs0.setLabelFor(stopKurs)

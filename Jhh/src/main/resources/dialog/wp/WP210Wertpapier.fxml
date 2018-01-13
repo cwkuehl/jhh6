@@ -21,13 +21,13 @@
 			<Tooltip text="%WP210.nr.tt" />
 		</tooltip>
 	</TextField>
-	<Label fx:id="bezeichnung0" mnemonicParsing="true" styleClass="label-bold" text="%WP210.bezeichnung" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+	<Label fx:id="bezeichnung0" mnemonicParsing="true" text="%WP210.bezeichnung" GridPane.columnIndex="0" GridPane.rowIndex="1" />
 	<TextField fx:id="bezeichnung" accessibleText="%WP210.bezeichnung.tt" promptText="%WP210.bezeichnung.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
 		<tooltip>
 			<Tooltip text="%WP210.bezeichnung.tt" />
 		</tooltip>
 	</TextField>
-	<Label fx:id="kuerzel0" mnemonicParsing="true" styleClass="label-bold" text="%WP210.kuerzel" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+	<Label fx:id="kuerzel0" mnemonicParsing="true" text="%WP210.kuerzel" GridPane.columnIndex="0" GridPane.rowIndex="2" />
 	<TextField fx:id="kuerzel" accessibleText="%WP210.kuerzel.tt" promptText="%WP210.kuerzel.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2">
 		<tooltip>
 			<Tooltip text="%WP210.kuerzel.tt" />

@@ -81,14 +81,14 @@ class WP410BuchungController extends BaseController<String> {
 		tabbar = 0
 		nr0.setLabelFor(nr)
 		anlage0.setLabelFor(anlage, true)
-		valuta0.setLabelFor(valuta.getLabelForNode)
+		valuta0.setLabelFor(valuta.getLabelForNode, true)
 		preis0.setLabelFor(preis)
 		betrag0.setLabelFor(betrag)
 		rabatt0.setLabelFor(rabatt)
 		anteile0.setLabelFor(anteile)
 		preis20.setLabelFor(preis2)
 		zinsen0.setLabelFor(zinsen)
-		bText0.setLabelFor(bText)
+		bText0.setLabelFor(bText, true)
 		angelegt0.setLabelFor(angelegt)
 		geaendert0.setLabelFor(geaendert)
 		betrag.textProperty.addListener([ observable, oldValue, newValue |

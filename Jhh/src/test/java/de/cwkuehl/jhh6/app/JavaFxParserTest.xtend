@@ -135,9 +135,9 @@ class JavaFxParserTest extends TestBase {
 		// parse("wp/WP300Konfigurationen.fxml")
 		// parse("wp/WP310Konfiguration.fxml")
 		// parse("wp/WP400Buchungen.fxml")
-		 parse("wp/WP410Buchung.fxml")
+		// parse("wp/WP410Buchung.fxml")
 		// parse("wp/WP500Staende.fxml")
-		// parse("wp/WP510Stand.fxml")
+		 parse("wp/WP510Stand.fxml")
 		Global.machNichts
 	}
 

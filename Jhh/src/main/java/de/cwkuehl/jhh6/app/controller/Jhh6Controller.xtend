@@ -63,6 +63,7 @@ import de.cwkuehl.jhh6.app.controller.wp.WP200WertpapiereController
 import de.cwkuehl.jhh6.app.controller.wp.WP250AnlagenController
 import de.cwkuehl.jhh6.app.controller.wp.WP300KonfigurationenController
 import de.cwkuehl.jhh6.app.controller.wp.WP400BuchungenController
+import de.cwkuehl.jhh6.app.controller.wp.WP500StaendeController
 import de.cwkuehl.jhh6.server.FactoryService
 import java.net.URL
 import java.util.ArrayList
@@ -395,7 +396,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		l.add(new StartDialog("#WP200", g("menu.stocks"), typeof(WP200WertpapiereController), null))
 		l.add(new StartDialog("#WP250", g("menu.investments"), typeof(WP250AnlagenController), null))
 		l.add(new StartDialog("#WP400", g("menu.bookings3"), typeof(WP400BuchungenController), null))
-		// l.add(new StartDialog("#WP500", g("menu.prices"), typeof(WP500StaendeController), null))
+		l.add(new StartDialog("#WP500", g("menu.prices"), typeof(WP500StaendeController), null))
 		l.add(new StartDialog("#MO100", g("menu.acolytes"), typeof(MO100MessdienerController), null))
 		l.add(new StartDialog("#MO200", g("menu.holymass"), typeof(MO200GottesdiensteController), null))
 		return l
@@ -633,7 +634,8 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		starteFormular(typeof(WP400BuchungenController), DialogAufrufEnum.OHNE)
 	}
 
-	@FXML def void handleWP500() { // starteFormular(typeof(WP500StaendeController), DialogAufrufEnum.OHNE)
+	@FXML def void handleWP500() {
+		starteFormular(typeof(WP500StaendeController), DialogAufrufEnum.OHNE)
 	}
 
 	def TabPane getTabs() {

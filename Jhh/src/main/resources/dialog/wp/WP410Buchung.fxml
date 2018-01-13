@@ -25,14 +25,14 @@
 			<Tooltip text="%WP410.nr.tt" />
 		</tooltip>
 	</TextField>
-	<Label fx:id="anlage0" mnemonicParsing="true" styleClass="label-bold" text="%WP410.anlage" GridPane.rowIndex="1" />
+	<Label fx:id="anlage0" mnemonicParsing="true" text="%WP410.anlage" GridPane.rowIndex="1" />
 	<ComboBox fx:id="anlage" accessibleText="%WP410.anlage.tt" GridPane.columnIndex="1"
 		GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
 		<tooltip>
 			<Tooltip text="%WP410.anlage.tt" />
 		</tooltip>
 	</ComboBox>
-	<Label fx:id="valuta0" mnemonicParsing="true" styleClass="label-bold" text="%WP410.valuta" GridPane.rowIndex="2" />
+	<Label fx:id="valuta0" mnemonicParsing="true" text="%WP410.valuta" GridPane.rowIndex="2" />
 	<Datum fx:id="valuta" accessibleText="%WP410.valuta.tt" nullText="" onAction="#onValuta" promptText="%WP410.valuta.tt"
 		schalterText="mhp" uhrzeitGroesse="0" wochentagGroesse="80" GridPane.columnIndex="1" GridPane.rowIndex="2">
 		<tooltip>
@@ -81,7 +81,7 @@
 			<Tooltip text="%WP410.zinsen.tt" />
 		</tooltip>
 	</TextField>
-	<Label fx:id="bText0" mnemonicParsing="true" styleClass="label-bold" text="%WP410.bText" GridPane.rowIndex="7" />
+	<Label fx:id="bText0" mnemonicParsing="true" text="%WP410.bText" GridPane.rowIndex="7" />
 	<TextField fx:id="bText" accessibleText="%WP410.bText.tt" promptText="%WP410.bText.tt" GridPane.columnIndex="1"
 		GridPane.columnSpan="3" GridPane.rowIndex="7">
 		<tooltip>

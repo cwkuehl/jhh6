@@ -23,14 +23,14 @@
 			<Tooltip text="%WP260.nr.tt" />
 		</tooltip>
 	</TextField>
-	<Label fx:id="wertpapier0" mnemonicParsing="true" styleClass="label-bold" text="%WP260.wertpapier" GridPane.rowIndex="1" />
+	<Label fx:id="wertpapier0" mnemonicParsing="true" text="%WP260.wertpapier" GridPane.rowIndex="1" />
 	<ComboBox fx:id="wertpapier" accessibleText="%WP260.wertpapier.tt" GridPane.columnIndex="1"
 		GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
 		<tooltip>
 			<Tooltip text="%WP260.wertpapier.tt" />
 		</tooltip>
 	</ComboBox>
-	<Label fx:id="bezeichnung0" mnemonicParsing="true" styleClass="label-bold" text="%WP260.bezeichnung"
+	<Label fx:id="bezeichnung0" mnemonicParsing="true" text="%WP260.bezeichnung"
 		GridPane.rowIndex="2" />
 	<TextField fx:id="bezeichnung" accessibleText="%WP260.bezeichnung.tt" promptText="%WP260.bezeichnung.tt" GridPane.columnIndex="1"
 		GridPane.columnSpan="3" GridPane.rowIndex="2">
