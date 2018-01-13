@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import de.cwkuehl.jhh5.anwendung.control.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="de.cwkuehl.jhh6.app.controller.wp.WP250AnlagenController">
+
+	<padding>
+		<Insets bottom="10" left="10" right="10" top="10" />
+	</padding>
+
+	<ToolBar GridPane.columnSpan="4" GridPane.hgrow="ALWAYS">
+		<items>
+			<Button fx:id="aktuell" mnemonicParsing="false" onAction="#onAktuell">
+				<tooltip>
+					<Tooltip text="%Refresh" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-refresh.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="rueckgaengig" mnemonicParsing="false" onAction="#onRueckgaengig">
+				<tooltip>
+					<Tooltip text="%Undo" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-undo.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="wiederherstellen" mnemonicParsing="false" onAction="#onWiederherstellen">
+				<tooltip>
+					<Tooltip text="%Redo" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-redo.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="neu" mnemonicParsing="false" onAction="#onNeu">
+				<tooltip>
+					<Tooltip text="%New" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-new-document.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="kopieren" mnemonicParsing="false" onAction="#onKopieren">
+				<tooltip>
+					<Tooltip text="%Copy" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-copy.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="aendern" mnemonicParsing="false" onAction="#onAendern">
+				<tooltip>
+					<Tooltip text="%Edit" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-edit.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="loeschen" mnemonicParsing="false" onAction="#onLoeschen">
+				<tooltip>
+					<Tooltip text="%Delete" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-remove.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+			<Button fx:id="tab" mnemonicParsing="false" onAction="#onTab">
+				<tooltip>
+					<Tooltip text="%Tab" />
+				</tooltip>
+				<graphic>
+					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../icon/icons8-tab.png" />
+						</image>
+					</ImageView>
+				</graphic>
+			</Button>
+		</items>
+	</ToolBar>
+	<Label fx:id="anlagen0" mnemonicParsing="true" text="%WP250.anlagen" GridPane.columnIndex="0" GridPane.columnSpan="4"
+		GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+	<TableView fx:id="anlagen" accessibleText="%WP250.anlagen.tt" onMouseClicked="#onAnlagenMouseClick"
+		GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%WP250.anlagen.tt" />
+		</tooltip>
+		<columns>
+			<TableColumn fx:id="colWpbezeichnung" prefWidth="250.0" text="%WP250.colWpbezeichnung" />
+			<TableColumn fx:id="colBezeichnung" prefWidth="250.0" text="%WP250.colBezeichnung" />
+			<TableColumn fx:id="colBetrag" prefWidth="100.0" text="%WP250.colBetrag" />
+			<TableColumn fx:id="colWert" prefWidth="100.0" text="%WP250.colWert" />
+			<TableColumn fx:id="colGewinn" prefWidth="100.0" text="%WP250.colGewinn" />
+			<TableColumn fx:id="colWaehrung" prefWidth="80.0" text="%WP250.colWaehrung" />
+			<TableColumn fx:id="colGa" prefWidth="170.0" text="%WP250.colGa" />
+			<TableColumn fx:id="colGv" prefWidth="120.0" text="%WP250.colGv" />
+			<TableColumn fx:id="colAa" prefWidth="170.0" text="%WP250.colAa" />
+			<TableColumn fx:id="colAv" prefWidth="120.0" text="%WP250.colAv" />
+		</columns>
+	</TableView>
+	<Label fx:id="anlagenStatus" text="%WP250.anlagenStatus" GridPane.columnIndex="0" GridPane.columnSpan="6" GridPane.rowIndex="3" />
+	<Label fx:id="bezeichnung0" mnemonicParsing="true" text="%WP250.bezeichnung" GridPane.columnIndex="0"
+		GridPane.rowIndex="4" />
+	<TextField fx:id="bezeichnung" accessibleText="%WP250.bezeichnung.tt" promptText="%WP250.bezeichnung.tt"
+		GridPane.columnIndex="1" GridPane.rowIndex="4">
+		<tooltip>
+			<Tooltip text="%WP250.bezeichnung.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="wertpapier0" mnemonicParsing="true" text="%WP250.wertpapier" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+	<ComboBox fx:id="wertpapier" accessibleText="%WP250.wertpapier.tt" onAction="#onWertpapier"
+		GridPane.columnIndex="3" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
+		<tooltip>
+			<Tooltip text="%WP250.wertpapier.tt" />
+		</tooltip>
+	</ComboBox>
+	<HBox spacing="10.0" GridPane.columnSpan="4" GridPane.rowIndex="5">
+		<children>
+			<Button fx:id="alle" mnemonicParsing="true" onAction="#onAlle" text="%WP250.alle">
+				<tooltip>
+					<Tooltip text="%WP250.alle.tt" />
+				</tooltip>
+			</Button>
+			<Button fx:id="berechnen" onAction="#onBerechnen" text="%WP250.berechnen">
+				<tooltip>
+					<Tooltip text="%WP250.berechnen.tt" />
+				</tooltip>
+			</Button>
+			<Button fx:id="abbrechen" onAction="#onAbbrechen" text="%Cancel">
+				<tooltip>
+					<Tooltip text="%Cancel.tt" />
+				</tooltip>
+			</Button>
+		</children>
+	</HBox>
+
+	<stylesheets>
+		<URL value="@../Jhh6.css" />
+	</stylesheets>
+	<columnConstraints>
+		<ColumnConstraints />
+		<ColumnConstraints />
+		<ColumnConstraints />
+		<ColumnConstraints />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+		<RowConstraints />
+	</rowConstraints>
+</GridPane>
