@@ -405,14 +405,14 @@ class FoGeneratorDocumentBase {
 
 	/** 
 	 * Start fo:flow Tag des FO-Dokuments.
-	 * @param fontname Fontname kann null sein, z.B. Times.
+	 * @param ffontname Fontname kann null sein, z.B. Times.
 	 * @param size Standard-Zeichensatz-Größe in Point (pt)
 	 * @param lineheight Standard-Zeilenhöhe in Point (pt)
 	 * @throws IOException
 	 */
-	def void startFlow(String fontname_finalParam_, int size, int lineheight) throws IOException {
+	def void startFlow(String ffontname, int size, int lineheight) throws IOException {
 
-		var fontname = fontname_finalParam_
+		var fontname = ffontname
 		if (fontname === null) {
 			fontname = FONTNAME
 		}
@@ -614,12 +614,12 @@ class FoGeneratorDocumentBase {
 	/** 
 	 * Hinzufügen mehrerer Leerzeilen.
 	 * @param size Zeilenhöhe in pt.
-	 * @param anzahl Anzahl der Leerzeilen.
+	 * @param fanzahl Anzahl der Leerzeilen.
 	 * @throws IOException
 	 */
-	def void addNewLine(int size, int anzahl_finalParam_) throws IOException {
+	def void addNewLine(int size, int fanzahl) throws IOException {
 
-		var anzahl = anzahl_finalParam_
+		var anzahl = fanzahl
 		var StringBuffer sb = new StringBuffer
 		while (anzahl > 0) {
 			anzahl--
@@ -703,14 +703,14 @@ class FoGeneratorDocumentBase {
 
 	/** 
 	 * Liefert Betrag im Format #.##0,00 Währung.
-	 * @param betrag Betrag.
+	 * @param fbetrag Betrag.
 	 * @param waehrung Währung kann null sein.
 	 * @param ohneVorzeichen Soll der Betrag ohne Vorzeichen ausgegeben werden?
 	 * @return Betrag im Format #.##0,00 Währung.
 	 */
-	def String getBetrag(double betrag_finalParam_, String waehrung, boolean ohneVorzeichen) {
+	def String getBetrag(double fbetrag, String waehrung, boolean ohneVorzeichen) {
 
-		var betrag = betrag_finalParam_
+		var betrag = fbetrag
 		var DecimalFormat df = new DecimalFormat("#,##0.00", new DecimalFormatSymbols(Locale.GERMAN))
 		if (ohneVorzeichen) {
 			betrag = Math.abs(betrag)

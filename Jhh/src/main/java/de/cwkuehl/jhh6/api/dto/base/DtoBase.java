@@ -14,9 +14,6 @@ import de.cwkuehl.jhh6.api.message.Meldungen;
 
 public class DtoBase {
 
-    // private static HashMap<String, CSpalte[]> spalten = new HashMap<String,
-    // CSpalte[]>();
-
     private static HashMap<String, Method[]> methoden        = new HashMap<String, Method[]>();
 
     /** Keine Parameter. */

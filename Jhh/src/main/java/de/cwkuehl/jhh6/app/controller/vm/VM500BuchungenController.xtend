@@ -294,9 +294,9 @@ class VM500BuchungenController extends BaseController<String> {
 		onAktuell
 	}
 
-	def private void starteDialog(DialogAufrufEnum aufruf_finalParam_) {
+	def private void starteDialog(DialogAufrufEnum faufruf) {
 
-		var aufruf = aufruf_finalParam_
+		var aufruf = faufruf
 		var HhBuchungVm k = getValue(buchungen, !DialogAufrufEnum::NEU.equals(aufruf))
 		if (DialogAufrufEnum::STORNO.equals(aufruf)) {
 			if (Global::compString(letzterStorno, k.getUid) === 0) {

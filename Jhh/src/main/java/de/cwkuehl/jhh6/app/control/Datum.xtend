@@ -297,9 +297,8 @@ class Datum extends HBox {
 		return datum.onActionProperty.get
 	}
 
-	def void setEditable(boolean b_finalParam_) {
+	def void setEditable(boolean b) {
 
-		var b = b_finalParam_
 		editable = b
 		ohne.setDisable(!b)
 		datum.setDisable(!b)

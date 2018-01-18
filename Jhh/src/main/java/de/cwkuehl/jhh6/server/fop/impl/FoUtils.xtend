@@ -213,9 +213,9 @@ class FoUtils {
 		return calendar
 	}
 
-	def private static void addMonateIntern(Calendar calendar, int monate, boolean ultimo_finalParam_, int tag) {
+	def private static void addMonateIntern(Calendar calendar, int monate, boolean fultimo, int tag) {
 
-		var ultimo = ultimo_finalParam_
+		var ultimo = fultimo
 		if (ultimo) {
 			if(calendar.get(Calendar.DAY_OF_MONTH) < calendar.getActualMaximum(Calendar.DAY_OF_MONTH)) ultimo = false
 		}
@@ -310,12 +310,12 @@ class FoUtils {
 
 	/** 
 	 * Liefert Darstellung als römische Zahl.
-	 * @param i Zahl.
+	 * @param j Zahl.
 	 * @return Darstellung als römische Zahl.
 	 */
-	def static String getRoman(int i_finalParam_) {
+	def static String getRoman(int j) {
 
-		var i = i_finalParam_
+		var i = j
 		var StringBuffer sb = new StringBuffer
 		if (i < 0) {
 			sb.append("-")
