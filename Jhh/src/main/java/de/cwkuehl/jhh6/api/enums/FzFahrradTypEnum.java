@@ -43,7 +43,8 @@ public enum FzFahrradTypEnum {
                 }
             }
         }
-        throw new IllegalArgumentException("ungültige FzFahrradTypEnum: " + v);
+        return null;
+        //throw new IllegalArgumentException("ungültige FzFahrradTypEnum: " + v);
     }
 
     public String getItemValue() {

@@ -1,8 +1,7 @@
 package de.cwkuehl.jhh6.api.enums;
 
 /**
- * Generierte Datei. BITTE NICHT AENDERN!
- * Generierte Aufzählung KontokennzeichenEnum.
+ * Generierte Datei. BITTE NICHT AENDERN! Generierte Aufzählung KontokennzeichenEnum.
  */
 @SuppressWarnings("all")
 public enum KontokennzeichenEnum {
@@ -59,26 +58,27 @@ public enum KontokennzeichenEnum {
 
     }
 
-    public String toString2() {
-
-        if (equals(OHNE)) {
-            return "OHNE";
-        } else if (equals(EIGENKAPITEL)) {
-            return "EIGENKAPITEL";
-        } else if (equals(GEWINN_VERLUST)) {
-            return "GEWINN_VERLUST";
-        } else if (equals(KEN_B)) {
-            return "KEN_B";
-        } else if (equals(KEN_D)) {
-            return "KEN_D";
-        } else if (equals(KEN_I)) {
-            return "KEN_I";
-        }
-        return "KEN_O"; // KEN_O
-
-    }
+    // public String toString2() {
+    //
+    // if (equals(OHNE)) {
+    // return "OHNE";
+    // } else if (equals(EIGENKAPITEL)) {
+    // return "EIGENKAPITEL";
+    // } else if (equals(GEWINN_VERLUST)) {
+    // return "GEWINN_VERLUST";
+    // } else if (equals(KEN_B)) {
+    // return "KEN_B";
+    // } else if (equals(KEN_D)) {
+    // return "KEN_D";
+    // } else if (equals(KEN_I)) {
+    // return "KEN_I";
+    // }
+    // return "KEN_O"; // KEN_O
+    //
+    // }
 
     public static KontokennzeichenEnum fromValue(final String v) {
+
         if (v != null) {
             for (KontokennzeichenEnum e : values()) {
                 if (v.equals(e.toString())) {

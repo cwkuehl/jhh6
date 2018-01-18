@@ -84,7 +84,7 @@ class FreizeitService {
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var r = new ServiceErgebnis<FzNotiz>(null)
 		if (Global.nes(thema)) {
-			throw new MeldungException("Das Thema darf nicht leer sein.")
+			throw new MeldungException(Meldungen.M2034)
 		}
 		r.ergebnis = notizRep.iuFzNotiz(daten, null, uid, thema, notiz, null, null, null, null)
 		return r
@@ -153,7 +153,7 @@ class FreizeitService {
 			var String prSerie = null
 			var benutzer = benutzerRep.get(daten, new BenutzerKey(daten.mandantNr, daten.benutzerId))
 			if (benutzer === null) {
-				throw new MeldungException('''Benutzer «daten.benutzerId» fehlt.''')
+				throw new MeldungException(Meldungen.M1006(daten.benutzerId))
 			}
 			var geburt = benutzer.geburt
 			var wk = benutzer.benutzerId.toLowerCase.equals("wolfgang")
@@ -276,7 +276,7 @@ class FreizeitService {
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var liste = fahrradRep.getFahrradLangListe(daten, null)
 		for (FzFahrradLang e : liste) {
-			e.typBezeichnung = FzFahrradTypEnum.fromValue(Global.intStr(e.typ)).toString2
+			e.typBezeichnung = FzFahrradTypEnum.fromValue(Global.intStr(e.typ))?.toString2
 			if (zusammengesetzt) {
 				e.bezeichnung = Global.anhaengen(e.bezeichnung, " ", e.typBezeichnung)
 			}
@@ -302,10 +302,12 @@ class FreizeitService {
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var r = new ServiceErgebnis<FzFahrrad>(null)
 		if (Global.nes(bez)) {
-			throw new MeldungException("Die Bezeichnung darf nicht leer sein.")
+			throw new MeldungException(Meldungen.M2015)
 		}
 		// Typ prüfen
-		FzFahrradTypEnum.fromValue(Global.intStr(typ))
+		if (FzFahrradTypEnum.fromValue(Global.intStr(typ)) === null) {
+			throw new MeldungException(Meldungen.M2026)
+		}
 		r.ergebnis = fahrradRep.iuFzFahrrad(daten, null, uid, bez, typ, null, null, null, null)
 		return r
 	}
@@ -395,6 +397,9 @@ class FreizeitService {
 			throw new MeldungException("Fahrrad-Nr. " + fahrradUid + " nicht vorhanden.")
 		}
 		var typ = FzFahrradTypEnum.fromValue(Global.intStr(fzFahrrad.typ))
+		if (typ === null) {
+			throw new MeldungException(Meldungen.M2026)
+		}
 		if (insert && typ == FzFahrradTypEnum.WOECHENTLICH) { // insert neuen Stand
 		// evtl. vorhandenen Satz in der gleichen Woche lesen
 			var l = standRep.getFahrradstandListe(daten, fahrradUid, dAktuell, null, false, protag)
@@ -580,7 +585,7 @@ class FreizeitService {
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var liste = buchRep.getBuchLangListe(daten, null, uid, null, null, 0, 1)
 		if (liste.size > 0) {
-			throw new MeldungException("Der Autor wird in Büchern verwendet und kann nicht gelöscht werden.")
+			throw new MeldungException(Meldungen.M2031)
 		}
 		autorRep.delete(daten, new FzBuchautorKey(daten.mandantNr, uid))
 		var r = new ServiceErgebnis<Void>(null)
@@ -622,7 +627,7 @@ class FreizeitService {
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var liste = buchRep.getBuchLangListe(daten, null, null, uid, null, 0, 1)
 		if (liste.size > 0) {
-			throw new MeldungException("Die Serie wird in Büchern verwendet und kann nicht gelöscht werden.")
+			throw new MeldungException(Meldungen.M2030)
 		}
 		serieRep.delete(daten, new FzBuchserieKey(daten.mandantNr, uid))
 		var r = new ServiceErgebnis<Void>(null)
@@ -662,7 +667,7 @@ class FreizeitService {
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var r = new ServiceErgebnis<FzBuch>(null)
 		if (Global.nes(titel)) {
-			throw new MeldungException("Der Titel darf nicht leer sein.")
+			throw new MeldungException(Meldungen.M2027)
 		}
 		if (Global.nes(autorUid)) {
 			throw new MeldungException(Meldungen.M2028)
@@ -677,7 +682,8 @@ class FreizeitService {
 		if (Global.nes(uid) && !Global.nes(serieUid)) {
 			var keineSerie = false
 			var serie = serieRep.get(daten, new FzBuchserieKey(daten.mandantNr, serieUid))
-			if (serie !== null && serie.name.toLowerCase.endsWith("keine serie")) {
+			if (serie !== null &&
+				(serie.name.toLowerCase.endsWith("keine serie") || serie.name.toLowerCase.endsWith("no series"))) {
 				keineSerie = true
 				seriennummer = 0
 			}

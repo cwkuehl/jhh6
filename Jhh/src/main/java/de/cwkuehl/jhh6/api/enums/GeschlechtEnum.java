@@ -1,8 +1,7 @@
 package de.cwkuehl.jhh6.api.enums;
 
 /**
- * Generierte Datei. BITTE NICHT AENDERN!
- * Generierte Aufzählung GeschlechtEnum.
+ * Generierte Datei. BITTE NICHT AENDERN! Generierte Aufzählung GeschlechtEnum.
  */
 @SuppressWarnings("all")
 public enum GeschlechtEnum {
@@ -45,22 +44,22 @@ public enum GeschlechtEnum {
 
     }
 
-    public String toString2() {
-
-        if (equals(NEUTRUM)) {
-            return "neutrum";
-        } else if (equals(MANN)) {
-            return "männlich";
-        } else if (equals(FRAU)) {
-            return "weiblich";
-        } else if (equals(MAENNLICH)) {
-            return "männlich";
-        }
-        return "weiblich"; // WEIBLICH
-
-    }
+    // public String toString2() {
+    //
+    // if (equals(NEUTRUM)) {
+    // return "neutrum";
+    // } else if (equals(MANN)) {
+    // return "männlich";
+    // } else if (equals(FRAU)) {
+    // return "weiblich";
+    // } else if (equals(MAENNLICH)) {
+    // return "männlich";
+    // }
+    // return "weiblich"; // WEIBLICH
+    // }
 
     public static GeschlechtEnum fromValue(final String v) {
+
         if (v != null) {
             for (GeschlechtEnum e : values()) {
                 if (v.equals(e.toString())) {

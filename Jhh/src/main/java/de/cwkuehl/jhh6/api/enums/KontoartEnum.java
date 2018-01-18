@@ -1,8 +1,7 @@
 package de.cwkuehl.jhh6.api.enums;
 
 /**
- * Generierte Datei. BITTE NICHT AENDERN!
- * Generierte Aufzählung KontoartEnum.
+ * Generierte Datei. BITTE NICHT AENDERN! Generierte Aufzählung KontoartEnum.
  */
 public enum KontoartEnum {
 
@@ -38,20 +37,21 @@ public enum KontoartEnum {
 
     }
 
-    public String toString2() {
-
-        if (equals(AKTIVKONTO)) {
-            return "AKTIVKONTO";
-        } else if (equals(PASSIVKONTO)) {
-            return "PASSIVKONTO";
-        } else if (equals(AUFWANDSKONTO)) {
-            return "AUFWANDSKONTO";
-        }
-        return "ERTRAGSKONTO"; // ERTRAGSKONTO
-
-    }
+    // public String toString2() {
+    //
+    // if (equals(AKTIVKONTO)) {
+    // return "AKTIVKONTO";
+    // } else if (equals(PASSIVKONTO)) {
+    // return "PASSIVKONTO";
+    // } else if (equals(AUFWANDSKONTO)) {
+    // return "AUFWANDSKONTO";
+    // }
+    // return "ERTRAGSKONTO"; // ERTRAGSKONTO
+    //
+    // }
 
     public static KontoartEnum fromValue(final String v) {
+
         if (v != null) {
             for (KontoartEnum e : values()) {
                 if (v.equals(e.toString())) {

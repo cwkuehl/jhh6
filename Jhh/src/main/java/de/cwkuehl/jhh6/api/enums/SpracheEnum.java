@@ -42,6 +42,7 @@ public enum SpracheEnum {
     }
 
     public static SpracheEnum fromValue(final String v) {
+
         if (v != null) {
             for (SpracheEnum e : values()) {
                 if (v.equals(e.toString())) {
