@@ -581,8 +581,8 @@ class WertpapierService {
 		// wp, range)
 		var url = Global.format(
 			"http://query1.finance.yahoo.com/v7/finance/chart/{0}?period1={1}&period2={2}&interval=1d&indicators=quote&includeTimestamps=true",
-			wp, dvon.atStartOfDay(ZoneOffset.UTC).toEpochSecond.toString,
-			dbis.atStartOfDay(ZoneOffset.UTC).toEpochSecond.toString)
+			wp, von.atStartOfDay(ZoneOffset.UTC).toEpochSecond.toString,
+			bis.atStartOfDay(ZoneOffset.UTC).toEpochSecond.toString)
 		var v = executeHttp(url, null, false, null)
 		var kl = 0.0
 		var liste = new ArrayList<SoKurse>
@@ -1289,8 +1289,6 @@ class WertpapierService {
 //			var row5 = sheet.createRow(5)
 //			var row6 = sheet.createRow(6)
 //			for (var i = 0; i <= 2 && abbruch.length <= 0; i++) {
-//				// if (i==0)
-//				// throw new MeldungException(Meldungen.M1000)
 //				var rp = 3
 //				cp = cp + 3
 //				var dbis = zeiten.get(i)

@@ -117,8 +117,12 @@ class MessdienerService {
 	def private MaEinstellung[] getParameterAlsListe(ServiceDaten daten, String key) {
 
 		var p = parameterRep.get(daten, new MaParameterKey(daten.mandantNr, key))
-		if (p !== null && !Global.nes(p.wert)) {
-			var a = p.wert.split(";")
+		var wert = p?.wert
+		if (wert === null) {
+			wert = Parameter.get(key)?.standard
+		}
+		if (!Global.nes(wert)) {
+			var a = wert.split(";")
 			var MaEinstellung[] liste = newArrayOfSize(a.length)
 			for (var i = 0; i < a.length; i++) {
 				liste.set(i, new MaEinstellung)

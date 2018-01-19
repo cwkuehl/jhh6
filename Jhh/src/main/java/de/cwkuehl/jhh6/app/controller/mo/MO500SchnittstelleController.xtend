@@ -86,7 +86,7 @@ class MO500SchnittstelleController extends BaseController<String> {
 		if (Global.nes(datei.getText)) {
 			throw new MeldungException(Meldungen.M2058)
 		}
-		if (0 === Werkzeug.showYesNoQuestion(Meldungen.M2078)) {
+		if (Werkzeug.showYesNoQuestion(Meldungen.M2078) === 0) {
 			return
 		}
 		var List<String> zeilen = Werkzeug.leseDatei(datei.getText)

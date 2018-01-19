@@ -4,7 +4,6 @@ import de.cwkuehl.jhh6.api.dto.Benutzer
 import de.cwkuehl.jhh6.api.dto.BenutzerKey
 import de.cwkuehl.jhh6.api.dto.BenutzerLang
 import de.cwkuehl.jhh6.api.dto.BenutzerUpdate
-import de.cwkuehl.jhh6.api.dto.HhKonto
 import de.cwkuehl.jhh6.api.dto.MaEinstellung
 import de.cwkuehl.jhh6.api.dto.MaEinstellungKey
 import de.cwkuehl.jhh6.api.dto.MaEinstellungUpdate
@@ -13,13 +12,8 @@ import de.cwkuehl.jhh6.api.dto.MaMandantKey
 import de.cwkuehl.jhh6.api.dto.MaParameter
 import de.cwkuehl.jhh6.api.dto.MaParameterKey
 import de.cwkuehl.jhh6.api.dto.MaParameterUpdate
-import de.cwkuehl.jhh6.api.dto.VmKonto
-import de.cwkuehl.jhh6.api.dto.VmKontoKey
 import de.cwkuehl.jhh6.api.dto.ZeinstellungKey
 import de.cwkuehl.jhh6.api.enums.BerechtigungEnum
-import de.cwkuehl.jhh6.api.enums.KontoartEnum
-import de.cwkuehl.jhh6.api.enums.KontokennzeichenEnum
-import de.cwkuehl.jhh6.api.enums.VmKontoSchluesselEnum
 import de.cwkuehl.jhh6.api.global.Constant
 import de.cwkuehl.jhh6.api.global.Global
 import de.cwkuehl.jhh6.api.message.MeldungException
@@ -30,7 +24,6 @@ import de.cwkuehl.jhh6.generator.RepositoryRef
 import de.cwkuehl.jhh6.generator.Service
 import de.cwkuehl.jhh6.generator.ServiceRef
 import de.cwkuehl.jhh6.generator.Transaction
-import de.cwkuehl.jhh6.server.base.SqlBuilder
 import de.cwkuehl.jhh6.server.db.DbInit
 import de.cwkuehl.jhh6.server.rep.impl.BenutzerRep
 import de.cwkuehl.jhh6.server.rep.impl.HhKontoRep
@@ -77,28 +70,28 @@ class AnmeldungService {
 		String passwortNeu, boolean speichern) {
 
 		if (daten.mandantNr < 0) {
-			// Die Anmeldedaten sind ungültig. Mandant ungültig!
-			throw new MeldungException(Meldungen.M1003)
+			// Die Anmeldedaten sind ungültig. Mandant ungültig.
+			throw new MeldungException(Meldungen.AM001)
 		}
 		if (Global.nes(daten.benutzerId)) {
-			// Die Anmeldedaten sind ungültig. Benutzer ungültig!
-			throw new MeldungException(Meldungen.M1003)
+			// Die Anmeldedaten sind ungültig. Benutzer ungültig.
+			throw new MeldungException(Meldungen.AM001)
 		}
 
 		if (Global.nes(passwortNeu)) {
 			// Das neue Kennwort darf nicht leer sein.
-			throw new MeldungException(Meldungen.M1005)
+			throw new MeldungException(Meldungen.AM002)
 		}
 		// getBerechService.pruefeBerechtigungAktuellerBenutzerOderAdmin(daten, mandantNr, benutzerId)
 		var benutzerKey = new BenutzerKey(mandantNr, benutzerId)
 		var benutzer = benutzerRep.get(daten, benutzerKey)
 		if (benutzer === null) {
-			// Die Anmeldedaten sind ungültig. Der Benutzer wurde nicht gefunden!
-			throw new MeldungException(Meldungen.M1003)
+			// Die Anmeldedaten sind ungültig. Der Benutzer wurde nicht gefunden.
+			throw new MeldungException(Meldungen.AM001)
 		}
 		if (Global.compString(benutzer.passwort, passwortAlt) != 0) {
-			// Die Anmeldedaten sind ungültig. Altes Kennwort ist falsch!
-			throw new MeldungException(Meldungen.M1003)
+			// Die Anmeldedaten sind ungültig. Altes Kennwort ist falsch.
+			throw new MeldungException(Meldungen.AM001)
 		}
 		var benutzerU = new BenutzerUpdate(benutzer)
 		benutzerU.setPasswort(passwortNeu)
@@ -114,12 +107,12 @@ class AnmeldungService {
 	override ServiceErgebnis<Void> anmelden(ServiceDaten daten, String kennwort, boolean speichern) {
 
 		if (daten.mandantNr < 0) {
-			// Die Anmeldedaten sind ungültig. Mandant ungültig!
-			throw new MeldungException(Meldungen.M1003)
+			// Die Anmeldedaten sind ungültig. Mandant ungültig.
+			throw new MeldungException(Meldungen.AM001)
 		}
 		if (Global.nes(daten.benutzerId)) {
-			// Die Anmeldedaten sind ungültig. Benutzer ungültig!
-			throw new MeldungException(Meldungen.M1003)
+			// Die Anmeldedaten sind ungültig. Benutzer ungültig.
+			throw new MeldungException(Meldungen.AM001)
 		}
 
 		var r = new ServiceErgebnis<Void>
@@ -129,7 +122,7 @@ class AnmeldungService {
 		benutzer = benutzerRep.get(daten, benutzerKey)
 		if (benutzer !== null) {
 			// Benutzer vorhanden.
-			log.debug(Meldungen.M1004(daten.mandantNr, daten.benutzerId))
+			log.debug(Meldungen.AM003(daten.mandantNr, daten.benutzerId))
 			var wert = getOhneAnmelden(daten)
 			if (!Global.nes(wert) && wert.equals(daten.benutzerId)) {
 				// Anmeldung ohne Kennwort
@@ -163,8 +156,8 @@ class AnmeldungService {
 			return r
 		}
 
-		// Die Anmeldedaten sind ungültig. Mandant, Benutzer oder Kennwort ungültig!
-		throw new MeldungException(Meldungen.M1003)
+		// Die Anmeldedaten sind ungültig. Mandant, Benutzer oder Kennwort ungültig.
+		throw new MeldungException(Meldungen.AM001)
 	}
 
 	@Transaction
@@ -365,71 +358,6 @@ class AnmeldungService {
 		return r
 	}
 
-	def private void insertInitialKonten(ServiceDaten daten, int mandantNr) {
-
-		var where = new SqlBuilder
-		where.append(null, HhKonto.KZ_NAME, "=", KontokennzeichenEnum.EIGENKAPITEL.toString, null)
-		var kliste = kontoRep.getListe(daten, mandantNr, where, null)
-		var ek = if(kliste.size > 0) kliste.get(0) else null
-		if (ek === null) {
-			var hh = new HhKonto
-			hh.mandantNr = mandantNr
-			hh.uid = Global.UID
-			hh.art = KontoartEnum.PASSIVKONTO.toString
-			hh.kz = KontokennzeichenEnum.EIGENKAPITEL.toString
-			hh.name = "Eigenkapital"
-			hh.gueltigVon = null
-			hh.gueltigBis = null
-			hh.periodeVon = -1
-			hh.periodeBis = Constant.MAX_PERIODE
-			hh.angelegtAm = daten.jetzt
-			hh.angelegtVon = daten.benutzerId
-			hh.sortierung = Global.fixiereString(hh.name, HhKonto.SORTIERUNG_LAENGE, true, " ")
-			kontoRep.insert(daten, hh)
-			ek = hh
-		}
-		where = new SqlBuilder
-		where.append(null, HhKonto.KZ_NAME, "=", KontokennzeichenEnum.GEWINN_VERLUST.toString, null)
-		kliste = kontoRep.getListe(daten, mandantNr, where, null)
-		var gv = if(kliste.size > 0) kliste.get(0) else null
-		if (gv === null) {
-			var hh = new HhKonto
-			hh.mandantNr = mandantNr
-			hh.uid = Global.UID
-			hh.art = KontoartEnum.ERTRAGSKONTO.toString
-			hh.kz = KontokennzeichenEnum.GEWINN_VERLUST.toString
-			hh.name = "Gewinn/Verlust"
-			hh.setGueltigVon(null)
-			hh.gueltigVon = null
-			hh.gueltigBis = null
-			hh.periodeVon = -1
-			hh.periodeBis = Constant.MAX_PERIODE
-			hh.angelegtAm = daten.jetzt
-			hh.angelegtVon = daten.benutzerId
-			hh.sortierung = Global.fixiereString(hh.name, HhKonto.SORTIERUNG_LAENGE, true, " ")
-			kontoRep.insert(daten, hh)
-			gv = hh
-		}
-		if (vmkontoRep.get(daten, new VmKontoKey(mandantNr, ek.uid)) === null) {
-			var vm = new VmKonto
-			vm.mandantNr = mandantNr
-			vm.uid = ek.uid
-			vm.schluessel = VmKontoSchluesselEnum.KP301_EK.toString
-			vm.angelegtAm = daten.jetzt
-			vm.angelegtVon = daten.benutzerId
-			vmkontoRep.insert(daten, vm)
-		}
-		if (vmkontoRep.get(daten, new VmKontoKey(mandantNr, gv.uid)) === null) {
-			var vm = new VmKonto
-			vm.mandantNr = mandantNr
-			vm.uid = gv.uid
-			vm.schluessel = VmKontoSchluesselEnum.KP60_GV.toString
-			vm.angelegtAm = daten.jetzt
-			vm.angelegtVon = daten.benutzerId
-			vmkontoRep.insert(daten, vm)
-		}
-	}
-
 	@Transaction
 	override ServiceErgebnis<MaMandant> insertUpdateMandant(ServiceDaten daten, int nr, String beschreibung,
 		boolean insert) {
@@ -463,9 +391,6 @@ class AnmeldungService {
 			// maEinstellungRep.iuMaEinstellung(daten, mnr, Constant.EINST_MA_REPLIKATION_UID, null)
 			// getMaEinstellungDao.iuMaEinstellung(daten, mnr, Constant.EINST_MA_REPLIKATION_ROLLE, null)
 			// getMaEinstellungDao.iuMaEinstellung(daten, mnr, Constant.EINST_MA_SERVER_UID, null)
-			// Konten anlegen
-			insertInitialKonten(daten, mnr)
-
 			// Einstellungen anlegen
 			zeinstellungRep.iuZeinstellung(daten, null, Constant.EINST_DB_INIT, "1", null, null, null, null)
 		}
@@ -479,18 +404,21 @@ class AnmeldungService {
 		pruefeBerechtigungAlleMandanten(daten, nr)
 		if (nr == daten.mandantNr) {
 			// Der aktuelle Mandant kann nicht gelöscht werden.
-			throw new MeldungException(Meldungen.M2046)
+			throw new MeldungException(Meldungen.AM004)
 		}
-		// TODO Mandant in allen Tabellen löschen
-		// Ztabelle[] tabVo = null
-		// String strTab = null
-		// tabVo = ztabelleDao.getMandantenListe(null)
-		// for (int i = 0; tabVo != null && i < tabVo.length; i++) {
-		// strTab = tabVo[i].getName
-		// if (allgemeinDao.countMandantTabelle(nr, strTab) > 0) {
-		// allgemeinDao.deleteMandantTabelle(nr, strTab)
-		// }
-		// }
+		// Mandant in allen mandantenabhängigen Tabellen löschen
+		var tabellen = replikationService.getAlleTabellen(daten).ergebnis
+		for (t : tabellen) {
+			if (!(t.equalsIgnoreCase("Benutzer") || t.equalsIgnoreCase("MA_Mandant") ||
+				t.equalsIgnoreCase("zEinstellung"))) {
+				var s = '''DELETE FROM «t» WHERE Mandant_Nr=«nr»'''
+				zeinstellungRep.execute(daten, s)
+			}
+		}
+		var bliste = benutzerRep.getListe(daten, nr, null, null)
+		for (b : bliste) {
+			benutzerRep.delete(daten, new BenutzerKey(b.mandantNr, b.benutzerId))
+		}
 		mandantRep.delete(daten, new MaMandantKey(nr))
 		var r = new ServiceErgebnis<Void>(null)
 		return r

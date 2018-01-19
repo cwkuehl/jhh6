@@ -494,7 +494,6 @@ class HeilpraktikerService {
 			geschl = u.geschlecht
 		}
 		if (Global.nes(name)) {
-			// throw new MeldungException(Meldungen.M1000)
 			name = '''N«uid»'''
 		}
 		if (name.length > HpPatient.NAME1_LAENGE) {

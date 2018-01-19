@@ -156,9 +156,11 @@ import de.cwkuehl.jhh6.api.dto.Zeinstellung
 import de.cwkuehl.jhh6.api.dto.ZeinstellungKey
 import de.cwkuehl.jhh6.api.dto.ZeinstellungUpdate
 import de.cwkuehl.jhh6.api.enums.FzFahrradTypEnum
+import de.cwkuehl.jhh6.api.enums.GeschlechtEnum
 import de.cwkuehl.jhh6.api.enums.KontoartEnum
 import de.cwkuehl.jhh6.api.enums.KontokennzeichenEnum
 import de.cwkuehl.jhh6.api.enums.SpracheEnum
+import de.cwkuehl.jhh6.api.enums.VmKontoSchluesselEnum
 import de.cwkuehl.jhh6.api.global.Constant
 import de.cwkuehl.jhh6.api.global.Global
 import de.cwkuehl.jhh6.api.message.MeldungException
@@ -173,6 +175,7 @@ import de.cwkuehl.jhh6.generator.ServiceRef
 import de.cwkuehl.jhh6.generator.Transaction
 import de.cwkuehl.jhh6.server.base.RbRepository
 import de.cwkuehl.jhh6.server.base.RemoteDb
+import de.cwkuehl.jhh6.server.base.SqlBuilder
 import de.cwkuehl.jhh6.server.rep.IAdAdresseRep
 import de.cwkuehl.jhh6.server.rep.IAdPersonRep
 import de.cwkuehl.jhh6.server.rep.IAdSitzRep
@@ -277,7 +280,6 @@ import de.cwkuehl.jhh6.server.rep.impl.WpWertpapierRep
 import de.cwkuehl.jhh6.server.rep.impl.ZeinstellungRep
 import de.cwkuehl.jhh6.server.service.impl.ReplTabelle
 import java.util.List
-import de.cwkuehl.jhh6.api.enums.GeschlechtEnum
 
 @Service
 class ReplikationService {
@@ -386,6 +388,7 @@ class ReplikationService {
 		var kl = kontoRep.getListe(daten, mnr, null, null)
 		if (kl.size <= 2) {
 			haushaltService.anlegenPeriode(daten, 12, true)
+			insertInitialKonten(daten, mnr)
 			var ak = haushaltService.insertUpdateKonto(daten, null, KontoartEnum.AKTIVKONTO.toString,
 				KontokennzeichenEnum.OHNE.toString, Meldungen.M9000 + " AK", null, null, null, null, null, null, //
 				null, false).ergebnis
@@ -485,6 +488,71 @@ class ReplikationService {
 		}
 		maeinstellungRep.iuMaEinstellung(daten, null, Constant.EINST_MA_EXAMPLES, "1", null, null, null, null)
 		return r
+	}
+
+	def private void insertInitialKonten(ServiceDaten daten, int mandantNr) {
+
+		var where = new SqlBuilder
+		where.append(null, HhKonto.KZ_NAME, "=", KontokennzeichenEnum.EIGENKAPITEL.toString, null)
+		var kliste = kontoRep.getListe(daten, mandantNr, where, null)
+		var ek = if(kliste.size > 0) kliste.get(0) else null
+		if (ek === null) {
+			var hh = new HhKonto
+			hh.mandantNr = mandantNr
+			hh.uid = Global.UID
+			hh.art = KontoartEnum.PASSIVKONTO.toString
+			hh.kz = KontokennzeichenEnum.EIGENKAPITEL.toString
+			hh.name = "Eigenkapital"
+			hh.gueltigVon = null
+			hh.gueltigBis = null
+			hh.periodeVon = -1
+			hh.periodeBis = Constant.MAX_PERIODE
+			hh.angelegtAm = daten.jetzt
+			hh.angelegtVon = daten.benutzerId
+			hh.sortierung = Global.fixiereString(hh.name, HhKonto.SORTIERUNG_LAENGE, true, " ")
+			kontoRep.insert(daten, hh)
+			ek = hh
+		}
+		where = new SqlBuilder
+		where.append(null, HhKonto.KZ_NAME, "=", KontokennzeichenEnum.GEWINN_VERLUST.toString, null)
+		kliste = kontoRep.getListe(daten, mandantNr, where, null)
+		var gv = if(kliste.size > 0) kliste.get(0) else null
+		if (gv === null) {
+			var hh = new HhKonto
+			hh.mandantNr = mandantNr
+			hh.uid = Global.UID
+			hh.art = KontoartEnum.ERTRAGSKONTO.toString
+			hh.kz = KontokennzeichenEnum.GEWINN_VERLUST.toString
+			hh.name = "Gewinn/Verlust"
+			hh.setGueltigVon(null)
+			hh.gueltigVon = null
+			hh.gueltigBis = null
+			hh.periodeVon = -1
+			hh.periodeBis = Constant.MAX_PERIODE
+			hh.angelegtAm = daten.jetzt
+			hh.angelegtVon = daten.benutzerId
+			hh.sortierung = Global.fixiereString(hh.name, HhKonto.SORTIERUNG_LAENGE, true, " ")
+			kontoRep.insert(daten, hh)
+			gv = hh
+		}
+		if (vmkontoRep.get(daten, new VmKontoKey(mandantNr, ek.uid)) === null) {
+			var vm = new VmKonto
+			vm.mandantNr = mandantNr
+			vm.uid = ek.uid
+			vm.schluessel = VmKontoSchluesselEnum.KP301_EK.toString
+			vm.angelegtAm = daten.jetzt
+			vm.angelegtVon = daten.benutzerId
+			vmkontoRep.insert(daten, vm)
+		}
+		if (vmkontoRep.get(daten, new VmKontoKey(mandantNr, gv.uid)) === null) {
+			var vm = new VmKonto
+			vm.mandantNr = mandantNr
+			vm.uid = gv.uid
+			vm.schluessel = VmKontoSchluesselEnum.KP60_GV.toString
+			vm.angelegtAm = daten.jetzt
+			vm.angelegtVon = daten.benutzerId
+			vmkontoRep.insert(daten, vm)
+		}
 	}
 
 	/**
@@ -886,7 +954,10 @@ class ReplikationService {
 			new ReplTabelle("VM_Miete", "Mandant_Nr", "Mandant_Nr, Uid", true, true),
 			new ReplTabelle("VM_Mieter", "Mandant_Nr", "Mandant_Nr, Uid", true, true),
 			new ReplTabelle("VM_Wohnung", "Mandant_Nr", "Mandant_Nr, Uid", true, true),
+			new ReplTabelle("WP_Anlage", "Mandant_Nr", "Mandant_Nr, Uid", true, true),
+			new ReplTabelle("WP_Buchung", "Mandant_Nr", "Mandant_Nr, Uid", true, true),
 			new ReplTabelle("WP_Konfiguration", "Mandant_Nr", "Mandant_Nr, Uid", true, true),
+			new ReplTabelle("WP_Stand", "Mandant_Nr", "Mandant_Nr, Wertpapier_Uid, Datum", true, true),
 			new ReplTabelle("WP_Wertpapier", "Mandant_Nr", "Mandant_Nr, Uid", true, true),
 			new ReplTabelle("zEinstellung", null, "Schluessel", false, false))
 		// l = newArrayList(new ReplTabelle("MA_Parameter", "Mandant_Nr", "Mandant_Nr, Schluessel", true, true))

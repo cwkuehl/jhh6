@@ -6,6 +6,7 @@ import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.api.service.ServiceErgebnis
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
+import de.cwkuehl.jhh6.app.base.Werkzeug
 import de.cwkuehl.jhh6.server.FactoryService
 import javafx.fxml.FXML
 import javafx.scene.control.Button
@@ -73,9 +74,9 @@ class AG110MandantController extends BaseController<String> {
 				ok.setText(Meldungen.M2001)
 			}
 		}
-		if (stufe <= 1) { // stufe = 0;
+		if (stufe <= 1) { // stufe = 0
 		}
-		if (stufe <= 2) { // initDatenTable();
+		if (stufe <= 2) { // initDatenTable
 		}
 	}
 
@@ -98,6 +99,9 @@ class AG110MandantController extends BaseController<String> {
 			r = FactoryService.getAnmeldungService().insertUpdateMandant(serviceDaten, Global.strInt(nr.text),
 				beschreibung.text, false)
 		} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
+			if (Werkzeug.showYesNoQuestion(Meldungen.AM005) === 0) {
+				return
+			}
 			r = FactoryService.getAnmeldungService().deleteMandant(serviceDaten, Global.strInt(nr.text))
 		}
 		if (r !== null) {
