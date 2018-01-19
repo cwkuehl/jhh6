@@ -553,19 +553,10 @@ class WertpapierService {
 	def private List<SoKurse> holeKurse(ServiceDaten daten, LocalDate dvon, LocalDate dbis, String kursname,
 		boolean letzter) {
 
-		var von = dvon
-		var bis = dbis
-		if (bis === null) {
-			bis = daten.heute
-		}
-		if (von === null || !von.isBefore(bis)) {
-			von = bis.minusDays(182)
-		}
+		var bis = if(dbis === null) daten.heute else dbis
+		var von = if(dvon === null || !dvon.isBefore(bis)) bis.minusDays(182) else dvon
+		var wp = if(Global.nes(kursname)) "^GDAXI" else kursname
 		// http://real-chart.finance.yahoo.com/table.csv?s=%5EGDAXI&d=1&e=10&f=2015&g=d&a=10&b=26&c=2010&ignore=.csv
-		var wp = kursname
-		if (Global.nes(wp)) {
-			wp = "^GDAXI"
-		}
 		// try {
 		// wp = URLEncoder.encode(wp, "UTF-8")
 		// } catch (UnsupportedEncodingException ex) {
@@ -579,9 +570,9 @@ class WertpapierService {
 		// var url = Global.format(
 		// "http://query1.finance.yahoo.com/v7/finance/chart/{0}?range={1}&interval=1d&indicators=quote&includeTimestamps=true",
 		// wp, range)
-		var url = Global.format(
-			"http://query1.finance.yahoo.com/v7/finance/chart/{0}?period1={1}&period2={2}&interval=1d&indicators=quote&includeTimestamps=true",
-			wp, von.atStartOfDay(ZoneOffset.UTC).toEpochSecond.toString,
+		var url = Global.format("http://query1.finance.yahoo.com/v7/finance/chart/{0}" +
+			"?period1={1}&period2={2}&interval=1d&indicators=quote&includeTimestamps=true", wp, //
+			von.atStartOfDay(ZoneOffset.UTC).toEpochSecond.toString,
 			bis.atStartOfDay(ZoneOffset.UTC).toEpochSecond.toString)
 		var v = executeHttp(url, null, false, null)
 		var kl = 0.0

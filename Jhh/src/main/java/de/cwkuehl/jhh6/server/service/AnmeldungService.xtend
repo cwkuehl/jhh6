@@ -57,11 +57,6 @@ class AnmeldungService {
 	/** Abmelden. */
 	@Transaction(false)
 	override void abmelden(ServiceDaten daten) {
-		// testService.getFunktion(daten, "")
-		// var key = new AdPersonKey
-		// key.mandantNr = 1
-		// val p = adPersonRep.get(daten, key)
-		// if (p != null)
 		// machNichts
 	}
 
@@ -308,6 +303,7 @@ class AnmeldungService {
 		return r
 	}
 
+	/** Berechtigung eines Benutzers lesen */
 	def private BerechtigungEnum getBerechtigung(ServiceDaten daten, int mandantNr, String benutzerId) {
 
 		var b = benutzerRep.get(daten, new BenutzerKey(mandantNr, benutzerId))
@@ -323,7 +319,7 @@ class AnmeldungService {
 		if (b == BerechtigungEnum.ALLES) {
 			return
 		}
-		throw new Exception("Keine Alles-Berechtigung.")
+		throw new Exception(Meldungen.AM006)
 	}
 
 	def private void pruefeBerechtigungAdmin(ServiceDaten daten, int mandantNr) {
@@ -332,7 +328,7 @@ class AnmeldungService {
 		if (b == BerechtigungEnum.ALLES || (b == BerechtigungEnum.ADMIN && daten.mandantNr == mandantNr)) {
 			return
 		}
-		throw new Exception("Keine Admin-Berechtigung.")
+		throw new Exception(Meldungen.AM007)
 	}
 
 	@Transaction(false)
@@ -364,7 +360,7 @@ class AnmeldungService {
 
 		pruefeBerechtigungAdmin(daten, nr)
 		if (Global.nes(beschreibung)) {
-			throw new MeldungException("Die Beschreibung darf nicht leer sein.")
+			throw new MeldungException(Meldungen.AM008)
 		}
 		var mnr = nr
 		if (insert && mnr <= 0) {
