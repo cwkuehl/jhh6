@@ -71,7 +71,7 @@ class MessdienerService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<MoProfil> insertUpdateProfil(ServiceDaten daten, String uid, String name, String dienste,
 		String notiz) {
 
@@ -130,7 +130,7 @@ class MessdienerService {
 		throw new MeldungException(Meldungen.M2090(key))
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> deleteProfil(ServiceDaten daten, String uid) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
@@ -234,7 +234,7 @@ class MessdienerService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<MoMessdiener> insertUpdateMessdiener(ServiceDaten daten, String uid, String name,
 		String vorname, LocalDate von, LocalDate bis, String adresse1, String adresse2, String adresse3, String email,
 		String email2, String telefon, String telefon2, String verfuegbar, String dienste0, String mitUid,
@@ -280,7 +280,7 @@ class MessdienerService {
 		return sb.toString
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> deleteMessdiener(ServiceDaten daten, String uid) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
@@ -374,7 +374,7 @@ class MessdienerService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<MoGottesdienst> insertUpdateGottesdienst(ServiceDaten daten, String uid, LocalDateTime t,
 		String name, String ort, String pUid, String status, String notiz, List<MoEinteilungLang> et) {
 
@@ -450,7 +450,7 @@ class MessdienerService {
 		einteilungRep.delete(daten, new MoEinteilungKey(daten.mandantNr, uid))
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> deleteGottesdienst(ServiceDaten daten, String uid) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
@@ -539,7 +539,7 @@ class MessdienerService {
 		return null
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<String> importMessdienerListe(ServiceDaten daten, List<String> zeilen, boolean loeschen) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
@@ -675,7 +675,7 @@ class MessdienerService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<String> importGottesdienstListe(ServiceDaten daten, List<String> zeilen,
 		boolean loeschen) {
 

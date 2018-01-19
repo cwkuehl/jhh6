@@ -169,7 +169,7 @@ class HeilpraktikerService {
 		}
 	]
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<HpStatus> insertUpdateStatus(ServiceDaten daten, String uid, String status, String besch,
 		int sortierung, int standard, String notiz) {
 
@@ -180,7 +180,7 @@ class HeilpraktikerService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> deleteStatus(ServiceDaten daten, String uid) {
 
 		// getBerechService().pruefeBerechtigungAktuellerMandant(daten, mandantNr)
@@ -281,7 +281,7 @@ class HeilpraktikerService {
 		}
 	]
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<HpLeistung> insertUpdateLeistung(ServiceDaten daten, String uid, String ziffer,
 		String zifferAlt, String beschFett, String besch, double faktor, double betrag, String fragen, String notiz) {
 
@@ -292,7 +292,7 @@ class HeilpraktikerService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> deleteLeistung(ServiceDaten daten, String uid) {
 
 		// getBerechService().pruefeBerechtigungAktuellerMandant(daten, mandantNr)
@@ -365,7 +365,7 @@ class HeilpraktikerService {
 		}
 	]
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<HpLeistungsgruppe> insertUpdateLeistungsgruppe(ServiceDaten daten, String uid, String bez,
 		String leistungUid, double dauer, String notiz, List<HpBehandlungLeistungLang> leistungen) {
 
@@ -431,7 +431,7 @@ class HeilpraktikerService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> deleteLeistungsgruppe(ServiceDaten daten, String uid) {
 
 		// getBerechService().pruefeBerechtigungAktuellerMandant(daten, mandantNr)
@@ -512,7 +512,7 @@ class HeilpraktikerService {
 		}
 	]
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<HpPatient> insertUpdatePatient(ServiceDaten daten, String uid, String name1,
 		String vorname, String adresse1, String adresse2, String adresse3, String geschlecht, LocalDate geburt,
 		String patientUid, String status, String notiz, List<ByteDaten> byteliste) {
@@ -525,7 +525,7 @@ class HeilpraktikerService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> deletePatient(ServiceDaten daten, String uid) {
 
 		// getBerechService().pruefeBerechtigungAktuellerMandant(daten, mandantNr)
@@ -678,7 +678,7 @@ class HeilpraktikerService {
 		}
 	]
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<HpBehandlung> insertUpdateBehandlung(ServiceDaten daten, String uid, String patientUid,
 		LocalDate datum, int dauer, String diagnose, String leistungUid, String statusUid, String mittel, String potenz,
 		String dosierung, String verordnung, String notiz, List<HpBehandlungLeistungLang> leistungen) {
@@ -754,7 +754,7 @@ class HeilpraktikerService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> deleteBehandlung(ServiceDaten daten, String uid) {
 
 		// getBerechService().pruefeBerechtigungAktuellerMandant(daten, mandantNr)
@@ -859,7 +859,7 @@ class HeilpraktikerService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<HpRechnung> insertUpdateRechnung(ServiceDaten daten, String uid, String rnr,
 		LocalDate datum, String patientUid, double betrag, String diagnose, String statusUid, String notiz,
 		List<HpBehandlungLeistungLang> bliste) {
@@ -924,7 +924,7 @@ class HeilpraktikerService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> deleteRechnung(ServiceDaten daten, String uid) {
 
 		// getBerechService().pruefeBerechtigungAktuellerMandant(daten, mandantNr)

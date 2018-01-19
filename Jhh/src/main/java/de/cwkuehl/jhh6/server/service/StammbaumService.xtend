@@ -90,7 +90,7 @@ class StammbaumService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<SbPerson> insertUpdatePerson(ServiceDaten daten, String uid, String name, String vorname,
 		String gebname, String geschlecht, String titel, String konfession, String bemerkung, String quid, int status1,
 		int status2, int status3, String geburtsdatum, String geburtsort, String geburtsbem, String geburtsQuelle,
@@ -182,7 +182,7 @@ class StammbaumService {
 			zeitangabe.datumTyp, ort, bemerkung, quid, null, null, null, null)
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> deletePerson(ServiceDaten daten, String uid) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
@@ -309,7 +309,7 @@ class StammbaumService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<SbFamilie> insertUpdateFamilie(ServiceDaten daten, String uid, String mannUid,
 		String frauUid, String heiratsdatum, String heiratsort, String heiratsbem, String quid, List<String> kinder) {
 
@@ -344,7 +344,7 @@ class StammbaumService {
 	 * Löschen einer Familie.
 	 * @param uid Familie-Nummer.
 	 */
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> deleteFamilie(ServiceDaten daten, String uid) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
@@ -490,7 +490,7 @@ class StammbaumService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<SbQuelle> insertUpdateQuelle(ServiceDaten daten, String uid, String autor,
 		String beschreibung, String zitat, String bemerkung) {
 
@@ -531,7 +531,7 @@ class StammbaumService {
 		return e
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> deleteQuelle(ServiceDaten daten, String uid) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
@@ -1086,7 +1086,7 @@ class StammbaumService {
 	 * @param version0 Version kann null sein, dann gilt Version "5.5".
 	 * @return Datei als String-Array.
 	 */
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<List<String>> exportAhnen(ServiceDaten daten, String skript, String name, String filter,
 		String version0) {
 
@@ -1509,7 +1509,7 @@ class StammbaumService {
 		quelleRep.insert(daten, q)
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<String> importAhnen(ServiceDaten daten, List<String> datei) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)

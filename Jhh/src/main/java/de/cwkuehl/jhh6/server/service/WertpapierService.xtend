@@ -123,7 +123,7 @@ class WertpapierService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<WpKonfiguration> insertUpdateKonfiguration(ServiceDaten daten, String uid, String bez,
 		double box, boolean proz, int umkehr, int methode, int dauer, boolean relativ, int skala, String status, //
 		String notiz) {
@@ -164,7 +164,7 @@ class WertpapierService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> deleteKonfiguration(ServiceDaten daten, String uid) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
@@ -200,7 +200,7 @@ class WertpapierService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<List<WpWertpapierLang>> bewerteteWertpapierListe(ServiceDaten daten,
 		boolean zusammengesetzt, String bez, String muster, String uid, LocalDate bewertungsdatum, String kuid,
 		StringBuffer status, StringBuffer abbruch) {
@@ -958,7 +958,7 @@ class WertpapierService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> deleteWertpapier(ServiceDaten daten, String uid) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
@@ -976,7 +976,7 @@ class WertpapierService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<WpWertpapier> insertUpdateWertpapier(ServiceDaten daten, String uid, String bez,
 		String kuerzel, String signal1, String sort, String quelle, String status, String ruid, String notiz) {
 
@@ -1352,7 +1352,7 @@ class WertpapierService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<List<WpAnlageLang>> bewerteteAnlageListe(ServiceDaten daten, boolean zusammengesetzt,
 		String bez, String uid, String wpuid, LocalDate bewertungsdatum, StringBuffer status, StringBuffer abbruch) {
 
@@ -1487,7 +1487,7 @@ class WertpapierService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<WpAnlage> insertUpdateAnlage(ServiceDaten daten, String uid, String wpuid, String bez,
 		String notiz) {
 
@@ -1509,7 +1509,7 @@ class WertpapierService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> deleteAnlage(ServiceDaten daten, String uid) {
 
 		var bliste = buchungRep.getBuchungLangListe(daten, null, null, null, uid, false)
@@ -1554,7 +1554,7 @@ class WertpapierService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<WpBuchung> insertUpdateBuchung(ServiceDaten daten, String uid, String auid,
 		LocalDate datum, double betrag, double rabatt, double anteile, double zinsen, String btext, //
 		String notiz, double stand) {
@@ -1607,7 +1607,7 @@ class WertpapierService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> deleteBuchung(ServiceDaten daten, String uid) {
 
 		buchungRep.delete(daten, new WpBuchungKey(daten.mandantNr, uid))
@@ -1638,7 +1638,7 @@ class WertpapierService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<WpStand> insertUpdateStand(ServiceDaten daten, String wpuid, LocalDate datum,
 		double betrag) {
 
@@ -1650,7 +1650,7 @@ class WertpapierService {
 		return r
 	}
 
-	@Transaction(true)
+	@Transaction
 	override ServiceErgebnis<Void> deleteStand(ServiceDaten daten, String wpuid, LocalDate datum) {
 
 		standRep.delete(daten, new WpStandKey(daten.mandantNr, wpuid, datum))
