@@ -12,6 +12,8 @@ import de.cwkuehl.jhh6.api.dto.AdSitzUpdate
 import de.cwkuehl.jhh6.api.enums.GeschlechtEnum
 import de.cwkuehl.jhh6.api.enums.PersonStatusEnum
 import de.cwkuehl.jhh6.api.global.Global
+import de.cwkuehl.jhh6.api.message.MeldungException
+import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.api.service.ServiceDaten
 import de.cwkuehl.jhh6.api.service.ServiceErgebnis
 import de.cwkuehl.jhh6.generator.RepositoryRef
@@ -48,15 +50,8 @@ class AdresseService {
 		var j = datum.year
 		var j1 = 0
 		var dv = dvon.monthValue * 100 + dvon.dayOfMonth
-		// var db = dbis.monthValue * 100 + dbis.dayOfMonth
-		v.add("Geburtage zwischen " + Global.dateTimeStringForm(dvon.atStartOfDay) + " und " +
-			Global.dateTimeStringForm(dbis.atStartOfDay))
-		var i = 0
-		if (j != dvon.year) {
-			i = 1
-		} else if (j != dbis.year) {
-			i = 2
-		}
+		v.add(Meldungen.AD001(dvon.atStartOfDay, dbis.atStartOfDay))
+		var i = if(j != dvon.year) 1 else if(j != dbis.year) 2 else 0
 		var liste = personRep.getGeburtstagListe(daten, dvon, dbis)
 		for (AdPerson vo : liste) {
 			var d = vo.geburtk
@@ -69,9 +64,7 @@ class AdresseService {
 					j1 = dbis.year - vo.geburt.year
 				}
 			}
-			v.
-				add('''«Global.dateTimeStringForm(vo.geburt.atStartOfDay)» «vo.name1»«IF !Global.nes(vo.vorname)», «vo.vorname»«ENDIF» («j1» Jahr«IF j1!=0»e«ENDIF»)''')
-
+			v.add(Meldungen.AD002(vo.geburt.atStartOfDay, Global.anhaengen(vo.name1, ", ", vo.vorname), j1))
 		}
 		r.ergebnis = v
 		return r
@@ -148,7 +141,7 @@ class AdresseService {
 	override ServiceErgebnis<byte[]> getReportAdresse(ServiceDaten daten) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
-		var ueberschrift = "Adressenliste vom " + Global.dateTimeStringForm(daten.getJetzt)
+		var ueberschrift = Meldungen.AD003(daten.getJetzt)
 		var liste = personRep.getPersonenSitzAdresseListe(daten, true, null, null, null, null)
 		var doc = newFopDokument
 		doc.addAdressenliste(true, ueberschrift, liste)
@@ -210,10 +203,9 @@ class AdresseService {
 
 	def private boolean isSitzLeer(AdPersonSitzAdresse sitz) {
 
-		if (sitz.getTyp == 0 && Global.nes(sitz.getName) && Global.nes(sitz.getTelefon) &&
-			Global.nes(sitz.getFax) && Global.nes(sitz.getMobil) && Global.nes(sitz.getEmail) &&
-			Global.nes(sitz.getHomepage) && Global.nes(sitz.getPostfach) && Global.nes(sitz.getBemerkung) &&
-			sitz.getSitzStatus == 0) {
+		if (sitz.getTyp == 0 && Global.nes(sitz.getName) && Global.nes(sitz.getTelefon) && Global.nes(sitz.getFax) &&
+			Global.nes(sitz.getMobil) && Global.nes(sitz.getEmail) && Global.nes(sitz.getHomepage) &&
+			Global.nes(sitz.getPostfach) && Global.nes(sitz.getBemerkung) && sitz.getSitzStatus == 0) {
 			return true
 		}
 		return false
@@ -478,7 +470,7 @@ class AdresseService {
 				for (AdPerson b : peListe) {
 					personRep.delete(daten, b)
 				}
-				log.debug("Adressen komplett gelöscht.")
+				log.debug(Meldungen.AD004)
 			}
 
 			var String pnr = null
@@ -547,7 +539,7 @@ class AdresseService {
 								person.angelegtAm, person.geaendertVon, person.geaendertAm)
 						}
 					} catch (Exception ex) {
-						log.error("importAdresseListe-Fehler bei Person", ex)
+						log.error(Meldungen.AD007, ex)
 						fehler = true
 						pFehler++
 						if (Global.nes(pnr)) {
@@ -636,7 +628,7 @@ class AdresseService {
 									adresse.angelegtAm, adresse.geaendertVon, adresse.geaendertAm)
 							}
 						} catch (Exception ex) {
-							log.error("importAdresseListe-Fehler bei Adresse", ex)
+							log.error(Meldungen.AD009, ex)
 							fehler = true
 							aFehler++
 							if (Global.nes(anr)) {
@@ -663,7 +655,7 @@ class AdresseService {
 									sitz.angelegtAm, sitz.geaendertVon, sitz.geaendertAm)
 							}
 						} catch (Exception ex) {
-							log.error("importAdresseListe-Fehler bei Sitz", ex)
+							log.error(Meldungen.AD008, ex)
 							fehler = true
 							sFehler++
 							if (Global.nes(snr)) {
@@ -690,22 +682,17 @@ class AdresseService {
 						}
 					}
 					if (!geprueft) {
-						throw new Exception("Spaltenüberschriften stimmen nicht.")
+						throw new MeldungException(Meldungen.AD005)
 					}
 				}
 			}
 			if (!geprueft) {
-				throw new Exception("Spaltenüberschriften in der 1. Zeile fehlen.")
+				throw new MeldungException(Meldungen.AD006)
 			}
 		} finally {
 			Global.machNichts
 		}
-		var r = new ServiceErgebnis<String>(
-			Global.format(
-				"Es wurde(n) {0} Person(en), {2} Sitz(e)" + " und {4} Adresse(n) importiert." +
-					"\nEs traten Fehler bei {1} Person(en), {3} Sitz(en)" + " und {5} Adresse(n) auf.",
-				Global.intStr(pAnzahl), Global.intStr(pFehler), Global.intStr(sAnzahl), Global.intStr(sFehler),
-				Global.intStr(aAnzahl), Global.intStr(aFehler)))
+		var r = new ServiceErgebnis<String>(Meldungen.AD010(pAnzahl, pFehler, sAnzahl, sFehler, aAnzahl, aFehler))
 		return r
 	}
 
