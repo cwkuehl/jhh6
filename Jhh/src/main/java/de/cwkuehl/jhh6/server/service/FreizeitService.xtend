@@ -84,7 +84,7 @@ class FreizeitService {
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var r = new ServiceErgebnis<FzNotiz>(null)
 		if (Global.nes(thema)) {
-			throw new MeldungException(Meldungen.M2034)
+			throw new MeldungException(Meldungen.FZ035)
 		}
 		r.ergebnis = notizRep.iuFzNotiz(daten, null, uid, thema, notiz, null, null, null, null)
 		return r
@@ -152,7 +152,7 @@ class FreizeitService {
 			var prSerie = ""
 			var benutzer = benutzerRep.get(daten, new BenutzerKey(daten.mandantNr, daten.benutzerId))
 			if (benutzer === null) {
-				throw new MeldungException(Meldungen.M1006(daten.benutzerId))
+				throw new MeldungException(Meldungen.FZ036(daten.benutzerId))
 			}
 			var geburt = benutzer.geburt
 			var wk = benutzer.benutzerId.toLowerCase.equals("wolfgang")
@@ -296,11 +296,11 @@ class FreizeitService {
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var r = new ServiceErgebnis<FzFahrrad>(null)
 		if (Global.nes(bez)) {
-			throw new MeldungException(Meldungen.M2015)
+			throw new MeldungException(Meldungen.FZ037)
 		}
 		// Typ prüfen
 		if (FzFahrradTypEnum.fromValue(Global.intStr(typ)) === null) {
-			throw new MeldungException(Meldungen.M2026)
+			throw new MeldungException(Meldungen.FZ038)
 		}
 		r.ergebnis = fahrradRep.iuFzFahrrad(daten, null, uid, bez, typ, null, null, null, null)
 		return r
@@ -372,27 +372,27 @@ class FreizeitService {
 			throw new MeldungException(Meldungen.FZ019)
 		}
 		if (Global.compDouble(zaehlerAktuell, 0) < 0) {
-			throw new MeldungException("Bitte positiven Zählerstand angeben.")
+			throw new MeldungException(Meldungen.FZ020)
 		}
 		if (Global.compDouble(periodeAktuell, 0) < 0) {
-			throw new MeldungException("Bitte positive km angeben.")
+			throw new MeldungException(Meldungen.FZ021)
 		}
 		if (Global.compDouble(schnitt, 0) < 0) {
-			throw new MeldungException("Bitte einen positiven Schnitt angeben.")
+			throw new MeldungException(Meldungen.FZ022)
 		}
 		if (Global.compDouble(zaehlerAktuell, 0) == 0 && Global.compDouble(periodeAktuell, 0) == 0) {
 			zaehlerNull = true
 		}
 		if (datum === null) {
-			throw new MeldungException("Bitte ein Datum angeben.")
+			throw new MeldungException(Meldungen.FZ023)
 		}
 		var fzFahrrad = fahrradRep.get(daten, new FzFahrradKey(daten.mandantNr, fahrradUid))
 		if (fzFahrrad === null) {
-			throw new MeldungException("Fahrrad-Nr. " + fahrradUid + " nicht vorhanden.")
+			throw new MeldungException(Meldungen.FZ024(fahrradUid))
 		}
 		var typ = FzFahrradTypEnum.fromValue(Global.intStr(fzFahrrad.typ))
 		if (typ === null) {
-			throw new MeldungException(Meldungen.M2026)
+			throw new MeldungException(Meldungen.FZ038)
 		}
 		if (insert && typ == FzFahrradTypEnum.WOECHENTLICH) { // insert neuen Stand
 		// evtl. vorhandenen Satz in der gleichen Woche lesen
@@ -442,8 +442,7 @@ class FreizeitService {
 				} else {
 					periodeAktuell = zaehlerAktuell - zaehlerVorher
 					if (Global.compDouble(periodeAktuell, 0) < 0) {
-						throw new MeldungException(
-							"Der Zählerstand muss größer oder gleich " + Global.dblStr2(zaehlerVorher) + " sein.")
+						throw new MeldungException(Meldungen.FZ025(zaehlerVorher))
 					}
 				}
 			}
@@ -454,7 +453,7 @@ class FreizeitService {
 					nr = voNachher.nr
 					dAktuell = voNachher.datum
 				} else {
-					throw new MeldungException("Es kann nur am Ende eingefügt werden.")
+					throw new MeldungException(Meldungen.FZ026)
 				}
 			}
 			if (!zaehlerNull) {
@@ -463,7 +462,7 @@ class FreizeitService {
 			}
 		}
 		if (voNachher !== null /* nachherNr > 0 */ && zaehlerNull) {
-			throw new MeldungException("Der Zähler kann nur als letzter Eintrag auf 0 gesetzt werden.")
+			throw new MeldungException(Meldungen.FZ027)
 		}
 		if (!zaehlerNull) {
 			if (Global.compDouble(zaehlerAktuell, periodeAktuell) < 0) {
@@ -480,7 +479,7 @@ class FreizeitService {
 			if (voVorher !== null /* vorherNr > 0 */ ) {
 				var woche = voVorher.datum.plusDays(7)
 				while (woche.isBefore(dAktuell)) {
-					standRep.iuFzFahrradstand(daten, null, fahrradUid, woche, 0, zaehlerVorher, 0, 0, "keine Tour",
+					standRep.iuFzFahrradstand(daten, null, fahrradUid, woche, 0, zaehlerVorher, 0, 0, Meldungen.FZ028,
 						null, null, null, null)
 					woche = woche.plusDays(7)
 				}
@@ -491,7 +490,7 @@ class FreizeitService {
 		if (vo === null) {
 			// Autowert
 			if (nr > 0 && neueNr) {
-				throw new MeldungException("Fahrradstand-Nr. " + nr + " nicht vorhanden.")
+				throw new MeldungException(Meldungen.FZ029(nr))
 			}
 			var l = standRep.getFahrradstandListe(daten, fahrradUid, dAktuell, dAktuell, true, 1)
 			nr = 0
@@ -504,7 +503,7 @@ class FreizeitService {
 		if (voNachher !== null /* nachherNr > 0 */ && !(dAktuell.equals(voNachher.datum) && nr == voNachher.nr) &&
 			Global.compDouble(periodeNachher, zaehlerNachher - zaehlerAktuell) !== 0) {
 			if (Global.compDouble(0, zaehlerNachher - zaehlerAktuell) > 0) {
-				throw new MeldungException("Die nachfolgenden km wären negativ.")
+				throw new MeldungException(Meldungen.FZ030)
 			}
 			var voNachherU = new FzFahrradstandUpdate(voNachher)
 			voNachherU.setPeriodeKm(zaehlerNachher - zaehlerAktuell)
@@ -524,12 +523,12 @@ class FreizeitService {
 		var key = new FzFahrradstandKey(daten.mandantNr, fuid, datum, nr)
 		var fzFahrradstand = standRep.get(daten, key)
 		if (fzFahrradstand === null) {
-			throw new MeldungException("Fahrradstand nicht vorhanden.")
+			throw new MeldungException(Meldungen.FZ029(nr))
 		}
 		var liste = standRep.getFahrradstandListe(daten, fuid, datum, null, false, 0)
 		for (FzFahrradstand stand : liste) {
 			if (stand.datum.isAfter(key.datum) || stand.nr > key.nr) {
-				throw new MeldungException("Es darf nur die letzte Fahrradstand gelöscht werden.")
+				throw new MeldungException(Meldungen.FZ031)
 			}
 		}
 		standRep.delete(daten, key)
@@ -567,7 +566,7 @@ class FreizeitService {
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var r = new ServiceErgebnis<FzBuchautor>(null)
 		if (Global.nes(name)) {
-			throw new MeldungException("Der Name darf nicht leer sein.")
+			throw new MeldungException(Meldungen.FZ032)
 		}
 		r.ergebnis = autorRep.iuFzBuchautor(daten, null, uid, name, vorname, null, null, null, null)
 		return r
@@ -579,7 +578,7 @@ class FreizeitService {
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var liste = buchRep.getBuchLangListe(daten, null, uid, null, null, 0, 1)
 		if (liste.size > 0) {
-			throw new MeldungException(Meldungen.M2031)
+			throw new MeldungException(Meldungen.FZ039)
 		}
 		autorRep.delete(daten, new FzBuchautorKey(daten.mandantNr, uid))
 		var r = new ServiceErgebnis<Void>(null)
@@ -609,7 +608,7 @@ class FreizeitService {
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var r = new ServiceErgebnis<FzBuchserie>(null)
 		if (Global.nes(name)) {
-			throw new MeldungException("Der Name darf nicht leer sein.")
+			throw new MeldungException(Meldungen.FZ033)
 		}
 		r.ergebnis = serieRep.iuFzBuchserie(daten, null, uid, name, null, null, null, null)
 		return r
@@ -621,7 +620,7 @@ class FreizeitService {
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var liste = buchRep.getBuchLangListe(daten, null, null, uid, null, 0, 1)
 		if (liste.size > 0) {
-			throw new MeldungException(Meldungen.M2030)
+			throw new MeldungException(Meldungen.FZ040)
 		}
 		serieRep.delete(daten, new FzBuchserieKey(daten.mandantNr, uid))
 		var r = new ServiceErgebnis<Void>(null)
@@ -661,13 +660,13 @@ class FreizeitService {
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var r = new ServiceErgebnis<FzBuch>(null)
 		if (Global.nes(titel)) {
-			throw new MeldungException(Meldungen.M2027)
+			throw new MeldungException(Meldungen.FZ041)
 		}
 		if (Global.nes(autorUid)) {
-			throw new MeldungException(Meldungen.M2028)
+			throw new MeldungException(Meldungen.FZ042)
 		}
 		if (Global.nes(serieUid)) {
-			throw new MeldungException(Meldungen.M2029)
+			throw new MeldungException(Meldungen.FZ043)
 		}
 		// Sprache prüfen
 		SpracheEnum.fromValue(sp)
@@ -676,8 +675,7 @@ class FreizeitService {
 		if (Global.nes(uid) && !Global.nes(serieUid)) {
 			var keineSerie = false
 			var serie = serieRep.get(daten, new FzBuchserieKey(daten.mandantNr, serieUid))
-			if (serie !== null &&
-				(serie.name.toLowerCase.endsWith("keine serie") || serie.name.toLowerCase.endsWith("no series"))) {
+			if (serie !== null && serie.name.toLowerCase.endsWith(Meldungen.FZ034.toLowerCase)) {
 				keineSerie = true
 				seriennummer = 0
 			}

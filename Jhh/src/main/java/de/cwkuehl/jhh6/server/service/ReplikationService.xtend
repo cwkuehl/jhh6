@@ -377,6 +377,7 @@ class ReplikationService {
 		var bl = buchRep.getListe(daten, mnr, null, null)
 		if (bl.size <= 0) {
 			var a = freizeitService.insertUpdateAutor(daten, null, Meldungen.M9000, Meldungen.M9000).ergebnis
+			freizeitService.insertUpdateSerie(daten, null, Meldungen.FZ034)
 			var s = freizeitService.insertUpdateSerie(daten, null, Meldungen.M9000).ergebnis
 			freizeitService.insertUpdateBuch(daten, null, a.uid, s.uid, 1, Meldungen.M9000, 200,
 				SpracheEnum.ENGLISCH.toString, false, daten.heute, null)
