@@ -1,5 +1,7 @@
 package de.cwkuehl.jhh6.api.enums;
 
+import de.cwkuehl.jhh6.api.global.Global;
+
 /**
  * Aufzählung BerechtigungEnum.
  */
@@ -41,13 +43,13 @@ public enum BerechtigungEnum {
     public String toString2() {
 
         if (equals(KEINE)) {
-            return "Keine";
+            return Global.g0("permission.no");
         } else if (equals(BENUTZER)) {
-            return "Benutzer";
+            return Global.g0("permission.user");
         } else if (equals(ADMIN)) {
-            return "Administrator";
+            return Global.g0("permission.admin");
         }
-        return "Alles"; // ALLES
+        return Global.g0("permission.all"); // ALLES
 
     }
 
@@ -60,7 +62,8 @@ public enum BerechtigungEnum {
                 }
             }
         }
-        throw new IllegalArgumentException("ungültige BerechtigungEnum: " + v);
+        return null;
+        // throw new IllegalArgumentException("ungültige BerechtigungEnum: " + v);
     }
 
     public String getItemValue() {
@@ -87,6 +90,7 @@ public enum BerechtigungEnum {
                 return e;
             }
         }
-        throw new IllegalArgumentException("ungültige BerechtigungEnum: " + v);
+        return KEINE;
+        // throw new IllegalArgumentException("ungültige BerechtigungEnum: " + v);
     }
 }

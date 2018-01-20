@@ -52,7 +52,7 @@ class AG210BenutzerController extends BaseController<String> {
 		angelegt0.setLabelFor(angelegt)
 		geaendert0.setLabelFor(geaendert)
 		initDaten(0)
-		benutzerId.requestFocus()
+		benutzerId.requestFocus
 	}
 
 	/** 
@@ -62,19 +62,19 @@ class AG210BenutzerController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var boolean neu = DialogAufrufEnum.NEU.equals(getAufruf())
-			var boolean kopieren = DialogAufrufEnum.KOPIEREN.equals(getAufruf())
-			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(getAufruf())
-			var BenutzerLang k = getParameter1()
+			var boolean neu = DialogAufrufEnum.NEU.equals(getAufruf)
+			var boolean kopieren = DialogAufrufEnum.KOPIEREN.equals(getAufruf)
+			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(getAufruf)
+			var BenutzerLang k = getParameter1
 			if (!neu && k !== null) {
-				k = get(FactoryService.getAnmeldungService().getBenutzerLang(getServiceDaten(), k.getPersonNr()))
-				nr.setText(Global.intStrFormat(k.getPersonNr()))
-				benutzerId.setText(k.getBenutzerId())
-				kennwort.setText(k.getPasswort())
-				setText(berechtigung, BerechtigungEnum.fromIntValue(k.getBerechtigung()).toString())
-				geburt.setValue(k.getGeburt())
-				angelegt.setText(k.formatDatumVon(k.getAngelegtAm(), k.getAngelegtVon()))
-				geaendert.setText(k.formatDatumVon(k.getGeaendertAm(), k.getGeaendertVon()))
+				k = get(FactoryService.getAnmeldungService.getBenutzerLang(getServiceDaten, k.getPersonNr))
+				nr.setText(Global.intStrFormat(k.getPersonNr))
+				benutzerId.setText(k.getBenutzerId)
+				kennwort.setText(k.getPasswort)
+				setText(berechtigung, BerechtigungEnum.fromIntValue(k.getBerechtigung).toString)
+				geburt.setValue(k.getGeburt)
+				angelegt.setText(k.formatDatumVon(k.getAngelegtAm, k.getAngelegtVon))
+				geaendert.setText(k.formatDatumVon(k.getGeaendertAm, k.getGeaendertVon))
 			}
 			nr.setEditable(false)
 			benutzerId.setEditable(neu || kopieren)
@@ -84,12 +84,12 @@ class AG210BenutzerController extends BaseController<String> {
 			angelegt.setEditable(false)
 			geaendert.setEditable(false)
 			if (loeschen) {
-				ok.setText(Meldungen.M2001())
+				ok.setText(Meldungen.M2001)
 			}
 		}
-		if (stufe <= 1) { // stufe = 0;
+		if (stufe <= 1) { // stufe = 0
 		}
-		if (stufe <= 2) { // initDatenTable();
+		if (stufe <= 2) { // initDatenTable
 		}
 	}
 
@@ -106,14 +106,14 @@ class AG210BenutzerController extends BaseController<String> {
 
 		var ServiceErgebnis<?> r = null
 		if (DialogAufrufEnum.NEU.equals(aufruf) || DialogAufrufEnum.KOPIEREN.equals(aufruf)) {
-			r = FactoryService.anmeldungService.insertUpdateBenutzer(getServiceDaten(), benutzerId.getText(),
-				kennwort.getText(), Global.strInt(getText(berechtigung)), 0, geburt.getValue())
+			r = FactoryService.anmeldungService.insertUpdateBenutzer(getServiceDaten, benutzerId.getText,
+				kennwort.getText, Global.strInt(getText(berechtigung)), 0, geburt.getValue)
 		} else if (DialogAufrufEnum.AENDERN.equals(aufruf)) {
-			r = FactoryService.anmeldungService.insertUpdateBenutzer(getServiceDaten(), benutzerId.getText(),
-				kennwort.getText(), Global.strInt(getText(berechtigung)), Global.strInt(nr.getText()),
-				geburt.getValue())
+			r = FactoryService.anmeldungService.insertUpdateBenutzer(getServiceDaten, benutzerId.getText,
+				kennwort.getText, Global.strInt(getText(berechtigung)), Global.strInt(nr.getText),
+				geburt.getValue)
 			} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
-				r = FactoryService.anmeldungService.deleteBenutzer(getServiceDaten(), benutzerId.getText())
+				r = FactoryService.anmeldungService.deleteBenutzer(getServiceDaten, benutzerId.getText)
 			}
 			if (r !== null) {
 				get(r)
