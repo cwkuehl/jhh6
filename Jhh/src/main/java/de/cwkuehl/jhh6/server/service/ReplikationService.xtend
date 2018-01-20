@@ -502,7 +502,7 @@ class ReplikationService {
 			hh.uid = Global.UID
 			hh.art = KontoartEnum.PASSIVKONTO.toString
 			hh.kz = KontokennzeichenEnum.EIGENKAPITEL.toString
-			hh.name = "Eigenkapital"
+			hh.name = Meldungen.HH001
 			hh.gueltigVon = null
 			hh.gueltigBis = null
 			hh.periodeVon = -1
@@ -523,7 +523,7 @@ class ReplikationService {
 			hh.uid = Global.UID
 			hh.art = KontoartEnum.ERTRAGSKONTO.toString
 			hh.kz = KontokennzeichenEnum.GEWINN_VERLUST.toString
-			hh.name = "Gewinn/Verlust"
+			hh.name = Meldungen.HH002
 			hh.setGueltigVon(null)
 			hh.gueltigVon = null
 			hh.gueltigBis = null

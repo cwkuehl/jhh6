@@ -117,7 +117,7 @@ class FreizeitService {
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var r = new ServiceErgebnis<String>(null)
 		var euro = isEuroIntern
-		var strE = Global.iif(euro, " €", " DM")
+		// var strE = Global.iif(euro, " €", " DM")
 		if (jetzt0 === null) {
 			return r
 		}
@@ -137,20 +137,19 @@ class FreizeitService {
 				for (HhBilanz e : hhBilanz) {
 					db = if(euro) e.ebetrag else e.betrag
 					if (!Double.isNaN(alt)) {
-						sb.append(" (").append(Global.dblStr2(alt - db)).append(strE).append(")")
+						sb.append(Meldungen.FZ002(Global.dblStr2(alt - db))).append(")") // .append(strE)
 					}
 					if (sb.length > 0) {
 						sb.append(Constant.CRLF)
 					}
-					sb.append("Eigenkapital (").append(Global.dateTimeStringForm(e.geaendertAm)).append("): ").append(
-						Global.dblStr2(db)).append(strE)
+					sb.append(Meldungen.FZ001(Meldungen.HH001, e.geaendertAm, db)) // .append(strE)
 					alt = db
 				}
 			}
 			r.ergebnis = sb.toString
 		} else if (nr == 2) {
 			// Buchstatistik
-			var String prSerie = null
+			var prSerie = ""
 			var benutzer = benutzerRep.get(daten, new BenutzerKey(daten.mandantNr, daten.benutzerId))
 			if (benutzer === null) {
 				throw new MeldungException(Meldungen.M1006(daten.benutzerId))
@@ -166,50 +165,46 @@ class FreizeitService {
 					prSerie = sliste.get(0).uid
 				}
 			}
-			sb.append("Person: ").append(benutzer.benutzerId)
+			sb.append(Meldungen.FZ003(benutzer.benutzerId.toFirstUpper))
 			if (geburt !== null) {
 				anzahlTage = ChronoUnit.DAYS.between(geburt, jetzt)
 			}
 			if (anzahlTage > 0) {
-				sb.append(Constant.CRLF).append("Lebenstage: ").append(anzahlTage)
+				sb.append(Constant.CRLF).append(Meldungen.FZ004(anzahlTage))
 			}
-			var lAnzahl = buchRep.getBuchLangAnzahl(daten, -1, null, prSerie, jetzt, null, null)
-			sb.append(Constant.CRLF).append("Anzahl Bücher: ").append(lAnzahl)
-			var lAnzahl2 = buchRep.getBuchLangAnzahl(daten, -1, null, prSerie, jetzt, jetzt, null)
-			sb.append(Constant.CRLF).append("gelesen: ").append(lAnzahl2)
-			if (lAnzahl !== 0) {
-				var proz = lAnzahl2 as double / lAnzahl * 100
-				sb.append(" (").append(Global.dblStr(proz)).append("%)")
+			var anzahl = buchRep.getBuchLangAnzahl(daten, -1, null, prSerie, jetzt, null, null)
+			sb.append(Constant.CRLF).append(Meldungen.FZ005(anzahl))
+			var anzahl2 = buchRep.getBuchLangAnzahl(daten, -1, null, prSerie, jetzt, jetzt, null)
+			sb.append(Constant.CRLF).append(Meldungen.FZ006(anzahl2))
+			if (anzahl !== 0) {
+				sb.append(Meldungen.FZ008(anzahl2 as double / anzahl * 100))
 			}
-			lAnzahl2 = buchRep.getBuchLangAnzahl(daten, -1, null, prSerie, jetzt, null, jetzt)
-			sb.append(Constant.CRLF).append("gehört: ").append(lAnzahl2)
-			if (lAnzahl !== 0) {
-				var proz = lAnzahl2 as double / lAnzahl * 100
-				sb.append(" (").append(Global.dblStr(proz)).append("%)")
+			anzahl2 = buchRep.getBuchLangAnzahl(daten, -1, null, prSerie, jetzt, null, jetzt)
+			sb.append(Constant.CRLF).append(Meldungen.FZ007(anzahl2))
+			if (anzahl !== 0) {
+				sb.append(Meldungen.FZ008(anzahl2 as double / anzahl * 100))
 			}
-			lAnzahl = buchRep.getBuchLangAnzahl(daten, SpracheEnum.ENGLISCH.intValue, null, null, jetzt, null, null)
-			sb.append(Constant.CRLF).append("Englische Bücher: ").append(lAnzahl)
-			if (wk) {
-				lAnzahl = buchRep.getBuchLangAnzahl(daten, -1, prSerie, null, jetzt, null, null)
-				sb.append(Constant.CRLF).append("Perry Rhodan-Hefte: ").append(lAnzahl)
-				lAnzahl2 = buchRep.getBuchLangAnzahl(daten, -1, prSerie, null, jetzt, jetzt, null)
-				sb.append(Constant.CRLF).append("PR-Hefte gelesen: ").append(lAnzahl2)
-				if (lAnzahl !== 0) {
-					var proz = lAnzahl2 as double / lAnzahl * 100
-					sb.append(" (").append(Global.dblStr(proz)).append("%)")
+			anzahl = buchRep.getBuchLangAnzahl(daten, SpracheEnum.ENGLISCH.intValue, null, null, jetzt, null, null)
+			sb.append(Constant.CRLF).append(Meldungen.FZ009(anzahl))
+			if (wk && !Global.nes(prSerie)) {
+				anzahl = buchRep.getBuchLangAnzahl(daten, -1, prSerie, null, jetzt, null, null)
+				sb.append(Constant.CRLF).append(Meldungen.FZ010(anzahl))
+				anzahl2 = buchRep.getBuchLangAnzahl(daten, -1, prSerie, null, jetzt, jetzt, null)
+				sb.append(Constant.CRLF).append(Meldungen.FZ011(anzahl2))
+				if (anzahl !== 0) {
+					sb.append(Meldungen.FZ008(anzahl2 as double / anzahl * 100))
 				}
 			}
-			lAnzahl2 = buchRep.getBuchLangSeitenSumme(daten, -1, null, prSerie, jetzt, jetzt, null) as int
-			sb.append(Constant.CRLF).append("gelesene Buch-Seiten: ").append(lAnzahl2)
-			if (wk) {
-				lAnzahl2 = buchRep.getBuchLangSeitenSumme(daten, -1, prSerie, null, jetzt, jetzt, null) as int
-				sb.append(Constant.CRLF).append("gelesene PR-Seiten: ").append(lAnzahl2)
+			anzahl2 = buchRep.getBuchLangSeitenSumme(daten, -1, null, prSerie, jetzt, jetzt, null) as int
+			sb.append(Constant.CRLF).append(Meldungen.FZ012(anzahl2))
+			if (wk && !Global.nes(prSerie)) {
+				anzahl2 = buchRep.getBuchLangSeitenSumme(daten, -1, prSerie, null, jetzt, jetzt, null) as int
+				sb.append(Constant.CRLF).append(Meldungen.FZ013(anzahl2))
 			}
-			lAnzahl2 = buchRep.getBuchLangSeitenSumme(daten, -1, null, null, jetzt, jetzt, null) as int
-			sb.append(Constant.CRLF).append("gelesene Seiten: ").append(lAnzahl2)
+			anzahl2 = buchRep.getBuchLangSeitenSumme(daten, -1, null, null, jetzt, jetzt, null) as int
+			sb.append(Constant.CRLF).append(Meldungen.FZ014(anzahl2))
 			if (anzahlTage > 0) {
-				sb.append(Constant.CRLF).append("gel. Seiten/Tag: ").append(
-					Global.dblStr(lAnzahl2 as double / anzahlTage))
+				sb.append(Constant.CRLF).append(Meldungen.FZ015(anzahl2 as double / anzahlTage))
 			}
 			r.ergebnis = sb.toString
 		} else if (nr == 3) {
@@ -248,22 +243,21 @@ class FreizeitService {
 				if (sb.length > 0) {
 					sb.append(Constant.CRLF)
 				}
-				sb.append(Global.fixiereString(vo.bezeichnung + ": ", laenge, true, " ")).append(
-					Global.lngStr(km as long)).append(" (").append(Global.lngStr(kmJahr as long)).append(") km")
+				sb.append(Meldungen.FZ016(Global.fixiereString(vo.bezeichnung + ": ", laenge, true, " "), km, kmJahr))
 				if (anzahlTage > 0) {
 					sb.append(Constant.CRLF).append(
-						Global.fixiereString(" " + Global.dateString(anfang.toLocalDate) + ": ", laenge, true, " ")).
-						append(Global.dblStr(km / anzahlTage)).append(" km/Tag (").append(
-							Global.dblStr(km / anzahlTage * jahresTage)).append(" km/a)")
+						Meldungen.FZ017(
+							Global.fixiereString(" " + Global.dateString0(anfang.toLocalDate) + ": ", laenge, true,
+								" "), km / anzahlTage, km / anzahlTage * jahresTage))
 				}
 			}
 			if (anzahlTageMax > 0) {
-				sb.append(Constant.CRLF).append(Global.fixiereString("Summe: ", laenge, true, " ")).append(
-					Global.lngStr(summe as long)).append(" (").append(Global.lngStr(summeJahr as long)).append(") km")
 				sb.append(Constant.CRLF).append(
-					Global.fixiereString(" " + Global.dateString(anfangMin.toLocalDate) + ": ", laenge, true, " ")).
-					append(Global.dblStr(summe / anzahlTageMax)).append(" km/Tag (").append(
-						Global.dblStr(summe / anzahlTageMax * jahresTage)).append(" km/a)")
+					Meldungen.FZ016(Global.fixiereString(Meldungen.FZ018 + ": ", laenge, true, " "), summe, summeJahr))
+				sb.append(Constant.CRLF).append(
+					Meldungen.FZ017(
+						Global.fixiereString(" " + Global.dateString0(anfangMin.toLocalDate) + ": ", laenge, true, " "),
+						summe / anzahlTageMax, summe / anzahlTageMax * jahresTage))
 			}
 			r.ergebnis = sb.toString
 		}
@@ -375,7 +369,7 @@ class FreizeitService {
 		val protag = 10 + 1
 
 		if (Global.nes(fahrradUid)) {
-			throw new MeldungException("Bitte ein Fahrrad auswählen.")
+			throw new MeldungException(Meldungen.FZ019)
 		}
 		if (Global.compDouble(zaehlerAktuell, 0) < 0) {
 			throw new MeldungException("Bitte positiven Zählerstand angeben.")

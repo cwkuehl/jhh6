@@ -1721,7 +1721,7 @@ class HaushaltService {
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var v = new Vector<HhBilanz>
 		var r = new ServiceErgebnis<List<HhBilanz>>(v)
-		var anzahl = 6
+		var anzahl = 10
 
 		var p = holePassendePeriode(daten, datum, false)
 		if (p === null) {

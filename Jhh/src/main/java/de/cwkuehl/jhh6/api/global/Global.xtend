@@ -972,6 +972,20 @@ class Global {
 	}
 
 	/**
+	 * Liefert Datum im Format yyyy-MM-dd.
+	 * @param d Zu konvertierendes Datum.
+	 * @return Datums-String.
+	 */
+	def public static String dateString0(LocalDate d) {
+
+		if (d === null) {
+			return ""
+		}
+		var str = d.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+		return str
+	}
+
+	/**
 	 * Liefert Datum im Format dd.MM.yyyy HH:mm:ss.
 	 * @param d Zu konvertierendes Datum mit Uhrzeit.
 	 * @return Datums-String.
