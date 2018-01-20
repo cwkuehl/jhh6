@@ -280,6 +280,7 @@ class ServiceBase {
 		}
 	}
 
+	/** Liefert getrimmten String. Wenn String null oder leer ist, wird null geliefert. */
 	def protected String n(String s) {
 
 		if (s === null || s.trim == "") {

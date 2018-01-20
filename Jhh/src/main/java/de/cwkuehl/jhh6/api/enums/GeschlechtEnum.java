@@ -1,10 +1,10 @@
 package de.cwkuehl.jhh6.api.enums;
 
 /**
- * Generierte Datei. BITTE NICHT AENDERN! Generierte Aufzählung GeschlechtEnum.
+ * Aufzählung GeschlechtEnum.
  */
-@SuppressWarnings("all")
 public enum GeschlechtEnum {
+ 
     /**
      * Geschlecht: neutrum.
      */
@@ -21,14 +21,15 @@ public enum GeschlechtEnum {
     FRAU,
 
     /**
-     * Geschlecht: männlich.
+     * Geschlecht: männlich für Stammbaum.
      */
     MAENNLICH,
 
     /**
-     * Geschlecht: weiblich.
+     * Geschlecht: weiblich für Stammbaum.
      */
     WEIBLICH;
+
     public String toString() {
 
         if (equals(NEUTRUM)) {
@@ -67,7 +68,8 @@ public enum GeschlechtEnum {
                 }
             }
         }
-        throw new IllegalArgumentException("ungültige GeschlechtEnum: " + v);
+        return NEUTRUM;
+        // throw new IllegalArgumentException("ungültige GeschlechtEnum: " + v);
     }
 
     public String getItemValue() {

@@ -106,7 +106,7 @@ class StammbaumService {
 			throw new MeldungException("Neuer Gatte und neue Eltern sind nicht möglich.")
 		}
 		// Typ prüfen
-		var gesch = if(n(geschlecht) === null) GeschlechtEnum.NEUTRUM.toString else geschlecht
+		var gesch = n(geschlecht)
 		var g = GeschlechtEnum.fromValue(gesch)
 		if (g == GeschlechtEnum.MANN) {
 			gesch = GeschlechtEnum.MAENNLICH.toString
