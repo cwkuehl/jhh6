@@ -1,11 +1,12 @@
 package de.cwkuehl.jhh6.api.enums;
 
+import de.cwkuehl.jhh6.api.global.Global;
+
 /**
- * Generierte Datei. BITTE NICHT AENDERN!
- * Generierte Aufzählung PersonStatusEnum.
+ * Aufzählung PersonStatusEnum.
  */
-@SuppressWarnings("all")
 public enum PersonStatusEnum {
+
     /**
      * Person-Status: aktuell.
      */
@@ -15,6 +16,7 @@ public enum PersonStatusEnum {
      * Person-Status: nicht aktuell.
      */
     ALT;
+
     public String toString() {
 
         if (equals(AKTUELL)) {
@@ -27,22 +29,24 @@ public enum PersonStatusEnum {
     public String toString2() {
 
         if (equals(AKTUELL)) {
-            return "aktuell";
+            return Global.g0("enum.state.actual");
         }
-        return "nicht aktuell"; // ALT
+        return Global.g0("enum.state.old"); // ALT
 
     }
 
-    public static PersonStatusEnum fromValue(final String v) {
-        if (v != null) {
-            for (PersonStatusEnum e : values()) {
-                if (v.equals(e.toString())) {
-                    return e;
-                }
-            }
-        }
-        throw new IllegalArgumentException("ungültige PersonStatusEnum: " + v);
-    }
+    // public static PersonStatusEnum fromValue(final String v) {
+    //
+    // if (v != null) {
+    // for (PersonStatusEnum e : values()) {
+    // if (v.equals(e.toString())) {
+    // return e;
+    // }
+    // }
+    // }
+    // return ALT;
+    // // throw new IllegalArgumentException("ungültige PersonStatusEnum: " + v);
+    // }
 
     public String getItemValue() {
         return toString();
@@ -57,13 +61,13 @@ public enum PersonStatusEnum {
 
     }
 
-    public static PersonStatusEnum fromIntValue(final int v) {
-
-        for (PersonStatusEnum e : values()) {
-            if (v == e.intValue()) {
-                return e;
-            }
-        }
-        throw new IllegalArgumentException("ungültige PersonStatusEnum: " + v);
-    }
+    // public static PersonStatusEnum fromIntValue(final int v) {
+    //
+    // for (PersonStatusEnum e : values()) {
+    // if (v == e.intValue()) {
+    // return e;
+    // }
+    // }
+    // throw new IllegalArgumentException("ungültige PersonStatusEnum: " + v);
+    // }
 }
