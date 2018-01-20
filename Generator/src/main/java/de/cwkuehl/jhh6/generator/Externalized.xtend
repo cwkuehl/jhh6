@@ -36,7 +36,7 @@ class ExternalizedProcessor extends AbstractClassProcessor implements CodeGenera
 			val msgFormat = try {
 					new MessageFormat(initializer)
 				} catch (IllegalArgumentException e) {
-					field.initializer.addError("invalid format: " + e.message)
+					field.initializer.addError('''invalid format: «e.message»''')
 					new MessageFormat("")
 				}
 			val formats = msgFormat.formatsByArgumentIndex
@@ -84,9 +84,17 @@ class ExternalizedProcessor extends AbstractClassProcessor implements CodeGenera
 			body = '''return p == null ? "" : p;'''
 		]
 
+		//annotatedClass.addMethod("c") [
+		//	addParameter("p", primitiveInt)
+		//	returnType = primitiveInt
+		//	docComment = "Convert."
+		//	static = true
+		//	body = '''return p;'''
+		//]
+
 		annotatedClass.addMethod("c") [
-			addParameter("p", primitiveInt)
-			returnType = primitiveInt
+			addParameter("p", primitiveDouble)
+			returnType = primitiveDouble
 			docComment = "Convert."
 			static = true
 			body = '''return p;'''
@@ -158,14 +166,16 @@ class ExternalizedProcessor extends AbstractClassProcessor implements CodeGenera
 	}
 
 	def TypeReference formatType(Format format, extension TransformationContext context) {
+
 		switch format {
-			NumberFormat: primitiveInt
+			NumberFormat: primitiveDouble
 			DateFormat: LocalDateTime.newTypeReference
 			default: string
 		}
 	}
 
 	def boolean formatNullable(Format format, extension TransformationContext context) {
+
 		switch format {
 			NumberFormat: false
 			default: true
