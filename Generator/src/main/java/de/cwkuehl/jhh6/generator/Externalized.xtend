@@ -53,12 +53,12 @@ class ExternalizedProcessor extends AbstractClassProcessor implements CodeGenera
 				static = true
 				val params = parameters
 				body = [
-							//	«FOR f : formats.indexed»
-							//		«IF f.v.formatNullable(context) »
-							//			if (arg«f.index» == null)
-							//				return "";
-							//		«ENDIF»
-							//	«ENDFOR»
+					// «FOR f : formats.indexed»
+					// «IF f.v.formatNullable(context) »
+					// if (arg«f.index» == null)
+					// return "";
+					// «ENDIF»
+					// «ENDFOR»
 					'''
 						try {
 							String msg = BUNDLE.getString("«field.simpleName»");
@@ -84,14 +84,13 @@ class ExternalizedProcessor extends AbstractClassProcessor implements CodeGenera
 			body = '''return p == null ? "" : p;'''
 		]
 
-		//annotatedClass.addMethod("c") [
-		//	addParameter("p", primitiveInt)
-		//	returnType = primitiveInt
-		//	docComment = "Convert."
-		//	static = true
-		//	body = '''return p;'''
-		//]
-
+		// annotatedClass.addMethod("c") [
+		// addParameter("p", primitiveInt)
+		// returnType = primitiveInt
+		// docComment = "Convert."
+		// static = true
+		// body = '''return p;'''
+		// ]
 		annotatedClass.addMethod("c") [
 			addParameter("p", primitiveDouble)
 			returnType = primitiveDouble
@@ -157,12 +156,24 @@ class ExternalizedProcessor extends AbstractClassProcessor implements CodeGenera
 		}
 	}
 
-	def getInitializerAsString(FieldDeclaration f) {
+	def private String getInitializerAsString(FieldDeclaration f) {
 
-		val string = f.initializer?.toString
+		var string = f.initializer?.toString
 		if (string === null)
-			return "empty string"
-		return string.substring(1, string.length - 1)
+			return "" // "empty string"
+		string = string.substring(1, string.length - 1)
+		var s = new StringBuilder
+		var anfang = true
+		val char leer = ' '
+		for (c : string.toCharArray) {
+			if (anfang && leer == c)
+				s.append("\\u0020")
+			else {
+				s.append(c)
+				anfang = false
+			}
+		}
+		return s.toString
 	}
 
 	def TypeReference formatType(Format format, extension TransformationContext context) {
