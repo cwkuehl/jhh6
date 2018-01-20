@@ -45,19 +45,19 @@ public enum DialogAufrufEnum {
     public String toString() {
 
         if (equals(OHNE)) {
-            return Global.g0("dialog.without");
+            return Global.g0("enum.dialog.without");
         } else if (equals(NEU)) {
-            return Global.g0("dialog.new");
+            return Global.g0("enum.dialog.new");
         } else if (equals(KOPIEREN)) {
-            return Global.g0("dialog.copy");
+            return Global.g0("enum.dialog.copy");
         } else if (equals(KOPIEREN2)) {
-            return Global.g0("dialog.copy2");
+            return Global.g0("enum.dialog.copy2");
         } else if (equals(AENDERN)) {
-            return Global.g0("dialog.edit");
+            return Global.g0("enum.dialog.edit");
         } else if (equals(LOESCHEN)) {
-            return Global.g0("dialog.delete");
+            return Global.g0("enum.dialog.delete");
         }
-        return Global.g0("dialog.reverse"); // STORNO
+        return Global.g0("enum.dialog.reverse"); // STORNO
 
     }
 

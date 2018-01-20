@@ -28,9 +28,9 @@ public enum FzFahrradTypEnum {
     public String toString2() {
 
         if (equals(TOUR)) {
-            return Global.g0("bike.tour");
+            return Global.g0("enum.bike.tour");
         }
-        return Global.g0("bike.weekly"); // WOECHENTLICH
+        return Global.g0("enum.bike.weekly"); // WOECHENTLICH
 
     }
 

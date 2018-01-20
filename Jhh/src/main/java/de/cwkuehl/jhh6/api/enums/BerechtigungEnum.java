@@ -43,13 +43,13 @@ public enum BerechtigungEnum {
     public String toString2() {
 
         if (equals(KEINE)) {
-            return Global.g0("permission.no");
+            return Global.g0("enum.permission.no");
         } else if (equals(BENUTZER)) {
-            return Global.g0("permission.user");
+            return Global.g0("enum.permission.user");
         } else if (equals(ADMIN)) {
-            return Global.g0("permission.admin");
+            return Global.g0("enum.permission.admin");
         }
-        return Global.g0("permission.all"); // ALLES
+        return Global.g0("enum.permission.all"); // ALLES
 
     }
 

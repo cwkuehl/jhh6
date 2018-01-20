@@ -1,8 +1,9 @@
 package de.cwkuehl.jhh6.api.enums;
 
+import de.cwkuehl.jhh6.api.global.Global;
+
 /**
- * Generierte Datei. BITTE NICHT AENDERN!
- * Generierte Aufzählung MoStatusEnum.
+ * Aufzählung MoStatusEnum.
  */
 public enum MoStatusEnum {
 
@@ -15,6 +16,7 @@ public enum MoStatusEnum {
      * Messdiener-Status: manuell.
      */
     MANUELL;
+
     public String toString() {
 
         if (equals(AUTOMATISCH)) {
@@ -27,13 +29,14 @@ public enum MoStatusEnum {
     public String toString2() {
 
         if (equals(AUTOMATISCH)) {
-            return "automatisch";
+            return Global.g0("enum.state.auto");
         }
-        return "manuell"; // MANUELL
+        return Global.g0("enum.state.manual"); // MANUELL
 
     }
 
     public static MoStatusEnum fromValue(final String v) {
+
         if (v != null) {
             for (MoStatusEnum e : values()) {
                 if (v.equals(e.toString())) {
@@ -41,7 +44,8 @@ public enum MoStatusEnum {
                 }
             }
         }
-        throw new IllegalArgumentException("ungültige MoStatusEnum: " + v);
+        return MANUELL;
+        // throw new IllegalArgumentException("ungültige MoStatusEnum: " + v);
     }
 
     public String getItemValue() {

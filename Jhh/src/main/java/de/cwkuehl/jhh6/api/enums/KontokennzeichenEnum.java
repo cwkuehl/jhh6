@@ -1,10 +1,10 @@
 package de.cwkuehl.jhh6.api.enums;
 
 /**
- * Generierte Datei. BITTE NICHT AENDERN! Generierte Aufzählung KontokennzeichenEnum.
+ * Aufzählung KontokennzeichenEnum.
  */
-@SuppressWarnings("all")
 public enum KontokennzeichenEnum {
+
     /**
      * Konto-Kennzeichen: ohne Kennzeichen.
      */
@@ -39,6 +39,7 @@ public enum KontokennzeichenEnum {
      * Konto-Kennzeichen: O.
      */
     KEN_O;
+
     public String toString() {
 
         if (equals(OHNE)) {
@@ -55,7 +56,6 @@ public enum KontokennzeichenEnum {
             return "I";
         }
         return "O"; // KEN_O
-
     }
 
     // public String toString2() {

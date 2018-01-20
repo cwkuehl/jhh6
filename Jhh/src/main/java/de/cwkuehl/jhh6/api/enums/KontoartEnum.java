@@ -1,7 +1,7 @@
 package de.cwkuehl.jhh6.api.enums;
 
 /**
- * Generierte Datei. BITTE NICHT AENDERN! Generierte Aufzählung KontoartEnum.
+ * Aufzählung KontoartEnum.
  */
 public enum KontoartEnum {
 
@@ -24,6 +24,7 @@ public enum KontoartEnum {
      * Konto-Art: Ertragskonto.
      */
     ERTRAGSKONTO;
+
     public String toString() {
 
         if (equals(AKTIVKONTO)) {
