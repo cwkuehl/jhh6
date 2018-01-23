@@ -1,10 +1,12 @@
 package de.cwkuehl.jhh6.api.enums;
 
+import de.cwkuehl.jhh6.api.global.Global;
+
 /**
  * Aufzählung VmAbrechnungSchluesselEnum.
  */
 public enum VmAbrechnungSchluesselEnum {
- 
+
     /**
      * Vermietung-Abrechnungs-Haus-Schlüssel: Name des Vermieters oder Mieters.
      */
@@ -204,6 +206,7 @@ public enum VmAbrechnungSchluesselEnum {
      * Vermietung-Abrechnungs-Mieter-Schlüssel: Korrektur der Personenmonate-Summe.
      */
     M_PERSMON_KORR;
+
     public String toString() {
 
         if (equals(VM_NAME)) {
@@ -292,98 +295,99 @@ public enum VmAbrechnungSchluesselEnum {
     public String toString2() {
 
         if (equals(VM_NAME)) {
-            return "Name des Vermieters";
+            return Global.g0("enum.akey.llname");
         } else if (equals(VM_TELEFON)) {
-            return "Telefonnummer des Vermieters";
+            return Global.g0("enum.akey.llname");
         } else if (equals(VM_STRASSE)) {
-            return "Straße und Hausnummer des Vermieters";
+            return Global.g0("enum.akey.llstreet");
         } else if (equals(VM_ORT)) {
-            return "Postleitzahl und Ort des Vermieters";
+            return Global.g0("enum.akey.lltown");
         } else if (equals(H_STRASSE)) {
-            return "Straße und Hausnummer des Hauses";
+            return Global.g0("enum.akey.hstreet");
         } else if (equals(H_ORT)) {
-            return "Postleitzahl und Ort des Hauses";
+            return Global.g0("enum.akey.htown");
         } else if (equals(H_DATUM)) {
-            return "Datum der Abrechnung";
+            return Global.g0("enum.akey.hdate");
         } else if (equals(H_GUTHABEN)) {
-            return "Zahlungsformel bei Guthaben";
+            return Global.g0("enum.akey.hcredit");
         } else if (equals(H_NACHZAHLUNG)) {
-            return "Zahlungsformel bei Nachzahlung";
+            return Global.g0("enum.akey.hpayment");
         } else if (equals(H_GRUESSE)) {
-            return "Grußformel am Ende";
+            return Global.g0("enum.akey.hsalut");
         } else if (equals(H_ANLAGE)) {
-            return "Anlage für Abrechnung";
+            return Global.g0("enum.akey.happendix");
         } else if (equals(H_GRUNDSTEUER)) {
-            return "Grundsteuer";
+            return Global.g0("enum.akey.htax");
         } else if (equals(H_STRASSENREINIGUNG)) {
-            return "Straßenreinigung, Winterdienst";
+            return Global.g0("enum.akey.hclean");
         } else if (equals(H_ABFALL)) {
-            return "Abfallbeseitigung";
+            return Global.g0("enum.akey.hwaste");
         } else if (equals(H_STROM)) {
-            return "Allgemein-Beleuchtung";
+            return Global.g0("enum.akey.hpower");
         } else if (equals(H_TRINKWASSER)) {
-            return "Trinkwasser";
+            return Global.g0("enum.akey.hwater");
         } else if (equals(H_SCHMUTZWASSER)) {
-            return "Schmutzwasser";
+            return Global.g0("enum.akey.hsewage");
         } else if (equals(H_NIEDERSCHLAGSWASSER)) {
-            return "Niederschlagswasser";
+            return Global.g0("enum.akey.hrain");
         } else if (equals(H_WOHNVERSICHERUNG)) {
-            return "Wohngebäudeversicherung";
+            return Global.g0("enum.akey.hinsurance");
         } else if (equals(H_HAFTVERSICHERUNG)) {
-            return "Haftpflichtversicherung";
+            return Global.g0("enum.akey.hliabilityinsurance");
         } else if (equals(H_GLASVERSICHERUNG)) {
-            return "Glasversicherung";
+            return Global.g0("enum.akey.hglass");
         } else if (equals(H_DACHREINIGUNG)) {
-            return "Dachrinnenreinigung";
+            return Global.g0("enum.akey.hgutter");
         } else if (equals(H_SCHORNSTEINFEGER)) {
-            return "Schornsteinfeger";
+            return Global.g0("enum.akey.hchimney");
         } else if (equals(H_GARTEN)) {
-            return "Heckenpflege, Gartenpflege";
+            return Global.g0("enum.akey.hgarden");
         } else if (equals(H_WOHNFL_KORR)) {
-            return "Korrektur der Wohnflächen-Summe";
+            return Global.g0("enum.akey.hareadiff");
         } else if (equals(H_PERSMON_KORR)) {
-            return "Korrektur der Personenmonate-Summe";
+            return Global.g0("enum.akey.hpersondiff");
         } else if (equals(W_WOHNFLAECHE)) {
-            return "Wohnfläche";
+            return Global.g0("enum.akey.farea");
         } else if (equals(M_ANREDE)) {
-            return "Anrede des Mieters";
+            return Global.g0("enum.akey.rsalut");
         } else if (equals(M_NAME)) {
-            return "Name des Mieters";
+            return Global.g0("enum.akey.rname");
         } else if (equals(M_STRASSE)) {
-            return "Straße und Hausnummer";
+            return Global.g0("enum.akey.rstreet");
         } else if (equals(M_ORT)) {
-            return "Postleitzahl und Ort";
+            return Global.g0("enum.akey.rtown");
         } else if (equals(M_PERSONENMONATE)) {
-            return "Personenmonate";
+            return Global.g0("enum.akey.rpersons");
         } else if (equals(M_BK_VORAUS)) {
-            return "Betriebskosten-Vorauszahlung ohne Heizkosten";
+            return Global.g0("enum.akey.radvance");
         } else if (equals(M_HK_VORAUS)) {
-            return "Heizkosten-Vorauszahlung";
+            return Global.g0("enum.akey.rheatadvance");
         } else if (equals(M_HK_ABRECHNUNG)) {
-            return "Heizkosten-Abrechnung";
+            return Global.g0("enum.akey.rheat");
         } else if (equals(M_ANTENNE)) {
-            return "Satelliten-Anlage";
+            return Global.g0("enum.akey.rantenna");
         } else if (equals(M_GARTEN)) {
-            return "Pflege des Vorgartens";
+            return Global.g0("enum.akey.rgarden");
         } else if (equals(M_WASSER_ANFANG)) {
-            return "Wasserstand am Anfang";
+            return Global.g0("enum.akey.rwater1");
         } else if (equals(M_WASSER_ENDE)) {
-            return "Wasserstand am Ende";
+            return Global.g0("enum.akey.rwater2");
         }
-        return "Korrektur der Personenmonate-Summe"; // M_PERSMON_KORR
-
+        return Global.g0("enum.akey.rpersondiff"); // M_PERSMON_KORR
     }
 
-    public static VmAbrechnungSchluesselEnum fromValue(final String v) {
-        if (v != null) {
-            for (VmAbrechnungSchluesselEnum e : values()) {
-                if (v.equals(e.toString())) {
-                    return e;
-                }
-            }
-        }
-        throw new IllegalArgumentException("ungültige VmAbrechnungSchluesselEnum: " + v);
-    }
+    // public static VmAbrechnungSchluesselEnum fromValue(final String v) {
+    //
+    // if (v != null) {
+    // for (VmAbrechnungSchluesselEnum e : values()) {
+    // if (v.equals(e.toString())) {
+    // return e;
+    // }
+    // }
+    // }
+    // return null;
+    // // throw new IllegalArgumentException("ungültige VmAbrechnungSchluesselEnum: " + v);
+    // }
 
     public String getItemValue() {
         return toString();

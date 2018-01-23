@@ -1,16 +1,19 @@
 package de.cwkuehl.jhh6.api.global
 
+import de.cwkuehl.jhh6.api.message.Meldungen
+
 /**
  * Zentrale Klasse für Konstanten wird nicht instanziiert.
  * <p>
  * Erstellt am 17.08.2004.
  */
 class Constant {
+
 	/**
 	 * Der Standard-Konstruktor sollte nicht aufgerufen werden, da diese Klasse nur aus statischen Elementen besteht.
 	 */
 	private new() {
-		throw new RuntimeException("Die Klasse Konstanten kann nicht instanziiert werden.")
+		throw new RuntimeException(Meldungen.M1000(typeof(Constant).name))
 	}
 
 	/** Zahl 100.0 als Konstante. */

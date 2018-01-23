@@ -1,5 +1,6 @@
 package de.cwkuehl.jhh6.api.global
 
+import de.cwkuehl.jhh6.api.message.Meldungen
 import java.io.File
 import java.io.FileInputStream
 import java.io.IOException
@@ -34,6 +35,12 @@ class Global {
 	private static final SecureRandom random = new SecureRandom
 	private static ResourceBundle bundle = null
 
+	/**
+	 * Der Standard-Konstruktor sollte nicht aufgerufen werden, da diese Klasse nur aus statischen Elementen besteht.
+	 */
+	private new() {
+		throw new RuntimeException(Meldungen.M1000(typeof(Global).name))
+	}
 	/**
 	 * Diese Funktion macht nichts und wird gebraucht, damit Checkstyle nicht leere Blocks bemängelt.
 	 * @return 0.

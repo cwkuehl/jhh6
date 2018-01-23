@@ -30,21 +30,22 @@ public enum WpStatusEnum {
             return "aktiv";
         }
         return "inaktiv"; // INAKTIV
-
     }
 
-    public static WpStatusEnum fromValue(final String v) {
-        if (v != null) {
-            for (WpStatusEnum e : values()) {
-                if (v.equals(e.toString())) {
-                    return e;
-                }
-            }
-        }
-        throw new IllegalArgumentException("ungültige MoStatusEnum: " + v);
-    }
+    // public static WpStatusEnum fromValue(final String v) {
+    //
+    // if (v != null) {
+    // for (WpStatusEnum e : values()) {
+    // if (v.equals(e.toString())) {
+    // return e;
+    // }
+    // }
+    // }
+    // return AKTIV;
+    // // throw new IllegalArgumentException("ungültige WpStatusEnum: " + v);
+    // }
 
-    public String getItemValue() {
-        return toString();
-    }
+    // public String getItemValue() {
+    // return toString();
+    // }
 }

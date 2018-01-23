@@ -139,6 +139,7 @@ public enum VmKontoSchluesselEnum {
      * Vermietung-Konto-Schlüssel: AW Grundsteuer.
      */
     KP8910_GRUNDSTEUER;
+
     public String toString() {
 
         if (equals(KP200_MIETFORDERUNGEN)) {
@@ -254,21 +255,22 @@ public enum VmKontoSchluesselEnum {
             return "AW Körperschaftssteuer";
         }
         return "AW Grundsteuer"; // KP8910_GRUNDSTEUER
-
     }
 
-    public static VmKontoSchluesselEnum fromValue(final String v) {
-        if (v != null) {
-            for (VmKontoSchluesselEnum e : values()) {
-                if (v.equals(e.toString())) {
-                    return e;
-                }
-            }
-        }
-        throw new IllegalArgumentException("ungültige VmKontoSchluesselEnum: " + v);
-    }
+    // public static VmKontoSchluesselEnum fromValue(final String v) {
+    //
+    // if (v != null) {
+    // for (VmKontoSchluesselEnum e : values()) {
+    // if (v.equals(e.toString())) {
+    // return e;
+    // }
+    // }
+    // }
+    // return null;
+    // // throw new IllegalArgumentException("ungültige VmKontoSchluesselEnum: " + v);
+    // }
 
-    public String getItemValue() {
-        return toString();
-    }
+    // public String getItemValue() {
+    // return toString();
+    // }
 }

@@ -1,8 +1,7 @@
 package de.cwkuehl.jhh6.api.enums;
 
 /**
- * Generierte Datei. BITTE NICHT AENDERN!
- * Generierte Aufzählung VmBuchungSchluesselEnum.
+ * Aufzählung VmBuchungSchluesselEnum.
  */
 public enum VmBuchungSchluesselEnum {
 
@@ -40,6 +39,7 @@ public enum VmBuchungSchluesselEnum {
      * Vermietung-Buchung-Schlüssel: Betriebskosten-Ausgabe.
      */
     BK_AUSGABE;
+
     public String toString() {
 
         if (equals(MIET_SOLL)) {
@@ -59,37 +59,39 @@ public enum VmBuchungSchluesselEnum {
 
     }
 
-    public String toString2() {
+    // public String toString2() {
+    //
+    // if (equals(MIET_SOLL)) {
+    // return "MIET_SOLL";
+    // } else if (equals(MIET_IST)) {
+    // return "MIET_IST";
+    // } else if (equals(NK_SOLL)) {
+    // return "NK_SOLL";
+    // } else if (equals(NK_IST)) {
+    // return "NK_IST";
+    // } else if (equals(KAUTION_SOLL)) {
+    // return "KAUTION_SOLL";
+    // } else if (equals(KAUTION_IST)) {
+    // return "KAUTION_IST";
+    // }
+    // return "BK_AUSGABE"; // BK_AUSGABE
+    //
+    // }
 
-        if (equals(MIET_SOLL)) {
-            return "MIET_SOLL";
-        } else if (equals(MIET_IST)) {
-            return "MIET_IST";
-        } else if (equals(NK_SOLL)) {
-            return "NK_SOLL";
-        } else if (equals(NK_IST)) {
-            return "NK_IST";
-        } else if (equals(KAUTION_SOLL)) {
-            return "KAUTION_SOLL";
-        } else if (equals(KAUTION_IST)) {
-            return "KAUTION_IST";
-        }
-        return "BK_AUSGABE"; // BK_AUSGABE
+    // public static VmBuchungSchluesselEnum xxxfromValue(final String v) {
+    //
+    // if (v != null) {
+    // for (VmBuchungSchluesselEnum e : values()) {
+    // if (v.equals(e.toString())) {
+    // return e;
+    // }
+    // }
+    // }
+    // return null;
+    // // throw new IllegalArgumentException("ungültige VmBuchungSchluesselEnum: " + v);
+    // }
 
-    }
-
-    public static VmBuchungSchluesselEnum fromValue(final String v) {
-        if (v != null) {
-            for (VmBuchungSchluesselEnum e : values()) {
-                if (v.equals(e.toString())) {
-                    return e;
-                }
-            }
-        }
-        throw new IllegalArgumentException("ungültige VmBuchungSchluesselEnum: " + v);
-    }
-
-    public String getItemValue() {
-        return toString();
-    }
+    // public String getItemValue() {
+    // return toString();
+    // }
 }

@@ -1,5 +1,7 @@
 package de.cwkuehl.jhh6.api.enums
 
+import de.cwkuehl.jhh6.api.message.Meldungen
+
 /** 
  * GEDCOM-Kürzel für Ereignisse. 
  */
@@ -8,11 +10,11 @@ final class GedcomEreignis implements Comparable<GedcomEreignis> {
 	/** 
 	 * Der Standard-Konstruktor sollte nicht aufgerufen werden.
 	 */
-	new() {
+	private new() {
 		wert = null
 		symbol = null
 		nr = 0
-		throw new RuntimeException("Die Klasse GedcomEreignis kann nicht instanziiert werden.")
+		throw new RuntimeException(Meldungen.M1000(typeof(GedcomEreignis).name))
 	}
 
 	/** 

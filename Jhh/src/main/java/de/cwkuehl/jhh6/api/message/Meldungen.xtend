@@ -72,6 +72,7 @@ class Meldungen {
 	val FZ043 = "Select a series."
 	val HH001 = "Equity capital"
 	val HH002 = "Profit and loss"
+	val M1000 = "The class {0} cannot be instantiated."
 	val M1007 = "The parameter {0} is invalid."
 	val M1008 = "Report: {0,date,yyyy-MM-dd HH:mm:ss}{1}"
 	val M1009 = "Search: (/{0}/ or /{1}/ or /{2}/) and (/{3}/ or /{4}/ or /{5}/) and not (/{6}/ or /{7}/ or /{8}/){9}"
