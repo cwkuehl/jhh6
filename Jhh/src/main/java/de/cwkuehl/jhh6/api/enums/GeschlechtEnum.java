@@ -4,7 +4,7 @@ package de.cwkuehl.jhh6.api.enums;
  * Aufzählung GeschlechtEnum.
  */
 public enum GeschlechtEnum {
- 
+
     /**
      * Geschlecht: neutrum.
      */
@@ -42,7 +42,6 @@ public enum GeschlechtEnum {
             return "m";
         }
         return "w"; // WEIBLICH
-
     }
 
     // public String toString2() {
@@ -72,7 +71,7 @@ public enum GeschlechtEnum {
         // throw new IllegalArgumentException("ungültige GeschlechtEnum: " + v);
     }
 
-    public String getItemValue() {
-        return toString();
-    }
+    // public String getItemValue() {
+    // return toString();
+    // }
 }

@@ -55,9 +55,9 @@ public enum SpracheEnum {
         // throw new IllegalArgumentException("ungültige SpracheEnum: " + v);
     }
 
-    public String getItemValue() {
-        return toString();
-    }
+    // public String getItemValue() {
+    // return toString();
+    // }
 
     public int intValue() {
 
@@ -67,7 +67,6 @@ public enum SpracheEnum {
             return 1;
         }
         return 2; // ENGLISCH
-
     }
 
     // public static SpracheEnum fromIntValue(final int v) {

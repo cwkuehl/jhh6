@@ -32,7 +32,6 @@ public enum MoStatusEnum {
             return Global.g0("enum.state.auto");
         }
         return Global.g0("enum.state.manual"); // MANUELL
-
     }
 
     public static MoStatusEnum fromValue(final String v) {
@@ -48,7 +47,7 @@ public enum MoStatusEnum {
         // throw new IllegalArgumentException("ungültige MoStatusEnum: " + v);
     }
 
-    public String getItemValue() {
-        return toString();
-    }
+    // public String getItemValue() {
+    // return toString();
+    // }
 }

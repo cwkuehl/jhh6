@@ -1,5 +1,7 @@
 package de.cwkuehl.jhh6.api.enums;
 
+import de.cwkuehl.jhh6.api.global.Global;
+
 /**
  * Aufzählung WpStatusEnum.
  */
@@ -27,9 +29,9 @@ public enum WpStatusEnum {
     public String toString2() {
 
         if (equals(AKTIV)) {
-            return "aktiv";
+            return Global.g0("enum.state.active");
         }
-        return "inaktiv"; // INAKTIV
+        return Global.g0("enum.state.inactive"); // INAKTIV
     }
 
     // public static WpStatusEnum fromValue(final String v) {

@@ -64,7 +64,7 @@ public enum KontoartEnum {
         // throw new IllegalArgumentException("ungültige KontoartEnum: " + v);
     }
 
-    public String getItemValue() {
-        return toString();
-    }
+    // public String getItemValue() {
+    // return toString();
+    // }
 }

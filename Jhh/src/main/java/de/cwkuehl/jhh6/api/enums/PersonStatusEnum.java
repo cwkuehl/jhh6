@@ -48,9 +48,9 @@ public enum PersonStatusEnum {
     // // throw new IllegalArgumentException("ungültige PersonStatusEnum: " + v);
     // }
 
-    public String getItemValue() {
-        return toString();
-    }
+    // public String getItemValue() {
+    // return toString();
+    // }
 
     public int intValue() {
 
@@ -58,7 +58,6 @@ public enum PersonStatusEnum {
             return 0;
         }
         return 1; // ALT
-
     }
 
     // public static PersonStatusEnum fromIntValue(final int v) {

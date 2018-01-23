@@ -66,9 +66,9 @@ public enum BerechtigungEnum {
         // throw new IllegalArgumentException("ungültige BerechtigungEnum: " + v);
     }
 
-    public String getItemValue() {
-        return toString();
-    }
+    // public String getItemValue() {
+    // return toString();
+    // }
 
     public int intValue() {
 

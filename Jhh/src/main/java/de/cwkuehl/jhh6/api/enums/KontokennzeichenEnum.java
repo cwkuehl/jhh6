@@ -90,7 +90,7 @@ public enum KontokennzeichenEnum {
         // throw new IllegalArgumentException("ungültige KontokennzeichenEnum: " + v);
     }
 
-    public String getItemValue() {
-        return toString();
-    }
+    // public String getItemValue() {
+    // return toString();
+    // }
 }

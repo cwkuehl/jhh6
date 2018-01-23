@@ -389,7 +389,7 @@ public enum VmAbrechnungSchluesselEnum {
     // // throw new IllegalArgumentException("ungültige VmAbrechnungSchluesselEnum: " + v);
     // }
 
-    public String getItemValue() {
-        return toString();
-    }
+    // public String getItemValue() {
+    // return toString();
+    // }
 }
