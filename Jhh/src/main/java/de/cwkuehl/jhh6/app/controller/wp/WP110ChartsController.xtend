@@ -101,20 +101,20 @@ class WP110ChartsController extends BaseController<String> {
 				k1.setRelativ(false)
 			}
 			if (wp2 === null) {
-				wp2 = wp1.getClone as WpWertpapierLang
+				wp2 = wp1.getClone
 				wp2.setUid(null)
 			}
 			if (k2 === null) {
-				k2 = k1.getClone as WpKonfigurationLang
+				k2 = k1.getClone
 				k2.setUid(null)
 				k2.setBox(k1.getBox / 2)
 			}
 			if (wp3 === null) {
-				wp3 = wp1.getClone as WpWertpapierLang
+				wp3 = wp1.getClone
 				wp3.setUid(null)
 			}
 			if (k3 === null) {
-				k3 = k2.getClone as WpKonfigurationLang
+				k3 = k2.getClone
 				k3.setUid(null)
 				k3.setBox(k2.getBox * 4)
 			}
