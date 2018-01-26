@@ -1,0 +1,22 @@
+= JHH6 Dokumentation
+Wolfgang Kühl <wolfgang@cwkuehl.de>
+v1.0, 2018-01-26
+:homepage: http://cwkuehl.de
+:toc:
+:icons: font
+:imagesdir: de/assets
+:doctype: book
+:lang: de
+:toc-title: Inhaltsverzeichnis
+:note-caption: Anmerkung
+:warning-caption: Achtung
+:embedAssets:
+
+== Installation
+
+.Titel
+NOTE: Noch *nicht* fertig. 
+
+== Formulare
+
+include::../de/am/AM000.adoc[]
