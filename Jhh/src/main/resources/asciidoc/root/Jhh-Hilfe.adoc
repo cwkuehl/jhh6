@@ -2,17 +2,58 @@
 Wolfgang Kühl <wolfgang@cwkuehl.de>
 v1.0, 2018-01-26
 :homepage: http://cwkuehl.de
-:toc:
+:toc2:
 :icons: font
 :imagesdir: de/assets
+////
+ Bilder einbetten
+:data-uri:
+:imagesdir: ../de/assets
+////
 :doctype: book
 :lang: de
 :toc-title: Inhaltsverzeichnis
 :note-caption: Anmerkung
 :warning-caption: Achtung
-:embedAssets:
 
 == Installation
+
+Generell wird eine aktuelle Java-Installation vorausgesetzt.
+
+=== Installation für Windows
+- Speichern der Batch-Datei als #InstallUpdateJhh6.cmd in einem leeren Verzeichnis, z.B. D:\Haushalt\JHH6.
+- Starten von cmd.exe.
+- Wechseln in das Verzeichnis:
+----
+ D:
+ cd \Haushalt\JHH6
+----
+- Ausführen der Datei:
+----
+ #InstallUpdateJhh6.cmd
+----
+- Beim nächsten Mal starten mit:
+----
+ #JHH6.cmd
+----
+
+=== Installation für Linux
+.(getestet für Ubuntu 16.04)
+* Speichern der Batch-Datei als #InstallUpdateJhh6.sh in einem leeren Verzeichnis, z.B. /opt/Haushalt/JHH6.
+* Starten einer Terminal-Sitzung.
+* Wechseln in das Verzeichnis und Ausführungsberechtigung setzen:
+----
+ cd /opt/Haushalt/JHH6
+ chmod 755 #InstallUpdateJhh6.sh
+----
+* Ausführen der Datei:
+----
+ ./#InstallUpdateJhh6.sh
+----
+* Beim nächsten Mal Starten mit:
+----
+ ./#JHH6.sh
+----
 
 .Titel
 NOTE: Noch *nicht* fertig. 

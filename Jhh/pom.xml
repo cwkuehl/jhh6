@@ -200,6 +200,7 @@
 					</executions>
 					<configuration>
 						<sourceDirectory>src/main/resources/asciidoc/root</sourceDirectory>
+						<sourceDocumentName>Jhh-Hilfe.adoc</sourceDocumentName>
 						<!-- html5 pdf -->
 						<backend>html5</backend>
 						<!-- coderay rouge -->
