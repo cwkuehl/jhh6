@@ -95,7 +95,7 @@ im Installtionsverzeichnis.
 === Erste Anmeldung
 Beim ersten Starten des Programms wird die Benutzer-ID und das Kennwort des Administrator-Benutzers festgelegt.
 Den Eintrag 1 beim Mandanten sollte nicht geändert werden. Die Felder Benutzer und Kennwort müssen mit den gewünschten
-Werten gefüllt werden, bevor die Schaltfläche Anmelden betätigt werden kann.
+Werten gefüllt werden, bevor die Schaltfläche Anmelden betätigt werden kann. Siehe auch <<AM000>>.
 
 
 == Benutzer-Oberfläche
@@ -121,7 +121,223 @@ Tabulator-Köpfe eines auswählen. Über das X nach dem Formulartitel kann ein F
 === Statuszeile
 Hier werden Hinweise oder Fehlermeldungen angezeigt.
 
- 
+
+== Menü
+
+Das Menü umfasst folgende Punkte:
+
+[width="100%",cols="<1,<1,<4",frame="all",options="header"]
+|==========================
+|Menü|Menüpunkt|Erklärung
+.2+|Datei    |                   |Aufruf der Funktionen und Dialoge aus dem Bereich Datei.
+             |Beenden            |Das Programm wird ohne Nachfrage beendet.
+.2+|Benutzer |                   |Aufruf der Funktionen und Dialoge aus dem Bereich Benutzer.
+             |Anmelden / Abmelden|Dialog zum Anmelden, falls dies noch nicht geschehen ist. Abmelden, wenn man angemeldet ist.
+|==========================
+
+Kennwort ändern
+Dialog zum Ändern des Kennworts.
+
+Einstellungen
+Dialog zum Ändern von Einstellungen.
+
+Start-Dialoge
+Dialog zum Auswählen von Dialogen, die nach dem Anmelden geöffnet werden.
+Privat
+
+Aufruf der Funktionen und Dialoge aus dem Bereich Privat.
+
+Tagebuch
+Dieser Dialog verwaltet beliebig lange textliche Eintragungen für jeden Tag.
+
+Notizen
+Dieser Dialog verwaltet beliebig lange Notizen in Text- und Tabellenform für jede Gelegenheit.
+
+Adressen
+Dieser Dialog verwaltet Personen, Geburtstage und Adressen.
+
+Fahrradstände
+Dieser Dialog verwaltet Fahrrad-Touren und Fahrradstände.
+
+Fahrräder
+Dieser Dialog verwaltet Fahrräder.
+
+Bücher
+Dieser Dialog verwaltet Bücher.
+
+Autoren
+Dieser Dialog verwaltet Buch-Autoren.
+
+Serien
+Dieser Dialog verwaltet Buch-Serien.
+
+Lektionen
+Dieser Dialog verwaltet Lektionen.
+
+Lektioninhalte
+Dieser Dialog verwaltet Lektioninhalte.
+
+Statistik
+Dieser Dialog zeigt eine Übersicht über verschiedene Informationen, die im Programm erfasst sind.
+Haushalt
+
+Aufruf der Funktionen und Dialoge aus dem Bereich Haushalt.
+
+Buchungen
+Mit diesem Dialog können Sie komfortabel alle möglichen Buchungen erfassen, kopieren, ändern und stornieren.
+
+Ereignisse
+Dieser Dialog erlaubt das Bearbeiten von Ereignissen, also vorgefertigten Buchungen.
+
+Konten
+Dieser Dialog dient der Verwaltung der Konten. Hier können die Konten angezeigt, erstellt, geändert und eingeschränkt gelöscht werden.
+
+Perioden
+Mit diesem Dialog werden die Perioden bearbeitet.
+
+Schlussbilanz
+In diesem Dialog wird die Schlussbilanz (SB) als T-Konto dargestellt.
+
+G+V-Rechnung
+In diesem Dialog wird die Gewinn- und Verlustrechnung (GV) als T-Konto dargestellt.
+
+Eröffnungsbilanz
+In diesem Dialog wird die Eröffnungsbilanz (EB) als T-Konto dargestellt.
+Vermietung
+
+Aufruf der Funktionen und Dialoge aus dem Bereich Vermietung.
+
+VM-Buchungen
+Mit diesem Dialog können Sie komfortabel alle möglichen Vermietungs-Buchungen erfassen, kopieren, ändern und stornieren.
+
+VM-Ereignisse
+Dieser Dialog erlaubt das Bearbeiten von Vermietungs-Ereignissen, also vorgefertigten Buchungen.
+
+VM-Konten
+Dieser Dialog dient der Verwaltung der Vermietungs-Konten. Hier können die Konten angezeigt, erstellt, geändert und eingeschränkt gelöscht werden.
+
+Perioden
+Mit diesem Dialog werden die Perioden bearbeitet.
+
+Miet-Forderungen
+Dieser Dialog zeigt die Miet-Forderungen an, die nicht bezahlt wurden.
+
+Häuser
+Dieser Dialog verwaltet Häser.
+
+Wohnungen
+Dieser Dialog verwaltet Wohnungen.
+
+Mieter
+Dieser Dialog verwaltet Mieter.
+
+Mieten
+Dieser Dialog verwaltet Mieten von Wohnungen.
+
+Haus-Abrechnungen
+Dieser Dialog verwaltet Betriebskostenabrechnungen auf Häuser-Ebene.
+
+Abrechnungen
+Dieser Dialog verwaltet Betriebskostenabrechnungen in Einzel-Darstellung.
+Heilpraktiker
+
+Aufruf der Funktionen und Dialoge aus dem Bereich Heilpraktiker.
+
+Anamnesen
+Dieser Dialog verwaltet die Anamnesen der Patienten mit Symptomen.
+
+Behandlungen
+Dieser Dialog verwaltet die Behandlungen der Patienten mit Symptomen und Diagnose.
+
+Rechnungen
+Dieser Dialog verwaltet die Rechnungen für Patienten.
+
+Patienten
+Dieser Dialog verwaltet die Patienten.
+
+Status
+Dieser Dialog verwaltet die möglichen Status für Behandlungen und Rechnungen.
+
+Leistungen
+Dieser Dialog verwaltet die möglichen Leistungen für Behandlungen.
+
+Einstellungen
+Dieser Dialog verwaltet die Einstellungen für den Bereich Heilpraktiker.
+Stammbaum
+
+Aufruf der Funktionen und Dialoge aus dem Bereich Stammbaum.
+
+Ahnen
+Dieser Dialog verwaltet alle Ahnen.
+
+Familien
+Dieser Dialog verwaltet alle Ahnen-Familien.
+
+Quellen
+Dieser Dialog verwaltet die Quellen-Angaben für die Ahnen.
+Wertpapiere
+
+Aufruf der Funktionen und Dialoge aus dem Bereich Wertpapiere.
+
+Wertpapiere
+Dieser Dialog verwaltet alle Wertpapiere.
+
+Konfigurationen
+Dieser Dialog verwaltet alle Point and Figure-Konfigurationen zur Auswertung von Wertpapieren.
+
+Wertpapier-Chart
+Dieser Dialog zeigt die Kurse und das Point and Figure-Chart eines Wertpapiers.
+
+Charts
+Dieser Dialog zeigt drei Point and Figure-Charts.
+Administration
+
+Aufruf der Funktionen und Dialoge aus dem Bereich Administration.
+
+Mandanten
+Dieser Dialog verwaltet alle Mandanten in der aktuellen Datenbank.
+
+Benutzer
+Dieser Dialog verwaltet alle Benutzer des aktuellen Mandanten.
+
+Sicherung
+Dieser Dialog bietet eine einfache Durchführung von Sicherungen auf Verzeichnis-Ebene an.
+
+Replikation
+Dieser Dialog verwaltet die Replikation des aktuellen Mandanten mit einer anderen Datenbank.
+Sonstiges
+
+Aufruf der Funktionen und Dialoge aus dem Bereich Sonstiges.
+
+Gottesdienste
+Dieser Dialog verwaltet die Gottesdienste.
+
+Messdiener
+Dieser Dialog verwaltet die Messdiener.
+
+Profile
+Dieser Dialog verwaltet die Gottesdienst-Profile, d.h. Liste der Dienste mit minimaler Anzahl der Messdiener.
+
+Einstellungen
+Dieser Dialog verwaltet die Messdiener-Einstellungen.
+
+Sudoku
+Dieser Dialog erlaubt das Prüfen und Lösen von Sudoku-Rätseln.
+
+Detektiv
+Dieser Dialog erlaubt das Prüfen und Lösen von Detektiv-Rätseln.
+Hilfe
+
+Aufruf der Funktionen und Dialoge aus dem Bereich Hilfe.
+
+Hilfe
+Aufruf dieser Hilfe im eingestellten Browser.
+
+Info
+Aufruf des Dialog für Informationen über das Programm aus den Kategorien Server, Client und Anmeldung.
+|==========================
+
+
 == Formulare und Dialoge
 
 Es gibt zwei verschiedene Arten von Formularen. Die erste Art wird im Formularbereich geöffnet und ist somit von der Größe an das

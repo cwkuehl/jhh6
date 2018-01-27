@@ -1,9 +1,19 @@
-=== Formular AM000 Anmeldung
+anchor:AM000[Anmeldung]
 
-* Hallo
-* Pallo
+=== Formular Anmeldung
+
+Mit diesem Dialog meldet sich der Benutzer bei einem Mandanten an.
 
 image:AM000.png[Anmeldung]
 
-[WARNING]
-Hallo
+[width="100%",cols="<1,<5",frame="all",options="header"]
+|==========================
+|Steuerelement|Erklärung
+|Mandant      |Die Mandantennummer muss eingegeben werden. Der Standardwert ist 1. Die zuletzt verwendete Nummer wird vorgeblendet.
+|Benutzer     |Die Benutzer-ID muss eingegeben werden. Die zuletzt verwendete ID wird vorgeblendet.
+|Kennwort     |Das zum Mandanten und Benutzer-ID passende Kennwort muss eingegeben werden.
+|Kennwort speichern|Das Kontrollkästchen gibt an, ob beim nächsten Start der Anwendung der Anmeldung-Dialog entfallen soll.
+|Anmelden     |Schaltfläche zum Durchführen der Anmeldung. Sind die Angaben korrekt, werden die zusätzlichen Menüpunkte eingeblendet und die ausgewählten Start-Dialoge geöffnet.
+|Zurücksetzen |Schaltfläche zum Verschieben des Hauptfensters in die Mitte des Hauptbildschirms, falls dieser nicht mehr sichtbar sein sollte.
+|Abbrechen    |Schaltfläche zum Abbrechen des Dialogs.
+|==========================
