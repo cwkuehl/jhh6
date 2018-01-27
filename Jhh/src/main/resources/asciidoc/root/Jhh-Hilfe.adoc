@@ -1,27 +1,48 @@
-= JHH6 Dokumentation
+= JHH6 Dokumentation (C) 2018 cwkuehl.de
 Wolfgang Kühl <wolfgang@cwkuehl.de>
 v1.0, 2018-01-26
 :homepage: http://cwkuehl.de
 :toc2:
 :icons: font
-:imagesdir: de/assets
-////
- Bilder einbetten
 :data-uri:
 :imagesdir: ../de/assets
+////
+Bilder einbetten bzw. separat
+:imagesdir: de/assets
 ////
 :doctype: book
 :lang: de
 :toc-title: Inhaltsverzeichnis
 :note-caption: Anmerkung
 :warning-caption: Achtung
+:tip-caption: Tipp
+
+== Beste Funktionen
+
+Das Haushalts-Programm enthält eine Sammlung von Funktionen und Dialogen, die fast jeder verwenden kann:
+
+- *Haushaltsführung* mit doppelter Buchführung, Eröffnungs- und Schlussbilanz sowie Gewinn- und Verlustrechnung (Bereich Haushalt)
+- *Adressenverwaltung* mit beliebig vielen Adressen pro Person und Geburtstagsliste beim Start (Bereich Privat)
+- *Tagebuch* speichert pro Tag einen beliebig langen Text (Bereich Privat)
+- *Stammbaum* mit Ahnen, Familien, Quellen und GEDCOM-Schnittstelle (Bereich Stammbaum)
+- *Heilpraktiker*-Praxis mit Erfassen von Patienten, Behandlungen und Rechnungen (Bereich Heilpraktiker)
+- *Wertpapiere* mit Point and Figure-Charts (Bereich Wertpapiere)
+- *Messdienerordnungen* erstellen (Bereich Messdiener)
+
 
 == Installation
 
 Generell wird eine aktuelle Java-Installation vorausgesetzt.
 
+Herunterladen der zum Betriebsystem passenden Batch-Datei von http://cwkuehl.de/jhh6[JHH6 Download].
+
 === Installation für Windows
 - Speichern der Batch-Datei als #InstallUpdateJhh6.cmd in einem leeren Verzeichnis, z.B. D:\Haushalt\JHH6.
+
+TIP: Dazu ist es notwendig, dass die Dateiendungen angezeigt werden.
+In Windows erreicht man die Einstellung über den Windows Explorer, im Bereich Datei, Optionen die Auswahl ‚Ordner- und Suchoptionen ändern‘.
+Hier muss im Tab Ansicht der Haken bei der Einstellung ‚Erweiterungen bei bekannten Dateitypen ausblenden‘ entfernt werden.
+
 - Starten von cmd.exe.
 - Wechseln in das Verzeichnis:
 ----
@@ -39,25 +60,79 @@ Generell wird eine aktuelle Java-Installation vorausgesetzt.
 
 === Installation für Linux
 .(getestet für Ubuntu 16.04)
-* Speichern der Batch-Datei als #InstallUpdateJhh6.sh in einem leeren Verzeichnis, z.B. /opt/Haushalt/JHH6.
-* Starten einer Terminal-Sitzung.
-* Wechseln in das Verzeichnis und Ausführungsberechtigung setzen:
+- Speichern der Batch-Datei als #InstallUpdateJhh6.sh in einem leeren Verzeichnis, z.B. /opt/Haushalt/JHH6.
+- Starten einer Terminal-Sitzung.
+- Wechseln in das Verzeichnis und Ausführungsberechtigung setzen:
 ----
  cd /opt/Haushalt/JHH6
  chmod 755 #InstallUpdateJhh6.sh
 ----
-* Ausführen der Datei:
+- Ausführen der Datei:
 ----
  ./#InstallUpdateJhh6.sh
 ----
-* Beim nächsten Mal Starten mit:
+- Beim nächsten Mal starten mit:
 ----
  ./#JHH6.sh
 ----
 
-.Titel
-NOTE: Noch *nicht* fertig. 
+== Starten des Programms
 
-== Formulare
+=== Starten für Windows
+Ausführen der Datei:
+----
+ #JHH6.cmd
+----
+im Installtionsverzeichnis.
+
+=== Starten für Linux
+Ausführen der Datei:
+----
+ ./#JHH6.sh
+----
+im Installtionsverzeichnis.
+
+=== Erste Anmeldung
+Beim ersten Starten des Programms wird die Benutzer-ID und das Kennwort des Administrator-Benutzers festgelegt.
+Den Eintrag 1 beim Mandanten sollte nicht geändert werden. Die Felder Benutzer und Kennwort müssen mit den gewünschten
+Werten gefüllt werden, bevor die Schaltfläche Anmelden betätigt werden kann.
+
+
+== Benutzer-Oberfläche
+
+Nach dem Starten öffnet sich das Hauptfenster. Es ist in die vier Bereiche unterteilt: Titelzeile, Menü, Formulare, Statuszeile.
+Das Hauptfenster lässt sich beliebig positionieren und in der Größe ändern. Beim nächsten Starten erscheint das Hauptfenster an der
+gleichen Stelle in der gleichen Größe.
+
+=== Titelzeile
+.In der Titelzeile wird der Name des Programms mit zusätzlichen Informationen angezeigt:
+- Falls das Programm in Testmodus gestartet wurde, beginnt die Zeile mit dem Text "Test-".
+- Falls noch kein Benutzer angemeldet ist, wird dies mit dem Text "(nicht angemeldet)" am Ende angezeigt.
+- Falls ein Benutzer mit einem anderen Mandanten als 1 angemeldet ist, wird dies am Ende der Titelzeile angezeigt, z.B. "(Mandant 2)". 
+
+=== Menü-Bereich
+Im Menü werden alle aktuell verfügbaren Menüpunkte angezeigt. Die meisten Menüpunkte sind erst nach der Anmeldung sichtbar.
+Mit den Einstellungen lassen sich einige Hauptmenüpunkt komplett aus- bzw. einblenden.
+
+=== Formular-Bereich
+In diesem Tabulator-Bereich wird immer höchstens ein Formular angezeigt. Wenn mehrere Formulare offen sind, kann mit Hilfe der
+Tabulator-Köpfe eines auswählen. Über das X nach dem Formulartitel kann ein Formular geschlossen werden.
+
+=== Statuszeile
+Hier werden Hinweise oder Fehlermeldungen angezeigt.
+
+ 
+== Formulare und Dialoge
+
+Es gibt zwei verschiedene Arten von Formularen. Die erste Art wird im Formularbereich geöffnet und ist somit von der Größe an das
+Hauptfenster gebunden, z.B. das Tagebuch-Formular. Die andere Art öffnet sich meist als Folgeformular der ersten Art
+und kann in Größe und Position beliebig geändert werden. Die zweite Art wird als Dialog bezeichnet. Diese Dialoge behalten sich die letzte Position und Größe für das
+nächste Öffnen.
+
+.Fenster verschwunden?
+NOTE: Falls einzelne Dialoge verschwunden sind, können die Positionen und Größe zurückgesetzt werden, und zwar mit dem Menüpunkt
+_Benutzer_ - _Dialoge zurücksetzen_. Falls das Hauptfenster nicht mehr sichtbar ist, kann es über die Schaltfläche Zurücksetzen auf den
+Hauptbildschirm zurückgeholt werden.
+
 
 include::../de/am/AM000.adoc[]

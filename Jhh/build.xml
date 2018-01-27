@@ -61,6 +61,11 @@
 				<include name="*.*" />
 			</fileset>
 		</copy>
+		<copy todir="target/zip/doc" overwrite="true">
+			<fileset dir="target/generated-docs">
+				<include name="**/*.*" />
+			</fileset>
+		</copy>
 		<copy todir="target/zip/license" overwrite="true">
 			<fileset dir="../license">
 				<include name="**/*.*" />

@@ -18,4 +18,4 @@ Installation fuer Linux (getestet fuer Ubuntu 16.04):
  cd /opt/Haushalt/JHH6
  chmod 755 #InstallUpdateJhh6.sh
 4) Ausfuehren der Datei: ./#InstallUpdateJhh6.sh.
-5) Beim naechsten Mal Starten mit ./#JHH6.sh.
+5) Beim naechsten Mal starten mit ./#JHH6.sh.
