@@ -127,8 +127,8 @@ Das Menü umfasst folgende Punkte:
                  |Beenden             |Das Programm wird ohne Nachfrage beendet.
 .6+|Benutzer     |                    |Aufruf der Funktionen und Dialoge aus dem Bereich Benutzer.
                  |Anmelden / Abmelden |Dialog zum Anmelden, falls dies noch nicht geschehen ist. Abmelden, wenn man angemeldet ist. <<AM000>>
-                 |Kennwort ändern     |Dialog zum Ändern des Kennworts.
-                 |Einstellungen       |Dialog zum Ändern von Einstellungen.
+                 |Kennwort ändern     |Dialog zum Ändern des Kennworts. <<AM100>>
+                 |Einstellungen       |Dialog zum Ändern von Einstellungen. <<AM500>>
                  |Start-Dialoge       |Dialog zum Auswählen von Dialogen, die nach dem Anmelden geöffnet werden.
                  |Dialoge zurücksetzen|Die Positionen und Größen aller Dialoge werden zurückgesetzt.
 .12+|Privat      |                    |Aufruf der Funktionen und Dialoge aus dem Bereich Privat.
@@ -214,3 +214,4 @@ Hauptbildschirm zurückgeholt werden.
 
 include::../de/am/AM000.adoc[]
 include::../de/am/AM100.adoc[]
+include::../de/am/AM500.adoc[]
