@@ -129,7 +129,7 @@ Das Menü umfasst folgende Punkte:
                  |Anmelden / Abmelden |Dialog zum Anmelden, falls dies noch nicht geschehen ist. Abmelden, wenn man angemeldet ist. <<AM000>>
                  |Kennwort ändern     |Dialog zum Ändern des Kennworts. <<AM100>>
                  |Einstellungen       |Dialog zum Ändern von Einstellungen. <<AM500>>
-                 |Start-Dialoge       |Dialog zum Auswählen von Dialogen, die nach dem Anmelden geöffnet werden.
+                 |Start-Formulare     |Dialog zum Auswählen von Formularen, die nach dem Anmelden geöffnet werden.
                  |Dialoge zurücksetzen|Die Positionen und Größen aller Dialoge werden zurückgesetzt.
 .12+|Privat      |                    |Aufruf der Funktionen und Dialoge aus dem Bereich Privat.
                  |Tagebuch            |Dieses Formular verwaltet beliebig lange textliche Eintragungen für jeden Tag.
@@ -215,3 +215,4 @@ Hauptbildschirm zurückgeholt werden.
 include::../de/am/AM000.adoc[]
 include::../de/am/AM100.adoc[]
 include::../de/am/AM500.adoc[]
+include::../de/am/AM510.adoc[]
