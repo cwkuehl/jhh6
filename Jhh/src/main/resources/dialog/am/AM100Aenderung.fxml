@@ -54,7 +54,7 @@
 			<Tooltip text="%AM100.save.tt" />
 		</tooltip>
 	</CheckBox>
-	<HBox GridPane.columnIndex="1" GridPane.rowIndex="10">
+	<HBox GridPane.columnIndex="1" GridPane.rowIndex="6">
 		<Button fx:id="ok" defaultButton="true" mnemonicParsing="true" onAction="#onOk" text="%Ok">
 			<tooltip>
 				<Tooltip text="%Ok.tt" />

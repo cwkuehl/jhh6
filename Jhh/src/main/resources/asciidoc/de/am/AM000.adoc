@@ -1,6 +1,6 @@
 anchor:AM000[Anmeldung]
 
-=== Formular Anmeldung
+=== Dialog Anmeldung
 
 Mit diesem Dialog meldet sich der Benutzer bei einem Mandanten an.
 
@@ -12,7 +12,7 @@ image:AM000.png[Anmeldung]
 |Mandant      |Die Mandantennummer muss eingegeben werden. Der Standardwert ist 1. Die zuletzt verwendete Nummer wird vorgeblendet.
 |Benutzer     |Die Benutzer-ID muss eingegeben werden. Die zuletzt verwendete ID wird vorgeblendet.
 |Kennwort     |Das zum Mandanten und Benutzer-ID passende Kennwort muss eingegeben werden.
-|Kennwort speichern|Das Kontrollkästchen gibt an, ob beim nächsten Start der Anwendung der Anmeldung-Dialog entfallen soll.
+|Kennwort speichern|Das Kontrollkästchen gibt an, ob der Anmeldung-Dialog beim nächsten Start der Anwendung entfallen soll.
 |Anmelden     |Schaltfläche zum Durchführen der Anmeldung. Sind die Angaben korrekt, werden die zusätzlichen Menüpunkte eingeblendet und die ausgewählten Start-Dialoge geöffnet.
 |Zurücksetzen |Schaltfläche zum Verschieben des Hauptfensters in die Mitte des Hauptbildschirms, falls dieser nicht mehr sichtbar sein sollte.
 |Abbrechen    |Schaltfläche zum Abbrechen des Dialogs.
