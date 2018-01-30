@@ -12,7 +12,7 @@ image:AM100.png[Kennwort ändern]
 |Mandant      |Die Mandantennummer wird angezeigt.
 |Benutzer     |Die Benutzer-ID wird angezeigt.
 |Altes Kennwort|Das bisherige Kennwort muss eingegeben werden.
-|neues Kennwort|Ein neues Kennwort muss eingegeben werden.
+|Neues Kennwort|Ein neues Kennwort muss eingegeben werden.
 |Wiederholung |Das neue Kennwort muss noch einmal eingegeben werden.
 |Kennwort speichern|Das Kontrollkästchen gibt an, ob der Anmeldung-Dialog beim nächsten Start der Anwendung entfallen soll.
 |OK           |Schaltfläche zum Durchführen der Kennwort-Änderung.
