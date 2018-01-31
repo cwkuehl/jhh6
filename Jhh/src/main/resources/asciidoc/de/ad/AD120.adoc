@@ -1,0 +1,16 @@
+anchor:AD120[Geburtstagsliste]
+
+=== Dialog Geburtstagsliste
+
+Dieser Dialog zeigt die aktuellen Personen, die in einem Zeitraum vom aktuellen Datum Geburtstag haben.
+
+image:AD120.png[Geburtstagsliste]
+
+[width="100%",cols="<1,<5",frame="all",options="header"]
+|==========================
+|Steuerelement|Erklärung
+|Datum        |Das Datum, das den Mittelpunkt den Zeitraums bildet, kann geändert werden. Die Geburtstagsliste wird sofort angepasst.
+|Anzahl Tage  |Die Anzahl der Tage werden zum das Datum	hinzugezählt und von ihm abgezogen und bildet den Geburtstagszeitraum. Das Textfeld kann geändert werden. Die Geburtstagsliste wird sofort angepasst.
+|Geburtstage  |Liste von Geburtstagen mit Personen und dem zugehörigen Alter.
+|OK           |Schaltfläche zum Schließen des Dialog.
+|==========================

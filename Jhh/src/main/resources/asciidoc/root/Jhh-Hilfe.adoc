@@ -209,6 +209,8 @@ Hauptfenster gebunden, z.B. das Tagebuch-Formular. Die andere Art öffnet sich m
 und kann in Größe und Position beliebig geändert werden. Die zweite Art wird als Dialog bezeichnet. Diese Dialoge behalten sich die letzte Position und Größe für das
 nächste Öffnen.
 
+In Dialogen müssen einige Felder ausgefüllt werden und heißen daher Pflichtfelder. Diese sind mit einer fetten Bezeichnung gekennzeichnet. 
+
 .Fenster verschwunden?
 NOTE: Falls einzelne Dialoge verschwunden sind, können die Positionen und Größe zurückgesetzt werden, und zwar mit dem Menüpunkt
 _Benutzer_ - _Dialoge zurücksetzen_. Falls das Hauptfenster nicht mehr sichtbar ist, kann es über die Schaltfläche Zurücksetzen auf den
@@ -217,6 +219,7 @@ Hauptbildschirm zurückgeholt werden.
 
 include::../de/ad/AD100.adoc[]
 include::../de/ad/AD110.adoc[]
+include::../de/ad/AD120.adoc[]
 
 include::../de/am/AM000.adoc[]
 include::../de/am/AM100.adoc[]

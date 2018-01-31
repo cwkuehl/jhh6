@@ -18,7 +18,7 @@
 	</padding>
 
 	<Label fx:id="datum0" mnemonicParsing="true" text="%AD120.datum" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-	<Datum fx:id="datum" schalterText="mhp" onAction="#onTage" accessibleText="%AD120.datum.tt" promptText="%AD120.datum.tt"
+	<Datum fx:id="datum" nullText="" schalterText="mhp" onAction="#onTage" accessibleText="%AD120.datum.tt" promptText="%AD120.datum.tt"
 		wochentagGroesse="100.0" GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.rowIndex="0">
 		<tooltip>
 			<Tooltip text="%AD120.datum.tt" />

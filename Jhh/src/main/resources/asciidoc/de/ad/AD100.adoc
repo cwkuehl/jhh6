@@ -29,5 +29,5 @@ image:AD100.png[Personen]
 |Alle         |Schaltfläche zum Zurücksetzen der Selektionskriterien.
 |Neuer Sitz   |Schaltfläche zum Anlegen eines neuen Sitz für die ausgewählte Person.
 |1. Sitz      |Mit dieser Schaltfläche wird der ausgeählte Sitz zum ersten Sitz dieser Person gemacht. Dabei ändert sich die Nummerierung aller Sitze dieser Person.
-|Geburtstagsliste|Schaltfläche zum Aufrufen der Geburtstagsliste, die auch nach dem Anmelden angezeigt werden kann.
+|Geburtstagsliste|Schaltfläche zum Aufrufen der Geburtstagsliste, die auch nach dem Anmelden angezeigt werden kann. <<AD120>>
 |==========================
