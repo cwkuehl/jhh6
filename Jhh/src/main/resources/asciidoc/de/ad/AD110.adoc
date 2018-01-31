@@ -38,6 +38,6 @@ image:AD110.png[Person mit Sitz und Adresse]
 |Geändert     |Datum und Uhrzeit sowie Benutzer-ID von der letzten Änderung des Datensatzes.
 |OK           |Diese Schaltfläche speichert oder löscht die Person bzw. den Sitz und schließt den Dialog.
 |Adresse Duplizieren|Schaltfläche zum Anlegen einer Adressen-Kopie unter neuer Nummer für den aktuellen Sitz. Dies kann nötig sein, wenn zwei Personen, die bisher die gleiche Adresse benutzt haben, sich trennen.
-|Adresse Wechseln|Schaltfläche zum Benutzen der Adresse einer anderen Person (eines anderen Sitzes). Dies kann nötig sein, wenn zwei Personen zusammenziehen.
+|Adresse Wechseln|Schaltfläche zum Benutzen der Adresse einer anderen Person (eines anderen Sitzes). Dies kann nötig sein, wenn zwei Personen zusammenziehen. <<AD130>>
 |Abbrechen    |Diese Schaltfläche schließt den Dialog ohne Speichern.
 |==========================
