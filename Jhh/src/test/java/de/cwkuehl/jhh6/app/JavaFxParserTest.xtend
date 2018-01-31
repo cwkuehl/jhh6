@@ -1,6 +1,10 @@
 package de.cwkuehl.jhh6.app
 
+import de.cwkuehl.jhh6.TestBase
+import de.cwkuehl.jhh6.api.global.Constant
 import de.cwkuehl.jhh6.api.global.Global
+import java.awt.Toolkit
+import java.awt.datatransfer.DataFlavor
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.util.Vector
@@ -8,7 +12,6 @@ import java.util.regex.Pattern
 import org.junit.Test
 
 import static org.junit.Assert.*
-import de.cwkuehl.jhh6.TestBase
 
 class JavaFxParserTest extends TestBase {
 
@@ -137,7 +140,7 @@ class JavaFxParserTest extends TestBase {
 		// parse("wp/WP400Buchungen.fxml")
 		// parse("wp/WP410Buchung.fxml")
 		// parse("wp/WP500Staende.fxml")
-		 parse("wp/WP510Stand.fxml")
+		parse("wp/WP510Stand.fxml")
 		Global.machNichts
 	}
 
@@ -266,5 +269,39 @@ class JavaFxParserTest extends TestBase {
 		System.out.println
 		for (s : props)
 			System.out.println(s)
+	}
+
+	/* Build AsciiDoc table from . */
+	@Test def void buildAsciiDocTable() {
+
+		if (skipForBuild) {
+			return
+		}
+		var clipboard = Toolkit.getDefaultToolkit.getSystemClipboard
+		var s = clipboard.getData(DataFlavor.stringFlavor) as String
+		if (Global.nes(s)) {
+			return
+		}
+		var sb = new StringBuffer
+		var lines = s.split("\n\r|\r|\n")
+		var l = lines.size
+		val leer = "              "
+		for (var i = 0; i < l; i = i + 2) {
+			sb.append("|").append(lines.get(i))
+			if (lines.get(i).length < leer.length)
+				sb.append(leer.substring(lines.get(i).length + 1))
+			if (i + 1 < l)
+				sb.append("|").append(lines.get(i + 1))
+			sb.append(Constant.CRLF)
+		}
+		System.out.println(sb.toString)
+//		var selection = new StringSelection(sb.toString)
+//		clipboard.setContents(selection, null)
+//		var t = clipboard.getContents(null)
+//		if (t.isDataFlavorSupported(DataFlavor.stringFlavor)) {
+//			var o = t.getTransferData(DataFlavor.stringFlavor)
+//			var data = t.getTransferData(DataFlavor.stringFlavor) as String
+//			System.out.println("Clipboard contents: " + data)
+//		}
 	}
 }

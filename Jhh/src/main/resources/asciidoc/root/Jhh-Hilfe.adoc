@@ -137,7 +137,7 @@ Das Menü umfasst folgende Punkte:
 .12+|Privat      |                    |Aufruf der Funktionen und Dialoge aus dem Bereich Privat.
                  |Tagebuch            |Dieses Formular verwaltet beliebig lange textliche Eintragungen für jeden Tag.
                  |Notizen             |Dieses Formular verwaltet beliebig lange Notizen in Text- und Tabellenform für jede Gelegenheit.
-                 |Personen            |Dieses Formular verwaltet Personen, Geburtstage und Adressen.
+                 |Personen            |Dieses Formular verwaltet Personen, Geburtstage und Adressen. <<AD100>>
                  |Fahrradstände       |Dieses Formular verwaltet Fahrrad-Touren und Fahrradstände.
                  |Fahrräder           |Dieses Formular verwaltet Fahrräder.
                  |Bücher              |Dieses Formular verwaltet Bücher.
@@ -216,6 +216,7 @@ Hauptbildschirm zurückgeholt werden.
 
 
 include::../de/ad/AD100.adoc[]
+include::../de/ad/AD110.adoc[]
 
 include::../de/am/AM000.adoc[]
 include::../de/am/AM100.adoc[]
