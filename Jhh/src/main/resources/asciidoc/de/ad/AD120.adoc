@@ -1,10 +1,11 @@
-anchor:AD120[Geburtstagsliste]
+:ad120-title: Geburtstagsliste
+anchor:AD120[{ad120-title}]
 
-=== Dialog Geburtstagsliste
+=== Dialog {ad120-title}
 
 Dieser Dialog zeigt die aktuellen Personen, die in einem Zeitraum vom aktuellen Datum Geburtstag haben.
 
-image:AD120.png[Geburtstagsliste]
+image:AD120.png[{ad120-title},title={ad120-title}]
 
 [width="100%",cols="<1,<5",frame="all",options="header"]
 |==========================
