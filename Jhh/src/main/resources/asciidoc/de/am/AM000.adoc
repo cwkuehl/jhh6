@@ -1,10 +1,11 @@
-anchor:AM000[Anmeldung]
+:am000-title: Anmeldung
+anchor:AM000[{am000-title}]
 
-=== Dialog Anmeldung
+==== Dialog {am000-title}
 
 Mit diesem Dialog meldet sich der Benutzer bei einem Mandanten an.
 
-image:AM000.png[Anmeldung]
+image:AM000.png[{am000-title},title={am000-title}]
 
 [width="100%",cols="<1,<5",frame="all",options="header"]
 |==========================

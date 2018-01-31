@@ -1,7 +1,7 @@
 :ad100-title: Personen
 anchor:AD100[{ad100-title}]
 
-=== Formular {ad100-title}
+==== Formular {ad100-title}
 
 Dieses Formular verwaltet Personen, Geburtstage und Adressen. Einer Person können beliebig viele Sitze mit Adressen zugeordnet werden.
 Ein Sitz hat eine Bezeichnung (z.B. Sitz, Eltern, Firma) und die damit verbundenen Kommunikationsdaten wie Telefon, Fax, Mobil, E-Mail,

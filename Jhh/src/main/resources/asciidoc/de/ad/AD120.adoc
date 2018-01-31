@@ -1,7 +1,7 @@
 :ad120-title: Geburtstagsliste
 anchor:AD120[{ad120-title}]
 
-=== Dialog {ad120-title}
+==== Dialog {ad120-title}
 
 Dieser Dialog zeigt die aktuellen Personen, die in einem Zeitraum vom aktuellen Datum Geburtstag haben.
 

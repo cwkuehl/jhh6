@@ -1,10 +1,11 @@
-anchor:AM100[Kennwort ändern]
+:am100-title: Kennwort ändern
+anchor:AM100[{am100-title}]
 
-=== Dialog Kennwort ändern
+==== Dialog {am100-title}
 
 Mit diesem Dialog wird das Kennwort des angemeldeten Benutzers geändert.
 
-image:AM100.png[Kennwort ändern]
+image:AM100.png[{am100-title},title={am100-title}]
 
 [width="100%",cols="<1,<5",frame="all",options="header"]
 |==========================

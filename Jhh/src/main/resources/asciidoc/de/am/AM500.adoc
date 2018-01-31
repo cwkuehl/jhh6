@@ -1,12 +1,13 @@
-anchor:AM500[Einstellungen]
+:am500-title: Einstellungen
+anchor:AM500[{am500-title}]
 
-=== Dialog Einstellungen
+==== Dialog {am500-title}
 
 In diesem Dialog werden alle Einstellungen angezeigt. Die Werte können in der Liste direkt geändert werden.
 
 TIP: Nach dem Ändern eines Wert muss Enter gedrückt werden, damit der neue Wert übernommen wird.
 
-image:AM500.png[Einstellungen]
+image:AM500.png[{am500-title},title={am500-title}]
 
 [width="100%",cols="<1,<5",frame="all",options="header"]
 |==========================

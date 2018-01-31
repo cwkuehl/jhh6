@@ -1,10 +1,11 @@
-anchor:AM510[Start-Formulare]
+:am510-title: Start-Formulare
+anchor:AM510[{am510-title}]
 
-=== Dialog Start-Formulare
+==== Dialog {am510-title}
 
-In diesem Dialog werden die Formular festgelegt, die nach dem Anmelden geöffnet werden.
+In diesem Dialog werden die Formulare festgelegt, die nach dem Anmelden geöffnet werden.
 
-image:AM510.png[Start-Formulare]
+image:AM510.png[{am510-title},title={am510-title}]
 
 [width="100%",cols="<1,<5",frame="all",options="header"]
 |==========================

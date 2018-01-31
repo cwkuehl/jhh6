@@ -216,6 +216,21 @@ NOTE: Falls einzelne Dialoge verschwunden sind, können die Positionen und Grö�
 _Benutzer_ - _Dialoge zurücksetzen_. Falls das Hauptfenster nicht mehr sichtbar ist, kann es über die Schaltfläche Zurücksetzen auf den
 Hauptbildschirm zurückgeholt werden.
 
+=== Bereich Benutzer
+
+In diesem Bereich werden die Einstellungen des Benutzers vorgenommen.
+Dieser Bereich besteht aus folgenden Dialogen:
+
+include::../de/am/AM000.adoc[]
+include::../de/am/AM100.adoc[]
+include::../de/am/AM500.adoc[]
+include::../de/am/AM510.adoc[]
+
+
+=== Bereich Privat
+
+In diesem Bereich sind verschiedenartige Dialoge zusammengefasst, die persönliche Daten betreffen.
+Dieser Bereich besteht aus folgenden Dialogen:
 
 include::../de/ad/AD100.adoc[]
 include::../de/ad/AD110.adoc[]
@@ -223,7 +238,3 @@ include::../de/ad/AD120.adoc[]
 include::../de/ad/AD130.adoc[]
 include::../de/ad/AD200.adoc[]
 
-include::../de/am/AM000.adoc[]
-include::../de/am/AM100.adoc[]
-include::../de/am/AM500.adoc[]
-include::../de/am/AM510.adoc[]

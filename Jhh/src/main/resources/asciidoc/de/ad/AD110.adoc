@@ -1,7 +1,7 @@
 :ad110-title: Person mit Sitz und Adresse
 anchor:AD110[{ad110-title}]
 
-=== Dialog {ad110-title}
+==== Dialog {ad110-title}
 
 Dieser Dialog dient dem Erstellen, Kopieren, Ändern und Löschen einer Person mit Sitz und Adresse.
 Abhängig von der Art des Aufrufes sind die Felder editierbar oder nicht.

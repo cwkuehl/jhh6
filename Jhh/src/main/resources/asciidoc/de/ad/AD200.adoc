@@ -1,7 +1,7 @@
 :ad200-title: Adressen-Schnittstelle
 anchor:AD200[{ad200-title}]
 
-=== Dialog {ad200-title}
+==== Dialog {ad200-title}
 
 Dieser Dialog dient dem Import und Export von Personen mit Sitz und Adresse. Die Daten werden in CSV-Dateien abgelegt.
 

@@ -1,7 +1,7 @@
 :ad130-title: Adressen
 anchor:AD130[{ad130-title}]
 
-=== Dialog {ad130-title}
+==== Dialog {ad130-title}
 
 In diesem Dialog wird eine bestehende Adresse ausgewählt.
 
