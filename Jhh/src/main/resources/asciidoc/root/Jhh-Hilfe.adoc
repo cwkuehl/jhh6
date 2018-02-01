@@ -1,6 +1,6 @@
 = JHH6 Dokumentation (C) 2018 cwkuehl.de
 Wolfgang Kühl <wolfgang@cwkuehl.de>
-v1.0, 2018-01-26
+v1.0, 2018-02-01
 :homepage: http://cwkuehl.de
 :toc2:
 :icons: font
@@ -190,7 +190,7 @@ Das Menü umfasst folgende Punkte:
                  |Messdiener          |Dieses Formular verwaltet die Messdiener.
                  |Profile             |Dieses Formular verwaltet die Gottesdienst-Profile, d.h. Liste der Dienste mit minimaler Anzahl der Messdiener.
 .3+|Hilfe        |                    |Aufruf der Funktionen und Dialoge aus dem Bereich Hilfe.
-                 |Über JHH6           |Aufruf des Dialog für Informationen über das Programm aus den Kategorien Laufzeit-Umgebung, Anmeldung und Lizenzen.
+                 |Über JHH6           |Aufruf des Dialog für Informationen über das Programm aus den Kategorien Laufzeit-Umgebung, Anmeldung und Lizenzen. <<AG000>>
                  |Hilfe               |Dieser Dialog zeigt diese Hilfe an.
 |==========================
 
@@ -216,6 +216,10 @@ NOTE: Falls einzelne Dialoge verschwunden sind, können die Positionen und Grö�
 _Benutzer_ - _Dialoge zurücksetzen_. Falls das Hauptfenster nicht mehr sichtbar ist, kann es über die Schaltfläche Zurücksetzen auf den
 Hauptbildschirm zurückgeholt werden.
 
+
+=== Bereich Datei und Administration
+
+
 === Bereich Benutzer
 
 In diesem Bereich werden die Einstellungen des Benutzers vorgenommen.
@@ -227,7 +231,7 @@ include::../de/am/AM500.adoc[]
 include::../de/am/AM510.adoc[]
 
 
-=== Bereich Privat
+=== Bereich Privat und Freizeit
 
 In diesem Bereich sind verschiedenartige Dialoge zusammengefasst, die persönliche Daten betreffen.
 Dieser Bereich besteht aus folgenden Dialogen:
@@ -238,3 +242,25 @@ include::../de/ad/AD120.adoc[]
 include::../de/ad/AD130.adoc[]
 include::../de/ad/AD200.adoc[]
 
+
+=== Bereich Haushalt
+
+
+=== Bereich Vermietung
+
+
+=== Bereich Heilpraktiker
+
+
+=== Bereich Stammbaum
+
+
+=== Bereich Wertpapiere
+
+
+=== Bereich Messdiener
+
+
+=== Bereich Hilfe
+
+include::../de/ag/AG000.adoc[]
