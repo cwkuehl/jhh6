@@ -47,6 +47,7 @@ class AG000InfoController extends BaseController<String> {
 	 * @FXML
 	 */
 	def void onBack() {
+
 		Platform.runLater([
 			val we = lizenz.engine
 			val ci = we.history.currentIndex

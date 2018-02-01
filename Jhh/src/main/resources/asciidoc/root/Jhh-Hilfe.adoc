@@ -191,7 +191,7 @@ Das Menü umfasst folgende Punkte:
                  |Profile             |Dieses Formular verwaltet die Gottesdienst-Profile, d.h. Liste der Dienste mit minimaler Anzahl der Messdiener.
 .3+|Hilfe        |                    |Aufruf der Funktionen und Dialoge aus dem Bereich Hilfe.
                  |Über JHH6           |Aufruf des Dialog für Informationen über das Programm aus den Kategorien Laufzeit-Umgebung, Anmeldung und Lizenzen. <<AG000>>
-                 |Hilfe               |Dieser Dialog zeigt diese Hilfe an.
+                 |Hilfe               |Dieser Dialog zeigt diese Hilfe an. <<AG010>>
 |==========================
 
 === Formular-Bereich
@@ -264,3 +264,4 @@ include::../de/ad/AD200.adoc[]
 === Bereich Hilfe
 
 include::../de/ag/AG000.adoc[]
+include::../de/ag/AG010.adoc[]

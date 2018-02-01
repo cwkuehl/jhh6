@@ -15,10 +15,15 @@
 		<Insets bottom="10" left="10" right="0" top="10" />
 	</padding>
 	<WebView fx:id="webview" minHeight="300.0" minWidth="400.0" prefHeight="-1.0" prefWidth="-1.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.vgrow="ALWAYS" />
-	<HBox alignment="CENTER" GridPane.rowIndex="1">
+	<HBox spacing="10.0" alignment="CENTER" GridPane.rowIndex="1">
 		<Button fx:id="ok" cancelButton="true" defaultButton="true" mnemonicParsing="true" onAction="#onOk" text="%Ok">
 			<tooltip>
 				<Tooltip text="%Ok.tt" />
+			</tooltip>
+		</Button>
+		<Button fx:id="back" mnemonicParsing="true" onAction="#onBack" text="%AG010.back">
+			<tooltip>
+				<Tooltip text="%AG010.back.tt" />
 			</tooltip>
 		</Button>
 	</HBox>
