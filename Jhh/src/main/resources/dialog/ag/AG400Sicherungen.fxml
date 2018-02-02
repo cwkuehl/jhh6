@@ -138,7 +138,7 @@
 			<Tooltip text="%AG400.statusText.tt" />
 		</tooltip>
 	</TextArea>
-	<HBox spacing="10.0" GridPane.columnIndex="0" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
+	<HBox spacing="10.0" GridPane.columnIndex="0" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" visible="false">
 		<Button fx:id="mandantKopieren" mnemonicParsing="true" onAction="#onMandantKopieren" text="%AG400.mandantKopieren">
 			<tooltip>
 				<Tooltip text="%AG400.mandantKopieren.tt" />

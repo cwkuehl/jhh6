@@ -126,7 +126,7 @@ Das Menü umfasst folgende Punkte:
                  |Wiederherstellen    |Die Daten vor der letzten Rückgängig-Aktion werden wiederhergestellt. 
                  |Mandanten           |Dieses Formular verwaltet Mandanten, d.h. getrennte Datenbestände. <<AG100>>
                  |Benutzer            |Dieses Formular verwaltet alle Benutzer des aktuellen Mandanten. <<AG200>>
-                 |Sicherungen         |Dieses Formular bietet eine einfache Durchführung von Sicherungen auf Verzeichnis-Ebene an.
+                 |Sicherungen         |Dieses Formular bietet eine einfache Durchführung von Sicherungen auf Verzeichnis-Ebene an. <<AG400>>
                  |Beenden             |Das Programm wird ohne Nachfrage beendet.
 .6+|Benutzer     |                    |Aufruf der Funktionen und Dialoge aus dem Bereich Benutzer.
                  |Anmelden / Abmelden |Dialog zum Anmelden, falls dies noch nicht geschehen ist. Abmelden, wenn man angemeldet ist. <<AM000>>
@@ -222,6 +222,7 @@ include::../de/ag/AG100.adoc[]
 include::../de/ag/AG110.adoc[]
 include::../de/ag/AG200.adoc[]
 include::../de/ag/AG210.adoc[]
+include::../de/ag/AG400.adoc[]
 
 
 === Bereich Benutzer
