@@ -125,7 +125,7 @@ Das Menü umfasst folgende Punkte:
                  |Rückgängig          |Die letzte Änderung der Daten wird rückgängig gemacht.
                  |Wiederherstellen    |Die Daten vor der letzten Rückgängig-Aktion werden wiederhergestellt. 
                  |Mandanten           |Dieses Formular verwaltet Mandanten, d.h. getrennte Datenbestände. <<AG100>>
-                 |Benutzer            |Dieses Formular verwaltet alle Benutzer des aktuellen Mandanten.
+                 |Benutzer            |Dieses Formular verwaltet alle Benutzer des aktuellen Mandanten. <<AG200>>
                  |Sicherungen         |Dieses Formular bietet eine einfache Durchführung von Sicherungen auf Verzeichnis-Ebene an.
                  |Beenden             |Das Programm wird ohne Nachfrage beendet.
 .6+|Benutzer     |                    |Aufruf der Funktionen und Dialoge aus dem Bereich Benutzer.
@@ -220,6 +220,8 @@ Hauptbildschirm zurückgeholt werden.
 === Bereich Datei und Administration
 include::../de/ag/AG100.adoc[]
 include::../de/ag/AG110.adoc[]
+include::../de/ag/AG200.adoc[]
+include::../de/ag/AG210.adoc[]
 
 
 === Bereich Benutzer
