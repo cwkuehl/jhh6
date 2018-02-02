@@ -1,4 +1,4 @@
-:ag100-title: Personen
+:ag100-title: Mandanten
 anchor:AG100[{ag100-title}]
 
 ==== Formular {ag100-title}
@@ -25,3 +25,4 @@ image:AG100.png[{ag100-title},title={ag100-title}]
 |==========================
 
 WARNING: Beim Löschen werden die Daten des Mandanten aus allen Tabellen gelöscht.
+
