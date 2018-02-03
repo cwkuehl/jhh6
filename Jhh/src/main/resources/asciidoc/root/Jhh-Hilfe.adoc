@@ -147,7 +147,7 @@ Das Menü umfasst folgende Punkte:
                  |Start-Formulare     |Dialog zum Auswählen von Formularen, die nach dem Anmelden geöffnet werden.
                  |Dialoge zurücksetzen|Die Positionen und Größen aller Dialoge werden zurückgesetzt.
 .12+|Privat      |                    |Aufruf der Funktionen und Dialoge aus dem Bereich Privat.
-                 |Tagebuch            |Dieses Formular verwaltet beliebig lange textliche Eintragungen für jeden Tag.
+                 |Tagebuch            |Dieses Formular verwaltet beliebig lange textliche Eintragungen für jeden Tag. <<TB100>>
                  |Notizen             |Dieses Formular verwaltet beliebig lange Notizen in Text- und Tabellenform für jede Gelegenheit.
                  |Personen            |Dieses Formular verwaltet Personen, Geburtstage und Adressen. <<AD100>>
                  |Fahrradstände       |Dieses Formular verwaltet Fahrrad-Touren und Fahrradstände.
@@ -268,12 +268,14 @@ include::../de/am/AM510.adoc[]
 In diesem Bereich sind verschiedenartige Dialoge zusammengefasst, die persönliche Daten betreffen.
 Dieser Bereich besteht aus folgenden Dialogen:
 
+* <<TB100>>
 * <<AD100>>
 * <<AD110>>
 * <<AD120>>
 * <<AD130>>
 * <<AD200>>
 
+include::../de/tb/TB100.adoc[]
 include::../de/ad/AD100.adoc[]
 include::../de/ad/AD110.adoc[]
 include::../de/ad/AD120.adoc[]
