@@ -98,6 +98,18 @@ Beim ersten Starten des Programms wird die Benutzer-ID und das Kennwort des Admi
 Den Eintrag 1 beim Mandanten sollte nicht geändert werden. Die Felder Benutzer und Kennwort müssen mit den gewünschten
 Werten gefüllt werden, bevor die Schaltfläche Anmelden betätigt werden kann. Siehe auch <<AM000>>.
 
+=== Konfiguration
+Nach der Installation ist alles so eingestellt, dass das Programm starten kann.
+Der Speicherplatz der HSQLDB-Datenbank ist in der Konfigurationsdatei _ServerConfig.properties_ im Installationsverzeichnis hinterlegt: 
+
+.Beispiel für _ServerConfig.properties_ unter Linux
+----
+DB_DRIVER_CLASS=org.hsqldb.jdbc.JDBCDriver
+DB_DRIVER_CONNECT=jdbc:hsqldb:file:/home/user/hsqldb/JHH6
+DB_DRIVER_USERNAME=SA
+DB_DRIVER_PASSWORD=
+----
+
 
 == Benutzer-Oberfläche
 
