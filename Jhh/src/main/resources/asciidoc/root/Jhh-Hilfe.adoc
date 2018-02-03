@@ -279,6 +279,7 @@ Dieser Bereich besteht aus folgenden Dialogen:
 * <<FZ200>>
 * <<FZ210>>
 * <<FZ250>>
+* <<FZ260>>
 
 include::../de/tb/TB100.adoc[]
 include::../de/fz/FZ700.adoc[]
@@ -291,6 +292,7 @@ include::../de/ad/AD200.adoc[]
 include::../de/fz/FZ200.adoc[]
 include::../de/fz/FZ210.adoc[]
 include::../de/fz/FZ250.adoc[]
+include::../de/fz/FZ260.adoc[]
 
 
 === Bereich Haushalt
