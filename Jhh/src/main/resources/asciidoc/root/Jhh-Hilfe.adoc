@@ -153,7 +153,7 @@ Das Menü umfasst folgende Punkte:
                  |Fahrradstände       |Dieses Formular verwaltet Fahrrad-Touren und Fahrradstände. <<FZ250>>
                  |Fahrräder           |Dieses Formular verwaltet Fahrräder. <<FZ200>>
                  |Bücher              |Dieses Formular verwaltet Bücher.
-                 |Autoren             |Dieses Formular verwaltet Buch-Autoren.
+                 |Autoren             |Dieses Formular verwaltet Buch-Autoren. <<FZ300>>
                  |Serien              |Dieses Formular verwaltet Buch-Serien.
                  |Statistik           |Dieses Formular zeigt eine Übersicht über verschiedene Informationen, die im Programm erfasst sind.
                  |Sudoku              |Dieses Formular erlaubt das Prüfen und Lösen von Sudoku-Rätseln.
@@ -280,6 +280,8 @@ Dieser Bereich besteht aus folgenden Dialogen:
 * <<FZ210>>
 * <<FZ250>>
 * <<FZ260>>
+* <<FZ300>>
+* <<FZ310>>
 
 include::../de/tb/TB100.adoc[]
 include::../de/fz/FZ700.adoc[]
@@ -293,6 +295,8 @@ include::../de/fz/FZ200.adoc[]
 include::../de/fz/FZ210.adoc[]
 include::../de/fz/FZ250.adoc[]
 include::../de/fz/FZ260.adoc[]
+include::../de/fz/FZ300.adoc[]
+include::../de/fz/FZ310.adoc[]
 
 
 === Bereich Haushalt
