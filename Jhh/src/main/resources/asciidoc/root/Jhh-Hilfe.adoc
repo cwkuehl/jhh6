@@ -270,6 +270,7 @@ Dieser Bereich besteht aus folgenden Dialogen:
 
 * <<TB100>>
 * <<FZ700>>
+* <<FZ710>>
 * <<AD100>>
 * <<AD110>>
 * <<AD120>>
@@ -278,6 +279,7 @@ Dieser Bereich besteht aus folgenden Dialogen:
 
 include::../de/tb/TB100.adoc[]
 include::../de/fz/FZ700.adoc[]
+include::../de/fz/FZ710.adoc[]
 include::../de/ad/AD100.adoc[]
 include::../de/ad/AD110.adoc[]
 include::../de/ad/AD120.adoc[]

@@ -19,6 +19,3 @@ image:FZ700.png[{fz700-title},title={fz700-title}]
 |image:icon/icons8-remove.png[title="Löschen",width={icon-width}]       |Schaltfläche zum Löschen des ausgewählten Notiz.
 |Notizen      |Liste mit allen bestehenden Themen.
 |==========================
-
-TIP: Die Tablle wird mit einem Kontext-Menü gesteuert, das mit der rechten Maustaste aktiviert wird.
-
