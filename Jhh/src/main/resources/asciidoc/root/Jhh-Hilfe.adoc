@@ -150,7 +150,7 @@ Das Menü umfasst folgende Punkte:
                  |Tagebuch            |Dieses Formular verwaltet beliebig lange textliche Eintragungen für jeden Tag. <<TB100>>
                  |Notizen             |Dieses Formular verwaltet beliebig lange Notizen in Text- und Tabellenform für jede Gelegenheit. <<FZ700>>
                  |Personen            |Dieses Formular verwaltet Personen, Geburtstage und Adressen. <<AD100>>
-                 |Fahrradstände       |Dieses Formular verwaltet Fahrrad-Touren und Fahrradstände.
+                 |Fahrradstände       |Dieses Formular verwaltet Fahrrad-Touren und Fahrradstände. <<FZ250>>
                  |Fahrräder           |Dieses Formular verwaltet Fahrräder. <<FZ200>>
                  |Bücher              |Dieses Formular verwaltet Bücher.
                  |Autoren             |Dieses Formular verwaltet Buch-Autoren.
@@ -278,6 +278,7 @@ Dieser Bereich besteht aus folgenden Dialogen:
 * <<AD200>>
 * <<FZ200>>
 * <<FZ210>>
+* <<FZ250>>
 
 include::../de/tb/TB100.adoc[]
 include::../de/fz/FZ700.adoc[]
@@ -289,6 +290,7 @@ include::../de/ad/AD130.adoc[]
 include::../de/ad/AD200.adoc[]
 include::../de/fz/FZ200.adoc[]
 include::../de/fz/FZ210.adoc[]
+include::../de/fz/FZ250.adoc[]
 
 
 === Bereich Haushalt
