@@ -230,17 +230,33 @@ Hauptbildschirm zurückgeholt werden.
 
 
 === Bereich Datei und Administration
+Dieser Bereich stellt administrative Dialoge zur Verfügung.
+Außerdem können Sicherungen auf Verzeichnis-Ebene im Sicherung-Dialog durchgeführt werden.
+Dieser Bereich besteht aus folgenden Dialogen:
+
+* <<AG100>>
+* <<AG110>>
+* <<AG200>>
+* <<AG210>>
+* <<AG400>>
+* <<AG410>>
+
 include::../de/ag/AG100.adoc[]
 include::../de/ag/AG110.adoc[]
 include::../de/ag/AG200.adoc[]
 include::../de/ag/AG210.adoc[]
 include::../de/ag/AG400.adoc[]
+include::../de/ag/AG410.adoc[]
 
 
 === Bereich Benutzer
-
 In diesem Bereich werden die Einstellungen des Benutzers vorgenommen.
 Dieser Bereich besteht aus folgenden Dialogen:
+
+* <<AM000>>
+* <<AM100>>
+* <<AM500>>
+* <<AM510>>
 
 include::../de/am/AM000.adoc[]
 include::../de/am/AM100.adoc[]
@@ -249,9 +265,14 @@ include::../de/am/AM510.adoc[]
 
 
 === Bereich Privat und Freizeit
-
 In diesem Bereich sind verschiedenartige Dialoge zusammengefasst, die persönliche Daten betreffen.
 Dieser Bereich besteht aus folgenden Dialogen:
+
+* <<AD100>>
+* <<AD110>>
+* <<AD120>>
+* <<AD130>>
+* <<AD200>>
 
 include::../de/ad/AD100.adoc[]
 include::../de/ad/AD110.adoc[]
@@ -261,24 +282,45 @@ include::../de/ad/AD200.adoc[]
 
 
 === Bereich Haushalt
+In diesem Bereich ist eine Haushaltsführung mit doppelter Buchführung, Eröffnungs- und Schlussbilanz sowie Gewinn- und Verlustrechnung möglich.
+Dieser Bereich besteht aus folgenden Dialogen:
 
 
 === Bereich Vermietung
+In diesem Bereich werden Häuser, Wohnungen, Mieter, Mieten sowie Sollstellungen und Istbuchungen verwaltet. Die Buchungen werden wie im Bereich Haushalt verwendet. Es werden zusätzlich Felder für Schlüssel, Haus, Wohnung, Mieter bereitgestellt.
+Dieser Bereich besteht aus folgenden Dialogen:
 
 
 === Bereich Heilpraktiker
+In diesem Bereich werden Dialoge für den (homöopathischen) Heilpraktiker bereitgestellt.
+Es wird der Ablauf bei der Behandlung von Patienten von Anamnese bis zur Rechnungsstellung abgebildet.
+Dieser Bereich besteht aus folgenden Dialogen:
 
 
 === Bereich Stammbaum
+In diesem Bereich können Ahnen verwaltet werden. Die verwandtschaftlichen Verhältnisse und Quellen-Angaben werden dabei erfasst.
+Die Daten können selektiv als GEDCOM-Datei exportiert und importiert werden.
+Dieser Bereich besteht aus folgenden Dialogen:
 
 
 === Bereich Wertpapiere
+In diesem Bereich können Wertpapiere verwaltet werden.
+Die Kurse der Wertpapiere können als Point and Figure-Chart visualisiert und bewertet werden.
+Darüberhinaus können Anlagen, d.h. Investitionen in Wertpapiere, inklusive Gebühren, Zinsen gebucht werden.
+Die Anlagen bilden ein Depot, das tagesaktuell preislich bewertet werden kann.
+Dieser Bereich besteht aus folgenden Dialogen:
 
 
 === Bereich Messdiener
+Dieser Bereich stellt Dialoge für die Erstellung von Messdienerordnungen zur Verfügung.
+Dieser Bereich besteht aus folgenden Dialogen:
 
 
 === Bereich Hilfe
+Dieser Bereich bietet Hilfe-Funktionen. Dieser Bereich besteht aus folgenden Dialogen:
+
+* <<AG000>>
+* <<AG010>>
 
 include::../de/ag/AG000.adoc[]
 include::../de/ag/AG010.adoc[]
