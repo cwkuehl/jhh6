@@ -59,9 +59,9 @@ class AG410SicherungController extends BaseController<MaEinstellung> {
 				ok.setText(Meldungen.M2001())
 			}
 		}
-		if (stufe <= 1) { // stufe = 0;
+		if (stufe <= 1) { // stufe = 0
 		}
-		if (stufe <= 2) { // initDatenTable();
+		if (stufe <= 2) { // initDatenTable
 		}
 	}
 

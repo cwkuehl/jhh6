@@ -299,11 +299,11 @@ class AG400SicherungenController extends BaseController<String> {
 
 	def private void speichern() {
 
-		var int i = 1
+		var i = 0
 		for (VerzeichnisseData e : verzeichnisse.getItems) {
+			i++
 			Jhh6::getEinstellungen.setzeResourceDaten('''Sicherung_«i»'''.toString,
 				'''«e.getData.getSchluessel»<«e.getData.getWert»'''.toString)
-			i++
 		}
 		Jhh6::getEinstellungen.setzeResourceDaten('''Sicherung_«(i + 1)»'''.toString, "")
 	}
