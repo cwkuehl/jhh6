@@ -161,7 +161,7 @@ Das Menü umfasst folgende Punkte:
 .8+|Haushalt     |                    |Aufruf der Funktionen und Dialoge aus dem Bereich Haushalt.
                  |Buchungen           |Mit diesem Formular können Sie komfortabel alle möglichen Buchungen erfassen, kopieren, ändern und stornieren.
                  |Ereignisse          |Dieses Formular erlaubt das Bearbeiten von Ereignissen, also vorgefertigten Buchungen.
-                 |Konten              |Dieses Formular dient der Verwaltung der Konten. Hier können die Konten angezeigt, erstellt, geändert und eingeschränkt gelöscht werden.
+                 |Konten              |Dieses Formular dient der Verwaltung der Konten. Hier können die Konten angezeigt, erstellt, geändert und eingeschränkt gelöscht werden. <<HH200>>
                  |Perioden            |Mit diesem Formular werden die Perioden bearbeitet. <<HH100>>
                  |Schlussbilanz       |In diesem Formular wird die Schlussbilanz (SB) als T-Konto dargestellt.
                  |G+V-Rechnung        |In diesem Formular wird die Gewinn- und Verlustrechnung (GV) als T-Konto dargestellt.
@@ -267,7 +267,7 @@ include::../de/am/AM510.adoc[]
 :fz0-title: Bereich Privat und Freizeit
 anchor:FZ0[{fz0-title}]
 
-=== {fzh0-title}
+=== {fz0-title}
 In diesem Bereich sind verschiedenartige Dialoge zusammengefasst, die persönliche Daten betreffen.
 Dieser Bereich besteht aus folgenden Dialogen:
 
@@ -326,8 +326,12 @@ In diesem Bereich ist eine Haushaltsführung mit doppelter Buchführung, Eröffn
 Dieser Bereich besteht aus folgenden Dialogen:
 
 * <<HH100>>
+* <<HH200>>
+* <<HH210>>
 
 include::../de/hh/HH100.adoc[]
+include::../de/hh/HH200.adoc[]
+include::../de/hh/HH210.adoc[]
 
 
 === Bereich Vermietung
