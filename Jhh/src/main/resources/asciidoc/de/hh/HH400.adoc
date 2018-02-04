@@ -22,6 +22,7 @@ image:HH400.png[{hh400-title},title={hh400-title}]
 |image:icon/icons8-copy.png[title="Kopieren",width={icon-width}]        |Schaltfläche zum Kopieren der ausgewählten Buchung.
 |image:icon/icons8-edit.png[title="Ändern",width={icon-width}]          |Schaltfläche zum Ändern der ausgewählten Buchung.
 |image:icon/icons8-remove.png[title="Löschen",width={icon-width}]       |Schaltfläche zum Löschen der ausgewählten Buchung.
+|image:icon/icons8-save.png[title="Export",width={icon-width}]          |Schaltfläche zum Exportieren der aktuellen Buchungsliste als CSV-Datei.
 |Buchungen    |Liste von ausgewählten Buchungen.
 |Status       |Anzeige von Informationen zur aktuellen Buchungsliste.
 |Suche nach   |Es kann Valuta oder Revision gewählt werden. Bei Revision wird nach dem Angelegt- oder Geändert-Datum gesucht.

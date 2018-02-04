@@ -154,7 +154,7 @@
 	<Label fx:id="buchungenStatus" text="%HH400.buchungenStatus" GridPane.columnIndex="0" GridPane.columnSpan="6" GridPane.rowIndex="3" />
 	<Label fx:id="kennzeichen0" mnemonicParsing="true" text="%HH400.kennzeichen" GridPane.columnIndex="0"
 		GridPane.rowIndex="4" />
-	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+	<HBox spacing="10.0" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="4">
 		<fx:define>
 			<ToggleGroup fx:id="kennzeichen" />
 		</fx:define>

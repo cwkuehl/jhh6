@@ -163,9 +163,9 @@ Das Menü umfasst folgende Punkte:
                  |Ereignisse          |Dieses Formular erlaubt das Bearbeiten von Ereignissen, also vorgefertigten Buchungen. <<HH300>>
                  |Konten              |Dieses Formular dient der Verwaltung der Konten. Hier können die Konten angezeigt, erstellt, geändert und eingeschränkt gelöscht werden. <<HH200>>
                  |Perioden            |Mit diesem Formular werden die Perioden bearbeitet. <<HH100>>
-                 |Schlussbilanz       |In diesem Formular wird die Schlussbilanz (SB) als T-Konto dargestellt.
-                 |G+V-Rechnung        |In diesem Formular wird die Gewinn- und Verlustrechnung (GV) als T-Konto dargestellt.
-                 |Eröffnungsbilanz    |In diesem Formular wird die Eröffnungsbilanz (EB) als T-Konto dargestellt.
+                 |Schlussbilanz       |In diesem Formular wird die Schlussbilanz (SB) als T-Konto dargestellt. <<HH500>>
+                 |G+V-Rechnung        |In diesem Formular wird die Gewinn- und Verlustrechnung (GV) als T-Konto dargestellt. <<HH500>>
+                 |Eröffnungsbilanz    |In diesem Formular wird die Eröffnungsbilanz (EB) als T-Konto dargestellt. <<HH500>>
 .12+|Vermietung  |                    |Aufruf der Funktionen und Dialoge aus dem Bereich Vermietung.
                  |VM-Buchungen        |Mit diesem Formular können Sie komfortabel alle möglichen Vermietungs-Buchungen erfassen, kopieren, ändern und stornieren.
                  |VM-Ereignisse       |Dieses Formular erlaubt das Bearbeiten von Vermietungs-Ereignissen, also vorgefertigten Buchungen.
@@ -332,6 +332,8 @@ Dieser Bereich besteht aus folgenden Dialogen:
 * <<HH310>>
 * <<HH400>>
 * <<HH410>>
+* <<HH500>>
+* <<HH510>>
 
 include::../de/hh/HH100.adoc[]
 include::../de/hh/HH200.adoc[]
@@ -340,6 +342,8 @@ include::../de/hh/HH300.adoc[]
 include::../de/hh/HH310.adoc[]
 include::../de/hh/HH400.adoc[]
 include::../de/hh/HH410.adoc[]
+include::../de/hh/HH500.adoc[]
+include::../de/hh/HH510.adoc[]
 
 
 === Bereich Vermietung
