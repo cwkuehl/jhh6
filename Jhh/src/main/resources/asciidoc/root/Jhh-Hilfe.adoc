@@ -1,6 +1,6 @@
 = JHH6 Dokumentation (C) 2018 cwkuehl.de
 Wolfgang Kühl <wolfgang@cwkuehl.de>
-v1.0, 2018-02-01
+v1.0, 2018-02-04
 :homepage: http://cwkuehl.de
 :toc2:
 :icons: font
@@ -155,9 +155,9 @@ Das Menü umfasst folgende Punkte:
                  |Bücher              |Dieses Formular verwaltet Bücher. <<FZ350>>
                  |Autoren             |Dieses Formular verwaltet Buch-Autoren. <<FZ300>>
                  |Serien              |Dieses Formular verwaltet Buch-Serien. <<FZ320>>
-                 |Statistik           |Dieses Formular zeigt eine Übersicht über verschiedene Informationen, die im Programm erfasst sind.
-                 |Sudoku              |Dieses Formular erlaubt das Prüfen und Lösen von Sudoku-Rätseln.
-                 |Detektiv            |Dieses Formular erlaubt das Prüfen und Lösen von Detektiv-Rätseln.
+                 |Statistik           |Dieses Formular zeigt eine Übersicht über verschiedene Informationen, die im Programm erfasst sind. <<FZ100>>
+                 |Sudoku              |Dieses Formular erlaubt das Prüfen und Lösen von Sudoku-Rätseln. <<SO100>>
+                 |Detektiv            |Dieses Formular erlaubt das Prüfen und Lösen von Detektiv-Rätseln. <<SO200>>
 .8+|Haushalt     |                    |Aufruf der Funktionen und Dialoge aus dem Bereich Haushalt.
                  |Buchungen           |Mit diesem Formular können Sie komfortabel alle möglichen Buchungen erfassen, kopieren, ändern und stornieren.
                  |Ereignisse          |Dieses Formular erlaubt das Bearbeiten von Ereignissen, also vorgefertigten Buchungen.
@@ -286,6 +286,7 @@ Dieser Bereich besteht aus folgenden Dialogen:
 * <<FZ330>>
 * <<FZ340>>
 * <<FZ350>>
+* <<FZ100>>
 
 include::../de/tb/TB100.adoc[]
 include::../de/fz/FZ700.adoc[]
@@ -305,6 +306,7 @@ include::../de/fz/FZ320.adoc[]
 include::../de/fz/FZ330.adoc[]
 include::../de/fz/FZ340.adoc[]
 include::../de/fz/FZ350.adoc[]
+include::../de/fz/FZ100.adoc[]
 
 
 === Bereich Haushalt
