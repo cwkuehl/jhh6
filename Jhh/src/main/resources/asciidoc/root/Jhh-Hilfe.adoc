@@ -22,9 +22,9 @@ Bilder einbetten bzw. separat
 
 Das Haushalts-Programm enthält eine Sammlung von Funktionen und Dialogen, die fast jeder verwenden kann:
 
-- *Haushaltsführung* mit doppelter Buchführung, Eröffnungs- und Schlussbilanz sowie Gewinn- und Verlustrechnung (Bereich Haushalt)
-- *Adressenverwaltung* mit beliebig vielen Adressen pro Person und Geburtstagsliste beim Start (Bereich Privat)
-- *Tagebuch* speichert pro Tag einen beliebig langen Text (Bereich Privat)
+- *Haushaltsführung* mit doppelter Buchführung, Eröffnungs- und Schlussbilanz sowie Gewinn- und Verlustrechnung (<<HH0>>)
+- *Adressenverwaltung* mit beliebig vielen Adressen pro Person und Geburtstagsliste beim Start (<<FZ0>>)
+- *Tagebuch* speichert pro Tag einen beliebig langen Text (<<FZ0>>)
 - *Stammbaum* mit Ahnen, Familien, Quellen und GEDCOM-Schnittstelle (Bereich Stammbaum)
 - *Heilpraktiker*-Praxis mit Erfassen von Patienten, Behandlungen und Rechnungen (Bereich Heilpraktiker)
 - *Wertpapiere* mit Point and Figure-Charts (Bereich Wertpapiere)
@@ -162,7 +162,7 @@ Das Menü umfasst folgende Punkte:
                  |Buchungen           |Mit diesem Formular können Sie komfortabel alle möglichen Buchungen erfassen, kopieren, ändern und stornieren.
                  |Ereignisse          |Dieses Formular erlaubt das Bearbeiten von Ereignissen, also vorgefertigten Buchungen.
                  |Konten              |Dieses Formular dient der Verwaltung der Konten. Hier können die Konten angezeigt, erstellt, geändert und eingeschränkt gelöscht werden.
-                 |Perioden            |Mit diesem Formular werden die Perioden bearbeitet.
+                 |Perioden            |Mit diesem Formular werden die Perioden bearbeitet. <<HH100>>
                  |Schlussbilanz       |In diesem Formular wird die Schlussbilanz (SB) als T-Konto dargestellt.
                  |G+V-Rechnung        |In diesem Formular wird die Gewinn- und Verlustrechnung (GV) als T-Konto dargestellt.
                  |Eröffnungsbilanz    |In diesem Formular wird die Eröffnungsbilanz (EB) als T-Konto dargestellt.
@@ -264,7 +264,10 @@ include::../de/am/AM500.adoc[]
 include::../de/am/AM510.adoc[]
 
 
-=== Bereich Privat und Freizeit
+:fz0-title: Bereich Privat und Freizeit
+anchor:FZ0[{fz0-title}]
+
+=== {fzh0-title}
 In diesem Bereich sind verschiedenartige Dialoge zusammengefasst, die persönliche Daten betreffen.
 Dieser Bereich besteht aus folgenden Dialogen:
 
@@ -315,9 +318,16 @@ include::../de/so/SO200.adoc[]
 include::../de/so/SO210.adoc[]
 
 
-=== Bereich Haushalt
+:hh0-title: Bereich Haushalt
+anchor:HH0[{hh0-title}]
+
+=== {hh0-title}
 In diesem Bereich ist eine Haushaltsführung mit doppelter Buchführung, Eröffnungs- und Schlussbilanz sowie Gewinn- und Verlustrechnung möglich.
 Dieser Bereich besteht aus folgenden Dialogen:
+
+* <<HH100>>
+
+include::../de/hh/HH100.adoc[]
 
 
 === Bereich Vermietung
