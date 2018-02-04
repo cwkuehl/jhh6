@@ -1,0 +1,28 @@
+:hp110-title: Patient
+anchor:HP110[{hp110-title}]
+
+==== Dialog {hp110-title}
+
+Dieser Dialog dient dem Erstellen, Kopieren, Ändern und Löschen eines Patienten.
+Abhängig von der Art des Aufrufes sind die Felder editierbar oder nicht.
+
+image:HP110.png[{hp110-title},title={hp110-title}]
+
+[width="100%",cols="<1,<5",frame="all",options="header"]
+|==========================
+|Steuerelement|Erklärung
+|Nr.          |Eindeutige Nummer des ausgewählten Patienten.
+|Vorname      |Ein Vorname kann eingegeben werden.
+|Name         |Ein Name muss eingegeben werden.
+|Geschlecht   |Ein Geschlecht muss eingegeben werden.
+|Bilddaten    |Die Metadaten der Bilder können bearbeitet werden. Der Text wird als Tooltipp angezeigt.
+|Adresse      |Es können 3 Adress-Zeilen eingegeben werden.
+|Rechnung an  |Es kann ein anderer Patient ausgewählt werden. Dessen Adresse wird in der Rechnung ausgedruckt. Dies kann z.B. ein Elternteil eines Kindes sein.
+|Geburtsdatum |Es kann ein Geburtsdatum eingegeben werden.
+|Notiz        |Eine beliebig lange Notiz kann erfasst werden.
+|Angelegt     |Datum und Uhrzeit sowie Benutzer-ID von der Erstellung des Datensatzes.
+|Geändert     |Datum und Uhrzeit sowie Benutzer-ID von der letzten Änderung des Datensatzes.
+|OK           |Diese Schaltfläche speichert oder löscht den Patienten und schließt den Dialog.
+|Bild Hinzufügen|Mit dieser Schaltfläche können beliebig viele Bilder zu einem Patienten hinzugefügt werden.
+|Abbrechen    |Diese Schaltfläche schließt den Dialog ohne Speichern.
+|==========================

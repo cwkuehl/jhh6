@@ -181,7 +181,7 @@ Das Menü umfasst folgende Punkte:
 .7+|Heilpraktiker|                    |Aufruf der Funktionen und Dialoge aus dem Bereich Heilpraktiker.
                  |Behandlungen        |Dieses Formular verwaltet die Behandlungen der Patienten mit Symptomen und Diagnose.
                  |Rechnungen          |Dieses Formular verwaltet die Rechnungen für Patienten.
-                 |Patienten           |Dieses Formular verwaltet die Patienten.
+                 |Patienten           |Dieses Formular verwaltet die Patienten. <<HP100>>
                  |Status              |Dieses Formular verwaltet die möglichen Status für Behandlungen und Rechnungen.
                  |Leistungen          |Dieses Formular verwaltet die möglichen Leistungen für Behandlungen.
                  |Leistungsgruppen    |Mit diesem Formular werden Leistungen zu Gruppen zusammengefasst.
@@ -355,6 +355,12 @@ Dieser Bereich besteht aus folgenden Dialogen:
 In diesem Bereich werden Dialoge für den (homöopathischen) Heilpraktiker bereitgestellt.
 Es wird der Ablauf bei der Behandlung von Patienten von Anamnese bis zur Rechnungsstellung abgebildet.
 Dieser Bereich besteht aus folgenden Dialogen:
+
+* <<HP100>>
+* <<HP110>>
+
+include::../de/hp/HP100.adoc[]
+include::../de/hp/HP110.adoc[]
 
 
 === Bereich Stammbaum

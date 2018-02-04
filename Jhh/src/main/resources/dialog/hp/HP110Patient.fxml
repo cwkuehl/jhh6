@@ -17,31 +17,31 @@
 		<Insets bottom="10" left="10" right="10" top="10" />
 	</padding>
 
-	<Label fx:id="nr0" text="%HP110.nr" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-	<TextField fx:id="nr" accessibleText="%HP110.nr.tt" promptText="%HP110.nr.tt" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1">
+	<Label fx:id="nr0" text="%HP110.nr" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+	<TextField fx:id="nr" accessibleText="%HP110.nr.tt" promptText="%HP110.nr.tt" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="0">
 		<tooltip>
 			<Tooltip text="%HP110.nr.tt" />
 		</tooltip>
 	</TextField>
-	<ScrollPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.rowSpan="4">
+	<ScrollPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.rowSpan="4">
 		<HBox fx:id="bilder">
 		</HBox>
 	</ScrollPane>
 	
-	<Label fx:id="vorname0" mnemonicParsing="true" text="%HP110.vorname" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-	<TextField fx:id="vorname" accessibleText="%HP110.vorname.tt" promptText="%HP110.vorname.tt" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
+	<Label fx:id="vorname0" mnemonicParsing="true" text="%HP110.vorname" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+	<TextField fx:id="vorname" accessibleText="%HP110.vorname.tt" promptText="%HP110.vorname.tt" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
 		<tooltip>
 			<Tooltip text="%HP110.vorname.tt" />
 		</tooltip>
 	</TextField>
-	<Label fx:id="name10" mnemonicParsing="true" text="%HP110.name1" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-	<TextField fx:id="name1" accessibleText="%HP110.name1.tt" minWidth="100.0" promptText="%HP110.name1.tt" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
+	<Label fx:id="name10" mnemonicParsing="true" text="%HP110.name1" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+	<TextField fx:id="name1" accessibleText="%HP110.name1.tt" minWidth="100.0" promptText="%HP110.name1.tt" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
 		<tooltip>
 			<Tooltip text="%HP110.name1.tt" />
 		</tooltip>
 	</TextField>
-	<Label fx:id="geschlecht0" text="%HP110.geschlecht" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4">
+	<Label fx:id="geschlecht0" text="%HP110.geschlecht" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3">
 		<fx:define>
 			<ToggleGroup fx:id="geschlecht" />
 		</fx:define>
@@ -64,59 +64,59 @@
 			</RadioButton>
 		</children>
 	</HBox>
-	<Label fx:id="bilddaten0" text="%HP110.bilddaten" GridPane.columnIndex="0" GridPane.rowIndex="6" />
-	<TextArea fx:id="bilddaten" accessibleText="%HP110.bilddaten.tt" promptText="%HP110.bilddaten.tt" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6" GridPane.vgrow="ALWAYS">
+	<Label fx:id="bilddaten0" text="%HP110.bilddaten" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+	<TextArea fx:id="bilddaten" accessibleText="%HP110.bilddaten.tt" promptText="%HP110.bilddaten.tt" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.vgrow="ALWAYS">
 		<tooltip>
 			<Tooltip text="%HP110.bilddaten.tt" />
 		</tooltip>
 	</TextArea>
-	<Label fx:id="adresse10" mnemonicParsing="true" text="%HP110.adresse1" GridPane.columnIndex="0" GridPane.rowIndex="11" />
-	<TextField fx:id="adresse1" accessibleText="%HP110.adresse1.tt" promptText="%HP110.adresse1.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="11">
+	<Label fx:id="adresse10" mnemonicParsing="true" text="%HP110.adresse1" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+	<TextField fx:id="adresse1" accessibleText="%HP110.adresse1.tt" promptText="%HP110.adresse1.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="5">
 		<tooltip>
 			<Tooltip text="%HP110.adresse1.tt" />
 		</tooltip>
 	</TextField>
-	<TextField fx:id="adresse2" accessibleText="%HP110.adresse2.tt" promptText="%HP110.adresse2.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="12">
+	<TextField fx:id="adresse2" accessibleText="%HP110.adresse2.tt" promptText="%HP110.adresse2.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="6">
 		<tooltip>
 			<Tooltip text="%HP110.adresse2.tt" />
 		</tooltip>
 	</TextField>
-	<TextField fx:id="adresse3" accessibleText="%HP110.adresse3.tt" promptText="%HP110.adresse3.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="13">
+	<TextField fx:id="adresse3" accessibleText="%HP110.adresse3.tt" promptText="%HP110.adresse3.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="7">
 		<tooltip>
 			<Tooltip text="%HP110.adresse3.tt" />
 		</tooltip>
 	</TextField>
-	<Label fx:id="rechnung0" mnemonicParsing="true" text="%HP110.rechnung" GridPane.columnIndex="0" GridPane.rowIndex="14" />
-	<ComboBox fx:id="rechnung" accessibleText="%HP110.rechnung.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="14">
+	<Label fx:id="rechnung0" mnemonicParsing="true" text="%HP110.rechnung" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+	<ComboBox fx:id="rechnung" accessibleText="%HP110.rechnung.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="8">
 		<tooltip>
 			<Tooltip text="%HP110.rechnung.tt" />
 		</tooltip>
 	</ComboBox>
-	<Label fx:id="geburt0" mnemonicParsing="true" text="%HP110.geburt" GridPane.columnIndex="0" GridPane.rowIndex="15" />
-	<Datum fx:id="geburt" accessibleText="%HP110.geburt.tt" promptText="%HP110.geburt.tt" wochentagGroesse="80" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="15">
+	<Label fx:id="geburt0" mnemonicParsing="true" text="%HP110.geburt" GridPane.columnIndex="0" GridPane.rowIndex="9" />
+	<Datum fx:id="geburt" accessibleText="%HP110.geburt.tt" promptText="%HP110.geburt.tt" wochentagGroesse="80" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="9">
 		<tooltip>
 			<Tooltip text="%HP110.geburt.tt" />
 		</tooltip>
 	</Datum>
-	<Label fx:id="notiz0" text="%HP110.notiz" GridPane.columnIndex="0" GridPane.rowIndex="16" />
-	<TextArea fx:id="notiz" accessibleText="%HP110.notiz.tt" promptText="%HP110.notiz.tt" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="16" GridPane.vgrow="ALWAYS">
+	<Label fx:id="notiz0" text="%HP110.notiz" GridPane.columnIndex="0" GridPane.rowIndex="10" />
+	<TextArea fx:id="notiz" accessibleText="%HP110.notiz.tt" promptText="%HP110.notiz.tt" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="10" GridPane.vgrow="ALWAYS">
 		<tooltip>
 			<Tooltip text="%HP110.notiz.tt" />
 		</tooltip>
 	</TextArea>
-	<Label fx:id="angelegt0" text="%Creation" GridPane.columnIndex="0" GridPane.rowIndex="17" />
-	<TextField fx:id="angelegt" accessibleText="%Creation.tt" promptText="%Creation.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="17">
+	<Label fx:id="angelegt0" text="%Creation" GridPane.columnIndex="0" GridPane.rowIndex="11" />
+	<TextField fx:id="angelegt" accessibleText="%Creation.tt" promptText="%Creation.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="11">
 		<tooltip>
 			<Tooltip text="%Creation.tt" />
 		</tooltip>
 	</TextField>
-	<Label fx:id="geaendert0" text="%Change" GridPane.columnIndex="0" GridPane.rowIndex="18" />
-	<TextField fx:id="geaendert" accessibleText="%Change.tt" promptText="%Change.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="18">
+	<Label fx:id="geaendert0" text="%Change" GridPane.columnIndex="0" GridPane.rowIndex="12" />
+	<TextField fx:id="geaendert" accessibleText="%Change.tt" promptText="%Change.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="12">
 		<tooltip>
 			<Tooltip text="%Change.tt" />
 		</tooltip>
 	</TextField>
-	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="19">
+	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="13">
 		<Button fx:id="ok" defaultButton="true" mnemonicParsing="true" onAction="#onOk" text="%Ok">
 			<tooltip>
 				<Tooltip text="%Ok.tt" />
@@ -144,12 +144,6 @@
 		<ColumnConstraints />
 	</columnConstraints>
 	<rowConstraints>
-		<RowConstraints />
-		<RowConstraints />
-		<RowConstraints />
-		<RowConstraints />
-		<RowConstraints />
-		<RowConstraints />
 		<RowConstraints />
 		<RowConstraints />
 		<RowConstraints />
