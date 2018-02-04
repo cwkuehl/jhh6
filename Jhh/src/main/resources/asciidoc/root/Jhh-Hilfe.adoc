@@ -288,6 +288,8 @@ Dieser Bereich besteht aus folgenden Dialogen:
 * <<FZ350>>
 * <<FZ100>>
 * <<SO100>>
+* <<SO200>>
+* <<SO210>>
 
 include::../de/tb/TB100.adoc[]
 include::../de/fz/FZ700.adoc[]
@@ -309,6 +311,8 @@ include::../de/fz/FZ340.adoc[]
 include::../de/fz/FZ350.adoc[]
 include::../de/fz/FZ100.adoc[]
 include::../de/so/SO100.adoc[]
+include::../de/so/SO200.adoc[]
+include::../de/so/SO210.adoc[]
 
 
 === Bereich Haushalt
