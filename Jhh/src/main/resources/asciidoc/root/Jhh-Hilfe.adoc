@@ -160,7 +160,7 @@ Das Menü umfasst folgende Punkte:
                  |Detektiv            |Dieses Formular erlaubt das Prüfen und Lösen von Detektiv-Rätseln. <<SO200>>
 .8+|Haushalt     |                    |Aufruf der Funktionen und Dialoge aus dem Bereich Haushalt.
                  |Buchungen           |Mit diesem Formular können Sie komfortabel alle möglichen Buchungen erfassen, kopieren, ändern und stornieren.
-                 |Ereignisse          |Dieses Formular erlaubt das Bearbeiten von Ereignissen, also vorgefertigten Buchungen.
+                 |Ereignisse          |Dieses Formular erlaubt das Bearbeiten von Ereignissen, also vorgefertigten Buchungen. <<HH300>>
                  |Konten              |Dieses Formular dient der Verwaltung der Konten. Hier können die Konten angezeigt, erstellt, geändert und eingeschränkt gelöscht werden. <<HH200>>
                  |Perioden            |Mit diesem Formular werden die Perioden bearbeitet. <<HH100>>
                  |Schlussbilanz       |In diesem Formular wird die Schlussbilanz (SB) als T-Konto dargestellt.
@@ -328,10 +328,14 @@ Dieser Bereich besteht aus folgenden Dialogen:
 * <<HH100>>
 * <<HH200>>
 * <<HH210>>
+* <<HH300>>
+* <<HH310>>
 
 include::../de/hh/HH100.adoc[]
 include::../de/hh/HH200.adoc[]
 include::../de/hh/HH210.adoc[]
+include::../de/hh/HH300.adoc[]
+include::../de/hh/HH310.adoc[]
 
 
 === Bereich Vermietung
