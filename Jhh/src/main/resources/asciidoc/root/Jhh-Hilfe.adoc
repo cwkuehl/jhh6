@@ -26,7 +26,7 @@ Das Haushalts-Programm enthält eine Sammlung von Funktionen und Dialogen, die f
 - *Adressenverwaltung* mit beliebig vielen Adressen pro Person und Geburtstagsliste beim Start (<<FZ0>>)
 - *Tagebuch* speichert pro Tag einen beliebig langen Text (<<FZ0>>)
 - *Stammbaum* mit Ahnen, Familien, Quellen und GEDCOM-Schnittstelle (Bereich Stammbaum)
-- *Heilpraktiker*-Praxis mit Erfassen von Patienten, Behandlungen und Rechnungen (Bereich Heilpraktiker)
+- *Heilpraktiker*-Praxis mit Erfassen von Patienten, Behandlungen und Rechnungen (<<HP0>>)
 - *Wertpapiere* mit Point and Figure-Charts (Bereich Wertpapiere)
 - *Messdienerordnungen* erstellen (Bereich Messdiener)
 
@@ -182,7 +182,7 @@ Das Menü umfasst folgende Punkte:
                  |Behandlungen        |Dieses Formular verwaltet die Behandlungen der Patienten mit Symptomen und Diagnose.
                  |Rechnungen          |Dieses Formular verwaltet die Rechnungen für Patienten.
                  |Patienten           |Dieses Formular verwaltet die Patienten. <<HP100>>
-                 |Status              |Dieses Formular verwaltet die möglichen Status für Behandlungen und Rechnungen.
+                 |Status              |Dieses Formular verwaltet die möglichen Status für Behandlungen und Rechnungen. <<HP150>>
                  |Leistungen          |Dieses Formular verwaltet die möglichen Leistungen für Behandlungen.
                  |Leistungsgruppen    |Mit diesem Formular werden Leistungen zu Gruppen zusammengefasst.
 .4+|Stammbaum    |                    |Aufruf der Funktionen und Dialoge aus dem Bereich Stammbaum.
@@ -351,16 +351,23 @@ In diesem Bereich werden Häuser, Wohnungen, Mieter, Mieten sowie Sollstellungen
 Dieser Bereich besteht aus folgenden Dialogen:
 
 
-=== Bereich Heilpraktiker
+:hp0-title: Bereich Heilpraktiker
+anchor:HP0[{hp0-title}]
+
+=== {hp0-title}
 In diesem Bereich werden Dialoge für den (homöopathischen) Heilpraktiker bereitgestellt.
 Es wird der Ablauf bei der Behandlung von Patienten von Anamnese bis zur Rechnungsstellung abgebildet.
 Dieser Bereich besteht aus folgenden Dialogen:
 
 * <<HP100>>
 * <<HP110>>
+* <<HP150>>
+* <<HP160>>
 
 include::../de/hp/HP100.adoc[]
 include::../de/hp/HP110.adoc[]
+include::../de/hp/HP150.adoc[]
+include::../de/hp/HP160.adoc[]
 
 
 === Bereich Stammbaum

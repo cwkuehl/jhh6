@@ -1,0 +1,24 @@
+:hp160-title: Status
+anchor:HP160[{hp160-title}]
+
+==== Dialog {hp160-title}
+
+Dieser Dialog dient dem Erstellen, Kopieren, Ändern und Löschen eines Status.
+Abhängig von der Art des Aufrufes sind die Felder editierbar oder nicht.
+
+image:HP160.png[{hp160-title},title={hp160-title}]
+
+[width="100%",cols="<1,<5",frame="all",options="header"]
+|==========================
+|Steuerelement|Erklärung
+|Nr.          |Eindeutige Nummer des ausgewählten Status.
+|Status       |Eine Kurz-Bezeichnung des Status muss eingegeben werden.
+|Beschreibung |Eine Beschreibung kann eingegeben werden.
+|Sortierung   |Durch die Eingabe einer Zahl wird die Reihenfolge der Status-Einträge in den Liste festgelegt.
+|Standard     |Mit dieser Einstellung, kann festgelegt werden, ob der Status bei der Rechnung oder der Behandlung vorgeblendet werden soll.
+|Notiz        |Eine beliebig lange Notiz kann erfasst werden.
+|Angelegt     |Datum und Uhrzeit sowie Benutzer-ID von der Erstellung des Datensatzes.
+|Geändert     |Datum und Uhrzeit sowie Benutzer-ID von der letzten Änderung des Datensatzes.
+|OK           |Diese Schaltfläche speichert oder löscht den Status und schließt den Dialog.
+|Abbrechen    |Diese Schaltfläche schließt den Dialog ohne Speichern.
+|==========================
