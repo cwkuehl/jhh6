@@ -304,10 +304,10 @@ class HeilpraktikerService {
 			throw new MeldungException(Meldungen.M2036)
 		}
 		// Leistung aus Leistungsgruppen löschen
-		var lliste = behleistRep.getBehandlungLeistungListe(daten, null, uid)
-		for (HpBehandlungLeistung l : lliste) {
-			behleistRep.delete(daten, l)
-		}
+		// var lliste = behleistRep.getBehandlungLeistungListe(daten, null, uid)
+		// for (HpBehandlungLeistung l : lliste) {
+		// behleistRep.delete(daten, l)
+		// }
 		var key = new HpLeistungKey(daten.mandantNr, uid)
 		leistungRep.delete(daten, key)
 		var r = new ServiceErgebnis<Void>(null)
@@ -758,6 +758,10 @@ class HeilpraktikerService {
 
 		// getBerechService().pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		behandlungRep.delete(daten, new HpBehandlungKey(daten.mandantNr, uid))
+		var lliste = behleistRep.getBehandlungLeistungListe(daten, uid, null)
+		for (HpBehandlungLeistung l : lliste) {
+			behleistRep.delete(daten, l)
+		}
 		var r = new ServiceErgebnis<Void>(null)
 		return r
 	}

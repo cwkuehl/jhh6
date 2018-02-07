@@ -1065,6 +1065,13 @@ public class DbInit {
                 mout.add("DROP TABLE HP_Fragenkatalog");
                 execute(daten, zeinstellungDao, mout);
                 version = 50;
+            } else if (version <= 50) {
+                Vector<String> mout = new Vector<String>();
+                mout.add(
+                        "DELETE FROM HP_Behandlung_Leistung a WHERE NOT EXISTS (SELECT * FROM HP_Behandlung WHERE UID=a.Behandlung_UID)"
+                                + " AND NOT EXISTS (SELECT * FROM HP_Leistungsgruppe WHERE UID=a.Behandlung_UID)");
+                execute(daten, zeinstellungDao, mout);
+                version = 51;
             }
             if (version > versionAlt) {
                 // log.error("Version " + version);

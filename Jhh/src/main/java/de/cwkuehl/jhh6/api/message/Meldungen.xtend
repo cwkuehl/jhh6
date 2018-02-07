@@ -107,7 +107,7 @@ class Meldungen {
 	val M2023 = "Type in a target folder."
 	val M2024 = "Type in at least one source folder."
 	val M2035 = "Select a service."
-	val M2036 = "The service is used by treatments and cannot be deleted."
+	val M2036 = "The service is used by treatments or service groups and cannot be deleted."
 	val M2037 = "An invoice cannot be saved without an amount."
 	val M2038 = "Select an invoice."
 	val M2042 = "The user ID must not be empty."
