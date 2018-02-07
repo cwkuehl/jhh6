@@ -1,0 +1,31 @@
+:hp200-title: Behandlungen
+anchor:HP200[{hp200-title}]
+
+==== Formular {hp200-title}
+
+Dieses Formular verwaltet die Behandlungen der Patienten mit Symptomen und Diagnose.
+Wenn ein Patient in der Praxis erscheint, wird eine Anamnese durchgeführt.
+In einer Behandlung werden dann die Anamnese, die Entscheidungen zur tatsächlichen Behandlung des Patienten,
+die Mittelwahl mit der Potenz und Dosis sowie nicht-homöopathische Therapieformen und die Überlegungen,
+die zu der Wahl des homöopathischen Mittel geführt haben, sowie die Symptome, die dafür wichtig waren, abgelegt.
+Diese Symptome sollten sorgfältig eingetragen werden, denn sie dienen in der nächsten Anamnese zur Überprüfung des Behandlungsverlaufs.
+
+image:HP200.png[{hp200-title},title={hp200-title}]
+
+[width="100%",cols="<1,<5",frame="all",options="header"]
+|==========================
+|Steuerelement|Erklärung
+|image:icon/icons8-refresh.png[title="Aktualisieren",width={icon-width}]|Schaltfläche zum Aktualisieren der Liste von Behandlungen. Wenn Änderungen scheinbar nicht wirksam sind, sollte diese Schaltfläche ausprobiert werden.
+|image:icon/icons8-undo.png[title="Rückgängig",width={icon-width}]      |Diese Schaltfläche macht die letzte Aktion rückgängig. Manchmal eine äußerst hilfreiche Rettungsmaßnahme...
+|image:icon/icons8-redo.png[title="Wiederherstellen",width={icon-width}]|Diese Schaltfläche stellt die letzte rückgängig gemachte Aktion wieder her.
+|image:icon/icons8-new-document.png[title="Neu",width={icon-width}]     |Schaltfläche zum Erstellen einer neuen Behandlung. <<HP210>>
+|image:icon/icons8-copy.png[title="Kopieren",width={icon-width}]        |Schaltfläche zum Kopieren der ausgewählten Behandlung. Manchmal ähneln sich zwei Termine sehr, dann kann mit dieser Möglichkeit Arbeit gespart werden.
+|image:icon/icons8-edit.png[title="Ändern",width={icon-width}]          |Schaltfläche zum Ändern der ausgewählten Behandlung. Auch durch Doppelklick auf die Behandlung zu erreichen.
+|image:icon/icons8-remove.png[title="Löschen",width={icon-width}]       |Schaltfläche zum Löschen der ausgewählten Behandlung. Bitte nur verwenden, wenn wirklich etwas falsch eingegeben wurde.
+|image:icon/icons8-print.png[title="Drucken",width={icon-width}]        |Schaltfläche zum Drucken einer Patientenakte für den ausgewählten Patienten und Zeitraum. Diese Option sollte in regelmäßigen Abständen verwendet werden, damit die Akte auch in schriftlicher Form nachlesbar ist. Wichtig ist, in der Kombinationsliste unten einen Patienten zu selektieren.
+|Behandlungen |Liste mit allen bestehenden Behandlungen. Durch Klick auf die Spaltenbezeichnungen kann die Sortierung geändert werden.
+|Von          |Selektionsdatum für Behandlungen, die nach diesem Datum liegen. Wichtig für das Ausdrucken von Patientenakten.
+|Bis          |Selektionsdatum für Behandlungen, die vor diesem Datum liegen. Wichtig für das Ausdrucken von Pateintenakten.
+|Patient      |Kombinationsliste zum Selektieren eines Patienten. Dies schränkt die angezeigten Patienten ein und ist wichtig für das Ausdrucken einer Patientenakte.
+|Alle         |Schaltfläche zum Zurücksetzen aller Selektionskriterien.
+|==========================

@@ -1,0 +1,52 @@
+:hp210-title: Behandlung
+anchor:HP210[{hp210-title}]
+
+==== Dialog {hp210-title}
+
+Dieser Dialog dient dem Erstellen, Kopieren, Ändern und Löschen einer Behandlung.
+Abhängig von der Art des Aufrufes sind die Felder editierbar oder nicht.
+Hier werden die Anamnese, die tatsächliche Therapie und die erbrachten Leistungen festgehalten.
+Die homöopathische Mittelwahl, die nicht-homöopathische Therapie sowie die Gründe und Symptome, die dazu geführt haben, können erfasst werden.
+Die Daten dienen auch als Basis für die Abrechnung.
+
+image:HP210.png[{hp210-title},title={hp210-title}]
+
+[width="100%",cols="<1,<5",frame="all",options="header"]
+|==========================
+|Steuerelement|Erklärung
+|Nr.          |Eindeutige Nummer der ausgewählten Behandlung. Sie wird automatisch vergeben.
+|Status       |Ein Status kann ausgewählt werden. Welchen Status hat diese Behandlung? Beispiel: Rechnung noch nicht geschrieben oder bar bezahlt usw.
+|Patient      |Ein Patient muss ausgewählt werden. Nur bei einer neuen Behandlung möglich.
+|Datum        |Ein Behandlungsdatum muss ausgewählt werden. Nur bei einer neuen Behandlung möglich.
+|Leistungen   |In der Liste werden die zugeordneten Leistungen angezeigt.
+|Leistung     |Eine Leistung zur Abrechnung muss ausgewählt werden. Von der Leistung ist später abhängig, wie diese Behandlung in der Rechnung erscheint.
+|Dauer        |Eine Behandlungsdauer (in Minuten) kann eingegeben werden. Je nachdem wie die Leistung definiert wurde, kann von dieser Eingabe der Rechnungsbetrag dieser Behandlung abhängen.
+|Hinzufügen   |Schaltfläche zum Hinzufügen der ausgewählten Leistung inkl. Dauer zur Leistungen-Liste.
+|Entfernen    |Schaltfläche zum Entfernden der ausgewählten Leistung aus der Leistungen-Liste.
+|Diagnose     |Eine Diagnose kann eingegeben werden. Diese Diagnose sollte später in der Rechnung erscheinen.
+|Mittel       |Ein homöopathisches Mittel kann eingegeben werden. Hier bitte nur den Mittelnamen eingeben.
+|Potenz       |Ein Potenzierung kann eingegeben werden. Beispiel: D6, C30 oder Q6.
+|Dosierung    |Ein Dosierung kann eingegeben werden. Hier sollte genau festgehalten werden, wie der Patient das Mittel einnehmen soll, um es später nachlesen zu können.
+|Verordnung   |Ein Verordnung kann eingegeben werden. Hier sollte die nicht-homöopathische Therapie festgehalten werden.
+|Notiz        |Eine beliebig lange Notiz für Anamnese, Symptome, Mittelwahl und Therapie kann erfasst werden. Der Text kann durch besondere Markierungen in einer Zeile farblich und inhaltlich strukturiert werden.
+|(Übersicht)  |Anzeige der hervorgehobenen Zeilen mit einigen Sekunden Verzögerung.
+|Angelegt     |Datum und Uhrzeit sowie Benutzer-ID von der Erstellung des Datensatzes.
+|Geändert     |Datum und Uhrzeit sowie Benutzer-ID von der letzten Änderung des Datensatzes.
+|OK           |Diese Schaltfläche speichert oder löscht die Behandlung und schließt den Dialog.
+|Drucken      |Schaltfläche zum Drucken aller Behandlungen des Patienten in einer Behandlungsakte.
+|Abbrechen    |Diese Schaltfläche schließt den Dialog ohne Speichern. Also Vorsicht, wenn viele Notizen erfasst wurden!
+|==========================
+
+TIP: Zeilen-Formatierung der Notizen
+[width="100%",cols="<1,<1,<2",frame="all",options="header"]
+|==========================
+|Bedeutung  |Markierung|Beispiel
+|Überschrift|:         |:Überschrift
+|Beobachtung|-         |-Beobachtung
+|Aussage    |_         |_Aussage
+|Hypothese  |!         |!Hypothese
+|Kontrolle  |%         |%Kontrolle
+|Parameter  |#         |#Parameter
+|Symptom    |<< >>     |+<<Symptom>>+
+|==========================
+

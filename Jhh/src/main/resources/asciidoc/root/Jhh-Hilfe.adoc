@@ -179,7 +179,7 @@ Das Menü umfasst folgende Punkte:
                  |Haus-Abrechnungen   |Dieses Formular verwaltet Betriebskostenabrechnungen auf Häuser-Ebene.
                  |Abrechnungen        |Dieses Formular verwaltet Betriebskostenabrechnungen in Einzel-Darstellung.
 .7+|Heilpraktiker|                    |Aufruf der Funktionen und Dialoge aus dem Bereich Heilpraktiker.
-                 |Behandlungen        |Dieses Formular verwaltet die Behandlungen der Patienten mit Symptomen und Diagnose.
+                 |Behandlungen        |Dieses Formular verwaltet die Behandlungen der Patienten mit Symptomen und Diagnose. <<HP200>>
                  |Rechnungen          |Dieses Formular verwaltet die Rechnungen für Patienten.
                  |Patienten           |Dieses Formular verwaltet die Patienten. <<HP100>>
                  |Status              |Dieses Formular verwaltet die möglichen Status für Behandlungen und Rechnungen. <<HP150>>
@@ -363,11 +363,15 @@ Dieser Bereich besteht aus folgenden Dialogen:
 * <<HP110>>
 * <<HP150>>
 * <<HP160>>
+* <<HP200>>
+* <<HP210>>
 
 include::../de/hp/HP100.adoc[]
 include::../de/hp/HP110.adoc[]
 include::../de/hp/HP150.adoc[]
 include::../de/hp/HP160.adoc[]
+include::../de/hp/HP200.adoc[]
+include::../de/hp/HP210.adoc[]
 
 
 === Bereich Stammbaum
