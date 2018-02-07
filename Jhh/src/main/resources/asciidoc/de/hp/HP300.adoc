@@ -1,0 +1,22 @@
+:hp300-title: Leistungen
+anchor:HP300[{hp300-title}]
+
+==== Formular {hp300-title}
+
+Dieses Formular verwaltet die möglichen Leistungen für Behandlungen.
+Es können LVKH-Ziffern und Ziffern GebüH erfasst werden, die auf den Rechnungen ausgewiesen werden.
+
+image:HP300.png[{hp300-title},title={hp300-title}]
+
+[width="100%",cols="<1,<5",frame="all",options="header"]
+|==========================
+|Steuerelement|Erklärung
+|image:icon/icons8-refresh.png[title="Aktualisieren",width={icon-width}]|Schaltfläche zum Aktualisieren der Liste von Leistungen.
+|image:icon/icons8-undo.png[title="Rückgängig",width={icon-width}]      |Diese Schaltfläche macht die letzte Aktion rückgängig.
+|image:icon/icons8-redo.png[title="Wiederherstellen",width={icon-width}]|Diese Schaltfläche stellt die letzte rückgängig gemachte Aktion wieder her.
+|image:icon/icons8-new-document.png[title="Neu",width={icon-width}]     |Schaltfläche zum Erstellen einer neuen Leistung. <<HP310>>
+|image:icon/icons8-copy.png[title="Kopieren",width={icon-width}]        |Schaltfläche zum Kopieren der ausgewählten Leistung.
+|image:icon/icons8-edit.png[title="Ändern",width={icon-width}]          |Schaltfläche zum Ändern der ausgewählten Leistung.
+|image:icon/icons8-remove.png[title="Löschen",width={icon-width}]       |Schaltfläche zum Löschen der ausgewählten Leistung.
+|Leistungen   |Liste mit allen bestehenden Leistungen.
+|==========================

@@ -1,0 +1,26 @@
+:hp310-title: Leistung
+anchor:HP310[{hp310-title}]
+
+==== Dialog {hp310-title}
+
+Dieser Dialog dient dem Erstellen, Kopieren, Ändern und Löschen einer Leistung.
+Abhängig von der Art des Aufrufes sind die Felder editierbar oder nicht.
+
+image:HP310.png[{hp310-title},title={hp310-title}]
+
+[width="100%",cols="<1,<5",frame="all",options="header"]
+|==========================
+|Steuerelement|Erklärung
+|Nr.          |Eindeutige Nummer der ausgewählten Leistung.
+|Ziffer       |Eine Ziffer aus einem Leistungsverzeichnis muss eingegeben werden.
+|Ziffer 2     |Eine Ziffer aus einem anderen Leistungsverzeichnis kann eingegeben werden.
+|Beschreibung Fett|Eine Beschreibung, die fett in der Rechnung gedruckt wird, muss eingegeben werden.
+|Beschreibung |Eine Beschreibung kann eingegeben werden. Es können Felder eingebaut werden, die einen Prozentsatz vom Betrag darstellen, z.B. {20%}.
+|Faktor       |Es kann eine Zahl eingegeben werden. Der Faktor wird mit der Dauer multipliziert	und ergibt den Betrag der Leistung.
+|Festbetrag   |Es kann ein Betrag eingegeben werden. Der Betrag wird zum Betrag der Leistung hinzugezählt.
+|Notiz        |Eine beliebig lange Notiz kann erfasst werden.
+|Angelegt     |Datum und Uhrzeit sowie Benutzer-ID von der Erstellung des Datensatzes.
+|Geändert     |Datum und Uhrzeit sowie Benutzer-ID von der letzten Änderung des Datensatzes.
+|OK           |Diese Schaltfläche speichert oder löscht die Leistung und schließt den Dialog.
+|Abbrechen    |Diese Schaltfläche schließt den Dialog ohne Speichern.
+|==========================

@@ -59,7 +59,7 @@
 		</tooltip>
 	</Button>
 	<Label fx:id="leistungen0" mnemonicParsing="true" text="%HP360.leistungen" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-	<ListView fx:id="leistungen" prefHeight="60.0" GridPane.columnIndex="1" GridPane.columnSpan="4"
+	<ListView fx:id="leistungen" prefHeight="100.0" minHeight="80.0" GridPane.columnIndex="1" GridPane.columnSpan="4"
 		GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.vgrow="ALWAYS" />
 	<Label fx:id="angelegt0" text="%Creation" GridPane.columnIndex="0" GridPane.rowIndex="5" />
 	<TextField fx:id="angelegt" accessibleText="%Creation.tt"
