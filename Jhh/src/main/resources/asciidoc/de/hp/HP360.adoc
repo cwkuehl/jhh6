@@ -1,0 +1,26 @@
+:hp360-title: Leistungsgruppe
+anchor:HP360[{hp360-title}]
+
+==== Dialog {hp360-title}
+
+Dieser Dialog dient dem Erstellen, Kopieren, Ändern und Löschen einer Leistungsgruppe.
+Abhängig von der Art des Aufrufes sind die Felder editierbar oder nicht.
+
+image:HP360.png[{hp360-title},title={hp360-title}]
+
+[width="100%",cols="<1,<5",frame="all",options="header"]
+|==========================
+|Steuerelement|Erklärung
+|Nr.          |Eindeutige Nummer der ausgewählten Leistungsgruppe.
+|Bezeichnung  |Eine Bezeichnung muss eingegeben werden.
+|Notiz        |Eine beliebig lange Notiz kann erfasst werden.
+|Leistung     |Eine Leistung muss ausgewählt werden, um sie zur Leistungsgruppe hinzufügen zu können.
+|Dauer        |Eine vorgegebene Behandlungsdauer (in Minuten) kann eingegeben werden. Je nachdem wie die Leistung definiert wurde, kann von dieser Eingabe der Rechnungsbetrag dieser Behandlung abhängen.
+|Hinzufügen   |Schaltfläche zum Hinzufügen der ausgewählten Leistung inkl. Dauer zur Leistungen-Liste.
+|Leistungen   |In der Liste werden die zugeordneten Leistungen inkl. Dauer angezeigt.
+|Angelegt     |Datum und Uhrzeit sowie Benutzer-ID von der Erstellung des Datensatzes.
+|Geändert     |Datum und Uhrzeit sowie Benutzer-ID von der letzten Änderung des Datensatzes.
+|OK           |Diese Schaltfläche speichert oder löscht die Leistungsgruppe und schließt den Dialog.
+|Entfernen    |Schaltfläche zum Entfernden der ausgewählten Leistung aus der Leistungen-Liste.
+|Abbrechen    |Diese Schaltfläche schließt den Dialog ohne Speichern.
+|==========================

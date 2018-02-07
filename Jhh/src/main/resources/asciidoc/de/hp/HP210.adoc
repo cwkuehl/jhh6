@@ -19,7 +19,7 @@ image:HP210.png[{hp210-title},title={hp210-title}]
 |Patient      |Ein Patient muss ausgewählt werden. Nur bei einer neuen Behandlung möglich.
 |Datum        |Ein Behandlungsdatum muss ausgewählt werden. Nur bei einer neuen Behandlung möglich.
 |Leistungen   |In der Liste werden die zugeordneten Leistungen angezeigt.
-|Leistung     |Eine Leistung zur Abrechnung muss ausgewählt werden. Von der Leistung ist später abhängig, wie diese Behandlung in der Rechnung erscheint.
+|Leistung     |Eine Leistung oder Leistungsgruppen muss zur Abrechnung ausgewählt werden. Von der Leistung ist später abhängig, wie diese Behandlung in der Rechnung erscheint.
 |Dauer        |Eine Behandlungsdauer (in Minuten) kann eingegeben werden. Je nachdem wie die Leistung definiert wurde, kann von dieser Eingabe der Rechnungsbetrag dieser Behandlung abhängen.
 |Hinzufügen   |Schaltfläche zum Hinzufügen der ausgewählten Leistung inkl. Dauer zur Leistungen-Liste.
 |Entfernen    |Schaltfläche zum Entfernden der ausgewählten Leistung aus der Leistungen-Liste.

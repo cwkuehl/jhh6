@@ -184,7 +184,7 @@ Das Menü umfasst folgende Punkte:
                  |Patienten           |Dieses Formular verwaltet die Patienten. <<HP100>>
                  |Status              |Dieses Formular verwaltet die möglichen Status für Behandlungen und Rechnungen. <<HP150>>
                  |Leistungen          |Dieses Formular verwaltet die möglichen Leistungen für Behandlungen. <<HP300>>
-                 |Leistungsgruppen    |Mit diesem Formular werden Leistungen zu Gruppen zusammengefasst.
+                 |Leistungsgruppen    |Mit diesem Formular werden Leistungen zu Gruppen zusammengefasst. <<HP350>>
 .4+|Stammbaum    |                    |Aufruf der Funktionen und Dialoge aus dem Bereich Stammbaum.
                  |Ahnen               |Dieses Formular verwaltet alle Ahnen.
                  |Familien            |Dieses Formular verwaltet alle Ahnen-Familien.
@@ -367,6 +367,8 @@ Dieser Bereich besteht aus folgenden Dialogen:
 * <<HP210>>
 * <<HP300>>
 * <<HP310>>
+* <<HP350>>
+* <<HP360>>
 
 include::../de/hp/HP100.adoc[]
 include::../de/hp/HP110.adoc[]
@@ -374,8 +376,8 @@ include::../de/hp/HP150.adoc[]
 include::../de/hp/HP160.adoc[]
 include::../de/hp/HP200.adoc[]
 include::../de/hp/HP210.adoc[]
-include::../de/hp/HP300.adoc[]
-include::../de/hp/HP310.adoc[]
+include::../de/hp/HP350.adoc[]
+include::../de/hp/HP360.adoc[]
 
 
 === Bereich Stammbaum
