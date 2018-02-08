@@ -172,7 +172,7 @@ Das Menü umfasst folgende Punkte:
                  |VM-Konten           |Dieses Formular dient der Verwaltung der Vermietungs-Konten. Hier können die Konten angezeigt, erstellt, geändert und eingeschränkt gelöscht werden.
                  |Perioden            |Mit diesem Formular werden die Perioden bearbeitet.
                  |Miet-Forderungen    |Dieses Formular zeigt die Miet-Forderungen an, die nicht bezahlt wurden.
-                 |Häuser              |Dieses Formular verwaltet Häuser.
+                 |Häuser              |Dieses Formular verwaltet Häuser. <<VM100>>
                  |Wohnungen           |Dieses Formular verwaltet Wohnungen.
                  |Mieter              |Dieses Formular verwaltet Mieter.
                  |Mieten              |Dieses Formular verwaltet Mieten von Wohnungen.
@@ -346,9 +346,19 @@ include::../de/hh/HH500.adoc[]
 include::../de/hh/HH510.adoc[]
 
 
-=== Bereich Vermietung
-In diesem Bereich werden Häuser, Wohnungen, Mieter, Mieten sowie Sollstellungen und Istbuchungen verwaltet. Die Buchungen werden wie im Bereich Haushalt verwendet. Es werden zusätzlich Felder für Schlüssel, Haus, Wohnung, Mieter bereitgestellt.
+:vm0-title: Bereich Vermietung
+anchor:VM0[{hp0-title}]
+
+=== {vm0-title}
+In diesem Bereich werden Häuser, Wohnungen, Mieter, Mieten sowie Sollstellungen und Istbuchungen verwaltet.
+Die Buchungen werden wie im <<HH0>> verwendet. Es werden zusätzliche Felder für Schlüssel, Haus, Wohnung, Mieter bereitgestellt.
 Dieser Bereich besteht aus folgenden Dialogen:
+
+* <<VM100>>
+* <<VM110>>
+
+include::../de/vm/VM100.adoc[]
+include::../de/vm/VM110.adoc[]
 
 
 :hp0-title: Bereich Heilpraktiker

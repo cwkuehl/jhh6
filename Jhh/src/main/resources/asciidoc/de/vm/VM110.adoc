@@ -1,0 +1,23 @@
+:vm110-title: Haus
+anchor:VM110[{vm110-title}]
+
+==== Dialog {vm110-title}
+
+Dieser Dialog dient dem Erstellen, Kopieren, Ändern und Löschen eines Hauses.
+Abhängig von der Art des Aufrufes sind die Felder editierbar oder nicht.
+
+image:VM110.png[{vm110-title},title={vm110-title}]
+
+[width="100%",cols="<1,<5",frame="all",options="header"]
+|==========================
+|Steuerelement|Erklärung
+|Nr.          |Eindeutige Nummer des ausgewählten Hauses.
+|Bezeichnung  |Eine Bezeichnung des Hauses muss eingegeben werden.
+|Straße       |Eine Straße inkl. Hausnummer kann eingegeben werden.
+|Plz Ort      |Eine Postleitzahl und ein Ort können eingegeben werden.
+|Notiz        |Eine beliebig lange Notiz kann erfasst werden.
+|Angelegt     |Datum und Uhrzeit sowie Benutzer-ID von der Erstellung des Datensatzes.
+|Geändert     |Datum und Uhrzeit sowie Benutzer-ID von der letzten Änderung des Datensatzes.
+|OK           |Diese Schaltfläche speichert oder löscht das Haus und schließt den Dialog.
+|Abbrechen    |Diese Schaltfläche schließt den Dialog ohne Speichern.
+|==========================
