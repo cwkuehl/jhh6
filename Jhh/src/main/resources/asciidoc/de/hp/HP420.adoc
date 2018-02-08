@@ -1,0 +1,16 @@
+:hp420-title: Behandlungen
+anchor:HP420[{hp420-title}]
+
+==== Dialog {hp420-title}
+
+In diesem Dialog werden Behandlungen für eine Rechnung ausgewählt.
+
+image:HP420.png[{hp420-title},title={hp420-title}]
+
+[width="100%",cols="<1,<5",frame="all",options="header"]
+|==========================
+|Steuerelement|Erklärung
+|Behandlungen |Liste von allen nicht abgerechneten Behandlungen des Patienten. Es können auch mehrere Behandlung ausgewählt werden.
+|OK           |Schaltfläche zum Bestätigen der ausgewählten Behandlungen und Schließen des Dialog.
+|Abbrechen    |Schaltfläche zum Schließen des Dialog ohne Auswahl.
+|==========================

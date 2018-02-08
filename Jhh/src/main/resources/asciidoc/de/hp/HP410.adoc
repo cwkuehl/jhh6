@@ -1,0 +1,29 @@
+:hp410-title: Rechnung
+anchor:HP410[{hp410-title}]
+
+==== Dialog {hp410-title}
+
+Dieser Dialog dient dem Erstellen, Kopieren, Ändern und Löschen einer Rechnung.
+Abhängig von der Art des Aufrufes sind die Felder editierbar oder nicht.
+
+image:HP410.png[{hp410-title},title={hp410-title}]
+
+[width="100%",cols="<1,<5",frame="all",options="header"]
+|==========================
+|Steuerelement|Erklärung
+|Nr.          |Eindeutige Nummer der ausgewählten Rechnung.
+|Patient      |Ein Patient muss ausgewählt werden.
+|Datum        |Ein Rechnungsdatum muss ausgewählt werden.
+|Rechnungsnummer|Eine Rechnungsnummer kann eingegeben werden. Wenn das Datum geändert wird, wird eine neue eindeutige Rechnungsnummer berechnet.
+|Diagnose     |Eine Diagnose kann eingegeben werden. Es wird die Diagnose der ersten Behandlung hier eingetragen.
+|Betrag       |Der Rechnungsbetrag als Summe der Beträge zugeordneten Behandlungen	wird angezeigt.
+|Status       |Ein Status kann ausgewählt werden. Falls ein Status ausgewählt	wird, werden alle zugeordneten Behandlungen beim Speichern auf diesen Status gesetzt.
+|Notiz        |Eine beliebig lange Notiz kann erfasst werden. Diese erscheint nicht	auf der Rechnung.
+|Behandlungen |Zu einer Rechnung müssen Behandlungen zugeordnet werden. Beim Wechsel des Patienten werden zunächst alle nicht abgerechneten Behandlungen zugeordnet.
+|Angelegt     |Datum und Uhrzeit sowie Benutzer-ID von der Erstellung des Datensatzes.
+|Geändert     |Datum und Uhrzeit sowie Benutzer-ID von der letzten Änderung des Datensatzes.
+|OK           |Diese Schaltfläche speichert oder löscht die Rechnung und schließt den Dialog.
+|Hinzufügen   |Diese Schaltfläche öffnet den Behandlungen-Dialog. Die ausgewählten Behandlungen werden zur Rechnung hinzugefügt. <<HP420>>
+|Entfernen    |Diese Schaltfläche entfernt die ausgewählte Behandlung aus der Rechnung.
+|Abbrechen    |Diese Schaltfläche schließt den Dialog ohne Speichern.
+|==========================

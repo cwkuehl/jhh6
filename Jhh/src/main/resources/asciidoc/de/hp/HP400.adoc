@@ -1,0 +1,23 @@
+:hp400-title: Rechnungen
+anchor:HP400[{hp400-title}]
+
+==== Formular {hp400-title}
+
+Dieses Formular verwaltet die Rechnungen für Patienten.
+Es können alle nicht abgerechneten Behandlungen eines Patienten zusammengefasst werden.
+
+image:HP400.png[{hp400-title},title={hp400-title}]
+
+[width="100%",cols="<1,<5",frame="all",options="header"]
+|==========================
+|Steuerelement|Erklärung
+|image:icon/icons8-refresh.png[title="Aktualisieren",width={icon-width}]|Schaltfläche zum Aktualisieren der Liste von Rechnungen.
+|image:icon/icons8-undo.png[title="Rückgängig",width={icon-width}]      |Diese Schaltfläche macht die letzte Aktion rückgängig.
+|image:icon/icons8-redo.png[title="Wiederherstellen",width={icon-width}]|Diese Schaltfläche stellt die letzte rückgängig gemachte Aktion wieder her.
+|image:icon/icons8-new-document.png[title="Neu",width={icon-width}]     |Schaltfläche zum Erstellen einer neuen Rechnung. <<HP410>>
+|image:icon/icons8-copy.png[title="Kopieren",width={icon-width}]        |Schaltfläche zum Kopieren der ausgewählten Rechnung.
+|image:icon/icons8-edit.png[title="Ändern",width={icon-width}]          |Schaltfläche zum Ändern der ausgewählten Rechnung.
+|image:icon/icons8-remove.png[title="Löschen",width={icon-width}]       |Schaltfläche zum Löschen der ausgewählten Rechnung.
+|image:icon/icons8-print.png[title="Drucken",width={icon-width}]        |Schaltfläche zum Drucken der ausgewählten Rechnung.
+|Rechnungen   |Liste mit allen bestehenden Rechnungen.
+|==========================
