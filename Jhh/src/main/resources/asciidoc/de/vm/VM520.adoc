@@ -1,0 +1,20 @@
+:vm520-title: Sollstellung
+anchor:VM520[{vm520-title}]
+
+==== Dialog {vm520-title}
+
+Dieser Dialog dient dem Erzeugen von Sollstellungen für Häuser oder Wohnungen.
+
+image:VM520.png[{vm520-title},title={vm520-title}]
+
+[width="100%",cols="<1,<5",frame="all",options="header"]
+|==========================
+|Steuerelement|Erklärung
+|Monat        |Ein Monat muss ausgewählt werden.
+|Haus         |Ein Haus muss ausgewählt werden.
+|Wohnung      |Eine Wohnung kann ausgewählt werden.
+|Miete        |Die Summe aller ausgewählten Mieten (Miete und Garage/Stellplatz) wird angezeigt.
+|Vorauszahlung|Die Summe aller ausgewählten Vorauszahlungen (Betriebskosten und Heizkosten) wird angezeigt.
+|OK           |Diese Schaltfläche erzeugt die fehlenden Sollstellungen für die ausgewählten Häuser und Wohnungen.
+|Abbrechen    |Diese Schaltfläche schließt den Dialog ohne Speichern.
+|==========================

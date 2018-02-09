@@ -1,0 +1,23 @@
+:vm530-title: Zahlung
+anchor:VM530[{vm530-title}]
+
+==== Dialog {vm530-title}
+
+Dieser Dialog bucht die konkreten Zahlungen von Mietern.
+
+image:VM530.png[{vm530-title},title={vm530-title}]
+
+[width="100%",cols="<1,<5",frame="all",options="header"]
+|==========================
+|Steuerelement|Erklärung
+|Monat        |Ein Monat muss ausgewählt werden.
+|Mieter       |Ein Mieter muss ausgewählt werden.
+|Zahlung am   |Ein Zahlungsdatum (aus dem Kontoauszug) muss ausgewählt werden.
+|Miete        |Die Kaltmiete kann eingegeben werden.
+|Garage/Stellplatz|Die Miete für eine Garage, einen Stellplatz oder ähnliches kann eingegeben werden.
+|Betriebskosten|Die Betriebskosten ohne Heizkosten können eingegeben werden.
+|Heizkosten   |Die Heizkosten können eingegeben werden.
+|Summe        |Die Summe aller Beträge wird angezeigt.
+|OK           |Diese Schaltfläche erzeugt die Zahlung des Mieters als VM-Buchung.
+|Abbrechen    |Diese Schaltfläche schließt den Dialog ohne Speichern.
+|==========================

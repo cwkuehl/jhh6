@@ -364,6 +364,8 @@ Dieser Bereich besteht aus folgenden Dialogen:
 * <<VM410>>
 * <<VM500>>
 * <<VM510>>
+* <<VM520>>
+* <<VM530>>
 
 include::../de/vm/VM100.adoc[]
 include::../de/vm/VM110.adoc[]
@@ -375,6 +377,8 @@ include::../de/vm/VM400.adoc[]
 include::../de/vm/VM410.adoc[]
 include::../de/vm/VM500.adoc[]
 include::../de/vm/VM510.adoc[]
+include::../de/vm/VM520.adoc[]
+include::../de/vm/VM530.adoc[]
 
 
 :hp0-title: Bereich Heilpraktiker
