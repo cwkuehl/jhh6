@@ -3,7 +3,7 @@ anchor:VM600[{vm600-title}]
 
 ==== Formular {vm600-title}
 
-Diesem Formular dient der Verwaltung der Vermietungs-Konten.
+Dieses Formular dient der Verwaltung der Vermietungs-Konten.
 Hier können die Konten angezeigt, erstellt, geändert und eingeschränkt gelöscht werden.
 Es können nur Konten mit einem Schlüssel bearbeitet werden.
 Außerdem kann ein Konto einem Haus, einer Wohnung oder einem Mieter zugeordnet werden.

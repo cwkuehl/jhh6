@@ -1,0 +1,22 @@
+:vm700-title: VM-Ereignisse
+anchor:VM700[{vm700-title}]
+
+==== Formular {vm700-title}
+
+Diesem Formular  erlaubt das Bearbeiten von Vermietungs-Ereignissen, also vorgefertigten Buchungen.
+Einem Ereignis kann ein Haus, eine Wohnung oder ein Mieter zugeordnet werden. Vergleiche auch Formular <<HH300>>.
+
+image:VM700.png[{vm700-title},title={vm700-title}]
+
+[width="100%",cols="<1,<5",frame="all",options="header"]
+|==========================
+|Steuerelement|Erklärung
+|image:icon/icons8-refresh.png[title="Aktualisieren",width={icon-width}]|Schaltfläche zum Aktualisieren der Liste von Ereignissen.
+|image:icon/icons8-undo.png[title="Rückgängig",width={icon-width}]      |Diese Schaltfläche macht die letzte Aktion rückgängig.
+|image:icon/icons8-redo.png[title="Wiederherstellen",width={icon-width}]|Diese Schaltfläche stellt die letzte rückgängig gemachte Aktion wieder her.
+|image:icon/icons8-new-document.png[title="Neu",width={icon-width}]     |Schaltfläche zum Erstellen eines neuen Ereignisses. <<VM710>>
+|image:icon/icons8-copy.png[title="Kopieren",width={icon-width}]        |Schaltfläche zum Kopieren des ausgewählten Ereignisses.
+|image:icon/icons8-edit.png[title="Ändern",width={icon-width}]          |Schaltfläche zum Ändern des ausgewählten Ereignisses.
+|image:icon/icons8-remove.png[title="Löschen",width={icon-width}]       |Schaltfläche zum Löschen des ausgewählten Ereignisses.
+|Ereignisse   |Liste mit allen bestehenden Ereignissen.
+|==========================
