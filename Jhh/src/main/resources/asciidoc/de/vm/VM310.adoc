@@ -10,6 +10,7 @@ image:VM310.png[{vm310-title},title={vm310-title}]
 
 [width="100%",cols="<1,<5",frame="all",options="header"]
 |==========================
+|Steuerelement|Erklärung
 |Nr.          |Eindeutige Nummer des ausgewählten Mieters.
 |Wohnung      |Eine Wohnung muss ausgewählt werden.
 |Name         |Ein Name des Mieters muss eingegeben werden.
@@ -22,6 +23,6 @@ image:VM310.png[{vm310-title},title={vm310-title}]
 |Angelegt     |Datum und Uhrzeit sowie Benutzer-ID von der Erstellung des Datensatzes.
 |Geändert     |Datum und Uhrzeit sowie Benutzer-ID von der letzten Änderung des Datensatzes.
 |OK           |Diese Schaltfläche speichert oder löscht den Mieter und schließt den Dialog.
-|Miete ändern |Schaltfläche zum Erfassen einer Miete für die ausgewählte Wohnung.
+|Miete ändern |Schaltfläche zum Erfassen einer Miete für die ausgewählte Wohnung. <<VM410>>
 |Abbrechen    |Diese Schaltfläche schließt den Dialog ohne Speichern.
 |==========================

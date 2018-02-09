@@ -1,0 +1,31 @@
+:vm410-title: Miete
+anchor:VM410[{vm410-title}]
+
+==== Dialog {vm410-title}
+
+Dieser Dialog dient dem Erstellen, Kopieren, Ändern und Löschen einer Miete.
+Abhängig von der Art des Aufrufes sind die Felder editierbar oder nicht.
+Eine Miete gilt ab einem Datum. Ein weiterer Miet-Datensatz ändert die Miethöhe zu einem späteren Zeitpunkt.
+
+image:VM410.png[{vm410-title},title={vm410-title}]
+
+[width="100%",cols="<1,<5",frame="all",options="header"]
+|==========================
+|Steuerelement|Erklärung
+|Nr.          |Eindeutige Nummer der ausgewählten Miete.
+|Wohnung      |Eine Wohnung muss ausgewählt werden.
+|Gültig ab    |Ein Datum, ab dem die Miete gilt, muss angegeben werden.
+|Miete        |Die Kaltmiete kann eingegeben werden.
+|Garage/Stellplatz|Die Miete für eine Garage, einen Stellplatz oder ähnliches kann eingegeben werden.
+|Mietsumme    |Anzeige der Summe der Mieten.
+|Betriebskosten|Die Betriebskosten ohne Heizkosten können eingegeben werden.
+|Heizkosten   |Die Heizkosten können eingegeben werden.
+|Nebenkosten  |Anzeige der Summe der Nebenkosten.
+|Gesamtsumme  |Anzeige der Gesamtsumme aus Mieten und Nebenkosten.
+|Anzahl Personen|Die Anzahl der Personen können eingegeben werden. Der Wert kann für die Berechnung von personenabhängigen Kosten verwendet werden.
+|Notiz        |Eine beliebig lange Notiz kann erfasst werden.
+|Angelegt     |Datum und Uhrzeit sowie Benutzer-ID von der Erstellung des Datensatzes.
+|Geändert     |Datum und Uhrzeit sowie Benutzer-ID von der letzten Änderung des Datensatzes.
+|OK           |Diese Schaltfläche speichert oder löscht die Miete und schließt den Dialog.
+|Abbrechen    |Diese Schaltfläche schließt den Dialog ohne Speichern.
+|==========================

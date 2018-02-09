@@ -64,15 +64,16 @@ class VM400MietenController extends BaseController<String> {
 		new(VmMieteLang v) {
 
 			super(v)
-			uid = new SimpleStringProperty(v.getUid)
-			haus = new SimpleStringProperty(v.getHausBezeichnung)
-			wohnung = new SimpleStringProperty(v.getWohnungBezeichnung)
-			datum = new SimpleObjectProperty<LocalDate>(v.getDatum)
-			miete = new SimpleObjectProperty<Double>(v.getMiete)
-			nebenkosten = new SimpleObjectProperty<Double>(v.getNebenkosten)
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
+			uid = new SimpleStringProperty(v.uid)
+			haus = new SimpleStringProperty(v.hausBezeichnung)
+			wohnung = new SimpleStringProperty(v.wohnungBezeichnung)
+			datum = new SimpleObjectProperty<LocalDate>(v.datum)
+			miete = new SimpleObjectProperty<Double>(v.miete)
+			nebenkosten = new SimpleObjectProperty<Double>(v.nebenkosten)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
+			geaendertVon = new SimpleStringProperty(v.geaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
+			angelegtVon = new SimpleStringProperty(v.angelegtVon)
 		}
 
 		override String getId() {
