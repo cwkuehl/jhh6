@@ -3,7 +3,7 @@ anchor:VM700[{vm700-title}]
 
 ==== Formular {vm700-title}
 
-Diesem Formular  erlaubt das Bearbeiten von Vermietungs-Ereignissen, also vorgefertigten Buchungen.
+Diesem Formular erlaubt das Bearbeiten von Vermietungs-Ereignissen, also vorgefertigten Buchungen.
 Einem Ereignis kann ein Haus, eine Wohnung oder ein Mieter zugeordnet werden. Vergleiche auch Formular <<HH300>>.
 
 image:VM700.png[{vm700-title},title={vm700-title}]

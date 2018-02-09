@@ -1,0 +1,22 @@
+:vm800-title: Miet-Forderungen
+anchor:VM800[{vm800-title}]
+
+==== Formular {vm800-title}
+
+Dieses Formular zeigt die Miet-Forderungen an, die nicht bezahlt wurden.
+Die Liste kann für einen Zeitraum, ein Haus, eine Wohnung oder einen Mieter eingeschränkt werden.
+
+image:VM800.png[{vm800-title},title={vm800-title}]
+
+[width="100%",cols="<1,<5",frame="all",options="header"]
+|==========================
+|Steuerelement|Erklärung
+|image:icon/icons8-refresh.png[title="Aktualisieren",width={icon-width}]|Schaltfläche zum Aktualisieren der Liste von Forderungen.
+|Forderungen  |Liste mit bestehenden Miet-Forderungen.
+|Von          |Selektionsmonat für Forderungen, die nach diesem Datum liegen.
+|Bis          |Selektionsmonat für Forderungen, die vor diesem Datum liegen.
+|Haus         |Kombinationsliste zum Selektieren eines Hauses.
+|Wohnung      |Kombinationsliste zum Selektieren einer Wohnung.
+|Mieter       |Kombinationsliste zum Selektieren eines Mieters.
+|Alle         |Schaltfläche zum Zurücksetzen der Selektionskriterien.
+|==========================

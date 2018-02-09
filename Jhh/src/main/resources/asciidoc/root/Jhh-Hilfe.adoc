@@ -171,7 +171,7 @@ Das Menü umfasst folgende Punkte:
                  |VM-Ereignisse       |Dieses Formular erlaubt das Bearbeiten von Vermietungs-Ereignissen, also vorgefertigten Buchungen. <<VM700>>
                  |VM-Konten           |Dieses Formular dient der Verwaltung der Vermietungs-Konten. Hier können die Konten angezeigt, erstellt, geändert und eingeschränkt gelöscht werden. <<VM600>>
                  |Perioden            |Mit diesem Formular werden die Perioden bearbeitet. <<HH100>>
-                 |Miet-Forderungen    |Dieses Formular zeigt die Miet-Forderungen an, die nicht bezahlt wurden.
+                 |Miet-Forderungen    |Dieses Formular zeigt die Miet-Forderungen an, die nicht bezahlt wurden. <<VM800>>
                  |Häuser              |Dieses Formular verwaltet Häuser. <<VM100>>
                  |Wohnungen           |Dieses Formular verwaltet Wohnungen. <<VM200>>
                  |Mieter              |Dieses Formular verwaltet Mieter. <<VM300>>
@@ -370,6 +370,7 @@ Dieser Bereich besteht aus folgenden Dialogen:
 * <<VM610>>
 * <<VM700>>
 * <<VM710>>
+* <<VM800>>
 
 include::../de/vm/VM100.adoc[]
 include::../de/vm/VM110.adoc[]
@@ -387,6 +388,7 @@ include::../de/vm/VM600.adoc[]
 include::../de/vm/VM610.adoc[]
 include::../de/vm/VM700.adoc[]
 include::../de/vm/VM710.adoc[]
+include::../de/vm/VM800.adoc[]
 
 
 :hp0-title: Bereich Heilpraktiker
