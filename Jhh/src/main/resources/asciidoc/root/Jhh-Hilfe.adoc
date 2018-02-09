@@ -169,8 +169,8 @@ Das Menü umfasst folgende Punkte:
 .12+|Vermietung  |                    |Aufruf der Funktionen und Dialoge aus dem Bereich Vermietung.
                  |VM-Buchungen        |Mit diesem Formular können Sie komfortabel alle möglichen Vermietungs-Buchungen erfassen, kopieren, ändern und stornieren. <<VM500>>
                  |VM-Ereignisse       |Dieses Formular erlaubt das Bearbeiten von Vermietungs-Ereignissen, also vorgefertigten Buchungen.
-                 |VM-Konten           |Dieses Formular dient der Verwaltung der Vermietungs-Konten. Hier können die Konten angezeigt, erstellt, geändert und eingeschränkt gelöscht werden.
-                 |Perioden            |Mit diesem Formular werden die Perioden bearbeitet.
+                 |VM-Konten           |Dieses Formular dient der Verwaltung der Vermietungs-Konten. Hier können die Konten angezeigt, erstellt, geändert und eingeschränkt gelöscht werden. <<VM600>>
+                 |Perioden            |Mit diesem Formular werden die Perioden bearbeitet. <<HH100>>
                  |Miet-Forderungen    |Dieses Formular zeigt die Miet-Forderungen an, die nicht bezahlt wurden.
                  |Häuser              |Dieses Formular verwaltet Häuser. <<VM100>>
                  |Wohnungen           |Dieses Formular verwaltet Wohnungen. <<VM200>>
@@ -366,6 +366,8 @@ Dieser Bereich besteht aus folgenden Dialogen:
 * <<VM510>>
 * <<VM520>>
 * <<VM530>>
+* <<VM600>>
+* <<VM610>>
 
 include::../de/vm/VM100.adoc[]
 include::../de/vm/VM110.adoc[]
@@ -379,6 +381,8 @@ include::../de/vm/VM500.adoc[]
 include::../de/vm/VM510.adoc[]
 include::../de/vm/VM520.adoc[]
 include::../de/vm/VM530.adoc[]
+include::../de/vm/VM600.adoc[]
+include::../de/vm/VM610.adoc[]
 
 
 :hp0-title: Bereich Heilpraktiker

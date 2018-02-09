@@ -1,0 +1,29 @@
+:vm610-title: VM-Konto
+anchor:VM610[{vm610-title}]
+
+==== Dialog {vm610-title}
+
+Dieser Dialog dient dem Erstellen, Kopieren, Ändern und Löschen eines Vermietungs-Kontos.
+Abhängig von der Art des Aufrufes sind die Felder editierbar oder nicht.
+
+image:VM610.png[{vm610-title},title={vm610-title}]
+
+[width="100%",cols="<1,<5",frame="all",options="header"]
+|==========================
+|Steuerelement|Erklärung
+|Nr.          |Eindeutige Nummer des ausgewählten Kontos.
+|Bezeichnung  |Die Bezeichnung des Kontos muss eingegeben werden.
+|Kennzeichen  |Ein Kennzeichen des Kontos muss ausgewählt werden: Ohne, Eigenkapital-Konto oder Gewinn+Verlust-Konto.
+|Kontoart     |Eine Kontoart muss ausgewählt werden: Aktivkonto (AK), Passivkonto (PK), Aufwandskonto (AW) und Ertragskonto (ER).
+|Gültigkeit von|Wenn ein Von-Datum angegeben wird, kann davor keine Buchung für das Konto erfasst werden.
+|Bis          |Wenn ein Bis-Datum angegeben wird, kann danach keine Buchung für das Konto erfasst werden.
+|Schlüssel    |Ein Schlüssel muss erfasst werden.
+|Haus         |Ein Haus kann ausgewählt werden.
+|Wohnung      |Eine Wohnung kann ausgewählt werden.
+|Mieter       |Ein Mieter kann ausgewählt werden.
+|Notiz        |Eine beliebig lange Notiz kann erfasst werden.
+|Angelegt     |Datum und Uhrzeit sowie Benutzer-ID von der Erstellung des Datensatzes.
+|Geändert     |Datum und Uhrzeit sowie Benutzer-ID von der letzten Änderung des Datensatzes.
+|OK           |Diese Schaltfläche speichert oder löscht das Konto und schließt den Dialog.
+|Abbrechen    |Diese Schaltfläche schließt den Dialog ohne Speichern.
+|==========================
