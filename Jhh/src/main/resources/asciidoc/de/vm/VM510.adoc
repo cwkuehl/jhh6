@@ -1,0 +1,37 @@
+:vm510-title: VM-Buchung
+anchor:VM510[{vm510-title}]
+
+==== Dialog {vm510-title}
+
+Dieser Dialog dient dem Erstellen, Kopieren, Ändern und Stornieren einer Vermietungs-Buchung.
+Abhängig von der Art des Aufrufes sind die Felder editierbar oder nicht.
+
+image:VM510.png[{vm510-title},title={vm510-title}]
+
+[width="100%",cols="<1,<5",frame="all",options="header"]
+|==========================
+|Steuerelement|Erklärung
+|Nr.          |Buchungsnummer der ausgewählten Buchung oder leer, wenn eine neue Buchung erfasst wird.
+|Valuta       |Wertstellungsdatum der Buchung. Bei einer Änderung wird auch das Belegdatum auf das gleiche Datum gesetzt.
+|Betrag       |Der (Teil-)Betrag der Buchung (in EUR) muss eingegeben werden. In die Buchung geht die Summe aus Betrag und Summe ein.
+|Summe        |Der (Teil-)Betrag der Buchung in EUR wird durch Schaltfläche Addition verändert. In die Buchung geht die Summe aus Betrag und Summe ein.
+|Ereignis     |Liste von Ereignis-Bezeichnungen. Ein ausgewähltes Ereignis steuert Soll-, Habenkonto und Buchungstext vor.
+|Sollkonto    |Liste von Konten. Das Ausgewählte stellt das Sollkonto der Buchung dar.
+|Habenkonto   |Liste von Konten. Das Ausgewählte stellt das Habenkonto der Buchung dar.
+|Buchungstext |Buchungstext erklärt die Buchung.
+|Beleg        |Belegtext erläutert einen evtl. vorhandenen Beleg und kann leer sein.
+|Neue Nr.     |Schaltfläche zum Erzeugen einer neuen Belegnummer, falls das Feld Beleg leer ist. Sie besteht in den ersten acht Stellen aus dem Valuta-Datum und einer zweistelligen laufenden Nummer (Format JJJJMMTTNN).
+|Vom          |Belegdatum wird angepasst, wenn Valuta geändert wird. Danach kann es beliebig geändert werden.
+|Schlüssel    |Ein Schlüssel muss erfasst werden.
+|Haus         |Ein Haus kann ausgewählt werden.
+|Wohnung      |Eine Wohnung kann ausgewählt werden.
+|Mieter       |Ein Mieter kann ausgewählt werden.
+|Notiz        |Eine beliebig lange Notiz kann erfasst werden.
+|Angelegt     |Datum und Uhrzeit sowie Benutzer-ID von der Erstellung des Datensatzes.
+|Geändert     |Datum und Uhrzeit sowie Benutzer-ID von der letzten Änderung des Datensatzes.
+|Letzte Buchung|Anzeige der zuletzt erfassten Buchung.
+|OK           |Diese Schaltfläche speichert oder löscht die Buchung und schließt den Dialog.
+|Kontentausch |Schaltfläche zum Vertauschen von Soll- und Habenkonto.
+|Addition     |Schaltfläche zum Addieren des Betrags zur Summe, anschließend wird der Betrag geleert. Der Betrag kann auch kleiner als 0 sein. Es kann auch multipliziert oder dividiert werden, indem vor den Betrag * oder / geschrieben wird.
+|Abbrechen    |Diese Schaltfläche schließt den Dialog ohne Speichern.
+|==========================

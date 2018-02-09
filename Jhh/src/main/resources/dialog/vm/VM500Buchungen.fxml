@@ -103,29 +103,15 @@
 					</ImageView>
 				</graphic>
 			</Button>
-			<Button fx:id="sollstellung" mnemonicParsing="false" onAction="#onSollstellung">
+			<Button fx:id="sollstellung" minHeight="42.0" mnemonicParsing="false" onAction="#onSollstellung" text="%VM500.sollstellung">
 				<tooltip>
 					<Tooltip text="%VM500.sollstellung.tt" />
 				</tooltip>
-				<graphic>
-					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-						<image>
-							<Image url="@../../icon/icons8-new-document.png" />
-						</image>
-					</ImageView>
-				</graphic>
 			</Button>
-			<Button fx:id="istzahlung" mnemonicParsing="false" onAction="#onIstzahlung">
+			<Button fx:id="istzahlung" minHeight="42.0" mnemonicParsing="false" onAction="#onIstzahlung" text="%VM500.istzahlung">
 				<tooltip>
 					<Tooltip text="%VM500.istzahlung.tt" />
 				</tooltip>
-				<graphic>
-					<ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-						<image>
-							<Image url="@../../icon/icons8-new-document.png" />
-						</image>
-					</ImageView>
-				</graphic>
 			</Button>
 			<Button fx:id="tab" mnemonicParsing="false" onAction="#onTab">
 				<tooltip>
@@ -164,7 +150,7 @@
 		</columns>
 	</TableView>
 	<Label fx:id="kennzeichen0" mnemonicParsing="true" text="%VM500.kennzeichen" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+	<HBox spacing="10.0" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3">
 		<fx:define>
 			<ToggleGroup fx:id="kennzeichen" />
 		</fx:define>

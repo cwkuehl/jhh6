@@ -167,7 +167,7 @@ Das Menü umfasst folgende Punkte:
                  |G+V-Rechnung        |In diesem Formular wird die Gewinn- und Verlustrechnung (GV) als T-Konto dargestellt. <<HH500>>
                  |Eröffnungsbilanz    |In diesem Formular wird die Eröffnungsbilanz (EB) als T-Konto dargestellt. <<HH500>>
 .12+|Vermietung  |                    |Aufruf der Funktionen und Dialoge aus dem Bereich Vermietung.
-                 |VM-Buchungen        |Mit diesem Formular können Sie komfortabel alle möglichen Vermietungs-Buchungen erfassen, kopieren, ändern und stornieren.
+                 |VM-Buchungen        |Mit diesem Formular können Sie komfortabel alle möglichen Vermietungs-Buchungen erfassen, kopieren, ändern und stornieren. <<VM500>>
                  |VM-Ereignisse       |Dieses Formular erlaubt das Bearbeiten von Vermietungs-Ereignissen, also vorgefertigten Buchungen.
                  |VM-Konten           |Dieses Formular dient der Verwaltung der Vermietungs-Konten. Hier können die Konten angezeigt, erstellt, geändert und eingeschränkt gelöscht werden.
                  |Perioden            |Mit diesem Formular werden die Perioden bearbeitet.
@@ -362,6 +362,8 @@ Dieser Bereich besteht aus folgenden Dialogen:
 * <<VM310>>
 * <<VM400>>
 * <<VM410>>
+* <<VM500>>
+* <<VM510>>
 
 include::../de/vm/VM100.adoc[]
 include::../de/vm/VM110.adoc[]
@@ -371,6 +373,8 @@ include::../de/vm/VM300.adoc[]
 include::../de/vm/VM310.adoc[]
 include::../de/vm/VM400.adoc[]
 include::../de/vm/VM410.adoc[]
+include::../de/vm/VM500.adoc[]
+include::../de/vm/VM510.adoc[]
 
 
 :hp0-title: Bereich Heilpraktiker
