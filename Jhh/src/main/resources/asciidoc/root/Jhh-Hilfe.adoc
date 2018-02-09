@@ -174,7 +174,7 @@ Das Menü umfasst folgende Punkte:
                  |Miet-Forderungen    |Dieses Formular zeigt die Miet-Forderungen an, die nicht bezahlt wurden.
                  |Häuser              |Dieses Formular verwaltet Häuser. <<VM100>>
                  |Wohnungen           |Dieses Formular verwaltet Wohnungen. <<VM200>>
-                 |Mieter              |Dieses Formular verwaltet Mieter.
+                 |Mieter              |Dieses Formular verwaltet Mieter. <<VM300>>
                  |Mieten              |Dieses Formular verwaltet Mieten von Wohnungen.
                  |Haus-Abrechnungen   |Dieses Formular verwaltet Betriebskostenabrechnungen auf Häuser-Ebene.
                  |Abrechnungen        |Dieses Formular verwaltet Betriebskostenabrechnungen in Einzel-Darstellung.
@@ -358,11 +358,15 @@ Dieser Bereich besteht aus folgenden Dialogen:
 * <<VM110>>
 * <<VM200>>
 * <<VM210>>
+* <<VM300>>
+* <<VM310>>
 
 include::../de/vm/VM100.adoc[]
 include::../de/vm/VM110.adoc[]
 include::../de/vm/VM200.adoc[]
 include::../de/vm/VM210.adoc[]
+include::../de/vm/VM300.adoc[]
+include::../de/vm/VM310.adoc[]
 
 
 :hp0-title: Bereich Heilpraktiker

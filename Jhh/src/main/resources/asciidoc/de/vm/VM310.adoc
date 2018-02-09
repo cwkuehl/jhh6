@@ -1,0 +1,27 @@
+:vm310-title: Mieter
+anchor:VM310[{vm310-title}]
+
+==== Dialog {vm310-title}
+
+Dieser Dialog dient dem Erstellen, Kopieren, Ändern und Löschen eines Mieters.
+Abhängig von der Art des Aufrufes sind die Felder editierbar oder nicht.
+
+image:VM310.png[{vm310-title},title={vm310-title}]
+
+[width="100%",cols="<1,<5",frame="all",options="header"]
+|==========================
+|Nr.          |Eindeutige Nummer des ausgewählten Mieters.
+|Wohnung      |Eine Wohnung muss ausgewählt werden.
+|Name         |Ein Name des Mieters muss eingegeben werden.
+|Vorname      |Ein Vorname kann eingegeben werden.
+|Anrede       |Eine Anrede kann eingegeben werden.
+|Einzug       |Ein Einzugsdatum muss eingegeben werden.
+|Auszug       |Das Auszugsdatum kann eingegeben werden.
+|Notiz        |Eine beliebig lange Notiz kann erfasst werden.
+|Miete        |Anzeige der aktuellen Miete.
+|Angelegt     |Datum und Uhrzeit sowie Benutzer-ID von der Erstellung des Datensatzes.
+|Geändert     |Datum und Uhrzeit sowie Benutzer-ID von der letzten Änderung des Datensatzes.
+|OK           |Diese Schaltfläche speichert oder löscht den Mieter und schließt den Dialog.
+|Miete ändern |Schaltfläche zum Erfassen einer Miete für die ausgewählte Wohnung.
+|Abbrechen    |Diese Schaltfläche schließt den Dialog ohne Speichern.
+|==========================

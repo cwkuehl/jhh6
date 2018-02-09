@@ -1,0 +1,26 @@
+:vm300-title: Mieter
+anchor:VM300[{vm300-title}]
+
+==== Formular {vm300-title}
+
+Dieses Formular verwaltet Mieter, die in Wohnungen leben.
+
+image:VM300.png[{vm300-title},title={vm300-title}]
+
+[width="100%",cols="<1,<5",frame="all",options="header"]
+|==========================
+|Steuerelement|Erklärung
+|image:icon/icons8-refresh.png[title="Aktualisieren",width={icon-width}]|Schaltfläche zum Aktualisieren der Liste von Mietern.
+|image:icon/icons8-undo.png[title="Rückgängig",width={icon-width}]      |Diese Schaltfläche macht die letzte Aktion rückgängig.
+|image:icon/icons8-redo.png[title="Wiederherstellen",width={icon-width}]|Diese Schaltfläche stellt die letzte rückgängig gemachte Aktion wieder her.
+|image:icon/icons8-new-document.png[title="Neu",width={icon-width}]     |Schaltfläche zum Erstellen eines neuen Mieters. <<VM310>>
+|image:icon/icons8-copy.png[title="Kopieren",width={icon-width}]        |Schaltfläche zum Kopieren des ausgewählten Mieters.
+|image:icon/icons8-edit.png[title="Ändern",width={icon-width}]          |Schaltfläche zum Ändern des ausgewählten Mieters.
+|image:icon/icons8-remove.png[title="Löschen",width={icon-width}]       |Schaltfläche zum Löschen des ausgewählten Mieters.
+|Mieter       |Liste mit allen bestehenden Mietern.
+|Von          |Selektionsdatum für Mieter, die nach diesem Datum eingezogen sind.
+|Bis          |Selektionsdatum für Mieter, die vor diesem Datum ausgezogen sind.
+|Haus         |Kombinationsliste zum Selektieren von Mietern eines Hauses.
+|Wohnung      |Kombinationsliste zum Selektieren von Mietern einer Wohnung.
+|Alle         |Schaltfläche zum Zurücksetzen der Selektionskriterien.
+|==========================
