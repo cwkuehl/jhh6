@@ -446,9 +446,11 @@ Dieser Bereich besteht aus folgenden Dialogen:
 
 * <<SB200>>
 * <<SB210>>
+* <<SB220>>
 
 include::../de/sb/SB200.adoc[]
 include::../de/sb/SB210.adoc[]
+include::../de/sb/SB220.adoc[]
 
 
 === Bereich Wertpapiere
