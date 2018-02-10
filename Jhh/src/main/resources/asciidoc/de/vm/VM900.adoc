@@ -17,6 +17,6 @@ image:VM900.png[{vm900-title},title={vm900-title}]
 |image:icon/icons8-remove.png[title="Löschen",width={icon-width}]       |Schaltfläche zum Löschen der ausgewählten Haus-Abrechnung, d.h. aller Abrechnungs-Datensätze des betroffenen Zeitraums.
 |Haus-Abrechnungen|Liste mit allen bestehenden Haus-Abrechnungen.
 |Datum        |Selektionsdatum für Haus-Abrechnungen, die das Datum beinhalten.
-|Haus         |Kombinationsliste zum Selektieren eines Hauses.
+|Haus         |Auswahlliste zum Selektieren eines Hauses.
 |Alle         |Schaltfläche zum Zurücksetzen der Selektionskriterien.
 |==========================

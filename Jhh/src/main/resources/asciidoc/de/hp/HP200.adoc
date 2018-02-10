@@ -22,10 +22,10 @@ image:HP200.png[{hp200-title},title={hp200-title}]
 |image:icon/icons8-copy.png[title="Kopieren",width={icon-width}]        |Schaltfläche zum Kopieren der ausgewählten Behandlung. Manchmal ähneln sich zwei Termine sehr, dann kann mit dieser Möglichkeit Arbeit gespart werden.
 |image:icon/icons8-edit.png[title="Ändern",width={icon-width}]          |Schaltfläche zum Ändern der ausgewählten Behandlung. Auch durch Doppelklick auf die Behandlung zu erreichen.
 |image:icon/icons8-remove.png[title="Löschen",width={icon-width}]       |Schaltfläche zum Löschen der ausgewählten Behandlung. Bitte nur verwenden, wenn wirklich etwas falsch eingegeben wurde.
-|image:icon/icons8-print.png[title="Drucken",width={icon-width}]        |Schaltfläche zum Drucken einer Patientenakte für den ausgewählten Patienten und Zeitraum. Diese Option sollte in regelmäßigen Abständen verwendet werden, damit die Akte auch in schriftlicher Form nachlesbar ist. Wichtig ist, in der Kombinationsliste unten einen Patienten zu selektieren.
+|image:icon/icons8-print.png[title="Drucken",width={icon-width}]        |Schaltfläche zum Drucken einer Patientenakte für den ausgewählten Patienten und Zeitraum. Diese Option sollte in regelmäßigen Abständen verwendet werden, damit die Akte auch in schriftlicher Form nachlesbar ist. Wichtig ist, in der Auswahlliste unten einen Patienten zu selektieren.
 |Behandlungen |Liste mit allen bestehenden Behandlungen. Durch Klick auf die Spaltenbezeichnungen kann die Sortierung geändert werden.
 |Von          |Selektionsdatum für Behandlungen, die nach diesem Datum liegen. Wichtig für das Ausdrucken von Patientenakten.
 |Bis          |Selektionsdatum für Behandlungen, die vor diesem Datum liegen. Wichtig für das Ausdrucken von Pateintenakten.
-|Patient      |Kombinationsliste zum Selektieren eines Patienten. Dies schränkt die angezeigten Patienten ein und ist wichtig für das Ausdrucken einer Patientenakte.
+|Patient      |Auswahlliste zum Selektieren eines Patienten. Dies schränkt die angezeigten Patienten ein und ist wichtig für das Ausdrucken einer Patientenakte.
 |Alle         |Schaltfläche zum Zurücksetzen aller Selektionskriterien.
 |==========================

@@ -18,7 +18,7 @@ image:FZ340.png[{fz340-title},title={fz340-title}]
 |image:icon/icons8-edit.png[title="Ändern",width={icon-width}]          |Schaltfläche zum Ändern des ausgewählten Buches.
 |image:icon/icons8-remove.png[title="Löschen",width={icon-width}]       |Schaltfläche zum Löschen des ausgewählten Buches.
 |Bücher       |Liste mit allen bestehenden Büchern.
-|Autor        |Kombinationsliste zum Selektieren des Autors.
+|Autor        |Auswahlliste zum Selektieren des Autors.
 |Titel        |Der Buchtitel kann mit Platzhaltern gesucht werden.
 |Alle         |Schaltfläche zum Zurücksetzen aller Selektionskriterien.
 |==========================

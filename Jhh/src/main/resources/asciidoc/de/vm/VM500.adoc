@@ -7,7 +7,7 @@ Dieses Formular erlaubt das komfortable Erfassen, Kopieren, Ändern und Stornier
 Die Auswahl wird durch die unter der Liste befindlichen Steuerelemente bestimmt.
 Das Valuta- oder Erfassungsdatum kann durch ein Von- und Bis-Datum eingeschränkt werden.
 Der Buchungstext kann mit Platzhaltern gesucht werden. Der Betrag kann exakt bestimmt werden.
-Das Soll- oder Habenkonto kann durch die Kombinationsliste Konto festgelegt werden.
+Das Soll- oder Habenkonto kann durch die Auswahlliste Konto festgelegt werden.
 Durch die Schaltfläche Aktualisieren wird die Liste mit den aktuellen Einschränkungen neu aufgebaut.
 Einer Buchung kann ein Haus, eine Wohnung oder ein Mieter zugeordnet werden. Vergleiche auch Formular <<HH400>>.
 
@@ -31,9 +31,9 @@ image:VM500.png[{vm500-title},title={vm500-title}]
 |bis          |Selektionsdatum für Buchungen, die vor diesem Datum liegen.
 |Text         |Der Buchungstext kann mit Platzhaltern gesucht werden, z.B. '_ind%' findet alle Texte, die ein beliebiges 1. Zeichen, dann 'ind' haben und dann beliebig sind, wie 'Kinder' oder 'Rind'.
 |Betrag       |Der Buchungsbetrag wird exakt gesucht, z.B. 41,79.
-|Konto        |Kombinationsliste zum Selektieren von Soll- oder Habenkonto.
-|Haus         |Kombinationsliste zum Selektieren von Buchungen eines Hauses.
-|Wohnung      |Kombinationsliste zum Selektieren von Buchungen einer Wohnung.
-|Mieter       |Kombinationsliste zum Selektieren von Buchungen eines Mieters.
+|Konto        |Auswahlliste zum Selektieren von Soll- oder Habenkonto.
+|Haus         |Auswahlliste zum Selektieren von Buchungen eines Hauses.
+|Wohnung      |Auswahlliste zum Selektieren von Buchungen einer Wohnung.
+|Mieter       |Auswahlliste zum Selektieren von Buchungen eines Mieters.
 |Alle         |Schaltfläche zum Zurücksetzen der Selektionskriterien.
 |==========================

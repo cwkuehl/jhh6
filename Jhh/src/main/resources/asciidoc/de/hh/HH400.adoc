@@ -7,7 +7,7 @@ Dieses Formular erlaubt das komfortable Erfassen, Kopieren, Ändern und Stornier
 Die Auswahl wird durch die unter der Liste befindlichen Steuerelemente bestimmt.
 Das Valuta- oder Erfassungsdatum kann durch ein Von- und Bis-Datum eingeschränkt werden.
 Der Buchungstext kann mit Platzhaltern gesucht werden. Der Betrag kann exakt bestimmt werden.
-Das Soll- oder Habenkonto kann durch die Kombinationsliste Konto festgelegt werden.
+Das Soll- oder Habenkonto kann durch die Auswahlliste Konto festgelegt werden.
 Durch die Schaltfläche Aktuell wird die Liste mit den aktuellen Einschränkungen neu aufgebaut.
 
 image:HH400.png[{hh400-title},title={hh400-title}]
@@ -30,6 +30,6 @@ image:HH400.png[{hh400-title},title={hh400-title}]
 |Bis          |Selektionsdatum für Buchungen, die vor diesem Datum liegen.
 |Text         |Der Buchungstext kann mit Platzhaltern gesucht werden, z.B. '_ind%' findet alle Texte, die ein beliebiges 1. Zeichen, dann 'ind' haben und dann beliebig sind, wie 'Kinder' oder 'Rind'.
 |Betrag       |Der Buchungsbetrag wird exakt gesucht, z.B. 41,79.
-|Konto        |Kombinationsliste zum Selektieren von Soll- oder Habenkonto.
+|Konto        |Auswahlliste zum Selektieren von Soll- oder Habenkonto.
 |Alle         |Schaltfläche zum Zurücksetzen aller Selektionskriterien.
 |==========================

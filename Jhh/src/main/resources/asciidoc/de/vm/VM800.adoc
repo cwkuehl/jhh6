@@ -15,8 +15,8 @@ image:VM800.png[{vm800-title},title={vm800-title}]
 |Forderungen  |Liste mit bestehenden Miet-Forderungen.
 |Von          |Selektionsmonat für Forderungen, die nach diesem Datum liegen.
 |Bis          |Selektionsmonat für Forderungen, die vor diesem Datum liegen.
-|Haus         |Kombinationsliste zum Selektieren eines Hauses.
-|Wohnung      |Kombinationsliste zum Selektieren einer Wohnung.
-|Mieter       |Kombinationsliste zum Selektieren eines Mieters.
+|Haus         |Auswahlliste zum Selektieren eines Hauses.
+|Wohnung      |Auswahlliste zum Selektieren einer Wohnung.
+|Mieter       |Auswahlliste zum Selektieren eines Mieters.
 |Alle         |Schaltfläche zum Zurücksetzen der Selektionskriterien.
 |==========================

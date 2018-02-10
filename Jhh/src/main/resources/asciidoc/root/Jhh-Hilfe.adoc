@@ -187,7 +187,7 @@ Das Menü umfasst folgende Punkte:
                  |Leistungsgruppen    |Mit diesem Formular werden Leistungen zu Gruppen zusammengefasst. <<HP350>>
 .4+|Stammbaum    |                    |Aufruf der Funktionen und Dialoge aus dem Bereich Stammbaum.
                  |Ahnen               |Dieses Formular verwaltet alle Ahnen. <<SB200>>
-                 |Familien            |Dieses Formular verwaltet alle Ahnen-Familien.
+                 |Familien            |Dieses Formular verwaltet alle Ahnen-Familien. <<SB300>>
                  |Quellen             |Dieses Formular verwaltet die Quellen-Angaben für die Ahnen.
 .8+|Wertpapiere  |                    |Aufruf der Funktionen und Dialoge aus dem Bereich Wertpapiere.
                  |Wertpapiere         |Dieses Formular verwaltet alle Wertpapiere.
@@ -447,10 +447,14 @@ Dieser Bereich besteht aus folgenden Dialogen:
 * <<SB200>>
 * <<SB210>>
 * <<SB220>>
+* <<SB300>>
+* <<SB310>>
 
 include::../de/sb/SB200.adoc[]
 include::../de/sb/SB210.adoc[]
 include::../de/sb/SB220.adoc[]
+include::../de/sb/SB300.adoc[]
+include::../de/sb/SB310.adoc[]
 
 
 === Bereich Wertpapiere

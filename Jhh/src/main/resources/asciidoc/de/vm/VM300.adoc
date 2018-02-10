@@ -20,7 +20,7 @@ image:VM300.png[{vm300-title},title={vm300-title}]
 |Mieter       |Liste mit allen bestehenden Mietern.
 |Von          |Selektionsdatum für Mieter, die nach diesem Datum eingezogen sind.
 |Bis          |Selektionsdatum für Mieter, die vor diesem Datum ausgezogen sind.
-|Haus         |Kombinationsliste zum Selektieren von Mietern eines Hauses.
-|Wohnung      |Kombinationsliste zum Selektieren von Mietern einer Wohnung.
+|Haus         |Auswahlliste zum Selektieren von Mietern eines Hauses.
+|Wohnung      |Auswahlliste zum Selektieren von Mietern einer Wohnung.
 |Alle         |Schaltfläche zum Zurücksetzen der Selektionskriterien.
 |==========================

@@ -23,9 +23,9 @@ image:VM920.png[{vm920-title},title={vm920-title}]
 |Abrechnungen |Liste von ausgewählten Abrechnungs-Datensätzen.
 |Von          |Selektionsdatum für Abrechnungs-Datensätze, die nach diesem Datum liegen.
 |Bis          |Selektionsdatum für Abrechnungs-Datensätze, die vor diesem Datum liegen.
-|Haus         |Kombinationsliste zum Selektieren eines Hauses.
-|Wohnung      |Kombinationsliste zum Selektieren einer Wohnung.
-|Mieter       |Kombinationsliste zum Selektieren eines Mieters.
-|Schlüssel    |Kombinationsliste zum Selektieren eines Schlüssels.
+|Haus         |Auswahlliste zum Selektieren eines Hauses.
+|Wohnung      |Auswahlliste zum Selektieren einer Wohnung.
+|Mieter       |Auswahlliste zum Selektieren eines Mieters.
+|Schlüssel    |Auswahlliste zum Selektieren eines Schlüssels.
 |Alle         |Schaltfläche zum Zurücksetzen der Selektionskriterien.
 |==========================
