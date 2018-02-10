@@ -188,7 +188,7 @@ Das Menü umfasst folgende Punkte:
 .4+|Stammbaum    |                    |Aufruf der Funktionen und Dialoge aus dem Bereich Stammbaum.
                  |Ahnen               |Dieses Formular verwaltet alle Ahnen. <<SB200>>
                  |Familien            |Dieses Formular verwaltet alle Ahnen-Familien. <<SB300>>
-                 |Quellen             |Dieses Formular verwaltet die Quellen-Angaben für die Ahnen.
+                 |Quellen             |Dieses Formular verwaltet die Quellen-Angaben für die Ahnen. <<SB400>>
 .8+|Wertpapiere  |                    |Aufruf der Funktionen und Dialoge aus dem Bereich Wertpapiere.
                  |Wertpapiere         |Dieses Formular verwaltet alle Wertpapiere.
                  |Konfigurationen     |Dieses Formular verwaltet alle Point and Figure-Konfigurationen zur Auswertung von Wertpapieren.
@@ -449,12 +449,16 @@ Dieser Bereich besteht aus folgenden Dialogen:
 * <<SB220>>
 * <<SB300>>
 * <<SB310>>
+* <<SB400>>
+* <<SB410>>
 
 include::../de/sb/SB200.adoc[]
 include::../de/sb/SB210.adoc[]
 include::../de/sb/SB220.adoc[]
 include::../de/sb/SB300.adoc[]
 include::../de/sb/SB310.adoc[]
+include::../de/sb/SB400.adoc[]
+include::../de/sb/SB410.adoc[]
 
 
 === Bereich Wertpapiere
