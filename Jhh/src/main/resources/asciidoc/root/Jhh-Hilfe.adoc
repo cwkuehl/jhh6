@@ -25,7 +25,7 @@ Das Haushalts-Programm enthält eine Sammlung von Funktionen und Dialogen, die f
 - *Haushaltsführung* mit doppelter Buchführung, Eröffnungs- und Schlussbilanz sowie Gewinn- und Verlustrechnung (<<HH0>>)
 - *Adressenverwaltung* mit beliebig vielen Adressen pro Person und Geburtstagsliste beim Start (<<FZ0>>)
 - *Tagebuch* speichert pro Tag einen beliebig langen Text (<<FZ0>>)
-- *Stammbaum* mit Ahnen, Familien, Quellen und GEDCOM-Schnittstelle (Bereich Stammbaum)
+- *Stammbaum* mit Ahnen, Familien, Quellen und GEDCOM-Schnittstelle (<<SB0>>)
 - *Heilpraktiker*-Praxis mit Erfassen von Patienten, Behandlungen und Rechnungen (<<HP0>>)
 - *Wertpapiere* mit Point and Figure-Charts (Bereich Wertpapiere)
 - *Messdienerordnungen* erstellen (Bereich Messdiener)
@@ -186,7 +186,7 @@ Das Menü umfasst folgende Punkte:
                  |Leistungen          |Dieses Formular verwaltet die möglichen Leistungen für Behandlungen. <<HP300>>
                  |Leistungsgruppen    |Mit diesem Formular werden Leistungen zu Gruppen zusammengefasst. <<HP350>>
 .4+|Stammbaum    |                    |Aufruf der Funktionen und Dialoge aus dem Bereich Stammbaum.
-                 |Ahnen               |Dieses Formular verwaltet alle Ahnen.
+                 |Ahnen               |Dieses Formular verwaltet alle Ahnen. <<SB200>>
                  |Familien            |Dieses Formular verwaltet alle Ahnen-Familien.
                  |Quellen             |Dieses Formular verwaltet die Quellen-Angaben für die Ahnen.
 .8+|Wertpapiere  |                    |Aufruf der Funktionen und Dialoge aus dem Bereich Wertpapiere.
@@ -436,10 +436,19 @@ include::../de/hp/HP410.adoc[]
 include::../de/hp/HP420.adoc[]
 
 
-=== Bereich Stammbaum
+:sb0-title: Bereich Stammbaum
+anchor:SB0[{sb0-title}]
+
+=== {sb0-title}
 In diesem Bereich können Ahnen verwaltet werden. Die verwandtschaftlichen Verhältnisse und Quellen-Angaben werden dabei erfasst.
 Die Daten können selektiv als GEDCOM-Datei exportiert und importiert werden.
 Dieser Bereich besteht aus folgenden Dialogen:
+
+* <<SB200>>
+* <<SB210>>
+
+include::../de/sb/SB200.adoc[]
+include::../de/sb/SB210.adoc[]
 
 
 === Bereich Wertpapiere
