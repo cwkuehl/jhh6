@@ -1,0 +1,31 @@
+:vm920-title: Abrechnungen
+anchor:VM920[{vm920-title}]
+
+==== Formular {vm920-title}
+
+Diesem Formular verwaltet Betriebskostenabrechnungen in Einzel-Darstellung.
+Üblicherweise werden die Abrechnungs-Datensätze von der Haus-Abrechnung erstellt.
+Die einzelne Werte werden dann in diesen Dialogen bearbeitet.
+
+image:VM920.png[{vm920-title},title={vm920-title}]
+
+[width="100%",cols="<1,<5",frame="all",options="header"]
+|==========================
+|Steuerelement|Erklärung
+|image:icon/icons8-refresh.png[title="Aktualisieren",width={icon-width}]|Schaltfläche zum Aktualisieren der Liste von Abrechnungs-Datensätzen.
+|image:icon/icons8-undo.png[title="Rückgängig",width={icon-width}]      |Diese Schaltfläche macht die letzte Aktion rückgängig.
+|image:icon/icons8-redo.png[title="Wiederherstellen",width={icon-width}]|Diese Schaltfläche stellt die letzte rückgängig gemachte Aktion wieder her.
+|image:icon/icons8-new-document.png[title="Neu",width={icon-width}]     |Schaltfläche zum Erstellen eines neuen Abrechnungs-Datensatzes. <<VM930>>
+|image:icon/icons8-copy.png[title="Kopieren",width={icon-width}]        |Schaltfläche zum Kopieren des ausgewählten Abrechnungs-Datensatzes.
+|image:icon/icons8-edit.png[title="Ändern",width={icon-width}]          |Schaltfläche zum Ändern des ausgewählten Abrechnungs-Datensatzes.
+|image:icon/icons8-remove.png[title="Löschen",width={icon-width}]       |Schaltfläche zum Löschen des ausgewählten Abrechnungs-Datensatzes.
+|image:icon/icons8-print.png[title="Drucken",width={icon-width}]        |Schaltfläche zum Erstellen einer Betriebskosten-Abrechnung zum ausgewählten Haus und Zeitraum als PDF-Datei.
+|Abrechnungen |Liste von ausgewählten Abrechnungs-Datensätzen.
+|Von          |Selektionsdatum für Abrechnungs-Datensätze, die nach diesem Datum liegen.
+|Bis          |Selektionsdatum für Abrechnungs-Datensätze, die vor diesem Datum liegen.
+|Haus         |Kombinationsliste zum Selektieren eines Hauses.
+|Wohnung      |Kombinationsliste zum Selektieren einer Wohnung.
+|Mieter       |Kombinationsliste zum Selektieren eines Mieters.
+|Schlüssel    |Kombinationsliste zum Selektieren eines Schlüssels.
+|Alle         |Schaltfläche zum Zurücksetzen der Selektionskriterien.
+|==========================

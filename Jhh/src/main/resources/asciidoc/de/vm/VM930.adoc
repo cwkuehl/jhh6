@@ -1,0 +1,33 @@
+:vm930-title: Abrechnung
+anchor:VM930[{vm930-title}]
+
+==== Dialog {vm930-title}
+
+Dieser Dialog dient dem Erstellen, Kopieren, Ändern und Löschen eines Abrechnungs-Datensatzes.
+Abhängig von der Art des Aufrufes sind die Felder editierbar oder nicht.
+
+image:VM930.png[{vm930-title},title={vm930-title}]
+
+[width="100%",cols="<1,<5",frame="all",options="header"]
+|==========================
+|Steuerelement|Erklärung
+|Nr.          |Eindeutige Nummer des ausgewählten Abrechnungs-Datensatzes.
+|Von          |Ein Abrechnungsbeginn muss eingestellt werden.
+|Bis          |Ein Abrechnungsende muss eingestellt werden.
+|Haus         |Ein Haus muss ausgewählt werden.
+|Wohnung      |Eine Wohnung kann ausgewählt werden.
+|Mieter       |Ein Mieter kann ausgewählt werden.
+|Schlüssel    |Ein Schlüssel muss erfasst werden.
+|Beschreibung |Eine Beschreibung zum Schlüssel kann erfasst werden. Sie wird abhängig vom Schlüssel in der Betriebskosten-Abrechnung ausgegeben.
+|Wert         |Abhängig von Schlüssel kann ein Wert als Zeichenkette erfasst werden.
+|Betrag       |Abhängig von Schlüssel kann ein Wert als Betrag bzw. Zahl erfasst werden.
+|Datum        |Abhängig von Schlüssel kann ein Wert als Datum erfasst werden.
+|Reihenfolge  |Eine Zeichenkette, die die Reihenfolge der Schlüssel in der Abrechnung festlegt, muss erfasst werden.
+|Status       |Ein Status des Abrechnungs-Datensatzes muss erfasst werden. A steht für aktiv. Bei allen anderen Status wird Datensatz ignoriert.
+|Funktion     |Eine Berechnungsfunktion kann erfasst werden.
+|Notiz        |Eine beliebig lange Notiz kann erfasst werden.
+|Angelegt     |Datum und Uhrzeit sowie Benutzer-ID von der Erstellung des Datensatzes.
+|Geändert     |Datum und Uhrzeit sowie Benutzer-ID von der letzten Änderung des Datensatzes.
+|OK           |Diese Schaltfläche speichert oder löscht den Abrechnungs-Datensatz und schließt den Dialog.
+|Abbrechen    |Diese Schaltfläche schließt den Dialog ohne Speichern.
+|==========================
