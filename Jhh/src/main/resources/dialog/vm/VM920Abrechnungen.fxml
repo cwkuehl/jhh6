@@ -154,14 +154,14 @@
 		</columns>
 	</TableView>
 	<Label fx:id="von0" mnemonicParsing="true" text="%VM920.von" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-	<Datum fx:id="von" accessibleText="%VM920.von.tt" nullText="unbegrenzt" onAction="#onVon" promptText="%VM920.von.tt"
+	<Datum fx:id="von" accessibleText="%VM920.von.tt" nullText="%VM920.von.null" onAction="#onVon" promptText="%VM920.von.tt"
 		schalterText="" uhrzeitGroesse="0" GridPane.columnIndex="1" GridPane.rowIndex="3">
 		<tooltip>
 			<Tooltip text="%VM920.von.tt" />
 		</tooltip>
 	</Datum>
 	<Label fx:id="bis0" mnemonicParsing="true" text="%VM920.bis" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-	<Datum fx:id="bis" accessibleText="%VM920.bis.tt" nullText="unbegrenzt" onAction="#onBis" promptText="%VM920.bis.tt"
+	<Datum fx:id="bis" accessibleText="%VM920.bis.tt" nullText="%VM920.bis.null" onAction="#onBis" promptText="%VM920.bis.tt"
 		schalterText="" uhrzeitGroesse="0" GridPane.columnIndex="1" GridPane.rowIndex="4">
 		<tooltip>
 			<Tooltip text="%VM920.bis.tt" />

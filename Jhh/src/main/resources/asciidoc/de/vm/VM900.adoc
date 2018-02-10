@@ -1,0 +1,22 @@
+:vm900-title: Haus-Abrechnungen
+anchor:VM900[{vm900-title}]
+
+==== Formular {vm900-title}
+
+Dieses Formular verwaltet Betriebskostenabrechnungen auf Häuser-Ebene für den Zeitraum von üblicherweise einem Kalenderjahr.
+
+image:VM900.png[{vm900-title},title={vm900-title}]
+
+[width="100%",cols="<1,<5",frame="all",options="header"]
+|==========================
+|Steuerelement|Erklärung
+|image:icon/icons8-refresh.png[title="Aktualisieren",width={icon-width}]|Schaltfläche zum Aktualisieren der Liste von Haus-Abrechnungen.
+|image:icon/icons8-undo.png[title="Rückgängig",width={icon-width}]      |Diese Schaltfläche macht die letzte Aktion rückgängig.
+|image:icon/icons8-redo.png[title="Wiederherstellen",width={icon-width}]|Diese Schaltfläche stellt die letzte rückgängig gemachte Aktion wieder her.
+|image:icon/icons8-new-document.png[title="Neu",width={icon-width}]     |Schaltfläche zum Erstellen einer neuen Haus-Abrechnung. <<VM910>>
+|image:icon/icons8-remove.png[title="Löschen",width={icon-width}]       |Schaltfläche zum Löschen der ausgewählten Haus-Abrechnung, d.h. aller Abrechnungs-Datensätze des betroffenen Zeitraums.
+|Haus-Abrechnungen|Liste mit allen bestehenden Haus-Abrechnungen.
+|Datum        |Selektionsdatum für Haus-Abrechnungen, die das Datum beinhalten.
+|Haus         |Kombinationsliste zum Selektieren eines Hauses.
+|Alle         |Schaltfläche zum Zurücksetzen der Selektionskriterien.
+|==========================

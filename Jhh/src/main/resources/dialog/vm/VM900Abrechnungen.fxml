@@ -106,7 +106,7 @@
 		</columns>
 	</TableView>
 	<Label fx:id="von0" mnemonicParsing="true" text="%VM900.von" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-	<Datum fx:id="von" accessibleText="%VM900.von.tt" nullText="unbegrenzt" onAction="#onVon" promptText="%VM900.von.tt" schalterText="" uhrzeitGroesse="0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+	<Datum fx:id="von" accessibleText="%VM900.von.tt" nullText="%VM900.von.null" onAction="#onVon" promptText="%VM900.von.tt" schalterText="" uhrzeitGroesse="0" GridPane.columnIndex="1" GridPane.rowIndex="3">
 		<tooltip>
 			<Tooltip text="%VM900.von.tt" />
 		</tooltip>

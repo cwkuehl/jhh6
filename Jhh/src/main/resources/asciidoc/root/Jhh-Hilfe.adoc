@@ -176,7 +176,7 @@ Das Menü umfasst folgende Punkte:
                  |Wohnungen           |Dieses Formular verwaltet Wohnungen. <<VM200>>
                  |Mieter              |Dieses Formular verwaltet Mieter. <<VM300>>
                  |Mieten              |Dieses Formular verwaltet Mieten von Wohnungen. <<VM400>>
-                 |Haus-Abrechnungen   |Dieses Formular verwaltet Betriebskostenabrechnungen auf Häuser-Ebene.
+                 |Haus-Abrechnungen   |Dieses Formular verwaltet Betriebskostenabrechnungen auf Häuser-Ebene. <<VM900>>
                  |Abrechnungen        |Dieses Formular verwaltet Betriebskostenabrechnungen in Einzel-Darstellung.
 .7+|Heilpraktiker|                    |Aufruf der Funktionen und Dialoge aus dem Bereich Heilpraktiker.
                  |Behandlungen        |Dieses Formular verwaltet die Behandlungen der Patienten mit Symptomen und Diagnose. <<HP200>>
@@ -371,6 +371,8 @@ Dieser Bereich besteht aus folgenden Dialogen:
 * <<VM700>>
 * <<VM710>>
 * <<VM800>>
+* <<VM900>>
+* <<VM910>>
 
 include::../de/vm/VM100.adoc[]
 include::../de/vm/VM110.adoc[]
@@ -389,6 +391,8 @@ include::../de/vm/VM610.adoc[]
 include::../de/vm/VM700.adoc[]
 include::../de/vm/VM710.adoc[]
 include::../de/vm/VM800.adoc[]
+include::../de/vm/VM900.adoc[]
+include::../de/vm/VM910.adoc[]
 
 
 :hp0-title: Bereich Heilpraktiker

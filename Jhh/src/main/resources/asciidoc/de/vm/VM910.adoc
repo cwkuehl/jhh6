@@ -1,0 +1,19 @@
+:vm910-title: Haus-Abrechnung
+anchor:VM910[{vm910-title}]
+
+==== Dialog {vm910-title}
+
+Dieser Dialog dient dem Erstellen, und Löschen einer Haus-Abrechnung.
+Abhängig von der Art des Aufrufes sind die Felder editierbar oder nicht.
+
+image:VM910.png[{vm910-title},title={vm910-title}]
+
+[width="100%",cols="<1,<5",frame="all",options="header"]
+|==========================
+|Steuerelement|Erklärung
+|Von          |Ein Abrechnungsbeginn muss eingestellt werden.
+|Bis          |Ein Abrechnungsende muss eingestellt werden.
+|Haus         |Ein Haus muss ausgewählt werden.
+|OK           |Diese Schaltfläche speichert oder löscht die Haus-Abrechnung und schließt den Dialog.
+|Abbrechen    |Diese Schaltfläche schließt den Dialog ohne Speichern.
+|==========================
