@@ -451,6 +451,7 @@ Dieser Bereich besteht aus folgenden Dialogen:
 * <<SB310>>
 * <<SB400>>
 * <<SB410>>
+* <<SB500>>
 
 include::../de/sb/SB200.adoc[]
 include::../de/sb/SB210.adoc[]
@@ -459,6 +460,7 @@ include::../de/sb/SB300.adoc[]
 include::../de/sb/SB310.adoc[]
 include::../de/sb/SB400.adoc[]
 include::../de/sb/SB410.adoc[]
+include::../de/sb/SB500.adoc[]
 
 
 === Bereich Wertpapiere
