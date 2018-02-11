@@ -1,0 +1,30 @@
+:mo210-title: Gottesdienst
+anchor:MO210[{mo210-title}]
+
+==== Dialog {mo210-title}
+
+Dieser Dialog dient dem Erstellen, Ändern und Löschen eines Gottesdienstes.
+Abhängig von der Art des Aufrufes sind die Felder editierbar oder nicht.
+
+image:MO210.png[{mo210-title},title={mo210-title}]
+
+[width="100%",cols="<1,<5",frame="all",options="header"]
+|==========================
+|Steuerelement|Erklärung
+|Nr.          |Eindeutige Nummer des ausgewählten Gottesdienstes.
+|Termin       |Ein Gottesdienstbeginn inkl. Uhrzeit muss angegeben werden.
+|Name         |Ein Gottesdienstbezeichnung muss eingegeben werden.
+|Ort          |Ein Veranstaltungsort muss eingegeben werden.
+|Profil       |Ein Profil für Messdiener-Besetzung kann ausgewählt werden.
+|Status       |Es kann zwischen automatischem und manuellem Status unterschieden werden. Bei automatischem Status werden bei der Messdiener-Einteilung nur Messdiener mit automatischem Status angeboten, die für den Dienst und die Zeit verfügbar sind. Beim manuellem Status werden alle Messdiener angeboten.
+|Notiz        |Eine beliebig lange Notiz kann erfasst werden.
+|Einteilungen |Liste mit allen eingeteilten Messdienern.
+|Angelegt     |Datum und Uhrzeit sowie Benutzer-ID von der Erstellung des Datensatzes.
+|Geändert     |Datum und Uhrzeit sowie Benutzer-ID von der letzten Änderung des Datensatzes.
+|OK           |Diese Schaltfläche speichert oder löscht den Gottesdienst und schließt den Dialog.
+|Neue Einteilung|Schaltfläche zum Erstellen einer neuen Messdiener-Einteilung. <<MO220>>
+|Ändern       |Schaltfläche zum Ändern der ausgewählten Messdiener-Einteilung.
+|Löschen      |Schaltfläche zum Löschen der ausgewählten Messdiener-Einteilung.
+|Alle löschen |Schaltfläche zum Löschen aller Messdiener-Einteilungen.
+|Abbrechen    |Diese Schaltfläche schließt den Dialog ohne Speichern.
+|==========================

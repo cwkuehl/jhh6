@@ -198,7 +198,7 @@ Das Menü umfasst folgende Punkte:
                  |WP-Buchungen        |Mit diesem Formular können Sie komfortabel alle möglichen Anlage-Buchungen erfassen, kopieren, ändern und stornieren.
                  |Stände              |Dieses Formular verwaltet alle Preise von Wertpapieren.
 .4+|Messdiener   |                    |Aufruf der Funktionen und Dialoge aus dem Bereich Messdiener.
-                 |Gottesdienste       |Dieses Formular verwaltet die Gottesdienste.
+                 |Gottesdienste       |Dieses Formular verwaltet die Gottesdienste. <<MO200>>
                  |Messdiener          |Dieses Formular verwaltet die Messdiener. <<MO100>>
                  |Profile             |Dieses Formular verwaltet die Gottesdienst-Profile, d.h. Liste der Dienste mit minimaler Anzahl der Messdiener.
 .3+|Hilfe        |                    |Aufruf der Funktionen und Dialoge aus dem Bereich Hilfe.
@@ -480,9 +480,13 @@ Dieser Bereich besteht aus folgenden Dialogen:
 
 * <<MO100>>
 * <<MO110>>
+* <<MO200>>
+* <<MO210>>
 
 include::../de/mo/MO100.adoc[]
 include::../de/mo/MO110.adoc[]
+include::../de/mo/MO200.adoc[]
+include::../de/mo/MO210.adoc[]
 
 
 === Bereich Hilfe

@@ -182,7 +182,7 @@ class MO210GottesdienstController extends BaseController<String> {
 		tabbar = 0
 		super.initialize
 		nr0.setLabelFor(nr)
-		von0.setLabelFor(von.getLabelForNode)
+		von0.setLabelFor(von.getLabelForNode, true)
 		name0.setLabelFor(name, true)
 		ort0.setLabelFor(ort, true)
 		profil0.setLabelFor(profil, true)
