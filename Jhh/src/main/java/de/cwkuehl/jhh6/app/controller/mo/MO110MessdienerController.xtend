@@ -22,6 +22,7 @@ import javafx.scene.control.TextField
  * Controller für Dialog MO110Messdiener.
  */
 class MO110MessdienerController extends BaseController<String> {
+
 	@FXML Label nr0
 	@FXML TextField nr
 	@FXML Label vorname0
@@ -141,14 +142,14 @@ class MO110MessdienerController extends BaseController<String> {
 		tabbar = 0
 		nr0.setLabelFor(nr)
 		vorname0.setLabelFor(vorname)
-		name0.setLabelFor(name)
+		name0.setLabelFor(name, true)
 		adresse10.setLabelFor(adresse1)
 		telefon10.setLabelFor(telefon1)
 		telefon20.setLabelFor(telefon2)
 		email10.setLabelFor(email1)
 		email20.setLabelFor(email2)
 		mit0.setLabelFor(mit, false)
-		von0.setLabelFor(von.getLabelForNode)
+		von0.setLabelFor(von.getLabelForNode, true)
 		bis0.setLabelFor(bis.getLabelForNode)
 		dienste0.setLabelFor(dienste)
 		initListView(dienste, null)

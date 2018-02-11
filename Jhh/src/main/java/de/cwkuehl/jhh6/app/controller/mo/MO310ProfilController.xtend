@@ -39,8 +39,8 @@ class MO310ProfilController extends BaseController<String> {
 
 		tabbar = 0
 		nr0.setLabelFor(nr)
-		name0.setLabelFor(name)
-		dienste0.setLabelFor(dienste)
+		name0.setLabelFor(name, true)
+		dienste0.setLabelFor(dienste, true)
 		notiz0.setLabelFor(notiz)
 		angelegt0.setLabelFor(angelegt)
 		geaendert0.setLabelFor(geaendert)

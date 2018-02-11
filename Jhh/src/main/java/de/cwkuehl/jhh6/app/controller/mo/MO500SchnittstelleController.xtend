@@ -39,9 +39,9 @@ class MO500SchnittstelleController extends BaseController<String> {
 	override protected void initialize() {
 
 		tabbar = 0
-		von0.setLabelFor(von.getLabelForNode)
+		von0.setLabelFor(von.getLabelForNode, true)
 		bis0.setLabelFor(bis.getLabelForNode)
-		datei0.setLabelFor(datei)
+		datei0.setLabelFor(datei, true)
 		initDaten(0)
 		datei.requestFocus
 	}

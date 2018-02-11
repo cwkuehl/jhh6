@@ -28,7 +28,7 @@ Das Haushalts-Programm enthält eine Sammlung von Funktionen und Dialogen, die f
 - *Stammbaum* mit Ahnen, Familien, Quellen und GEDCOM-Schnittstelle (<<SB0>>)
 - *Heilpraktiker*-Praxis mit Erfassen von Patienten, Behandlungen und Rechnungen (<<HP0>>)
 - *Wertpapiere* mit Point and Figure-Charts (Bereich Wertpapiere)
-- *Messdienerordnungen* erstellen (Bereich Messdiener)
+- *Messdienerordnungen* erstellen (<<MO0>>)
 
 
 == Installation
@@ -199,7 +199,7 @@ Das Menü umfasst folgende Punkte:
                  |Stände              |Dieses Formular verwaltet alle Preise von Wertpapieren.
 .4+|Messdiener   |                    |Aufruf der Funktionen und Dialoge aus dem Bereich Messdiener.
                  |Gottesdienste       |Dieses Formular verwaltet die Gottesdienste.
-                 |Messdiener          |Dieses Formular verwaltet die Messdiener.
+                 |Messdiener          |Dieses Formular verwaltet die Messdiener. <<MO100>>
                  |Profile             |Dieses Formular verwaltet die Gottesdienst-Profile, d.h. Liste der Dienste mit minimaler Anzahl der Messdiener.
 .3+|Hilfe        |                    |Aufruf der Funktionen und Dialoge aus dem Bereich Hilfe.
                  |Über JHH6           |Aufruf des Dialog für Informationen über das Programm aus den Kategorien Laufzeit-Umgebung, Anmeldung und Lizenzen. <<AG000>>
@@ -471,9 +471,18 @@ Die Anlagen bilden ein Depot, das tagesaktuell preislich bewertet werden kann.
 Dieser Bereich besteht aus folgenden Dialogen:
 
 
-=== Bereich Messdiener
+:mo0-title: Bereich Messdiener
+anchor:MO0[{mo0-title}]
+
+=== {mo0-title}
 Dieser Bereich stellt Dialoge für die Erstellung von Messdienerordnungen zur Verfügung.
 Dieser Bereich besteht aus folgenden Dialogen:
+
+* <<MO100>>
+* <<MO110>>
+
+include::../de/mo/MO100.adoc[]
+include::../de/mo/MO110.adoc[]
 
 
 === Bereich Hilfe

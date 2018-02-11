@@ -1,0 +1,33 @@
+:mo110-title: Messdiener
+anchor:MO110[{mo110-title}]
+
+==== Dialog {mo110-title}
+
+Dieser Dialog dient dem Erstellen, Ändern und Löschen eines Messdieners.
+Abhängig von der Art des Aufrufes sind die Felder editierbar oder nicht.
+
+image:MO110.png[{mo110-title},title={mo110-title}]
+
+[width="100%",cols="<1,<5",frame="all",options="header"]
+|==========================
+|Steuerelement|Erklärung
+|Nr.          |Eindeutige Nummer des ausgewählten Messdieners.
+|Vorname      |Ein Vorname kann eingegeben werden.
+|Name         |Ein Name muss eingegeben werden.
+|Adresse      |Es können 3 Adress-Zeilen eingegeben werden.
+|Telefon      |Eine Telefonnummer kann eingegeben werden.
+|Telefon 2    |Eine zweite Telefonnummer kann eingegeben werden.
+|E-Mail       |Eine E-Mail-Adresse kann eingegeben werden.
+|E-Mail 2     |Eine zweite E-Mail-Adresse kann eingegeben werden.
+|Dienen mit   |Ein Messdiener kann ausgewählt werden, wenn beide zusammen dienen wollen.
+|Eintritt     |Ein Eintritts-Datum muss ausgewählt werden.
+|Austritt     |Ein Austritts-Datum kann ausgewählt werden. Nach diesem Datum erfolgt keine automatische Einteilung mehr.
+|Dienste      |Bei automatischem Status muss mindestens ein Dienst ausgewählt werden.
+|Verfügbarkeit|Bei automatischem Status muss mindestens eine Verfügbarkeit ausgewählt werden.
+|Status       |Es kann zwischen automatischem und manuellem Status unterschieden werden. Die automatische Einteilung wird nur bei Messdienern mit automatischem Status vorgenommen.
+|Notiz        |Eine beliebig lange Notiz kann erfasst werden.
+|Angelegt     |Datum und Uhrzeit sowie Benutzer-ID von der Erstellung des Datensatzes.
+|Geändert     |Datum und Uhrzeit sowie Benutzer-ID von der letzten Änderung des Datensatzes.
+|OK           |Diese Schaltfläche speichert oder löscht den Messdiener und schließt den Dialog.
+|Abbrechen    |Diese Schaltfläche schließt den Dialog ohne Speichern.
+|==========================
