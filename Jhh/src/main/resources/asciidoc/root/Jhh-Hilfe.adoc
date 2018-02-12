@@ -473,9 +473,11 @@ Darüberhinaus können Anlagen, d.h. Investitionen in Wertpapiere, inklusive Geb
 Die Anlagen bilden ein Depot, das tagesaktuell preislich bewertet werden kann.
 Dieser Bereich besteht aus folgenden Dialogen:
 
+* <<WP100>>
 * <<WP200>>
 * <<WP210>>
 
+include::../de/wp/WP100.adoc[]
 include::../de/wp/WP200.adoc[]
 include::../de/wp/WP210.adoc[]
 
