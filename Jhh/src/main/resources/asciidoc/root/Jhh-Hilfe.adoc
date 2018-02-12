@@ -478,12 +478,14 @@ Dieser Bereich besteht aus folgenden Dialogen:
 * <<WP120>>
 * <<WP200>>
 * <<WP210>>
+* <<WP220>>
 
 include::../de/wp/WP100.adoc[]
 include::../de/wp/WP110.adoc[]
 include::../de/wp/WP120.adoc[]
 include::../de/wp/WP200.adoc[]
 include::../de/wp/WP210.adoc[]
+include::../de/wp/WP220.adoc[]
 
 
 :mo0-title: Bereich Messdiener
