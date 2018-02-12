@@ -1,0 +1,55 @@
+:mo500-title: Messdiener-Schnittstelle
+anchor:MO500[{mo500-title}]
+
+==== Dialog {mo500-title}
+
+Dieser Dialog dient dem Import und Export von Messdienern sowie Messdienerordnungen.
+Die Dateien werden im CSV-Format erwartet bzw. erstellt.
+
+image:MO500.png[{mo500-title},title={mo500-title}]
+
+[width="100%",cols="<1,<5",frame="all",options="header"]
+|==========================
+|Steuerelement|Erklärung
+|Eintritt nach|Für den Messdienter-Export werden nur Messdiener berücksichtigt, die nach dem Datum begonnen haben.
+|Austritt bis |Für den Messdienter-Export kann ein Austrittsdatum angegeben werden. Es werden dann nur Messdiener exportiert, die bis zu dem Datum ausgetreten sind.
+|Datei        |Ein Name einer CSV-Datei muss angegeben oder über die Schaltfläche ... selektiert werden.
+|...          |Diese Schaltfläche öffnet den Datei-Dialog zum Selektieren der Import- bzw. Export-Datei.
+|Vorhandene Daten löschen|Wenn das Kontrollkästchen gesetzt ist, werden alle Messdiener vor dem Import gelöscht.
+|Import Messdiener|Schaltfläche zum Importieren einer Messdiener-Datei. Die CSV-Datei muss folgende Spalten beinhalten: 
+Name, Vorname, Telefon, seit, bis, manuell, Mit-Name, Mit-Vorname, Email, Email2, Di 18:00, Do 18:00, Fr 18:00, Sa 18:00, So 08:00, So 10:00
+|Export       |Schaltfläche zum Exportieren aller aktuellen Messdiener in einer CSV-Datei.
+|Import Messdiener-Ordnung|Schaltfläche zum Importieren Messdiener-Ordnungen aus einer Datei.
+|Abbrechen    |Diese Schaltfläche schließt den Dialog ohne Speichern.
+|==========================
+
+TIP: Beim Gottesdienst-Import wird eine Messdienerordnung analysiert und als Gottesdienste mit Messdiener-Einteilungen erfasst.
+Das Format der Datei sieht folgendermaßen aus:
+
+----
+Messdienerordnung 29.10.-17.11.2013
+
+Dienstag  29.10. , 18 Uhr Abendmesse                                                                                             
+
+Name Vorname - Name2 Vorname2 - Name3 Vorname3 - Name4 Vorname4
+
+Donnerstag  31.10. , 18 Uhr Abendmesse                                                                                         
+
+Name Vorname - Name2 Vorname2 - Name3 Vorname3
+
+Freitag  1.11.                                               Allerheiligen                                                                   
+
+8.00 Uhr Frühmesse
+
+Name Vorname - Name2 Vorname2 - Name3 Vorname3
+
+10.00 Uhr Hochamt
+
+Zeremoniar: Name Vorname
+Weihrauch:  Name Vorname – Name2 Vorname2
+Kreuz:      Name Vorname
+Fahnen:     Name Vorname – Name2 Vorname2
+Akolyten:   Name Vorname – Name2 Vorname2 – Name3 Vorname3
+Altar:      Name Vorname – Name2 Vorname2 – Name3 Vorname3
+Flambo:     Name Vorname - Name2 Vorname2 - Name3 Vorname3 - Name4 Vorname4
+----

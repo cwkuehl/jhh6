@@ -485,6 +485,7 @@ Dieser Bereich besteht aus folgenden Dialogen:
 * <<MO220>>
 * <<MO300>>
 * <<MO310>>
+* <<MO500>>
 
 include::../de/mo/MO100.adoc[]
 include::../de/mo/MO110.adoc[]
@@ -493,6 +494,7 @@ include::../de/mo/MO210.adoc[]
 include::../de/mo/MO220.adoc[]
 include::../de/mo/MO300.adoc[]
 include::../de/mo/MO310.adoc[]
+include::../de/mo/MO500.adoc[]
 
 
 === Bereich Hilfe
