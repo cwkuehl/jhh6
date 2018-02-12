@@ -27,7 +27,7 @@ Das Haushalts-Programm enthält eine Sammlung von Funktionen und Dialogen, die f
 - *Tagebuch* speichert pro Tag einen beliebig langen Text (<<FZ0>>)
 - *Stammbaum* mit Ahnen, Familien, Quellen und GEDCOM-Schnittstelle (<<SB0>>)
 - *Heilpraktiker*-Praxis mit Erfassen von Patienten, Behandlungen und Rechnungen (<<HP0>>)
-- *Wertpapiere* mit Point and Figure-Charts (Bereich Wertpapiere)
+- *Wertpapiere* mit Point and Figure-Charts (<<WP0>>)
 - *Messdienerordnungen* erstellen (<<MO0>>)
 
 
@@ -190,7 +190,7 @@ Das Menü umfasst folgende Punkte:
                  |Familien            |Dieses Formular verwaltet alle Ahnen-Familien. <<SB300>>
                  |Quellen             |Dieses Formular verwaltet die Quellen-Angaben für die Ahnen. <<SB400>>
 .8+|Wertpapiere  |                    |Aufruf der Funktionen und Dialoge aus dem Bereich Wertpapiere.
-                 |Wertpapiere         |Dieses Formular verwaltet alle Wertpapiere.
+                 |Wertpapiere         |Dieses Formular verwaltet alle Wertpapiere. <<WP200>>
                  |Konfigurationen     |Dieses Formular verwaltet alle Point and Figure-Konfigurationen zur Auswertung von Wertpapieren.
                  |Wertpapier-Chart    |Dieses Formular zeigt die Kurse und das Point and Figure-Chart eines Wertpapiers.
                  |PnF-Charts          |Dieses Formular zeigt drei Point and Figure-Charts.
@@ -463,12 +463,21 @@ include::../de/sb/SB410.adoc[]
 include::../de/sb/SB500.adoc[]
 
 
-=== Bereich Wertpapiere
+:wp0-title: Bereich Wertpapiere
+anchor:WP0[{wp0-title}]
+
+=== {wp0-title}
 In diesem Bereich können Wertpapiere verwaltet werden.
 Die Kurse der Wertpapiere können als Point and Figure-Chart visualisiert und bewertet werden.
 Darüberhinaus können Anlagen, d.h. Investitionen in Wertpapiere, inklusive Gebühren, Zinsen gebucht werden.
 Die Anlagen bilden ein Depot, das tagesaktuell preislich bewertet werden kann.
 Dieser Bereich besteht aus folgenden Dialogen:
+
+* <<WP200>>
+* <<WP210>>
+
+include::../de/wp/WP200.adoc[]
+include::../de/wp/WP210.adoc[]
 
 
 :mo0-title: Bereich Messdiener
