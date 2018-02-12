@@ -200,7 +200,7 @@ Das Menü umfasst folgende Punkte:
 .4+|Messdiener   |                    |Aufruf der Funktionen und Dialoge aus dem Bereich Messdiener.
                  |Gottesdienste       |Dieses Formular verwaltet die Gottesdienste. <<MO200>>
                  |Messdiener          |Dieses Formular verwaltet die Messdiener. <<MO100>>
-                 |Profile             |Dieses Formular verwaltet die Gottesdienst-Profile, d.h. Liste der Dienste mit minimaler Anzahl der Messdiener.
+                 |Profile             |Dieses Formular verwaltet die Gottesdienst-Profile, d.h. Liste der Dienste mit minimaler Anzahl der Messdiener. <<MO300>>
 .3+|Hilfe        |                    |Aufruf der Funktionen und Dialoge aus dem Bereich Hilfe.
                  |Über JHH6           |Aufruf des Dialog für Informationen über das Programm aus den Kategorien Laufzeit-Umgebung, Anmeldung und Lizenzen. <<AG000>>
                  |Hilfe               |Dieser Dialog zeigt diese Hilfe an. <<AG010>>
@@ -483,12 +483,16 @@ Dieser Bereich besteht aus folgenden Dialogen:
 * <<MO200>>
 * <<MO210>>
 * <<MO220>>
+* <<MO300>>
+* <<MO310>>
 
 include::../de/mo/MO100.adoc[]
 include::../de/mo/MO110.adoc[]
 include::../de/mo/MO200.adoc[]
 include::../de/mo/MO210.adoc[]
 include::../de/mo/MO220.adoc[]
+include::../de/mo/MO300.adoc[]
+include::../de/mo/MO310.adoc[]
 
 
 === Bereich Hilfe
