@@ -1,0 +1,24 @@
+:mo220-title: Einteilung
+anchor:MO220[{mo220-title}]
+
+==== Dialog {mo220-title}
+
+Dieser Dialog dient dem Erstellen, Ändern und Löschen einer Messdiener-Einteilung, die aus einem Dienst und einem Messdiener besteht.
+Abhängig von der Art des Aufrufes sind die Felder editierbar oder nicht.
+
+image:MO220.png[{mo220-title},title={mo220-title}]
+image:MO220A.png[{mo220-title},title={mo220-title}]
+
+[width="100%",cols="<1,<5",frame="all",options="header"]
+|==========================
+|Steuerelement|Erklärung
+|Nr.          |Eindeutige Nummer des ausgewählten Messdiener-Einteilung.
+|Termin       |Der Gottesdienstbeginn wird angezeigt.
+|Dienst       |Ein Dienst muss ausgewählt werden.
+|Messdiener   |Beim Ändern muss ein Messdiener für einen Dienst ausgewählt werden.
+|Messdiener-Liste|Bei der Erfassung können mehrere Messdiener für einen Dienst ausgewählt werden.
+|Angelegt     |Datum und Uhrzeit sowie Benutzer-ID von der Erstellung des Datensatzes.
+|Geändert     |Datum und Uhrzeit sowie Benutzer-ID von der letzten Änderung des Datensatzes.
+|OK           |Diese Schaltfläche speichert oder löscht den Messdiener-Einteilung und schließt den Dialog.
+|Abbrechen    |Diese Schaltfläche schließt den Dialog ohne Speichern.
+|==========================

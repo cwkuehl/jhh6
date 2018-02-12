@@ -159,7 +159,7 @@ class MO220EinteilungController extends BaseController<List<MoEinteilungLang>> {
 				ausschluss = sb.toString
 			}
 			nr.setEditable(false)
-			von.setEditable(!loeschen)
+			von.setEditable(false)
 			setEditable(dienst, !loeschen)
 			messdiener0.setVisible(!neu)
 			setEditable(messdiener, !loeschen)

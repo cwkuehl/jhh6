@@ -482,11 +482,13 @@ Dieser Bereich besteht aus folgenden Dialogen:
 * <<MO110>>
 * <<MO200>>
 * <<MO210>>
+* <<MO220>>
 
 include::../de/mo/MO100.adoc[]
 include::../de/mo/MO110.adoc[]
 include::../de/mo/MO200.adoc[]
 include::../de/mo/MO210.adoc[]
+include::../de/mo/MO220.adoc[]
 
 
 === Bereich Hilfe
