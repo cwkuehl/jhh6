@@ -192,8 +192,8 @@ Das Menü umfasst folgende Punkte:
 .8+|Wertpapiere  |                    |Aufruf der Funktionen und Dialoge aus dem Bereich Wertpapiere.
                  |Wertpapiere         |Dieses Formular verwaltet alle Wertpapiere. <<WP200>>
                  |Konfigurationen     |Dieses Formular verwaltet alle Point and Figure-Konfigurationen zur Auswertung von Wertpapieren.
-                 |Wertpapier-Chart    |Dieses Formular zeigt die Kurse und das Point and Figure-Chart eines Wertpapiers.
-                 |PnF-Charts          |Dieses Formular zeigt drei Point and Figure-Charts.
+                 |Wertpapier-Chart    |Dieses Formular zeigt die Kurse und das Point and Figure-Chart eines Wertpapiers. <<WP100>>
+                 |PnF-Charts          |Dieses Formular zeigt drei Point and Figure-Charts. <<WP110>>
                  |Anlagen             |Dieses Formular verwaltet alle Anlagen in Wertpapiere.
                  |WP-Buchungen        |Mit diesem Formular können Sie komfortabel alle möglichen Anlage-Buchungen erfassen, kopieren, ändern und stornieren.
                  |Stände              |Dieses Formular verwaltet alle Preise von Wertpapieren.
@@ -474,10 +474,14 @@ Die Anlagen bilden ein Depot, das tagesaktuell preislich bewertet werden kann.
 Dieser Bereich besteht aus folgenden Dialogen:
 
 * <<WP100>>
+* <<WP110>>
+* <<WP120>>
 * <<WP200>>
 * <<WP210>>
 
 include::../de/wp/WP100.adoc[]
+include::../de/wp/WP110.adoc[]
+include::../de/wp/WP120.adoc[]
 include::../de/wp/WP200.adoc[]
 include::../de/wp/WP210.adoc[]
 
