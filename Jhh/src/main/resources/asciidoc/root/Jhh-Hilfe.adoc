@@ -191,7 +191,7 @@ Das Menü umfasst folgende Punkte:
                  |Quellen             |Dieses Formular verwaltet die Quellen-Angaben für die Ahnen. <<SB400>>
 .8+|Wertpapiere  |                    |Aufruf der Funktionen und Dialoge aus dem Bereich Wertpapiere.
                  |Wertpapiere         |Dieses Formular verwaltet alle Wertpapiere. <<WP200>>
-                 |Konfigurationen     |Dieses Formular verwaltet alle Point and Figure-Konfigurationen zur Auswertung von Wertpapieren.
+                 |Konfigurationen     |Dieses Formular verwaltet alle Point and Figure-Konfigurationen zur Auswertung von Wertpapieren. <<WP300>>
                  |Wertpapier-Chart    |Dieses Formular zeigt die Kurse und das Point and Figure-Chart eines Wertpapiers. <<WP100>>
                  |PnF-Charts          |Dieses Formular zeigt drei Point and Figure-Charts. <<WP110>>
                  |Anlagen             |Dieses Formular verwaltet alle Anlagen in Wertpapiere.
@@ -479,6 +479,8 @@ Dieser Bereich besteht aus folgenden Dialogen:
 * <<WP200>>
 * <<WP210>>
 * <<WP220>>
+* <<WP300>>
+* <<WP310>>
 
 include::../de/wp/WP100.adoc[]
 include::../de/wp/WP110.adoc[]
@@ -486,6 +488,8 @@ include::../de/wp/WP120.adoc[]
 include::../de/wp/WP200.adoc[]
 include::../de/wp/WP210.adoc[]
 include::../de/wp/WP220.adoc[]
+include::../de/wp/WP300.adoc[]
+include::../de/wp/WP310.adoc[]
 
 
 :mo0-title: Bereich Messdiener

@@ -4,7 +4,7 @@ anchor:WP200[{wp200-title}]
 ==== Formular {wp200-title}
 
 Dieses Formular verwaltet alle Wertpapiere. Zu allen aktiven Wertpapieren wird eine Bewertung an Hand der ausgewählten Konfiguration berechnet:
-Für die Boxgröße von 2 bis 5 werden die bewerteten Signale der letzten Säule (nur am Tag des Austretens) addiert.
+Für die Boxgröße von 2 bis 5 werden die bewerteten Signale der letzten Säule (nur am Tag des Auftretens) addiert.
 
 image:WP200.png[{wp200-title},title={wp200-title}]
 
