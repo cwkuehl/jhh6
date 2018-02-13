@@ -125,7 +125,7 @@ class WP400BuchungenController extends BaseController<String> {
 		super.initialize
 		buchungen0.setLabelFor(buchungen)
 		bezeichnung0.setLabelFor(bezeichnung)
-		anlage0.setLabelFor(anlage, true)
+		anlage0.setLabelFor(anlage, false)
 		initAccelerator("A", aktuell)
 		initAccelerator("U", rueckgaengig)
 		initAccelerator("W", wiederherstellen)

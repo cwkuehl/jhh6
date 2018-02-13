@@ -159,7 +159,7 @@ Das Menü umfasst folgende Punkte:
                  |Sudoku              |Dieses Formular erlaubt das Prüfen und Lösen von Sudoku-Rätseln. <<SO100>>
                  |Detektiv            |Dieses Formular erlaubt das Prüfen und Lösen von Detektiv-Rätseln. <<SO200>>
 .8+|Haushalt     |                    |Aufruf der Funktionen und Dialoge aus dem Bereich Haushalt.
-                 |Buchungen           |Mit diesem Formular können Sie komfortabel alle möglichen Buchungen erfassen, kopieren, ändern und stornieren. <<HH400>>
+                 |Buchungen           |Dieses Formular erlaubt das komfortable Erfassen, Kopieren, Ändern und Stornieren von Buchungen. <<HH400>>
                  |Ereignisse          |Dieses Formular erlaubt das Bearbeiten von Ereignissen, also vorgefertigten Buchungen. <<HH300>>
                  |Konten              |Dieses Formular dient der Verwaltung der Konten. Hier können die Konten angezeigt, erstellt, geändert und eingeschränkt gelöscht werden. <<HH200>>
                  |Perioden            |Mit diesem Formular werden die Perioden bearbeitet. <<HH100>>
@@ -167,7 +167,7 @@ Das Menü umfasst folgende Punkte:
                  |G+V-Rechnung        |In diesem Formular wird die Gewinn- und Verlustrechnung (GV) als T-Konto dargestellt. <<HH500>>
                  |Eröffnungsbilanz    |In diesem Formular wird die Eröffnungsbilanz (EB) als T-Konto dargestellt. <<HH500>>
 .12+|Vermietung  |                    |Aufruf der Funktionen und Dialoge aus dem Bereich Vermietung.
-                 |VM-Buchungen        |Mit diesem Formular können Sie komfortabel alle möglichen Vermietungs-Buchungen erfassen, kopieren, ändern und stornieren. <<VM500>>
+                 |VM-Buchungen        |Dieses Formular erlaubt das komfortable Erfassen, Kopieren, Ändern und Stornieren von Vermietungs-Buchungen. <<VM500>>
                  |VM-Ereignisse       |Dieses Formular erlaubt das Bearbeiten von Vermietungs-Ereignissen, also vorgefertigten Buchungen. <<VM700>>
                  |VM-Konten           |Dieses Formular dient der Verwaltung der Vermietungs-Konten. Hier können die Konten angezeigt, erstellt, geändert und eingeschränkt gelöscht werden. <<VM600>>
                  |Perioden            |Mit diesem Formular werden die Perioden bearbeitet. <<HH100>>
@@ -195,8 +195,8 @@ Das Menü umfasst folgende Punkte:
                  |Wertpapier-Chart    |Dieses Formular zeigt die Kurse und das Point and Figure-Chart eines Wertpapiers. <<WP100>>
                  |PnF-Charts          |Dieses Formular zeigt drei Point and Figure-Charts. <<WP110>>
                  |Anlagen             |Dieses Formular verwaltet alle Anlagen in Wertpapiere. <<WP250>>
-                 |WP-Buchungen        |Mit diesem Formular können Sie komfortabel alle möglichen Anlage-Buchungen erfassen, kopieren, ändern und stornieren.
-                 |Stände              |Dieses Formular verwaltet alle Preise von Wertpapieren.
+                 |WP-Buchungen        |Dieses Formular erlaubt das komfortable Erfassen, Kopieren, Ändern und Stornieren von Anlage-Buchungen. <<WP400>>
+                 |Stände              |Dieses Formular verwaltet alle Preise von Wertpapieren. <<WP500>>
 .4+|Messdiener   |                    |Aufruf der Funktionen und Dialoge aus dem Bereich Messdiener.
                  |Gottesdienste       |Dieses Formular verwaltet die Gottesdienste. <<MO200>>
                  |Messdiener          |Dieses Formular verwaltet die Messdiener. <<MO100>>
@@ -483,6 +483,8 @@ Dieser Bereich besteht aus folgenden Dialogen:
 * <<WP260>>
 * <<WP300>>
 * <<WP310>>
+* <<WP400>>
+* <<WP410>>
 
 include::../de/wp/WP100.adoc[]
 include::../de/wp/WP110.adoc[]
@@ -494,6 +496,8 @@ include::../de/wp/WP250.adoc[]
 include::../de/wp/WP260.adoc[]
 include::../de/wp/WP300.adoc[]
 include::../de/wp/WP310.adoc[]
+include::../de/wp/WP400.adoc[]
+include::../de/wp/WP410.adoc[]
 
 
 :mo0-title: Bereich Messdiener

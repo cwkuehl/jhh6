@@ -38,7 +38,7 @@ image:HH410.png[{hh410-title},title={hh410-title}]
 |Ereignis     |Liste von Ereignis-Bezeichnungen. Ein ausgewähltes Ereignis steuert Soll-, Habenkonto und Buchungstext vor.
 |Sollkonto    |Liste von Konten. Das Ausgewählte stellt das	Sollkonto der Buchung dar.
 |Habenkonto   |Liste von Konten. Das Ausgewählte stellt das Habenkonto der Buchung dar.
-|Buchungstext |Buchungstext erklärt die Buchung.
+|Buchungstext |Ein Buchungstext, der die Buchung erklärt, muss erfasst werden.
 |Beleg        |Belegtext erläutert einen evtl. vorhandenen Beleg und kann leer sein.
 |Neue Nr.     |Schaltfläche zum Erzeugen einer neuen Belegnummer, falls das Feld Beleg leer ist. Sie besteht in den ersten acht Stellen aus dem Valuta-Datum und einer zweistelligen laufenden Nummer (Format JJJJMMTTNN).
 |Vom          |Belegdatum wird angepasst, wenn Valuta geändert wird. Danach kann es beliebig geändert werden.
