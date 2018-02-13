@@ -637,19 +637,19 @@ public class DbAnpassung {
                 mhtTyp.put(db + "D_MEMO", "varchar(1M)"); // clob // COLLATE SQL_TEXT_UCC
                 mhtTyp.put(db + "D_BLOB", "blob");
                 mhtTyp.put(db + "D_REPL_ID", "varchar(35)");
-                mhtTyp.put(db + "D_STRING_01", "varchar(1)");
-                mhtTyp.put(db + "D_STRING_02", "varchar(2)");
-                mhtTyp.put(db + "D_STRING_03", "varchar(3)");
-                mhtTyp.put(db + "D_STRING_04", "varchar(4)");
-                mhtTyp.put(db + "D_STRING_05", "varchar(5)");
-                mhtTyp.put(db + "D_STRING_10", "varchar(10)");
-                mhtTyp.put(db + "D_STRING_20", "varchar(20)");
-                mhtTyp.put(db + "D_STRING_35", "varchar(35)");
-                mhtTyp.put(db + "D_STRING_40", "varchar(40)");
-                mhtTyp.put(db + "D_STRING_50", "varchar(50)");
-                mhtTyp.put(db + "D_STRING_100", "varchar(100)");
-                mhtTyp.put(db + "D_STRING_120", "varchar(120)");
-                mhtTyp.put(db + "D_STRING_255", "varchar(255)");
+                mhtTyp.put(db + "D_STRING_01", "varchar(1) COLLATE SQL_TEXT_UCC");
+                mhtTyp.put(db + "D_STRING_02", "varchar(2) COLLATE SQL_TEXT_UCC");
+                mhtTyp.put(db + "D_STRING_03", "varchar(3) COLLATE SQL_TEXT_UCC");
+                mhtTyp.put(db + "D_STRING_04", "varchar(4) COLLATE SQL_TEXT_UCC");
+                mhtTyp.put(db + "D_STRING_05", "varchar(5) COLLATE SQL_TEXT_UCC");
+                mhtTyp.put(db + "D_STRING_10", "varchar(10) COLLATE SQL_TEXT_UCC");
+                mhtTyp.put(db + "D_STRING_20", "varchar(20) COLLATE SQL_TEXT_UCC");
+                mhtTyp.put(db + "D_STRING_35", "varchar(35) COLLATE SQL_TEXT_UCC");
+                mhtTyp.put(db + "D_STRING_40", "varchar(40) COLLATE SQL_TEXT_UCC");
+                mhtTyp.put(db + "D_STRING_50", "varchar(50) COLLATE SQL_TEXT_UCC");
+                mhtTyp.put(db + "D_STRING_100", "varchar(100) COLLATE SQL_TEXT_UCC");
+                mhtTyp.put(db + "D_STRING_120", "varchar(120) COLLATE SQL_TEXT_UCC");
+                mhtTyp.put(db + "D_STRING_255", "varchar(255) COLLATE SQL_TEXT_UCC");
                 mhtTyp.put(db + "D_SWITCH", "boolean");
             }
             strDBTyp = mhtTyp.get(miDBZiel.symbol() + "#" + strTyp);

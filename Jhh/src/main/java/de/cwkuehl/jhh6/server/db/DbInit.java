@@ -1072,6 +1072,27 @@ public class DbInit {
                                 + " AND NOT EXISTS (SELECT * FROM HP_Leistungsgruppe WHERE UID=a.Behandlung_UID)");
                 execute(daten, zeinstellungDao, mout);
                 version = 51;
+            } else if (version <= 51) {
+                DbAnpassung dba = new DbAnpassung(dbart);
+                Vector<String> mout = new Vector<String>();
+                String tabelle = null;
+
+                // Codierung und Sortierung anpassen
+                tabelle = "WP_Anlage";
+                dba.addTab0();
+                dba.addTab1("Mandant_Nr", "D_INTEGER", false);
+                dba.addTab1("Uid", "D_REPL_ID", false);
+                dba.addTab1("Wertpapier_Uid", "D_REPL_ID", false);
+                dba.addTab1("Bezeichnung", "D_STRING_50", false);
+                dba.addTab1("Parameter", "D_MEMO", true);
+                dba.addTab1("Notiz", "D_MEMO", true);
+                dba.addTab1("Angelegt_Von", "D_STRING_20", true);
+                dba.addTab1("Angelegt_Am", "D_DATETIME", true);
+                dba.addTab1("Geaendert_Von", "D_STRING_20", true);
+                dba.addTab1("Geaendert_Am", "D_DATETIME", true);
+                dba.addTab2(mout, tabelle, "Mandant_Nr, Uid", "Mandant_Nr, Uid");
+                execute(daten, zeinstellungDao, mout);
+                version = 52;
             }
             if (version > versionAlt) {
                 // log.error("Version " + version);
