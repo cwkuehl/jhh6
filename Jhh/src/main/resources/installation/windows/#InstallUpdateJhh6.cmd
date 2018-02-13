@@ -41,7 +41,7 @@ goto Ende
   echo Download
   if exist temp\zip rmdir /s/q temp\zip
   mkdir temp\zip
-  powershell -command "& { (New-Object Net.WebClient).DownloadFile('http://cwkuehl.de/wp-content/uploads/2017/12/Jhh-6_0.zip', 'temp\zip\jhh6.zip') }"
+  powershell -command "& { (New-Object Net.WebClient).DownloadFile('http://cwkuehl.de/wp-content/uploads/2018/02/Jhh-6_0.zip', 'temp\zip\jhh6.zip') }"
   echo Unzip
   powershell -command "& { function unzip($filename) { if (!(test-path $filename)) { throw \"$filename does not exist\"; } $shell = new-object -com shell.application; $shell.namespace($pwd.path).copyhere($shell.namespace((join-path $pwd $filename)).items(), 0x14); } unzip('temp\zip\jhh6.zip'); }"
   del temp\zip\jhh6.zip

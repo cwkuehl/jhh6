@@ -2,7 +2,7 @@
 # Installation and update for program JHH6 (c) 2018 cwkuehl.de
 
 function download {
-  curl -o ./temp/jhh6.zip 'http://cwkuehl.de/wp-content/uploads/2017/12/Jhh-6_0.zip'
+  curl -o ./temp/jhh6.zip 'http://cwkuehl.de/wp-content/uploads/2018/02/Jhh-6_0.zip'
   rm -rf temp/zip
   unzip ./temp/jhh6.zip -d ./temp/zip
   cp -rf ./temp/zip/* .

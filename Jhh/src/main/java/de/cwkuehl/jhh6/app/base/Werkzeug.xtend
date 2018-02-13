@@ -143,7 +143,8 @@ class Werkzeug {
 
 		var BufferedInputStream in = null
 		try {
-			in = new BufferedInputStream(new URL("http://cwkuehl.de/wp-content/uploads/2017/12/update.txt").openStream)
+			in = new BufferedInputStream(
+				new URL("http://cwkuehl.de/wp-content/uploads/2018/02/update.txt").openStream)
 			val data = newByteArrayOfSize(19)
 			if (in.read(data, 0, data.length) >= data.length) {
 				val sbt = Global.getManifestProperty(typeof(Werkzeug), "/META-INF/MANIFEST.MF", "Built-Time")
@@ -152,6 +153,8 @@ class Werkzeug {
 				if (bt !== null && up !== null && bt.isBefore(up))
 					return true
 			}
+		} catch (Throwable t) {
+			Global.machNichts
 		} finally {
 			if (in !== null) {
 				in.close
