@@ -194,7 +194,7 @@ Das Menü umfasst folgende Punkte:
                  |Konfigurationen     |Dieses Formular verwaltet alle Point and Figure-Konfigurationen zur Auswertung von Wertpapieren. <<WP300>>
                  |Wertpapier-Chart    |Dieses Formular zeigt die Kurse und das Point and Figure-Chart eines Wertpapiers. <<WP100>>
                  |PnF-Charts          |Dieses Formular zeigt drei Point and Figure-Charts. <<WP110>>
-                 |Anlagen             |Dieses Formular verwaltet alle Anlagen in Wertpapiere.
+                 |Anlagen             |Dieses Formular verwaltet alle Anlagen in Wertpapiere. <<WP250>>
                  |WP-Buchungen        |Mit diesem Formular können Sie komfortabel alle möglichen Anlage-Buchungen erfassen, kopieren, ändern und stornieren.
                  |Stände              |Dieses Formular verwaltet alle Preise von Wertpapieren.
 .4+|Messdiener   |                    |Aufruf der Funktionen und Dialoge aus dem Bereich Messdiener.
@@ -479,6 +479,8 @@ Dieser Bereich besteht aus folgenden Dialogen:
 * <<WP200>>
 * <<WP210>>
 * <<WP220>>
+* <<WP250>>
+* <<WP260>>
 * <<WP300>>
 * <<WP310>>
 
@@ -488,6 +490,8 @@ include::../de/wp/WP120.adoc[]
 include::../de/wp/WP200.adoc[]
 include::../de/wp/WP210.adoc[]
 include::../de/wp/WP220.adoc[]
+include::../de/wp/WP250.adoc[]
+include::../de/wp/WP260.adoc[]
 include::../de/wp/WP300.adoc[]
 include::../de/wp/WP310.adoc[]
 
