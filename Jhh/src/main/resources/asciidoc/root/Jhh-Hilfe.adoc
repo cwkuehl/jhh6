@@ -1,6 +1,6 @@
 = JHH6 Dokumentation (C) 2018 cwkuehl.de
 Wolfgang Kühl <wolfgang@cwkuehl.de>
-v1.0, 2018-02-04
+v1.0, 2018-02-13
 :homepage: http://cwkuehl.de
 :toc2:
 :icons: font

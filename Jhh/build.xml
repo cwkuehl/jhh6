@@ -78,6 +78,7 @@
 		</copy>
 		<zip destfile="${jhh.prod.dir}/Jhh${install.version}.zip" basedir="target/zip"
 			includes="**/*.*" />
+		<copy file="target/zip/doc/Jhh-Hilfe.html" tofile="${jhh.prod.dir}/Jhh-Hilfe${install.version}.html"/>
 	</target>
 
 	<target name="copy_ftp" if="ftp.server">
