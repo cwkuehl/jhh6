@@ -1051,8 +1051,8 @@ public class DbInit {
                     Vector<String> mout = new Vector<String>();
                     List<String> tabliste = replService.getAlleTabellen(daten).getErgebnis();
                     for (String t : tabliste) {
-                        mout.add(Global.format("SET TABLE {0} TYPE MEMORY", t));
-                        // mout.add(Global.format("SET TABLE {0} TYPE CACHED", t));
+                        // mout.add(Global.format("SET TABLE {0} TYPE MEMORY", t));
+                        mout.add(Global.format("SET TABLE {0} TYPE CACHED", t));
                     }
                     execute(daten, zeinstellungDao, mout);
                 }

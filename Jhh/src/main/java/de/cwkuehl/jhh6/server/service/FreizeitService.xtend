@@ -137,7 +137,7 @@ class FreizeitService {
 				for (HhBilanz e : hhBilanz) {
 					db = if(euro) e.ebetrag else e.betrag
 					if (!Double.isNaN(alt)) {
-						sb.append(Meldungen.FZ002(Global.dblStr2(alt - db))).append(")") // .append(strE)
+						sb.append(Meldungen.FZ002(Global.dblStr2(alt - db))) // .append(strE)
 					}
 					if (sb.length > 0) {
 						sb.append(Constant.CRLF)
