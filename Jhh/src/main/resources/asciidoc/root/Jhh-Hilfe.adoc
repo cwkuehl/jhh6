@@ -485,6 +485,8 @@ Dieser Bereich besteht aus folgenden Dialogen:
 * <<WP310>>
 * <<WP400>>
 * <<WP410>>
+* <<WP500>>
+* <<WP510>>
 
 include::../de/wp/WP100.adoc[]
 include::../de/wp/WP110.adoc[]
@@ -498,6 +500,8 @@ include::../de/wp/WP300.adoc[]
 include::../de/wp/WP310.adoc[]
 include::../de/wp/WP400.adoc[]
 include::../de/wp/WP410.adoc[]
+include::../de/wp/WP500.adoc[]
+include::../de/wp/WP510.adoc[]
 
 
 :mo0-title: Bereich Messdiener

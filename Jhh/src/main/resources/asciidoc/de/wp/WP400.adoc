@@ -18,7 +18,6 @@ image:WP400.png[{wp400-title},title={wp400-title}]
 |image:icon/icons8-copy.png[title="Kopieren",width={icon-width}]        |Schaltfläche zum Kopieren der ausgewählten Buchung.
 |image:icon/icons8-edit.png[title="Ändern",width={icon-width}]          |Schaltfläche zum Ändern der ausgewählten Buchung.
 |image:icon/icons8-remove.png[title="Löschen",width={icon-width}]       |Schaltfläche zum Löschen der ausgewählten Buchung.
-|image:icon/icons8-save.png[title="Export",width={icon-width}]          |Diese Schaltfläche öffnet den Dialog <<WP420>>.
 |Buchungen    |Liste von ausgewählten Buchungen.
 |Buchungstext |Der Buchungstext der Buchungen kann mit Platzhaltern gesucht werden, z.B. '_ind%' findet alle Texte, die ein beliebiges 1. Zeichen, dann 'ind' haben und dann beliebig sind, wie 'Kinder' oder 'Rind'..
 |Anlage       |Auswahlliste für Anlagen.

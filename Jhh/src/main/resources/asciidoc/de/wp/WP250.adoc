@@ -20,7 +20,7 @@ image:WP250.png[{wp250-title},title={wp250-title}]
 |Anlagen      |Liste von ausgewählten Anlagen inkl. der aktuellen Werte.
 |Status       |Anzeige von Informationen zur aktuellen Anlagenliste: Anzahl der Datensätze, Summe der angelegten Beträge, Werte und sich daraus ergebenen Gewinne.
 |Bezeichnung  |Die Bezeichnung der Anlage kann mit Platzhaltern gesucht werden, z.B. '_ind%' findet alle Texte, die ein beliebiges 1. Zeichen, dann 'ind' haben und dann beliebig sind, wie 'Kinder' oder 'Rind'..
-|Wertpapier   |Auswahlliste für Wertpapier.
+|Wertpapier   |Auswahlliste für ein Wertpapier.
 |Alle         |Schaltfläche zum Zurücksetzen aller Selektionskriterien.
 |Bewertungen berechnen|Schaltfläche zum Starten der Bewertungsberechnung für alle selektierten Anlagen.
 |Abbrechen    |Schaltfläche zum Abbrechen der laufenden Bewertungsberechnung.

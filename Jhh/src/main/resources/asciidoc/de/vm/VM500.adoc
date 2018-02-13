@@ -27,8 +27,8 @@ image:VM500.png[{vm500-title},title={vm500-title}]
 |Istzahlung   |Schaltfläche zum Buchen von Zahlungen. Es wird der Dialog <<VM530>> aufgerufen.
 |Buchungen    |Liste von ausgewählten Buchungen.
 |Suche nach   |Es kann Valuta oder Revision gewählt werden. Bei Revision wird nach dem Angelegt- oder Geändert-Datum gesucht.
-|von          |Selektionsdatum für Buchungen, die nach diesem Datum liegen.
-|bis          |Selektionsdatum für Buchungen, die vor diesem Datum liegen.
+|Von          |Selektionsdatum für Buchungen, die nach diesem Datum liegen.
+|Bis          |Selektionsdatum für Buchungen, die vor diesem Datum liegen.
 |Text         |Der Buchungstext kann mit Platzhaltern gesucht werden, z.B. '_ind%' findet alle Texte, die ein beliebiges 1. Zeichen, dann 'ind' haben und dann beliebig sind, wie 'Kinder' oder 'Rind'.
 |Betrag       |Der Buchungsbetrag wird exakt gesucht, z.B. 41,79.
 |Konto        |Auswahlliste zum Selektieren von Soll- oder Habenkonto.
