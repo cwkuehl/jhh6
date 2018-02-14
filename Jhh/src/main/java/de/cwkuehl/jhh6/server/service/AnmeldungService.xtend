@@ -459,15 +459,15 @@ class AnmeldungService {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		if (Global.nes(benutzerId)) {
-			throw new MeldungException(Meldungen.M2042)
+			throw new MeldungException(Meldungen.AM009)
 		}
 		if (getBerechtigung(daten, daten.mandantNr, daten.benutzerId).intValue < berechtigung) {
-			throw new MeldungException(Meldungen.M2043)
+			throw new MeldungException(Meldungen.AM010)
 		}
 		var enr = personNr
 		var liste = benutzerRep.getBenutzerLangListe(daten, 0, benutzerId, enr)
 		if (liste.size > 0) {
-			throw new MeldungException(Meldungen.M2044)
+			throw new MeldungException(Meldungen.AM011)
 		}
 		if (enr <= 0) {
 			enr = Constant.AW_MIN
