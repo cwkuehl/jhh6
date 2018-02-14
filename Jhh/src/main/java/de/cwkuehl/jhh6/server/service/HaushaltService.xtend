@@ -29,6 +29,7 @@ import de.cwkuehl.jhh6.api.enums.KontokennzeichenEnum
 import de.cwkuehl.jhh6.api.global.Constant
 import de.cwkuehl.jhh6.api.global.Global
 import de.cwkuehl.jhh6.api.message.MeldungException
+import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.api.service.ServiceDaten
 import de.cwkuehl.jhh6.api.service.ServiceErgebnis
 import de.cwkuehl.jhh6.generator.RepositoryRef
@@ -109,7 +110,7 @@ class HaushaltService {
 			dBis = dBis.plusMonths(iMonate)
 		} else {
 			if (min === null || max === null) {
-				throw new MeldungException("Keine Perioden gefunden.")
+				throw new MeldungException(Meldungen.HH003)
 			}
 			dVon = min.datumVon
 			dBis = max.datumBis
@@ -151,7 +152,7 @@ class HaushaltService {
 		var minNr = periodeRep.getMaxMinPeriodeNr(daten, true)
 		var maxNr = periodeRep.getMaxMinPeriodeNr(daten, false)
 		if (minNr >= maxNr) {
-			throw new MeldungException("Die letzte Periode kann nicht gelöscht werden.")
+			throw new MeldungException(Meldungen.HH004)
 		}
 		if (bEnde) {
 			lNr = maxNr
@@ -176,7 +177,7 @@ class HaushaltService {
 	def private void setzeBerPeriode(ServiceDaten daten, int nr) {
 
 		if (periodeRep.get(daten, new HhPeriodeKey(daten.mandantNr, nr)) === null) {
-			throw new MeldungException("setzeBerPeriode: " + nr + " Periode nicht da.")
+			throw new MeldungException(Meldungen.HH005(nr))
 		}
 		var lBer = holeBerPeriodeIntern(daten)
 		if (lBer >= Constant.MIN_PERIODE && lBer < nr) {
@@ -198,7 +199,7 @@ class HaushaltService {
 		var minNr = periodeRep.getMaxMinPeriodeNr(daten, true)
 		if (nr >= minNr) {
 			if (periodeRep.get(daten, new HhPeriodeKey(daten.mandantNr, nr)) === null) {
-				throw new MeldungException("setzeBerPeriode2: " + nr + " Periode nicht da.")
+				throw new MeldungException(Meldungen.HH005(nr))
 			}
 			if (berechnet) {
 				nr++
@@ -253,16 +254,10 @@ class HaushaltService {
 		for (HhKonto hhKonto : hhKontos) {
 			var longKNr2 = hhKonto.uid
 			if (istAktivPassivKontoIntern(hhKonto.art.toString)) {
-				vListe.add(
-					Global.format("{0,number,0000000000}{1}{2}{3}", longPNr, Constant.KZBI_EROEFFNUNG,
-						holeBilanzSH(hhKonto.art), longKNr2))
-				vListe.add(
-					Global.format("{0,number,0000000000}{1}{2}{3}", longPNr, Constant.KZBI_SCHLUSS,
-						holeBilanzSH(hhKonto.art), longKNr2))
+				vListe.add(Meldungen.HH006(longPNr, Constant.KZBI_EROEFFNUNG, holeBilanzSH(hhKonto.art), longKNr2))
+				vListe.add(Meldungen.HH006(longPNr, Constant.KZBI_SCHLUSS, holeBilanzSH(hhKonto.art), longKNr2))
 			} else {
-				vListe.add(
-					Global.format("{0,number,0000000000}{1}{2}{3}", longPNr, Constant.KZBI_GV,
-						holeBilanzSH(hhKonto.art), longKNr2))
+				vListe.add(Meldungen.HH006(longPNr, Constant.KZBI_GV, holeBilanzSH(hhKonto.art), longKNr2))
 			}
 		}
 
@@ -374,25 +369,18 @@ class HaushaltService {
 		var insert = Global.nes(uid)
 		var HhKonto hhKonto = null
 
-		// if (!Global.nes(uid)) {
-		// throw new MeldungException("Die Kontonummer muss leer sein.")
-		// }
 		if (Global.nes(strN)) {
-			throw new MeldungException("Die Bezeichnung darf nicht leer sein.")
+			throw new MeldungException(Meldungen.HH007)
 		}
 		if (KontoartEnum.fromValue(strA) === null) {
-			throw new MeldungException("Die Kontoart '" + strA + "' ist ungültig.")
+			throw new MeldungException(Meldungen.HH008(strA))
 		}
-		if (KontokennzeichenEnum.fromValue(strK) === null) {
-			throw new MeldungException("Das Kontokennzeichen '" + strK + "' ist ungültig.")
-		}
-		// pruefKontokennzeichen
-		if (strK.length > 1) {
-			throw new MeldungException("Das Kennzeichen darf max. 1 Zeichen lang sein.")
+		if (KontokennzeichenEnum.fromValue(strK) === null || strK.length > 1) {
+			throw new MeldungException(Meldungen.HH009(strK))
 		}
 		if (istSpezialKontokennzeichen(strK)) {
 			if (!Global.nes(kontoRep.getMinKonto(daten, uid, strK, null, null))) {
-				throw new MeldungException("Das Kennzeichen " + strK + " darf nur einmal vergeben werden.")
+				throw new MeldungException(Meldungen.HH010(strK))
 			}
 			if (dVon !== null || dBis !== null) {
 				throw new MeldungException("Das Konto darf nicht zeitlich begrenzt werden.")
@@ -818,7 +806,7 @@ class HaushaltService {
 
 		var ek = kontoRep.getMinKonto(daten, null, KontokennzeichenEnum.EIGENKAPITEL.toString, null, null)
 		if (exception && Global.nes(ek)) {
-			throw new MeldungException("Das Eigenkapital-Konto" + " konnte nicht bestimmt werden.")
+			throw new MeldungException("Das Eigenkapital-Konto konnte nicht bestimmt werden.")
 		}
 		return ek
 	}
@@ -833,7 +821,7 @@ class HaushaltService {
 
 		var gv = kontoRep.getMinKonto(daten, null, KontokennzeichenEnum.GEWINN_VERLUST.toString, null, null)
 		if (exception && Global.nes(gv)) {
-			throw new MeldungException("Das Gewinn+Verlust-Konto" + " konnte nicht bestimmt werden.")
+			throw new MeldungException("Das Gewinn+Verlust-Konto konnte nicht bestimmt werden.")
 		}
 		return gv
 	}
