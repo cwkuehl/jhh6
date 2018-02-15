@@ -383,7 +383,7 @@ class HaushaltService {
 				throw new MeldungException(Meldungen.HH010(strK))
 			}
 			if (dVon !== null || dBis !== null) {
-				throw new MeldungException("Das Konto darf nicht zeitlich begrenzt werden.")
+				throw new MeldungException(Meldungen.HH011)
 			}
 		}
 		if (dVon !== null) {
@@ -392,11 +392,11 @@ class HaushaltService {
 		if (!insert) {
 			hhKonto = getKontoIntern(daten, uid, true)
 			if (!hhKonto.art.equals(strA)) {
-				throw new MeldungException("Die Kontoart darf nicht gewechselt werden.")
+				throw new MeldungException(Meldungen.HH012)
 			}
 			var kzAlt = hhKonto.kz
 			if (istSpezialKontokennzeichen(kzAlt) && !kzAlt.equals(strK)) {
-				throw new MeldungException("Das Kennzeichen " + kzAlt + " kann nicht geändert werden.")
+				throw new MeldungException(Meldungen.HH013(kzAlt))
 			}
 			lVonAlt = hhKonto.periodeVon
 			lVonAlt = Math.max(lVonAlt, Constant.MIN_PERIODE)
@@ -405,7 +405,7 @@ class HaushaltService {
 			sort = hhKonto.sortierung
 			if (dVon !== null) {
 				if (buchungRep.countKontoValutaVorNach(daten, uid, dVon, null, Constant.KZB_AKTIV) > 0) {
-					throw new MeldungException("Es gibt noch Buchungen vor dem Gültigkeitszeitraum.")
+					throw new MeldungException(Meldungen.HH014)
 				}
 			}
 		}
