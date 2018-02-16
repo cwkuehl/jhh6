@@ -654,22 +654,22 @@ class HaushaltService {
 			bez = Meldungen.HH025(uid)
 		}
 		if (kz !== null && kz.length > HhEreignis.KZ_LAENGE) {
-			throw new MeldungException('''Das Kennzeichen darf max. «HhEreignis.KZ_LAENGE» Zeichen lang sein.''')
+			throw new MeldungException(Meldungen.HH026(HhEreignis.KZ_LAENGE))
 		}
 		if (Global.nes(text)) {
-			throw new MeldungException("Der Buchungstext darf nicht leer sein.")
+			throw new MeldungException(Meldungen.HH027)
 		}
 		if (text.length > HhEreignis.ETEXT_LAENGE) {
 			text = text.substring(0, HhEreignis.ETEXT_LAENGE)
 		}
 		if (Global.nes(suid)) {
-			throw new MeldungException("Es muss ein Sollkonto angegeben werden.")
+			throw new MeldungException(Meldungen.HH028)
 		}
 		if (Global.nes(huid)) {
-			throw new MeldungException("Es muss ein Habenkonto angegeben werden.")
+			throw new MeldungException(Meldungen.HH029)
 		}
 		if (suid.equals(huid)) {
-			throw new MeldungException("Soll- und Habenkonto müssen verschieden sein.")
+			throw new MeldungException(Meldungen.HH030)
 		}
 		if (e !== null) {
 			e.bezeichnung = bez
@@ -800,7 +800,7 @@ class HaushaltService {
 
 		var ek = kontoRep.getMinKonto(daten, null, KontokennzeichenEnum.EIGENKAPITEL.toString, null, null)
 		if (exception && Global.nes(ek)) {
-			throw new MeldungException("Das Eigenkapital-Konto konnte nicht bestimmt werden.")
+			throw new MeldungException(Meldungen.HH031)
 		}
 		return ek
 	}
@@ -815,7 +815,7 @@ class HaushaltService {
 
 		var gv = kontoRep.getMinKonto(daten, null, KontokennzeichenEnum.GEWINN_VERLUST.toString, null, null)
 		if (exception && Global.nes(gv)) {
-			throw new MeldungException("Das Gewinn+Verlust-Konto konnte nicht bestimmt werden.")
+			throw new MeldungException(Meldungen.HH032)
 		}
 		return gv
 	}
@@ -829,22 +829,19 @@ class HaushaltService {
 		String habenUid, String text, String bn, LocalDate bd) {
 
 		if (sv === null) {
-			throw new MeldungException("Es ist kein Valuta festgelegt.")
+			throw new MeldungException(Meldungen.HH033)
 		}
-		// if (hv === null) {
-		// throw new MeldungException("Es ist kein HabenValuta festgelegt.")
-		// }
 		if (Global.compDouble(b, 0) <= 0 || Global.compDouble(eb, 0) <= 0) {
 			throw new MeldungException("Der Betrag muss größer 0 sein.")
 		}
 		if (Global.nes(sollUid)) {
-			throw new MeldungException("Es ist kein Sollkonto festgelegt.")
+			throw new MeldungException(Meldungen.HH028)
 		}
 		if (Global.nes(habenUid)) {
-			throw new MeldungException("Es ist kein Habenkonto festgelegt.")
+			throw new MeldungException(Meldungen.HH029)
 		}
 		if (habenUid == sollUid) {
-			throw new MeldungException("Gleiches Soll- und Habenkonto ist sinnlos.")
+			throw new MeldungException(Meldungen.HH030)
 		}
 		var ek = holeEkKonto(daten, true)
 		var gv = holeGvKonto(daten, true)
@@ -852,7 +849,7 @@ class HaushaltService {
 			throw new MeldungException("Das Eigenkapital- und GV-Konto sind nicht bebuchbar.")
 		}
 		if (Global.nes(text)) {
-			throw new MeldungException("Es ist kein Buchungstext erfasst.")
+			throw new MeldungException(Meldungen.HH027)
 		}
 		if (bd === null) {
 			throw new MeldungException("Das Belegdatum muss angegeben werden.")
