@@ -411,21 +411,21 @@ class HaushaltService {
 		}
 		if (dBis !== null) {
 			if (dVon !== null && dBis.isBefore(dVon)) {
-				throw new MeldungException("Das Bis-Datum darf nicht vor dem Von-Datum liegen.")
+				throw new MeldungException(Meldungen.HH015)
 			}
 			lBis = periodeRep.getMaxMinNr(daten, true, dBis)
 			if (lBis <= 0) {
 				lBis = Constant.MAX_PERIODE
 			}
 			if (!insert && buchungRep.countKontoValutaVorNach(daten, uid, null, dBis, Constant.KZB_AKTIV) > 0) {
-				throw new MeldungException("Es gibt noch Buchungen nach dem Gültigkeitszeitraum.")
+				throw new MeldungException(Meldungen.HH016)
 			}
 		}
 		if (Global.nes(sort)) {
 			sort = kontoRep.findKontoSortierung(daten, knr)
 		}
 		if (!Global.nes(kontoRep.getMinKonto(daten, knr, null, null, strN))) {
-			throw new MeldungException("Es gibt schon ein Konto mit gleicher Bezeichnung '" + strN + "'.")
+			throw new MeldungException(Meldungen.HH017(strN))
 		}
 		if (insert) {
 			knr = Global.getUID
@@ -455,8 +455,7 @@ class HaushaltService {
 				anzahl = insertBilanzPerioden(daten, hhBilanz, dVon, dBis)
 			}
 			if (anzahl <= 0) {
-				throw new MeldungException("Es gibt noch keine passende Periode." +
-					" Bitte eine geeignete Periode anlegen.")
+				throw new MeldungException(Meldungen.HH018)
 			}
 			hhKonto = new HhKonto
 			hhKonto.mandantNr = daten.mandantNr
@@ -554,7 +553,7 @@ class HaushaltService {
 
 		var hhKonto = kontoRep.get(daten, new HhKontoKey(daten.mandantNr, uid))
 		if (exception && hhKonto === null) {
-			throw new MeldungException("Konto-Nr. " + uid + " nicht vorhanden.")
+			throw new MeldungException(Meldungen.HH019(uid))
 		}
 		return hhKonto
 	}
@@ -570,10 +569,10 @@ class HaushaltService {
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var hhKonto = getKontoIntern(daten, uid, true)
 		if (buchungRep.countKontoValutaVorNach(daten, uid, null, null, null) > 0) {
-			throw new MeldungException("Das Konto wird in Buchungen verwendet und kann nicht gelöscht werden.")
+			throw new MeldungException(Meldungen.HH020)
 		}
 		if (istSpezialKontokennzeichen(hhKonto.kz)) {
-			throw new MeldungException("Das Eigenkapital- und Gewinn/Verlust-Konto können nicht gelöscht werden.")
+			throw new MeldungException(Meldungen.HH021)
 		}
 		var biliste = bilanzRep.getBilanzListe(daten, null, Constant.PN_BERECHNET, Constant.PN_BERECHNET, uid)
 		for (HhBilanz b : biliste) {
@@ -597,19 +596,14 @@ class HaushaltService {
 	override ServiceErgebnis<String> holeMinMaxKontoText(ServiceDaten daten, String kontoUid) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
-		var strBuchung = "Keine Buchungen."
+		var r = new ServiceErgebnis<String>(Meldungen.HH022)
 		var min = buchungRep.getBuchungMaxMin(daten, kontoUid, true)
 		if (min !== null) {
 			var max = buchungRep.getBuchungMaxMin(daten, kontoUid, false)
-			var dMin = min.sollValuta
-			var dMax = max.sollValuta
-			// if (dMin.isAfter(dMax)) {
-			// dMin = max.getSollValuta
-			// dMax = min.getSollValuta
-			// }
-			strBuchung = '''Buchungen von «Global.dateString(dMin)» bis «Global.dateString(dMax)»'''
+			var dMin = min.sollValuta.atStartOfDay
+			var dMax = max.sollValuta.atStartOfDay
+			r.ergebnis = Meldungen.HH023(dMin, dMax)
 		}
-		var r = new ServiceErgebnis<String>(strBuchung)
 		return r
 	}
 
@@ -655,9 +649,9 @@ class HaushaltService {
 		}
 		if (Global.nes(bez)) {
 			if (u !== null) {
-				throw new MeldungException("Die Bezeichnung darf nicht leer sein.")
+				throw new MeldungException(Meldungen.HH024)
 			}
-			bez = '''Ereignis«uid»'''
+			bez = Meldungen.HH025(uid)
 		}
 		if (kz !== null && kz.length > HhEreignis.KZ_LAENGE) {
 			throw new MeldungException('''Das Kennzeichen darf max. «HhEreignis.KZ_LAENGE» Zeichen lang sein.''')
