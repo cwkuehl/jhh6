@@ -183,20 +183,20 @@ class MessdienerService {
 			Global.anhaengen(sb, ", ", e.vorname)
 			Global.anhaengen(sb, " (", e.von.year.toString, ")")
 			if (e.von.compareTo(flamboGrenze) >= 0) {
-				sb.append(" FLAMBO!")
+				sb.append(Meldungen.MO003)
 			}
 			if (MoStatusEnum.MANUELL.toString.equals(e.status)) {
-				sb.append(" MANUELL!")
+				sb.append(Meldungen.MO001)
 			}
 			if (!Global.nes(e.messdienerUid)) {
-				Global.anhaengen(sb, " mit ", e.messdienerName)
+				Global.anhaengen(sb, Meldungen.MO002, e.messdienerName)
 				Global.anhaengen(sb, ", ", e.messdienerVorname)
 			}
 			var mliste = messdienerRep.getMessdienerListe(daten, null, null, e.uid)
 			if (Global.listLaenge(mliste) > 0) {
 				var m = mliste.get(0)
 				if (e.messdienerUid != m.uid) {
-					Global.anhaengen(sb, " mit ", m.name)
+					Global.anhaengen(sb, Meldungen.MO002, m.name)
 					Global.anhaengen(sb, ", ", m.vorname)
 				}
 			}
