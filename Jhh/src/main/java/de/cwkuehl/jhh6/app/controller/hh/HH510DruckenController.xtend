@@ -27,7 +27,7 @@ class HH510DruckenController extends BaseController<String> {
 	@FXML CheckBox eb
 	@FXML CheckBox gv
 	@FXML CheckBox sb
-	@FXML CheckBox kassenbericht
+	@FXML @Profil CheckBox kassenbericht
 
 	// @FXML Button ok
 	// @FXML Button abbrechen
@@ -71,7 +71,7 @@ class HH510DruckenController extends BaseController<String> {
 				}
 			}
 		}
-		if (stufe <= 1) { // stufe = 0;
+		if (stufe <= 1) { // stufe = 0
 		}
 		if (stufe <= 2) {
 			initDatenTable

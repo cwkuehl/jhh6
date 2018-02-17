@@ -832,7 +832,7 @@ class HaushaltService {
 			throw new MeldungException(Meldungen.HH033)
 		}
 		if (Global.compDouble(b, 0) <= 0 || Global.compDouble(eb, 0) <= 0) {
-			throw new MeldungException("Der Betrag muss größer 0 sein.")
+			throw new MeldungException(Meldungen.HH034)
 		}
 		if (Global.nes(sollUid)) {
 			throw new MeldungException(Meldungen.HH028)
@@ -846,41 +846,33 @@ class HaushaltService {
 		var ek = holeEkKonto(daten, true)
 		var gv = holeGvKonto(daten, true)
 		if (sollUid.equals(ek) || habenUid.equals(ek) || sollUid.equals(gv) || habenUid.equals(gv)) {
-			throw new MeldungException("Das Eigenkapital- und GV-Konto sind nicht bebuchbar.")
+			throw new MeldungException(Meldungen.HH035)
 		}
 		if (Global.nes(text)) {
 			throw new MeldungException(Meldungen.HH027)
 		}
 		if (bd === null) {
-			throw new MeldungException("Das Belegdatum muss angegeben werden.")
+			throw new MeldungException(Meldungen.HH036)
 		}
 		var hhKonto = getKontoIntern(daten, sollUid, false)
 		if (hhKonto === null) {
-			throw new MeldungException("Keinen Sollkonto-Datensatz gefunden.")
+			throw new MeldungException(Meldungen.HH037)
 		}
 		if (hhKonto.gueltigVon !== null && sv.isBefore(hhKonto.gueltigVon)) {
-			throw new MeldungException(
-				Global.format("Das Sollkonto ist nur ab {0} gültig.",
-					Global.dateTimeStringForm(hhKonto.gueltigVon.atStartOfDay)))
+			throw new MeldungException(Meldungen.HH038(hhKonto.gueltigVon.atStartOfDay))
 		}
 		if (hhKonto.gueltigBis !== null && sv.isAfter(hhKonto.gueltigBis)) {
-			throw new MeldungException(
-				Global.format("Das Sollkonto ist nur bis {0} gültig.",
-					Global.dateTimeStringForm(hhKonto.gueltigBis.atStartOfDay)))
+			throw new MeldungException(Meldungen.HH039(hhKonto.gueltigBis.atStartOfDay))
 		}
 		hhKonto = getKontoIntern(daten, habenUid, false)
 		if (hhKonto === null) {
-			throw new MeldungException("Keinen Habenkonto-Datensatz gefunden.")
+			throw new MeldungException(Meldungen.HH040)
 		}
 		if (hhKonto.gueltigVon !== null && sv.isBefore(hhKonto.gueltigVon)) {
-			throw new MeldungException(
-				Global.format("Das Habenkonto ist nur ab {0} gültig.",
-					Global.dateTimeStringForm(hhKonto.gueltigVon.atStartOfDay)))
+			throw new MeldungException(Meldungen.HH041(hhKonto.gueltigVon.atStartOfDay))
 		}
 		if (hhKonto.gueltigBis !== null && sv.isAfter(hhKonto.gueltigBis)) {
-			throw new MeldungException(
-				Global.format("Das Habenkonto ist nur bis {0} gültig.",
-					Global.dateTimeStringForm(hhKonto.gueltigBis.atStartOfDay)))
+			throw new MeldungException(Meldungen.HH042(hhKonto.gueltigBis.atStartOfDay))
 		}
 	}
 
@@ -974,7 +966,7 @@ class HaushaltService {
 
 		var p = periodeRep.getMaxMinPeriode(daten, false, d)
 		if (p === null && exception) {
-			throw new MeldungException("Passende Periode konnte nicht bestimmt werden.")
+			throw new MeldungException(Meldungen.HH018)
 		}
 		return p
 	}
@@ -990,7 +982,7 @@ class HaushaltService {
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var hhBuchung = buchungRep.get(daten, new HhBuchungKey(daten.mandantNr, uid))
 		if (hhBuchung === null) {
-			throw new MeldungException("Buchung-Nr. " + uid + " nicht vorhanden.")
+			throw new MeldungException(Meldungen.HH043(uid))
 		}
 		var hhBuchungU = new HhBuchungUpdate(hhBuchung)
 		if (Constant.KZB_AKTIV.equals(hhBuchung.kz)) {
@@ -1017,7 +1009,7 @@ class HaushaltService {
 		var key = new HhBuchungKey(daten.mandantNr, uid)
 		var hhBuchung = buchungRep.get(daten, key)
 		if (hhBuchung === null) {
-			throw new MeldungException("Buchung-Nr. " + uid + " nicht vorhanden.")
+			throw new MeldungException(Meldungen.HH043(uid))
 		}
 		setzePassendeBerPeriode(daten, hhBuchung.sollValuta)
 		buchungRep.delete(daten, key)
@@ -1363,7 +1355,7 @@ class HaushaltService {
 
 		var vo = periodeRep.get(daten, new HhPeriodeKey(daten.mandantNr, pnr))
 		if (vo === null) {
-			throw new MeldungException("Periode " + pnr + " nicht gefunden.")
+			throw new MeldungException(Meldungen.HH005(pnr))
 		}
 		uebernehmenBilanz(daten, pnr, Constant.KZBI_EROEFFNUNG, pnr, Constant.KZBI_SCHLUSS, false, ek, gv)
 		uebernehmenBilanz(daten, 0, "", pnr, Constant.KZBI_GV, false, ek, gv)
@@ -1435,7 +1427,7 @@ class HaushaltService {
 		var k = getKontoIntern(daten, uid, true)
 		var k2 = getKontoIntern(daten, uid2, true)
 		if (k === null || k2 === null) {
-			throw new MeldungException("Bitte 2 Konten zum Tauschen angeben.")
+			throw new MeldungException(Meldungen.HH044)
 		}
 		var s = k.sortierung
 		var s2 = k2.sortierung
@@ -1468,7 +1460,7 @@ class HaushaltService {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		if (Global.nes(titel)) {
-			throw new MeldungException("Bitte einen Titel angeben.")
+			throw new MeldungException(Meldungen.HH045)
 		}
 		var List<HhBilanzSb> liste = null
 		var List<HhBilanzDruck> ebListe = null
@@ -1476,13 +1468,12 @@ class HaushaltService {
 		var List<HhBilanzDruck> sbListe = null
 		var periode = Global.getPeriodeString(dVon, dBis, false)
 		var euro = isEuroIntern
-		var ueberschrift = "Jahresbericht " + periode + " für " + titel + " vom " +
-			Global.dateTimeStringForm(daten.jetzt)
+		var ueberschrift = Meldungen.HH046(periode, titel, daten.jetzt)
 		var HhBilanzDruck z = null
 		if (eb) {
 			z = new HhBilanzDruck
 			z.setName(Constant.KZBI_EROEFFNUNG)
-			liste = getBilanzZeilenIntern(daten, Constant.KZBI_EROEFFNUNG, dVon, dBis)
+			liste = getBilanzZeilenIntern(daten, Constant.KZBI_EROEFFNUNG, dVon, dVon)
 			ebListe = getBilanzDruckListe(liste, euro)
 		}
 		if (gv) {
@@ -1494,7 +1485,7 @@ class HaushaltService {
 		if (sb) {
 			z = new HhBilanzDruck
 			z.setName(Constant.KZBI_SCHLUSS)
-			liste = getBilanzZeilenIntern(daten, Constant.KZBI_SCHLUSS, dVon, dBis)
+			liste = getBilanzZeilenIntern(daten, Constant.KZBI_SCHLUSS, dBis, dBis)
 			sbListe = getBilanzDruckListe(liste, euro)
 		}
 		var doc = newFopDokument
@@ -1560,7 +1551,7 @@ class HaushaltService {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		if (Global.nes(titel)) {
-			throw new MeldungException("Bitte einen Titel angeben.")
+			throw new MeldungException(Meldungen.HH045)
 		}
 		var periode = Global.getPeriodeString(dVon, dBis, false)
 		var euro = isEuroIntern
@@ -1569,11 +1560,10 @@ class HaushaltService {
 		var dbE = 0.0
 		var dbA = 0.0
 		var dbS = 0.0
-		var ueberschrift = "Kassenbericht " + periode + " für " + titel + " vom " +
-			Global.dateTimeStringForm(daten.jetzt)
+		var ueberschrift = Meldungen.HH047(periode, titel, daten.jetzt)
 		var ek = holeEkKonto(daten, true)
 		var gv = holeGvKonto(daten, true)
-		var ebListe = getBilanzZeilenIntern(daten, Constant.KZBI_EROEFFNUNG, dVon, dBis)
+		var ebListe = getBilanzZeilenIntern(daten, Constant.KZBI_EROEFFNUNG, dVon, dVon)
 		for (HhBilanzSb b : ebListe) {
 			if (Global.compString(b.kontoUid, ek) == 0) {
 				dbV = Global.iif(euro, b.esumme, b.summe)
