@@ -98,11 +98,11 @@ class HeilpraktikerService {
 		// getBerechService().pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var liste = newArrayList(new MaEinstellung, new MaEinstellung, new MaEinstellung)
 		liste.get(0).setSchluessel("0")
-		liste.get(0).setWert("kein Standard")
+		liste.get(0).setWert(Meldungen.HP001)
 		liste.get(1).setSchluessel("1")
-		liste.get(1).setWert("Standard für Behandlung")
+		liste.get(1).setWert(Meldungen.HP002)
 		liste.get(2).setSchluessel("2")
-		liste.get(2).setWert("Standard für Rechnung")
+		liste.get(2).setWert(Meldungen.HP003)
 		var r = new ServiceErgebnis<List<MaEinstellung>>(liste)
 		return r
 	}
@@ -144,13 +144,13 @@ class HeilpraktikerService {
 			sortierung = u.sortierung
 		}
 		if (Global.nes(status)) {
-			status = '''Status«uid»'''
+			status = Meldungen.HP004(uid)
 		}
 		if (status.length > HpStatus.STATUS_LAENGE) {
 			status = status.substring(0, HpStatus.STATUS_LAENGE)
 		}
 		if (Global.nes(besch)) {
-			besch = '''Status«uid»'''
+			besch = Meldungen.HP005(uid)
 		}
 		if (status.length > HpStatus.BESCHREIBUNG_LAENGE) {
 			status = status.substring(0, HpStatus.BESCHREIBUNG_LAENGE)
@@ -185,7 +185,7 @@ class HeilpraktikerService {
 
 		// getBerechService().pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		if (behandlungRep.getStatusAnzahl(daten, uid) > 0) {
-			throw new MeldungException(Meldungen.M2017)
+			throw new MeldungException(Meldungen.HP017)
 		}
 		var r = new ServiceErgebnis<Void>(null)
 		var key = new HpStatusKey(daten.mandantNr, uid)
@@ -251,13 +251,13 @@ class HeilpraktikerService {
 			beschFett = u.beschreibungFett
 		}
 		if (Global.nes(ziffer)) {
-			ziffer = '''Z«uid»'''
+			ziffer = Meldungen.HP006(uid)
 		}
 		if (ziffer.length > HpLeistung.ZIFFER_LAENGE) {
 			ziffer = ziffer.substring(0, HpLeistung.ZIFFER_LAENGE)
 		}
 		if (Global.nes(beschFett)) {
-			beschFett = '''Beschreibung«uid»'''
+			beschFett = Meldungen.HP005(uid)
 		}
 		if (beschFett.length > HpLeistung.BESCHREIBUNG_FETT_LAENGE) {
 			beschFett = beschFett.substring(0, HpLeistung.BESCHREIBUNG_FETT_LAENGE)
@@ -297,11 +297,11 @@ class HeilpraktikerService {
 
 		// getBerechService().pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		if (behandlungRep.getLeistungAnzahl(daten, uid) > 0) {
-			throw new MeldungException(Meldungen.M2036)
+			throw new MeldungException(Meldungen.HP007)
 		}
 		var ll = behleistRep.getBehandlungLeistungLangListe(daten, null, uid)
 		if (ll.size > 0) {
-			throw new MeldungException(Meldungen.M2036)
+			throw new MeldungException(Meldungen.HP007)
 		}
 		// Leistung aus Leistungsgruppen löschen
 		// var lliste = behleistRep.getBehandlungLeistungListe(daten, null, uid)
@@ -353,7 +353,7 @@ class HeilpraktikerService {
 			bez = u.bezeichnung
 		}
 		if (Global.nes(bez)) {
-			bez = '''Bezeichnung«uid»'''
+			bez = Meldungen.HP005(uid)
 		}
 		if (bez.length > HpLeistungsgruppe.BEZEICHNUNG_LAENGE) {
 			bez = bez.substring(0, HpLeistungsgruppe.BEZEICHNUNG_LAENGE)
@@ -373,7 +373,7 @@ class HeilpraktikerService {
 		var lliste = leistungen
 		if (Global.arrayLaenge(leistungen) <= 0) {
 			if (Global.nes(leistungUid)) {
-				throw new MeldungException(Meldungen.M2035)
+				throw new MeldungException(Meldungen.HP008)
 			}
 			if (lliste === null) {
 				lliste = new ArrayList<HpBehandlungLeistungLang>
@@ -494,7 +494,7 @@ class HeilpraktikerService {
 			geschl = u.geschlecht
 		}
 		if (Global.nes(name)) {
-			name = '''N«uid»'''
+			name = Meldungen.HP009(uid)
 		}
 		if (name.length > HpPatient.NAME1_LAENGE) {
 			name = name.substring(0, HpPatient.NAME1_LAENGE)
@@ -530,7 +530,7 @@ class HeilpraktikerService {
 		// getBerechService().pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var pliste = patientRep.getPatientListe(daten, uid)
 		if (pliste.length > 0) {
-			throw new MeldungException(Meldungen.M2077)
+			throw new MeldungException(Meldungen.HP010)
 		}
 		var rliste = rechnungRep.getRechnungListe(daten, null, uid, null)
 		for (HpRechnung re : rliste) {
@@ -653,17 +653,16 @@ class HeilpraktikerService {
 			besch = u.beschreibung
 		}
 		if (Global.nes(puid)) {
-			throw new MeldungException(Meldungen.M2011)
+			throw new MeldungException(Meldungen.HP011)
 		}
 		if (Global.nes(luid)) {
 			luid = ''
-		// throw new MeldungException(Meldungen.M2035)
 		}
 		if (Global.nes(suid)) {
-			throw new MeldungException(Meldungen.M2016)
+			throw new MeldungException(Meldungen.HP016)
 		}
 		if (datum === null) {
-			throw new MeldungException(Meldungen.M2012)
+			throw new MeldungException(Meldungen.HP012)
 		}
 		if (Global.nes(besch)) {
 			besch = ''
@@ -686,7 +685,7 @@ class HeilpraktikerService {
 		var lliste = leistungen
 		if (Global.arrayLaenge(leistungen) <= 0) {
 			if (Global.nes(leistungUid)) {
-				throw new MeldungException(Meldungen.M2035)
+				throw new MeldungException(Meldungen.HP008)
 			}
 			if (lliste === null) {
 				lliste = new ArrayList<HpBehandlungLeistungLang>
@@ -772,13 +771,13 @@ class HeilpraktikerService {
 
 		// getBerechService().pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		if (patientUid === null) {
-			throw new MeldungException(Meldungen.M2011)
+			throw new MeldungException(Meldungen.HP011)
 		}
 
 		// Patient
 		var p = patientRep.get(daten, new HpPatientKey(daten.mandantNr, patientUid))
 		if (p === null) {
-			throw new MeldungException(Meldungen.M2011)
+			throw new MeldungException(Meldungen.HP011)
 		}
 		// Behandlungen
 		var list = new ArrayList<HpBehandlungDruck>
@@ -868,7 +867,7 @@ class HeilpraktikerService {
 		List<HpBehandlungLeistungLang> bliste) {
 
 		if (Global.arrayLaenge(bliste) <= 0) {
-			throw new MeldungException(Meldungen.M2013)
+			throw new MeldungException(Meldungen.HP013)
 		}
 		var r = new ServiceErgebnis<HpRechnung>(null)
 		var summe = 0.0
@@ -881,7 +880,7 @@ class HeilpraktikerService {
 			summe += vo.leistungBetrag
 		}
 		if (Global.compDouble(summe, 0) <= 0) {
-			throw new MeldungException(Meldungen.M2037)
+			throw new MeldungException(Meldungen.HP014)
 		}
 		r.ergebnis = rechnungRep.iuHpRechnung(daten, null, uid, rnr, datum, patientUid, summe, diagnose, statusUid,
 			notiz, null, null, null, null)
@@ -969,23 +968,23 @@ class HeilpraktikerService {
 
 		// getBerechService().pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		if (uid === null) {
-			throw new MeldungException(Meldungen.M2038)
+			throw new MeldungException(Meldungen.HP015)
 		}
 
 		// Rechnung
 		var re = rechnungRep.get(daten, new HpRechnungKey(daten.mandantNr, uid))
 		if (re === null) {
-			throw new MeldungException(Meldungen.M2038)
+			throw new MeldungException(Meldungen.HP015)
 		}
 		var p = patientRep.get(daten, new HpPatientKey(daten.mandantNr, re.patientUid))
 		if (p === null) {
-			throw new MeldungException(Meldungen.M2011)
+			throw new MeldungException(Meldungen.HP011)
 		}
 		var HpPatient p2 = null
 		if (!Global.nes(p.rechnungPatientUid)) {
 			p2 = patientRep.get(daten, new HpPatientKey(daten.mandantNr, p.rechnungPatientUid))
 			if (p2 === null) {
-				throw new MeldungException(Meldungen.M2011)
+				throw new MeldungException(Meldungen.HP011)
 			}
 		} else {
 			p2 = p

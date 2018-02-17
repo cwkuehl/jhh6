@@ -1,6 +1,7 @@
 package de.cwkuehl.jhh6.app.controller.hh
 
 import de.cwkuehl.jhh6.api.global.Constant
+import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.Profil
 import de.cwkuehl.jhh6.app.base.Werkzeug
@@ -8,6 +9,7 @@ import de.cwkuehl.jhh6.app.control.Datum
 import de.cwkuehl.jhh6.server.FactoryService
 import java.time.LocalDate
 import java.util.List
+import javafx.application.Platform
 import javafx.fxml.FXML
 import javafx.scene.control.CheckBox
 import javafx.scene.control.Label
@@ -90,16 +92,16 @@ class HH510DruckenController extends BaseController<String> {
 	@FXML def void onOk() {
 
 		if (eb.isSelected || gv.isSelected || sb.isSelected) {
-			var byte[] pdf = get(
+			val byte[] pdf = get(
 				FactoryService.getHaushaltService.getReportJahresbericht(getServiceDaten, von.getValue, bis.getValue,
 					titel.getText, eb.isSelected, gv.isSelected, sb.isSelected))
-			Werkzeug.speicherReport(pdf, "Jahresbericht", true)
+			Platform.runLater([Werkzeug.speicherReport(pdf, Meldungen.HH048, true)])
 		}
 		if (kassenbericht.isSelected) {
-			var byte[] pdf = get(
+			val byte[] pdf = get(
 				FactoryService.getHaushaltService.getReportKassenbericht(getServiceDaten, von.getValue, bis.getValue,
 					titel.getText))
-			Werkzeug.speicherReport(pdf, "Kassenbericht", true)
+			Platform.runLater([Werkzeug.speicherReport(pdf, Meldungen.HH049, true)])
 		}
 	}
 
