@@ -77,10 +77,10 @@ class MessdienerService {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		if (Global.nes(name)) {
-			throw new MeldungException(Meldungen.M2088)
+			throw new MeldungException(Meldungen.MO006)
 		}
 		if (Global.nes(dienste)) {
-			throw new MeldungException(Meldungen.M2089)
+			throw new MeldungException(Meldungen.MO007)
 		}
 		pruefDienste(daten, dienste)
 		var e = profilRep.iuMoProfil(daten, null, uid, name, 0, dienste, notiz, null, null, null, null)
@@ -91,11 +91,11 @@ class MessdienerService {
 	def private HashMap<String, Integer> pruefDienste(ServiceDaten daten, String dienste) {
 
 		if (Global.nes(dienste) || !dienste.matches("^([A-Za-zäöüßÄÖÜ0-1]+;\\d+)(;[A-Za-zäöüßÄÖÜ0-1]+;\\d+)*$")) {
-			throw new MeldungException(Meldungen.M2089)
+			throw new MeldungException(Meldungen.MO007)
 		}
 		var array = dienste.split(";")
 		if (array.length % 2 == 1) {
-			throw new MeldungException(Meldungen.M2089)
+			throw new MeldungException(Meldungen.MO007)
 		}
 		var liste = getParameterAlsListe(daten, Parameter.MO_DIENSTE)
 		var hash = new HashMap<String, Integer>
@@ -104,10 +104,10 @@ class MessdienerService {
 		}
 		for (var j = 0; j < array.length; j = j + 2) {
 			if (!hash.containsKey(array.get(j))) {
-				throw new MeldungException(Meldungen.M2091(array.get(j)))
+				throw new MeldungException(Meldungen.MO008(array.get(j)))
 			}
 			if (!Global.isNumeric(array.get(j + 1))) {
-				throw new MeldungException(Meldungen.M2092(array.get(j + 1)))
+				throw new MeldungException(Meldungen.MO009(array.get(j + 1)))
 			}
 			hash.put(array.get(j), Global.strInt(array.get(j + 1)))
 		}
@@ -131,7 +131,7 @@ class MessdienerService {
 			}
 			return liste
 		}
-		throw new MeldungException(Meldungen.M2090(key))
+		throw new MeldungException(Meldungen.MO010(key))
 	}
 
 	@Transaction
@@ -139,7 +139,7 @@ class MessdienerService {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		if (gottesdienstRep.getGottesdienstListe(daten, uid, null, null, null, false).size > 0) {
-			throw new MeldungException(Meldungen.M2081)
+			throw new MeldungException(Meldungen.MO011)
 		}
 		profilRep.delete(daten, new MoProfilKey(daten.mandantNr, uid))
 		var r = new ServiceErgebnis<Void>(null)
@@ -209,7 +209,7 @@ class MessdienerService {
 			}
 			Global.anhaengen(sb, ", ", e.notiz)
 			e.setInfo(sb.toString)
-			if (!"Flambo".equals(dienst) || e.von.compareTo(flamboGrenze) >= 0) {
+			if (!Meldungen.MO004.equals(dienst) || e.von.compareTo(flamboGrenze) >= 0) {
 				liste2.add(e)
 			}
 		// System.out.println(sb.toString)
@@ -275,11 +275,11 @@ class MessdienerService {
 		if (!Global.nes(dienste)) {
 			sb.append(dienste)
 		}
-		if (!sb.toString.contains("Flambo")) {
-			Global.anhaengen(sb, ";", "Flambo")
+		if (!sb.toString.contains(Meldungen.MO004)) {
+			Global.anhaengen(sb, ";", Meldungen.MO004)
 		}
-		if (!sb.toString.contains("Dienst")) {
-			Global.anhaengen(sb, ";", "Dienst")
+		if (!sb.toString.contains(Meldungen.MO005)) {
+			Global.anhaengen(sb, ";", Meldungen.MO005)
 		}
 		return sb.toString
 	}
@@ -297,7 +297,7 @@ class MessdienerService {
 
 		var liste = messdienerRep.getMessdienerListe(daten, null, null, uid)
 		if (pruefen && liste.size > 0) {
-			throw new MeldungException(Meldungen.M2076)
+			throw new MeldungException(Meldungen.MO012)
 		}
 		messdienerRep.delete(daten, new MoMessdienerKey(daten.mandantNr, uid))
 		// Abhängigkeiten löschen
@@ -401,7 +401,7 @@ class MessdienerService {
 		if (!Global.nes(profilUid)) {
 			var p = profilRep.get(daten, new MoProfilKey(daten.mandantNr, profilUid))
 			if (p === null) {
-				throw new MeldungException(Meldungen.M2087)
+				throw new MeldungException(Meldungen.MO013)
 			}
 			var hash = pruefDienste(daten, p.dienste)
 			var Integer i = null
@@ -409,7 +409,7 @@ class MessdienerService {
 				for (MoEinteilungLang e : einteilungen) {
 					i = hash.get(e.dienst)
 					if (i === null) {
-						throw new MeldungException(Meldungen.M2091(e.dienst))
+						throw new MeldungException(Meldungen.MO008(e.dienst))
 					}
 					hash.put(e.dienst, i - 1)
 				}
@@ -417,7 +417,7 @@ class MessdienerService {
 			for (String s : hash.keySet) {
 				i = hash.get(s)
 				if (i > 0) {
-					throw new MeldungException(Meldungen.M2093(s))
+					throw new MeldungException(Meldungen.MO014(s))
 				}
 			}
 		}
@@ -841,7 +841,7 @@ class MessdienerService {
 					throw new MeldungException("Gottesdienst nicht vorhanden.")
 				}
 				if (Global.nes(dienst)) {
-					dienst = "Dienst"
+					dienst = Meldungen.MO005
 				}
 				if (dienst.endsWith(":")) {
 					dienst = dienst.substring(0, dienst.length - 1)
@@ -864,7 +864,7 @@ class MessdienerService {
 			// break;
 			}
 		}
-		var r = new ServiceErgebnis<String>(Meldungen.M2083(anzahl))
+		var r = new ServiceErgebnis<String>(Meldungen.MO015(anzahl))
 		return r
 	}
 }
