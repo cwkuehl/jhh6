@@ -43,7 +43,10 @@ import de.cwkuehl.jhh6.server.rep.impl.HhPeriodeRep
 import de.cwkuehl.jhh6.server.rep.impl.VmBuchungRep
 import de.cwkuehl.jhh6.server.rep.impl.VmEreignisRep
 import de.cwkuehl.jhh6.server.rep.impl.VmKontoRep
+import de.cwkuehl.jhh6.server.service.impl.BuchungSpalten
+import de.cwkuehl.jhh6.server.service.impl.SbDatum
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.ArrayList
 import java.util.HashMap
@@ -900,6 +903,17 @@ class HaushaltService {
 		String wuid, String muid, String n, boolean vermietung) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
+		var buchung = insertUpdateBuchungIntern(daten, uid, v, b, eb, sollUid, habenUid, text, bn, bd, s, huid, wuid,
+			muid, n, vermietung, null, null, null, null)
+		var r = new ServiceErgebnis<HhBuchung>(buchung)
+		return r
+	}
+
+	def private HhBuchung insertUpdateBuchungIntern(ServiceDaten daten, String uid, LocalDate v, double b, double eb,
+		String sollUid, String habenUid, String text, String bn, LocalDate bd, String s, String huid, String wuid,
+		String muid, String n, boolean vermietung, String angelegtVon, LocalDateTime angelegtAm, String geaendertVon,
+		LocalDateTime geaendertAm) {
+
 		var strKz = Constant.KZB_AKTIV
 		var strT = text
 		var insert = Global.nes(uid)
@@ -911,13 +925,14 @@ class HaushaltService {
 		}
 		pruefBuchung(daten, v, b, eb, sollUid, habenUid, strT, bn, bd)
 		var buchung = buchungRep.iuHhBuchung(daten, null, uid, v, v, strKz, b, eb, sollUid, habenUid, strT, bn, bd,
-			null, null, null, null)
+			angelegtVon, angelegtAm, geaendertVon, geaendertAm)
 		if (Global.nes(s) && Global.nes(huid) && Global.nes(wuid) && Global.nes(muid) && Global.nes(n)) {
 			if (vermietung && !insert) {
 				vmbuchungRep.delete(daten, new VmBuchungKey(daten.mandantNr, uid))
 			}
 		} else {
-			vmbuchungRep.iuVmBuchung(daten, null, buchung.uid, s, huid, wuid, muid, n, null, null, null, null)
+			vmbuchungRep.iuVmBuchung(daten, null, buchung.uid, s, huid, wuid, muid, n, angelegtVon, angelegtAm,
+				geaendertVon, geaendertAm)
 		}
 		if (insert) {
 			setzePassendeBerPeriode(daten, v)
@@ -928,8 +943,7 @@ class HaushaltService {
 			}
 			setzePassendeBerPeriode(daten, dValt)
 		}
-		var r = new ServiceErgebnis<HhBuchung>(buchung)
-		return r
+		return buchung
 	}
 
 	/**
@@ -1006,6 +1020,13 @@ class HaushaltService {
 	override ServiceErgebnis<Void> deleteBuchung(ServiceDaten daten, String uid) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
+		deleteBuchungIntern(daten, uid, true)
+		var r = new ServiceErgebnis<Void>(null)
+		return r
+	}
+
+	def private void deleteBuchungIntern(ServiceDaten daten, String uid, boolean pruefen) {
+
 		var key = new HhBuchungKey(daten.mandantNr, uid)
 		var hhBuchung = buchungRep.get(daten, key)
 		if (hhBuchung === null) {
@@ -1014,8 +1035,6 @@ class HaushaltService {
 		setzePassendeBerPeriode(daten, hhBuchung.sollValuta)
 		buchungRep.delete(daten, key)
 		vmbuchungRep.delete(daten, new VmBuchungKey(daten.mandantNr, uid))
-		var r = new ServiceErgebnis<Void>(null)
-		return r
 	}
 
 	@Transaction(false)
@@ -1710,6 +1729,102 @@ class HaushaltService {
 			anzahl--
 			pnr = pnr - 12
 		}
+		return r
+	}
+
+	def private String getWertM(List<String> werte, BuchungSpalten e, HashMap<BuchungSpalten, Integer> h) {
+
+		if (werte !== null && e !== null && h !== null && h.containsKey(e)) {
+			var i = h.get(e)
+			if (0 <= i && i < werte.size) {
+				var str = werte.get(i)
+				if (!Global.nes(str)) {
+					return str.trim
+				}
+			}
+		}
+		return null
+	}
+
+	@Transaction
+	override ServiceErgebnis<String> importBuchungListe(ServiceDaten daten, List<String> zeilen, boolean loeschen) {
+
+		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
+		if (loeschen) {
+			var listem = buchungRep.getListe(daten, daten.mandantNr, null, null)
+			for (HhBuchung b : listem) {
+				deleteBuchungIntern(daten, b.uid, false)
+			}
+		}
+		if (Global.arrayLaenge(zeilen) <= 1) {
+			throw new MeldungException(Meldungen.HH050)
+		}
+		var h = new HashMap<BuchungSpalten, Integer>
+		for (BuchungSpalten e : BuchungSpalten.values) {
+			h.put(e, -1)
+		}
+		var werte = Global.decodeCSV(zeilen.get(0))
+		for (var i = 0; werte !== null && i < werte.size; i++) {
+			var e = BuchungSpalten.fromString(werte.get(i))
+			if (e !== null) {
+				h.put(e, i)
+			}
+		}
+		for (BuchungSpalten e : BuchungSpalten.values) {
+			if (e.muss && h.get(e) < 0) {
+				throw new MeldungException(Meldungen.HH051(e.name))
+			}
+		}
+		var anzahl = 0
+		for (var i = 1; zeilen !== null && i < zeilen.size; i++) {
+			werte = Global.decodeCSV(zeilen.get(i))
+			var wert = getWertM(werte, BuchungSpalten.VALUTA, h)
+			var LocalDate valuta = null
+			if (wert !== null) {
+				var d = new SbDatum
+				d.parse(wert)
+				if (!d.isLeer) {
+					valuta = d.getDate(true)
+				}
+			}
+			var ebetrag = Global.strDbl(getWertM(werte, BuchungSpalten.BETRAG, h))
+			var betrag = Global.konvDM(ebetrag)
+			var solluid = getWertM(werte, BuchungSpalten.SOLLUID, h)
+			var sk = getKontoIntern(daten, solluid, false)
+			if (sk === null) {
+				wert = getWertM(werte, BuchungSpalten.SOLLNAME, h)
+				if (!Global.nes(wert)) {
+					solluid = kontoRep.getMinKonto(daten, null, null, null, wert)
+				}
+			}
+			var habenuid = getWertM(werte, BuchungSpalten.HABENUID, h)
+			sk = getKontoIntern(daten, habenuid, false)
+			if (sk === null) {
+				wert = getWertM(werte, BuchungSpalten.HABENNAME, h)
+				if (!Global.nes(wert)) {
+					habenuid = kontoRep.getMinKonto(daten, null, null, null, wert)
+				}
+			}
+			var btext = getWertM(werte, BuchungSpalten.TEXT, h)
+			var belegnr = getWertM(werte, BuchungSpalten.BELEGNR, h)
+			wert = getWertM(werte, BuchungSpalten.VALUTA, h)
+			var LocalDate belegdatum = null
+			if (wert !== null) {
+				var d = new SbDatum
+				d.parse(wert)
+				if (!d.isLeer) {
+					belegdatum = d.getDate(true)
+				}
+			}
+			var angelegtVon = getWertM(werte, BuchungSpalten.ANGELEGTVON, h)
+			var angelegtAm = Global.objDat(getWertM(werte, BuchungSpalten.ANGELEGTAM, h))
+			var String geaendertVon = getWertM(werte, BuchungSpalten.GEAENDERTVON, h)
+			var geaendertAm = Global.objDat(getWertM(werte, BuchungSpalten.GEAENDERTAM, h))
+			insertUpdateBuchungIntern(daten, null, valuta, betrag, ebetrag, solluid, habenuid, btext, belegnr,
+				belegdatum, null, null, null, null, null, false, angelegtVon, angelegtAm, geaendertVon, geaendertAm)
+			anzahl++
+		}
+		var r = new ServiceErgebnis<String>(Meldungen.HH053(anzahl))
 		return r
 	}
 }

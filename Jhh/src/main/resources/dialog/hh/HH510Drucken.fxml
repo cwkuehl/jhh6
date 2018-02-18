@@ -74,6 +74,32 @@
 			</tooltip>
 		</Button>
 	</HBox>
+	<Label fx:id="datei0" mnemonicParsing="true" text="%HH510.datei" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+	<TextField fx:id="datei" accessibleText="%HH510.datei.tt" promptText="%HH510.datei.tt"
+		GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="8">
+		<tooltip>
+			<Tooltip text="%HH510.datei.tt" />
+		</tooltip>
+	</TextField>
+	<Button fx:id="dateiAuswahl" defaultButton="true" onAction="#onDateiAuswahl" text="%HH510.dateiAuswahl" GridPane.columnIndex="4"
+		GridPane.columnSpan="1" GridPane.rowIndex="8">
+		<tooltip>
+			<Tooltip text="%HH510.dateiAuswahl.tt" />
+		</tooltip>
+	</Button>
+	<CheckBox fx:id="loeschen" accessibleText="%HH510.loeschen.tt" text="%HH510.loeschen"
+		GridPane.columnIndex="0" GridPane.columnSpan="3" GridPane.rowIndex="9">
+		<tooltip>
+			<Tooltip text="%HH510.loeschen.tt" />
+		</tooltip>
+	</CheckBox>
+	<HBox spacing="10.0" GridPane.columnIndex="0" GridPane.rowIndex="10" GridPane.columnSpan="2">
+		<Button fx:id="import1" mnemonicParsing="true" onAction="#onImport1" text="%HH510.import1">
+			<tooltip>
+				<Tooltip text="%HH510.import1.tt" />
+			</tooltip>
+		</Button>
+	</HBox>
 
 	<stylesheets>
 		<URL value="@../Jhh6.css" />

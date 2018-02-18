@@ -1,8 +1,11 @@
 package de.cwkuehl.jhh6.app.controller.hh
 
 import de.cwkuehl.jhh6.api.global.Constant
+import de.cwkuehl.jhh6.api.global.Global
+import de.cwkuehl.jhh6.api.message.MeldungException
 import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.app.base.BaseController
+import de.cwkuehl.jhh6.app.base.DateiAuswahl
 import de.cwkuehl.jhh6.app.base.Profil
 import de.cwkuehl.jhh6.app.base.Werkzeug
 import de.cwkuehl.jhh6.app.control.Datum
@@ -11,6 +14,7 @@ import java.time.LocalDate
 import java.util.List
 import javafx.application.Platform
 import javafx.fxml.FXML
+import javafx.scene.control.Button
 import javafx.scene.control.CheckBox
 import javafx.scene.control.Label
 import javafx.scene.control.TextField
@@ -26,6 +30,11 @@ class HH510DruckenController extends BaseController<String> {
 	@FXML Datum von
 	@FXML Label bis0
 	@FXML Datum bis
+	@FXML Label datei0
+	@FXML TextField datei
+	@FXML Button dateiAuswahl
+	@FXML CheckBox loeschen
+	@FXML Button import1
 	@FXML CheckBox eb
 	@FXML CheckBox gv
 	@FXML CheckBox sb
@@ -72,6 +81,13 @@ class HH510DruckenController extends BaseController<String> {
 					gv.setSelected(true)
 				}
 			}
+			if (serviceDaten.benutzerId.toLowerCase != "wolfgang") {
+				datei0.visible = false
+				datei.visible = false
+				dateiAuswahl.visible = false
+				loeschen.visible = false
+				import1.visible = false
+			}
 		}
 		if (stufe <= 1) { // stufe = 0
 		}
@@ -84,6 +100,37 @@ class HH510DruckenController extends BaseController<String> {
 	 * Tabellen-Daten initialisieren.
 	 */
 	def protected void initDatenTable() {
+	}
+
+	/** 
+	 * Event für DateiAuswahl.
+	 */
+	@FXML def void onDateiAuswahl() {
+		var String dateiname = DateiAuswahl.auswaehlen(true, "HH510.select.file", "HH510.select.ok", "csv",
+			"HH510.select.ext")
+		if (!Global.nes(dateiname)) {
+			datei.setText(dateiname)
+		}
+	}
+
+	/** 
+	 * Event für Import.
+	 */
+	@FXML def void onImport1() {
+
+		if (Global.nes(datei.getText)) {
+			throw new MeldungException(Meldungen.M2058)
+		}
+		if (Werkzeug.showYesNoQuestion(Meldungen.HH052) === 0) {
+			return
+		}
+		var List<String> zeilen = Werkzeug.leseDatei(datei.getText)
+		var meldung = get(
+			FactoryService.haushaltService.importBuchungListe(getServiceDaten, zeilen, loeschen.isSelected))
+		if (!Global.nes(meldung)) {
+			updateParent
+			Werkzeug.showInfo(meldung)
+		}
 	}
 
 	/** 
