@@ -858,11 +858,11 @@ class MessdienerService {
 					dienst, null, null, null, null)
 				namen.clear
 			}
-			// System.out.println(token)
-			if (zeile > 12) {
-				Global.machNichts
-			// break;
-			}
+		// System.out.println(token)
+		// if (zeile > 12) {
+		// Global.machNichts
+		// break;
+		// }
 		}
 		var r = new ServiceErgebnis<String>(Meldungen.MO015(anzahl))
 		return r

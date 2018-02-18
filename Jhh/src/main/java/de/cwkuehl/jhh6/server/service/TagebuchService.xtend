@@ -132,7 +132,7 @@ class TagebuchService {
 
 		if (Global.arrayLaenge(suche) != 9) {
 			// Der Parameter %1$s ist ungültig.
-			throw new MeldungException(Meldungen.M1007("suche"))
+			throw new MeldungException(Meldungen.TB001("suche"))
 		}
 
 		var str = suche.get(0);
@@ -200,11 +200,11 @@ class TagebuchService {
 		suche.set(0, str)
 
 		// Bericht vom: %1$s
-		v.add(Meldungen.M1008(daten.jetzt, Constant.CRLF))
+		v.add(Meldungen.TB002(daten.jetzt, Constant.CRLF))
 		// Suche nach: ('%1$s' oder '%2$s' oder '%3$s') und ('%4$s' oder '%5$s'
 		// oder '%6$s') und nicht ('%7$s' oder '%8$s' oder '%9$s')%10$s
 		v.add(
-			Meldungen.M1009(suche.get(0), suche.get(1), suche.get(2), suche.get(3), suche.get(4), suche.get(5),
+			Meldungen.TB003(suche.get(0), suche.get(1), suche.get(2), suche.get(3), suche.get(4), suche.get(5),
 				suche.get(6), suche.get(7), suche.get(8), Constant.CRLF))
 		v.add(Constant.CRLF);
 		var liste = tagebuchRep.erzeugeDatei(daten, suche);
@@ -228,7 +228,7 @@ class TagebuchService {
 							if (z != l) {
 								// Falscher Zähler am %1$s: %2$s, erwartet: %3$s
 								throw new MeldungException(
-									Meldungen.M1010(e.datum.atTime(0, 0), m.group(1), Global.lngStr(z)))
+									Meldungen.TB004(e.datum.atTime(0, 0), m.group(1), Global.lngStr(z)))
 							}
 						}
 						z++;
