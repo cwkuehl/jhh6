@@ -246,21 +246,21 @@ class MessdienerService {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		if (Global.nes(name)) {
-			throw new MeldungException("Der Name darf nicht leer sein.")
+			throw new MeldungException(Meldungen.MO006)
 		}
 		if (von === null) {
-			throw new MeldungException("Der Eintritt darf nicht leer sein.")
+			throw new MeldungException(Meldungen.MO016)
 		}
 		if (MoStatusEnum.AUTOMATISCH.toString.equals(status)) {
 			if (Global.nes(dienste0)) {
-				throw new MeldungException("Mindestens ein Dienst muss ausgewählt werden.")
+				throw new MeldungException(Meldungen.MO017)
 			}
 			if (Global.nes(verfuegbar)) {
-				throw new MeldungException("Mindestens eine Verfügbarkeit muss ausgewählt werden.")
+				throw new MeldungException(Meldungen.MO018)
 			}
 		}
 		if (!Global.nes(uid) && Global.compString(uid, mitUid) == 0) {
-			throw new MeldungException("Das Dienen mit sich selbst ist sinnlos.")
+			throw new MeldungException(Meldungen.MO019)
 		}
 		var dienste = addStandardDienste(dienste0)
 		var e = messdienerRep.iuMoMessdiener(daten, null, uid, name, vorname, von, bis, adresse1, adresse2, adresse3,
@@ -504,7 +504,7 @@ class MessdienerService {
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var liste = gottesdienstRep.getGottesdienstLangListe(daten, null, von, bis, false)
 		if (Global.listLaenge(liste) <= 0) {
-			throw new MeldungException("Keine Gottesdienst mit Einteilungen vorhanden.")
+			throw new MeldungException(Meldungen.MO020)
 		}
 		var doc = newFopDokument
 		doc.addMessdienerordnung(true, von, bis, liste)
@@ -554,7 +554,7 @@ class MessdienerService {
 			}
 		}
 		if (Global.arrayLaenge(zeilen) <= 1) {
-			throw new MeldungException("Die Datei ist zu kurz.")
+			throw new MeldungException(Meldungen.MO021)
 		}
 		var h = new HashMap<MessdienerSpalten, Integer>
 		for (MessdienerSpalten e : MessdienerSpalten.values) {
@@ -569,7 +569,7 @@ class MessdienerService {
 		}
 		for (MessdienerSpalten e : MessdienerSpalten.values) {
 			if (e.muss && h.get(e) < 0) {
-				throw new MeldungException("Die Spalte " + e.name + " ist nicht vorhanden.")
+				throw new MeldungException(Meldungen.MO022(e.name))
 			}
 		}
 		var anzahl = 0
@@ -627,11 +627,11 @@ class MessdienerService {
 			if (suche2) {
 				var liste2 = messdienerRep.getMessdienerListe(daten, name2, vorname2, null)
 				if (liste2.size <= 0) {
-					throw new MeldungException("Der 2. Messdiener in Zeile " + i + " ist nicht vorhanden.")
+					throw new MeldungException(Meldungen.MO024(i))
 				} else if (liste2.size == 1) {
 					mitUid = liste2.get(0).uid
 				} else {
-					throw new MeldungException("Der 2. Messdiener in Zeile " + i + " ist doppeldeutig.")
+					throw new MeldungException(Meldungen.MO025(i))
 				}
 			}
 			var sb = new StringBuffer
@@ -671,11 +671,10 @@ class MessdienerService {
 					m.adresse3, email, email2, telefon, m.telefon2, verfuegbar, addStandardDienste(m.dienste), mitUid,
 					status, m.notiz, null, null, null, null)
 			} else {
-				throw new MeldungException("Der Messdiener in Zeile " + i + " ist doppeldeutig.")
+				throw new MeldungException(Meldungen.MO026(i))
 			}
 		}
-		var r = new ServiceErgebnis<String>(
-			Global.format("Es wurde(n) {0} Messdiener importiert.", Global.intStr(anzahl)))
+		var r = new ServiceErgebnis<String>(Meldungen.MO023(anzahl))
 		return r
 	}
 
@@ -694,7 +693,7 @@ class MessdienerService {
 			// }
 		}
 		if (Global.arrayLaenge(zeilen) <= 1) {
-			throw new MeldungException("Die Datei ist zu kurz.")
+			throw new MeldungException(Meldungen.MO021)
 		}
 		var sb = new StringBuffer
 		for (String s : zeilen) {
