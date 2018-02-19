@@ -867,7 +867,7 @@ class ReplikationService {
 			for (r : rbListe.liste) {
 				var rep = reps.get(r.eintrag.class)
 				if (rep === null) {
-					throw new RuntimeException('''RbRepository für «r.eintrag.class» fehlt.''')
+					throw new RuntimeException(Meldungen.M1001(r.eintrag.class.toString))
 				}
 				switch (r.art) {
 					case RollbackArtEnum.INSERT: rep.delete(daten, r.eintrag)
@@ -891,7 +891,7 @@ class ReplikationService {
 			for (r : rbListe.liste.reverseView) {
 				var rep = reps.get(r.eintrag.class)
 				if (rep === null) {
-					throw new RuntimeException('''RbRepository für «r.eintrag.class» fehlt.''')
+					throw new RuntimeException(Meldungen.M1001(r.eintrag.class.toString))
 				}
 				switch (r.art) {
 					case RollbackArtEnum.INSERT: rep.insert(daten, r.eintrag)
@@ -970,22 +970,21 @@ class ReplikationService {
 		var vonuid = von.getMandantEinstellungWert(Constant.EINST_MA_REPLIKATION_UID)
 		var nachuid = nach.getMandantEinstellungWert(Constant.EINST_MA_REPLIKATION_UID)
 		if (Global.nes(vonuid) || Global.nes(nachuid)) {
-			throw new MeldungException("Es fehlt eine Replikation-UID.")
+			throw new MeldungException(Meldungen.M1002)
 		}
 		if (Global.compString(vonuid, nachuid) == 0) {
-			throw new MeldungException("Keine Kopie zwischen gleichen Replikation-UIDs.")
+			throw new MeldungException(Meldungen.M1003)
 		}
 		var vonbeginn = von.getMandantEinstellungWert(Constant.EINST_MA_REPLIKATION_BEGINN)
 		var nachbeginn = nach.getMandantEinstellungWert(Constant.EINST_MA_REPLIKATION_BEGINN)
 		if (!Global.nes(vonbeginn) || !Global.nes(nachbeginn)) {
-			throw new MeldungException("Es läuft bereits eine Replikation.")
+			throw new MeldungException(Meldungen.M1004)
 		}
 		// Datenbank-Struktur vergleichen
 		var vonversion = Global.strInt(von.getEinstellungWert(Constant.EINST_DB_VERSION))
 		var nachversion = Global.strInt(nach.getEinstellungWert(Constant.EINST_DB_VERSION))
 		if (vonversion == 0 || nachversion == 0 || vonversion != nachversion) {
-			throw new MeldungException("Die Einstellung DB_VERSION ist unterschiedlich." +
-				" Bitte Datenstruktur anpassen.")
+			throw new MeldungException(Meldungen.M1005)
 		}
 	}
 
@@ -1006,12 +1005,12 @@ class ReplikationService {
 			var liste = alleTabellen
 			var abgleich = true
 			for (t : liste) {
-				log.debug('''Tabelle «t.name»''')
+				log.debug(Meldungen.M1006(t.name))
 				status.length = 0
-				status.append("Tabelle ").append(t.name).append(Constant.CRLF)
-				status.append(anzahl).append(" Datensätze bisher")
+				status.append(Meldungen.M1006(t.name)).append(Constant.CRLF)
+				status.append(Meldungen.M1007(anzahl))
 				if (abbruch.length > 0) {
-					throw new MeldungException("Abbruch")
+					throw new MeldungException(Meldungen.M1008)
 				}
 				if (t.loeschen || t.kopieren) {
 					if (abgleich) {
@@ -1031,7 +1030,7 @@ class ReplikationService {
 			// Thread.sleep(100)
 			}
 		} finally {
-			log.debug('''copyMandant Ende''')
+			log.debug(Meldungen.M1009)
 			if (von !== null) {
 				von.con.close
 			}
