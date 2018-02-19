@@ -728,10 +728,10 @@ class MessdienerService {
 				}
 				case UHR: {
 					if (zeit === null) {
-						throw new MeldungException("Unbekannte Uhrzeit.");
+						throw new MeldungException(Meldungen.MO027)
 					}
 					if (messedatum === null) {
-						throw new MeldungException("Unbekanntes Messedatum.");
+						throw new MeldungException(Meldungen.MO028)
 					}
 					var z = zeit.split("\\.")
 					var minute = 0
@@ -748,14 +748,14 @@ class MessdienerService {
 				}
 				case ZEIT:
 					if (messe == 1) {
-						zeit = token.data;
+						zeit = token.data
 					}
 				case DATUMZEIT:
 					if (messe == 0) {
 						if (jahr < 0) {
-							throw new MeldungException("Das Jahr ist nicht festgelegt.");
+							throw new MeldungException(Meldungen.MO029)
 						}
-						var str = token.data + "." + jahr;
+						var str = token.data + "." + jahr
 						messedatum = Global.objDat(str)
 						messe = 1
 					} else if (messe == 1) {
@@ -775,7 +775,7 @@ class MessdienerService {
 					namen.clear
 				}
 				case DIENST: {
-					dienst = token.data;
+					dienst = token.data
 					namen.clear
 				// System.out.println(dienst)
 				}
@@ -826,7 +826,7 @@ class MessdienerService {
 				}
 			}
 			if (addMd && namen.size > 1) {
-				var vorname = namen.get(0);
+				var vorname = namen.get(0)
 				for (var i = 1; i < namen.size - 1; i++) {
 					vorname += " " + namen.get(i)
 				}
@@ -834,10 +834,10 @@ class MessdienerService {
 				var mliste = messdienerRep.getMessdienerListe(daten, name, vorname, null)
 				var md = if(mliste.length > 0) mliste.get(0) else null
 				if (md === null) {
-					throw new MeldungException("Messdiener " + vorname + " " + name + " nicht vorhanden.")
+					throw new MeldungException(Meldungen.MO030(vorname, name))
 				}
 				if (g === null) {
-					throw new MeldungException("Gottesdienst nicht vorhanden.")
+					throw new MeldungException(Meldungen.MO031)
 				}
 				if (Global.nes(dienst)) {
 					dienst = Meldungen.MO005
@@ -860,7 +860,7 @@ class MessdienerService {
 		// System.out.println(token)
 		// if (zeile > 12) {
 		// Global.machNichts
-		// break;
+		// break
 		// }
 		}
 		var r = new ServiceErgebnis<String>(Meldungen.MO015(anzahl))
