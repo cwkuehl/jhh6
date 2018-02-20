@@ -100,10 +100,10 @@ class StammbaumService {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		if (Global.nes(gebname)) {
-			throw new MeldungException("Der Geburtsname darf nicht leer sein.")
+			throw new MeldungException(Meldungen.SB001)
 		}
 		if (!Global.nes(gatteNeu) && (!Global.nes(vaterUidNeu) || !Global.nes(mutterUidNeu))) {
-			throw new MeldungException("Neuer Gatte und neue Eltern sind nicht möglich.")
+			throw new MeldungException(Meldungen.SB002)
 		}
 		// Typ prüfen
 		var gesch = n(geschlecht)
@@ -157,16 +157,16 @@ class StammbaumService {
 
 		var zeitangabe = new SbZeitangabe
 		if (zeitangabe.parse(datum)) {
-			throw new MeldungException("Datum '" + datum + "' konnte nicht geparst werden.")
+			throw new MeldungException(Meldungen.SB003(datum))
 		}
 		if (Global.nes(puid) && Global.nes(fuid)) {
-			throw new MeldungException("Die Nummer darf nicht leer sein.")
+			throw new MeldungException(Meldungen.SB004)
 		}
 		if (Global.nes(typ)) {
-			throw new MeldungException("Der Typ darf nicht leer sein.")
+			throw new MeldungException(Meldungen.SB005)
 		}
 		if (Global.nes(zeitangabe.datumTyp) && !zeitangabe.datum1.leer) {
-			throw new MeldungException("Der Datum-Typ darf nicht leer sein.")
+			throw new MeldungException(Meldungen.SB006)
 		}
 		var loeschen = zeitangabe.datum1.leer && Global.nes(zeitangabe.datumTyp) && zeitangabe.datum2.leer &&
 			Global.nes(ort) && Global.nes(bemerkung)
@@ -375,18 +375,18 @@ class StammbaumService {
 		var frUid = frauUid
 
 		if (Global.nes(maUid) && Global.nes(frUid)) {
-			throw new MeldungException("Vater oder Mutter ist notwendig.")
+			throw new MeldungException(Meldungen.SB007)
 		}
 		if (!Global.nes(maUid)) {
 			sbPerson = personRep.get(daten, new SbPersonKey(daten.mandantNr, maUid))
 			if (sbPerson === null || !GeschlechtEnum.MAENNLICH.toString.equalsIgnoreCase(sbPerson.geschlecht)) {
-				throw new MeldungException("Neuer Vater ist nicht männlich.")
+				throw new MeldungException(Meldungen.SB008)
 			}
 		}
 		if (!Global.nes(frUid)) {
 			sbPerson = personRep.get(daten, new SbPersonKey(daten.mandantNr, frUid))
 			if (sbPerson === null || !GeschlechtEnum.WEIBLICH.toString.equalsIgnoreCase(sbPerson.geschlecht)) {
-				throw new MeldungException("Neue Mutter ist nicht weiblich.")
+				throw new MeldungException(Meldungen.SB009)
 			}
 		}
 		var fliste = familieRep.getFamilieListe(daten, null, maUid, frUid, null, fuid)
@@ -398,7 +398,7 @@ class StammbaumService {
 		}
 		if (!Global.nes(fuid2)) {
 			if (doppelt) {
-				throw new MeldungException("Familie-Nr. " + fuid2 + " hat gleichen Vater und Mutter.")
+				throw new MeldungException(Meldungen.SB010(fuid2))
 			}
 			fuid = fuid2
 		}
@@ -421,7 +421,7 @@ class StammbaumService {
 	def private SbFamilie iuFamilie(ServiceDaten daten, String uid, String mannUid, String frauUid) {
 
 		if (Global.nes(mannUid) && Global.nes(frauUid)) {
-			throw new MeldungException("Vater oder Mutter ist notwendig.")
+			throw new MeldungException(Meldungen.SB007)
 		}
 		var f = familieRep.iuSbFamilie(daten, null, uid, mannUid, frauUid, 0, 0, 0, null, null, null, null)
 		return f
@@ -436,13 +436,13 @@ class StammbaumService {
 	def private void iuKind(ServiceDaten daten, String fuid, String kindUid) {
 
 		if (Global.nes(fuid) || Global.nes(kindUid)) {
-			throw new MeldungException("Familie und Kind sind notwendig.")
+			throw new MeldungException(Meldungen.SB011)
 		}
 		var kliste = kindRep.getKindListe(daten, null, kindUid, fuid, null, null)
 		var vo2 = if(kliste.size > 0) kliste.get(0) else null
 		if (vo2 !== null) {
 			var fuid2 = vo2.familieUid
-			throw new MeldungException("Ahn ist schon Kind bei Familie " + fuid2 + ".")
+			throw new MeldungException(Meldungen.SB012(fuid2))
 		}
 		kindRep.iuSbKind(daten, null, fuid, kindUid, null, null, null, null)
 	}
@@ -516,13 +516,13 @@ class StammbaumService {
 		var a = autor
 		var b = beschreibung
 		if (Global.nes(autor)) {
-			throw new MeldungException("Autor darf nicht leer sein.")
+			throw new MeldungException(Meldungen.SB013)
 		}
 		if (a.length > SbQuelle.AUTOR_LAENGE) {
 			a = a.substring(0, SbQuelle.AUTOR_LAENGE)
 		}
 		if (Global.nes(beschreibung)) {
-			throw new MeldungException("Beschreibung darf nicht leer sein.")
+			throw new MeldungException(Meldungen.SB014)
 		}
 		if (b.length > SbQuelle.BESCHREIBUNG_LAENGE) {
 			b = b.substring(0, SbQuelle.BESCHREIBUNG_LAENGE)
@@ -544,11 +544,11 @@ class StammbaumService {
 
 		var pliste = personRep.getPersonLangListe(daten, null, null, null, null, uid, null)
 		if (pliste.size > 0) {
-			throw new MeldungException(Meldungen.M2051)
+			throw new MeldungException(Meldungen.SB015)
 		}
 		var eliste = ereignisRep.getEreignisListe(daten, null, null, null, uid)
 		if (eliste.size > 0) {
-			throw new MeldungException(Meldungen.M2052)
+			throw new MeldungException(Meldungen.SB016)
 		}
 		quelleRep.delete(daten, new SbQuelleKey(daten.mandantNr, uid))
 	}
@@ -558,17 +558,17 @@ class StammbaumService {
 		boolean nachfahren, boolean vorfahren) {
 
 		// Nachfahren-Liste
-		// 1 Wolfgang <b>Kühl </b> * 10.08.1968 Osnabrück
-		// + Claudia <b>Labs</b> * 28.04.1971 Mainz
-		// 2 Deborah <b>Kühl</b> * 20.07.1998 Mainz
-		// 2 Viktoria <b>Kühl</b> * 04.10.2000 Bodenheim
-		// 2 Benjamin <b>Kühl</b> * 26.07.2002 Bodenheim
+		// 1 Vorname <b>Name</b> * tt.mm.jjjj Ort
+		// + Vorname <b>Name</b> * tt.mm.jjjj Ort
+		// 2 Vorname <b>Name</b> * tt.mm.jjjj Ort
+		// 2 Vorname <b>Name</b> * tt.mm.jjjj Ort
+		// 2 Vorname <b>Name</b> * tt.mm.jjjj Ort
 		// Vorfahren-Liste
-		// 1 Deborah <b>Kühl</b> * 20.07.1998 Mainz
-		// + Viktoria <b>Kühl</b> * 04.10.2000 Bodenheim
-		// + Benjamin <b>Kühl</b> * 26.07.2002 Bodenheim
-		// 2 Wolfgang <b>Kühl </b> * 10.08.1968 Osnabrück
-		// 2 Claudia <b>Labs</b> * 28.04.1971 Mainz
+		// 1 Vorname <b>Name</b> * tt.mm.jjjj Ort
+		// + Vorname <b>Name</b> * tt.mm.jjjj Ort
+		// + Vorname <b>Name</b> * tt.mm.jjjj Ort
+		// 2 Vorname <b>Name</b> * tt.mm.jjjj Ort
+		// 2 Vorname <b>Name</b> * tt.mm.jjjj Ort
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var anzahl = if(anzahl0 <= 0) 1 else anzahl0
 		var p = personRep.get(daten, new SbPersonKey(daten.mandantNr, uid))

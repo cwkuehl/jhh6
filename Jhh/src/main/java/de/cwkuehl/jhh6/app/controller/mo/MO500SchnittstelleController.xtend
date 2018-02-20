@@ -72,7 +72,8 @@ class MO500SchnittstelleController extends BaseController<String> {
 	 * Event für DateiAuswahl.
 	 */
 	@FXML def void onDateiAuswahl() {
-		var String dateiname = DateiAuswahl.auswaehlen(true, "MO500.select.file", "MO500.select.ok", "csv", "MO500.select.ext")
+		var String dateiname = DateiAuswahl.auswaehlen(true, "MO500.select.file", "MO500.select.ok", "csv",
+			"MO500.select.ext")
 		if (!Global.nes(dateiname)) {
 			datei.setText(dateiname)
 		}
@@ -86,7 +87,7 @@ class MO500SchnittstelleController extends BaseController<String> {
 		if (Global.nes(datei.getText)) {
 			throw new MeldungException(Meldungen.M2058)
 		}
-		if (Werkzeug.showYesNoQuestion(Meldungen.M2078) === 0) {
+		if (Werkzeug.showYesNoQuestion(Meldungen.MO032) === 0) {
 			return
 		}
 		var List<String> zeilen = Werkzeug.leseDatei(datei.getText)
@@ -119,7 +120,7 @@ class MO500SchnittstelleController extends BaseController<String> {
 		if (Global.nes(datei.getText)) {
 			throw new MeldungException(Meldungen.M2058)
 		}
-		if (0 === Werkzeug.showYesNoQuestion(Meldungen.M2082)) {
+		if (Werkzeug.showYesNoQuestion(Meldungen.MO033) == 0) {
 			return
 		}
 		var List<String> zeilen = Werkzeug.leseDatei(datei.getText)
