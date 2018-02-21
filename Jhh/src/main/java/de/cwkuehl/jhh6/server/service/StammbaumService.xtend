@@ -573,24 +573,22 @@ class StammbaumService {
 		var anzahl = if(anzahl0 <= 0) 1 else anzahl0
 		var p = personRep.get(daten, new SbPersonKey(daten.mandantNr, uid))
 		if (p === null) {
-			throw new MeldungException("Ahn-Nr. " + uid + " nicht vorhanden.")
+			throw new MeldungException(Meldungen.SB017(uid))
 		}
 		var doc = newFopDokument
 		if (nachfahren) {
 			var liste = new Vector<SbPerson>
 			getNachfahrenRekursiv(daten, uid, 0, 1, anzahl, liste)
-			var ueberschrift = "Nachfahrenliste vom " + Global.dateTimeStringForm(daten.jetzt)
-			var untertitel = String.format("Ahn %s mit max. %d Generationen",
-				Global.ahnString(p.uid, p.geburtsname, p.vorname, false, false), anzahl)
+			var ueberschrift = Meldungen.SB018(daten.jetzt)
+			var untertitel = Meldungen.SB019(Global.ahnString(p.uid, p.geburtsname, p.vorname, false, false), anzahl)
 			doc.addNachfahrenliste(true, ueberschrift, untertitel, liste)
 		}
 		if (vorfahren) {
 			var liste = new Vector<SbPerson>
 			getVorfahrenRekursiv(daten, uid, true, geschwister, true, 1, anzahl, liste)
-			var ueberschrift = "Vorfahrenliste vom " + Global.dateTimeStringForm(daten.jetzt)
-			var mo = if(geschwister) "mit" else "ohne"
-			var untertitel = String.format("Ahn %s mit max. %d Generationen und %s Geschwister",
-				Global.ahnString(p.uid, p.geburtsname, p.vorname, false, false), anzahl, mo)
+			var ueberschrift = Meldungen.SB020(daten.jetzt)
+			var untertitel = Meldungen.SB021(Global.ahnString(p.uid, p.geburtsname, p.vorname, false, false), anzahl,
+				if(geschwister) Meldungen.SB022 else "")
 			doc.addVorfahrenliste(true, ueberschrift, untertitel, liste)
 		}
 		var r = new ServiceErgebnis<byte[]>
@@ -621,7 +619,7 @@ class StammbaumService {
 
 		var sbPerson = personRep.get(daten, new SbPersonKey(daten.mandantNr, uid))
 		if (sbPerson === null) {
-			throw new MeldungException("Ahn-Nr. " + uid + " nicht vorhanden.")
+			throw new MeldungException(Meldungen.SB017(uid))
 		}
 
 		var strGen = if(mitPartner) "" + generation else "+"
@@ -698,7 +696,7 @@ class StammbaumService {
 		var zeile = new StringBuffer
 		var sbPerson = personRep.get(daten, new SbPersonKey(daten.mandantNr, uid))
 		if (sbPerson === null) {
-			throw new MeldungException("Ahn-Nr. " + uid + " nicht vorhanden.")
+			throw new MeldungException(Meldungen.SB017(uid))
 		}
 		var strGen = if(mitEltern) "" + generation else "+"
 		var strPraefix = Global.fixiereString("", (Math.abs(generation) - 1) * 1, false, " ") // &nbsp;
@@ -771,7 +769,7 @@ class StammbaumService {
 		out.add("0 HEAD" + Constant.CRLF)
 		out.add("1 SOUR WKUEHL" + Constant.CRLF)
 		out.add("2 VERS 0.1" + Constant.CRLF)
-		out.add("2 NAME JHH5-Programm" + Constant.CRLF)
+		out.add("2 NAME JHH6-Programm" + Constant.CRLF)
 		out.add("1 DEST ANSTFILE or TempleReady" + Constant.CRLF)
 		out.add("1 DATE " + SbDatum.gcdatum(daten.jetzt).toUpperCase + Constant.CRLF)
 		out.add("2 TIME " + zeit + Constant.CRLF)
@@ -1098,13 +1096,13 @@ class StammbaumService {
 			version = "5.5"
 		}
 		if (Global.nes(name)) {
-			throw new MeldungException("Name darf nicht leer sein.")
+			throw new MeldungException(Meldungen.SB023)
 		}
 		if (Global.nes(skript)) {
-			throw new MeldungException("Datei darf nicht leer sein.")
+			throw new MeldungException(Meldungen.M2058)
 		}
 		if (!(version.equals("4.0") || version.equals("5.5"))) {
-			throw new MeldungException("Falsche GEDCOM-Version.")
+			throw new MeldungException(Meldungen.SB024)
 		}
 		var status2 = 1
 		var operator = ">="
@@ -1119,7 +1117,7 @@ class StammbaumService {
 				operator = m.group(1)
 				tot = Global.strInt(m.group(2))
 			} else {
-				throw new MeldungException("Filter-Kriterium hat falsche Struktur.")
+				throw new MeldungException(Meldungen.SB025)
 			}
 			status2 = 0
 			personRep.updateStatus2(daten, null, 0, status2)
