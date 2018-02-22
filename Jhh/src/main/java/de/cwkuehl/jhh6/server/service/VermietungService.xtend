@@ -108,7 +108,7 @@ class VermietungService {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		if (Global.nes(bez)) {
-			throw new MeldungException("Die Bezeichnung darf nicht leer sein.")
+			throw new MeldungException(Meldungen.VM001)
 		}
 		var e = hausRep.iuVmHaus(daten, null, uid, bez, strasse, plz, ort, notiz, null, null, null, null)
 		var r = new ServiceErgebnis<VmHaus>(e)
@@ -121,7 +121,7 @@ class VermietungService {
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var wliste = wohnungRep.getWohnungLangListe(daten, null, uid)
 		if (Global.listLaenge(wliste) > 0) {
-			throw new MeldungException(Meldungen.M2018)
+			throw new MeldungException(Meldungen.VM003)
 		}
 		hausRep.delete(daten, new VmHausKey(daten.mandantNr, uid))
 		var r = new ServiceErgebnis<Void>(null)
@@ -160,10 +160,10 @@ class VermietungService {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		if (Global.nes(hausUid)) {
-			throw new MeldungException("Bitte ein Haus auswählen.")
+			throw new MeldungException(Meldungen.VM002)
 		}
 		if (Global.nes(bez)) {
-			throw new MeldungException("Die Bezeichnung darf nicht leer sein.")
+			throw new MeldungException(Meldungen.VM001)
 		}
 		var e = wohnungRep.iuVmWohnung(daten, null, uid, hausUid, bez, notiz, null, null, null, null)
 		var r = new ServiceErgebnis<VmWohnung>(e)
@@ -176,11 +176,11 @@ class VermietungService {
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var mliste = mieterRep.getMieterLangListe(daten, null, uid, null, null, null, false)
 		if (Global.listLaenge(mliste) > 0) {
-			throw new MeldungException(Meldungen.M2019)
+			throw new MeldungException(Meldungen.VM004)
 		}
 		var liste = mieteRep.getMieteLangListe(daten, null, uid, null, null)
 		if (Global.listLaenge(liste) > 0) {
-			throw new MeldungException(Meldungen.M2020)
+			throw new MeldungException(Meldungen.VM005)
 		}
 		wohnungRep.delete(daten, new VmWohnungKey(daten.mandantNr, uid))
 		var r = new ServiceErgebnis<Void>(null)
@@ -221,13 +221,13 @@ class VermietungService {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		if (Global.nes(wohnungUid)) {
-			throw new MeldungException(Meldungen.M2008)
+			throw new MeldungException(Meldungen.VM006)
 		}
 		if (Global.nes(name)) {
-			throw new MeldungException("Der Name darf nicht leer sein.")
+			throw new MeldungException(Meldungen.VM008)
 		}
 		if (einzug === null) {
-			throw new MeldungException("Der Einzug darf nicht leer sein.")
+			throw new MeldungException(Meldungen.VM009)
 		}
 		var e = mieterRep.iuVmMieter(daten, null, uid, wohnungUid, name, vorname, anrede, einzug, auszug, qm, miete,
 			kaution, antenne, status, notiz, null, null, null, null)
@@ -252,7 +252,7 @@ class VermietungService {
 		var haeuser = new ArrayList<FoHaus>
 		var hliste = hausRep.getHausListe(daten, hausUid, null)
 		if (Global.listLaenge(hliste) <= 0) {
-			throw new MeldungException(Meldungen.M2007)
+			throw new MeldungException(Meldungen.VM002)
 		}
 
 		var periode = Global.getPeriodeString(von, bis, false)
@@ -398,7 +398,7 @@ class VermietungService {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		if (Global.nes(wohnungUid)) {
-			throw new MeldungException(Meldungen.M2008)
+			throw new MeldungException(Meldungen.VM006)
 		}
 		if (datum === null) {
 			throw new MeldungException("Das Datum darf nicht leer sein.")
@@ -750,11 +750,11 @@ class VermietungService {
 		var Double betrag = null
 		var LocalDate datum = null
 		if (Global.nes(hausUid)) {
-			throw new MeldungException(Meldungen.M2007)
+			throw new MeldungException(Meldungen.VM002)
 		}
 		var haus = hausRep.get(daten, new VmHausKey(daten.mandantNr, hausUid))
 		if (haus === null) {
-			throw new MeldungException(Meldungen.M2007)
+			throw new MeldungException(Meldungen.VM002)
 		}
 
 		e = VmAbrechnungSchluesselEnum.H_DATUM
@@ -1018,14 +1018,14 @@ class VermietungService {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		if (Global.nes(hausUid)) {
-			throw new MeldungException(Meldungen.M2007)
+			throw new MeldungException(Meldungen.VM002)
 		}
 		if (Global.nes(schluessel)) {
-			throw new MeldungException(Meldungen.M2014)
+			throw new MeldungException(Meldungen.VM007)
 		}
 		var haus = hausRep.get(daten, new VmHausKey(daten.mandantNr, hausUid))
 		if (haus === null) {
-			throw new MeldungException(Meldungen.M2007)
+			throw new MeldungException(Meldungen.VM002)
 		}
 		var e = abrechnungRep.iuVmAbrechnung(daten, null, uid, hausUid, wohnungUid, mieterUid, von, bis, schluessel,
 			beschreibung, wert, betrag, datum, reihenfolge, status, funktion, notiz, null, null, null, null)
@@ -1048,7 +1048,7 @@ class VermietungService {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		if (Global.nes(hausUid)) {
-			throw new MeldungException(Meldungen.M2007)
+			throw new MeldungException(Meldungen.VM002)
 		}
 
 		var haus = new FoHaus

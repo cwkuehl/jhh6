@@ -595,7 +595,7 @@ public abstract class BaseController<R> {
             k = r.getData();
         }
         if (k == null && muss) {
-            throw new MeldungException(Meldungen.M2021());
+            throw new MeldungException(Meldungen.M1013());
         }
         return k;
     }
@@ -851,7 +851,7 @@ public abstract class BaseController<R> {
             k = r.getData();
         }
         if (k == null && muss) {
-            throw new MeldungException(Meldungen.M2021());
+            throw new MeldungException(Meldungen.M1013());
         }
         return k;
     }
@@ -860,7 +860,7 @@ public abstract class BaseController<R> {
 
         S r = (S) cb.getSelectionModel().getSelectedItem();
         if (r == null && muss) {
-            throw new MeldungException(Meldungen.M2021());
+            throw new MeldungException(Meldungen.M1013());
         }
         return r;
     }
@@ -875,7 +875,7 @@ public abstract class BaseController<R> {
                 liste.add(r.getData());
         }
         if (liste.size() <= 0 && muss) {
-            throw new MeldungException(Meldungen.M2021());
+            throw new MeldungException(Meldungen.M1013());
         }
         return liste;
     }
@@ -902,7 +902,7 @@ public abstract class BaseController<R> {
             k = r.getData();
         }
         if (k == null && muss) {
-            throw new MeldungException(Meldungen.M2021());
+            throw new MeldungException(Meldungen.M1013());
         }
         return k;
     }
@@ -912,7 +912,7 @@ public abstract class BaseController<R> {
         @SuppressWarnings("unchecked")
         S r = (S) tv.getSelectionModel().getSelectedItem();
         if (r == null && muss) {
-            throw new MeldungException(Meldungen.M2021());
+            throw new MeldungException(Meldungen.M1013());
         }
         return r;
     }
@@ -929,7 +929,7 @@ public abstract class BaseController<R> {
             }
         }
         if (liste.size() <= 0 && muss) {
-            throw new MeldungException(Meldungen.M2021());
+            throw new MeldungException(Meldungen.M1013());
         }
         return liste;
     }
