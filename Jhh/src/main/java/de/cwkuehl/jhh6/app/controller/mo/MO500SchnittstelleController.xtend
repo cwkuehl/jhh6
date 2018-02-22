@@ -85,7 +85,7 @@ class MO500SchnittstelleController extends BaseController<String> {
 	@FXML def void onImport1() {
 
 		if (Global.nes(datei.getText)) {
-			throw new MeldungException(Meldungen.M2058)
+			throw new MeldungException(Meldungen.M1012)
 		}
 		if (Werkzeug.showYesNoQuestion(Meldungen.MO032) === 0) {
 			return
@@ -105,7 +105,7 @@ class MO500SchnittstelleController extends BaseController<String> {
 	@FXML def void onExport() {
 
 		if (Global.nes(datei.getText)) {
-			throw new MeldungException(Meldungen.M2058)
+			throw new MeldungException(Meldungen.M1012)
 		}
 		var List<String> zeilen = get(
 			FactoryService.getMessdienerService.exportMessdienerListe(getServiceDaten, von.getValue, bis.getValue))
@@ -118,7 +118,7 @@ class MO500SchnittstelleController extends BaseController<String> {
 	@FXML def void onImport2() {
 
 		if (Global.nes(datei.getText)) {
-			throw new MeldungException(Meldungen.M2058)
+			throw new MeldungException(Meldungen.M1012)
 		}
 		if (Werkzeug.showYesNoQuestion(Meldungen.MO033) == 0) {
 			return

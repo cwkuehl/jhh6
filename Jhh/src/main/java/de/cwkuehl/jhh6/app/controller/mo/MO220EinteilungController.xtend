@@ -248,13 +248,13 @@ class MO220EinteilungController extends BaseController<List<MoEinteilungLang>> {
 	@FXML def void onOk() {
 
 		if (Global::nes(getText(dienst))) {
-			throw new MeldungException(Meldungen::M2086)
+			throw new MeldungException(Meldungen::MO035)
 		}
 		var List<MoEinteilungLang> liste = new ArrayList
 		if (DialogAufrufEnum::NEU.equals(getAufruf)) {
 			var List<MoMessdienerLang> liste2 = getValues(messdiener2, false)
 			if (Global::listLaenge(liste2) <= 0) {
-				throw new MeldungException(Meldungen::M2085)
+				throw new MeldungException(Meldungen::MO034)
 			}
 			for (MoMessdienerLang m : liste2) {
 				var MoEinteilungLang a = new MoEinteilungLang
@@ -267,7 +267,7 @@ class MO220EinteilungController extends BaseController<List<MoEinteilungLang>> {
 		} else {
 			var MoMessdienerLang m = getValue(messdiener, false)
 			if (m === null) {
-				throw new MeldungException(Meldungen::M2085)
+				throw new MeldungException(Meldungen::MO034)
 			}
 			einteilung.setMessdienerUid(m.getUid)
 			einteilung.setMessdienerName(m.getName)

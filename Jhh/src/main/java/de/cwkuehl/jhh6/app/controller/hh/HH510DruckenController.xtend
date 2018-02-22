@@ -119,7 +119,7 @@ class HH510DruckenController extends BaseController<String> {
 	@FXML def void onImport1() {
 
 		if (Global.nes(datei.getText)) {
-			throw new MeldungException(Meldungen.M2058)
+			throw new MeldungException(Meldungen.M1012)
 		}
 		if (Werkzeug.showYesNoQuestion(Meldungen.HH052) === 0) {
 			return

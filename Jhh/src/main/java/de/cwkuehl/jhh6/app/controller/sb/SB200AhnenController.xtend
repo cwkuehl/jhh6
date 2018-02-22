@@ -153,7 +153,7 @@ class SB200AhnenController extends BaseController<String> {
 					}
 				}
 			}
-			ahnenStatus.setText(Meldungen.M2053(anz, anzg))
+			ahnenStatus.setText(Meldungen.SB028(anz, anzg))
 		}
 		if (stufe <= 2) {
 			initDatenTable

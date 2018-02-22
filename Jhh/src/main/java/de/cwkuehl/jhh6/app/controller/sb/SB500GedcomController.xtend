@@ -94,9 +94,9 @@ class SB500GedcomController extends BaseController<String> {
 	@FXML def void onImport() {
 
 		if (Global.nes(datei.getText)) {
-			throw new MeldungException(Meldungen.M2058)
+			throw new MeldungException(Meldungen.M1012)
 		}
-		if (0 === Werkzeug.showYesNoQuestion(Meldungen.M2054)) {
+		if (Werkzeug.showYesNoQuestion(Meldungen.SB029) === 0) {
 			return;
 		}
 		var List<String> zeilen = Werkzeug.leseDatei(datei.getText)

@@ -248,7 +248,7 @@ class SB300FamilienController extends BaseController<String> {
 			var String r = get(FactoryService::getStammbaumService.getElternFamilie(getServiceDaten, k.getUid))
 			setText(familien, r)
 			if (Global::nes(r)) {
-				Jhh6::setLeftStatus2(Meldungen.M2050)
+				Jhh6::setLeftStatus2(Meldungen.SB027)
 			}
 		}
 	}

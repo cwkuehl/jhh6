@@ -375,7 +375,7 @@ class AG400SicherungenController extends BaseController<String> {
 
 	def private void onMandantKopierenTimer(boolean vonRep) {
 
-		if (0 === Werkzeug::showYesNoQuestion(Meldungen::M2057)) {
+		if (Werkzeug::showYesNoQuestion(Meldungen::M1010) === 0) {
 			return;
 		}
 		var Task<Void> task = ([|

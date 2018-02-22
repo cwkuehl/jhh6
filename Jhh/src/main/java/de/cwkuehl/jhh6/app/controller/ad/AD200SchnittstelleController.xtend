@@ -71,7 +71,7 @@ class AD200SchnittstelleController extends BaseController<String> {
 	@FXML def void onExport() {
 
 		if (Global.nes(datei.text)) {
-			throw new MeldungException(Meldungen.M2058)
+			throw new MeldungException(Meldungen.M1012)
 		}
 		var List<String> zeilen = get(FactoryService.adresseService.exportAdresseListe(serviceDaten))
 		Werkzeug.speicherDateiOeffnen(zeilen, null, datei.text, false)
@@ -83,9 +83,9 @@ class AD200SchnittstelleController extends BaseController<String> {
 	@FXML def void onImport() {
 
 		if (Global.nes(datei.text)) {
-			throw new MeldungException(Meldungen.M2058)
+			throw new MeldungException(Meldungen.M1012)
 		}
-		if (0 === Werkzeug.showYesNoQuestion(Meldungen.M2056)) {
+		if (Werkzeug.showYesNoQuestion(Meldungen.AD011) === 0) {
 			return
 		}
 		var List<String> zeilen = Werkzeug.leseDatei(datei.text)

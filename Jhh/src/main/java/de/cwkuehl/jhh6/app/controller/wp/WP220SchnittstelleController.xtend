@@ -170,7 +170,7 @@ class WP220SchnittstelleController extends BaseController<String> {
 	@FXML def void onExport() {
 
 		if (Global.nes(datei.getText)) {
-			throw new MeldungException(Meldungen.M2058)
+			throw new MeldungException(Meldungen.M1012)
 		}
 		var Task<Void> task = [
 			status.append("Vorbereitung ...")
@@ -206,7 +206,7 @@ class WP220SchnittstelleController extends BaseController<String> {
 			throw new MeldungException(Meldungen.M2094)
 		}
 		if (Global.nes(datei2.getText)) {
-			throw new MeldungException(Meldungen.M2058)
+			throw new MeldungException(Meldungen.M1012)
 		}
 		var Task<Void> task = [
 			status.append("Vorbereitung ...")

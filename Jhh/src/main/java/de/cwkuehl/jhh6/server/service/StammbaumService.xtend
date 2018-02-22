@@ -1099,7 +1099,7 @@ class StammbaumService {
 			throw new MeldungException(Meldungen.SB023)
 		}
 		if (Global.nes(skript)) {
-			throw new MeldungException(Meldungen.M2058)
+			throw new MeldungException(Meldungen.M1012)
 		}
 		if (!(version.equals("4.0") || version.equals("5.5"))) {
 			throw new MeldungException(Meldungen.SB024)
@@ -1525,7 +1525,7 @@ class StammbaumService {
 		}
 		var map = new HashMap<String, String>
 		var anzahl = importiereAhnen(daten, datei, map)
-		var r = new ServiceErgebnis<String>(Meldungen.M2055(anzahl))
+		var r = new ServiceErgebnis<String>(Meldungen.SB026(anzahl))
 		return r
 	}
 
