@@ -256,7 +256,7 @@ class VermietungService {
 		}
 
 		var periode = Global.getPeriodeString(von, bis, false)
-		var ueberschrift = "Mieterliste " + periode + " vom " + Global.dateTimeStringForm(daten.jetzt)
+		var ueberschrift = Meldungen.VM010(periode, daten.jetzt)
 		for (VmHaus h : hliste) {
 			var haus = new FoHaus
 			haus.bezeichnung = h.bezeichnung
@@ -298,7 +298,7 @@ class VermietungService {
 				}
 				if (mliste.size <= 0) {
 					var mieter = new FoMieter
-					mieter.setName("leer")
+					mieter.setName(Meldungen.VM011)
 					wohnung.mieter.add(mieter)
 				}
 			}
@@ -362,29 +362,29 @@ class VermietungService {
 		if (l.size > 0) {
 			var m = l.get(0)
 			var summe = 0.0
-			var sb = new StringBuffer("ab: ")
+			var sb = new StringBuffer(Meldungen.VM012)
 			sb.append(Global.dateTimeStringForm(m.datum.atStartOfDay))
 			if (Global.compDouble(m.miete, 0) > 0) {
 				summe += m.miete
-				sb.append("  Miete: ").append(Global.dblStr2l(m.miete))
+				sb.append(Meldungen.VM013).append(Global.dblStr2l(m.miete))
 			}
 			if (Global.compDouble(m.garage, 0) > 0) {
 				summe += m.garage
-				sb.append("  Garage: ").append(Global.dblStr2l(m.garage))
+				sb.append(Meldungen.VM014).append(Global.dblStr2l(m.garage))
 			}
 			if (Global.compDouble(m.nebenkosten, 0) > 0) {
 				summe += m.nebenkosten
-				sb.append("  BK: ").append(Global.dblStr2l(m.nebenkosten))
+				sb.append(Meldungen.VM015).append(Global.dblStr2l(m.nebenkosten))
 			}
 			if (Global.compDouble(m.heizung, 0) > 0) {
 				summe += m.heizung
-				sb.append("  Heizung: ").append(Global.dblStr2l(m.heizung))
+				sb.append(Meldungen.VM016).append(Global.dblStr2l(m.heizung))
 			}
 			if (Global.compDouble(summe, 0) > 0) {
-				sb.append("  Summe: ").append(Global.dblStr2l(summe))
+				sb.append(Meldungen.VM017).append(Global.dblStr2l(summe))
 			}
 			if (m.personen > 0) {
-				sb.append("  Pers.: ").append(Global.intStr(m.personen))
+				sb.append(Meldungen.VM018).append(Global.intStr(m.personen))
 			}
 			m.text1 = sb.toString
 			r.ergebnis = m
@@ -401,7 +401,7 @@ class VermietungService {
 			throw new MeldungException(Meldungen.VM006)
 		}
 		if (datum === null) {
-			throw new MeldungException("Das Datum darf nicht leer sein.")
+			throw new MeldungException(Meldungen.VM019)
 		}
 		var e = mieteRep.iuVmMiete(daten, null, uid, wohnungUid, datum, miete, nebenkosten, garage, heizung, personen,
 			notiz, null, null, null, null)
@@ -480,12 +480,11 @@ class VermietungService {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		if (hausUid === null && wohnungUid === null) {
-			throw new MeldungException("Bitte Haus oder Wohnung auswählen.")
+			throw new MeldungException(Meldungen.VM020)
 		}
 		var v = valuta.withDayOfMonth(1)
 		var buchung = false
 		var euro = isEuroIntern
-		var df = DateTimeFormatter.ofPattern("MM/yyyy")
 		var mietforderung = getKontoNrIntern(daten, VmKontoSchluesselEnum.KP200_MIETFORDERUNGEN.toString)
 		var sollmiete = getKontoNrIntern(daten, VmKontoSchluesselEnum.KP600_SOLLMIETEN.toString)
 		var anzahlung = getKontoNrIntern(daten, VmKontoSchluesselEnum.KP431_ANZAHLUNG.toString)
@@ -500,7 +499,7 @@ class VermietungService {
 				if (bliste.empty) {
 					var ebetrag = e.miete + e.garage
 					var betrag = Global.konvDM(ebetrag)
-					var btext = '''Miet-Sollstellung «v.format(df)» «mieter.wohnungBezeichnung» «mieter.name»'''
+					var btext = Meldungen.VM022(v.atStartOfDay, mieter.wohnungBezeichnung, mieter.name)
 					haushaltService.insertUpdateBuchung(daten, null, v, betrag, ebetrag, mietforderung, sollmiete,
 						btext, null, v, schluessel, e.hausUid, e.wohnungUid, mieter.uid, null, true)
 					buchung = true
@@ -511,7 +510,7 @@ class VermietungService {
 				if (bliste.empty) {
 					var ebetrag = e.nebenkosten + e.heizung
 					var betrag = Global.konvDM(ebetrag)
-					var btext = '''NK-Sollstellung «v.format(df)» «mieter.wohnungBezeichnung» «mieter.name»'''
+					var btext = Meldungen.VM023(v.atStartOfDay, mieter.wohnungBezeichnung, mieter.name)
 					haushaltService.insertUpdateBuchung(daten, null, v, betrag, ebetrag, mietforderung, anzahlung,
 						btext, null, v, schluessel, e.hausUid, e.wohnungUid, mieter.uid, null, true)
 					buchung = true
@@ -519,7 +518,7 @@ class VermietungService {
 			}
 		}
 		if (!buchung) {
-			throw new MeldungException("Es wurde keine Buchung vorgenommen.")
+			throw new MeldungException(Meldungen.VM021)
 		}
 
 		var r = new ServiceErgebnis<Void>(null)
