@@ -56,7 +56,6 @@ import de.cwkuehl.jhh6.server.rep.impl.VmMieterRep
 import de.cwkuehl.jhh6.server.rep.impl.VmWohnungRep
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
@@ -535,24 +534,23 @@ class VermietungService {
 		var v = valuta.withDayOfMonth(1)
 
 		if (Global.nes(mieterUid)) {
-			throw new MeldungException("Bitte Mieter auswählen.")
+			throw new MeldungException(Meldungen.VM024)
 		}
 		if (Global.compDouble(summeMiete, 0) <= 0 && Global.compDouble(summeBk, 0) <= 0) {
-			throw new MeldungException("Bitte Beträge eingeben.")
+			throw new MeldungException(Meldungen.VM025)
 		}
 
 		var buchung = false
 		var euro = isEuroIntern
 		var liste = mieterRep.getMieterLangListe(daten, mieterUid, null, v, v, null, true)
 		if (liste.isEmpty) {
-			throw new MeldungException("Mieter-Nr. " + mieterUid + " (zu diesem Datum) nicht vorhanden.")
+			throw new MeldungException(Meldungen.VM026(mieterUid))
 		}
 		var mieter = liste.get(0)
 		var hausUid = mieter.hausUid
 		var wohnungUid = mieter.wohnungUid
 		var mietforderung = getKontoNrIntern(daten, VmKontoSchluesselEnum.KP200_MIETFORDERUNGEN.toString)
 		var bank = getKontoNrIntern(daten, VmKontoSchluesselEnum.KP2740_BANK.toString)
-		var df = DateTimeFormatter.ofPattern("MM/yyyy")
 
 		if (Global.compDouble(summeMiete, 0) > 0) {
 			var schluessel = VmBuchungSchluesselEnum.MIET_IST.toString
@@ -561,7 +559,7 @@ class VermietungService {
 			if (bliste.empty) {
 				var ebetrag = summeMiete
 				var betrag = Global.konvDM(ebetrag)
-				var btext = '''Miet-Zahlung «v.format(df)» «mieter.wohnungBezeichnung» «mieter.name»'''
+				var btext = Meldungen.VM029(v.atStartOfDay, mieter.wohnungBezeichnung, mieter.name)
 				haushaltService.insertUpdateBuchung(daten, null, v, betrag, ebetrag, bank, mietforderung, btext, null,
 					belegDatum, schluessel, hausUid, wohnungUid, mieterUid, null, true)
 				buchung = true
@@ -575,14 +573,14 @@ class VermietungService {
 			if (bliste.empty) {
 				var ebetrag = summeBk
 				var betrag = Global.konvDM(ebetrag)
-				var btext = '''NK-Zahlung «v.format(df)» «mieter.wohnungBezeichnung» «mieter.name»'''
+				var btext = Meldungen.VM030(v.atStartOfDay, mieter.wohnungBezeichnung, mieter.name)
 				haushaltService.insertUpdateBuchung(daten, null, v, betrag, ebetrag, bank, mietforderung, btext, null,
 					belegDatum, schluessel, hausUid, wohnungUid, mieterUid, null, true)
 				buchung = true
 			}
 		}
 		if (!buchung) {
-			throw new MeldungException("Es wurde keine Buchung vorgenommen.")
+			throw new MeldungException(Meldungen.VM021)
 		}
 
 		var r = new ServiceErgebnis<Void>(null)
@@ -593,7 +591,7 @@ class VermietungService {
 
 		var vo = getKontoIntern(daten, schluessel)
 		if (vo === null) {
-			throw new MeldungException("VM-Konto mit Schlüssel " + schluessel + " fehlt.")
+			throw new MeldungException(Meldungen.VM027(schluessel))
 		}
 		return vo.uid
 	}
@@ -1059,7 +1057,7 @@ class VermietungService {
 		var aliste = abrechnungRep.getAbrechnungLangListe(daten, null, null, hausUid, "null", "null", null, null, von,
 			bis)
 		if (aliste.size <= 0) {
-			throw new MeldungException("Keine Haus-Abrechnung gefunden.")
+			throw new MeldungException(Meldungen.VM028)
 		}
 		var a0 = aliste.get(0)
 		if (a0.datumVon.isBefore(von)) {
@@ -1070,7 +1068,7 @@ class VermietungService {
 		}
 		var listeH = abrechnungRep.getAbrechnungLangListe(daten, null, null, hausUid, null, null, von, bis, null, null)
 		if (Global.listLaenge(listeH) <= 0) {
-			throw new MeldungException("Keine Haus-Abrechnung gefunden.")
+			throw new MeldungException(Meldungen.VM028)
 		}
 		haus.setVon(von)
 		haus.setBis(bis)
