@@ -20,6 +20,7 @@ import de.cwkuehl.jhh6.api.dto.WpWertpapierLang
 import de.cwkuehl.jhh6.api.enums.WpStatusEnum
 import de.cwkuehl.jhh6.api.global.Global
 import de.cwkuehl.jhh6.api.message.MeldungException
+import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.api.service.ServiceDaten
 import de.cwkuehl.jhh6.api.service.ServiceErgebnis
 import de.cwkuehl.jhh6.generator.RepositoryRef
@@ -130,25 +131,25 @@ class WertpapierService {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		if (!Global.nes(uid) && Global.nes(bez)) {
-			throw new MeldungException("Die Bezeichnung darf nicht leer sein.")
+			throw new MeldungException(Meldungen.WP001)
 		}
 		if (!Global.nes(uid) && Global.nes(status)) {
-			throw new MeldungException("Der Status darf nicht leer sein.")
+			throw new MeldungException(Meldungen.WP002)
 		}
 		if (Global.compDouble4(box, 0) <= 0) {
-			throw new MeldungException("Die Boxgröße muss größer 0 sein.")
+			throw new MeldungException(Meldungen.WP003)
 		}
 		if (umkehr <= 0) {
-			throw new MeldungException("Die Umkehr muss größer 0 sein.")
+			throw new MeldungException(Meldungen.WP004)
 		}
 		if (!Global.in(methode, 1, 5)) {
-			throw new MeldungException("Falsche Methode.")
+			throw new MeldungException(Meldungen.WP005)
 		}
 		if (dauer <= 10) {
-			throw new MeldungException("Die Dauer muss größer 10 sein.")
+			throw new MeldungException(Meldungen.WP006)
 		}
 		if (!Global.in(methode, 0, 2)) {
-			throw new MeldungException("Falsche Skala.")
+			throw new MeldungException(Meldungen.WP007)
 		}
 		var sb = new StringBuilder
 		sb.append(box)
@@ -241,8 +242,9 @@ class WertpapierService {
 			for (var i = 0; i < l && abbruch.length <= 0; i++) {
 				val a = liste.get(i)
 				status.length = 0
-				status.
-					append('''(«i+1» von «l») Berechnung von «a.bezeichnung» am «bis» «if (k === null) "ohne Konfiguration" else k.bezeichnung»''')
+				status.append(
+					Meldungen.WP008(i + 1, l, a.bezeichnung, bis.atStartOfDay,
+						if(k === null) Meldungen.WP009 else k.bezeichnung))
 				berechneBewertung(daten, von, bis, a, k, speichern)
 			}
 		}
@@ -288,7 +290,7 @@ class WertpapierService {
 			e.index3 = if(l <= 25) "" else array.get(25)
 			e.index4 = if(l <= 26) "" else array.get(26)
 			e.schnitt200 = if(l <= 27) "" else array.get(27)
-			e.konfiguration = if(k === null) "ohne" else k.bezeichnung
+			e.konfiguration = if(k === null) Meldungen.WP010 else k.bezeichnung
 		}
 		return e
 	}
@@ -296,7 +298,7 @@ class WertpapierService {
 	def private void berechneBewertung(ServiceDaten daten, LocalDate dvon, LocalDate dbis, WpWertpapierLang wp,
 		WpKonfigurationLang k, boolean speichern) {
 
-		wp.bewertung = "00 ohne"
+		wp.bewertung = '''00 «Meldungen.WP010»'''
 		wp.bewertung1 = ""
 		wp.bewertung2 = ""
 		wp.bewertung3 = ""
@@ -479,7 +481,7 @@ class WertpapierService {
 				wp.schnitt200 = Global.compDouble(schnitt200, schnitt214).toString
 			}
 		} catch (Exception ex) {
-			wp.bewertung = "00 Fehler: " + ex.message
+			wp.bewertung = '''00 «Meldungen.WP011(ex.message)»'''
 		// throw new RuntimeException(ex)
 		} finally {
 			if (speichern) {
