@@ -51,6 +51,9 @@
 		<tooltip>
 			<Tooltip text="%WP260.daten.tt" />
 		</tooltip>
+		<font>
+			<Font name="FreeMono Bold" size="17.0" />
+		</font>
 	</TextArea>
 	<Label fx:id="angelegt0" text="%Creation" GridPane.rowIndex="5" />
 	<TextField fx:id="angelegt" accessibleText="%Creation.tt"

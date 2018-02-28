@@ -788,7 +788,7 @@ class WertpapierService {
 				return null
 			}
 			if (connection.responseCode != HttpURLConnection.HTTP_OK) {
-				throw new Exception(Global.format("Status: {0} bei {1}", connection.responseCode, targetURL))
+				throw new Exception(Meldungen.WP012(connection.responseCode, targetURL))
 			}
 			var is = connection.getInputStream
 			var rd = new BufferedReader(new InputStreamReader(is, "UTF-8"))
@@ -827,7 +827,7 @@ class WertpapierService {
 			connection.connectTimeout = 3000
 			connection.readTimeout = 3000
 			if (connection.responseCode != HttpURLConnection.HTTP_OK) {
-				throw new Exception(Global.format("Status: {0} bei {1}", connection.responseCode, targetURL))
+				throw new Exception(Meldungen.WP012(connection.responseCode, targetURL))
 			}
 			var is = connection.getInputStream
 			var rd = new BufferedReader(new InputStreamReader(is, "UTF-8"))
@@ -888,21 +888,21 @@ class WertpapierService {
 
 		if (Global.nes(uid)) {
 			if (Global.nes(strB)) {
-				strB = "Wertpapier" + kuerzel
+				strB = Meldungen.WP013(kuerzel)
 			}
 			if (Global.nes(strStatus)) {
 				strStatus = "0"
 			}
 		} else {
 			if (Global.nes(strB)) {
-				throw new MeldungException("Die Bezeichnung darf nicht leer sein.")
+				throw new MeldungException(Meldungen.WP001)
 			}
 			if (Global.nes(status)) {
-				throw new MeldungException("Der Status darf nicht leer sein.")
+				throw new MeldungException(Meldungen.WP002)
 			}
 		}
 		if (Global.nes(kuerzel)) {
-			throw new MeldungException("Das Kürzel darf nicht leer sein.")
+			throw new MeldungException(Meldungen.WP014)
 		}
 		if (Global.nes(strQ)) {
 			strQ = "yahoo"
@@ -957,12 +957,11 @@ class WertpapierService {
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var liste = wertpapierRep.getWertpapierLangListe(daten, null, null, null, null, uid, false)
 		if (liste.size > 0) {
-			throw new MeldungException(
-				"Das Wertpapier wird in einer Relation verwendet und kann nicht gelöscht werden.")
+			throw new MeldungException(Meldungen.WP015)
 		}
 		var aliste = anlageRep.getAnlageLangListe(daten, null, null, uid)
 		if (aliste.size > 0) {
-			throw new MeldungException("Das Wertpapier wird in einer Anlage verwendet und kann nicht gelöscht werden.")
+			throw new MeldungException(Meldungen.WP016)
 		}
 		wertpapierRep.delete(daten, new WpWertpapierKey(daten.mandantNr, uid))
 		var r = new ServiceErgebnis<Void>(null)
@@ -1363,7 +1362,7 @@ class WertpapierService {
 			for (var i = 0; i < l && abbruch.length <= 0; i++) {
 				val a = liste.get(i)
 				status.length = 0
-				status.append('''(«i+1» von «l») Berechnung von «a.wertpapierBezeichnung», «a.bezeichnung» am «bis»''')
+				status.append(Meldungen.WP008(i + 1, l, a.bezeichnung, bis.atStartOfDay, null))
 				var array = if(Global.nes(a.parameter)) newArrayOfSize(0) else a.parameter.split(";")
 				var waehrung = if(array.size >= 10 && !Global.excelNes(array.get(9))) array.get(9) else ''
 				var kurs = if (array.size >= 11 && !Global.excelNes(array.get(10)))
@@ -1450,21 +1449,11 @@ class WertpapierService {
 				a.kurs = Global.strDbl(array.get(10))
 			}
 			if (zusammengesetzt) {
-				// a.bezeichnung = Global.anhaengen(new StringBuffer(a.wertpapierBezeichnung), ", ", a.bezeichnung).
-				// toString
-				a.daten = '''
-					«IF a.anteile != 0»
-						Zahlungssumme: «Global.dblStr2l(a.betrag)»
-						Anteilssumme:  «Global.dblStr5l(a.anteile)»
-						Preis/Anteil:  «Global.dblStr4l(a.preis)»
-						Zinsen:        «Global.dblStr2l(a.zinsen)»
-						«IF a.aktpreis != 0»
-							Aktueller Preis: «Global.dblStr4l(a.aktpreis)»«IF !Global.nes(a.waehrung)» («a.waehrung» «Global.dblStr4l(a.kurs)»)«ENDIF»«IF a.aktdatum === null»«ELSE» («a.aktdatum»)«ENDIF»
-							Aktueller Wert: «Global.dblStr2l(a.wert)»
-							Gewinn/Verlust: «Global.dblStr2l(a.gewinn)» («Global.dblStr4l(a.pgewinn)» %)
-						«ENDIF»
-					«ENDIF»
-				'''
+				var p0 = if(a.aktdatum === null) null else Meldungen.WP026(a.aktdatum)
+				var p1 = if(Global.nes(a.waehrung)) null else Meldungen.WP025(a.waehrung, a.kurs, p0)
+				var p2 = if(a.anteile == 0 || a.aktpreis == 0) null else Meldungen.WP024(a.aktpreis, p1, a.wert,
+						a.gewinn, a.pgewinn)
+				a.daten = if(a.anteile == 0) null else Meldungen.WP023(a.betrag, a.anteile, a.preis, a.zinsen, p2)
 			}
 		}
 		return liste
@@ -1483,10 +1472,10 @@ class WertpapierService {
 		String notiz) {
 
 		if (Global.nes(bez)) {
-			throw new MeldungException("Die Bezeichnung darf nicht leer sein.")
+			throw new MeldungException(Meldungen.WP001)
 		}
 		if (Global.nes(wpuid) || wertpapierRep.get(daten, new WpWertpapierKey(daten.mandantNr, wpuid)) === null) {
-			throw new MeldungException("Ein Wertpapier muss ausgewählt werden.")
+			throw new MeldungException(Meldungen.WP017)
 		}
 		var String parameter = null
 		if (!Global.nes(uid)) {
@@ -1505,7 +1494,7 @@ class WertpapierService {
 
 		var bliste = buchungRep.getBuchungLangListe(daten, null, null, null, uid, false)
 		if (bliste.size > 0) {
-			throw new MeldungException("Die Anlage wird in einer Buchung verwendet und kann nicht gelöscht werden.")
+			throw new MeldungException(Meldungen.WP018)
 		}
 		anlageRep.delete(daten, new WpAnlageKey(daten.mandantNr, uid))
 		var r = new ServiceErgebnis<Void>(null)
@@ -1555,17 +1544,17 @@ class WertpapierService {
 			anlage = anlageRep.get(daten, new WpAnlageKey(daten.mandantNr, auid))
 		}
 		if (anlage === null) {
-			throw new MeldungException("Eine Anlage muss ausgewählt werden.")
+			throw new MeldungException(Meldungen.WP019)
 		}
 		if (datum === null) {
-			throw new MeldungException("Es ist kein Valuta festgelegt.")
+			throw new MeldungException(Meldungen.WP020)
 		}
 		if (Global.nes(btext)) {
-			throw new MeldungException("Es ist kein Buchungstext erfasst.")
+			throw new MeldungException(Meldungen.WP021)
 		}
 		if (Global.compDouble(betrag, 0) == 0 && Global.compDouble(rabatt, 0) == 0 &&
 			Global.compDouble4(anteile, 0) == 0 && Global.compDouble(zinsen, 0) == 0) {
-			throw new MeldungException("Es muss ein Betrag oder Anteil erfasst werden.")
+			throw new MeldungException(Meldungen.WP022)
 		}
 		var WpBuchung balt
 		if (!Global.nes(uid)) {
@@ -1634,7 +1623,7 @@ class WertpapierService {
 		double betrag) {
 
 		if (Global.nes(wpuid) || wertpapierRep.get(daten, new WpWertpapierKey(daten.mandantNr, wpuid)) === null) {
-			throw new MeldungException("Ein Wertpapier muss ausgewählt werden.")
+			throw new MeldungException(Meldungen.WP017)
 		}
 		var e = standRep.iuWpStand(daten, null, wpuid, datum, betrag, null, null, null, null)
 		var r = new ServiceErgebnis<WpStand>(e)
