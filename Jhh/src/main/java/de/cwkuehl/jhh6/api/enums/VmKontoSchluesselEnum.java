@@ -1,5 +1,7 @@
 package de.cwkuehl.jhh6.api.enums;
 
+import de.cwkuehl.jhh6.api.global.Global;
+
 /**
  * Aufzählung VmKontoSchluesselEnum.
  */
@@ -202,59 +204,59 @@ public enum VmKontoSchluesselEnum {
     public String toString2() {
 
         if (equals(KP200_MIETFORDERUNGEN)) {
-            return "AK Mietforderungen";
+            return Global.g0("enum.acckey.kp200");
         } else if (equals(KP271_KASSE)) {
-            return "AK Kassenbestand";
+             return Global.g0("enum.acckey.kp271");
         } else if (equals(KP2740_BANK)) {
-            return "AK Bank";
+            return Global.g0("enum.acckey.kp2740");
         } else if (equals(KP301_EK)) {
-            return "PK Eigenkapital";
+            return Global.g0("enum.acckey.kp301");
         } else if (equals(KP3550_KAUTION)) {
-            return "PK Erhaltene Kaution";
+            return Global.g0("enum.acckey.kp3550");
         } else if (equals(KP431_ANZAHLUNG)) {
-            return "PK Anzahlungen auf unfertige Leistungen (Betriebskosten)";
+            return Global.g0("enum.acckey.kp431");
         } else if (equals(KP442_VERBINDLICHKEIT)) {
-            return "PK Verbindlichkeiten aus Lief. und Leist.";
+            return Global.g0("enum.acckey.kp442");
         } else if (equals(KP60_GV)) {
-            return "ER Gewinn/Verlust";
+            return Global.g0("enum.acckey.kp60");
         } else if (equals(KP600_SOLLMIETEN)) {
-            return "ER Sollmieten";
+            return Global.g0("enum.acckey.kp600");
         } else if (equals(KP66982_ERTRAEGE)) {
-            return "ER Erträge Mieterbelastung";
+            return Global.g0("enum.acckey.kp66982");
         } else if (equals(KP8000_WASSER)) {
-            return "AW Kosten der Wasserversorgung";
+            return Global.g0("enum.acckey.kp8000");
         } else if (equals(KP8001_ABWASSER)) {
-            return "AW Kosten der Entwässerung";
+            return Global.g0("enum.acckey.kp8001");
         } else if (equals(KP8002_HEIZUNG)) {
-            return "AW Kosten der Beheizung";
+            return Global.g0("enum.acckey.kp8002");
         } else if (equals(KP8005_STRASSENREINIGUNG)) {
-            return "AW Kosten der Straßenreinigung";
+            return Global.g0("enum.acckey.kp8005");
         } else if (equals(KP8006_MUELL)) {
-            return "AW Kosten der Müllabfuhr";
+            return Global.g0("enum.acckey.kp8006");
         } else if (equals(KP8009_GARTEN)) {
-            return "AW Kosten der Gartenpflege";
+            return Global.g0("enum.acckey.kp8009");
         } else if (equals(KP8011_BELEUCHTUNG)) {
-            return "AW Kosten der Beleuchtung";
+            return Global.g0("enum.acckey.kp8011");
         } else if (equals(KP8012_SCHORNSTEIN)) {
-            return "AW Kosten der Schornsteinreinigung";
+            return Global.g0("enum.acckey.kp8012");
         } else if (equals(KP8013_VERSICHERUNG)) {
-            return "AW Kosten der Sach- und Haftpflichtversicherung";
+            return Global.g0("enum.acckey.kp8013");
         } else if (equals(KP8014_VERSICHERUNG)) {
-            return "AW Kosten für fremde Hauswartleistungen";
+            return Global.g0("enum.acckey.kp8014");
         } else if (equals(KP805_INSTANDHALTUNG)) {
-            return "AW Instandhaltung";
+            return Global.g0("enum.acckey.kp805");
         } else if (equals(KP8099_MIETERBELASTUNG)) {
-            return "AW Mieterbelastung";
+            return Global.g0("enum.acckey.kp8099");
         } else if (equals(KP830_GEHAELTER)) {
-            return "AW Löhne und Gehälter";
+            return Global.g0("enum.acckey.kp830");
         } else if (equals(KP831_ABGABEN)) {
-            return "AW Soziale Abgaben";
+            return Global.g0("enum.acckey.kp831");
         } else if (equals(KP850_AUFWENDUNGEN)) {
-            return "AW Sächliche Verwaltungsaufwendungen";
+            return Global.g0("enum.acckey.kp850");
         } else if (equals(KP8900_STEUER)) {
-            return "AW Körperschaftssteuer";
+            return Global.g0("enum.acckey.kp8900");
         }
-        return "AW Grundsteuer"; // KP8910_GRUNDSTEUER
+        return Global.g0("enum.acckey.kp8910");
     }
 
     // public static VmKontoSchluesselEnum fromValue(final String v) {
