@@ -611,13 +611,13 @@ class WertpapierService {
 						k.open = if(Global.compDouble4(k.open, 0) == 0) k.close else k.open
 						k.high = if(Global.compDouble4(k.open, 0) == 0) k.close else k.high
 						k.low = if(Global.compDouble4(k.open, 0) == 0) k.close else k.low
-						// while (Global.compDouble4(kl, 0) != 0 && Global.compDouble4(k.close / kl, 5) > 0) {
-						// // richtig skalieren: bei WATL.L Faktor 100. 
-						// k.open = k.open / 10
-						// k.high = k.high / 10
-						// k.low = k.low / 10
-						// k.close = k.close / 10
-						// }
+						while (Global.compDouble4(kl, 0) != 0 && Global.compDouble4(k.close / kl, 5) > 0) {
+							// richtig skalieren: bei WATL.L Faktor 100. 
+							k.open = k.open / 10
+							k.high = k.high / 10
+							k.low = k.low / 10
+							k.close = k.close / 10
+						}
 						liste.add(k)
 					}
 				}
@@ -1451,8 +1451,10 @@ class WertpapierService {
 			if (zusammengesetzt) {
 				var p0 = if(a.aktdatum === null) null else Meldungen.WP026(a.aktdatum)
 				var p1 = if(Global.nes(a.waehrung)) null else Meldungen.WP025(a.waehrung, a.kurs, p0)
-				var p2 = if(a.anteile == 0 || a.aktpreis == 0) null else Meldungen.WP024(a.aktpreis, p1, a.wert,
-						a.gewinn, a.pgewinn)
+				var p2 = if (a.anteile == 0 || a.aktpreis == 0)
+						null
+					else
+						Meldungen.WP024(a.aktpreis, p1, a.wert, a.gewinn, a.pgewinn)
 				a.daten = if(a.anteile == 0) null else Meldungen.WP023(a.betrag, a.anteile, a.preis, a.zinsen, p2)
 			}
 		}
