@@ -1121,7 +1121,7 @@ public abstract class BaseController<R> {
                             wert = getTexte(t);
                         }
                     } else {
-                        throw new Exception("speichereResourceDaten: Typ " + clazz + " fehlt.");
+                        throw new Exception(Meldungen.M1025(clazz.toString()));
                     }
                     if (Global.nes(wert)) {
                         wert = p.defaultValue();

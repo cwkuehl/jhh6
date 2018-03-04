@@ -1,6 +1,7 @@
 package de.cwkuehl.jhh6.app.control;
 
 import java.awt.Dimension;
+import java.util.ResourceBundle;
 
 import de.cwkuehl.jhh6.api.global.Global;
 import de.cwkuehl.jhh6.server.fop.dto.PnfChart;
@@ -43,8 +44,9 @@ public class ChartPane {
         p.getProperties().put("yg", 11);
         p.setStyle("-fx-background-color: white;");
 
+        final ResourceBundle b = Global.getBundle();
         final ContextMenu contextMenu = new ContextMenu();
-        MenuItem item = new MenuItem("Drucken");
+        MenuItem item = new MenuItem(b.getString("menu.chart.print"));
         item.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -56,7 +58,7 @@ public class ChartPane {
                 // System.out.println("Drucken...");
                 PrinterJob job = PrinterJob.createPrinterJob();
                 if (job != null) {
-                    job.getJobSettings().setJobName("Print JHH5-Panel");
+                    job.getJobSettings().setJobName(b.getString("menu.chart.print"));
                     if (job.showPrintDialog(null)) {
                         boolean printed = job.printPage(p);
                         if (printed) {
@@ -68,37 +70,37 @@ public class ChartPane {
         });
         contextMenu.getItems().add(item);
 
-        item = new MenuItem("Größe Bildschirm");
+        item = new MenuItem(b.getString("menu.chart.sizefit"));
         item.setOnAction(new ChartEventHandler(p, 0, 0));
         contextMenu.getItems().add(item);
-        item = new MenuItem("Größe +5");
+        item = new MenuItem(b.getString("menu.chart.sizep5"));
         item.setOnAction(new ChartEventHandler(p, 5, 5));
         contextMenu.getItems().add(item);
-        item = new MenuItem("Größe +3");
+        item = new MenuItem(b.getString("menu.chart.sizep3"));
         item.setOnAction(new ChartEventHandler(p, 3, 3));
         contextMenu.getItems().add(item);
-        item = new MenuItem("Größe +1");
+        item = new MenuItem(b.getString("menu.chart.sizep1"));
         item.setOnAction(new ChartEventHandler(p, 1, 1));
         contextMenu.getItems().add(item);
-        item = new MenuItem("Breite +1");
+        item = new MenuItem(b.getString("menu.chart.widthp1"));
         item.setOnAction(new ChartEventHandler(p, 1, 0));
         contextMenu.getItems().add(item);
-        item = new MenuItem("Höhe +1");
+        item = new MenuItem(b.getString("menu.chart.heightp1"));
         item.setOnAction(new ChartEventHandler(p, 0, 1));
         contextMenu.getItems().add(item);
-        item = new MenuItem("Höhe -1");
+        item = new MenuItem(b.getString("menu.chart.heightm1"));
         item.setOnAction(new ChartEventHandler(p, 0, -1));
         contextMenu.getItems().add(item);
-        item = new MenuItem("Breite -1");
+        item = new MenuItem(b.getString("menu.chart.widthm1"));
         item.setOnAction(new ChartEventHandler(p, -1, 0));
         contextMenu.getItems().add(item);
-        item = new MenuItem("Größe -1");
+        item = new MenuItem(b.getString("menu.chart.sizem1"));
         item.setOnAction(new ChartEventHandler(p, -1, -1));
         contextMenu.getItems().add(item);
-        item = new MenuItem("Größe -3");
+        item = new MenuItem(b.getString("menu.chart.sizem3"));
         item.setOnAction(new ChartEventHandler(p, -3, -3));
         contextMenu.getItems().add(item);
-        item = new MenuItem("Größe -5");
+        item = new MenuItem(b.getString("menu.chart.sizem5"));
         item.setOnAction(new ChartEventHandler(p, -5, -5));
         contextMenu.getItems().add(item);
 

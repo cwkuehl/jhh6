@@ -21,6 +21,7 @@ import org.apache.log4j.Logger;
 import de.cwkuehl.jhh6.api.dto.MaParameter;
 import de.cwkuehl.jhh6.api.global.Global;
 import de.cwkuehl.jhh6.api.global.Parameter;
+import de.cwkuehl.jhh6.api.message.Meldungen;
 import de.cwkuehl.jhh6.api.service.ServiceDaten;
 import de.cwkuehl.jhh6.api.service.ServiceErgebnis;
 import de.cwkuehl.jhh6.app.Jhh6;
@@ -235,7 +236,7 @@ public class Einstellungen {
                 return;
             StringBuilder komm = new StringBuilder();
             String ls = System.getProperty("line.separator");
-            komm.append(" Property-Datei für Programm JHH6");
+            komm.append(Meldungen.M1026());
             for (Iterator<Parameter> it = Parameter.getParameter().values().iterator(); it.hasNext();) {
                 Parameter p = it.next();
                 if (p.inDatei && !Global.nes(p.kommentar))

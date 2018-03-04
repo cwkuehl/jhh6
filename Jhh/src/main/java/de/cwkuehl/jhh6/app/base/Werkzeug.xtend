@@ -236,7 +236,7 @@ class Werkzeug {
 	def public static String showInputDialog(String msg, String init) {
 
 		var dialog = new TextInputDialog(init)
-		dialog.setTitle("Eingabe")
+		dialog.setTitle(Meldungen.M1028)
 		dialog.setHeaderText(msg)
 		var result = dialog.showAndWait
 		if (result.isPresent) {
@@ -355,7 +355,7 @@ class Werkzeug {
 					]
 					t.start
 				} else {
-					throw new Exception("Awt-Desktop is not supported.")
+					throw new Exception(Meldungen.M1027)
 				}
 			}
 			rc = true
