@@ -33,6 +33,9 @@ class Constant {
 	/** Zeilenumbruch bei Linux. */
 	public static final String LF = "\n"
 
+	/** Benutzer-ID für Initialisierung. */
+	public static final String USER_ID = "Benutzer-ID"
+
 	/** Einstellung: DB_INIT. */
 	public static final String EINST_DB_INIT = "DB_INIT"
 	/** Einstellung: DB_VERSION. */

@@ -1,7 +1,9 @@
 package de.cwkuehl.jhh6.app
 
+import de.cwkuehl.jhh6.api.global.Constant
 import de.cwkuehl.jhh6.api.global.Global
 import de.cwkuehl.jhh6.api.message.MeldungException
+import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.api.service.ServiceDaten
 import de.cwkuehl.jhh6.api.service.ServiceErgebnis
 import de.cwkuehl.jhh6.app.base.Einstellungen
@@ -23,7 +25,7 @@ import org.slf4j.LoggerFactory
 
 class Jhh6 extends Application {
 
-	static ServiceDaten serviceDaten = new ServiceDaten(0, "Benutzer-ID")
+	static ServiceDaten serviceDaten = new ServiceDaten(0, Constant.USER_ID)
 	static Einstellungen einstellungen = null
 	static Stage stage = null
 	static Jhh6Controller controller = null
@@ -34,7 +36,7 @@ class Jhh6 extends Application {
 		// Locale.setDefault(Locale.ENGLISH);
 		if (Global::isWebStart) {
 			if (args !== null) {
-				log.error('''JHH6-Argumente: «String::join(" ", args)»'''.toString)
+				log.error(Meldungen.M1021(String::join(" ", args)))
 			}
 		}
 		launch(args)
@@ -123,7 +125,7 @@ class Jhh6 extends Application {
 	def static void setServiceDaten(ServiceDaten daten) {
 
 		if (daten === null) {
-			serviceDaten = new ServiceDaten(0, "Benutzer-ID")
+			serviceDaten = new ServiceDaten(0, Constant.USER_ID)
 		} else {
 			serviceDaten = new ServiceDaten(daten.getMandantNr, daten.getBenutzerId)
 		}
@@ -142,16 +144,16 @@ class Jhh6 extends Application {
 
 		var str = new StringBuffer
 		if (getEinstellungen.isTest) {
-			str.append("Test-")
+			str.append(Meldungen.M1024)
 		}
 		str.append("JHH6 ")
 		str.append(getEinstellungen.getAnwendungsTitel(serviceDaten.mandantNr))
 		str.append(" W. Kuehl")
 		var mandantNr = getServiceDaten.getMandantNr
 		if (mandantNr <= 0) {
-			str.append(" (nicht angemeldet)")
+			str.append(Meldungen.M1022)
 		} else if (mandantNr !== 1) {
-			str.append(" (Mandant ").append(mandantNr).append(")")
+			str.append(Meldungen.M1023(mandantNr))
 		}
 		return str.toString
 	}

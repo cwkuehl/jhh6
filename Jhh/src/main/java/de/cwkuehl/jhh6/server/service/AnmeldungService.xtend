@@ -140,7 +140,7 @@ class AnmeldungService {
 
 		// Anzumeldenden Benutzer als Benutzer eintragen
 		var liste = benutzerRep.getListe(daten, daten.mandantNr, null, null)
-		if (Global.arrayLaenge(liste) == 1 && "Benutzer-ID".equals(liste.get(0).benutzerId)) {
+		if (Global.arrayLaenge(liste) == 1 && Constant.USER_ID.equals(liste.get(0).benutzerId)) {
 			var benutzerU = new BenutzerUpdate(liste.get(0))
 			benutzerU.setBenutzerId(daten.benutzerId)
 			benutzerU.setPasswort(kennwort)
@@ -369,14 +369,14 @@ class AnmeldungService {
 		}
 		var e = mandantRep.iuMaMandant(daten, null, mnr, beschreibung, null, null, null, null)
 		if (insert) {
-			if (benutzerRep.get(daten, new BenutzerKey(mnr, "Benutzer-ID")) === null) {
+			if (benutzerRep.get(daten, new BenutzerKey(mnr, Constant.USER_ID)) === null) {
 				// einen Benutzer anlegen
 				var b = new Benutzer
 				b.mandantNr = mnr
 				b.aktPeriode = 0
 				b.angelegtVon = daten.benutzerId
 				b.angelegtAm = daten.jetzt
-				b.benutzerId = "Benutzer-ID"
+				b.benutzerId = Constant.USER_ID
 				b.passwort = null
 				b.berechtigung = BerechtigungEnum.ADMIN.intValue
 				b.personNr = 1
