@@ -1269,7 +1269,7 @@ class Global {
 	def public static byte[] leseBytes(String datei) throws Exception {
 
 		if (nes(datei)) {
-			throw new Exception("Dateiname darf nicht leer sein.")
+			throw new Exception(Meldungen.M1012)
 		}
 		var file = new File(datei)
 		return leseBytes(file, new FileInputStream(file), Integer.MAX_VALUE)
@@ -1285,11 +1285,8 @@ class Global {
 	 */
 	def public static byte[] leseBytes(File file, InputStream is, int max) throws Exception {
 
-		if (file === null) {
-			throw new Exception("File darf nicht leer sein.")
-		}
-		if (is === null) {
-			throw new Exception("InputStream darf nicht leer sein.")
+		if (file === null || is === null) {
+			throw new Exception(Meldungen.M1012)
 		}
 		var byte[] bytes = null
 
@@ -1297,7 +1294,7 @@ class Global {
 			// Get the size of the file
 			var length = file.length
 			if (length > max) {
-				throw new Exception("Die Datei " + file.getName + " ist zu groß.")
+				throw new Exception(Meldungen.M1014(file.getName))
 			}
 
 			// Byte-Array anlegen
@@ -1314,7 +1311,7 @@ class Global {
 			}
 			// Alles gelesen?
 			if (offset < bytes.length) {
-				throw new IOException("Die Datei " + file.getName + " konnte nicht komplett gelesen werden.")
+				throw new IOException(Meldungen.M1015(file.getName))
 			}
 		} finally {
 			// Close the input stream and return bytes
@@ -1446,7 +1443,7 @@ class Global {
 						i--
 						zustand = Z_ENDE_ANFANG // Zeilenende-Anfang
 					} else {
-						throw new Exception("CSV-Parse-Error beim " + i + ". Zeichen in Zeile\n" + csv)
+						throw new Exception(Meldungen.M1019(i, csv))
 					}
 				// case Z_FELD_ENDE: // Feldende
 				// i--
@@ -1482,7 +1479,7 @@ class Global {
 			if (!ende) {
 				i++
 				if (i > csv.length) {
-					throw new Exception("CSV-Parse-Error in Zeile\n" + csv)
+					throw new Exception(Meldungen.M1020(csv))
 				}
 			}
 		} while (!ende)
@@ -1608,7 +1605,7 @@ class Global {
 
 		var String str = null
 		if (ex === null) {
-			str = "Unbekannte Exception."
+			str = Meldungen.M1016
 		} else {
 			str = ex.getMessage
 			if (Global.nes(str)) {
