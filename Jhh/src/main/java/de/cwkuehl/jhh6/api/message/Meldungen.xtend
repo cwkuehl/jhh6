@@ -294,6 +294,8 @@ class Meldungen {
 	val M1026 = " Property file for programm JHH6"
 	val M1027 = "The JAVA version is not supporting AWT-Desktop."
 	val M1028 = "Input"
+	val M1029 = "Wrong parameter for image."
+	val M1030 = "Cancellation because of circular reference."
 	val M2001 = "Delete"
 	val M2004 = "_OK and new"
 	val M2005 = "Cancel reverse"

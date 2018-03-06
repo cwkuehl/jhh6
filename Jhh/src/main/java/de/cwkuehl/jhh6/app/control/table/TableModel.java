@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -38,6 +39,7 @@ import org.xml.sax.helpers.XMLReaderFactory;
 import com.sun.javafx.scene.control.skin.TableColumnHeader;
 
 import de.cwkuehl.jhh6.api.global.Global;
+import de.cwkuehl.jhh6.api.message.Meldungen;
 import de.cwkuehl.jhh6.app.base.Werkzeug;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
@@ -240,31 +242,32 @@ public final class TableModel implements EventHandler<ActionEvent> {
         if (tv == null || !tv.isEditable()) {
             return;
         }
-        zeilenMenuItem = new MenuItem("Zeile(n) einfügen");
+        final ResourceBundle b = Global.getBundle();
+        zeilenMenuItem = new MenuItem(b.getString("menu.table.addrow"));
         zeilenMenuItem.setOnAction(this);
-        zeilenEndeMenuItem = new MenuItem("Zeile(n) am Ende einfügen");
+        zeilenEndeMenuItem = new MenuItem(b.getString("menu.table.addrow2"));
         zeilenEndeMenuItem.setOnAction(this);
-        zeilenLoeschenMenuItem = new MenuItem("Zeile(n) löschen");
+        zeilenLoeschenMenuItem = new MenuItem(b.getString("menu.table.delrow"));
         zeilenLoeschenMenuItem.setOnAction(this);
-        spaltenMenuItem = new MenuItem("Spalte(n) einfügen");
+        spaltenMenuItem = new MenuItem(b.getString("menu.table.addcol"));
         spaltenMenuItem.setOnAction(this);
-        spaltenEndeMenuItem = new MenuItem("Spalte(n) am Ende einfügen");
+        spaltenEndeMenuItem = new MenuItem(b.getString("menu.table.addcol2"));
         spaltenEndeMenuItem.setOnAction(this);
-        spaltenLoeschenMenuItem = new MenuItem("Spalte(n) löschen");
+        spaltenLoeschenMenuItem = new MenuItem(b.getString("menu.table.delcol"));
         spaltenLoeschenMenuItem.setOnAction(this);
-        Menu layoutMenu = new Menu("Formatierung");
-        normalMenuItem = new MenuItem("normal");
+        Menu layoutMenu = new Menu(b.getString("menu.table.format"));
+        normalMenuItem = new MenuItem(b.getString("menu.table.normal"));
         normalMenuItem.setOnAction(this);
-        fettMenuItem = new MenuItem("fett");
+        fettMenuItem = new MenuItem(b.getString("menu.table.bold"));
         fettMenuItem.setOnAction(this);
-        linksMenuItem = new MenuItem("links");
+        linksMenuItem = new MenuItem(b.getString("menu.table.left"));
         linksMenuItem.setOnAction(this);
-        mitteMenuItem = new MenuItem("zentriert");
+        mitteMenuItem = new MenuItem(b.getString("menu.table.center"));
         mitteMenuItem.setOnAction(this);
-        rechtsMenuItem = new MenuItem("rechts");
+        rechtsMenuItem = new MenuItem(b.getString("menu.table.right"));
         rechtsMenuItem.setOnAction(this);
         layoutMenu.getItems().addAll(normalMenuItem, fettMenuItem, linksMenuItem, mitteMenuItem, rechtsMenuItem);
-        druckenMenuItem = new MenuItem("Drucken");
+        druckenMenuItem = new MenuItem(b.getString("menu.table.print"));
         druckenMenuItem.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent t) {
@@ -930,7 +933,7 @@ public final class TableModel implements EventHandler<ActionEvent> {
                 if (ci1 != null) {
                     if (nichtBerechnet.equals(ci1.getWert())) {
                         if (rekursion > 50) {
-                            throw new RuntimeException("Abbruch der Berechnung wegen Zirkelbezug");
+                            throw new RuntimeException(Meldungen.M1030());
                         }
                         berechneFormel(ci1, formelMap, rekursion + 1);
                     }

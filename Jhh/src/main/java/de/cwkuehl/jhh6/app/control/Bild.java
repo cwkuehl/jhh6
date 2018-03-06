@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 import de.cwkuehl.jhh6.api.dto.ByteDaten;
 import de.cwkuehl.jhh6.api.global.Constant;
 import de.cwkuehl.jhh6.api.global.Global;
+import de.cwkuehl.jhh6.api.message.Meldungen;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -86,7 +87,7 @@ public class Bild extends ImageView {
             bd.setBytes(bytes0);
             bd.setMetadaten(metadaten0);
         } else {
-            throw new RuntimeException("Falsche Parameter für Bild.");
+            throw new RuntimeException(Meldungen.M1029());
         }
         if (!Global.nes(pfad)) {
             Tooltip.install(this, new Tooltip(pfad));
