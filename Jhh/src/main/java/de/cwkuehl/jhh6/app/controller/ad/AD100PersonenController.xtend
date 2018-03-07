@@ -1,6 +1,7 @@
 package de.cwkuehl.jhh6.app.controller.ad
 
 import de.cwkuehl.jhh6.api.dto.AdPersonSitzAdresse
+import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
@@ -221,7 +222,7 @@ class AD100PersonenController extends BaseController<String> {
 	 */
 	@FXML def void onDrucken() {
 		var byte[] pdf = get(FactoryService.getAdresseService.getReportAdresse(getServiceDaten))
-		Werkzeug.speicherReport(pdf, "Adressenliste", true)
+		Werkzeug.speicherReport(pdf, Meldungen.AD012, true)
 	}
 
 	/** 

@@ -1,16 +1,17 @@
 package de.cwkuehl.jhh6.app.controller.hp
 
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.HpBehandlungLang
 import de.cwkuehl.jhh6.api.dto.HpPatient
+import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.app.base.Werkzeug
 import de.cwkuehl.jhh6.app.control.Datum
 import de.cwkuehl.jhh6.server.FactoryService
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.List
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -256,7 +257,7 @@ class HP200BehandlungenController extends BaseController<String> {
 		var byte[] pdf = get(
 			FactoryService.getHeilpraktikerService.getReportPatientenakte(getServiceDaten, getText(patient),
 				von.getValue, bis.getValue))
-		Werkzeug.speicherReport(pdf, "Behandlungenakte", true)
+		Werkzeug.speicherReport(pdf, Meldungen.HP018, true)
 	}
 
 	/** 

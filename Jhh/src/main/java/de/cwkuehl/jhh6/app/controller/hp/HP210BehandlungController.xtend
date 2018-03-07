@@ -216,7 +216,7 @@ class HP210BehandlungController extends BaseController<String> {
 			}
 			var List<HpBehandlungLeistungLang> bhl = get(
 				FactoryService::getHeilpraktikerService.getBehandlungLeistungListe(getServiceDaten, true, null,
-					null, nr.getText, null, null, false, true))
+					null, nr.text, null, null, false, true))
 			leistungen.setItems(getItems(bhl, null, [a|new LeistungenData(a)], null))
 			if (neu0) {
 				var HpStatus k = get(FactoryService::getHeilpraktikerService.getStandardStatus(getServiceDaten, 1))
@@ -301,7 +301,7 @@ class HP210BehandlungController extends BaseController<String> {
 	@FXML def void onHinzufuegen() {
 
 		var HpLeistung l = getValue(leistung, true)
-		var double d = Global::strDbl(dauer.getText)
+		var double d = Global::strDbl(dauer.text)
 		if (Global::nes(l.getZiffer)) {
             // Leistungsgruppe
 			var List<HpBehandlungLeistungLang> liste = get(
@@ -355,16 +355,16 @@ class HP210BehandlungController extends BaseController<String> {
 		var ServiceErgebnis<?> r = null
 		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
 			r = FactoryService::getHeilpraktikerService.insertUpdateBehandlung(getServiceDaten, null,
-				getText(patient), datum.getValue, Global::strInt(dauer.getText), diagnose.getText,
-				getText(leistung), getText(status), mittel.getText, potenz.getText, dosierung.getText,
-				verordnung.getText, notiz.getText, getAllValues(leistungen))
+				getText(patient), datum.value, Global::strInt(dauer.text), diagnose.text,
+				getText(leistung), getText(status), mittel.text, potenz.text, dosierung.text,
+				verordnung.text, notiz.text, getAllValues(leistungen))
 		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
-			r = FactoryService::getHeilpraktikerService.insertUpdateBehandlung(getServiceDaten, nr.getText,
-				getText(patient), datum.getValue, Global::strInt(dauer.getText), diagnose.getText,
-				getText(leistung), getText(status), mittel.getText, potenz.getText, dosierung.getText,
-				verordnung.getText, notiz.getText, getAllValues(leistungen))
+			r = FactoryService::getHeilpraktikerService.insertUpdateBehandlung(getServiceDaten, nr.text,
+				getText(patient), datum.getValue, Global::strInt(dauer.text), diagnose.text,
+				getText(leistung), getText(status), mittel.text, potenz.text, dosierung.text,
+				verordnung.text, notiz.text, getAllValues(leistungen))
 		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
-			r = FactoryService::getHeilpraktikerService.deleteBehandlung(getServiceDaten, nr.getText)
+			r = FactoryService::getHeilpraktikerService.deleteBehandlung(getServiceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)
@@ -382,7 +382,7 @@ class HP210BehandlungController extends BaseController<String> {
 		var byte[] pdf = get(
 			FactoryService::getHeilpraktikerService.getReportPatientenakte(getServiceDaten, getText(patient), null,
 				null))
-		Werkzeug::speicherReport(pdf, "Behandlungsakte", true)
+		Werkzeug::speicherReport(pdf, Meldungen.HP018, true)
 	}
 
 	/** 
