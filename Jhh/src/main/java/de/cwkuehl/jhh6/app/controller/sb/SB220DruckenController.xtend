@@ -2,6 +2,7 @@ package de.cwkuehl.jhh6.app.controller.sb
 
 import de.cwkuehl.jhh6.api.dto.SbPersonLang
 import de.cwkuehl.jhh6.api.global.Global
+import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.Profil
 import de.cwkuehl.jhh6.app.base.Werkzeug
@@ -69,7 +70,7 @@ class SB220DruckenController extends BaseController<String> {
 				generation.setText("3")
 			}
 			var List<SbPersonLang> l = get(
-				FactoryService::getStammbaumService.getPersonListe(getServiceDaten, true, false, null, null, null))
+				FactoryService::stammbaumService.getPersonListe(serviceDaten, true, false, null, null, null))
 			person.setItems(getItems(l, null, [a|new PersonData(a)], null))
 			setText(person, ahnUid)
 		}
@@ -91,10 +92,9 @@ class SB220DruckenController extends BaseController<String> {
 	@FXML def void onOk() {
 
 		var byte[] pdf = get(
-			FactoryService::getStammbaumService.getReportAhnen(getServiceDaten, getText(person),
-				Global::strInt(generation.getText), geschwister.isSelected, nachfahren.isSelected,
-				vorfahren.isSelected))
-		Werkzeug::speicherReport(pdf, "Ahnenliste", true)
+			FactoryService::stammbaumService.getReportAhnen(serviceDaten, getText(person),
+				Global::strInt(generation.text), geschwister.isSelected, nachfahren.isSelected, vorfahren.isSelected))
+		Werkzeug::speicherReport(pdf, Meldungen.SB030, true)
 	}
 
 	/** 

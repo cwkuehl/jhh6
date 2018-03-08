@@ -23,6 +23,7 @@ import javafx.scene.control.Label
 import javafx.scene.control.TableColumn
 import javafx.scene.control.TableView
 import javafx.scene.input.MouseEvent
+import de.cwkuehl.jhh6.api.message.Meldungen
 
 /** 
  * Controller für Dialog VM300Mieter.
@@ -166,10 +167,9 @@ class VM300MieterController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var List<VmHaus> pl = get(FactoryService::getVermietungService.getHausListe(getServiceDaten, true))
+			var List<VmHaus> pl = get(FactoryService::vermietungService.getHausListe(serviceDaten, true))
 			haus.setItems(getItems(pl, new VmHaus, [a|new HausData(a)], null))
-			var List<VmWohnungLang> wl = get(
-				FactoryService::getVermietungService.getWohnungListe(getServiceDaten, true))
+			var List<VmWohnungLang> wl = get(FactoryService::vermietungService.getWohnungListe(serviceDaten, true))
 			wohnung.setItems(getItems(wl, new VmWohnungLang, [a|new WohnungData(a)], null))
 			von.setValue(LocalDate::now.withDayOfYear(1))
 			bis.setValue(von.getValue.plusYears(1).minusDays(1))
@@ -178,7 +178,7 @@ class VM300MieterController extends BaseController<String> {
 		}
 		if (stufe <= 1) {
 			var List<VmMieterLang> l = get(
-				FactoryService::getVermietungService.getMieterListe(getServiceDaten, false, von.getValue, bis.getValue,
+				FactoryService::vermietungService.getMieterListe(serviceDaten, false, von.value, bis.value,
 					getText(haus), getText(wohnung)))
 			getItems(l, null, [a|new MieterData(a)], mieterData)
 		}
@@ -272,9 +272,8 @@ class VM300MieterController extends BaseController<String> {
 	 */
 	@FXML def void onDrucken() {
 		var byte[] pdf = get(
-			FactoryService::getVermietungService.getReportMieterliste(getServiceDaten, von.getValue, bis.getValue,
-				getText(haus)))
-		Werkzeug::speicherReport(pdf, "Mieterliste", true)
+			FactoryService::vermietungService.getReportMieterliste(serviceDaten, von.value, bis.value, getText(haus)))
+		Werkzeug::speicherReport(pdf, Meldungen.VM031, true)
 	}
 
 	/** 

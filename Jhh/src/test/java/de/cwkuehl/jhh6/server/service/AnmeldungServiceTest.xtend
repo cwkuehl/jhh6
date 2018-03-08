@@ -8,7 +8,7 @@ import static extension org.junit.Assert.*
 
 class AnmeldungServiceTest {
 
-	val service = FactoryService.anmeldungService
+	val service = FactoryService::anmeldungService
 	
 	@Test def void testService() {
 

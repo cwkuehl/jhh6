@@ -9,7 +9,7 @@ import static extension org.junit.Assert.*
 
 class TestServiceTest {
 
-	val service = FactoryService.testService
+	val service = FactoryService::testService
 	private int mandantNr = 2;
 	private String benutzerId = "Heinz";
 

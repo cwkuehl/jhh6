@@ -1,14 +1,15 @@
 package de.cwkuehl.jhh6.app.controller.hp
 
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.HpRechnungLang
+import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.app.base.Werkzeug
 import de.cwkuehl.jhh6.server.FactoryService
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.List
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -109,8 +110,7 @@ class HP400RechnungenController extends BaseController<String> {
 		if (stufe <= 0) { // stufe = 0
 		}
 		if (stufe <= 1) {
-			var List<HpRechnungLang> l = get(
-				FactoryService.getHeilpraktikerService.getRechnungListe(getServiceDaten, false))
+			var List<HpRechnungLang> l = get(FactoryService::heilpraktikerService.getRechnungListe(serviceDaten, false))
 			getItems(l, null, [a|new RechnungenData(a)], rechnungenData)
 		}
 		if (stufe <= 2) {
@@ -201,8 +201,8 @@ class HP400RechnungenController extends BaseController<String> {
 	 */
 	@FXML def void onDrucken() {
 		var HpRechnungLang k = getValue(rechnungen, true)
-		var byte[] pdf = get(FactoryService.getHeilpraktikerService.getReportRechnung(getServiceDaten, k.getUid))
-		Werkzeug.speicherReport(pdf, "Rechnung", true)
+		var byte[] pdf = get(FactoryService::heilpraktikerService.getReportRechnung(serviceDaten, k.getUid))
+		Werkzeug.speicherReport(pdf, Meldungen.HP019, true)
 	}
 
 	/** 

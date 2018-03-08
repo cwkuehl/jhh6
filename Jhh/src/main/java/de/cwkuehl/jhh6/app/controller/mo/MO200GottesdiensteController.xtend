@@ -1,18 +1,17 @@
 package de.cwkuehl.jhh6.app.controller.mo
 
-import java.time.DayOfWeek
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.MoGottesdienst
-import de.cwkuehl.jhh6.api.global.Global
+import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.app.base.Werkzeug
 import de.cwkuehl.jhh6.app.control.Datum
 import de.cwkuehl.jhh6.server.FactoryService
+import java.time.DayOfWeek
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.List
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -53,8 +52,8 @@ class MO200GottesdiensteController extends BaseController<String> {
 	@FXML Datum von
 	@FXML Label bis0
 	@FXML Datum bis
-	//@FXML Button alle
 
+	// @FXML Button alle
 	/** 
 	 * Daten für Tabelle Gottesdienste.
 	 */
@@ -118,7 +117,7 @@ class MO200GottesdiensteController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			 // nächsten Montag vorblenden
+			// nächsten Montag vorblenden
 			var LocalDate d = LocalDate.now
 			while (!d.getDayOfWeek.equals(DayOfWeek.MONDAY)) {
 				d = d.plusDays(1)
@@ -128,8 +127,7 @@ class MO200GottesdiensteController extends BaseController<String> {
 		}
 		if (stufe <= 1) {
 			var List<MoGottesdienst> l = get(
-				FactoryService.getMessdienerService.getGottesdienstListe(getServiceDaten, false, von.getValue,
-					bis.getValue))
+				FactoryService::messdienerService.getGottesdienstListe(serviceDaten, false, von.value, bis.value))
 			getItems(l, null, [a|new GottesdiensteData(a)], gottesdiensteData)
 		}
 		if (stufe <= 2) {
@@ -219,12 +217,8 @@ class MO200GottesdiensteController extends BaseController<String> {
 	@FXML def void onDrucken() {
 
 		var byte[] pdf = get(
-			FactoryService.getMessdienerService.getReportMessdienerordnung(getServiceDaten, von.getValue,
-				bis.getValue))
-		var String mo = Global.format("Messdienerordnung_{0}_{1}",
-			von.getValue.format(DateTimeFormatter.ofPattern("yyyyMMdd")),
-			bis.getValue.format(DateTimeFormatter.ofPattern("MMdd")))
-		Werkzeug.speicherReport(pdf, mo, false)
+			FactoryService::messdienerService.getReportMessdienerordnung(serviceDaten, von.value, bis.value))
+		Werkzeug.speicherReport(pdf, Meldungen.MO036(von.value.atStartOfDay, bis.value.atStartOfDay), false)
 	}
 
 	/** 

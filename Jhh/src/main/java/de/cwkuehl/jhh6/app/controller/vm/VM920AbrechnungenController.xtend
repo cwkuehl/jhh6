@@ -1,19 +1,20 @@
 package de.cwkuehl.jhh6.app.controller.vm
 
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.MaEinstellung
 import de.cwkuehl.jhh6.api.dto.VmAbrechnungLang
 import de.cwkuehl.jhh6.api.dto.VmHaus
 import de.cwkuehl.jhh6.api.dto.VmMieterLang
 import de.cwkuehl.jhh6.api.dto.VmWohnungLang
+import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.app.base.Werkzeug
 import de.cwkuehl.jhh6.app.control.Datum
 import de.cwkuehl.jhh6.server.FactoryService
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.List
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -67,8 +68,8 @@ class VM920AbrechnungenController extends BaseController<String> {
 	@FXML ComboBox<MieterData> mieter
 	@FXML Label schluessel0
 	@FXML ComboBox<SchluesselData> schluessel
-	//@FXML Button alle
 
+	// @FXML Button alle
 	/** 
 	 * Daten für Tabelle Abrechnungen.
 	 */
@@ -216,16 +217,15 @@ class VM920AbrechnungenController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var List<VmHaus> hl = get(FactoryService::getVermietungService.getHausListe(getServiceDaten, true))
+			var List<VmHaus> hl = get(FactoryService::vermietungService.getHausListe(serviceDaten, true))
 			haus.setItems(getItems(hl, new VmHaus, [a|new HausData(a)], null))
 			var List<VmWohnungLang> wl = get(
-				FactoryService::getVermietungService.getWohnungListe(getServiceDaten, true))
+				FactoryService::vermietungService.getWohnungListe(serviceDaten, true))
 			wohnung.setItems(getItems(wl, new VmWohnungLang, [a|new WohnungData(a)], null))
 			var List<VmMieterLang> ml = get(
-				FactoryService::getVermietungService.getMieterListe(getServiceDaten, true, null, null, null, null))
+				FactoryService::vermietungService.getMieterListe(serviceDaten, true, null, null, null, null))
 			mieter.setItems(getItems(ml, new VmMieterLang, [a|new MieterData(a)], null))
-			var List<MaEinstellung> sl = get(
-				FactoryService::getVermietungService.getSchluesselListe(getServiceDaten))
+			var List<MaEinstellung> sl = get(FactoryService::vermietungService.getSchluesselListe(serviceDaten))
 			schluessel.setItems(getItems(sl, new MaEinstellung, [a|new SchluesselData(a)], null))
 			von.setValue(LocalDate::now.withDayOfYear(1).minusYears(1))
 			bis.setValue(von.getValue.plusYears(1).minusDays(1))
@@ -235,8 +235,8 @@ class VM920AbrechnungenController extends BaseController<String> {
 		}
 		if (stufe <= 1) {
 			var List<VmAbrechnungLang> l = get(
-				FactoryService::getVermietungService.getAbrechnungListe(getServiceDaten, von.getValue,
-					bis.getValue, getText(haus), getText(wohnung), getText(mieter), getText(schluessel)))
+				FactoryService::vermietungService.getAbrechnungListe(serviceDaten, von.value, bis.value, getText(haus),
+					getText(wohnung), getText(mieter), getText(schluessel)))
 			getItems(l, null, [a|new AbrechnungenData(a)], abrechnungenData)
 		}
 		if (stufe <= 2) {
@@ -250,19 +250,19 @@ class VM920AbrechnungenController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		abrechnungen.setItems(abrechnungenData)
-		colUid.setCellValueFactory([c|c.getValue.uid])
-		colHaus.setCellValueFactory([c|c.getValue.haus])
-		colWohnung.setCellValueFactory([c|c.getValue.wohnung])
-		colMieter.setCellValueFactory([c|c.getValue.mieter])
-		colSchluessel.setCellValueFactory([c|c.getValue.schluessel])
-		colWert.setCellValueFactory([c|c.getValue.wert])
-		colBetrag.setCellValueFactory([c|c.getValue.betrag])
-		colVon.setCellValueFactory([c|c.getValue.von])
-		colBis.setCellValueFactory([c|c.getValue.bis])
-		colGv.setCellValueFactory([c|c.getValue.geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue.geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue.angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue.angelegtAm])
+		colUid.setCellValueFactory([c|c.value.uid])
+		colHaus.setCellValueFactory([c|c.value.haus])
+		colWohnung.setCellValueFactory([c|c.value.wohnung])
+		colMieter.setCellValueFactory([c|c.value.mieter])
+		colSchluessel.setCellValueFactory([c|c.value.schluessel])
+		colWert.setCellValueFactory([c|c.value.wert])
+		colBetrag.setCellValueFactory([c|c.value.betrag])
+		colVon.setCellValueFactory([c|c.value.von])
+		colBis.setCellValueFactory([c|c.value.bis])
+		colGv.setCellValueFactory([c|c.value.geaendertVon])
+		colGa.setCellValueFactory([c|c.value.geaendertAm])
+		colAv.setCellValueFactory([c|c.value.angelegtVon])
+		colAa.setCellValueFactory([c|c.value.angelegtAm])
 		initColumnBetrag(colBetrag)
 	}
 
@@ -333,9 +333,9 @@ class VM920AbrechnungenController extends BaseController<String> {
 
 		var VmAbrechnungLang k = getValue(abrechnungen, true)
 		var byte[] pdf = get(
-			FactoryService::getVermietungService.getReportAbrechnung(getServiceDaten, von.getValue,
-				bis.getValue, k.getHausUid, k.getMieterUid))
-		Werkzeug::speicherReport(pdf, "Abrechnung", true)
+			FactoryService::vermietungService.getReportAbrechnung(serviceDaten, von.value, bis.value, k.hausUid,
+				k.mieterUid))
+		Werkzeug::speicherReport(pdf, Meldungen.VM032, true)
 	}
 
 	/** 
