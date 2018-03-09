@@ -61,18 +61,18 @@ class FZ710NotizController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var boolean neu = DialogAufrufEnum.NEU.equals(getAufruf)
-			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(getAufruf)
+			var boolean neu = DialogAufrufEnum.NEU.equals(aufruf)
+			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(aufruf)
 			var FzNotizKurz k = getParameter1
 			if (!neu && k !== null) {
-				var FzNotiz l = get(FactoryService.getFreizeitService.getNotiz(getServiceDaten, k.getUid))
+				var FzNotiz l = get(FactoryService::freizeitService.getNotiz(serviceDaten, k.uid))
 				if (l !== null) {
-					nr.setText(l.getUid)
-					thema.setText(l.getThema)
-					daten.readXmlDocument(l.getNotiz)
-					notiz.setText(daten.getNotiz)
-					angelegt.setText(l.formatDatumVon(l.getAngelegtAm, l.getAngelegtVon))
-					geaendert.setText(l.formatDatumVon(l.getGeaendertAm, l.getGeaendertVon))
+					nr.setText(l.uid)
+					thema.setText(l.thema)
+					daten.readXmlDocument(l.notiz)
+					notiz.setText(daten.notiz)
+					angelegt.setText(l.formatDatumVon(l.angelegtAm, l.angelegtVon))
+					geaendert.setText(l.formatDatumVon(l.geaendertAm, l.geaendertVon))
 				}
 			}
 			nr.setEditable(false)
@@ -83,11 +83,7 @@ class FZ710NotizController extends BaseController<String> {
 			geaendert.setEditable(false)
 			daten.initContextMenu(getStage)
 			daten.fireTableStructureChanged
-			Platform.runLater([
-				{
-					splitpane.setDividerPosition(0, daten.getDivider)
-				}
-			])
+			Platform.runLater([splitpane.setDividerPosition(0, daten.getDivider)])
 		}
 		if (stufe <= 1) { // stufe = 0
 		}
@@ -104,17 +100,16 @@ class FZ710NotizController extends BaseController<String> {
 		if (pos !== null && pos.length > 0) {
 			daten.setDivider(pos.get(0))
 		}
-		daten.setNotiz(notiz.getText)
+		daten.setNotiz(notiz.text)
 		var String xml = daten.writeXmlDocument
 		// Werkzeug.showError(xml)
 		var ServiceErgebnis<?> r = null
 		if (DialogAufrufEnum.NEU.equals(aufruf) || DialogAufrufEnum.KOPIEREN.equals(aufruf)) {
-			r = FactoryService.getFreizeitService.insertUpdateNotiz(getServiceDaten, null, thema.getText, xml)
+			r = FactoryService::freizeitService.insertUpdateNotiz(serviceDaten, null, thema.text, xml)
 		} else if (DialogAufrufEnum.AENDERN.equals(aufruf)) {
-			r = FactoryService.getFreizeitService.insertUpdateNotiz(getServiceDaten, nr.getText, thema.getText,
-				xml)
+			r = FactoryService::freizeitService.insertUpdateNotiz(serviceDaten, nr.text, thema.text, xml)
 		} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
-			r = FactoryService.getFreizeitService.deleteNotiz(getServiceDaten, nr.getText)
+			r = FactoryService::freizeitService.deleteNotiz(serviceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)

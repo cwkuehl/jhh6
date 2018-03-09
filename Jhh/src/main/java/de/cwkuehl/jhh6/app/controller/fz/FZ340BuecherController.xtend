@@ -82,20 +82,20 @@ class FZ340BuecherController extends BaseController<String> {
 		new(FzBuchLang v) {
 
 			super(v)
-			uid = new SimpleStringProperty(v.getUid)
-			titel = new SimpleStringProperty(v.getTitel)
-			autor = new SimpleStringProperty(v.getAutorName)
-			serie = new SimpleStringProperty(v.getSerieName)
-			seriennr = new SimpleStringProperty(Global.intStrFormat(v.getSeriennummer))
-			seiten = new SimpleObjectProperty<Integer>(v.getSeiten)
-			sprache = new SimpleStringProperty(v.getSprache)
-			besitz = new SimpleObjectProperty<Boolean>(v.getIstBesitz)
-			lesedatum = new SimpleObjectProperty<LocalDate>(v.getLesedatum)
-			hoerdatum = new SimpleObjectProperty<LocalDate>(v.getHoerdatum)
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
+			uid = new SimpleStringProperty(v.uid)
+			titel = new SimpleStringProperty(v.titel)
+			autor = new SimpleStringProperty(v.autorName)
+			serie = new SimpleStringProperty(v.serieName)
+			seriennr = new SimpleStringProperty(Global.intStrFormat(v.seriennummer))
+			seiten = new SimpleObjectProperty<Integer>(v.seiten)
+			sprache = new SimpleStringProperty(v.sprache)
+			besitz = new SimpleObjectProperty<Boolean>(v.istBesitz)
+			lesedatum = new SimpleObjectProperty<LocalDate>(v.lesedatum)
+			hoerdatum = new SimpleObjectProperty<LocalDate>(v.hoerdatum)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
+			geaendertVon = new SimpleStringProperty(v.geaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
+			angelegtVon = new SimpleStringProperty(v.angelegtVon)
 		}
 
 		override String getId() {
@@ -149,16 +149,15 @@ class FZ340BuecherController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var List<FzBuchautor> al = get(
-				FactoryService.getFreizeitService.getAutorListe(getServiceDaten, true, null))
+			var List<FzBuchautor> al = get(FactoryService::freizeitService.getAutorListe(serviceDaten, true, null))
 			autor.setItems(getItems(al, new FzBuchautor, [a|new AutorData(a)], null))
 			setText(autor, null)
 			titel.setText("%%")
 		}
 		if (stufe <= 1) {
 			var List<FzBuchLang> l = get(
-				FactoryService.getFreizeitService.getBuchListe(getServiceDaten, true, getText(autor), null, null,
-					titel.getText))
+				FactoryService::freizeitService.getBuchListe(serviceDaten, true, getText(autor), null, null, //
+				titel.text))
 			getItems(l, null, [a|new BuecherData(a)], buecherData)
 			// Absteigend nach Lesedatum
 			Collections.sort(buecherData, [ a, b |
@@ -190,20 +189,20 @@ class FZ340BuecherController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		buecher.setItems(buecherData)
-		colUid.setCellValueFactory([c|c.getValue.uid])
-		colTitel.setCellValueFactory([c|c.getValue.titel])
-		colAutor.setCellValueFactory([c|c.getValue.autor])
-		colSerie.setCellValueFactory([c|c.getValue.serie])
-		colSeriennr.setCellValueFactory([c|c.getValue.seriennr])
-		colSeiten.setCellValueFactory([c|c.getValue.seiten])
-		colSprache.setCellValueFactory([c|c.getValue.sprache])
-		colBesitz.setCellValueFactory([c|c.getValue.besitz])
-		colLesedatum.setCellValueFactory([c|c.getValue.lesedatum])
-		colHoerdatum.setCellValueFactory([c|c.getValue.hoerdatum])
-		colGv.setCellValueFactory([c|c.getValue.geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue.geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue.angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue.angelegtAm])
+		colUid.setCellValueFactory([c|c.value.uid])
+		colTitel.setCellValueFactory([c|c.value.titel])
+		colAutor.setCellValueFactory([c|c.value.autor])
+		colSerie.setCellValueFactory([c|c.value.serie])
+		colSeriennr.setCellValueFactory([c|c.value.seriennr])
+		colSeiten.setCellValueFactory([c|c.value.seiten])
+		colSprache.setCellValueFactory([c|c.value.sprache])
+		colBesitz.setCellValueFactory([c|c.value.besitz])
+		colLesedatum.setCellValueFactory([c|c.value.lesedatum])
+		colHoerdatum.setCellValueFactory([c|c.value.hoerdatum])
+		colGv.setCellValueFactory([c|c.value.geaendertVon])
+		colGa.setCellValueFactory([c|c.value.geaendertAm])
+		colAv.setCellValueFactory([c|c.value.angelegtVon])
+		colAa.setCellValueFactory([c|c.value.angelegtAm])
 	}
 
 	override protected void updateParent() {

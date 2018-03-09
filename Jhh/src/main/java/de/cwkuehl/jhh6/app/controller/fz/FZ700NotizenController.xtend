@@ -68,7 +68,7 @@ class FZ700NotizenController extends BaseController<String> {
 		if (stufe <= 0) { // model.initDaten(0);
 		}
 		if (stufe <= 1) {
-			var List<FzNotizKurz> l = get(FactoryService.getFreizeitService.getNotizListe(getServiceDaten))
+			var List<FzNotizKurz> l = get(FactoryService::freizeitService.getNotizListe(serviceDaten))
 			getItems(l, null, [a|new NotizKurz(a)], notizenData)
 		}
 		if (stufe <= 2) {
@@ -82,12 +82,12 @@ class FZ700NotizenController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		notizen.setItems(notizenData)
-		colUid.setCellValueFactory([cellData|cellData.getValue.uid])
-		colThema.setCellValueFactory([cellData|cellData.getValue.thema])
-		colGv.setCellValueFactory([cellData|cellData.getValue.geaendertVon])
-		colGa.setCellValueFactory([cellData|cellData.getValue.geaendertAm])
-		colAv.setCellValueFactory([cellData|cellData.getValue.angelegtVon])
-		colAa.setCellValueFactory([cellData|cellData.getValue.angelegtAm])
+		colUid.setCellValueFactory([cellData|cellData.value.uid])
+		colThema.setCellValueFactory([cellData|cellData.value.thema])
+		colGv.setCellValueFactory([cellData|cellData.value.geaendertVon])
+		colGa.setCellValueFactory([cellData|cellData.value.geaendertAm])
+		colAv.setCellValueFactory([cellData|cellData.value.angelegtVon])
+		colAa.setCellValueFactory([cellData|cellData.value.angelegtAm])
 	}
 
 	override protected void updateParent() {
@@ -168,12 +168,12 @@ class FZ700NotizenController extends BaseController<String> {
 		new(FzNotizKurz v) {
 
 			super(v)
-			uid = new SimpleStringProperty(v.getUid)
-			thema = new SimpleStringProperty(v.getThema)
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
+			uid = new SimpleStringProperty(v.uid)
+			thema = new SimpleStringProperty(v.thema)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
+			geaendertVon = new SimpleStringProperty(v.geaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
+			angelegtVon = new SimpleStringProperty(v.angelegtVon)
 		}
 
 		override String getId() {

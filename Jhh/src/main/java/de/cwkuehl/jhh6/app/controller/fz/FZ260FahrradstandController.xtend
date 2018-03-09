@@ -68,7 +68,7 @@ class FZ260FahrradstandController extends BaseController<String> {
 		tabbar = 0
 		nr0.setLabelFor(nr)
 		fahrrad0.setLabelFor(fahrrad, true)
-		datum0.setLabelFor(datum.getLabelForNode, true)
+		datum0.setLabelFor(datum.labelForNode, true)
 		zaehler0.setLabelFor(zaehler, true)
 		km0.setLabelFor(km, true)
 		schnitt0.setLabelFor(schnitt)
@@ -87,29 +87,27 @@ class FZ260FahrradstandController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var List<FzFahrradLang> fl = get(FactoryService.getFreizeitService.getFahrradListe(getServiceDaten, true))
+			var List<FzFahrradLang> fl = get(FactoryService::freizeitService.getFahrradListe(serviceDaten, true))
 			fahrrad.setItems(getItems(fl, null, [a|new FahrradData(a)], null))
 			datum.setValue(LocalDate.now)
 			if (fl.size > 0) {
 				setText(fahrrad, fl.get(0).getUid)
 			}
-			var boolean neu = DialogAufrufEnum.NEU.equals(getAufruf)
-			var boolean kopieren = DialogAufrufEnum.KOPIEREN.equals(getAufruf)
-			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(getAufruf)
+			var boolean neu = DialogAufrufEnum.NEU.equals(aufruf)
+			var boolean kopieren = DialogAufrufEnum.KOPIEREN.equals(aufruf)
+			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(aufruf)
 			var FzFahrradstandLang k = getParameter1
 			if (!neu && k !== null) {
-				k = get(
-					FactoryService.getFreizeitService.getFahrradstandLang(getServiceDaten, k.getFahrradUid, k.getDatum,
-						k.getNr))
-				nr.setText(Global.intStrFormat(k.getNr))
-				setText(fahrrad, k.getFahrradUid)
-				datum.setValue(k.getDatum)
-				zaehler.setText(Global.lngStr((k.getZaehlerKm as long)))
-				km.setText(Global.lngStr((k.getPeriodeKm as long)))
-				schnitt.setText(Global.dblStr2l(k.getPeriodeSchnitt))
-				beschreibung.setText(k.getBeschreibung)
-				angelegt.setText(k.formatDatumVon(k.getAngelegtAm, k.getAngelegtVon))
-				geaendert.setText(k.formatDatumVon(k.getGeaendertAm, k.getGeaendertVon))
+				k = get(FactoryService::freizeitService.getFahrradstandLang(serviceDaten, k.fahrradUid, k.datum, k.nr))
+				nr.setText(Global.intStrFormat(k.nr))
+				setText(fahrrad, k.fahrradUid)
+				datum.setValue(k.datum)
+				zaehler.setText(Global.lngStr((k.zaehlerKm as long)))
+				km.setText(Global.lngStr((k.periodeKm as long)))
+				schnitt.setText(Global.dblStr2l(k.periodeSchnitt))
+				beschreibung.setText(k.beschreibung)
+				angelegt.setText(k.formatDatumVon(k.angelegtAm, k.angelegtVon))
+				geaendert.setText(k.formatDatumVon(k.geaendertAm, k.geaendertVon))
 			}
 			nr.setEditable(false)
 			setEditable(fahrrad, !loeschen)
@@ -157,16 +155,16 @@ class FZ260FahrradstandController extends BaseController<String> {
 
 		var ServiceErgebnis<?> r = null
 		if (DialogAufrufEnum.NEU.equals(aufruf) || DialogAufrufEnum.KOPIEREN.equals(aufruf)) {
-			r = FactoryService.getFreizeitService.insertUpdateFahrradstand(getServiceDaten, getText(fahrrad),
-				datum.getValue2, -1, Global.strDbl(zaehler.getText), Global.strDbl(km.getText),
-				Global.strDbl(schnitt.getText), beschreibung.getText)
+			r = FactoryService::freizeitService.insertUpdateFahrradstand(getServiceDaten, getText(fahrrad),
+				datum.value2, -1, Global.strDbl(zaehler.text), Global.strDbl(km.text), Global.strDbl(schnitt.text),
+				beschreibung.text)
 		} else if (DialogAufrufEnum.AENDERN.equals(aufruf)) {
-			r = FactoryService.getFreizeitService.insertUpdateFahrradstand(getServiceDaten, getText(fahrrad),
-				datum.getValue2, Global.strInt(nr.getText), Global.strDbl(zaehler.getText), Global.strDbl(km.getText),
-				Global.strDbl(schnitt.getText), beschreibung.getText)
+			r = FactoryService::freizeitService.insertUpdateFahrradstand(serviceDaten, getText(fahrrad), datum.value2,
+				Global.strInt(nr.text), Global.strDbl(zaehler.text), Global.strDbl(km.text),
+				Global.strDbl(schnitt.text), beschreibung.text)
 		} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
-			r = FactoryService.getFreizeitService.deleteFahrradstand(getServiceDaten, getText(fahrrad), datum.getValue2,
-				Global.strInt(nr.getText))
+			r = FactoryService::freizeitService.deleteFahrradstand(serviceDaten, getText(fahrrad), datum.value2,
+				Global.strInt(nr.text))
 		}
 		if (r !== null) {
 			get(r)

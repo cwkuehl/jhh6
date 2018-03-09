@@ -52,8 +52,8 @@ class FZ250FahrradstaendeController extends BaseController<String> {
 	@FXML ComboBox<FahrradData> fahrrad
 	@FXML Label text0
 	@FXML TextField text
-	//@FXML Button alle
 
+	// @FXML Button alle
 	/** 
 	 * Daten für Tabelle Fahrradstaende.
 	 */
@@ -74,17 +74,17 @@ class FZ250FahrradstaendeController extends BaseController<String> {
 		new(FzFahrradstandLang v) {
 
 			super(v)
-			fahrrad = new SimpleStringProperty(v.getFahrradBezeichnung)
-			datum = new SimpleObjectProperty<LocalDate>(v.getDatum.toLocalDate)
-			nr = new SimpleObjectProperty<Integer>(v.getNr)
-			zaehler = new SimpleObjectProperty<Long>((v.getZaehlerKm as long))
-			km = new SimpleObjectProperty<Long>((v.getPeriodeKm as long))
-			schnitt = new SimpleObjectProperty<Double>(v.getPeriodeSchnitt)
-			beschreibung = new SimpleStringProperty(v.getBeschreibung)
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
+			fahrrad = new SimpleStringProperty(v.fahrradBezeichnung)
+			datum = new SimpleObjectProperty<LocalDate>(v.datum.toLocalDate)
+			nr = new SimpleObjectProperty<Integer>(v.nr)
+			zaehler = new SimpleObjectProperty<Long>((v.zaehlerKm as long))
+			km = new SimpleObjectProperty<Long>((v.periodeKm as long))
+			schnitt = new SimpleObjectProperty<Double>(v.periodeSchnitt)
+			beschreibung = new SimpleStringProperty(v.beschreibung)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
+			geaendertVon = new SimpleStringProperty(v.geaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
+			angelegtVon = new SimpleStringProperty(v.angelegtVon)
 		}
 
 		override String getId() {
@@ -96,16 +96,17 @@ class FZ250FahrradstaendeController extends BaseController<String> {
 	 * Daten für ComboBox Fahrrad.
 	 */
 	static class FahrradData extends BaseController.ComboBoxData<FzFahrradLang> {
+
 		new(FzFahrradLang v) {
 			super(v)
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getBezeichnung
+			return getData.bezeichnung
 		}
 	}
 
@@ -137,16 +138,14 @@ class FZ250FahrradstaendeController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var List<FzFahrradLang> fl = get(
-				FactoryService.getFreizeitService.getFahrradListe(getServiceDaten, true))
+			var List<FzFahrradLang> fl = get(FactoryService::freizeitService.getFahrradListe(serviceDaten, true))
 			fahrrad.setItems(getItems(fl, new FzFahrradLang, [a|new FahrradData(a)], null))
 			setText(fahrrad, null)
 			text.setText("%%")
 		}
 		if (stufe <= 1) {
 			var List<FzFahrradstandLang> l = get(
-				FactoryService.getFreizeitService.getFahrradstandListe(getServiceDaten, getText(fahrrad),
-					text.getText))
+				FactoryService::freizeitService.getFahrradstandListe(serviceDaten, getText(fahrrad), text.text))
 			getItems(l, null, [a|new FahrradstaendeData(a)], fahrradstaendeData)
 		}
 		if (stufe <= 2) {
@@ -160,17 +159,17 @@ class FZ250FahrradstaendeController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		fahrradstaende.setItems(fahrradstaendeData)
-		colFahrrad.setCellValueFactory([c|c.getValue.fahrrad])
-		colDatum.setCellValueFactory([c|c.getValue.datum])
-		colNr.setCellValueFactory([c|c.getValue.nr])
-		colZaehler.setCellValueFactory([c|c.getValue.zaehler])
-		colKm.setCellValueFactory([c|c.getValue.km])
-		colSchnitt.setCellValueFactory([c|c.getValue.schnitt])
-		colBeschreibung.setCellValueFactory([c|c.getValue.beschreibung])
-		colGv.setCellValueFactory([c|c.getValue.geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue.geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue.angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue.angelegtAm])
+		colFahrrad.setCellValueFactory([c|c.value.fahrrad])
+		colDatum.setCellValueFactory([c|c.value.datum])
+		colNr.setCellValueFactory([c|c.value.nr])
+		colZaehler.setCellValueFactory([c|c.value.zaehler])
+		colKm.setCellValueFactory([c|c.value.km])
+		colSchnitt.setCellValueFactory([c|c.value.schnitt])
+		colBeschreibung.setCellValueFactory([c|c.value.beschreibung])
+		colGv.setCellValueFactory([c|c.value.geaendertVon])
+		colGa.setCellValueFactory([c|c.value.geaendertAm])
+		colAv.setCellValueFactory([c|c.value.angelegtVon])
+		colAa.setCellValueFactory([c|c.value.angelegtAm])
 		initColumnBetrag(colSchnitt)
 	}
 

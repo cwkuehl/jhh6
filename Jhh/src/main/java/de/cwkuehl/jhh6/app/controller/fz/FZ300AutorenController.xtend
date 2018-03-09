@@ -61,13 +61,13 @@ class FZ300AutorenController extends BaseController<String> {
 		new(FzBuchautor v) {
 
 			super(v)
-			uid = new SimpleStringProperty(v.getUid)
-			name = new SimpleStringProperty(v.getName)
-			vorname = new SimpleStringProperty(v.getVorname)
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
+			uid = new SimpleStringProperty(v.uid)
+			name = new SimpleStringProperty(v.name)
+			vorname = new SimpleStringProperty(v.vorname)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
+			geaendertVon = new SimpleStringProperty(v.geaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
+			angelegtVon = new SimpleStringProperty(v.angelegtVon)
 		}
 
 		override String getId() {
@@ -106,7 +106,7 @@ class FZ300AutorenController extends BaseController<String> {
 		}
 		if (stufe <= 1) {
 			var List<FzBuchautor> l = get(
-				FactoryService.getFreizeitService.getAutorListe(getServiceDaten, false, name.getText))
+				FactoryService::freizeitService.getAutorListe(serviceDaten, false, name.text))
 			getItems(l, null, [a|new AutorenData(a)], autorenData)
 		}
 		if (stufe <= 2) {
@@ -120,13 +120,13 @@ class FZ300AutorenController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		autoren.setItems(autorenData)
-		colUid.setCellValueFactory([c|c.getValue.uid])
-		colName.setCellValueFactory([c|c.getValue.name])
-		colVorname.setCellValueFactory([c|c.getValue.vorname])
-		colGv.setCellValueFactory([c|c.getValue.geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue.geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue.angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue.angelegtAm])
+		colUid.setCellValueFactory([c|c.value.uid])
+		colName.setCellValueFactory([c|c.value.name])
+		colVorname.setCellValueFactory([c|c.value.vorname])
+		colGv.setCellValueFactory([c|c.value.geaendertVon])
+		colGa.setCellValueFactory([c|c.value.geaendertAm])
+		colAv.setCellValueFactory([c|c.value.angelegtVon])
+		colAa.setCellValueFactory([c|c.value.angelegtAm])
 	}
 
 	override protected void updateParent() {

@@ -30,8 +30,8 @@ class FZ210FahrradController extends BaseController<String> {
 	@FXML Label geaendert0
 	@FXML TextField geaendert
 	@FXML Button ok
-	//@FXML Button abbrechen
 
+	// @FXML Button abbrechen
 	/** 
 	 * Initialisierung des Dialogs.
 	 */
@@ -55,16 +55,16 @@ class FZ210FahrradController extends BaseController<String> {
 
 		if (stufe <= 0) {
 			setText(typ, FzFahrradTypEnum.TOUR.toString)
-			var boolean neu = DialogAufrufEnum.NEU.equals(getAufruf)
-			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(getAufruf)
+			var boolean neu = DialogAufrufEnum.NEU.equals(aufruf)
+			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(aufruf)
 			var FzFahrradLang k = getParameter1
 			if (!neu && k !== null) {
-				k = get(FactoryService.getFreizeitService.getFahrradLang(getServiceDaten, k.getUid))
-				nr.setText(k.getUid)
-				bezeichnung.setText(k.getBezeichnung)
-				setText(typ, Global.intStrFormat(k.getTyp))
-				angelegt.setText(k.formatDatumVon(k.getAngelegtAm, k.getAngelegtVon))
-				geaendert.setText(k.formatDatumVon(k.getGeaendertAm, k.getGeaendertVon))
+				k = get(FactoryService::freizeitService.getFahrradLang(serviceDaten, k.uid))
+				nr.setText(k.uid)
+				bezeichnung.setText(k.bezeichnung)
+				setText(typ, Global.intStrFormat(k.typ))
+				angelegt.setText(k.formatDatumVon(k.angelegtAm, k.angelegtVon))
+				geaendert.setText(k.formatDatumVon(k.geaendertAm, k.geaendertVon))
 			}
 			nr.setEditable(false)
 			bezeichnung.setEditable(!loeschen)
@@ -94,13 +94,13 @@ class FZ210FahrradController extends BaseController<String> {
 
 		var ServiceErgebnis<?> r = null
 		if (DialogAufrufEnum.NEU.equals(aufruf) || DialogAufrufEnum.KOPIEREN.equals(aufruf)) {
-			r = FactoryService.getFreizeitService.insertUpdateFahrrad(getServiceDaten, null, bezeichnung.getText,
+			r = FactoryService::freizeitService.insertUpdateFahrrad(serviceDaten, null, bezeichnung.text,
 				Global.strInt(getText(typ)))
 		} else if (DialogAufrufEnum.AENDERN.equals(aufruf)) {
-			r = FactoryService.getFreizeitService.insertUpdateFahrrad(getServiceDaten, nr.getText,
-				bezeichnung.getText, Global.strInt(getText(typ)))
+			r = FactoryService::freizeitService.insertUpdateFahrrad(serviceDaten, nr.text, bezeichnung.getText,
+				Global.strInt(getText(typ)))
 		} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
-			r = FactoryService.getFreizeitService.deleteFahrrad(getServiceDaten, nr.getText)
+			r = FactoryService::freizeitService.deleteFahrrad(serviceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)

@@ -57,13 +57,13 @@ class FZ200FahrraederController extends BaseController<String> {
 		new(FzFahrradLang v) {
 
 			super(v)
-			uid = new SimpleStringProperty(v.getUid)
-			bezeichnung = new SimpleStringProperty(v.getBezeichnung)
-			typ = new SimpleStringProperty(v.getTypBezeichnung)
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
+			uid = new SimpleStringProperty(v.uid)
+			bezeichnung = new SimpleStringProperty(v.bezeichnung)
+			typ = new SimpleStringProperty(v.typBezeichnung)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
+			geaendertVon = new SimpleStringProperty(v.geaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
+			angelegtVon = new SimpleStringProperty(v.angelegtVon)
 		}
 
 		override String getId() {
@@ -96,12 +96,10 @@ class FZ200FahrraederController extends BaseController<String> {
 	 */
 	override protected void initDaten(int stufe) {
 
-		if (stufe <= 0) {
-			 // stufe = 0
+		if (stufe <= 0) { // stufe = 0
 		}
 		if (stufe <= 1) {
-			var List<FzFahrradLang> l = get(
-				FactoryService.getFreizeitService.getFahrradListe(getServiceDaten, false))
+			var List<FzFahrradLang> l = get(FactoryService::freizeitService.getFahrradListe(serviceDaten, false))
 			getItems(l, null, [a|new FahrraederData(a)], fahrraederData)
 		}
 		if (stufe <= 2) {
@@ -115,13 +113,13 @@ class FZ200FahrraederController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		fahrraeder.setItems(fahrraederData)
-		colUid.setCellValueFactory([c|c.getValue.uid])
-		colBezeichnung.setCellValueFactory([c|c.getValue.bezeichnung])
-		colTyp.setCellValueFactory([c|c.getValue.typ])
-		colGv.setCellValueFactory([c|c.getValue.geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue.geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue.angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue.angelegtAm])
+		colUid.setCellValueFactory([c|c.value.uid])
+		colBezeichnung.setCellValueFactory([c|c.value.bezeichnung])
+		colTyp.setCellValueFactory([c|c.value.typ])
+		colGv.setCellValueFactory([c|c.value.geaendertVon])
+		colGa.setCellValueFactory([c|c.value.geaendertAm])
+		colAv.setCellValueFactory([c|c.value.angelegtVon])
+		colAa.setCellValueFactory([c|c.value.angelegtAm])
 	}
 
 	override protected void updateParent() {

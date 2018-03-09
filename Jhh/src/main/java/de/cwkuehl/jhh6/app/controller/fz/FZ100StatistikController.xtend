@@ -31,7 +31,7 @@ class FZ100StatistikController extends BaseController<String> {
 
 		tabbar = 1
 		super.initialize
-		datum0.setLabelFor(datum.getLabelForNode)
+		datum0.setLabelFor(datum.labelForNode)
 		bilanz0.setLabelFor(bilanz)
 		buecher0.setLabelFor(buecher)
 		fahrrad0.setLabelFor(fahrrad)
@@ -50,12 +50,11 @@ class FZ100StatistikController extends BaseController<String> {
 			datum.setValue(LocalDate.now)
 		}
 		if (stufe <= 1) {
-			var String str = get(
-				FactoryService.getFreizeitService.getStatistik(getServiceDaten, 1, datum.getValue))
+			var String str = get(FactoryService::freizeitService.getStatistik(serviceDaten, 1, datum.value))
 			bilanz.setText(str)
-			str = get(FactoryService.getFreizeitService.getStatistik(getServiceDaten, 2, datum.getValue))
+			str = get(FactoryService::freizeitService.getStatistik(serviceDaten, 2, datum.value))
 			buecher.setText(str)
-			str = get(FactoryService.getFreizeitService.getStatistik(getServiceDaten, 3, datum.getValue))
+			str = get(FactoryService::freizeitService.getStatistik(serviceDaten, 3, datum.value))
 			fahrrad.setText(str)
 		}
 		if (stufe <= 2) { // initDatenTable

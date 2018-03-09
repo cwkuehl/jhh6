@@ -27,8 +27,8 @@ class FZ310AutorController extends BaseController<FzBuchautor> {
 	@FXML Label geaendert0
 	@FXML TextField geaendert
 	@FXML Button ok
-	//@FXML Button abbrechen
 
+	// @FXML Button abbrechen
 	/** 
 	 * Initialisierung des Dialogs.
 	 */
@@ -51,16 +51,16 @@ class FZ310AutorController extends BaseController<FzBuchautor> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var boolean neu = DialogAufrufEnum.NEU.equals(getAufruf)
-			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(getAufruf)
+			var boolean neu = DialogAufrufEnum.NEU.equals(aufruf)
+			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(aufruf)
 			var FzBuchautor k = getParameter1
 			if (!neu && k !== null) {
-				k = get(FactoryService.getFreizeitService.getAutor(getServiceDaten, k.getUid))
-				nr.setText(k.getUid)
-				name.setText(k.getName)
-				vorname.setText(k.getVorname)
-				angelegt.setText(k.formatDatumVon(k.getAngelegtAm, k.getAngelegtVon))
-				geaendert.setText(k.formatDatumVon(k.getGeaendertAm, k.getGeaendertVon))
+				k = get(FactoryService::freizeitService.getAutor(serviceDaten, k.uid))
+				nr.setText(k.uid)
+				name.setText(k.name)
+				vorname.setText(k.vorname)
+				angelegt.setText(k.formatDatumVon(k.angelegtAm, k.angelegtVon))
+				geaendert.setText(k.formatDatumVon(k.geaendertAm, k.geaendertVon))
 			}
 			nr.setEditable(false)
 			name.setEditable(!loeschen)
@@ -91,15 +91,14 @@ class FZ310AutorController extends BaseController<FzBuchautor> {
 		var ServiceErgebnis<?> r = null
 		var FzBuchautor s = null
 		if (DialogAufrufEnum.NEU.equals(aufruf) || DialogAufrufEnum.KOPIEREN.equals(aufruf)) {
-			var ServiceErgebnis<FzBuchautor> r1 = FactoryService.getFreizeitService.insertUpdateAutor(
-				getServiceDaten, null, name.getText, vorname.getText)
+			var ServiceErgebnis<FzBuchautor> r1 = FactoryService::freizeitService.insertUpdateAutor(serviceDaten, null,
+				name.text, vorname.text)
 			s = r1.getErgebnis
 			r = r1
 		} else if (DialogAufrufEnum.AENDERN.equals(aufruf)) {
-			r = FactoryService.getFreizeitService.insertUpdateAutor(getServiceDaten, nr.getText, name.getText,
-				vorname.getText)
+			r = FactoryService::freizeitService.insertUpdateAutor(serviceDaten, nr.text, name.text, vorname.text)
 		} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
-			r = FactoryService.getFreizeitService.deleteAutor(getServiceDaten, nr.getText)
+			r = FactoryService::freizeitService.deleteAutor(serviceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)

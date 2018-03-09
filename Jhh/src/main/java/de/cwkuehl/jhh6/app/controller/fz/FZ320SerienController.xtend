@@ -42,8 +42,8 @@ class FZ320SerienController extends BaseController<String> {
 	ObservableList<SerienData> serienData = FXCollections.observableArrayList
 	@FXML Label name0
 	@FXML TextField name
-	//@FXML Button alle
 
+	// @FXML Button alle
 	/** 
 	 * Daten für Tabelle Serien.
 	 */
@@ -59,12 +59,12 @@ class FZ320SerienController extends BaseController<String> {
 		new(FzBuchserie v) {
 
 			super(v)
-			uid = new SimpleStringProperty(v.getUid)
-			name = new SimpleStringProperty(v.getName)
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
+			uid = new SimpleStringProperty(v.uid)
+			name = new SimpleStringProperty(v.name)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
+			geaendertVon = new SimpleStringProperty(v.geaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
+			angelegtVon = new SimpleStringProperty(v.angelegtVon)
 		}
 
 		override String getId() {
@@ -102,8 +102,7 @@ class FZ320SerienController extends BaseController<String> {
 			name.setText("%%")
 		}
 		if (stufe <= 1) {
-			var List<FzBuchserie> l = get(
-				FactoryService.getFreizeitService.getSerieListe(getServiceDaten, name.getText))
+			var List<FzBuchserie> l = get(FactoryService::freizeitService.getSerieListe(serviceDaten, name.text))
 			getItems(l, null, [a|new SerienData(a)], serienData)
 		}
 		if (stufe <= 2) {
@@ -117,12 +116,12 @@ class FZ320SerienController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		serien.setItems(serienData)
-		colUid.setCellValueFactory([c|c.getValue.uid])
-		colName.setCellValueFactory([c|c.getValue.name])
-		colGv.setCellValueFactory([c|c.getValue.geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue.geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue.angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue.angelegtAm])
+		colUid.setCellValueFactory([c|c.value.uid])
+		colName.setCellValueFactory([c|c.value.name])
+		colGv.setCellValueFactory([c|c.value.geaendertVon])
+		colGa.setCellValueFactory([c|c.value.geaendertAm])
+		colAv.setCellValueFactory([c|c.value.angelegtVon])
+		colAa.setCellValueFactory([c|c.value.angelegtAm])
 	}
 
 	override protected void updateParent() {

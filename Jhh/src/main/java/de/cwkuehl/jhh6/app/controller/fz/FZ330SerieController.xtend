@@ -54,11 +54,11 @@ class FZ330SerieController extends BaseController<FzBuchserie> {
 			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(getAufruf)
 			var FzBuchserie k = getParameter1
 			if (!neu && k !== null) {
-				k = get(FactoryService.getFreizeitService.getSerie(getServiceDaten, k.getUid))
-				nr.setText(k.getUid)
-				name.setText(k.getName)
-				angelegt.setText(k.formatDatumVon(k.getAngelegtAm, k.getAngelegtVon))
-				geaendert.setText(k.formatDatumVon(k.getGeaendertAm, k.getGeaendertVon))
+				k = get(FactoryService::freizeitService.getSerie(serviceDaten, k.uid))
+				nr.setText(k.uid)
+				name.setText(k.name)
+				angelegt.setText(k.formatDatumVon(k.angelegtAm, k.angelegtVon))
+				geaendert.setText(k.formatDatumVon(k.geaendertAm, k.geaendertVon))
 			}
 			nr.setEditable(false)
 			name.setEditable(!loeschen)
@@ -86,14 +86,14 @@ class FZ330SerieController extends BaseController<FzBuchserie> {
 		var ServiceErgebnis<?> r = null
 		var FzBuchserie s = null
 		if (DialogAufrufEnum.NEU.equals(aufruf) || DialogAufrufEnum.KOPIEREN.equals(aufruf)) {
-			var ServiceErgebnis<FzBuchserie> r1 = FactoryService.getFreizeitService.insertUpdateSerie(
-				getServiceDaten, null, name.getText)
+			var ServiceErgebnis<FzBuchserie> r1 = FactoryService::freizeitService.insertUpdateSerie(serviceDaten, null,
+				name.text)
 			s = r1.getErgebnis
 			r = r1
 		} else if (DialogAufrufEnum.AENDERN.equals(aufruf)) {
-			r = FactoryService.getFreizeitService.insertUpdateSerie(getServiceDaten, nr.getText, name.getText)
+			r = FactoryService::freizeitService.insertUpdateSerie(serviceDaten, nr.text, name.text)
 		} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
-			r = FactoryService.getFreizeitService.deleteSerie(getServiceDaten, nr.getText)
+			r = FactoryService::freizeitService.deleteSerie(serviceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)

@@ -83,11 +83,11 @@ class FZ350BuchController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getName
+			return getData.name
 		}
 	}
 
@@ -120,10 +120,9 @@ class FZ350BuchController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var List<FzBuchautor> al = get(
-				FactoryService.getFreizeitService.getAutorListe(getServiceDaten, true, null))
+			var List<FzBuchautor> al = get(FactoryService::freizeitService.getAutorListe(serviceDaten, true, null))
 			autor.setItems(getItems(al, null, [a|new AutorData(a)], null))
-			var List<FzBuchserie> sl = get(FactoryService.getFreizeitService.getSerieListe(getServiceDaten, null))
+			var List<FzBuchserie> sl = get(FactoryService::freizeitService.getSerieListe(serviceDaten, null))
 			serie.setItems(getItems(sl, null, [a|new SerieData(a)], null))
 			if (al.size > 0) {
 				setText(autor, al.get(0).getUid)
@@ -141,19 +140,19 @@ class FZ350BuchController extends BaseController<String> {
 			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(getAufruf)
 			var FzBuchLang k = getParameter1
 			if (!neu && k !== null) {
-				k = get(FactoryService.getFreizeitService.getBuchLang(getServiceDaten, k.getUid))
-				nr.setText(k.getUid)
-				setText(autor, k.getAutorUid)
-				setText(serie, k.getSerieUid)
-				seriennummer.setText(Global.intStrFormat(k.getSeriennummer))
-				titel.setText(k.getTitel)
-				seiten.setText(Global.intStrFormat(k.getSeiten))
-				setText(sprache, Global.intStr(k.getSpracheNr))
-				besitz.setSelected(k.getIstBesitz)
-				lesedatum.setValue(k.getLesedatum)
-				hoerdatum.setValue(k.getHoerdatum)
-				angelegt.setText(k.formatDatumVon(k.getAngelegtAm, k.getAngelegtVon))
-				geaendert.setText(k.formatDatumVon(k.getGeaendertAm, k.getGeaendertVon))
+				k = get(FactoryService::freizeitService.getBuchLang(serviceDaten, k.uid))
+				nr.setText(k.uid)
+				setText(autor, k.autorUid)
+				setText(serie, k.serieUid)
+				seriennummer.setText(Global.intStrFormat(k.seriennummer))
+				titel.setText(k.titel)
+				seiten.setText(Global.intStrFormat(k.seiten))
+				setText(sprache, Global.intStr(k.spracheNr))
+				besitz.setSelected(k.istBesitz)
+				lesedatum.setValue(k.lesedatum)
+				hoerdatum.setValue(k.hoerdatum)
+				angelegt.setText(k.formatDatumVon(k.angelegtAm, k.angelegtVon))
+				geaendert.setText(k.formatDatumVon(k.geaendertAm, k.geaendertVon))
 			}
 			nr.setEditable(false)
 			setEditable(autor, !loeschen)
@@ -188,10 +187,9 @@ class FZ350BuchController extends BaseController<String> {
 
 		var FzBuchautor k = starteDialog(FZ310AutorController, DialogAufrufEnum.NEU)
 		if (k !== null) {
-			var List<FzBuchautor> al = get(
-				FactoryService.getFreizeitService.getAutorListe(getServiceDaten, true, null))
+			var List<FzBuchautor> al = get(FactoryService::freizeitService.getAutorListe(serviceDaten, true, null))
 			autor.setItems(getItems(al, null, [a|new AutorData(a)], null))
-			setText(autor, k.getUid)
+			setText(autor, k.uid)
 		}
 	}
 
@@ -202,9 +200,9 @@ class FZ350BuchController extends BaseController<String> {
 
 		var FzBuchserie k = starteDialog(FZ330SerieController, DialogAufrufEnum.NEU)
 		if (k !== null) {
-			var List<FzBuchserie> sl = get(FactoryService.getFreizeitService.getSerieListe(getServiceDaten, null))
+			var List<FzBuchserie> sl = get(FactoryService::freizeitService.getSerieListe(serviceDaten, null))
 			serie.setItems(getItems(sl, null, [a|new SerieData(a)], null))
-			setText(serie, k.getUid)
+			setText(serie, k.uid)
 		}
 	}
 
@@ -216,15 +214,15 @@ class FZ350BuchController extends BaseController<String> {
 
 		var ServiceErgebnis<?> r = null
 		if (DialogAufrufEnum.NEU.equals(aufruf) || DialogAufrufEnum.KOPIEREN.equals(aufruf)) {
-			r = FactoryService.getFreizeitService.insertUpdateBuch(getServiceDaten, null, getText(autor),
-				getText(serie), Global.strInt(seriennummer.getText), titel.getText, Global.strInt(seiten.getText),
-				getText(sprache), besitz.isSelected, lesedatum.getValue, hoerdatum.getValue)
+			r = FactoryService::freizeitService.insertUpdateBuch(serviceDaten, null, getText(autor), getText(serie),
+				Global.strInt(seriennummer.text), titel.text, Global.strInt(seiten.text), getText(sprache),
+				besitz.isSelected, lesedatum.value, hoerdatum.value)
 		} else if (DialogAufrufEnum.AENDERN.equals(aufruf)) {
-			r = FactoryService.getFreizeitService.insertUpdateBuch(getServiceDaten, nr.getText, getText(autor),
-				getText(serie), Global.strInt(seriennummer.getText), titel.getText, Global.strInt(seiten.getText),
-				getText(sprache), besitz.isSelected, lesedatum.getValue, hoerdatum.getValue)
+			r = FactoryService::freizeitService.insertUpdateBuch(serviceDaten, nr.text, getText(autor), getText(serie),
+				Global.strInt(seriennummer.text), titel.text, Global.strInt(seiten.text), getText(sprache),
+				besitz.isSelected, lesedatum.value, hoerdatum.value)
 		} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
-			r = FactoryService.getFreizeitService.deleteBuch(getServiceDaten, nr.getText)
+			r = FactoryService::freizeitService.deleteBuch(serviceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)
