@@ -39,8 +39,8 @@ class MO500SchnittstelleController extends BaseController<String> {
 	override protected void initialize() {
 
 		tabbar = 0
-		von0.setLabelFor(von.getLabelForNode, true)
-		bis0.setLabelFor(bis.getLabelForNode)
+		von0.setLabelFor(von.labelForNode, true)
+		bis0.setLabelFor(bis.labelForNode)
 		datei0.setLabelFor(datei, true)
 		initDaten(0)
 		datei.requestFocus
@@ -53,7 +53,7 @@ class MO500SchnittstelleController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			von.setValue(LocalDate.now.withDayOfYear(1))
+			von.setValue(LocalDate::now.withDayOfYear(1))
 			bis.setValue((null as LocalDate))
 		}
 		if (stufe <= 1) { // stufe = 0
@@ -90,9 +90,9 @@ class MO500SchnittstelleController extends BaseController<String> {
 		if (Werkzeug.showYesNoQuestion(Meldungen.MO032) === 0) {
 			return
 		}
-		var List<String> zeilen = Werkzeug.leseDatei(datei.getText)
+		var List<String> zeilen = Werkzeug.leseDatei(datei.text)
 		var meldung = get(
-			FactoryService.getMessdienerService.importMessdienerListe(getServiceDaten, zeilen, loeschen.isSelected))
+			FactoryService::messdienerService.importMessdienerListe(serviceDaten, zeilen, loeschen.isSelected))
 		if (!Global.nes(meldung)) {
 			updateParent
 			Werkzeug.showInfo(meldung)
@@ -104,12 +104,12 @@ class MO500SchnittstelleController extends BaseController<String> {
 	 */
 	@FXML def void onExport() {
 
-		if (Global.nes(datei.getText)) {
+		if (Global.nes(datei.text)) {
 			throw new MeldungException(Meldungen.M1012)
 		}
 		var List<String> zeilen = get(
-			FactoryService.getMessdienerService.exportMessdienerListe(getServiceDaten, von.getValue, bis.getValue))
-		Werkzeug.speicherDateiOeffnen(zeilen, null, datei.getText, false)
+			FactoryService::messdienerService.exportMessdienerListe(serviceDaten, von.value, bis.value))
+		Werkzeug.speicherDateiOeffnen(zeilen, null, datei.text, false)
 	}
 
 	/** 
@@ -117,15 +117,15 @@ class MO500SchnittstelleController extends BaseController<String> {
 	 */
 	@FXML def void onImport2() {
 
-		if (Global.nes(datei.getText)) {
+		if (Global.nes(datei.text)) {
 			throw new MeldungException(Meldungen.M1012)
 		}
 		if (Werkzeug.showYesNoQuestion(Meldungen.MO033) == 0) {
 			return
 		}
-		var List<String> zeilen = Werkzeug.leseDatei(datei.getText)
+		var List<String> zeilen = Werkzeug.leseDatei(datei.text)
 		var String meldung = get(
-			FactoryService.getMessdienerService.importGottesdienstListe(getServiceDaten, zeilen, loeschen.isSelected))
+			FactoryService::messdienerService.importGottesdienstListe(serviceDaten, zeilen, loeschen.isSelected))
 		if (!Global.nes(meldung)) {
 			updateParent
 			Werkzeug.showInfo(meldung)

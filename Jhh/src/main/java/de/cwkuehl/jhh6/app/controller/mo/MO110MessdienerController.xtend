@@ -72,11 +72,11 @@ class MO110MessdienerController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getName
+			return getData.name
 		}
 	}
 
@@ -90,11 +90,11 @@ class MO110MessdienerController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getSchluessel
+			return getData.schluessel
 		}
 
 		override String toString() {
-			return getData.getWert
+			return getData.wert
 		}
 	}
 
@@ -108,11 +108,11 @@ class MO110MessdienerController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getSchluessel
+			return getData.schluessel
 		}
 
 		override String toString() {
-			return getData.getWert
+			return getData.wert
 		}
 	}
 
@@ -126,11 +126,11 @@ class MO110MessdienerController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getSchluessel
+			return getData.schluessel
 		}
 
 		override String toString() {
-			return getData.getWert
+			return getData.wert
 		}
 	}
 
@@ -149,8 +149,8 @@ class MO110MessdienerController extends BaseController<String> {
 		email10.setLabelFor(email1)
 		email20.setLabelFor(email2)
 		mit0.setLabelFor(mit, false)
-		von0.setLabelFor(von.getLabelForNode, true)
-		bis0.setLabelFor(bis.getLabelForNode)
+		von0.setLabelFor(von.labelForNode, true)
+		bis0.setLabelFor(bis.labelForNode)
 		dienste0.setLabelFor(dienste)
 		initListView(dienste, null)
 		verfuegbar0.setLabelFor(verfuegbar)
@@ -173,42 +173,42 @@ class MO110MessdienerController extends BaseController<String> {
 
 		if (stufe <= 0) {
 			var List<MoMessdiener> mliste = get(
-				FactoryService::getMessdienerService.getMessdienerListe(getServiceDaten, true))
+				FactoryService::messdienerService.getMessdienerListe(serviceDaten, true))
 			mit.setItems(getItems(mliste, new MoMessdiener, [a|new MitData(a)], null))
 			var List<MaEinstellung> dliste = get(
-				FactoryService::getMessdienerService.getStandardDienstListe(getServiceDaten))
+				FactoryService::messdienerService.getStandardDienstListe(serviceDaten))
 			dienste.setItems(getItems(dliste, null, [a|new DiensteData(a)], null))
 			var List<MaEinstellung> vliste = get(
-				FactoryService::getMessdienerService.getStandardVerfuegbarListe(getServiceDaten))
+				FactoryService::messdienerService.getStandardVerfuegbarListe(serviceDaten))
 			verfuegbar.setItems(getItems(vliste, null, [a|new VerfuegbarData(a)], null))
 			var List<MaEinstellung> sliste = get(
-				FactoryService::getMessdienerService.getStandardStatusListe(getServiceDaten))
+				FactoryService::messdienerService.getStandardStatusListe(serviceDaten))
 			status.setItems(getItems(sliste, null, [a|new StatusData(a)], null))
 			status.getSelectionModel.select(0)
-			var boolean neu = DialogAufrufEnum::NEU.equals(getAufruf)
-			var boolean loeschen = DialogAufrufEnum::LOESCHEN.equals(getAufruf)
+			var boolean neu = DialogAufrufEnum::NEU.equals(aufruf)
+			var boolean loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
 			var MoMessdiener k = getParameter1
 			if (!neu && k !== null) {
-				k = get(FactoryService::getMessdienerService.getMessdiener(getServiceDaten, k.getUid))
-				nr.setText(k.getUid)
-				name.setText(k.getName)
-				vorname.setText(k.getVorname)
-				adresse1.setText(k.getAdresse1)
-				adresse2.setText(k.getAdresse2)
-				adresse3.setText(k.getAdresse3)
-				email1.setText(k.getEmail)
-				email2.setText(k.getEmail2)
-				telefon1.setText(k.getTelefon)
-				telefon2.setText(k.getTelefon2)
-				von.setValue(k.getVon)
-				bis.setValue(k.getBis)
-				setText(mit, k.getMessdienerUid)
-				setTexte(dienste, k.getDienste)
-				setTexte(verfuegbar, k.getVerfuegbarkeit)
-				setText(status, k.getStatus)
-				notiz.setText(k.getNotiz)
-				angelegt.setText(k.formatDatumVon(k.getAngelegtAm, k.getAngelegtVon))
-				geaendert.setText(k.formatDatumVon(k.getGeaendertAm, k.getGeaendertVon))
+				k = get(FactoryService::messdienerService.getMessdiener(serviceDaten, k.uid))
+				nr.setText(k.uid)
+				name.setText(k.name)
+				vorname.setText(k.vorname)
+				adresse1.setText(k.adresse1)
+				adresse2.setText(k.adresse2)
+				adresse3.setText(k.adresse3)
+				email1.setText(k.email)
+				email2.setText(k.email2)
+				telefon1.setText(k.telefon)
+				telefon2.setText(k.telefon2)
+				von.setValue(k.von)
+				bis.setValue(k.bis)
+				setText(mit, k.messdienerUid)
+				setTexte(dienste, k.dienste)
+				setTexte(verfuegbar, k.verfuegbarkeit)
+				setText(status, k.status)
+				notiz.setText(k.notiz)
+				angelegt.setText(k.formatDatumVon(k.angelegtAm, k.angelegtVon))
+				geaendert.setText(k.formatDatumVon(k.geaendertAm, k.geaendertVon))
 			}
 			nr.setEditable(false)
 			name.setEditable(!loeschen)
@@ -252,17 +252,17 @@ class MO110MessdienerController extends BaseController<String> {
 
 		var ServiceErgebnis<?> r = null
 		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
-			r = FactoryService::getMessdienerService.insertUpdateMessdiener(getServiceDaten, null, name.getText,
-				vorname.getText, von.getValue, bis.getValue, adresse1.getText, adresse2.getText, adresse3.getText,
-				email1.getText, email2.getText, telefon1.getText, telefon2.getText, getText(verfuegbar),
-				getText(dienste), getText(mit), getText(status), notiz.getText)
+			r = FactoryService::messdienerService.insertUpdateMessdiener(serviceDaten, null, name.text, vorname.text,
+				von.value, bis.value, adresse1.text, adresse2.text, adresse3.text, email1.text, email2.text,
+				telefon1.text, telefon2.text, getText(verfuegbar), getText(dienste), getText(mit), getText(status),
+				notiz.text)
 		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
-			r = FactoryService::getMessdienerService.insertUpdateMessdiener(getServiceDaten, nr.getText, name.getText,
-				vorname.getText, von.getValue, bis.getValue, adresse1.getText, adresse2.getText, adresse3.getText,
-				email1.getText, email2.getText, telefon1.getText, telefon2.getText, getTexte(verfuegbar),
-				getTexte(dienste), getText(mit), getText(status), notiz.getText)
+			r = FactoryService::messdienerService.insertUpdateMessdiener(serviceDaten, nr.text, name.text,
+				vorname.text, von.value, bis.value, adresse1.text, adresse2.text, adresse3.text, email1.text,
+				email2.text, telefon1.text, telefon2.text, getTexte(verfuegbar), getTexte(dienste), getText(mit),
+				getText(status), notiz.text)
 		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
-			r = FactoryService::getMessdienerService.deleteMessdiener(getServiceDaten, nr.getText)
+			r = FactoryService::messdienerService.deleteMessdiener(serviceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)

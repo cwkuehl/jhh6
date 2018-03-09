@@ -23,6 +23,7 @@ import javafx.scene.input.MouseEvent
  * Controller für Dialog MO100Messdiener.
  */
 class MO100MessdienerController extends BaseController<String> {
+
 	@FXML Button aktuell
 	@FXML Button rueckgaengig
 	@FXML Button wiederherstellen
@@ -62,15 +63,15 @@ class MO100MessdienerController extends BaseController<String> {
 		new(MoMessdiener v) {
 
 			super(v)
-			uid = new SimpleStringProperty(v.getUid)
-			vorname = new SimpleStringProperty(v.getVorname)
-			name = new SimpleStringProperty(v.getName)
-			von = new SimpleObjectProperty<LocalDate>(v.getVon)
-			bis = new SimpleObjectProperty<LocalDate>(v.getBis)
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
+			uid = new SimpleStringProperty(v.uid)
+			vorname = new SimpleStringProperty(v.vorname)
+			name = new SimpleStringProperty(v.name)
+			von = new SimpleObjectProperty<LocalDate>(v.von)
+			bis = new SimpleObjectProperty<LocalDate>(v.bis)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
+			geaendertVon = new SimpleStringProperty(v.geaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
+			angelegtVon = new SimpleStringProperty(v.angelegtVon)
 		}
 
 		override String getId() {
@@ -108,7 +109,7 @@ class MO100MessdienerController extends BaseController<String> {
 		}
 		if (stufe <= 1) {
 			var List<MoMessdiener> l = get(
-				FactoryService::getMessdienerService.getMessdienerListe(getServiceDaten, false))
+				FactoryService::messdienerService.getMessdienerListe(serviceDaten, false))
 			getItems(l, null, [a|new MessdienerData(a)], messdienerData)
 		}
 		if (stufe <= 2) {
@@ -122,15 +123,15 @@ class MO100MessdienerController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		messdiener.setItems(messdienerData)
-		colUid.setCellValueFactory([c|c.getValue.uid])
-		colVorname.setCellValueFactory([c|c.getValue.vorname])
-		colName.setCellValueFactory([c|c.getValue.name])
-		colVon.setCellValueFactory([c|c.getValue.von])
-		colBis.setCellValueFactory([c|c.getValue.bis])
-		colGv.setCellValueFactory([c|c.getValue.geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue.geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue.angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue.angelegtAm])
+		colUid.setCellValueFactory([c|c.value.uid])
+		colVorname.setCellValueFactory([c|c.value.vorname])
+		colName.setCellValueFactory([c|c.value.name])
+		colVon.setCellValueFactory([c|c.value.von])
+		colBis.setCellValueFactory([c|c.value.bis])
+		colGv.setCellValueFactory([c|c.value.geaendertVon])
+		colGa.setCellValueFactory([c|c.value.geaendertAm])
+		colAv.setCellValueFactory([c|c.value.angelegtVon])
+		colAa.setCellValueFactory([c|c.value.angelegtAm])
 	}
 
 	override protected void updateParent() {

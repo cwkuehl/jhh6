@@ -30,8 +30,8 @@ class MO310ProfilController extends BaseController<String> {
 	@FXML Label geaendert0
 	@FXML TextField geaendert
 	@FXML Button ok
-	//@FXML Button abbrechen
 
+	// @FXML Button abbrechen
 	/** 
 	 * Initialisierung des Dialogs.
 	 */
@@ -55,17 +55,17 @@ class MO310ProfilController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var boolean neu = DialogAufrufEnum.NEU.equals(getAufruf)
-			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(getAufruf)
+			var boolean neu = DialogAufrufEnum.NEU.equals(aufruf)
+			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(aufruf)
 			var MoProfil k = getParameter1
 			if (!neu && k !== null) {
-				k = get(FactoryService.getMessdienerService.getProfil(getServiceDaten, k.getUid))
-				nr.setText(k.getUid)
-				name.setText(k.getName)
-				dienste.setText(k.getDienste)
-				notiz.setText(k.getNotiz)
-				angelegt.setText(k.formatDatumVon(k.getAngelegtAm, k.getAngelegtVon))
-				geaendert.setText(k.formatDatumVon(k.getGeaendertAm, k.getGeaendertVon))
+				k = get(FactoryService::messdienerService.getProfil(serviceDaten, k.uid))
+				nr.setText(k.uid)
+				name.setText(k.name)
+				dienste.setText(k.dienste)
+				notiz.setText(k.notiz)
+				angelegt.setText(k.formatDatumVon(k.angelegtAm, k.angelegtVon))
+				geaendert.setText(k.formatDatumVon(k.geaendertAm, k.geaendertVon))
 			}
 			nr.setEditable(false)
 			name.setEditable(!loeschen)
@@ -96,13 +96,13 @@ class MO310ProfilController extends BaseController<String> {
 
 		var ServiceErgebnis<?> r = null
 		if (DialogAufrufEnum.NEU.equals(aufruf) || DialogAufrufEnum.KOPIEREN.equals(aufruf)) {
-			r = FactoryService.getMessdienerService.insertUpdateProfil(getServiceDaten, null, name.getText,
-				dienste.getText, notiz.getText)
+			r = FactoryService::messdienerService.insertUpdateProfil(serviceDaten, null, name.text, dienste.text,
+				notiz.text)
 		} else if (DialogAufrufEnum.AENDERN.equals(aufruf)) {
-			r = FactoryService.getMessdienerService.insertUpdateProfil(getServiceDaten, nr.getText,
-				name.getText, dienste.getText, notiz.getText)
+			r = FactoryService::messdienerService.insertUpdateProfil(serviceDaten, nr.text, name.text, dienste.text,
+				notiz.text)
 		} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
-			r = FactoryService.getMessdienerService.deleteProfil(getServiceDaten, nr.getText)
+			r = FactoryService::messdienerService.deleteProfil(serviceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)

@@ -1038,8 +1038,8 @@ class ReplikationService {
 				nach.con.close
 			}
 			if (e !== null) {
-				maeinstellungRep.iuMaEinstellung(daten, null, Constant.EINST_MA_REPLIKATION_BEGINN, "", null, null,
-					null, null)
+				maeinstellungRep.iuMaEinstellung(daten, null, Constant.EINST_MA_REPLIKATION_BEGINN, "", null,
+					null, null, null)
 			}
 		}
 		var r = new ServiceErgebnis<Void>(null)

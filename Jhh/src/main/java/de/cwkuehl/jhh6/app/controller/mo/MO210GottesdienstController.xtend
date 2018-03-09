@@ -68,8 +68,8 @@ class MO210GottesdienstController extends BaseController<String> {
 	@FXML Button aendern
 	@FXML Button loeschen
 	@FXML Button alleLoeschen
-	//@FXML Button abbrechen
 
+	// @FXML Button abbrechen
 	/** 
 	 * Daten für ComboBox Name.
 	 */
@@ -80,11 +80,11 @@ class MO210GottesdienstController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getSchluessel
+			return getData.schluessel
 		}
 
 		override String toString() {
-			return getData.getWert
+			return getData.wert
 		}
 	}
 
@@ -98,11 +98,11 @@ class MO210GottesdienstController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getSchluessel
+			return getData.schluessel
 		}
 
 		override String toString() {
-			return getData.getWert
+			return getData.wert
 		}
 	}
 
@@ -116,11 +116,11 @@ class MO210GottesdienstController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getName
+			return getData.name
 		}
 	}
 
@@ -134,11 +134,11 @@ class MO210GottesdienstController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getSchluessel
+			return getData.schluessel
 		}
 
 		override String toString() {
-			return getData.getWert
+			return getData.wert
 		}
 	}
 
@@ -159,14 +159,14 @@ class MO210GottesdienstController extends BaseController<String> {
 		new(MoEinteilungLang v) {
 
 			super(v)
-			uid = new SimpleStringProperty(v.getUid)
-			dienst = new SimpleStringProperty(v.getDienst)
-			vorname = new SimpleStringProperty(v.getMessdienerVorname)
-			name = new SimpleStringProperty(v.getMessdienerName)
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
+			uid = new SimpleStringProperty(v.uid)
+			dienst = new SimpleStringProperty(v.dienst)
+			vorname = new SimpleStringProperty(v.messdienerVorname)
+			name = new SimpleStringProperty(v.messdienerName)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
+			geaendertVon = new SimpleStringProperty(v.geaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
+			angelegtVon = new SimpleStringProperty(v.angelegtVon)
 		}
 
 		override String getId() {
@@ -203,36 +203,32 @@ class MO210GottesdienstController extends BaseController<String> {
 
 		if (stufe <= 0) {
 			von.setValue(LocalDate::now.atTime(18, 0))
-			var List<MaEinstellung> nliste = get(
-				FactoryService::getMessdienerService.getStandardNameListe(getServiceDaten))
+			var List<MaEinstellung> nliste = get(FactoryService::messdienerService.getStandardNameListe(serviceDaten))
 			name.setItems(getItems(nliste, null, [a|new NameData(a)], null))
 			name.getSelectionModel.select(0)
-			var List<MaEinstellung> oliste = get(
-				FactoryService::getMessdienerService.getStandardOrtListe(getServiceDaten))
+			var List<MaEinstellung> oliste = get(FactoryService::messdienerService.getStandardOrtListe(serviceDaten))
 			ort.setItems(getItems(oliste, null, [a|new OrtData(a)], null))
 			ort.getSelectionModel.select(0)
-			var List<MoProfil> pliste = get(
-				FactoryService::getMessdienerService.getProfilListe(getServiceDaten, true))
+			var List<MoProfil> pliste = get(FactoryService::messdienerService.getProfilListe(serviceDaten, true))
 			profil.setItems(getItems(pliste, new MoProfil, [a|new ProfilData(a)], null))
-			 // profil.getSelectionModel.select(0)
-			var List<MaEinstellung> sliste = get(
-				FactoryService::getMessdienerService.getStandardStatusListe(getServiceDaten))
+			// profil.getSelectionModel.select(0)
+			var List<MaEinstellung> sliste = get(FactoryService::messdienerService.getStandardStatusListe(serviceDaten))
 			status.setItems(getItems(sliste, null, [a|new StatusData(a)], null))
 			status.getSelectionModel.select(0)
-			var boolean neu0 = DialogAufrufEnum::NEU.equals(getAufruf)
-			var boolean loeschen0 = DialogAufrufEnum::LOESCHEN.equals(getAufruf)
+			var boolean neu0 = DialogAufrufEnum::NEU.equals(aufruf)
+			var boolean loeschen0 = DialogAufrufEnum::LOESCHEN.equals(aufruf)
 			var MoGottesdienst k = getParameter1
 			if (!neu0 && k !== null) {
-				k = get(FactoryService::getMessdienerService.getGottesdienst(getServiceDaten, k.getUid))
-				nr.setText(k.getUid)
-				von.setValue(k.getTermin)
-				setText(name, k.getName)
-				setText(ort, k.getOrt)
-				setText(profil, k.getProfilUid)
-				setText(status, k.getStatus)
-				notiz.setText(k.getNotiz)
-				angelegt.setText(k.formatDatumVon(k.getAngelegtAm, k.getAngelegtVon))
-				geaendert.setText(k.formatDatumVon(k.getGeaendertAm, k.getGeaendertVon))
+				k = get(FactoryService::messdienerService.getGottesdienst(serviceDaten, k.uid))
+				nr.setText(k.uid)
+				von.setValue(k.termin)
+				setText(name, k.name)
+				setText(ort, k.ort)
+				setText(profil, k.profilUid)
+				setText(status, k.status)
+				notiz.setText(k.notiz)
+				angelegt.setText(k.formatDatumVon(k.angelegtAm, k.angelegtVon))
+				geaendert.setText(k.formatDatumVon(k.geaendertAm, k.geaendertVon))
 			}
 			nr.setEditable(false)
 			von.setEditable(!loeschen0)
@@ -254,10 +250,9 @@ class MO210GottesdienstController extends BaseController<String> {
 		if (stufe <= 1) {
 			if (einteilungenData === null) {
 				einteilungenData = FXCollections::observableArrayList
-				if (!Global::nes(nr.getText)) {
+				if (!Global::nes(nr.text)) {
 					var List<MoEinteilungLang> l = get(
-						FactoryService::getMessdienerService.getEinteilungListe(getServiceDaten, false,
-							nr.getText, null))
+						FactoryService::messdienerService.getEinteilungListe(serviceDaten, false, nr.text, null))
 					getItems(l, null, [a|new EinteilungenData(a)], einteilungenData)
 				}
 			}
@@ -273,14 +268,14 @@ class MO210GottesdienstController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		einteilungen.setItems(einteilungenData)
-		colUid.setCellValueFactory([c|c.getValue.uid])
-		colDienst.setCellValueFactory([c|c.getValue.dienst])
-		colVorname.setCellValueFactory([c|c.getValue.vorname])
-		colName.setCellValueFactory([c|c.getValue.name])
-		colGv.setCellValueFactory([c|c.getValue.geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue.geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue.angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue.angelegtAm])
+		colUid.setCellValueFactory([c|c.value.uid])
+		colDienst.setCellValueFactory([c|c.value.dienst])
+		colVorname.setCellValueFactory([c|c.value.vorname])
+		colName.setCellValueFactory([c|c.value.name])
+		colGv.setCellValueFactory([c|c.value.geaendertVon])
+		colGa.setCellValueFactory([c|c.value.geaendertAm])
+		colAv.setCellValueFactory([c|c.value.angelegtVon])
+		colAa.setCellValueFactory([c|c.value.angelegtAm])
 	}
 
 	def private void starteDialog(DialogAufrufEnum aufruf) {
@@ -289,14 +284,14 @@ class MO210GottesdienstController extends BaseController<String> {
 		if (DialogAufrufEnum::NEU.equals(aufruf)) {
 			k = new MoEinteilungLang
 		}
-		k.setTermin(von.getValue2)
+		k.setTermin(von.value2)
 		k.setGottesdienstStatus(getText(status))
 		var List<MoEinteilungLang> liste = starteDialog(typeof(MO220EinteilungController), aufruf, k)
 		if (liste !== null) {
 			if (DialogAufrufEnum::NEU.equals(aufruf)) {
 				for (MoEinteilungLang s : liste) {
-					var Optional<EinteilungenData> d = einteilungenData.stream.filter([a |
-						Global::compString(a.getData.getMessdienerUid, s.getMessdienerUid) === 0
+					var Optional<EinteilungenData> d = einteilungenData.stream.filter([ a |
+						Global::compString(a.getData.messdienerUid, s.messdienerUid) === 0
 					]).findFirst
 					if (!d.isPresent) {
 						einteilungenData.add(new EinteilungenData(s))
@@ -304,8 +299,8 @@ class MO210GottesdienstController extends BaseController<String> {
 				}
 			} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
 				for (MoEinteilungLang s : liste) {
-					var Optional<EinteilungenData> d = einteilungenData.stream.filter([a |
-						Global::compString(a.getData.getMessdienerUid, s.getMessdienerUid) === 0
+					var Optional<EinteilungenData> d = einteilungenData.stream.filter([ a |
+						Global::compString(a.getData.messdienerUid, s.messdienerUid) === 0
 					]).findFirst
 					if (d.isPresent) {
 						einteilungenData.remove(d.get)
@@ -313,8 +308,8 @@ class MO210GottesdienstController extends BaseController<String> {
 				}
 			} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
 				for (MoEinteilungLang s : liste) {
-					var Optional<EinteilungenData> d = einteilungenData.stream.filter([a |
-						Global::compString(a.getData.getUid, s.getUid) === 0
+					var Optional<EinteilungenData> d = einteilungenData.stream.filter([ a |
+						Global::compString(a.getData.uid, s.uid) === 0
 					]).findFirst
 					if (d.isPresent) {
 						einteilungenData.remove(d.get)
@@ -349,15 +344,13 @@ class MO210GottesdienstController extends BaseController<String> {
 
 		var ServiceErgebnis<?> r = null
 		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
-			r = FactoryService::getMessdienerService.insertUpdateGottesdienst(getServiceDaten, null,
-				von.getValue2, getText(name), getText(ort), getText(profil), getText(status), notiz.getText,
-				getAllValues(einteilungen))
+			r = FactoryService::messdienerService.insertUpdateGottesdienst(serviceDaten, null, von.value2,
+				getText(name), getText(ort), getText(profil), getText(status), notiz.text, getAllValues(einteilungen))
 		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
-			r = FactoryService::getMessdienerService.insertUpdateGottesdienst(getServiceDaten, nr.getText,
-				von.getValue2, getText(name), getText(ort), getText(profil), getText(status), notiz.getText,
-				getAllValues(einteilungen))
+			r = FactoryService::messdienerService.insertUpdateGottesdienst(serviceDaten, nr.text, von.value2,
+				getText(name), getText(ort), getText(profil), getText(status), notiz.text, getAllValues(einteilungen))
 		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
-			r = FactoryService::getMessdienerService.deleteGottesdienst(getServiceDaten, nr.getText)
+			r = FactoryService::messdienerService.deleteGottesdienst(serviceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)

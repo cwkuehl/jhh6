@@ -251,6 +251,7 @@ class MessdienerService {
 		if (von === null) {
 			throw new MeldungException(Meldungen.MO016)
 		}
+		var stat = status
 		if (MoStatusEnum.AUTOMATISCH.toString.equals(status)) {
 			if (Global.nes(dienste0)) {
 				throw new MeldungException(Meldungen.MO017)
@@ -258,13 +259,14 @@ class MessdienerService {
 			if (Global.nes(verfuegbar)) {
 				throw new MeldungException(Meldungen.MO018)
 			}
-		}
+		} else
+			stat = MoStatusEnum.MANUELL.toString
 		if (!Global.nes(uid) && Global.compString(uid, mitUid) == 0) {
 			throw new MeldungException(Meldungen.MO019)
 		}
 		var dienste = addStandardDienste(dienste0)
 		var e = messdienerRep.iuMoMessdiener(daten, null, uid, name, vorname, von, bis, adresse1, adresse2, adresse3,
-			email, email2, telefon, telefon2, verfuegbar, dienste, mitUid, status, notiz, null, null, null, null)
+			email, email2, telefon, telefon2, verfuegbar, dienste, mitUid, stat, notiz, null, null, null, null)
 		var r = new ServiceErgebnis<MoMessdiener>(e)
 		return r
 	}

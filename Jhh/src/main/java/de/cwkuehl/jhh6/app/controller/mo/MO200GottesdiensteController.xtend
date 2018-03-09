@@ -71,14 +71,14 @@ class MO200GottesdiensteController extends BaseController<String> {
 		new(MoGottesdienst v) {
 
 			super(v)
-			uid = new SimpleStringProperty(v.getUid)
-			termin = new SimpleObjectProperty<LocalDateTime>(v.getTermin)
-			ort = new SimpleStringProperty(v.getOrt)
-			name = new SimpleStringProperty(v.getName)
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
+			uid = new SimpleStringProperty(v.uid)
+			termin = new SimpleObjectProperty<LocalDateTime>(v.termin)
+			ort = new SimpleStringProperty(v.ort)
+			name = new SimpleStringProperty(v.name)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
+			geaendertVon = new SimpleStringProperty(v.geaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
+			angelegtVon = new SimpleStringProperty(v.angelegtVon)
 		}
 
 		override String getId() {
@@ -94,8 +94,8 @@ class MO200GottesdiensteController extends BaseController<String> {
 		tabbar = 1
 		super.initialize
 		gottesdienste0.setLabelFor(gottesdienste)
-		von0.setLabelFor(von.getLabelForNode)
-		bis0.setLabelFor(bis.getLabelForNode)
+		von0.setLabelFor(von.labelForNode)
+		bis0.setLabelFor(bis.labelForNode)
 		initAccelerator("A", aktuell)
 		initAccelerator("U", rueckgaengig)
 		initAccelerator("W", wiederherstellen)
@@ -118,7 +118,7 @@ class MO200GottesdiensteController extends BaseController<String> {
 
 		if (stufe <= 0) {
 			// nächsten Montag vorblenden
-			var LocalDate d = LocalDate.now
+			var LocalDate d = LocalDate::now
 			while (!d.getDayOfWeek.equals(DayOfWeek.MONDAY)) {
 				d = d.plusDays(1)
 			}
@@ -142,13 +142,13 @@ class MO200GottesdiensteController extends BaseController<String> {
 
 		gottesdienste.setItems(gottesdiensteData)
 		colUid.setCellValueFactory([c|c.getValue.uid])
-		colTermin.setCellValueFactory([c|c.getValue.termin])
-		colOrt.setCellValueFactory([c|c.getValue.ort])
-		colName.setCellValueFactory([c|c.getValue.name])
-		colGv.setCellValueFactory([c|c.getValue.geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue.geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue.angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue.angelegtAm])
+		colTermin.setCellValueFactory([c|c.value.termin])
+		colOrt.setCellValueFactory([c|c.value.ort])
+		colName.setCellValueFactory([c|c.value.name])
+		colGv.setCellValueFactory([c|c.value.geaendertVon])
+		colGa.setCellValueFactory([c|c.value.geaendertAm])
+		colAv.setCellValueFactory([c|c.value.angelegtVon])
+		colAa.setCellValueFactory([c|c.value.angelegtAm])
 	}
 
 	override protected void updateParent() {
