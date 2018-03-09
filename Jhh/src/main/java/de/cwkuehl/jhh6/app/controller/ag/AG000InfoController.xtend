@@ -30,7 +30,7 @@ class AG000InfoController extends BaseController<String> {
 		anmeldung0.labelFor = anmeldung
 		lizenz0.labelFor = lizenz
 		client.engine.loadContent(Werkzeug.programInfo)
-		anmeldung.engine.loadContent(Werkzeug.getLoginInfo(getServiceDaten()))
+		anmeldung.engine.loadContent(Werkzeug.getLoginInfo(serviceDaten))
 		lizenz.engine.loadContent(Werkzeug.licenseInfo)
 	}
 
@@ -39,7 +39,7 @@ class AG000InfoController extends BaseController<String> {
 	 * @FXML
 	 */
 	def void onOk() {
-		close()
+		close
 	}
 
 	/** 

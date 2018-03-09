@@ -28,7 +28,7 @@ class AM000AnmeldungController extends BaseController<String> {
 	@FXML def void onAnmelden() {
 
 		var daten = new ServiceDaten(Global.strInt(mandant.getText), benutzer.getText)
-		var r = FactoryService.anmeldungService.anmelden(daten, kennwort.getText, speichern.isSelected)
+		var r = FactoryService::anmeldungService.anmelden(daten, kennwort.text, speichern.isSelected)
 		get(r)
 		if (r.ok) {
 			setServiceDaten(daten)

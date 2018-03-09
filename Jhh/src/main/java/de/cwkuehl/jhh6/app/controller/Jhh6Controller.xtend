@@ -190,13 +190,13 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 			if (mandantNr <= 0)
 				mandantNr = 1
 			var daten0 = new ServiceDaten(mandantNr, "(initDatenbank)")
-			var r0 = FactoryService.anmeldungService.initDatenbank(daten0)
+			var r0 = FactoryService::anmeldungService.initDatenbank(daten0)
 			get(r0)
 			if (!r0.ok) {
 				return
 			}
 			var daten = new ServiceDaten(mandantNr, Jhh6::einstellungen.benutzer)
-			var r = FactoryService.getAnmeldungService.istOhneAnmelden(daten)
+			var r = FactoryService::anmeldungService.istOhneAnmelden(daten)
 			if (get(r)) {
 				Jhh6.setServiceDaten(daten)
 				setRechte(daten.mandantNr, true)
@@ -222,20 +222,20 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		if (Werkzeug::isUpdateAvailable) {
 			setLeftStatus(Meldungen.M3001)
 		}
-		var daten = getServiceDaten
+		var daten = serviceDaten
 		if (menueAnmelden.isVisible) {
 			var s = starteDialog(typeof(AM000AnmeldungController), DialogAufrufEnum.OHNE)
 			if ("Anmelden".equals(s)) {
-				daten = getServiceDaten
+				daten = serviceDaten
 				setRechte(daten.getMandantNr, true)
 				startDialoge(daten.getMandantNr)
 			// System.out.println("Angemeldet.")
 			}
 		} else {
-			FactoryService.anmeldungService.abmelden(daten)
+			FactoryService::anmeldungService.abmelden(daten)
 			Jhh6::einstellungen.refreshMandant
 			setServiceDaten(null)
-			setRechte(daten.getMandantNr, false)
+			setRechte(daten.mandantNr, false)
 			// alle Tabs schließen
 			for (Tab t : getTabs.tabs) {
 				if (t.getOnClosed !== null) {

@@ -117,39 +117,39 @@ class AD110PersonController extends BaseController<String> {
 		var AdPersonSitzAdresse k = getParameter1()
 		if (!neu && k !== null) {
 			var l = get(
-				FactoryService.adresseService.getPersonenSitzAdresseListe(serviceDaten, false, false, null, null, k.uid,
-					k.siUid))
+				FactoryService::adresseService.getPersonenSitzAdresseListe(serviceDaten, false, false, null, null,
+					k.uid, k.siUid))
 			if (l !== null && l.size > 0) {
 				k = l.get(0)
-				nr.text = k.getUid
-				sitzNr.text = k.getSiUid
-				adressNr.text = k.getAdresseUid
-				titel.text = k.getTitel
-				vorname.text = k.getVorname
-				praedikat.text = k.getPraedikat
-				name1.text = k.getName1
-				name2.text = k.getName2
-				setText(geschlecht, k.getGeschlecht)
-				geburt.value = k.getGeburt
-				setText(personStatus, Global.intStr(k.getPersonStatus))
-				name.text = k.getName
-				strasse.text = k.getStrasse
-				hausnr.text = k.getHausnr
-				postfach.text = k.getPostfach
-				staat.text = k.getStaat
-				plz.text = k.getPlz
-				ort.text = k.getOrt
-				telefon.text = k.getTelefon
-				fax.text = k.getFax
-				mobil.text = k.getMobil
-				homepage.text = k.getHomepage
-				email.text = k.getEmail
-				notiz.text = k.getBemerkung
-				setText(sitzStatus, Global.intStr(k.getSitzStatus))
+				nr.text = k.uid
+				sitzNr.text = k.siUid
+				adressNr.text = k.adresseUid
+				titel.text = k.titel
+				vorname.text = k.vorname
+				praedikat.text = k.praedikat
+				name1.text = k.name1
+				name2.text = k.name2
+				setText(geschlecht, k.geschlecht)
+				geburt.value = k.geburt
+				setText(personStatus, Global.intStr(k.personStatus))
+				name.text = k.name
+				strasse.text = k.strasse
+				hausnr.text = k.hausnr
+				postfach.text = k.postfach
+				staat.text = k.staat
+				plz.text = k.plz
+				ort.text = k.ort
+				telefon.text = k.telefon
+				fax.text = k.fax
+				mobil.text = k.mobil
+				homepage.text = k.homepage
+				email.text = k.email
+				notiz.text = k.bemerkung
+				setText(sitzStatus, Global.intStr(k.sitzStatus))
 				adresseAnzahl.text = Global.intStr(
-					get(FactoryService.adresseService.getAdresseAnzahl(serviceDaten, k.getAdresseUid)))
-				angelegt.text = k.formatDatumVon(k.getAngelegtAm, k.getAngelegtVon)
-				geaendert.text = k.formatDatumVon(k.getGeaendertAm, k.getGeaendertVon)
+					get(FactoryService::adresseService.getAdresseAnzahl(serviceDaten, k.adresseUid)))
+				angelegt.text = k.formatDatumVon(k.angelegtAm, k.angelegtVon)
+				geaendert.text = k.formatDatumVon(k.geaendertAm, k.geaendertVon)
 				if (DialogAufrufEnum.KOPIEREN2.equals(aufruf)) {
 					sitzNr.text = null
 					adressNr.text = null
@@ -199,11 +199,11 @@ class AD110PersonController extends BaseController<String> {
 	 */
 	override protected void initDaten(int stufe) {
 
-		if (stufe <= 0) { // stufe = 0;
+		if (stufe <= 0) { // stufe = 0
 		}
-		if (stufe <= 1) { // stufe = 0;
+		if (stufe <= 1) { // stufe = 0
 		}
-		if (stufe <= 2) { // initDatenTable();
+		if (stufe <= 2) { // initDatenTable
 		}
 	}
 
@@ -249,12 +249,12 @@ class AD110PersonController extends BaseController<String> {
 			p.setUid(null)
 			p.setSiUid(null)
 			p.setAdresseUid(null)
-			r = FactoryService.adresseService.insertUpdatePerson(serviceDaten, p)
+			r = FactoryService::adresseService.insertUpdatePerson(serviceDaten, p)
 		} else if (DialogAufrufEnum.AENDERN.equals(aufruf) || DialogAufrufEnum.KOPIEREN2.equals(aufruf)) {
 			var AdPersonSitzAdresse p = getData()
-			r = FactoryService.adresseService.insertUpdatePerson(serviceDaten, p)
+			r = FactoryService::adresseService.insertUpdatePerson(serviceDaten, p)
 		} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
-			r = FactoryService.adresseService.deleteSitz(serviceDaten, nr.text, sitzNr.text)
+			r = FactoryService::adresseService.deleteSitz(serviceDaten, nr.text, sitzNr.text)
 		}
 		if (r !== null) {
 			get(r)
@@ -292,7 +292,7 @@ class AD110PersonController extends BaseController<String> {
 			plz.text = k.plz
 			ort.text = k.ort
 			adresseAnzahl.text = Global.intStr(
-				get(FactoryService.adresseService.getAdresseAnzahl(serviceDaten, k.uid)) + diff)
+				get(FactoryService::adresseService.getAdresseAnzahl(serviceDaten, k.uid)) + diff)
 		}
 	}
 

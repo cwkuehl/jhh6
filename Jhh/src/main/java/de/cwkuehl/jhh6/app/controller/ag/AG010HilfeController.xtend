@@ -31,7 +31,7 @@ class AG010HilfeController extends BaseController<String> {
 	 * @FXML
 	 */
 	def void onOk() {
-		close()
+		close
 	}
 
 	/** 

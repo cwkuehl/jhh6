@@ -62,19 +62,19 @@ class AG210BenutzerController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var boolean neu = DialogAufrufEnum.NEU.equals(getAufruf)
-			var boolean kopieren = DialogAufrufEnum.KOPIEREN.equals(getAufruf)
-			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(getAufruf)
+			var boolean neu = DialogAufrufEnum.NEU.equals(aufruf)
+			var boolean kopieren = DialogAufrufEnum.KOPIEREN.equals(aufruf)
+			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(aufruf)
 			var BenutzerLang k = getParameter1
 			if (!neu && k !== null) {
-				k = get(FactoryService.getAnmeldungService.getBenutzerLang(getServiceDaten, k.getPersonNr))
-				nr.setText(Global.intStrFormat(k.getPersonNr))
-				benutzerId.setText(k.getBenutzerId)
-				kennwort.setText(k.getPasswort)
-				setText(berechtigung, BerechtigungEnum.fromIntValue(k.getBerechtigung).toString)
-				geburt.setValue(k.getGeburt)
-				angelegt.setText(k.formatDatumVon(k.getAngelegtAm, k.getAngelegtVon))
-				geaendert.setText(k.formatDatumVon(k.getGeaendertAm, k.getGeaendertVon))
+				k = get(FactoryService::anmeldungService.getBenutzerLang(serviceDaten, k.personNr))
+				nr.setText(Global.intStrFormat(k.personNr))
+				benutzerId.setText(k.benutzerId)
+				kennwort.setText(k.passwort)
+				setText(berechtigung, BerechtigungEnum.fromIntValue(k.berechtigung).toString)
+				geburt.setValue(k.geburt)
+				angelegt.setText(k.formatDatumVon(k.angelegtAm, k.angelegtVon))
+				geaendert.setText(k.formatDatumVon(k.geaendertAm, k.geaendertVon))
 			}
 			nr.setEditable(false)
 			benutzerId.setEditable(neu || kopieren)
@@ -106,29 +106,27 @@ class AG210BenutzerController extends BaseController<String> {
 
 		var ServiceErgebnis<?> r = null
 		if (DialogAufrufEnum.NEU.equals(aufruf) || DialogAufrufEnum.KOPIEREN.equals(aufruf)) {
-			r = FactoryService.anmeldungService.insertUpdateBenutzer(getServiceDaten, benutzerId.getText,
-				kennwort.getText, Global.strInt(getText(berechtigung)), 0, geburt.getValue)
+			r = FactoryService::anmeldungService.insertUpdateBenutzer(serviceDaten, benutzerId.text, kennwort.text,
+				Global.strInt(getText(berechtigung)), 0, geburt.value)
 		} else if (DialogAufrufEnum.AENDERN.equals(aufruf)) {
-			r = FactoryService.anmeldungService.insertUpdateBenutzer(getServiceDaten, benutzerId.getText,
-				kennwort.getText, Global.strInt(getText(berechtigung)), Global.strInt(nr.getText),
-				geburt.getValue)
-			} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
-				r = FactoryService.anmeldungService.deleteBenutzer(getServiceDaten, benutzerId.getText)
-			}
-			if (r !== null) {
-				get(r)
-				if (r.fehler.isEmpty) {
-					updateParent
-					close
-				}
-			}
+			r = FactoryService::anmeldungService.insertUpdateBenutzer(serviceDaten, benutzerId.text, kennwort.text,
+				Global.strInt(getText(berechtigung)), Global.strInt(nr.text), geburt.value)
+		} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
+			r = FactoryService::anmeldungService.deleteBenutzer(serviceDaten, benutzerId.text)
 		}
-
-		/** 
-		 * Event für Abbrechen.
-		 */
-		@FXML def void onAbbrechen() {
-			close
+		if (r !== null) {
+			get(r)
+			if (r.fehler.isEmpty) {
+				updateParent
+				close
+			}
 		}
 	}
-	
+
+	/** 
+	 * Event für Abbrechen.
+	 */
+	@FXML def void onAbbrechen() {
+		close
+	}
+}

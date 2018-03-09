@@ -133,8 +133,8 @@ class AD100PersonenController extends BaseController<String> {
 		}
 		if (stufe <= 1) {
 			var List<AdPersonSitzAdresse> l = get(
-				FactoryService.getAdresseService.getPersonenSitzAdresseListe(getServiceDaten, true, false,
-					name.getText, vorname.getText, null, null))
+				FactoryService::adresseService.getPersonenSitzAdresseListe(serviceDaten, true, false, name.text,
+					vorname.text, null, null))
 			getItems(l, null, [a|new PersonenData(a)], personenData)
 		}
 		if (stufe <= 2) {
@@ -148,13 +148,13 @@ class AD100PersonenController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		personen.setItems(personenData)
-		colUid.setCellValueFactory([c|c.getValue.uid])
-		colName1.setCellValueFactory([c|c.getValue.name1])
-		colSitz.setCellValueFactory([c|c.getValue.name])
-		colGv.setCellValueFactory([c|c.getValue.geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue.geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue.angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue.angelegtAm])
+		colUid.setCellValueFactory([c|c.value.uid])
+		colName1.setCellValueFactory([c|c.value.name1])
+		colSitz.setCellValueFactory([c|c.value.name])
+		colGv.setCellValueFactory([c|c.value.geaendertVon])
+		colGa.setCellValueFactory([c|c.value.geaendertAm])
+		colAv.setCellValueFactory([c|c.value.angelegtVon])
+		colAa.setCellValueFactory([c|c.value.angelegtAm])
 	}
 
 	override protected void updateParent() {
@@ -221,7 +221,7 @@ class AD100PersonenController extends BaseController<String> {
 	 * Event für Drucken.
 	 */
 	@FXML def void onDrucken() {
-		var byte[] pdf = get(FactoryService.getAdresseService.getReportAdresse(getServiceDaten))
+		var byte[] pdf = get(FactoryService::adresseService.getReportAdresse(serviceDaten))
 		Werkzeug.speicherReport(pdf, Meldungen.AD012, true)
 	}
 
@@ -229,7 +229,7 @@ class AD100PersonenController extends BaseController<String> {
 	 * Event für ImExport.
 	 */
 	@FXML def void onImExport() {
-		 starteFormular(typeof(AD200SchnittstelleController), DialogAufrufEnum.OHNE);
+		starteFormular(typeof(AD200SchnittstelleController), DialogAufrufEnum.OHNE);
 	}
 
 	/** 
@@ -262,7 +262,7 @@ class AD100PersonenController extends BaseController<String> {
 
 		var AdPersonSitzAdresse e = getValue(personen, true)
 		if (e !== null) {
-			get(FactoryService.getAdresseService.machSitzEins(getServiceDaten, e.getPersonUid, e.getSiUid))
+			get(FactoryService::adresseService.machSitzEins(serviceDaten, e.personUid, e.siUid))
 			onAktuell
 		}
 	}
@@ -271,6 +271,6 @@ class AD100PersonenController extends BaseController<String> {
 	 * Event für GebListe.
 	 */
 	@FXML def void onGebListe() {
-		 starteFormular(typeof(AD120GeburtstageController), DialogAufrufEnum.OHNE);
+		starteFormular(typeof(AD120GeburtstageController), DialogAufrufEnum.OHNE);
 	}
 }

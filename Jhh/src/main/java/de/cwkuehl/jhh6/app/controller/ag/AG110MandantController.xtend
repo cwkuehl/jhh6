@@ -40,7 +40,7 @@ class AG110MandantController extends BaseController<String> {
 		angelegt0.setLabelFor(angelegt)
 		geaendert0.setLabelFor(geaendert)
 		initDaten(0)
-		beschreibung.requestFocus()
+		beschreibung.requestFocus
 	}
 
 	/** 
@@ -53,9 +53,9 @@ class AG110MandantController extends BaseController<String> {
 			var boolean neu = DialogAufrufEnum.NEU.equals(aufruf)
 			var boolean kopieren = DialogAufrufEnum.KOPIEREN.equals(aufruf)
 			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(aufruf)
-			var MaMandant k = getParameter1()
+			var MaMandant k = getParameter1
 			if (!neu && k !== null) {
-				k = get(FactoryService.anmeldungService.getMandant(serviceDaten, k.nr))
+				k = get(FactoryService::anmeldungService.getMandant(serviceDaten, k.nr))
 				if (k !== null) {
 					nr.text = Global.intStr(k.nr)
 					beschreibung.text = k.beschreibung
@@ -93,16 +93,16 @@ class AG110MandantController extends BaseController<String> {
 
 		var ServiceErgebnis<?> r = null
 		if (DialogAufrufEnum.NEU.equals(aufruf) || DialogAufrufEnum.KOPIEREN.equals(aufruf)) {
-			r = FactoryService.anmeldungService.insertUpdateMandant(serviceDaten, Global.strInt(nr.text),
+			r = FactoryService::anmeldungService.insertUpdateMandant(serviceDaten, Global.strInt(nr.text),
 				beschreibung.text, true)
 		} else if (DialogAufrufEnum.AENDERN.equals(aufruf)) {
-			r = FactoryService.getAnmeldungService().insertUpdateMandant(serviceDaten, Global.strInt(nr.text),
+			r = FactoryService::anmeldungService.insertUpdateMandant(serviceDaten, Global.strInt(nr.text),
 				beschreibung.text, false)
 		} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
 			if (Werkzeug.showYesNoQuestion(Meldungen.AM005) === 0) {
 				return
 			}
-			r = FactoryService.getAnmeldungService().deleteMandant(serviceDaten, Global.strInt(nr.text))
+			r = FactoryService::anmeldungService.deleteMandant(serviceDaten, Global.strInt(nr.text))
 		}
 		if (r !== null) {
 			get(r)

@@ -40,7 +40,7 @@ class AG100MandantenController extends BaseController<String> {
 	@FXML TableColumn<MandantenData, String> colGv
 	@FXML TableColumn<MandantenData, LocalDateTime> colAa
 	@FXML TableColumn<MandantenData, String> colAv
-	ObservableList<MandantenData> mandantenData = FXCollections.observableArrayList()
+	ObservableList<MandantenData> mandantenData = FXCollections.observableArrayList
 
 	/** 
 	 * Daten für Tabelle Mandanten.
@@ -57,12 +57,12 @@ class AG100MandantenController extends BaseController<String> {
 		new(MaMandant v) {
 
 			super(v)
-			nr = new SimpleObjectProperty<Integer>(v.getNr())
-			beschreibung = new SimpleStringProperty(v.getBeschreibung())
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm())
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon())
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm())
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon())
+			nr = new SimpleObjectProperty<Integer>(v.nr)
+			beschreibung = new SimpleStringProperty(v.beschreibung)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
+			geaendertVon = new SimpleStringProperty(v.geaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
+			angelegtVon = new SimpleStringProperty(v.angelegtVon)
 		}
 
 		override String getId() {
@@ -76,7 +76,7 @@ class AG100MandantenController extends BaseController<String> {
 	override protected void initialize() {
 
 		tabbar = 1
-		super.initialize()
+		super.initialize
 		mandanten0.setLabelFor(mandanten)
 		initAccelerator("A", aktuell)
 		initAccelerator("U", rueckgaengig)
@@ -87,7 +87,7 @@ class AG100MandantenController extends BaseController<String> {
 		initAccelerator("L", loeschen)
 		initAccelerator("I", einstellung)
 		initDaten(0)
-		mandanten.requestFocus()
+		mandanten.requestFocus
 	}
 
 	/** 
@@ -96,15 +96,14 @@ class AG100MandantenController extends BaseController<String> {
 	 */
 	override protected void initDaten(int stufe) {
 
-		if (stufe <= 0) {
-			// stufe = 0;
+		if (stufe <= 0) { // stufe = 0
 		}
 		if (stufe <= 1) {
-			var List<MaMandant> l = get(FactoryService.getAnmeldungService().getMandantListe(getServiceDaten(), false))
+			var List<MaMandant> l = get(FactoryService::anmeldungService.getMandantListe(serviceDaten, false))
 			getItems(l, null, [a|new MandantenData(a)], mandantenData)
 		}
 		if (stufe <= 2) {
-			initDatenTable()
+			initDatenTable
 		}
 	}
 
@@ -114,12 +113,12 @@ class AG100MandantenController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		mandanten.setItems(mandantenData)
-		colNr.setCellValueFactory([c|c.getValue().nr])
-		colBeschreibung.setCellValueFactory([c|c.getValue().beschreibung])
-		colGv.setCellValueFactory([c|c.getValue().geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue().geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue().angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue().angelegtAm])
+		colNr.setCellValueFactory([c|c.value.nr])
+		colBeschreibung.setCellValueFactory([c|c.value.beschreibung])
+		colGv.setCellValueFactory([c|c.value.geaendertVon])
+		colGa.setCellValueFactory([c|c.value.geaendertAm])
+		colAv.setCellValueFactory([c|c.value.angelegtVon])
+		colAa.setCellValueFactory([c|c.value.angelegtAm])
 	}
 
 	override protected void updateParent() {
@@ -198,7 +197,6 @@ class AG100MandantenController extends BaseController<String> {
 	 * Event für Mandanten.
 	 */
 	@FXML def void onMandantenMouseClick(MouseEvent e) {
-
 		if (e.clickCount > 1) {
 			onAendern
 		}

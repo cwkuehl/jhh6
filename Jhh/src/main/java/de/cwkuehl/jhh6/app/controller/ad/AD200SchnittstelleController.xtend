@@ -73,7 +73,7 @@ class AD200SchnittstelleController extends BaseController<String> {
 		if (Global.nes(datei.text)) {
 			throw new MeldungException(Meldungen.M1012)
 		}
-		var List<String> zeilen = get(FactoryService.adresseService.exportAdresseListe(serviceDaten))
+		var List<String> zeilen = get(FactoryService::adresseService.exportAdresseListe(serviceDaten))
 		Werkzeug.speicherDateiOeffnen(zeilen, null, datei.text, false)
 	}
 
@@ -90,7 +90,7 @@ class AD200SchnittstelleController extends BaseController<String> {
 		}
 		var List<String> zeilen = Werkzeug.leseDatei(datei.text)
 		var String meldung = get(
-			FactoryService.adresseService.importAdresseListe(serviceDaten, zeilen, loeschen.isSelected))
+			FactoryService::adresseService.importAdresseListe(serviceDaten, zeilen, loeschen.isSelected))
 		if (!Global.nes(meldung)) {
 			updateParent
 			Werkzeug.showInfo(meldung)

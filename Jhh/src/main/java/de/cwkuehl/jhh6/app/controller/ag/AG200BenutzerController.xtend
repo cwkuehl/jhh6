@@ -42,7 +42,7 @@ class AG200BenutzerController extends BaseController<String> {
 	@FXML TableColumn<BenutzerData, String> colGv
 	@FXML TableColumn<BenutzerData, LocalDateTime> colAa
 	@FXML TableColumn<BenutzerData, String> colAv
-	ObservableList<BenutzerData> benutzerData = FXCollections.observableArrayList()
+	ObservableList<BenutzerData> benutzerData = FXCollections.observableArrayList
 
 	/** 
 	 * Daten für Tabelle Benutzer.
@@ -62,19 +62,19 @@ class AG200BenutzerController extends BaseController<String> {
 		new(BenutzerLang v) {
 
 			super(v)
-			personNr = new SimpleObjectProperty<Integer>(v.getPersonNr())
-			benutzerId = new SimpleStringProperty(v.getBenutzerId())
-			kennwort = new SimpleStringProperty(v.getPasswort())
-			rechte = new SimpleStringProperty(v.getRechte())
-			geburt = new SimpleObjectProperty<LocalDate>(v.getGeburt())
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm())
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon())
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm())
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon())
+			personNr = new SimpleObjectProperty<Integer>(v.personNr)
+			benutzerId = new SimpleStringProperty(v.benutzerId)
+			kennwort = new SimpleStringProperty(v.passwort)
+			rechte = new SimpleStringProperty(v.rechte)
+			geburt = new SimpleObjectProperty<LocalDate>(v.geburt)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
+			geaendertVon = new SimpleStringProperty(v.geaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
+			angelegtVon = new SimpleStringProperty(v.angelegtVon)
 		}
 
 		override String getId() {
-			return '''«personNr.get()»'''
+			return '''«personNr.get»'''
 		}
 	}
 
@@ -84,7 +84,7 @@ class AG200BenutzerController extends BaseController<String> {
 	override protected void initialize() {
 
 		tabbar = 1
-		super.initialize()
+		super.initialize
 		benutzer0.setLabelFor(benutzer)
 		initAccelerator("A", aktuell)
 		initAccelerator("U", rueckgaengig)
@@ -94,7 +94,7 @@ class AG200BenutzerController extends BaseController<String> {
 		initAccelerator("E", aendern)
 		initAccelerator("L", loeschen)
 		initDaten(0)
-		benutzer.requestFocus()
+		benutzer.requestFocus
 	}
 
 	/** 
@@ -108,11 +108,11 @@ class AG200BenutzerController extends BaseController<String> {
 		}
 		if (stufe <= 1) {
 			var List<BenutzerLang> l = get(
-				FactoryService.getAnmeldungService().getBenutzerListe(getServiceDaten(), true))
+				FactoryService::anmeldungService.getBenutzerListe(serviceDaten, true))
 			getItems(l, null, [a|new BenutzerData(a)], benutzerData)
 		}
 		if (stufe <= 2) {
-			initDatenTable()
+			initDatenTable
 		}
 	}
 
@@ -122,19 +122,19 @@ class AG200BenutzerController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		benutzer.setItems(benutzerData)
-		colPersonNr.setCellValueFactory([c|c.getValue().personNr])
-		colBenutzerId.setCellValueFactory([c|c.getValue().benutzerId])
-		colKennwort.setCellValueFactory([c|c.getValue().kennwort])
-		colRechte.setCellValueFactory([c|c.getValue().rechte])
-		colGeburt.setCellValueFactory([c|c.getValue().geburt])
-		colGv.setCellValueFactory([c|c.getValue().geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue().geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue().angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue().angelegtAm])
+		colPersonNr.setCellValueFactory([c|c.value.personNr])
+		colBenutzerId.setCellValueFactory([c|c.value.benutzerId])
+		colKennwort.setCellValueFactory([c|c.value.kennwort])
+		colRechte.setCellValueFactory([c|c.value.rechte])
+		colGeburt.setCellValueFactory([c|c.value.geburt])
+		colGv.setCellValueFactory([c|c.value.geaendertVon])
+		colGa.setCellValueFactory([c|c.value.geaendertAm])
+		colAv.setCellValueFactory([c|c.value.angelegtVon])
+		colAa.setCellValueFactory([c|c.value.angelegtAm])
 	}
 
 	override protected void updateParent() {
-		onAktuell()
+		onAktuell
 	}
 
 	def private void starteDialog(DialogAufrufEnum aufruf) {
@@ -198,7 +198,6 @@ class AG200BenutzerController extends BaseController<String> {
 	 * Event für Benutzer.
 	 */
 	@FXML def void onBenutzerMouseClick(MouseEvent e) {
-
 		if (e.clickCount > 1) {
 			onAendern
 		}

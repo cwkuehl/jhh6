@@ -93,17 +93,17 @@ class AG400SicherungenController extends BaseController<String> {
 		new(MaEinstellung v) {
 
 			super(v)
-			nr = new SimpleObjectProperty<Integer>(v.getMandantNr)
-			schluessel = new SimpleStringProperty(v.getSchluessel)
-			wert = new SimpleStringProperty(v.getWert)
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
+			nr = new SimpleObjectProperty<Integer>(v.mandantNr)
+			schluessel = new SimpleStringProperty(v.schluessel)
+			wert = new SimpleStringProperty(v.wert)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
+			geaendertVon = new SimpleStringProperty(v.geaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
+			angelegtVon = new SimpleStringProperty(v.angelegtVon)
 		}
 
 		override String getId() {
-			return '''«nr.get»'''.toString
+			return '''«nr.get»'''
 		}
 	}
 
@@ -133,7 +133,7 @@ class AG400SicherungenController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			mandant.setText(Global::intStr(getServiceDaten.getMandantNr))
+			mandant.setText(Global::intStr(getServiceDaten.mandantNr))
 		// mandant.setText("3")
 		}
 		if (stufe <= 1) {
@@ -151,13 +151,13 @@ class AG400SicherungenController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		verzeichnisse.setItems(verzeichnisseData)
-		colNr.setCellValueFactory([c|c.getValue.nr])
+		colNr.setCellValueFactory([c|c.value.nr])
 		colSchluessel.setCellValueFactory([c|c.getValue.schluessel])
-		colWert.setCellValueFactory([c|c.getValue.wert])
-		colGv.setCellValueFactory([c|c.getValue.geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue.geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue.angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue.angelegtAm])
+		colWert.setCellValueFactory([c|c.value.wert])
+		colGv.setCellValueFactory([c|c.value.geaendertVon])
+		colGa.setCellValueFactory([c|c.value.geaendertAm])
+		colAv.setCellValueFactory([c|c.value.angelegtVon])
+		colAa.setCellValueFactory([c|c.value.angelegtAm])
 	}
 
 	override protected void updateParent() {
@@ -175,7 +175,7 @@ class AG400SicherungenController extends BaseController<String> {
 				e.setMandantNr(verzeichnisseData.size + 1)
 				verzeichnisseData.add(new VerzeichnisseData(e))
 			} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
-				k.schluessel.set(e.getSchluessel)
+				k.schluessel.set(e.schluessel)
 				k.wert.set(e.getWert)
 			} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
 				verzeichnisse.getItems.remove(k)
@@ -281,7 +281,7 @@ class AG400SicherungenController extends BaseController<String> {
 		var String[] array = null
 		var boolean ende = false
 		for (var int i = 1; !ende; i++) {
-			str = '''Sicherung_«i»'''.toString
+			str = '''Sicherung_«i»'''
 			wert = Jhh6::getEinstellungen.holeResourceDaten(str)
 			if (Global::nes(wert)) {
 				ende = true
@@ -302,10 +302,10 @@ class AG400SicherungenController extends BaseController<String> {
 		var i = 0
 		for (VerzeichnisseData e : verzeichnisse.getItems) {
 			i++
-			Jhh6::getEinstellungen.setzeResourceDaten('''Sicherung_«i»'''.toString,
-				'''«e.getData.getSchluessel»<«e.getData.getWert»'''.toString)
+			Jhh6::getEinstellungen.setzeResourceDaten('''Sicherung_«i»''',
+				'''«e.getData.getSchluessel»<«e.getData.getWert»''')
 		}
-		Jhh6::getEinstellungen.setzeResourceDaten('''Sicherung_«(i + 1)»'''.toString, "")
+		Jhh6::getEinstellungen.setzeResourceDaten('''Sicherung_«(i + 1)»''', "")
 	}
 
 	def private void onSicherungTimer(boolean diffSicherung, boolean zurueck) {
@@ -316,13 +316,13 @@ class AG400SicherungenController extends BaseController<String> {
 			abbruch.setLength(0)
 			kopierFehler.clear
 			onSicherungStatus
-			var String sicherung0 = '''«k.getSchluessel»<«k.getWert»'''.toString
+			var String sicherung0 = '''«k.getSchluessel»<«k.wert»'''
 			var String[] sicherungen = (#[sicherung0] as String[])
 			onSicherungStatusTimer
 			try {
 				var Sicherung sicherung = new Sicherung(diffZeit, kopierFehler, status, maxFehler, abbruch,
 					diffSicherung, zurueck, LocalDateTime::now)
-				status.append("Vorbereitung ...")
+				status.append(Meldungen.M1031)
 				for (var int i = 0; sicherungen !== null && i < sicherungen.length; i++) {
 					sicherung.machSicherungVorbereitung({
 						val _rdIndx_sicherungen = i
@@ -330,11 +330,11 @@ class AG400SicherungenController extends BaseController<String> {
 					})
 				}
 				status.setLength(0)
-				status.append("Kopieren ...")
+				status.append(Meldungen.M1032)
 				sicherung.machSicherung
 			} catch (Exception ex) {
 				status.setLength(0)
-				status.append('''Fehler: «ex.getMessage»'''.toString)
+				status.append(Meldungen.M1033(ex.message))
 			} finally {
 				abbruch.append("Ende")
 			}
@@ -390,7 +390,7 @@ class AG400SicherungenController extends BaseController<String> {
 				// r.throwErstenFehler
 			} catch (Exception ex) {
 				status.setLength(0)
-				status.append('''Fehler: «ex.getMessage»'''.toString)
+				status.append(Meldungen.M1033(ex.getMessage))
 			} finally {
 				abbruch.append("Ende")
 			}

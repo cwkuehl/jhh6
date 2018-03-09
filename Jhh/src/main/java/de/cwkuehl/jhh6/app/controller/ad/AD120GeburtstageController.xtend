@@ -49,15 +49,11 @@ class AD120GeburtstageController extends BaseController<String> {
 
 	override protected void initDaten(int stufe) {
 
-		var r = FactoryService.adresseService.getGeburtstagListe(serviceDaten, datum.value, Global.strInt(tage.text))
+		var r = FactoryService::adresseService.getGeburtstagListe(serviceDaten, datum.value, Global.strInt(tage.text))
 		var liste = get(r)
 		if (liste === null || liste.size <= 1) {
 			if (stufe <= 0) {
-				Platform.runLater([
-					{
-						close
-					}
-				])
+				Platform.runLater([close])
 			}
 			geburtstage.text = null
 			return

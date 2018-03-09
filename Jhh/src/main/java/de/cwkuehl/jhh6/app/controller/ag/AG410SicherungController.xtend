@@ -29,12 +29,13 @@ class AG410SicherungController extends BaseController<MaEinstellung> {
 	 * Initialisierung des Dialogs.
 	 */
 	override protected void initialize() {
+
 		tabbar = 0
 		nr0.setLabelFor(nr)
 		ziel0.setLabelFor(ziel)
 		quelle0.setLabelFor(quelle)
 		initDaten(0)
-		ziel.requestFocus()
+		ziel.requestFocus
 	}
 
 	/** 
@@ -44,19 +45,19 @@ class AG410SicherungController extends BaseController<MaEinstellung> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var boolean neu = DialogAufrufEnum.NEU.equals(getAufruf())
-			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(getAufruf())
-			var MaEinstellung k = getParameter1()
+			var boolean neu = DialogAufrufEnum.NEU.equals(aufruf)
+			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(aufruf)
+			var MaEinstellung k = getParameter1
 			if (!neu && k !== null) {
-				nr.setText(Global.intStrFormat(k.getMandantNr()))
-				ziel.setText(k.getSchluessel())
-				quelle.setText(k.getWert())
+				nr.setText(Global.intStrFormat(k.mandantNr))
+				ziel.setText(k.schluessel)
+				quelle.setText(k.wert)
 			}
 			nr.setEditable(false)
 			ziel.setEditable(!loeschen)
 			quelle.setEditable(!loeschen)
 			if (loeschen) {
-				ok.setText(Meldungen.M2001())
+				ok.setText(Meldungen.M2001)
 			}
 		}
 		if (stufe <= 1) { // stufe = 0

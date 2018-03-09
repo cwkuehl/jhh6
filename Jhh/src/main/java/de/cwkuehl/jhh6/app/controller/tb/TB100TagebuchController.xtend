@@ -1,15 +1,15 @@
 package de.cwkuehl.jhh6.app.controller.tb
 
-import java.time.LocalDate
 import de.cwkuehl.jhh6.api.dto.TbEintrag
 import de.cwkuehl.jhh6.api.global.Constant
 import de.cwkuehl.jhh6.api.global.Global
-import de.cwkuehl.jhh6.api.service.ServiceDaten
+import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.Werkzeug
 import de.cwkuehl.jhh6.app.control.Datum
 import de.cwkuehl.jhh6.server.FactoryService
+import java.time.LocalDate
 import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.Label
@@ -158,10 +158,10 @@ class TB100TagebuchController extends BaseController<String> {
 
 		// Bericht erzeugen
 		bearbeiteEintraege(true, false)
-		var String pfad = Jhh6.getEinstellungen.getTempVerzeichnis
-		var String datei = Global.getDateiname("Tagebuch", true, true, "txt")
-		Werkzeug.speicherDateiOeffnen(get(FactoryService.getTagebuchService.holeDatei(getServiceDaten, getSuche)),
-			pfad, datei, false)
+		var pfad = Jhh6::einstellungen.tempVerzeichnis
+		var datei = Global.getDateiname(Meldungen.TB005, true, true, "txt")
+		Werkzeug.speicherDateiOeffnen(get(FactoryService::tagebuchService.holeDatei(serviceDaten, getSuche)), pfad,
+			datei, false)
 	}
 
 	/** 
@@ -232,32 +232,32 @@ class TB100TagebuchController extends BaseController<String> {
 	 */
 	def private void ladeEintraege(LocalDate d) {
 
-		var ServiceDaten daten = getServiceDaten
+		var daten = serviceDaten
 		var TbEintrag tb = null
-		tb = get(FactoryService.getTagebuchService.getEintrag(daten, d.minusDays(1)))
-		zurueck1.setText(if(tb === null) null else tb.getEintrag)
-		tb = get(FactoryService.getTagebuchService.getEintrag(daten, d.minusMonths(1)))
-		zurueck2.setText(if(tb === null) null else tb.getEintrag)
-		tb = get(FactoryService.getTagebuchService.getEintrag(daten, d.minusYears(1)))
-		zurueck3.setText(if(tb === null) null else tb.getEintrag)
-		tb = get(FactoryService.getTagebuchService.getEintrag(daten, d))
+		tb = get(FactoryService::tagebuchService.getEintrag(daten, d.minusDays(1)))
+		zurueck1.setText(if(tb === null) null else tb.eintrag)
+		tb = get(FactoryService::tagebuchService.getEintrag(daten, d.minusMonths(1)))
+		zurueck2.setText(if(tb === null) null else tb.eintrag)
+		tb = get(FactoryService::tagebuchService.getEintrag(daten, d.minusYears(1)))
+		zurueck3.setText(if(tb === null) null else tb.eintrag)
+		tb = get(FactoryService::tagebuchService.getEintrag(daten, d))
 		if (tb === null) {
 			eintragAlt.setEintrag(null)
 			angelegt.setText(null)
 			geaendert.setText(null)
 		} else {
 			eintragAlt.setEintrag(tb.getEintrag)
-			angelegt.setText(tb.formatDatumVon(tb.getAngelegtAm, tb.getAngelegtVon))
-			geaendert.setText(tb.formatDatumVon(tb.getGeaendertAm, tb.getGeaendertVon))
+			angelegt.setText(tb.formatDatumVon(tb.angelegtAm, tb.angelegtVon))
+			geaendert.setText(tb.formatDatumVon(tb.geaendertAm, tb.geaendertVon))
 		}
 		eintragAlt.setDatum(d)
 		eintrag.setText(eintragAlt.getEintrag)
-		tb = get(FactoryService.getTagebuchService.getEintrag(daten, d.plusDays(1)))
-		vor1.setText(if(tb === null) null else tb.getEintrag)
-		tb = get(FactoryService.getTagebuchService.getEintrag(daten, d.plusMonths(1)))
-		vor2.setText(if(tb === null) null else tb.getEintrag)
-		tb = get(FactoryService.getTagebuchService.getEintrag(daten, d.plusYears(1)))
-		vor3.setText(if(tb === null) null else tb.getEintrag)
+		tb = get(FactoryService::tagebuchService.getEintrag(daten, d.plusDays(1)))
+		vor1.setText(if(tb === null) null else tb.eintrag)
+		tb = get(FactoryService::tagebuchService.getEintrag(daten, d.plusMonths(1)))
+		vor2.setText(if(tb === null) null else tb.eintrag)
+		tb = get(FactoryService::tagebuchService.getEintrag(daten, d.plusYears(1)))
+		vor3.setText(if(tb === null) null else tb.eintrag)
 	}
 
 	/** 
@@ -267,44 +267,40 @@ class TB100TagebuchController extends BaseController<String> {
 	 */
 	def private void bearbeiteEintraege(boolean speichern, boolean laden) {
 
-		var ServiceDaten daten = getServiceDaten
+		var daten = serviceDaten
 		// Rekursion vermeiden
 		if (speichern && geladen) {
 			// alten Eintrag von vorher merken
-			var String str = eintragAlt.getEintrag
+			var String str = eintragAlt.eintrag
 			// nur speichern, wenn etwas geändert ist.
-			if (str === null || Global.compString(str, eintrag.getText) !== 0) {
-				get(
-					FactoryService.getTagebuchService.speichereEintrag(daten, eintragAlt.getDatum,
-						eintrag.getText))
-				}
-			}
-			if (laden) {
-				var LocalDate d = datum.getValue
-				ladeEintraege(d)
-				geladen = true
+			if (str === null || Global.compString(str, eintrag.text) !== 0) {
+				get(FactoryService::tagebuchService.speichereEintrag(daten, eintragAlt.datum, eintrag.text))
 			}
 		}
-
-		def private String[] getSuche() {
-			var String[] suche = #[suche1.getText, suche2.getText, suche3.getText, suche4.getText,
-				suche5.getText, suche6.getText, suche7.getText, suche8.getText, suche9.getText]
-			return suche
-		}
-
-		/** 
-		 * Suche des nächsten passenden Eintrags in der Suchrichtung.
-		 * @param stelle Such-Richtung.
-		 */
-		def private void sucheEintraege(int stelle) {
-			bearbeiteEintraege(true, false)
-			var ServiceDaten daten = getServiceDaten
-			var LocalDate d = get(
-				FactoryService.getTagebuchService.holeSucheDatum(daten, stelle, datum.getValue, getSuche))
-			if (d !== null) {
-				datum.setValue(d)
-				bearbeiteEintraege(false, true)
-			}
+		if (laden) {
+			var LocalDate d = datum.value
+			ladeEintraege(d)
+			geladen = true
 		}
 	}
-	
+
+	def private String[] getSuche() {
+		var String[] suche = #[suche1.text, suche2.text, suche3.text, suche4.text, suche5.text, suche6.text,
+			suche7.text, suche8.text, suche9.text]
+		return suche
+	}
+
+	/** 
+	 * Suche des nächsten passenden Eintrags in der Suchrichtung.
+	 * @param stelle Such-Richtung.
+	 */
+	def private void sucheEintraege(int stelle) {
+		bearbeiteEintraege(true, false)
+		var LocalDate d = get(
+			FactoryService::tagebuchService.holeSucheDatum(serviceDaten, stelle, datum.value, getSuche))
+		if (d !== null) {
+			datum.setValue(d)
+			bearbeiteEintraege(false, true)
+		}
+	}
+}

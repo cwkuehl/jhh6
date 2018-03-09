@@ -54,16 +54,16 @@ class AD130AdressenController extends BaseController<AdAdresse> {
 		new(AdAdresse v) {
 
 			super(v)
-			uid = new SimpleStringProperty(v.getUid)
-			staat = new SimpleStringProperty(v.getStaat)
-			plz = new SimpleStringProperty(v.getPlz)
-			ort = new SimpleStringProperty(v.getOrt)
-			strasse = new SimpleStringProperty(v.getStrasse)
-			hausnr = new SimpleStringProperty(v.getHausnr)
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
+			uid = new SimpleStringProperty(v.uid)
+			staat = new SimpleStringProperty(v.staat)
+			plz = new SimpleStringProperty(v.plz)
+			ort = new SimpleStringProperty(v.ort)
+			strasse = new SimpleStringProperty(v.strasse)
+			hausnr = new SimpleStringProperty(v.hausnr)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
+			geaendertVon = new SimpleStringProperty(v.geaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
+			angelegtVon = new SimpleStringProperty(v.angelegtVon)
 		}
 
 		override String getId() {
@@ -88,10 +88,10 @@ class AD130AdressenController extends BaseController<AdAdresse> {
 	 */
 	override protected void initDaten(int stufe) {
 
-		if (stufe <= 0) { // stufe = 0;
+		if (stufe <= 0) { // stufe = 0
 		}
 		if (stufe <= 1) {
-			var l = get(FactoryService.adresseService.getAdresseListe(serviceDaten))
+			var l = get(FactoryService::adresseService.getAdresseListe(serviceDaten))
 			adressenData.clear
 			if (l !== null) {
 				for (AdAdresse v : l) {
@@ -110,16 +110,16 @@ class AD130AdressenController extends BaseController<AdAdresse> {
 	def protected void initDatenTable() {
 
 		adressen.setItems(adressenData)
-		colUid.setCellValueFactory([c|c.getValue.uid])
-		colStaat.setCellValueFactory([c|c.getValue.staat])
-		colPlz.setCellValueFactory([c|c.getValue.plz])
-		colOrt.setCellValueFactory([c|c.getValue.ort])
-		colStrasse.setCellValueFactory([c|c.getValue.strasse])
-		colHausnr.setCellValueFactory([c|c.getValue.hausnr])
-		colGv.setCellValueFactory([c|c.getValue.geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue.geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue.angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue.angelegtAm])
+		colUid.setCellValueFactory([c|c.value.uid])
+		colStaat.setCellValueFactory([c|c.value.staat])
+		colPlz.setCellValueFactory([c|c.value.plz])
+		colOrt.setCellValueFactory([c|c.value.ort])
+		colStrasse.setCellValueFactory([c|c.value.strasse])
+		colHausnr.setCellValueFactory([c|c.value.hausnr])
+		colGv.setCellValueFactory([c|c.value.geaendertVon])
+		colGa.setCellValueFactory([c|c.value.geaendertAm])
+		colAv.setCellValueFactory([c|c.value.angelegtVon])
+		colAa.setCellValueFactory([c|c.value.angelegtAm])
 	}
 
 	/** 

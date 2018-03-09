@@ -1,7 +1,6 @@
 package de.cwkuehl.jhh6.app.controller.am
 
 import de.cwkuehl.jhh6.api.global.Global
-import de.cwkuehl.jhh6.api.service.ServiceDaten
 import de.cwkuehl.jhh6.api.service.ServiceErgebnis
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.server.FactoryService
@@ -44,15 +43,11 @@ class AM100AenderungController extends BaseController<String> {
 		kennwortNeu20.setLabelFor(kennwortNeu2, true)
 		mandant.setEditable(false)
 		benutzer.setEditable(false)
-		var ServiceDaten daten = getServiceDaten
+		var daten = serviceDaten
 		if (daten !== null) {
-			mandant.setText(Global.intStr(daten.getMandantNr))
-			benutzer.setText(daten.getBenutzerId)
-			Platform.runLater([
-				{
-					kennwortAlt.requestFocus
-				}
-			])
+			mandant.setText(Global.intStr(daten.mandantNr))
+			benutzer.setText(daten.benutzerId)
+			Platform.runLater([kennwortAlt.requestFocus])
 		}
 		ok.disableProperty.bind(kennwortNeu.textProperty.isEqualTo(kennwortNeu2.textProperty).not)
 	}
@@ -63,8 +58,8 @@ class AM100AenderungController extends BaseController<String> {
 	 */
 	def void onOk() {
 
-		var ServiceDaten daten = getServiceDaten
-		var ServiceErgebnis<Void> r = FactoryService.anmeldungService.aendern(daten, daten.mandantNr, daten.benutzerId,
+		var daten = getServiceDaten
+		var ServiceErgebnis<Void> r = FactoryService::anmeldungService.aendern(daten, daten.mandantNr, daten.benutzerId,
 			kennwortAlt.text, kennwortNeu.text, speichern.isSelected)
 		get(r)
 		if (r.ok) {
