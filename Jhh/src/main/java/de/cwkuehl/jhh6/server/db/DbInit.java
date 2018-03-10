@@ -1093,6 +1093,37 @@ public class DbInit {
                 dba.addTab2(mout, tabelle, "Mandant_Nr, Uid", "Mandant_Nr, Uid");
                 execute(daten, zeinstellungDao, mout);
                 version = 52;
+            } else if (version <= 52) {
+                DbAnpassung dba = new DbAnpassung(dbart);
+                Vector<String> mout = new Vector<String>();
+                String tabelle = null;
+
+                tabelle = "SB_Ereignis";
+                dba.addTab0();
+                dba.addTab1("Mandant_Nr", "D_INTEGER", false);
+                dba.addTab1("Person_Uid", "D_REPL_ID", false);
+                dba.addTab1("Familie_Uid", "D_REPL_ID", false);
+                dba.addTab1("Typ", "D_STRING_04", false);
+                dba.addTab1("Tag1", "D_INTEGER", false);
+                dba.addTab1("Monat1", "D_INTEGER", false);
+                dba.addTab1("Jahr1", "D_INTEGER", false);
+                dba.addTab1("Tag2", "D_INTEGER", false);
+                dba.addTab1("Monat2", "D_INTEGER", false);
+                dba.addTab1("Jahr2", "D_INTEGER", false);
+                dba.addTab1("Datum_Typ", "D_STRING_04", false);
+                dba.addTab1("Ort", "D_STRING_120", true);
+                dba.addTab1("Bemerkung", "D_MEMO", true);
+                dba.addTab1("Quelle_Uid", "D_REPL_ID", true);
+                dba.addTab1("Angelegt_Von", "D_STRING_20", true);
+                dba.addTab1("Angelegt_Am", "D_DATETIME", true);
+                dba.addTab1("Geaendert_Von", "D_STRING_20", true);
+                dba.addTab1("Geaendert_Am", "D_DATETIME", true);
+                dba.addTab1("Replikation_Uid", "D_REPL_ID", true);
+                dba.addTab2(mout, tabelle, "Mandant_Nr, Person_Uid, Familie_Uid, Typ, Tag1, Monat1, Jahr1",
+                        "Mandant_Nr, Nr_Typ, Nr, Typ, Tag1, Monat1, Jahr1");
+                dba.createTab3(mout, tabelle, "XRKSB_Ereignis", false, "Replikation_Uid, Mandant_Nr");
+                execute(daten, zeinstellungDao, mout);
+                version = 53;
             }
             if (version > versionAlt) {
                 // log.error("Version " + version);
