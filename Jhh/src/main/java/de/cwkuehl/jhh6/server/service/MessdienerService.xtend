@@ -390,8 +390,12 @@ class MessdienerService {
 				e2.uid = null
 			}
 		}
+		var stat = if (MoStatusEnum.AUTOMATISCH.toString.equals(status))
+				status
+			else
+				MoStatusEnum.MANUELL.toString
 		pruefEinteilungen(daten, pUid, et)
-		var e = gottesdienstRep.iuMoGottesdienst(daten, null, uid, t, name, ort, pUid, status, notiz, null, null, null,
+		var e = gottesdienstRep.iuMoGottesdienst(daten, null, uid, t, name, ort, pUid, stat, notiz, null, null, null,
 			null)
 		updateEinteilungen(daten, e.uid, t, et)
 		var r = new ServiceErgebnis<MoGottesdienst>(e)
