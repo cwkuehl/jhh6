@@ -1,18 +1,19 @@
 package de.cwkuehl.jhh6.app.controller.hh
 
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.HhBilanzSb
 import de.cwkuehl.jhh6.api.dto.HhBuchungLang
 import de.cwkuehl.jhh6.api.dto.HhKonto
 import de.cwkuehl.jhh6.api.global.Global
+import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.app.base.Werkzeug
 import de.cwkuehl.jhh6.app.control.Datum
 import de.cwkuehl.jhh6.server.FactoryService
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.List
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -91,17 +92,17 @@ class HH400BuchungenController extends BaseController<String> {
 		new(HhBuchungLang v) {
 
 			super(v)
-			uid = new SimpleStringProperty(v.getUid)
-			valuta = new SimpleObjectProperty<LocalDate>(v.getSollValuta)
-			kz = new SimpleStringProperty(v.getKz)
-			betrag = new SimpleObjectProperty<Double>(v.getEbetrag)
-			text = new SimpleStringProperty(v.getBtext)
-			soll = new SimpleStringProperty(v.getSollName)
-			haben = new SimpleStringProperty(v.getHabenName)
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
+			uid = new SimpleStringProperty(v.uid)
+			valuta = new SimpleObjectProperty<LocalDate>(v.sollValuta)
+			kz = new SimpleStringProperty(v.kz)
+			betrag = new SimpleObjectProperty<Double>(v.ebetrag)
+			text = new SimpleStringProperty(v.btext)
+			soll = new SimpleStringProperty(v.sollName)
+			haben = new SimpleStringProperty(v.habenName)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
+			geaendertVon = new SimpleStringProperty(v.geaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
+			angelegtVon = new SimpleStringProperty(v.angelegtVon)
 		}
 
 		override String getId() {
@@ -119,11 +120,11 @@ class HH400BuchungenController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getName
+			return getData.name
 		}
 	}
 
@@ -132,7 +133,7 @@ class HH400BuchungenController extends BaseController<String> {
 	 */
 	override protected String getTitel() {
 		if (Global::nes(titel)) {
-			return super.getTitel
+			return super.titel
 		}
 		return titel
 	}
@@ -146,8 +147,8 @@ class HH400BuchungenController extends BaseController<String> {
 		super.initialize
 		buchungen0.setLabelFor(buchungen)
 		kennzeichen0.setLabelFor(kennzeichen, false)
-		von0.setLabelFor(von.getLabelForNode)
-		bis0.setLabelFor(bis.getLabelForNode)
+		von0.setLabelFor(von.labelForNode)
+		bis0.setLabelFor(bis.labelForNode)
 		bText0.setLabelFor(bText)
 		betrag0.setLabelFor(betrag)
 		konto0.setLabelFor(konto, false)
@@ -178,7 +179,7 @@ class HH400BuchungenController extends BaseController<String> {
 			bText.setText("%%")
 			betrag.setText(null)
 			var List<HhKonto> kl = get(
-				FactoryService::getHaushaltService.getKontoListe(getServiceDaten, bis.getValue, von.getValue))
+				FactoryService::getHaushaltService.getKontoListe(serviceDaten, bis.value, von.value))
 			konto.setItems(getItems(kl, new HhKonto, [a|new KontoData(a)], null))
 			setText(konto, null)
 			var LocalDate v = getParameter1
@@ -191,16 +192,14 @@ class HH400BuchungenController extends BaseController<String> {
 			}
 			val HhBilanzSb bi = getParameter3
 			if (bi !== null) {
-				setText(konto, bi.getKontoUid)
-				titel = kl.stream.filter([a|a.getUid.equals(bi.getKontoUid)]).map([a|a.getName]).findFirst.
-					orElse(null)
+				setText(konto, bi.kontoUid)
+				titel = kl.stream.filter([a|a.uid.equals(bi.kontoUid)]).map([a|a.name]).findFirst.orElse(null)
 			}
 		}
 		if (stufe <= 1) {
 			var List<HhBuchungLang> l = get(
-				FactoryService::getHaushaltService.getBuchungListe(getServiceDaten,
-					Global::objBool(getText(kennzeichen)), von.getValue, bis.getValue, bText.getText,
-					getText(konto), betrag.getText))
+				FactoryService::getHaushaltService.getBuchungListe(serviceDaten, Global::objBool(getText(kennzeichen)),
+					von.value, bis.value, bText.text, getText(konto), betrag.text))
 			getItems(l, null, [a|new BuchungenData(a)], buchungenData)
 			var int anz = Global::listLaenge(l)
 			var double summe = 0
@@ -208,18 +207,18 @@ class HH400BuchungenController extends BaseController<String> {
 			var String uid = getText(konto)
 			if (l !== null) {
 				for (HhBuchungLang b : l) {
-					summe += b.getEbetrag
-					if (b.getSollKontoUid.equals(uid)) {
-						saldo += b.getEbetrag
-					} else if (b.getHabenKontoUid.equals(uid)) {
-						saldo -= b.getEbetrag
+					summe += b.ebetrag
+					if (b.sollKontoUid.equals(uid)) {
+						saldo += b.ebetrag
+					} else if (b.habenKontoUid.equals(uid)) {
+						saldo -= b.ebetrag
 					}
 				}
 			}
-			var StringBuffer sb = new StringBuffer
-			sb.append(Global::format("Datensätze: {0}  Summe: {1}", anz, Global::dblStr(summe)))
+			var sb = new StringBuffer
+			sb.append(Global::format(Meldungen.HH054(anz, summe)))
 			if (!Global::nes(uid)) {
-				sb.append("  Saldo: ").append(Global::dblStr(saldo))
+				sb.append(Meldungen.HH055(saldo))
 			}
 			buchungenStatus.setText(sb.toString)
 		}
@@ -234,18 +233,18 @@ class HH400BuchungenController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		buchungen.setItems(buchungenData)
-		colUid.setCellValueFactory([c|c.getValue.uid])
-		colValuta.setCellValueFactory([c|c.getValue.valuta])
-		colKz.setCellValueFactory([c|c.getValue.kz])
-		colText.setCellValueFactory([c|c.getValue.text])
-		colBetrag.setCellValueFactory([c|c.getValue.betrag])
+		colUid.setCellValueFactory([c|c.value.uid])
+		colValuta.setCellValueFactory([c|c.value.valuta])
+		colKz.setCellValueFactory([c|c.value.kz])
+		colText.setCellValueFactory([c|c.value.text])
+		colBetrag.setCellValueFactory([c|c.value.betrag])
 		initColumnBetrag(colBetrag)
-		colSoll.setCellValueFactory([c|c.getValue.soll])
-		colHaben.setCellValueFactory([c|c.getValue.haben])
-		colGv.setCellValueFactory([c|c.getValue.geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue.geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue.angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue.angelegtAm])
+		colSoll.setCellValueFactory([c|c.value.soll])
+		colHaben.setCellValueFactory([c|c.value.haben])
+		colGv.setCellValueFactory([c|c.value.geaendertVon])
+		colGa.setCellValueFactory([c|c.value.geaendertAm])
+		colAv.setCellValueFactory([c|c.value.angelegtVon])
+		colAa.setCellValueFactory([c|c.value.angelegtAm])
 	}
 
 	override protected void updateParent() {
@@ -257,10 +256,10 @@ class HH400BuchungenController extends BaseController<String> {
 		var aufruf = faufruf
 		var HhBuchungLang k = getValue(buchungen, !DialogAufrufEnum::NEU.equals(aufruf))
 		if (DialogAufrufEnum::STORNO.equals(aufruf)) {
-			if (Global::compString(letzterStorno, k.getUid) === 0) {
+			if (Global::compString(letzterStorno, k.uid) === 0) {
 				aufruf = DialogAufrufEnum::LOESCHEN
 			}
-			letzterStorno = k.getUid
+			letzterStorno = k.uid
 		}
 		starteFormular(typeof(HH410BuchungController), aufruf, k)
 	}
@@ -321,12 +320,11 @@ class HH400BuchungenController extends BaseController<String> {
 	 */
 	@FXML def void onExport() {
 
-		var String pfad = Jhh6::getEinstellungen.getTempVerzeichnis
-		var String datei = Global::getDateiname("Buchungliste", true, true, "csv")
+		var String pfad = Jhh6::einstellungen.tempVerzeichnis
+		var String datei = Global::getDateiname(Meldungen.HH056, true, true, "csv")
 		var List<String> zeilen = get(
-			FactoryService::getHaushaltService.exportBuchungListe(getServiceDaten,
-				Global::objBool(getText(kennzeichen)), von.getValue, bis.getValue, bText.getText, getText(konto),
-				betrag.getText))
+			FactoryService::getHaushaltService.exportBuchungListe(serviceDaten, Global::objBool(getText(kennzeichen)),
+				von.value, bis.value, bText.text, getText(konto), betrag.text))
 		Werkzeug::speicherDateiOeffnen(zeilen, pfad, datei, false)
 	}
 

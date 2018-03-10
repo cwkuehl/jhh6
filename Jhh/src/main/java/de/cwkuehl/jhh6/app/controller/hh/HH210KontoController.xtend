@@ -51,8 +51,8 @@ class HH210KontoController extends BaseController<String> {
 		bezeichnung0.setLabelFor(bezeichnung, true)
 		kennzeichen0.setLabelFor(kennzeichen, false)
 		kontoart0.setLabelFor(kontoart, true)
-		von0.setLabelFor(von.getLabelForNode)
-		bis0.setLabelFor(bis.getLabelForNode)
+		von0.setLabelFor(von.labelForNode)
+		bis0.setLabelFor(bis.labelForNode)
 		angelegt0.setLabelFor(angelegt)
 		geaendert0.setLabelFor(geaendert)
 		initDaten(0)
@@ -75,18 +75,17 @@ class HH210KontoController extends BaseController<String> {
 			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(getAufruf)
 			var HhKonto k = getParameter1
 			if (!neu && k !== null) {
-				k = get(FactoryService.getHaushaltService.getKonto(getServiceDaten, k.getUid))
+				k = get(FactoryService::haushaltService.getKonto(serviceDaten, k.uid))
 				if (k !== null) {
-					nr.setText(k.getUid)
-					bezeichnung.setText(k.getName)
-					setText(kennzeichen, k.getKz)
-					setText(kontoart, k.getArt)
-					von.setValue(k.getGueltigVon)
-					bis.setValue(k.getGueltigBis)
-					angelegt.setText(k.formatDatumVon(k.getAngelegtAm, k.getAngelegtVon))
-					geaendert.setText(k.formatDatumVon(k.getGeaendertAm, k.getGeaendertVon))
-					buchung.setText(
-						get(FactoryService.getHaushaltService.holeMinMaxKontoText(getServiceDaten, k.getUid)))
+					nr.setText(k.uid)
+					bezeichnung.setText(k.name)
+					setText(kennzeichen, k.kz)
+					setText(kontoart, k.art)
+					von.setValue(k.gueltigVon)
+					bis.setValue(k.gueltigBis)
+					angelegt.setText(k.formatDatumVon(k.angelegtAm, k.angelegtVon))
+					geaendert.setText(k.formatDatumVon(k.geaendertAm, k.geaendertVon))
+					buchung.setText(get(FactoryService::haushaltService.holeMinMaxKontoText(serviceDaten, k.uid)))
 				}
 			}
 			nr.setEditable(false)
@@ -120,30 +119,27 @@ class HH210KontoController extends BaseController<String> {
 
 		var ServiceErgebnis<?> r = null
 		if (DialogAufrufEnum.NEU.equals(aufruf) || DialogAufrufEnum.KOPIEREN.equals(aufruf)) {
-			r = FactoryService.getHaushaltService.insertUpdateKonto(getServiceDaten, null, getText(kontoart),
-				getText(kennzeichen), bezeichnung.getText, von.getValue, bis.getValue, null, null, null, null, null,
-				false)
-			} else if (DialogAufrufEnum.AENDERN.equals(aufruf)) {
-				r = FactoryService.getHaushaltService.insertUpdateKonto(getServiceDaten, nr.getText, getText(kontoart),
-					getText(kennzeichen), bezeichnung.getText, von.getValue, bis.getValue, null, null, null, null, null,
-					false)
-				} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
-					r = FactoryService.getHaushaltService.deleteKonto(getServiceDaten, nr.getText)
-				}
-				if (r !== null) {
-					get(r)
-					if (r.getFehler.isEmpty) {
-						updateParent
-						close
-					}
-				}
-			}
-
-			/** 
-			 * Event für Abbrechen.
-			 */
-			@FXML def void onAbbrechen() {
+			r = FactoryService::haushaltService.insertUpdateKonto(serviceDaten, null, getText(kontoart),
+				getText(kennzeichen), bezeichnung.text, von.value, bis.value, null, null, null, null, null, false)
+		} else if (DialogAufrufEnum.AENDERN.equals(aufruf)) {
+			r = FactoryService::haushaltService.insertUpdateKonto(serviceDaten, nr.text, getText(kontoart),
+				getText(kennzeichen), bezeichnung.text, von.value, bis.value, null, null, null, null, null, false)
+		} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
+			r = FactoryService::haushaltService.deleteKonto(serviceDaten, nr.getText())
+		}
+		if (r !== null) {
+			get(r)
+			if (r.getFehler.isEmpty) {
+				updateParent
 				close
 			}
 		}
-		
+	}
+
+	/** 
+	 * Event für Abbrechen.
+	 */
+	@FXML def void onAbbrechen() {
+		close
+	}
+}

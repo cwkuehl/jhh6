@@ -64,16 +64,16 @@ class HH200KontenController extends BaseController<String> {
 		new(HhKonto v) {
 
 			super(v)
-			uid = new SimpleStringProperty(v.getUid)
-			art = new SimpleStringProperty(v.getArt)
-			kz = new SimpleStringProperty(v.getKz)
-			name = new SimpleStringProperty(v.getName)
-			von = new SimpleObjectProperty<LocalDate>(v.getGueltigVon)
-			bis = new SimpleObjectProperty<LocalDate>(v.getGueltigBis)
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
+			uid = new SimpleStringProperty(v.uid)
+			art = new SimpleStringProperty(v.art)
+			kz = new SimpleStringProperty(v.kz)
+			name = new SimpleStringProperty(v.name)
+			von = new SimpleObjectProperty<LocalDate>(v.gueltigVon)
+			bis = new SimpleObjectProperty<LocalDate>(v.gueltigBis)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
+			geaendertVon = new SimpleStringProperty(v.geaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
+			angelegtVon = new SimpleStringProperty(v.angelegtVon)
 		}
 
 		override String getId() {
@@ -109,7 +109,7 @@ class HH200KontenController extends BaseController<String> {
 		if (stufe <= 0) {
 		}
 		if (stufe <= 1) {
-			var List<HhKonto> l = get(FactoryService.getHaushaltService.getKontoListe(getServiceDaten, null, null))
+			var List<HhKonto> l = get(FactoryService::haushaltService.getKontoListe(serviceDaten, null, null))
 			getItems(l, null, [a|new KontenData(a)], kontenData)
 		}
 		if (stufe <= 2) {
@@ -123,16 +123,16 @@ class HH200KontenController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		konten.setItems(kontenData)
-		colUid.setCellValueFactory([c|c.getValue.uid])
-		colArt.setCellValueFactory([c|c.getValue.art])
-		colKz.setCellValueFactory([c|c.getValue.kz])
-		colName.setCellValueFactory([c|c.getValue.name])
-		colVon.setCellValueFactory([c|c.getValue.von])
-		colBis.setCellValueFactory([c|c.getValue.bis])
-		colGv.setCellValueFactory([c|c.getValue.geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue.geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue.angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue.angelegtAm])
+		colUid.setCellValueFactory([c|c.value.uid])
+		colArt.setCellValueFactory([c|c.value.art])
+		colKz.setCellValueFactory([c|c.value.kz])
+		colName.setCellValueFactory([c|c.value.name])
+		colVon.setCellValueFactory([c|c.value.von])
+		colBis.setCellValueFactory([c|c.value.bis])
+		colGv.setCellValueFactory([c|c.value.geaendertVon])
+		colGa.setCellValueFactory([c|c.value.geaendertAm])
+		colAv.setCellValueFactory([c|c.value.angelegtVon])
+		colAa.setCellValueFactory([c|c.value.angelegtAm])
 	}
 
 	override protected void updateParent() {

@@ -64,9 +64,9 @@ class HH510DruckenController extends BaseController<String> {
 			var List<Object> e = getParameter1
 			if (e !== null && e.size >= 3 && e.get(0) instanceof String && e.get(1) instanceof LocalDate &&
 				e.get(2) instanceof LocalDate) {
-				var String kz = (e.get(0) as String)
-				var LocalDate v = (e.get(1) as LocalDate)
-				var LocalDate b = (e.get(2) as LocalDate)
+				var kz = e.get(0) as String
+				var v = e.get(1) as LocalDate
+				var b = e.get(2) as LocalDate
 				if (Constant.KZBI_EROEFFNUNG.equals(kz)) {
 					von.setValue(v)
 					bis.setValue(v.withDayOfYear(v.lengthOfYear))
@@ -118,15 +118,14 @@ class HH510DruckenController extends BaseController<String> {
 	 */
 	@FXML def void onImport1() {
 
-		if (Global.nes(datei.getText)) {
+		if (Global.nes(datei.text)) {
 			throw new MeldungException(Meldungen.M1012)
 		}
 		if (Werkzeug.showYesNoQuestion(Meldungen.HH052) === 0) {
 			return
 		}
-		var List<String> zeilen = Werkzeug.leseDatei(datei.getText)
-		var meldung = get(
-			FactoryService.haushaltService.importBuchungListe(getServiceDaten, zeilen, loeschen.isSelected))
+		var List<String> zeilen = Werkzeug.leseDatei(datei.text)
+		var meldung = get(FactoryService.haushaltService.importBuchungListe(serviceDaten, zeilen, loeschen.isSelected))
 		if (!Global.nes(meldung)) {
 			updateParent
 			Werkzeug.showInfo(meldung)
@@ -140,14 +139,13 @@ class HH510DruckenController extends BaseController<String> {
 
 		if (eb.isSelected || gv.isSelected || sb.isSelected) {
 			val byte[] pdf = get(
-				FactoryService.getHaushaltService.getReportJahresbericht(getServiceDaten, von.getValue, bis.getValue,
-					titel.getText, eb.isSelected, gv.isSelected, sb.isSelected))
+				FactoryService::haushaltService.getReportJahresbericht(serviceDaten, von.value, bis.value, titel.text,
+					eb.isSelected, gv.isSelected, sb.isSelected))
 			Platform.runLater([Werkzeug.speicherReport(pdf, Meldungen.HH048, true)])
 		}
 		if (kassenbericht.isSelected) {
 			val byte[] pdf = get(
-				FactoryService.getHaushaltService.getReportKassenbericht(getServiceDaten, von.getValue, bis.getValue,
-					titel.getText))
+				FactoryService::haushaltService.getReportKassenbericht(serviceDaten, von.value, bis.value, titel.text))
 			Platform.runLater([Werkzeug.speicherReport(pdf, Meldungen.HH049, true)])
 		}
 	}

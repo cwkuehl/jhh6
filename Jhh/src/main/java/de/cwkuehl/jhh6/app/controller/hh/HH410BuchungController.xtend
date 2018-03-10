@@ -56,8 +56,8 @@ class HH410BuchungController extends BaseController<String> {
 	@FXML Button kontentausch
 	@FXML Button addition
 	// @FXML Button abbrechen
-	static LocalDate valutaZuletzt = LocalDate.now
-	static LocalDate belegDatumZuletzt = LocalDate.now
+	static LocalDate valutaZuletzt = LocalDate::now
+	static LocalDate belegDatumZuletzt = LocalDate::now
 
 	/** 
 	 * Daten für ListBox Ereignis.
@@ -69,11 +69,11 @@ class HH410BuchungController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getBezeichnung
+			return getData.bezeichnung
 		}
 	}
 
@@ -87,11 +87,11 @@ class HH410BuchungController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getName
+			return getData.name
 		}
 	}
 
@@ -105,11 +105,11 @@ class HH410BuchungController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getName
+			return getData.name
 		}
 	}
 
@@ -120,7 +120,7 @@ class HH410BuchungController extends BaseController<String> {
 
 		tabbar = 0
 		nr0.setLabelFor(nr)
-		valuta0.setLabelFor(valuta.getLabelForNode, true)
+		valuta0.setLabelFor(valuta.labelForNode, true)
 		betrag0.setLabelFor(betrag, true)
 		summe0.setLabelFor(summe)
 		ereignis0.setLabelFor(ereignis)
@@ -131,14 +131,10 @@ class HH410BuchungController extends BaseController<String> {
 		initListView(habenkonto, ok)
 		bText0.setLabelFor(bText, true)
 		belegNr0.setLabelFor(belegNr)
-		belegDatum0.setLabelFor(belegDatum.getLabelForNode)
+		belegDatum0.setLabelFor(belegDatum.labelForNode)
 		angelegt0.setLabelFor(angelegt)
 		geaendert0.setLabelFor(geaendert)
-		ereignis.getSelectionModel.selectedItemProperty.addListener([ e |
-			{
-				onEreignis
-			}
-		])
+		ereignis.getSelectionModel.selectedItemProperty.addListener([e|onEreignis])
 		initDaten(0)
 		betrag.requestFocus
 		betrag.selectAll
@@ -155,26 +151,25 @@ class HH410BuchungController extends BaseController<String> {
 			valuta.setValue(valutaZuletzt)
 			belegDatum.setValue(belegDatumZuletzt)
 			var boolean init = false
-			var boolean neu = DialogAufrufEnum.NEU.equals(getAufruf)
-			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(getAufruf) ||
-				DialogAufrufEnum.STORNO.equals(getAufruf)
+			var boolean neu = DialogAufrufEnum.NEU.equals(aufruf)
+			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(aufruf) || DialogAufrufEnum.STORNO.equals(aufruf)
 			var HhBuchungLang e = getParameter1
 			if (!neu && e !== null) {
-				var HhBuchung k = get(FactoryService.getHaushaltService.getBuchung(getServiceDaten, e.getUid))
+				var HhBuchung k = get(FactoryService::haushaltService.getBuchung(serviceDaten, e.uid))
 				if (k !== null) {
-					nr.setText(k.getUid)
-					valuta.setValue(k.getSollValuta)
+					nr.setText(k.uid)
+					valuta.setValue(k.sollValuta)
 					initListen
 					init = true
-					betrag.setText(Global.dblStr2l(k.getEbetrag))
+					betrag.setText(Global.dblStr2l(k.ebetrag))
 					summe.setText(null)
-					setText(sollkonto, k.getSollKontoUid)
-					setText(habenkonto, k.getHabenKontoUid)
-					bText.setText(k.getBtext)
-					belegNr.setText(k.getBelegNr)
-					belegDatum.setValue(k.getBelegDatum)
-					angelegt.setText(k.formatDatumVon(k.getAngelegtAm, k.getAngelegtVon))
-					geaendert.setText(k.formatDatumVon(k.getGeaendertAm, k.getGeaendertVon))
+					setText(sollkonto, k.sollKontoUid)
+					setText(habenkonto, k.habenKontoUid)
+					bText.setText(k.btext)
+					belegNr.setText(k.belegNr)
+					belegDatum.setValue(k.belegDatum)
+					angelegt.setText(k.formatDatumVon(k.angelegtAm, k.angelegtVon))
+					geaendert.setText(k.formatDatumVon(k.geaendertAm, k.geaendertVon))
 				}
 			}
 			if (!init) {
@@ -196,9 +191,9 @@ class HH410BuchungController extends BaseController<String> {
 			if (neu) {
 				ok.setText(Meldungen.M2004)
 			} else if (loeschen) {
-				if (DialogAufrufEnum.LOESCHEN.equals(getAufruf)) {
+				if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
 					ok.setText(Meldungen.M2001)
-				} else if (e !== null && Constant.KZB_STORNO.equals(e.getKz)) {
+				} else if (e !== null && Constant.KZB_STORNO.equals(e.kz)) {
 					ok.setText(Meldungen.M2005)
 				} else {
 					ok.setText(Meldungen.M2006)
@@ -208,11 +203,9 @@ class HH410BuchungController extends BaseController<String> {
 			kontentausch.setVisible(!loeschen)
 			addition.setVisible(!loeschen)
 		}
-		if (stufe <= 1) {
-			// stufe = 0
+		if (stufe <= 1) { // stufe = 0
 		}
-		if (stufe <= 2) {
-			// initDatenTable
+		if (stufe <= 2) { // initDatenTable
 		}
 	}
 
@@ -222,10 +215,10 @@ class HH410BuchungController extends BaseController<String> {
 		var String s = getText(sollkonto)
 		var String h = getText(habenkonto)
 		var List<HhEreignisLang> el = get(
-			FactoryService.getHaushaltService.getEreignisListe(getServiceDaten, valuta.getValue, valuta.getValue))
+			FactoryService::haushaltService.getEreignisListe(serviceDaten, valuta.value, valuta.value))
 		ereignis.setItems(getItems(el, null, [a|new EreignisData(a)], null))
 		var List<HhKonto> kl = get(
-			FactoryService.getHaushaltService.getKontoListe(getServiceDaten, valuta.getValue, valuta.getValue))
+			FactoryService::haushaltService.getKontoListe(serviceDaten, valuta.value, valuta.value))
 		sollkonto.setItems(getItems(kl, null, [a|new SollkontoData(a)], null))
 		habenkonto.setItems(getItems(kl, null, [a|new HabenkontoData(a)], null))
 		setText(ereignis, e)
@@ -247,7 +240,7 @@ class HH410BuchungController extends BaseController<String> {
 	@FXML def void onValuta() {
 		try {
 			event = false
-			belegDatum.setValue(valuta.getValue)
+			belegDatum.setValue(valuta.value)
 			initListen
 		} finally {
 			event = true
@@ -263,9 +256,9 @@ class HH410BuchungController extends BaseController<String> {
 		}
 		var HhEreignisLang e = getValue(ereignis, false)
 		if (e !== null) {
-			setText(sollkonto, e.getSollKontoUid)
-			setText(habenkonto, e.getHabenKontoUid)
-			bText.setText(e.getEtext)
+			setText(sollkonto, e.sollKontoUid)
+			setText(habenkonto, e.habenKontoUid)
+			bText.setText(e.etext)
 		}
 	}
 
@@ -274,8 +267,8 @@ class HH410BuchungController extends BaseController<String> {
 	 */
 	@FXML def void onNeueNr() {
 
-		if (Global.nes(belegNr.getText)) {
-			var String nr = get(FactoryService.getHaushaltService.getNeueBelegNr(getServiceDaten, belegDatum.getValue))
+		if (Global.nes(belegNr.text)) {
+			var String nr = get(FactoryService::haushaltService.getNeueBelegNr(serviceDaten, belegDatum.value))
 			belegNr.setText(nr)
 		}
 	}
@@ -293,36 +286,36 @@ class HH410BuchungController extends BaseController<String> {
 		dbB = Global.konvDM(dbEB)
 		b = dbEB
 		if (DialogAufrufEnum.NEU.equals(aufruf) || DialogAufrufEnum.KOPIEREN.equals(aufruf)) {
-			r = FactoryService.getHaushaltService.insertUpdateBuchung(getServiceDaten, null, valuta.getValue, dbB, dbEB,
-				getText(sollkonto), getText(habenkonto), bText.getText, belegNr.getText, belegDatum.getValue, null,
-				null, null, null, null, false)
+			r = FactoryService::haushaltService.insertUpdateBuchung(serviceDaten, null, valuta.value, dbB, dbEB,
+				getText(sollkonto), getText(habenkonto), bText.text, belegNr.text, belegDatum.value, null, null, null,
+				null, null, false)
 		} else if (DialogAufrufEnum.AENDERN.equals(aufruf)) {
-			r = FactoryService.getHaushaltService.insertUpdateBuchung(getServiceDaten, nr.getText, valuta.getValue, dbB,
-				dbEB, getText(sollkonto), getText(habenkonto), bText.getText, belegNr.getText, belegDatum.getValue,
-				null, null, null, null, null, false)
+			r = FactoryService::haushaltService.insertUpdateBuchung(getServiceDaten, nr.text, valuta.value, dbB, dbEB,
+				getText(sollkonto), getText(habenkonto), bText.text, belegNr.text, belegDatum.value, null, null, null,
+				null, null, false)
 		} else if (DialogAufrufEnum.STORNO.equals(aufruf)) {
-			r = FactoryService.getHaushaltService.storniereBuchung(getServiceDaten, nr.getText)
+			r = FactoryService::haushaltService.storniereBuchung(serviceDaten, nr.text)
 		} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
-			r = FactoryService.getHaushaltService.deleteBuchung(getServiceDaten, nr.getText)
+			r = FactoryService::haushaltService.deleteBuchung(serviceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)
 			if (r.getFehler.isEmpty) {
 				// letztes Datum merken
-				valutaZuletzt = valuta.getValue
-				belegDatumZuletzt = belegDatum.getValue
+				valutaZuletzt = valuta.value
+				belegDatumZuletzt = belegDatum.value
 				updateParent
 				if (DialogAufrufEnum.NEU.equals(aufruf)) {
 					var StringBuffer sb = new StringBuffer
 					var HhKonto sk = getValue(sollkonto, true)
 					var HhKonto hk = getValue(habenkonto, true)
-					sb.append(Global.dateTimeStringForm(valuta.getValue.atStartOfDay)).append(", ").append(
-						Global.dblStr2l(b)).append(", ").append(sk.getName).append(" an ").append(hk.getName).
-						append(", ").append(bText.getText)
+					sb.append(Meldungen.HH057(valuta.value.atStartOfDay, b, sk.name, hk.name, bText.text))
 					if (!Global.nes(belegNr.getText)) {
-						sb.append(", ").append(belegNr.getText)
+						sb.append(Meldungen.HH058(belegNr.text))
 					}
-					sb.append(", ").append(Global.dateTimeStringForm(belegDatum.getValue.atStartOfDay))
+					if (!valuta.value.equals(belegDatum.value)) {
+						sb.append(Meldungen.HH059(belegDatum.value.atStartOfDay))
+					}
 					buchung.setText(sb.toString)
 					betrag.setText("")
 					summe.setText("")
@@ -355,9 +348,9 @@ class HH410BuchungController extends BaseController<String> {
 	 */
 	def private double berechneBetrag() {
 
-		var String operator = ermittleOperator
-		var double b = Global.strDbl(betrag.getText)
-		var double d = Global.strDbl(summe.getText)
+		var operator = ermittleOperator
+		var b = Global.strDbl(betrag.text)
+		var d = Global.strDbl(summe.text)
 		if (Global.nes(operator)) {
 			d += b
 		} else if (operator.equals("*")) {
@@ -372,7 +365,7 @@ class HH410BuchungController extends BaseController<String> {
 	def private String ermittleOperator() {
 
 		var op = ""
-		var strBetrag = Global.objStr(betrag.getText)
+		var strBetrag = Global.objStr(betrag.text)
 		if (strBetrag.startsWith("+")) {
 			strBetrag = strBetrag.substring(1)
 		} else if (strBetrag.startsWith("*")) {

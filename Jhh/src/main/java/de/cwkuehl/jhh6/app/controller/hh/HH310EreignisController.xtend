@@ -50,11 +50,11 @@ class HH310EreignisController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getName
+			return getData.name
 		}
 	}
 
@@ -68,11 +68,11 @@ class HH310EreignisController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getName
+			return getData.name
 		}
 	}
 
@@ -103,23 +103,23 @@ class HH310EreignisController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var List<HhKonto> kl = get(FactoryService.getHaushaltService.getKontoListe(getServiceDaten, null, null))
+			var List<HhKonto> kl = get(FactoryService::haushaltService.getKontoListe(serviceDaten, null, null))
 			sollkonto.setItems(getItems(kl, null, [a|new SollkontoData(a)], null))
 			habenkonto.setItems(getItems(kl, null, [a|new HabenkontoData(a)], null))
 			var boolean neu = DialogAufrufEnum.NEU.equals(getAufruf)
 			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(getAufruf)
 			var HhEreignisLang e = getParameter1
 			if (!neu && e !== null) {
-				var HhEreignis k = get(FactoryService.getHaushaltService.getEreignis(getServiceDaten, e.getUid))
+				var HhEreignis k = get(FactoryService::haushaltService.getEreignis(serviceDaten, e.uid))
 				if (k !== null) {
-					nr.setText(k.getUid)
-					bezeichnung.setText(k.getBezeichnung)
-					kennzeichen.setText(k.getKz)
-					eText.setText(k.getEtext)
-					setText(sollkonto, k.getSollKontoUid)
-					setText(habenkonto, k.getHabenKontoUid)
-					angelegt.setText(k.formatDatumVon(k.getAngelegtAm, k.getAngelegtVon))
-					geaendert.setText(k.formatDatumVon(k.getGeaendertAm, k.getGeaendertVon))
+					nr.setText(k.uid)
+					bezeichnung.setText(k.bezeichnung)
+					kennzeichen.setText(k.kz)
+					eText.setText(k.etext)
+					setText(sollkonto, k.sollKontoUid)
+					setText(habenkonto, k.habenKontoUid)
+					angelegt.setText(k.formatDatumVon(k.angelegtAm, k.angelegtVon))
+					geaendert.setText(k.formatDatumVon(k.geaendertAm, k.geaendertVon))
 				}
 			}
 			nr.setEditable(false)
@@ -156,15 +156,15 @@ class HH310EreignisController extends BaseController<String> {
 
 		var ServiceErgebnis<?> r = null
 		if (DialogAufrufEnum.NEU.equals(aufruf) || DialogAufrufEnum.KOPIEREN.equals(aufruf)) {
-			r = FactoryService.getHaushaltService.insertUpdateEreignis(getServiceDaten, null, kennzeichen.getText,
-				getText(sollkonto), getText(habenkonto), bezeichnung.getText, eText.getText, null, null, null, null,
-				null, false)
+			r = FactoryService::haushaltService.insertUpdateEreignis(serviceDaten, null, kennzeichen.text,
+				getText(sollkonto), getText(habenkonto), bezeichnung.text, eText.text, null, null, null, null, null, //
+				false)
 		} else if (DialogAufrufEnum.AENDERN.equals(aufruf)) {
-			r = FactoryService.getHaushaltService.insertUpdateEreignis(getServiceDaten, nr.getText, kennzeichen.getText,
-				getText(sollkonto), getText(habenkonto), bezeichnung.getText, eText.getText, null, null, null, null,
-				null, false)
+			r = FactoryService::haushaltService.insertUpdateEreignis(serviceDaten, nr.text, kennzeichen.text,
+				getText(sollkonto), getText(habenkonto), bezeichnung.text, eText.text, null, null, null, null, null, //
+				false)
 		} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
-			r = FactoryService.getHaushaltService.deleteEreignis(getServiceDaten, nr.getText)
+			r = FactoryService::haushaltService.deleteEreignis(serviceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)

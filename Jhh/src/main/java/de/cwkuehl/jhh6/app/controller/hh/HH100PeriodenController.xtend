@@ -69,18 +69,18 @@ class HH100PeriodenController extends BaseController<String> {
 		new(HhPeriodeLang v) {
 
 			super(v)
-			nr = new SimpleObjectProperty<Integer>(v.getNr)
-			text = new SimpleStringProperty(v.getText)
-			datumVon = new SimpleObjectProperty<LocalDate>(v.getDatumVon)
-			datumBis = new SimpleObjectProperty<LocalDate>(v.getDatumBis)
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
+			nr = new SimpleObjectProperty<Integer>(v.nr)
+			text = new SimpleStringProperty(v.text)
+			datumVon = new SimpleObjectProperty<LocalDate>(v.datumVon)
+			datumBis = new SimpleObjectProperty<LocalDate>(v.datumBis)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
+			geaendertVon = new SimpleStringProperty(v.geaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
+			angelegtVon = new SimpleStringProperty(v.angelegtVon)
 		}
 
 		override String getId() {
-			return Global.intStr(getData.getNr)
+			return Global.intStr(getData.nr)
 		}
 	}
 
@@ -115,11 +115,11 @@ class HH100PeriodenController extends BaseController<String> {
 			ende.setEditable(false)
 		}
 		if (stufe <= 1) {
-			var List<HhPeriodeLang> l = get(FactoryService.getHaushaltService.getPeriodeListe(getServiceDaten))
+			var List<HhPeriodeLang> l = get(FactoryService::haushaltService.getPeriodeListe(serviceDaten))
 			getItems(l, null, [a|new PeriodenData(a)], periodenData)
 			if (l !== null && l.size > 0) {
-				anfang.setText(Global.dateTimeStringForm(l.get(l.size - 1).getDatumVon.atStartOfDay))
-				ende.setText(Global.dateTimeStringForm(l.get(0).getDatumBis.atStartOfDay))
+				anfang.setText(Global.dateTimeStringForm(l.get(l.size - 1).datumVon.atStartOfDay))
+				ende.setText(Global.dateTimeStringForm(l.get(0).datumBis.atStartOfDay))
 			}
 		}
 		if (stufe <= 2) {
@@ -133,14 +133,14 @@ class HH100PeriodenController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		perioden.setItems(periodenData)
-		colNr.setCellValueFactory([c|c.getValue.nr])
-		colText.setCellValueFactory([c|c.getValue.text])
-		colVon.setCellValueFactory([c|c.getValue.datumVon])
-		colBis.setCellValueFactory([c|c.getValue.datumBis])
-		colGv.setCellValueFactory([c|c.getValue.geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue.geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue.angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue.angelegtAm])
+		colNr.setCellValueFactory([c|c.value.nr])
+		colText.setCellValueFactory([c|c.value.text])
+		colVon.setCellValueFactory([c|c.value.datumVon])
+		colBis.setCellValueFactory([c|c.value.datumBis])
+		colGv.setCellValueFactory([c|c.value.geaendertVon])
+		colGa.setCellValueFactory([c|c.value.geaendertAm])
+		colAv.setCellValueFactory([c|c.value.angelegtVon])
+		colAa.setCellValueFactory([c|c.value.angelegtAm])
 	}
 
 	/** 
@@ -172,7 +172,7 @@ class HH100PeriodenController extends BaseController<String> {
 	@FXML def void onNeu() {
 
 		get(
-			FactoryService.getHaushaltService.anlegenPeriode(getServiceDaten, Global.strInt(getText(laenge)),
+			FactoryService::haushaltService.anlegenPeriode(serviceDaten, Global.strInt(getText(laenge)),
 				Global.strInt(getText(art)) !== 0))
 		onAktuell
 	}
@@ -181,7 +181,7 @@ class HH100PeriodenController extends BaseController<String> {
 	 * Event für Loeschen.
 	 */
 	@FXML def void onLoeschen() {
-		get(FactoryService.getHaushaltService.loeschePeriode(getServiceDaten, Global.strInt(getText(art)) !== 0))
+		get(FactoryService::haushaltService.loeschePeriode(serviceDaten, Global.strInt(getText(art)) !== 0))
 		onAktuell
 	}
 

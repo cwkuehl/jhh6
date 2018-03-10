@@ -61,15 +61,15 @@ class HH300EreignisseController extends BaseController<String> {
 		new(HhEreignisLang v) {
 
 			super(v)
-			uid = new SimpleStringProperty(v.getUid)
-			bezeichnung = new SimpleStringProperty(v.getBezeichnung)
-			text = new SimpleStringProperty(v.getEtext)
-			soll = new SimpleStringProperty(v.getSollName)
-			haben = new SimpleStringProperty(v.getHabenName)
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
+			uid = new SimpleStringProperty(v.uid)
+			bezeichnung = new SimpleStringProperty(v.bezeichnung)
+			text = new SimpleStringProperty(v.etext)
+			soll = new SimpleStringProperty(v.sollName)
+			haben = new SimpleStringProperty(v.habenName)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
+			geaendertVon = new SimpleStringProperty(v.geaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
+			angelegtVon = new SimpleStringProperty(v.angelegtVon)
 		}
 
 		override String getId() {
@@ -102,12 +102,10 @@ class HH300EreignisseController extends BaseController<String> {
 	 */
 	override protected void initDaten(int stufe) {
 
-		if (stufe <= 0) {
-			// stufe = 0;
+		if (stufe <= 0) { // stufe = 0
 		}
 		if (stufe <= 1) {
-			var List<HhEreignisLang> l = get(
-				FactoryService.getHaushaltService.getEreignisListe(getServiceDaten, null, null))
+			var List<HhEreignisLang> l = get(FactoryService::haushaltService.getEreignisListe(serviceDaten, null, null))
 			getItems(l, null, [a|new EreignisseData(a)], ereignisseData)
 		}
 		if (stufe <= 2) {
@@ -121,15 +119,15 @@ class HH300EreignisseController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		ereignisse.setItems(ereignisseData)
-		colUid.setCellValueFactory([c|c.getValue.uid])
-		colBezeichnung.setCellValueFactory([c|c.getValue.bezeichnung])
-		colText.setCellValueFactory([c|c.getValue.text])
-		colSoll.setCellValueFactory([c|c.getValue.soll])
-		colHaben.setCellValueFactory([c|c.getValue.haben])
-		colGv.setCellValueFactory([c|c.getValue.geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue.geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue.angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue.angelegtAm])
+		colUid.setCellValueFactory([c|c.value.uid])
+		colBezeichnung.setCellValueFactory([c|c.value.bezeichnung])
+		colText.setCellValueFactory([c|c.value.text])
+		colSoll.setCellValueFactory([c|c.value.soll])
+		colHaben.setCellValueFactory([c|c.value.haben])
+		colGv.setCellValueFactory([c|c.value.geaendertVon])
+		colGa.setCellValueFactory([c|c.value.geaendertAm])
+		colAv.setCellValueFactory([c|c.value.angelegtVon])
+		colAa.setCellValueFactory([c|c.value.angelegtAm])
 	}
 
 	override protected void updateParent() {

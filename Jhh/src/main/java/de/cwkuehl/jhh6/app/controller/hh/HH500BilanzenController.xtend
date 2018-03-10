@@ -73,9 +73,9 @@ class HH500BilanzenController extends BaseController<String> {
 		new(HhBilanzSb v) {
 
 			super(v)
-			kontoUid = new SimpleStringProperty(v.getKontoUid)
-			name = new SimpleStringProperty(v.getName)
-			betrag = new SimpleObjectProperty<Double>(v.getEsumme)
+			kontoUid = new SimpleStringProperty(v.kontoUid)
+			name = new SimpleStringProperty(v.name)
+			betrag = new SimpleObjectProperty<Double>(v.esumme)
 		}
 
 		override String getId() {
@@ -99,22 +99,14 @@ class HH500BilanzenController extends BaseController<String> {
 		super.initialize
 		soll0.setLabelFor(soll)
 		haben0.setLabelFor(haben)
-		von0.setLabelFor(von.getLabelForNode)
-		bis0.setLabelFor(bis.getLabelForNode)
+		von0.setLabelFor(von.labelForNode)
+		bis0.setLabelFor(bis.labelForNode)
 		initAccelerator("B", berechnen)
 		initAccelerator("U", rueckgaengig)
 		initAccelerator("W", wiederherstellen)
 		initAccelerator("D", drucken)
-		soll.getSelectionModel.selectedItemProperty.addListener([ e |
-			{
-				onSoll
-			}
-		])
-		haben.getSelectionModel.selectedItemProperty.addListener([ e |
-			{
-				onHaben
-			}
-		])
+		soll.getSelectionModel.selectedItemProperty.addListener([e|onSoll])
+		haben.getSelectionModel.selectedItemProperty.addListener([e|onHaben])
 		initDaten(0)
 		soll.setPrefWidth(1000)
 		haben.setPrefWidth(1000)
@@ -129,15 +121,15 @@ class HH500BilanzenController extends BaseController<String> {
 
 		var String parameter = getParameter1
 		if (stufe <= 0) {
-			var HhPeriode max = get(FactoryService.getHaushaltService.holeMinMaxPerioden(getServiceDaten))
-			var LocalDate dB = LocalDate.now
+			var HhPeriode max = get(FactoryService::haushaltService.holeMinMaxPerioden(serviceDaten))
+			var LocalDate dB = LocalDate::now
 			dB = dB.withDayOfMonth(dB.lengthOfMonth)
-			if (max !== null && max.getDatumBis !== null && max.getDatumBis.isBefore(dB)) {
-				dB = max.getDatumBis
+			if (max !== null && max.datumBis !== null && max.datumBis.isBefore(dB)) {
+				dB = max.datumBis
 			}
 			var LocalDate dV = dB.withDayOfYear(1)
-			if (max !== null && max.getDatumVon !== null && max.getDatumVon.isAfter(dV)) {
-				dV = max.getDatumVon
+			if (max !== null && max.datumVon !== null && max.datumVon.isAfter(dV)) {
+				dV = max.datumVon
 			}
 			if (Constant.KZBI_GV.equals(parameter)) {
 				von.setValue(dV)
@@ -164,14 +156,14 @@ class HH500BilanzenController extends BaseController<String> {
 			var LocalDate dV = null
 			var LocalDate dB = null
 			if (Constant.KZBI_GV.equals(parameter)) {
-				dV = von.getValue
-				dB = bis.getValue
+				dV = von.value
+				dB = bis.value
 			} else {
-				dV = von.getValue
-				dB = von.getValue
+				dV = von.value
+				dB = von.value
 			}
 			var List<HhBilanzSb> liste = get(
-				FactoryService.getHaushaltService.getBilanzZeilen(getServiceDaten, parameter, dV, dB))
+				FactoryService::haushaltService.getBilanzZeilen(serviceDaten, parameter, dV, dB))
 			var List<HhBilanzSb> listeS = new ArrayList<HhBilanzSb>
 			var List<HhBilanzSb> listeH = new ArrayList<HhBilanzSb>
 			var double summeS = 0
@@ -203,14 +195,14 @@ class HH500BilanzenController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		soll.setItems(sollData)
-		colKontoUid.setCellValueFactory([c|c.getValue.kontoUid])
-		colName.setCellValueFactory([c|c.getValue.name])
-		colBetrag.setCellValueFactory([c|c.getValue.betrag])
+		colKontoUid.setCellValueFactory([c|c.value.kontoUid])
+		colName.setCellValueFactory([c|c.value.name])
+		colBetrag.setCellValueFactory([c|c.value.betrag])
 		initColumnBetrag(colBetrag)
 		haben.setItems(habenData)
-		colhKontoUid.setCellValueFactory([c|c.getValue.kontoUid])
-		colhName.setCellValueFactory([c|c.getValue.name])
-		colhBetrag.setCellValueFactory([c|c.getValue.betrag])
+		colhKontoUid.setCellValueFactory([c|c.value.kontoUid])
+		colhName.setCellValueFactory([c|c.value.name])
+		colhBetrag.setCellValueFactory([c|c.value.betrag])
 		initColumnBetrag(colhBetrag)
 	}
 
@@ -235,11 +227,11 @@ class HH500BilanzenController extends BaseController<String> {
 			try {
 				Jhh6.setLeftStatus2(Global.g0("HH500.calculate1"))
 				if (mlBerechnen > 0) {
-					v = von.getValue
+					v = von.value
 					mlBerechnen = 0
 				}
 				while (weiter >= 2 && (r === null || r.ok)) {
-					r = FactoryService.getHaushaltService.aktualisiereBilanz(getServiceDaten, false, v)
+					r = FactoryService::haushaltService.aktualisiereBilanz(serviceDaten, false, v)
 					v = null
 					if (r.ok) {
 						var String[] l = r.getErgebnis
@@ -296,8 +288,8 @@ class HH500BilanzenController extends BaseController<String> {
 
 		var List<Object> d = new ArrayList<Object>
 		d.add(getParameter1)
-		d.add(von.getValue)
-		d.add(bis.getValue)
+		d.add(von.value)
+		d.add(bis.value)
 		starteFormular(HH510DruckenController, DialogAufrufEnum.OHNE, d)
 	}
 
@@ -323,8 +315,8 @@ class HH500BilanzenController extends BaseController<String> {
 	def private void starteBuchungen(HhBilanzSb bi) {
 
 		if (bi !== null) {
-			var LocalDate v = von.getValue
-			var LocalDate b = bis.getValue
+			var LocalDate v = von.value
+			var LocalDate b = bis.value
 			if (Constant.KZBI_EROEFFNUNG.equals(getParameter1)) {
 				b = v.plusYears(1).minusDays(1)
 			} else if (Constant.KZBI_SCHLUSS.equals(getParameter1)) {
@@ -383,34 +375,31 @@ class HH500BilanzenController extends BaseController<String> {
 		var int r = 0
 		var int d = if(oben) -1 else 1
 		if (sollTabelle) {
-			r = soll.getSelectionModel.getSelectedIndex
+			r = soll.getSelectionModel.selectedIndex
 			l = getAllValues(soll)
 		} else {
-			r = haben.getSelectionModel.getSelectedIndex
+			r = haben.getSelectionModel.selectedIndex
 			l = getAllValues(haben)
 		}
 		if (0 <= r && r < l.size && 0 <= r + d && r + d < l.size) {
 			var HhBilanzSb k = l.get(r)
 			var HhBilanzSb k2 = l.get(r + d)
-			get(
-				FactoryService.getHaushaltService.tauscheKontoSortierung(getServiceDaten, k.getKontoUid,
-					k2.getKontoUid))
-				var int r2
-				if (sollTabelle) {
-					r = r + d
-					r2 = haben.getSelectionModel.getSelectedIndex
-				} else {
-					r2 = r + d
-					r = soll.getSelectionModel.getSelectedIndex
-				}
-				onAktuell
-				if (r >= 0) {
-					soll.getSelectionModel.select(r)
-				}
-				if (r2 >= 0) {
-					haben.getSelectionModel.select(r2)
-				}
+			get(FactoryService::haushaltService.tauscheKontoSortierung(serviceDaten, k.kontoUid, k2.kontoUid))
+			var int r2
+			if (sollTabelle) {
+				r = r + d
+				r2 = haben.getSelectionModel.selectedIndex
+			} else {
+				r2 = r + d
+				r = soll.getSelectionModel.selectedIndex
+			}
+			onAktuell
+			if (r >= 0) {
+				soll.getSelectionModel.select(r)
+			}
+			if (r2 >= 0) {
+				haben.getSelectionModel.select(r2)
 			}
 		}
 	}
-	
+}
