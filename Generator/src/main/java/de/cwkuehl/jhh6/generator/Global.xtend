@@ -133,15 +133,16 @@ public class Global {
 	}
 
 	def public static String javaClassName(String n) {
+
 		if (n === null || n == "") {
 			return ""
 		}
 		var name = n
-		var StringBuffer str = new StringBuffer
+		var str = new StringBuffer
 		// if (isJetName(name)) {
 		// name = name.substring(1, name.length() - 1)
 		// }
-		var String[] array = name.split("_|-");
+		var array = name.split("_|-");
 		if (array.size <= 1) {
 			// 20.03.11 WK: Entity mit JavaClassName ohne _
 			str.append(name.substring(0, 1).toUpperCase)
@@ -156,12 +157,13 @@ public class Global {
 	}
 
 	def public static String typLaengeName(String n) {
+
 		var name = n
-		var StringBuffer str = new StringBuffer
+		var str = new StringBuffer
 		// if (isJetName(name)) {
 		// name = name.substring(1, name.length() - 1);
 		// }
-		var String[] array = name.split("_|-")
+		var array = name.split("_|-")
 		for (int i : 0 .. array.size - 1) {
 			if (i > 0) {
 				str.append("_")
@@ -173,9 +175,10 @@ public class Global {
 	}
 
 	def public static String attNameName(String n) {
+
 		var name = n
-		var StringBuffer str = new StringBuffer
-		var String[] array = name.split("_|-")
+		var str = new StringBuffer
+		var array = name.split("_|-")
 		for (int i : 0 .. array.size - 1) {
 			if (i > 0) {
 				str.append("_")

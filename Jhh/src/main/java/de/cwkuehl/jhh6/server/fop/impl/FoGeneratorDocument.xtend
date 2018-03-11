@@ -27,9 +27,9 @@ class FoGeneratorDocument extends FoGeneratorDocumentBase {
 	 * @throws IOException
 	 */
 	def void bausteinAdresse(String anrede, String titel, String vorname, String nachname,
-
 		String adressergaenzung) throws IOException {
-		var StringBuffer sb = new StringBuffer
+
+		var sb = new StringBuffer
 		FoUtils.append(sb, null, anrede)
 		FoUtils.append(sb, " ", titel)
 		FoUtils.append(sb, " ", vorname)

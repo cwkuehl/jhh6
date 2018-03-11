@@ -43,9 +43,9 @@ class ZeinstellungRep {
 		if (Global.nes(s)) {
 			return 0
 		}
-		val con = daten.getDb.con
-		var PreparedStatement stmt = null
-		var int rs
+		val con = daten.db.con
+		var PreparedStatement stmt
+		var rs = 0
 		try {
 			log.info('''execute: «s»''')
 			stmt = con.prepareStatement(s)

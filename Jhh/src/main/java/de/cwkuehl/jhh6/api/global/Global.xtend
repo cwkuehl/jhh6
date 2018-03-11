@@ -39,7 +39,7 @@ class Global {
 	 * Der Standard-Konstruktor sollte nicht aufgerufen werden, da diese Klasse nur aus statischen Elementen besteht.
 	 */
 	private new() {
-		throw new RuntimeException(Meldungen.M1000(typeof(Global).name))
+		throw new RuntimeException(Meldungen::M1000(typeof(Global).name))
 	}
 	/**
 	 * Diese Funktion macht nichts und wird gebraucht, damit Checkstyle nicht leere Blocks bemängelt.
@@ -175,7 +175,7 @@ class Global {
 	 */
 	def public static double strDbl(String str) {
 
-		var double d = 0
+		var d = 0.0
 		if (!nes(str)) {
 			try {
 				d = Double.parseDouble(str)
@@ -203,7 +203,7 @@ class Global {
 		if (Double.isNaN(d) || Double.isInfinite(d)) {
 			return d.toString
 		}
-		var String str = ""
+		var str = ""
 		if (hat3Oder4Nachkommastellen(d)) {
 			str = MessageFormat.format("{0,number,#,##0.0000}", d)
 		} else {
@@ -394,7 +394,7 @@ class Global {
 			// Nachkommastellen wegen Genauigkeit von double nicht mehr feststellbar
 			return false
 		}
-		var double diff = Math.abs(d) * Constant.ZAHL_100_0
+		var diff = Math.abs(d) * Constant.ZAHL_100_0
 		diff -= Math.floor(diff + RUNDEN_2_STELLEN)
 		return ( diff > RUNDEN_2_STELLEN)
 	}
@@ -496,7 +496,7 @@ class Global {
 		if (objFormat === null) {
 			return null
 		}
-		var String str = null
+		var String str
 		if (objFormat instanceof Double) {
 			str = format("{0,number,0.00}", objFormat)
 		} else if (objFormat instanceof Boolean) {
@@ -939,7 +939,7 @@ class Global {
 
 		var d0 = d
 		if (d0 === null) {
-			d0 = LocalDate.now
+			d0 = LocalDate::now
 		}
 		while (d0.dayOfWeek == DayOfWeek.SATURDAY || d0.dayOfWeek == DayOfWeek.SUNDAY) {
 			d0 = d0.minusDays(1)
@@ -956,7 +956,7 @@ class Global {
 
 		var d0 = d
 		if (d0 === null) {
-			d0 = LocalDate.now
+			d0 = LocalDate::now
 		}
 		while (d0.dayOfWeek != DayOfWeek.SUNDAY) {
 			d0 = d0.plusDays(1)
@@ -1083,7 +1083,7 @@ class Global {
 	 */
 	def public static LocalDateTime objDat(String obj) {
 
-		var LocalDateTime d = null
+		var LocalDateTime d
 		if (obj !== null) {
 			var str = objStr(obj)
 			try {
@@ -1111,7 +1111,7 @@ class Global {
 	 */
 	def public static LocalDateTime strdat(String str) {
 
-		var LocalDateTime d = null
+		var LocalDateTime d
 		if (str !== null) {
 			try {
 				d = LocalDateTime.parse(str, DateTimeFormatter.ofPattern("y-M-d HH:mm:ss"))
@@ -1138,7 +1138,7 @@ class Global {
 	 */
 	def public static LocalDate objDat2(String obj) {
 
-		var LocalDate d = null
+		var LocalDate d
 		if (obj !== null) {
 			var str = objStr(obj)
 			try {
@@ -1204,7 +1204,7 @@ class Global {
 		// Methode 1: XOR und Base64
 		bytes = xorMessage(bytes, getXorKeybytes)
 		if (bytes !== null) {
-			var str = Base64.getEncoder.encodeToString(bytes)
+			var str = Base64.encoder.encodeToString(bytes)
 			return "1;" + str
 		}
 		return null
@@ -1223,8 +1223,8 @@ class Global {
 		if (s.startsWith("1;")) {
 			// Methode 1: XOR und Base64
 			try {
-				var bytes = Base64.getDecoder.decode(s.substring(2))
-				bytes = xorMessage(bytes, getXorKeybytes)
+				var bytes = Base64.decoder.decode(s.substring(2))
+				bytes = xorMessage(bytes, xorKeybytes)
 				var str = new String(bytes, "UTF-8")
 				return str
 			} catch (UnsupportedEncodingException e) {
@@ -1269,7 +1269,7 @@ class Global {
 	def public static byte[] leseBytes(String datei) throws Exception {
 
 		if (nes(datei)) {
-			throw new Exception(Meldungen.M1012)
+			throw new Exception(Meldungen::M1012)
 		}
 		var file = new File(datei)
 		return leseBytes(file, new FileInputStream(file), Integer.MAX_VALUE)
@@ -1286,7 +1286,7 @@ class Global {
 	def public static byte[] leseBytes(File file, InputStream is, int max) throws Exception {
 
 		if (file === null || is === null) {
-			throw new Exception(Meldungen.M1012)
+			throw new Exception(Meldungen::M1012)
 		}
 		var byte[] bytes = null
 
@@ -1294,15 +1294,15 @@ class Global {
 			// Get the size of the file
 			var length = file.length
 			if (length > max) {
-				throw new Exception(Meldungen.M1014(file.getName))
+				throw new Exception(Meldungen::M1014(file.getName))
 			}
 
 			// Byte-Array anlegen
 			bytes = newByteArrayOfSize(length.intValue)
 
 			// Bytes lesen
-			var int offset = 0
-			var int numRead = 0
+			var offset = 0
+			var numRead = 0
 			while (numRead >= 0 && offset < bytes.length) {
 				numRead = is.read(bytes, offset, bytes.length - offset)
 				if (numRead >= 0) {
@@ -1311,7 +1311,7 @@ class Global {
 			}
 			// Alles gelesen?
 			if (offset < bytes.length) {
-				throw new IOException(Meldungen.M1015(file.getName))
+				throw new IOException(Meldungen::M1015(file.getName))
 			}
 		} finally {
 			// Close the input stream and return bytes
@@ -1443,7 +1443,7 @@ class Global {
 						i--
 						zustand = Z_ENDE_ANFANG // Zeilenende-Anfang
 					} else {
-						throw new Exception(Meldungen.M1019(i, csv))
+						throw new Exception(Meldungen::M1019(i, csv))
 					}
 				// case Z_FELD_ENDE: // Feldende
 				// i--
@@ -1479,7 +1479,7 @@ class Global {
 			if (!ende) {
 				i++
 				if (i > csv.length) {
-					throw new Exception(Meldungen.M1020(csv))
+					throw new Exception(Meldungen::M1020(csv))
 				}
 			}
 		} while (!ende)
@@ -1493,7 +1493,7 @@ class Global {
 	 */
 	def public static String getUID() {
 
-		var String uid = new UID().toString
+		var uid = new UID().toString
 		if (uid.startsWith("-")) {
 			// Wegen Jet-Engine-Sortierung wird Minuszeichen ans Ende gehängt.
 			uid = uid.substring(1) + "-"
@@ -1527,7 +1527,7 @@ class Global {
 			sb.append(name)
 		}
 		if (datum) {
-			sb.append("_").append(LocalDate.now.format(DateTimeFormatter.ofPattern("yyyyMMdd")))
+			sb.append("_").append(LocalDate::now.format(DateTimeFormatter.ofPattern("yyyyMMdd")))
 		}
 		if (zufall) {
 			sb.append("_").append(getNextRandom)
@@ -1550,15 +1550,15 @@ class Global {
 
 		var str = "Unbekannt"
 		try {
-			var url = clazz.getProtectionDomain.getCodeSource.getLocation
-			str += " " + url.getPath
-			var file = new File(url.getPath)
+			var url = clazz.getProtectionDomain.codeSource.location
+			str += " " + url.path
+			var file = new File(url.path)
 			var JarFile jar = null
 			try {
 				jar = new JarFile(file)
-				var manifest = jar.getManifest
+				var manifest = jar.manifest
 				str += " " + manifest.toString
-				var attributes = manifest.getMainAttributes
+				var attributes = manifest.mainAttributes
 				str += " " + getAttributes(attributes)
 				if (attributes.getValue(key) !== null) {
 					str = attributes.getValue(key)
@@ -1603,11 +1603,11 @@ class Global {
 
 	def public static String getExceptionText(Throwable ex) {
 
-		var String str = null
+		var String str
 		if (ex === null) {
-			str = Meldungen.M1016
+			str = Meldungen::M1016
 		} else {
-			str = ex.getMessage
+			str = ex.message
 			if (Global.nes(str)) {
 				// ex.printStackTrace
 				str = ex.toString

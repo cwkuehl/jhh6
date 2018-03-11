@@ -136,7 +136,7 @@ class RepositoryBase {
 
 	/** Lesen eines Datensatzes. */		
 	def protected Object selectOne(ServiceDaten daten, SqlBuilder sql) {
-		return selectOne(daten.getDb.con, sql)
+		return selectOne(daten.db.con, sql)
 	}
 
 	/** Lesen eines Datensatzes. */		
@@ -172,9 +172,9 @@ class RepositoryBase {
 	def protected <K extends DtoBase, T extends K> T selectOne(ServiceDaten daten, SqlBuilder sql,
 		Function<ResultSet, T> inst, Class<T> c) {
 
-		val con = daten.getDb.con
-		var PreparedStatement stmt = null
-		var ResultSet rs = null
+		val con = daten.db.con
+		var PreparedStatement stmt
+		var ResultSet rs
 		var T t = null
 		try {
 			log.info('''selectOne: «sql.toString»''')
@@ -203,9 +203,9 @@ class RepositoryBase {
 	def protected <K extends DtoBase, T extends K> List<T> selectList(ServiceDaten daten, SqlBuilder sql,
 		Function<ResultSet, T> inst, Class<T> c) {
 
-		val con = daten.getDb.con
-		var PreparedStatement stmt = null
-		var ResultSet rs = null
+		val con = daten.db.con
+		var PreparedStatement stmt
+		var ResultSet rs
 		var list = new ArrayList<T>
 		var T t = null
 
@@ -240,9 +240,9 @@ class RepositoryBase {
 
 	def protected int insert(ServiceDaten daten, DtoBase e, SqlBuilder sql) {
 
-		val con = daten.getDb.con
-		var PreparedStatement stmt = null
-		var int rs
+		val con = daten.db.con
+		var PreparedStatement stmt
+		var rs = 0
 		try {
 			log.info('''insert: «sql.toString»''')
 			stmt = con.prepareStatement(sql.toString)
@@ -268,9 +268,9 @@ class RepositoryBase {
 
 	def protected int update(ServiceDaten daten, DtoBase e, SqlBuilder sql) {
 
-		val con = daten.getDb.con
-		var PreparedStatement stmt = null
-		var int rs
+		val con = daten.db.con
+		var PreparedStatement stmt
+		var rs = 0
 		try {
 			log.info('''update: «sql.toString»''')
 			stmt = con.prepareStatement(sql.toString)
@@ -296,9 +296,9 @@ class RepositoryBase {
 
 	def protected int delete(ServiceDaten daten, DtoBase e, SqlBuilder sql) {
 
-		val con = daten.getDb.con
-		var PreparedStatement stmt = null
-		var int rs
+		val con = daten.db.con
+		var PreparedStatement stmt
+		var rs = 0
 		try {
 			log.info('''delete: «sql.toString»''')
 			stmt = con.prepareStatement(sql.toString)

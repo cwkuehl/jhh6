@@ -86,26 +86,26 @@ class ByteDatenRep {
 			bdn = byteliste.get(nr - 1)
 			bds = null;
 			for (ByteDaten bd : liste) {
-				if (bd.getLfdNr() == nr) {
+				if (bd.lfdNr == nr) {
 					bds = bd;
 				}
 			}
 			if (bds === null) {
-				var bd = new ByteDaten()
+				var bd = new ByteDaten
 				bd.setMandantNr(daten.mandantNr)
 				bd.setTyp(typ)
 				bd.setUid(uid)
 				bd.setLfdNr(nr)
-				bd.setMetadaten(bdn.getMetadaten())
-				bd.setBytes(bdn.getBytes())
-				bd.machAngelegt(daten.getJetzt(), daten.getBenutzerId())
+				bd.setMetadaten(bdn.metadaten)
+				bd.setBytes(bdn.bytes)
+				bd.machAngelegt(daten.jetzt, daten.benutzerId)
 				insert(daten, bd)
 			} else {
 				var bdu = new ByteDatenUpdate(bds)
-				bdu.setMetadaten(bdn.getMetadaten())
-				bdu.setBytes(bdn.getBytes())
-				if (bdu.isChanged()) {
-					bdu.machGeaendert(daten.getJetzt(), daten.getBenutzerId())
+				bdu.setMetadaten(bdn.metadaten)
+				bdu.setBytes(bdn.bytes)
+				if (bdu.isChanged) {
+					bdu.machGeaendert(daten.jetzt, daten.benutzerId)
 					update(daten, bdu)
 				}
 				liste.remove(bds)

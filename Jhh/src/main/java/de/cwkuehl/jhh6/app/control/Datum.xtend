@@ -60,7 +60,7 @@ class Datum extends HBox {
 		}
 
 		datum.setDisable(true)
-		setValue((null as LocalDateTime))
+		setValue(null as LocalDateTime)
 		Platform::runLater([
 			{
 				val pattern = "yyyy-MM-dd"
@@ -86,17 +86,17 @@ class Datum extends HBox {
 				})
 				datum.valueProperty.addListener([ e |
 					{
-						text.setText(Global::holeWochentag(datum.getValue))
+						text.setText(Global::holeWochentag(datum.value))
 					}
 				])
-				text.setText(Global::holeWochentag(datum.getValue))
+				text.setText(Global::holeWochentag(datum.value))
 			}
 		])
 		ohne.setOnAction([ e |
 			{
 				if (ohne.isSelected) {
 					if (datum.getValue !== null) {
-						date = datum.getValue
+						date = datum.value
 					}
 					datum.setValue(null)
 				} else {
@@ -114,17 +114,17 @@ class Datum extends HBox {
 
 	def LocalDateTime getValue2() {
 
-		var LocalDate d = datum.valueProperty.get
+		var d = datum.valueProperty.get
 		if (d === null) {
 			return null
 		}
-		var String z = zeit.getText
+		var z = zeit.text
 		if (z === null || z.length <= 0) {
 			return d.atStartOfDay
 		}
 		var DateTimeFormatter f = DateTimeFormatter::ofPattern("HH:mm")
 		var LocalTime t = LocalTime::from(f.parse(z))
-		return d.atTime(t.getHour, t.getMinute)
+		return d.atTime(t.hour, t.minute)
 	}
 
 	def void setValue(LocalDate d) {
@@ -156,7 +156,7 @@ class Datum extends HBox {
 			return;
 		}
 		setValue(d.toLocalDate)
-		var String str = d.format(DateTimeFormatter::ofPattern("HH:mm"))
+		var str = d.format(DateTimeFormatter::ofPattern("HH:mm"))
 		zeit.setText(str)
 	}
 
@@ -190,7 +190,7 @@ class Datum extends HBox {
 	}
 
 	def String getNullText() {
-		return ohne.getText
+		return ohne.text
 	}
 
 	def void setNullText(String v) {
@@ -199,7 +199,7 @@ class Datum extends HBox {
 		notnull = v === null || v.equals("")
 		ohne.setVisible(!notnull)
 		if (notnull) {
-			this.getChildren.remove(ohne)
+			this.children.remove(ohne)
 			setValue(null as LocalDateTime)
 		}
 	}
@@ -221,35 +221,23 @@ class Datum extends HBox {
 					var Scene s = datum.getScene
 					if (s !== null) {
 						for (Entry<KeyCodeCombination, Runnable> e : accelators.entrySet) {
-							s.getAccelerators.remove(e.getKey, e.getValue)
+							s.getAccelerators.remove(e.key, e.value)
 						}
 					}
 				}
 			])
 		} else {
 			if (accelators.isEmpty) {
-				accelators.put(new KeyCodeCombination(KeyCode::P, KeyCombination::CONTROL_DOWN), [
-					{
-						onPlus
-					}
-				])
-				accelators.put(new KeyCodeCombination(KeyCode::H, KeyCombination::CONTROL_DOWN), [
-					{
-						onHeute
-					}
-				])
-				accelators.put(new KeyCodeCombination(KeyCode::M, KeyCombination::CONTROL_DOWN), [
-					{
-						onMinus
-					}
-				])
+				accelators.put(new KeyCodeCombination(KeyCode::P, KeyCombination::CONTROL_DOWN), [onPlus])
+				accelators.put(new KeyCodeCombination(KeyCode::H, KeyCombination::CONTROL_DOWN), [onHeute])
+				accelators.put(new KeyCodeCombination(KeyCode::M, KeyCombination::CONTROL_DOWN), [onMinus])
 			}
 			Platform::runLater([
 				{
 					var Scene s = datum.getScene
 					if (s !== null) {
 						for (Entry<KeyCodeCombination, Runnable> e : accelators.entrySet) {
-							s.getAccelerators.put(e.getKey, e.getValue)
+							s.getAccelerators.put(e.key, e.value)
 						}
 					}
 				}
@@ -268,14 +256,14 @@ class Datum extends HBox {
 	}
 
 	def final Tooltip getTooltip() {
-		return datum.tooltipProperty.getValue()
+		return datum.tooltipProperty.value
 	}
 
 	// public StringProperty promptTextProperty() {
 	// return datum.promptTextProperty;
 	// }
 	def String getPromptText() {
-		return datum.getPromptText
+		return datum.promptText
 	}
 
 	def void setPromptText(String v) {
@@ -311,7 +299,7 @@ class Datum extends HBox {
 	@FXML def void onMinus() {
 
 		if (datum.getValue !== null) {
-			datum.setValue(datum.getValue.minusDays(1))
+			datum.setValue(datum.value.minusDays(1))
 		}
 	}
 
@@ -322,7 +310,7 @@ class Datum extends HBox {
 	@FXML def void onPlus() {
 
 		if (datum.getValue !== null) {
-			datum.setValue(datum.getValue.plusDays(1))
+			datum.setValue(datum.value.plusDays(1))
 		}
 	}
 

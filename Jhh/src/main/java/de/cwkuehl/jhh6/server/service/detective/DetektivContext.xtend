@@ -4,7 +4,6 @@ import de.cwkuehl.jhh6.api.dto.MaParameter
 import de.cwkuehl.jhh6.api.global.Global
 import de.cwkuehl.jhh6.api.message.MeldungException
 import de.cwkuehl.jhh6.api.service.ServiceDaten
-import de.cwkuehl.jhh6.api.service.ServiceErgebnis
 import de.cwkuehl.jhh6.api.service.detective.Ergebnis
 import de.cwkuehl.jhh6.api.service.detective.Kategorie
 import de.cwkuehl.jhh6.api.service.detective.Runde
@@ -67,19 +66,18 @@ class DetektivContext implements Serializable {
 	def private void initCluedo() {
 
 		var Kategorie k = null
-		// spieler = null;
 		if (spieler === null) {
 			// Spieler
 			spieler = new LinkedHashMap<String, Kategorie>
-			k = new Kategorie(Global.getUID, "Benjamin", "B")
+			k = new Kategorie(Global::UID, "Benjamin", "B")
 			spieler.put(k.getId, k)
-			k = new Kategorie(Global.getUID, "Claudia", "C")
+			k = new Kategorie(Global::UID, "Claudia", "C")
 			spieler.put(k.getId, k)
-			k = new Kategorie(Global.getUID, "Deborah", "D")
+			k = new Kategorie(Global::UID, "Deborah", "D")
 			spieler.put(k.getId, k)
-			k = new Kategorie(Global.getUID, "Viktoria", "V")
+			k = new Kategorie(Global::UID, "Viktoria", "V")
 			spieler.put(k.getId, k)
-			k = new Kategorie(Global.getUID, "Wolfgang", "W")
+			k = new Kategorie(Global::UID, "Wolfgang", "W")
 			spieler.put(k.getId, k)
 		} else {
 			k = getNr(spieler, 1) // if (k != null && "C".equals(k.getKurz)) {
@@ -89,72 +87,71 @@ class DetektivContext implements Serializable {
 		if (verdaechtige === null) {
 			// Verdächtige
 			verdaechtige = new LinkedHashMap<String, Kategorie>
-			k = new Kategorie(Global.getUID, "Prof. Bloom", "Blo")
+			k = new Kategorie(Global::UID, "Prof. Bloom", "Blo")
 			verdaechtige.put(k.getId, k)
-			k = new Kategorie(Global.getUID, "Baronin von Porz", "Por")
+			k = new Kategorie(Global::UID, "Baronin von Porz", "Por")
 			verdaechtige.put(k.getId, k)
-			k = new Kategorie(Global.getUID, "Frl. Ming", "Min")
+			k = new Kategorie(Global::UID, "Frl. Ming", "Min")
 			verdaechtige.put(k.getId, k)
-			k = new Kategorie(Global.getUID, "Frau Weiß", "Wei")
+			k = new Kategorie(Global::UID, "Frau Weiß", "Wei")
 			verdaechtige.put(k.getId, k)
-			k = new Kategorie(Global.getUID, "Oberst von Gatow", "Gat")
+			k = new Kategorie(Global::UID, "Oberst von Gatow", "Gat")
 			verdaechtige.put(k.getId, k)
-			k = new Kategorie(Global.getUID, "Herr Dir. Grün", "Grü")
+			k = new Kategorie(Global::UID, "Herr Dir. Grün", "Grü")
 			verdaechtige.put(k.getId, k)
 		}
 		if (werkzeuge === null) {
 			// Werkzeuge
 			werkzeuge = new LinkedHashMap<String, Kategorie>
-			k = new Kategorie(Global.getUID, "Heizungsrohr", "H")
+			k = new Kategorie(Global::UID, "Heizungsrohr", "H")
 			werkzeuge.put(k.getId, k)
-			k = new Kategorie(Global.getUID, "Leuchter", "L")
+			k = new Kategorie(Global::UID, "Leuchter", "L")
 			werkzeuge.put(k.getId, k)
-			k = new Kategorie(Global.getUID, "Pistole", "P")
+			k = new Kategorie(Global::UID, "Pistole", "P")
 			werkzeuge.put(k.getId, k)
-			k = new Kategorie(Global.getUID, "Seil", "S")
+			k = new Kategorie(Global::UID, "Seil", "S")
 			werkzeuge.put(k.getId, k)
-			k = new Kategorie(Global.getUID, "Dolch", "D")
+			k = new Kategorie(Global::UID, "Dolch", "D")
 			werkzeuge.put(k.getId, k)
-			k = new Kategorie(Global.getUID, "Rohrzange", "R")
+			k = new Kategorie(Global::UID, "Rohrzange", "R")
 			werkzeuge.put(k.getId, k)
 		}
 		if (raeume === null) {
 			// Räume
 			raeume = new LinkedHashMap<String, Kategorie>
-			k = new Kategorie(Global.getUID, "Küche", "Kü")
+			k = new Kategorie(Global::UID, "Küche", "Kü")
 			raeume.put(k.getId, k)
-			k = new Kategorie(Global.getUID, "Bibliothek", "Bi")
+			k = new Kategorie(Global::UID, "Bibliothek", "Bi")
 			raeume.put(k.getId, k)
-			k = new Kategorie(Global.getUID, "Salon", "Sa")
+			k = new Kategorie(Global::UID, "Salon", "Sa")
 			raeume.put(k.getId, k)
-			k = new Kategorie(Global.getUID, "Speisezimmer", "Sp")
+			k = new Kategorie(Global::UID, "Speisezimmer", "Sp")
 			raeume.put(k.getId, k)
-			k = new Kategorie(Global.getUID, "Billardzimmer", "Bd")
+			k = new Kategorie(Global::UID, "Billardzimmer", "Bd")
 			raeume.put(k.getId, k)
-			k = new Kategorie(Global.getUID, "Eingangshalle", "Ei")
+			k = new Kategorie(Global::UID, "Eingangshalle", "Ei")
 			raeume.put(k.getId, k)
-			k = new Kategorie(Global.getUID, "Veranda", "Ve")
+			k = new Kategorie(Global::UID, "Veranda", "Ve")
 			raeume.put(k.getId, k)
-			k = new Kategorie(Global.getUID, "Arbeitszimmer", "Ar")
+			k = new Kategorie(Global::UID, "Arbeitszimmer", "Ar")
 			raeume.put(k.getId, k)
-			k = new Kategorie(Global.getUID, "Musikzimmer", "Mu")
+			k = new Kategorie(Global::UID, "Musikzimmer", "Mu")
 			raeume.put(k.getId, k)
 		}
 		if (runden === null) {
 			// Runden
 			var Runde r = null
 			runden = new LinkedHashMap<String, Runde>
-			r = new Runde(Global.getUID, getNr(spieler, spieler.size - 1).getId,
-				toList(getNr(verdaechtige, 3).getId), true,
-				toList(getNr(werkzeuge, 0).getId, getNr(werkzeuge, 2).getId), true,
-				toList(getNr(raeume, 6).getId), true, toList, getNr(spieler, 4).getId)
+			r = new Runde(Global::UID, getNr(spieler, spieler.size - 1).id, toList(getNr(verdaechtige, 3).id), true,
+				toList(getNr(werkzeuge, 0).id, getNr(werkzeuge, 2).id), true, toList(getNr(raeume, 6).id), true, toList,
+				getNr(spieler, 4).id)
 			runden.put(r.getId, r)
 		}
 	}
 
 	def static List<String> toList(String... strings) {
 
-		var List<String> liste = new Vector<String>
+		var liste = new Vector<String>
 		if (Global.arrayLaenge(strings) > 0) {
 			for (String s : strings) {
 				liste.add(s)
@@ -169,7 +166,7 @@ class DetektivContext implements Serializable {
 		var Kategorie k = null
 		if (hm !== null) {
 			var Iterator<String> it = hm.keySet.iterator
-			var String key = null
+			var String key
 			while (it.hasNext && nr >= 0) {
 				key = it.next
 				if (nr === 0) {
@@ -186,15 +183,15 @@ class DetektivContext implements Serializable {
 
 	def private List<MaParameter> toList(LinkedHashMap<String, Kategorie> hm) {
 
-		var Vector<MaParameter> liste = new Vector<MaParameter>
-		var MaParameter p = null
-		var StringBuffer sb = new StringBuffer
+		var liste = new Vector<MaParameter>
+		var MaParameter p
+		var sb = new StringBuffer
 		for (Entry<String, Kategorie> e : hm.entrySet) {
 			p = new MaParameter
-			p.setSchluessel(e.getKey)
+			p.setSchluessel(e.key)
 			sb.setLength(0)
-			sb.append(e.getValue.getWert)
-			Global.anhaengen(sb, " (", e.getValue.getKurz, ")")
+			sb.append(e.value.wert)
+			Global.anhaengen(sb, " (", e.value.kurz, ")")
 			p.setWert(sb.toString)
 			liste.add(p)
 		}
@@ -203,13 +200,13 @@ class DetektivContext implements Serializable {
 
 	def private String toString(LinkedHashMap<String, Kategorie> hm, List<String> liste) {
 
-		var StringBuffer sb = new StringBuffer
+		var sb = new StringBuffer
 		if (hm !== null && liste !== null) {
 			var Kategorie k = null
 			for (String id : liste) {
 				k = hm.get(id)
 				if (k !== null) {
-					Global.anhaengen(sb, " ", k.getKurz)
+					Global.anhaengen(sb, " ", k.kurz)
 				}
 			}
 		}
@@ -218,13 +215,13 @@ class DetektivContext implements Serializable {
 
 	def private String toString(LinkedHashMap<String, Kategorie> hm, HashMap<String, Integer> liste) {
 
-		var StringBuffer sb = new StringBuffer
+		var sb = new StringBuffer
 		if (hm !== null && liste !== null) {
 			var Kategorie k = null
 			for (String id : liste.keySet) {
 				k = hm.get(id)
 				if (k !== null) {
-					Global.anhaengen(sb, " ", k.getKurz)
+					Global.anhaengen(sb, " ", k.kurz)
 					var Integer i = liste.get(id)
 					if (i !== null && i > 1) {
 						Global.anhaengen(sb, "", i.toString)
@@ -271,7 +268,7 @@ class DetektivContext implements Serializable {
 		}
 
 		override String getId() {
-			return getData.getId
+			return getData.id
 		}
 	}
 
@@ -311,7 +308,7 @@ class DetektivContext implements Serializable {
 		}
 
 		override String getId() {
-			return getData.getId
+			return getData.id
 		}
 	}
 
@@ -332,7 +329,7 @@ class DetektivContext implements Serializable {
 	}
 
 	def List<Runde> getRunden() {
-		var List<Runde> liste = new ArrayList<Runde>
+		var liste = new ArrayList<Runde>
 		for (Runde r : runden.values) {
 			liste.add(r)
 		}
@@ -342,7 +339,7 @@ class DetektivContext implements Serializable {
 	def List<Ergebnis> getErgebnisse() {
 
 		berechneErgebnisse(false)
-		var List<Ergebnis> liste = new ArrayList<Ergebnis>
+		var liste = new ArrayList<Ergebnis>
 		for (Ergebnis e : ergebnisse.values) {
 			liste.add(e)
 		}
@@ -356,8 +353,8 @@ class DetektivContext implements Serializable {
 
 		ergebnisse = new LinkedHashMap<String, Ergebnis>
 		var Ergebnis e = null
-		var int anzahl = spieler.size
-		var double w = 0
+		var anzahl = spieler.size
+		var w = 0.0
 		// Ergebnisse aus allen Kategorien
 		w = 100.0 / verdaechtige.size
 		for (Kategorie k : verdaechtige.values) {
@@ -464,7 +461,7 @@ class DetektivContext implements Serializable {
 		// Möglichkeiten berechnen
 		for (Runde r : runden.values) {
 			if (!Global.nes(r.getSpielerMit) && !r.isBesitzv && !r.isBesitzw && !r.isBesitzr) {
-				var List<String> sliste = new Vector<String>
+				var sliste = new Vector<String>
 				for (String s : r.getVerdaechtige) {
 					sliste.add(s)
 				}
@@ -474,7 +471,7 @@ class DetektivContext implements Serializable {
 				for (String s : r.getRaeume) {
 					sliste.add(s)
 				}
-				var boolean keiner = true
+				var keiner = true
 				for (String s : sliste) {
 					var Ergebnis er = ergebnisse.get(s)
 					if (er !== null) {
@@ -494,7 +491,7 @@ class DetektivContext implements Serializable {
 			}
 		}
 		// Wahrscheinlichkeiten berechnen
-		var HashMap<String, Statistik> katw = new HashMap<String, Statistik>
+		var katw = new HashMap<String, Statistik>
 		var Statistik s = null
 		katw.put(KAT_VERDAECHTIGER, new Statistik(KAT_VERDAECHTIGER))
 		katw.put(KAT_WERKZEUG, new Statistik(KAT_WERKZEUG))
@@ -534,13 +531,14 @@ class DetektivContext implements Serializable {
 	}
 
 	def Runde getRunde(String id) {
-		var Runde r = runden.get(id)
+		var r = runden.get(id)
 		return r
 	}
 
 	def void insertRunde(Runde r) {
+
 		if (r === null) {
-			return;
+			return
 		}
 		if (r.getSpieler === null) {
 			throw new MeldungException("Bitte einen Spieler auswählen.")
@@ -583,17 +581,16 @@ class DetektivContext implements Serializable {
 
 	def static DetektivContext readObject(ServiceDaten daten) {
 
-		var DetektivContext context = null
-		var ServiceErgebnis<List<MaParameter>> r = FactoryService.getAnmeldungService.getParameterListe(daten,
-			SCHLUESSEL)
+		var DetektivContext context
+		var r = FactoryService::anmeldungService.getParameterListe(daten, SCHLUESSEL)
 		r.throwErstenFehler
-		var List<MaParameter> pliste = r.getErgebnis
-		if (Global.listLaenge(pliste) > 0 && !Global.nes(pliste.get(0).getWert)) {
-			var String s = pliste.get(0).getWert
-			var byte[] bytes = Base64.getDecoder.decode(s)
-			var ByteArrayInputStream bs = new ByteArrayInputStream(bytes)
+		var pliste = r.ergebnis
+		if (Global.listLaenge(pliste) > 0 && !Global.nes(pliste.get(0).wert)) {
+			var s = pliste.get(0).wert
+			var bytes = Base64.getDecoder.decode(s)
+			var bs = new ByteArrayInputStream(bytes)
 			try {
-				var ObjectInputStream in = new ObjectInputStream(bs)
+				var in = new ObjectInputStream(bs)
 				context = in.readObject as DetektivContext
 			} catch (IOException e1) {
 				e1.printStackTrace
@@ -613,23 +610,23 @@ class DetektivContext implements Serializable {
 
 	def static void writeObject(DetektivContext context, ServiceDaten daten) {
 
-		var List<MaParameter> pliste = new ArrayList<MaParameter>
-		var MaParameter p = new MaParameter
+		var pliste = new ArrayList<MaParameter>
+		var p = new MaParameter
 		pliste.add(p)
 		try {
-			var ByteArrayOutputStream bs = new ByteArrayOutputStream
-			var ObjectOutputStream out = new ObjectOutputStream(bs)
+			var bs = new ByteArrayOutputStream
+			var out = new ObjectOutputStream(bs)
 			out.writeObject(context)
 			out.close
 			bs.close
 			var byte[] bytes = bs.toByteArray
 			p.setSchluessel(SCHLUESSEL)
 			p.setWert(Base64.getEncoder.encodeToString(bytes))
-			var ServiceErgebnis<Void> r = FactoryService.getAnmeldungService.updateParameterListe(daten, pliste)
+			var r = FactoryService::anmeldungService.updateParameterListe(daten, pliste)
 			r.throwErstenFehler
 		} catch (Exception e1) {
 			e1.printStackTrace
-			throw new MeldungException(e1.getMessage)
+			throw new MeldungException(e1.message)
 		}
 
 	}
@@ -639,11 +636,11 @@ class DetektivContext implements Serializable {
 		if (Global.nes(sp)) {
 			return;
 		}
-		var String[] array = sp.split(", *")
+		var array = sp.split(", *")
 		spieler = new LinkedHashMap<String, Kategorie>
 		for (String s : array) {
-			var Kategorie k = new Kategorie(Global.getUID, s, s.substring(0, 1))
-			spieler.put(k.getId, k)
+			var Kategorie k = new Kategorie(Global::UID, s, s.substring(0, 1))
+			spieler.put(k.id, k)
 		}
 	}
 }

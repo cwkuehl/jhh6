@@ -12,8 +12,8 @@ class ServiceDaten {
 
 		this.mandantNr = mandantNr
 		this.benutzerId = benutzerId
-		jetzt = LocalDateTime.now
-		heute = LocalDate.now
+		jetzt = LocalDateTime::now
+		heute = LocalDate::now
 		rbListe = new RollbackListe
 	}
 

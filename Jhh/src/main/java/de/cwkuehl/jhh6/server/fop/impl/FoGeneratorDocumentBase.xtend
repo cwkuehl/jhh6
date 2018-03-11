@@ -5,7 +5,6 @@ import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.util.ArrayList
 import java.util.Base64
-import java.util.List
 import java.util.Locale
 import javax.xml.transform.Source
 
@@ -45,8 +44,8 @@ class FoGeneratorDocumentBase {
 	 */
 	def private void appendAttribute(String... attrNameValue) throws IOException {
 		if (attrNameValue !== null) {
-			var int anzahl = attrNameValue.length / 2
-			for (var int i = 0; i < anzahl; i++) {
+			var anzahl = attrNameValue.length / 2
+			for (var i = 0; i < anzahl; i++) {
 				if ({
 					val _rdIndx_attrNameValue = i + i
 					attrNameValue.get(_rdIndx_attrNameValue)
@@ -240,7 +239,7 @@ class FoGeneratorDocumentBase {
 		}
 		endTag("fo:simple-page-master")
 		endTag("fo:layout-master-set")
-		var List<String> array = new ArrayList<String>
+		var array = new ArrayList<String>
 		array.add("master-reference")
 		array.add(getMultiName("simpleA4"))
 		if (resetPageNumber) {
@@ -316,7 +315,7 @@ class FoGeneratorDocumentBase {
 		endTag("fo:repeatable-page-master-alternatives")
 		endTag("fo:page-sequence-master")
 		endTag("fo:layout-master-set")
-		var List<String> array = new ArrayList<String>
+		var array = new ArrayList<String>
 		array.add("master-reference")
 		array.add(getMultiName("document"))
 		if (resetPageNumber) {
@@ -364,7 +363,7 @@ class FoGeneratorDocumentBase {
 		startTag("fo:layout-master-set").appendCrLf
 		startTag("fo:simple-page-master", "master-name", getMultiName("hfmaster"), "margin-bottom", bottom,
 			"margin-left", left, "margin-right", right, "margin-top", top).appendCrLf
-		var List<String> array = new ArrayList<String>
+		var array = new ArrayList<String>
 		array.add("margin-top")
 		array.add(headerExtent)
 		array.add("margin-bottom")
@@ -511,8 +510,8 @@ class FoGeneratorDocumentBase {
 
 		startTag("fo:table", "table-layout", "fixed", "width", "100%", "border-collapse", "separate")
 		if (columnWidth !== null) {
-			var int anzahl = columnWidth.length
-			for (var int i = 0; i < anzahl; i++) {
+			var anzahl = columnWidth.length
+			for (var i = 0; i < anzahl; i++) {
 				startTag("fo:table-column", true, "column-width", {
 					val _rdIndx_columnWidth = i
 					columnWidth.get(_rdIndx_columnWidth)
@@ -535,8 +534,8 @@ class FoGeneratorDocumentBase {
 		startTag("fo:table", "table-layout", "fixed", "width", "100%", "border-width", "0.1mm")
 		// , "margin", "2mm 2mm 2mm 2mm"); //, "border-style", "solid");
 		if (columnWidth !== null) {
-			var int anzahl = columnWidth.length
-			for (var int i = 0; i < anzahl; i++) {
+			var anzahl = columnWidth.length
+			for (var i = 0; i < anzahl; i++) {
 				startTag("fo:table-column", true, "column-width", {
 					val _rdIndx_columnWidth = i
 					columnWidth.get(_rdIndx_columnWidth)
@@ -583,9 +582,9 @@ class FoGeneratorDocumentBase {
 		if (FoUtils.nes0(text)) {
 			return ""
 		}
-		var int l = text.length
-		var StringBuilder sb = new StringBuilder
-		for (var int i = 0; i < l; i++) {
+		var l = text.length
+		var sb = new StringBuilder
+		for (var i = 0; i < l; i++) {
 			var c = text.charAt(i)
 			if(!(c === 0 || c === 2 || c === 19 || c === 24)) sb.append(c)
 		}
@@ -620,7 +619,7 @@ class FoGeneratorDocumentBase {
 	def void addNewLine(int size, int fanzahl) throws IOException {
 
 		var anzahl = fanzahl
-		var StringBuffer sb = new StringBuffer
+		var sb = new StringBuffer
 		while (anzahl > 0) {
 			anzahl--
 			sb.append(FoGeneratorDocumentStream.getCR)
@@ -657,7 +656,7 @@ class FoGeneratorDocumentBase {
 		if (bytes === null) {
 			return;
 		}
-		var StringBuffer sb = new StringBuffer
+		var sb = new StringBuffer
 		sb.append("url('data:image/jpeg;base64,")
 		sb.append(Base64.getEncoder.encodeToString(bytes))
 		sb.append("')")
@@ -711,11 +710,11 @@ class FoGeneratorDocumentBase {
 	def String getBetrag(double fbetrag, String waehrung, boolean ohneVorzeichen) {
 
 		var betrag = fbetrag
-		var DecimalFormat df = new DecimalFormat("#,##0.00", new DecimalFormatSymbols(Locale.GERMAN))
+		var df = new DecimalFormat("#,##0.00", new DecimalFormatSymbols(Locale.GERMAN))
 		if (ohneVorzeichen) {
 			betrag = Math.abs(betrag)
 		}
-		var String str = df.format(betrag)
+		var str = df.format(betrag)
 		if (!FoUtils.nesTrim(waehrung)) {
 			str += ''' «waehrung»'''
 		}
@@ -729,8 +728,8 @@ class FoGeneratorDocumentBase {
 	 */
 	def String getProzentsatz(double prozentsatz) {
 
-		var DecimalFormat df = new DecimalFormat("0.##%", new DecimalFormatSymbols(Locale.GERMAN))
-		var String str = df.format(prozentsatz)
+		var df = new DecimalFormat("0.##%", new DecimalFormatSymbols(Locale.GERMAN))
+		var str = df.format(prozentsatz)
 		return str
 	}
 
@@ -741,8 +740,8 @@ class FoGeneratorDocumentBase {
 	 */
 	def String getProzentsatz2(double prozentsatz) {
 
-		var DecimalFormat df = new DecimalFormat("0.00%", new DecimalFormatSymbols(Locale.GERMAN))
-		var String str = df.format(prozentsatz)
+		var df = new DecimalFormat("0.00%", new DecimalFormatSymbols(Locale.GERMAN))
+		var str = df.format(prozentsatz)
 		return str
 	}
 
@@ -753,8 +752,8 @@ class FoGeneratorDocumentBase {
 	 */
 	def String getPromillesatz(double promillesatz) {
 
-		var DecimalFormat df = new DecimalFormat("0.0\u2030", new DecimalFormatSymbols(Locale.GERMAN))
-		var String str = df.format(promillesatz)
+		var df = new DecimalFormat("0.0\u2030", new DecimalFormatSymbols(Locale.GERMAN))
+		var str = df.format(promillesatz)
 		// evtl. mit o/oo
 		return str
 	}

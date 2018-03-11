@@ -316,7 +316,7 @@ class FoUtils {
 	def static String getRoman(int j) {
 
 		var i = j
-		var StringBuffer sb = new StringBuffer
+		var sb = new StringBuffer
 		if (i < 0) {
 			sb.append("-")
 			i = -i
@@ -351,7 +351,7 @@ class FoUtils {
 			sb.append("I")
 			i -= 1
 		}
-		var String str = sb.toString
+		var str = sb.toString
 		// Subtraktionsregel
 		str = str.replace("DCCCC", "CM")
 		str = str.replace("CCCC", "CD")

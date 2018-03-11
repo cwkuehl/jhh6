@@ -14,7 +14,7 @@ class DateiAuswahl {
 		var pfad = ""
 		var File theFile = null
 		if (tempVerz) {
-			pfad += Jhh6.einstellungen.getTempVerzeichnis
+			pfad += Jhh6::einstellungen.tempVerzeichnis
 		}
 		if (!Global.nes(pfad) && !pfad.endsWith(File.separator)) {
 			pfad += File.separator
@@ -35,9 +35,9 @@ class DateiAuswahl {
 					if (f.isDirectory) {
 						return true
 					}
-					var String filename = f.getName
-					var String ^extension = null
-					var int i = filename.lastIndexOf(Character.valueOf('.').charValue)
+					var filename = f.getName
+					var String ^extension
+					var i = filename.lastIndexOf(Character.valueOf('.').charValue)
 					if (i > 0 && i < filename.length - 1) {
 						^extension = filename.substring(i + 1)
 					}
@@ -57,12 +57,12 @@ class DateiAuswahl {
 			}
 		}
 		chooser.setFileFilter(filter)
-		var int retval = chooser.showDialog(null, null)
+		var retval = chooser.showDialog(null, null)
 		if (retval === JFileChooser.APPROVE_OPTION) {
 			theFile = chooser.selectedFile
 			if (theFile !== null) {
 				if (tempVerz) {
-					Jhh6.getEinstellungen.setTempVerzeichnis(theFile.parent)
+					Jhh6::einstellungen.setTempVerzeichnis(theFile.parent)
 				}
 				return theFile.path
 			}

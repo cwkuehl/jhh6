@@ -13,7 +13,7 @@ class Constant {
 	 * Der Standard-Konstruktor sollte nicht aufgerufen werden, da diese Klasse nur aus statischen Elementen besteht.
 	 */
 	private new() {
-		throw new RuntimeException(Meldungen.M1000(typeof(Constant).name))
+		throw new RuntimeException(Meldungen::M1000(typeof(Constant).name))
 	}
 
 	/** Zahl 100.0 als Konstante. */
