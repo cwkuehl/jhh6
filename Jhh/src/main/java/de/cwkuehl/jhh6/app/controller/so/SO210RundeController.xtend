@@ -1,6 +1,5 @@
 package de.cwkuehl.jhh6.app.controller.so
 
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.MaParameter
 import de.cwkuehl.jhh6.api.global.Global
 import de.cwkuehl.jhh6.api.message.Meldungen
@@ -60,11 +59,11 @@ class SO210RundeController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getSchluessel
+			return getData.schluessel
 		}
 
 		override String toString() {
-			return getData.getWert
+			return getData.wert
 		}
 	}
 
@@ -78,11 +77,11 @@ class SO210RundeController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getSchluessel
+			return getData.schluessel
 		}
 
 		override String toString() {
-			return getData.getWert
+			return getData.wert
 		}
 	}
 
@@ -96,11 +95,11 @@ class SO210RundeController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getSchluessel
+			return getData.schluessel
 		}
 
 		override String toString() {
-			return getData.getWert
+			return getData.wert
 		}
 	}
 
@@ -114,11 +113,11 @@ class SO210RundeController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getSchluessel
+			return getData.schluessel
 		}
 
 		override String toString() {
-			return getData.getWert
+			return getData.wert
 		}
 	}
 
@@ -132,11 +131,11 @@ class SO210RundeController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getSchluessel
+			return getData.schluessel
 		}
 
 		override String toString() {
-			return getData.getWert
+			return getData.wert
 		}
 	}
 
@@ -150,11 +149,11 @@ class SO210RundeController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getSchluessel
+			return getData.schluessel
 		}
 
 		override String toString() {
-			return getData.getWert
+			return getData.wert
 		}
 	}
 
@@ -190,33 +189,33 @@ class SO210RundeController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			context = getParameter1
-			var List<MaParameter> sl = context.getSpieler
+			context = parameter1
+			var sl = context.getSpieler
 			spieler.setItems(getItems(sl, null, [a|new SpielerData(a)], null))
 			spielerMit.setItems(getItems(sl, null, [a|new SpielerMitData(a)], null))
 			spielerOhne.setItems(getItems(sl, null, [a|new SpielerOhneData(a)], null))
-			var List<MaParameter> vl = context.getVerdaechtige
+			var vl = context.getVerdaechtige
 			verdaechtiger.setItems(getItems(vl, null, [a|new VerdaechtigerData(a)], null))
-			var List<MaParameter> wl = context.getWerkzeuge
+			var wl = context.getWerkzeuge
 			werkzeug.setItems(getItems(wl, null, [a|new WerkzeugData(a)], null))
-			var List<MaParameter> rl = context.getRaeume
+			var rl = context.getRaeume
 			raum.setItems(getItems(rl, null, [a|new RaumData(a)], null))
-			var boolean neu = DialogAufrufEnum.NEU.equals(getAufruf)
-			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(getAufruf)
-			var Runde k = getParameter2
+			var neu = DialogAufrufEnum::NEU.equals(aufruf)
+			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
+			var Runde k = parameter2
 			if (!neu && k !== null) {
-				nr.setText(k.getId)
-				setText(spieler, k.getSpieler)
-				setTexte2(verdaechtiger, k.getVerdaechtige)
+				nr.setText(k.id)
+				setText(spieler, k.spieler)
+				setTexte2(verdaechtiger, k.verdaechtige)
 				besitzv.setSelected(k.isBesitzv)
-				setTexte2(werkzeug, k.getWerkzeuge)
+				setTexte2(werkzeug, k.werkzeuge)
 				besitzw.setSelected(k.isBesitzw)
-				setTexte2(raum, k.getRaeume)
+				setTexte2(raum, k.raeume)
 				besitzr.setSelected(k.isBesitzr)
-				setTexte2(spielerOhne, k.getSpielerOhne)
-				setText(spielerMit, k.getSpielerMit)
-			// angelegt.setText(k.formatDatumVon(k.getAngelegtAm, k.getAngelegtVon))
-			// geaendert.setText(k.formatDatumVon(k.getGeaendertAm, k.getGeaendertVon))
+				setTexte2(spielerOhne, k.spielerOhne)
+				setText(spielerMit, k.spielerMit)
+			// angelegt.setText(k.formatDatumVon(k.angelegtAm, k.angelegtVon))
+			// geaendert.setText(k.formatDatumVon(k.geaendertAm, k.geaendertVon))
 			}
 			nr.setEditable(false)
 			setEditable(spieler, !loeschen)
@@ -231,7 +230,7 @@ class SO210RundeController extends BaseController<String> {
 			angelegt.setEditable(false)
 			geaendert.setEditable(false)
 			if (loeschen) {
-				ok.setText(Meldungen.M2001)
+				ok.setText(Meldungen::M2001)
 			}
 		}
 		if (stufe <= 1) { // stufe = 0
@@ -251,22 +250,22 @@ class SO210RundeController extends BaseController<String> {
 	 */
 	@FXML def void onOk() {
 
-		if (DialogAufrufEnum.NEU.equals(aufruf) || DialogAufrufEnum.KOPIEREN.equals(aufruf)) {
-			var Runde r = new Runde(Global.getUID, getText(spieler), getTexte2(verdaechtiger), besitzv.isSelected,
+		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
+			var r = new Runde(Global::UID, getText(spieler), getTexte2(verdaechtiger), besitzv.isSelected,
 				getTexte2(werkzeug), besitzw.isSelected, getTexte2(raum), besitzr.isSelected, getTexte2(spielerOhne),
 				getText(spielerMit))
 			context.insertRunde(r)
-		} else if (DialogAufrufEnum.AENDERN.equals(aufruf)) {
-			var Runde r = new Runde(nr.getText, getText(spieler), getTexte2(verdaechtiger), besitzv.isSelected,
+		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
+			var r = new Runde(nr.text, getText(spieler), getTexte2(verdaechtiger), besitzv.isSelected,
 				getTexte2(werkzeug), besitzw.isSelected, getTexte2(raum), besitzr.isSelected, getTexte2(spielerOhne),
 				getText(spielerMit))
 			context.updateRunde(r)
-		} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
-			if (!Global.nes(nr.getText)) {
-				context.deleteRunde(nr.getText)
+		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
+			if (!Global.nes(nr.text)) {
+				context.deleteRunde(nr.text)
 			}
 		}
-		DetektivContext.writeObject(context, Jhh6.getServiceDaten)
+		DetektivContext.writeObject(context, Jhh6::serviceDaten)
 		updateParent
 		close
 	}

@@ -89,13 +89,13 @@ class SB500GedcomController extends BaseController<String> {
 	 */
 	@FXML def void onImport() {
 
-		if (Global.nes(datei.getText)) {
+		if (Global.nes(datei.text)) {
 			throw new MeldungException(Meldungen::M1012)
 		}
 		if (Werkzeug.showYesNoQuestion(Meldungen::SB029) === 0) {
 			return;
 		}
-		var zeilen = Werkzeug.leseDatei(datei.getText)
+		var zeilen = Werkzeug.leseDatei(datei.text)
 		var meldung = get(FactoryService::stammbaumService.importAhnen(serviceDaten, zeilen))
 		if (!Global.nes(meldung)) {
 			updateParent

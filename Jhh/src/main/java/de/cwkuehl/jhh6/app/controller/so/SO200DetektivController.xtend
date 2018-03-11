@@ -1,7 +1,6 @@
 package de.cwkuehl.jhh6.app.controller.so
 
 import de.cwkuehl.jhh6.api.global.Global
-import de.cwkuehl.jhh6.api.service.detective.Ergebnis
 import de.cwkuehl.jhh6.api.service.detective.Runde
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
@@ -10,7 +9,6 @@ import de.cwkuehl.jhh6.app.base.Werkzeug
 import de.cwkuehl.jhh6.server.service.detective.DetektivContext
 import de.cwkuehl.jhh6.server.service.detective.DetektivContext.ErgebnisseData
 import de.cwkuehl.jhh6.server.service.detective.DetektivContext.RundenData
-import java.util.List
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
 import javafx.fxml.FXML
@@ -93,10 +91,10 @@ class SO200DetektivController extends BaseController<String> {
 		}
 		if (stufe <= 1) {
 			// Runden
-			var List<Runde> rliste = context.getRunden
+			var rliste = context.runden
 			getItems(rliste, null, [a|new RundenData(context, a)], rundenData)
 			// Ergebnisse
-			var List<Ergebnis> eliste = context.getErgebnisse
+			var eliste = context.ergebnisse
 			getItems(eliste, null, [a|new ErgebnisseData(context, a)], ergebnisseData)
 		}
 		if (stufe <= 2) {
@@ -110,25 +108,25 @@ class SO200DetektivController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		runden.setItems(rundenData)
-		colRuid.setCellValueFactory([c|c.getValue.uid])
-		colRspieler.setCellValueFactory([c|c.getValue.spieler])
-		colRverdaechtige.setCellValueFactory([c|c.getValue.verdaechtige])
-		colRbesitzv.setCellValueFactory([c|c.getValue.besitzv])
-		colRwerkzeuge.setCellValueFactory([c|c.getValue.werkzeuge])
-		colRbesitzw.setCellValueFactory([c|c.getValue.besitzw])
-		colRraeume.setCellValueFactory([c|c.getValue.raeume])
-		colRbesitzr.setCellValueFactory([c|c.getValue.besitzr])
-		colRohne.setCellValueFactory([c|c.getValue.spielerohne])
-		colRmit.setCellValueFactory([c|c.getValue.spielermit])
+		colRuid.setCellValueFactory([c|c.value.uid])
+		colRspieler.setCellValueFactory([c|c.value.spieler])
+		colRverdaechtige.setCellValueFactory([c|c.value.verdaechtige])
+		colRbesitzv.setCellValueFactory([c|c.value.besitzv])
+		colRwerkzeuge.setCellValueFactory([c|c.value.werkzeuge])
+		colRbesitzw.setCellValueFactory([c|c.value.besitzw])
+		colRraeume.setCellValueFactory([c|c.value.raeume])
+		colRbesitzr.setCellValueFactory([c|c.value.besitzr])
+		colRohne.setCellValueFactory([c|c.value.spielerohne])
+		colRmit.setCellValueFactory([c|c.value.spielermit])
 		ergebnisse.setItems(ergebnisseData)
-		colEuid.setCellValueFactory([c|c.getValue.uid])
-		colEkategorie.setCellValueFactory([c|c.getValue.kategorie])
-		colEkurz.setCellValueFactory([c|c.getValue.kurz])
-		colEspieler.setCellValueFactory([c|c.getValue.spieler])
-		colEohne.setCellValueFactory([c|c.getValue.ohne])
-		colEmoeglich.setCellValueFactory([c|c.getValue.moeglich])
-		colEfrage.setCellValueFactory([c|c.getValue.frage])
-		colEwahrscheinlich.setCellValueFactory([c|c.getValue.wahrscheinlich])
+		colEuid.setCellValueFactory([c|c.value.uid])
+		colEkategorie.setCellValueFactory([c|c.value.kategorie])
+		colEkurz.setCellValueFactory([c|c.value.kurz])
+		colEspieler.setCellValueFactory([c|c.value.spieler])
+		colEohne.setCellValueFactory([c|c.value.ohne])
+		colEmoeglich.setCellValueFactory([c|c.value.moeglich])
+		colEfrage.setCellValueFactory([c|c.value.frage])
+		colEwahrscheinlich.setCellValueFactory([c|c.value.wahrscheinlich])
 	}
 
 	override protected void updateParent() {
@@ -136,7 +134,7 @@ class SO200DetektivController extends BaseController<String> {
 	}
 
 	def private void starteDialog(DialogAufrufEnum aufruf) {
-		var Runde k = getValue(runden, !DialogAufrufEnum.NEU.equals(aufruf))
+		var Runde k = getValue(runden, !DialogAufrufEnum::NEU.equals(aufruf))
 		starteFormular(SO210RundeController, aufruf, context, k)
 	}
 
@@ -167,28 +165,28 @@ class SO200DetektivController extends BaseController<String> {
 	 * Event für Neu.
 	 */
 	@FXML def void onNeu() {
-		starteDialog(DialogAufrufEnum.NEU)
+		starteDialog(DialogAufrufEnum::NEU)
 	}
 
 	/** 
 	 * Event für Kopieren.
 	 */
 	@FXML def void onKopieren() {
-		starteDialog(DialogAufrufEnum.KOPIEREN)
+		starteDialog(DialogAufrufEnum::KOPIEREN)
 	}
 
 	/** 
 	 * Event für Aendern.
 	 */
 	@FXML def void onAendern() {
-		starteDialog(DialogAufrufEnum.AENDERN)
+		starteDialog(DialogAufrufEnum::AENDERN)
 	}
 
 	/** 
 	 * Event für Loeschen.
 	 */
 	@FXML def void onLoeschen() {
-		starteDialog(DialogAufrufEnum.LOESCHEN)
+		starteDialog(DialogAufrufEnum::LOESCHEN)
 	}
 
 	/** 
@@ -213,7 +211,7 @@ class SO200DetektivController extends BaseController<String> {
 	 */
 	@FXML def void onReset() {
 
-		var String spieler = Werkzeug.showInputDialog("Bitte geben Sie die Spieler ein, getrennt mit Komma:",
+		var spieler = Werkzeug.showInputDialog("Bitte geben Sie die Spieler ein, getrennt mit Komma:",
 			"Wolfgang, Claudia, Deborah, Viktoria, Benjamin")
 		if (!Global.nes(spieler)) {
 			context.deleteRunde(null)

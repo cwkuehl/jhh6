@@ -56,13 +56,13 @@ class SB400QuellenController extends BaseController<String> {
 		new(SbQuelle v) {
 
 			super(v)
-			uid = new SimpleStringProperty(v.getUid)
-			autor = new SimpleStringProperty(v.getAutor)
-			beschreibung = new SimpleStringProperty(v.getBeschreibung)
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
+			uid = new SimpleStringProperty(v.uid)
+			autor = new SimpleStringProperty(v.autor)
+			beschreibung = new SimpleStringProperty(v.beschreibung)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
+			geaendertVon = new SimpleStringProperty(v.geaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
+			angelegtVon = new SimpleStringProperty(v.angelegtVon)
 		}
 
 		override String getId() {

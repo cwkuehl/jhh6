@@ -311,7 +311,7 @@ class SB310FamilieController extends BaseController<String> {
 	@FXML def void onEntfernen() {
 
 		var SbPersonLang k = getValue(kinder, true)
-		val kuid = k.getUid
+		val kuid = k.uid
 		var kd = kinderData.stream.filter([a|Global::compString(a.uid.value, kuid) === 0]).findFirst.orElse(null)
 		if (kd !== null) {
 			kinderData.remove(kd)

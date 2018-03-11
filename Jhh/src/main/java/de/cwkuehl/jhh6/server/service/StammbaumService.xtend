@@ -100,10 +100,10 @@ class StammbaumService {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		if (Global.nes(gebname)) {
-			throw new MeldungException(Meldungen.SB001)
+			throw new MeldungException(Meldungen::SB001)
 		}
 		if (!Global.nes(gatteNeu) && (!Global.nes(vaterUidNeu) || !Global.nes(mutterUidNeu))) {
-			throw new MeldungException(Meldungen.SB002)
+			throw new MeldungException(Meldungen::SB002)
 		}
 		// Typ prüfen
 		var gesch = n(geschlecht)
@@ -157,16 +157,16 @@ class StammbaumService {
 
 		var zeitangabe = new SbZeitangabe
 		if (zeitangabe.parse(datum)) {
-			throw new MeldungException(Meldungen.SB003(datum))
+			throw new MeldungException(Meldungen::SB003(datum))
 		}
 		if (Global.nes(puid) && Global.nes(fuid)) {
-			throw new MeldungException(Meldungen.SB004)
+			throw new MeldungException(Meldungen::SB004)
 		}
 		if (Global.nes(typ)) {
-			throw new MeldungException(Meldungen.SB005)
+			throw new MeldungException(Meldungen::SB005)
 		}
 		if (Global.nes(zeitangabe.datumTyp) && !zeitangabe.datum1.leer) {
-			throw new MeldungException(Meldungen.SB006)
+			throw new MeldungException(Meldungen::SB006)
 		}
 		var loeschen = zeitangabe.datum1.leer && Global.nes(zeitangabe.datumTyp) && zeitangabe.datum2.leer &&
 			Global.nes(ort) && Global.nes(bemerkung)
@@ -238,14 +238,14 @@ class StammbaumService {
 		var liste = familieRep.getFamilieListe(daten, null, null, null, uid, null)
 		for (SbFamilie f : liste) {
 			var fU = new SbFamilieUpdate(f)
-			if (Global.compString(fU.getMannUid, uid) == 0) {
+			if (Global.compString(fU.mannUid, uid) == 0) {
 				fU.setMannUid(null)
 			}
-			if (Global.compString(fU.getFrauUid, uid) == 0) {
+			if (Global.compString(fU.frauUid, uid) == 0) {
 				fU.setFrauUid(null)
 			}
-			if (Global.nes(fU.getMannUid) && Global.nes(fU.getFrauUid)) {
-				deleteFamilieIntern(daten, f.getUid)
+			if (Global.nes(fU.getMannUid) && Global.nes(fU.frauUid)) {
+				deleteFamilieIntern(daten, f.uid)
 			}
 		}
 
@@ -369,24 +369,23 @@ class StammbaumService {
 		boolean doppelt) {
 
 		var fuid = uid
-		var String fuid2 = null
-		var SbPerson sbPerson = null
+		var String fuid2
+		var SbPerson sbPerson
 		var maUid = mannUid
 		var frUid = frauUid
-
 		if (Global.nes(maUid) && Global.nes(frUid)) {
-			throw new MeldungException(Meldungen.SB007)
+			throw new MeldungException(Meldungen::SB007)
 		}
 		if (!Global.nes(maUid)) {
 			sbPerson = personRep.get(daten, new SbPersonKey(daten.mandantNr, maUid))
 			if (sbPerson === null || !GeschlechtEnum.MAENNLICH.toString.equalsIgnoreCase(sbPerson.geschlecht)) {
-				throw new MeldungException(Meldungen.SB008)
+				throw new MeldungException(Meldungen::SB008)
 			}
 		}
 		if (!Global.nes(frUid)) {
 			sbPerson = personRep.get(daten, new SbPersonKey(daten.mandantNr, frUid))
 			if (sbPerson === null || !GeschlechtEnum.WEIBLICH.toString.equalsIgnoreCase(sbPerson.geschlecht)) {
-				throw new MeldungException(Meldungen.SB009)
+				throw new MeldungException(Meldungen::SB009)
 			}
 		}
 		var fliste = familieRep.getFamilieListe(daten, null, maUid, frUid, null, fuid)
@@ -398,7 +397,7 @@ class StammbaumService {
 		}
 		if (!Global.nes(fuid2)) {
 			if (doppelt) {
-				throw new MeldungException(Meldungen.SB010(fuid2))
+				throw new MeldungException(Meldungen::SB010(fuid2))
 			}
 			fuid = fuid2
 		}
@@ -421,7 +420,7 @@ class StammbaumService {
 	def private SbFamilie iuFamilie(ServiceDaten daten, String uid, String mannUid, String frauUid) {
 
 		if (Global.nes(mannUid) && Global.nes(frauUid)) {
-			throw new MeldungException(Meldungen.SB007)
+			throw new MeldungException(Meldungen::SB007)
 		}
 		var f = familieRep.iuSbFamilie(daten, null, uid, mannUid, frauUid, 0, 0, 0, null, null, null, null)
 		return f
@@ -436,13 +435,13 @@ class StammbaumService {
 	def private void iuKind(ServiceDaten daten, String fuid, String kindUid) {
 
 		if (Global.nes(fuid) || Global.nes(kindUid)) {
-			throw new MeldungException(Meldungen.SB011)
+			throw new MeldungException(Meldungen::SB011)
 		}
 		var kliste = kindRep.getKindListe(daten, null, kindUid, fuid, null, null)
 		var vo2 = if(kliste.size > 0) kliste.get(0) else null
 		if (vo2 !== null) {
 			var fuid2 = vo2.familieUid
-			throw new MeldungException(Meldungen.SB012(fuid2))
+			throw new MeldungException(Meldungen::SB012(fuid2))
 		}
 		kindRep.iuSbKind(daten, null, fuid, kindUid, null, null, null, null)
 	}
@@ -516,13 +515,13 @@ class StammbaumService {
 		var a = autor
 		var b = beschreibung
 		if (Global.nes(autor)) {
-			throw new MeldungException(Meldungen.SB013)
+			throw new MeldungException(Meldungen::SB013)
 		}
 		if (a.length > SbQuelle.AUTOR_LAENGE) {
 			a = a.substring(0, SbQuelle.AUTOR_LAENGE)
 		}
 		if (Global.nes(beschreibung)) {
-			throw new MeldungException(Meldungen.SB014)
+			throw new MeldungException(Meldungen::SB014)
 		}
 		if (b.length > SbQuelle.BESCHREIBUNG_LAENGE) {
 			b = b.substring(0, SbQuelle.BESCHREIBUNG_LAENGE)
@@ -544,11 +543,11 @@ class StammbaumService {
 
 		var pliste = personRep.getPersonLangListe(daten, null, null, null, null, uid, null)
 		if (pliste.size > 0) {
-			throw new MeldungException(Meldungen.SB015)
+			throw new MeldungException(Meldungen::SB015)
 		}
 		var eliste = ereignisRep.getEreignisListe(daten, null, null, null, uid)
 		if (eliste.size > 0) {
-			throw new MeldungException(Meldungen.SB016)
+			throw new MeldungException(Meldungen::SB016)
 		}
 		quelleRep.delete(daten, new SbQuelleKey(daten.mandantNr, uid))
 	}
@@ -573,22 +572,22 @@ class StammbaumService {
 		var anzahl = if(anzahl0 <= 0) 1 else anzahl0
 		var p = personRep.get(daten, new SbPersonKey(daten.mandantNr, uid))
 		if (p === null) {
-			throw new MeldungException(Meldungen.SB017(uid))
+			throw new MeldungException(Meldungen::SB017(uid))
 		}
 		var doc = newFopDokument
 		if (nachfahren) {
 			var liste = new Vector<SbPerson>
 			getNachfahrenRekursiv(daten, uid, 0, 1, anzahl, liste)
-			var ueberschrift = Meldungen.SB018(daten.jetzt)
-			var untertitel = Meldungen.SB019(Global.ahnString(p.uid, p.geburtsname, p.vorname, false, false), anzahl)
+			var ueberschrift = Meldungen::SB018(daten.jetzt)
+			var untertitel = Meldungen::SB019(Global.ahnString(p.uid, p.geburtsname, p.vorname, false, false), anzahl)
 			doc.addNachfahrenliste(true, ueberschrift, untertitel, liste)
 		}
 		if (vorfahren) {
 			var liste = new Vector<SbPerson>
 			getVorfahrenRekursiv(daten, uid, true, geschwister, true, 1, anzahl, liste)
-			var ueberschrift = Meldungen.SB020(daten.jetzt)
-			var untertitel = Meldungen.SB021(Global.ahnString(p.uid, p.geburtsname, p.vorname, false, false), anzahl,
-				if(geschwister) Meldungen.SB022 else "")
+			var ueberschrift = Meldungen::SB020(daten.jetzt)
+			var untertitel = Meldungen::SB021(Global.ahnString(p.uid, p.geburtsname, p.vorname, false, false), anzahl,
+				if(geschwister) Meldungen::SB022 else "")
 			doc.addVorfahrenliste(true, ueberschrift, untertitel, liste)
 		}
 		var r = new ServiceErgebnis<byte[]>
@@ -619,7 +618,7 @@ class StammbaumService {
 
 		var sbPerson = personRep.get(daten, new SbPersonKey(daten.mandantNr, uid))
 		if (sbPerson === null) {
-			throw new MeldungException(Meldungen.SB017(uid))
+			throw new MeldungException(Meldungen::SB017(uid))
 		}
 
 		var strGen = if(mitPartner) "" + generation else "+"
@@ -696,7 +695,7 @@ class StammbaumService {
 		var zeile = new StringBuffer
 		var sbPerson = personRep.get(daten, new SbPersonKey(daten.mandantNr, uid))
 		if (sbPerson === null) {
-			throw new MeldungException(Meldungen.SB017(uid))
+			throw new MeldungException(Meldungen::SB017(uid))
 		}
 		var strGen = if(mitEltern) "" + generation else "+"
 		var strPraefix = Global.fixiereString("", (Math.abs(generation) - 1) * 1, false, " ") // &nbsp;
@@ -795,7 +794,7 @@ class StammbaumService {
 	 */
 	def private String getXref(HashMap<String, Integer> map, String typ, String uid) {
 
-		var String s = null
+		var String s
 		if (map === null) {
 			s = Global.toXref(uid)
 		} else {
@@ -849,7 +848,7 @@ class StammbaumService {
 
 		// Maximal Länge einer GEDCOM-Zeile.
 		val MAX_GEDCOM_ZEILE = 248
-		var String str = null
+		var String str
 		var iLen = if(text === null) 0 else text.length
 		if (iLen > 0) {
 			var iMax = (iLen - 1) / MAX_GEDCOM_ZEILE + 1
@@ -938,7 +937,7 @@ class StammbaumService {
 				out.add("1 FAMC " + getXref(map, "FAM", eltern.get(0).uid) + Constant.CRLF)
 			}
 			eltern = familieRep.getFamilieStatusListe(daten, uid, null, status2)
-			var String fuid = null
+			var String fuid
 			for (SbFamilieStatus f : eltern) {
 				// keine doppelten Einträge
 				if (Global.compString(f.uid, fuid) != 0) {
@@ -961,14 +960,8 @@ class StammbaumService {
 	def private void schreibeFamily(ServiceDaten daten, List<String> out, HashMap<String, Integer> map, int status2,
 		String operator, int tot) {
 
-//        String ort = null, ebem = null
-//        String familienUid = null, mannUid = null, frauUid = null, kindUid = null, muid = null, fuid = null
-//        boolean neu = false, filter = false
-//        List<SbEreignis> ereignisse = null
-//        List<SbFamilieStatus> familien = null
-		var String mannUid = null
-		var String frauUid = null
-
+		var String mannUid
+		var String frauUid
 		var familien = familieRep.getFamilieStatusListe(daten, null, null, status2)
 		for (SbFamilieStatus f : familien) {
 			var familienUid = f.uid
@@ -1096,13 +1089,13 @@ class StammbaumService {
 			version = "5.5"
 		}
 		if (Global.nes(name)) {
-			throw new MeldungException(Meldungen.SB023)
+			throw new MeldungException(Meldungen::SB023)
 		}
 		if (Global.nes(skript)) {
-			throw new MeldungException(Meldungen.M1012)
+			throw new MeldungException(Meldungen::M1012)
 		}
 		if (!(version.equals("4.0") || version.equals("5.5"))) {
-			throw new MeldungException(Meldungen.SB024)
+			throw new MeldungException(Meldungen::SB024)
 		}
 		var status2 = 1
 		var operator = ">="
@@ -1117,7 +1110,7 @@ class StammbaumService {
 				operator = m.group(1)
 				tot = Global.strInt(m.group(2))
 			} else {
-				throw new MeldungException(Meldungen.SB025)
+				throw new MeldungException(Meldungen::SB025)
 			}
 			status2 = 0
 			personRep.updateStatus2(daten, null, 0, status2)
@@ -1169,8 +1162,8 @@ class StammbaumService {
 
 	def private int importiereAhnen(ServiceDaten daten, List<String> datei, HashMap<String, String> map) {
 
-		var Matcher m = null
-		var String uid = null
+		var Matcher m
+		var String uid
 		var v = new Vector<String>
 		var anzahl = 0
 
@@ -1452,7 +1445,7 @@ class StammbaumService {
 
 		var q = new SbQuelle
 		var zuletzt = 0
-		q.setMandantNr(daten.getMandantNr)
+		q.setMandantNr(daten.mandantNr)
 		q.setUid(uid)
 		while (v.size > 0) {
 			var str = v.remove(0)
@@ -1525,7 +1518,7 @@ class StammbaumService {
 		}
 		var map = new HashMap<String, String>
 		var anzahl = importiereAhnen(daten, datei, map)
-		var r = new ServiceErgebnis<String>(Meldungen.SB026(anzahl))
+		var r = new ServiceErgebnis<String>(Meldungen::SB026(anzahl))
 		return r
 	}
 
@@ -1545,7 +1538,7 @@ class StammbaumService {
 	override ServiceErgebnis<String> getErstesKind(ServiceDaten daten, String puid) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
-		var String kuid = null
+		var String kuid
 		var f = getElternFamilieIntern(daten, puid)
 		if (f !== null) {
 			var kliste = kindRep.getKindListe(daten, f.uid, null, null, null, null)
