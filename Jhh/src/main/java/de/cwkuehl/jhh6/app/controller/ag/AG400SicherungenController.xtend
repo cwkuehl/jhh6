@@ -137,7 +137,7 @@ class AG400SicherungenController extends BaseController<String> {
 		// mandant.setText("3")
 		}
 		if (stufe <= 1) {
-			var List<MaEinstellung> l = getSicherungen
+			var l = sicherungen
 			getItems(l, null, [a|new VerzeichnisseData(a)], verzeichnisseData)
 		}
 		if (stufe <= 2) {
@@ -152,7 +152,7 @@ class AG400SicherungenController extends BaseController<String> {
 
 		verzeichnisse.setItems(verzeichnisseData)
 		colNr.setCellValueFactory([c|c.value.nr])
-		colSchluessel.setCellValueFactory([c|c.getValue.schluessel])
+		colSchluessel.setCellValueFactory([c|c.value.schluessel])
 		colWert.setCellValueFactory([c|c.value.wert])
 		colGv.setCellValueFactory([c|c.value.geaendertVon])
 		colGa.setCellValueFactory([c|c.value.geaendertAm])
@@ -274,13 +274,13 @@ class AG400SicherungenController extends BaseController<String> {
 
 	def private List<MaEinstellung> getSicherungen() {
 
-		var List<MaEinstellung> v = new ArrayList<MaEinstellung>
-		var MaEinstellung e = null
-		var String str = null
-		var String wert = null
-		var String[] array = null
-		var boolean ende = false
-		for (var int i = 1; !ende; i++) {
+		var v = new ArrayList<MaEinstellung>
+		var MaEinstellung e
+		var String str
+		var String wert
+		var String[] array
+		var ende = false
+		for (var i = 1; !ende; i++) {
 			str = '''Sicherung_«i»'''
 			wert = Jhh6::getEinstellungen.holeResourceDaten(str)
 			if (Global::nes(wert)) {
@@ -302,8 +302,8 @@ class AG400SicherungenController extends BaseController<String> {
 		var i = 0
 		for (VerzeichnisseData e : verzeichnisse.getItems) {
 			i++
-			Jhh6::getEinstellungen.setzeResourceDaten('''Sicherung_«i»''',
-				'''«e.getData.getSchluessel»<«e.getData.getWert»''')
+			Jhh6::getEinstellungen.
+				setzeResourceDaten('''Sicherung_«i»''', '''«e.getData.getSchluessel»<«e.getData.getWert»''')
 		}
 		Jhh6::getEinstellungen.setzeResourceDaten('''Sicherung_«(i + 1)»''', "")
 	}
@@ -316,31 +316,31 @@ class AG400SicherungenController extends BaseController<String> {
 			abbruch.setLength(0)
 			kopierFehler.clear
 			onSicherungStatus
-			var String sicherung0 = '''«k.getSchluessel»<«k.wert»'''
-			var String[] sicherungen = (#[sicherung0] as String[])
+			var sicherung0 = '''«k.getSchluessel»<«k.wert»'''
+			var String[] sicherungen = #[sicherung0] as String[]
 			onSicherungStatusTimer
 			try {
-				var Sicherung sicherung = new Sicherung(diffZeit, kopierFehler, status, maxFehler, abbruch,
-					diffSicherung, zurueck, LocalDateTime::now)
-				status.append(Meldungen.M1031)
-				for (var int i = 0; sicherungen !== null && i < sicherungen.length; i++) {
+				var sicherung = new Sicherung(diffZeit, kopierFehler, status, maxFehler, abbruch, diffSicherung,
+					zurueck, LocalDateTime::now)
+				status.append(Meldungen::M1031)
+				for (var i = 0; sicherungen !== null && i < sicherungen.length; i++) {
 					sicherung.machSicherungVorbereitung({
 						val _rdIndx_sicherungen = i
 						sicherungen.get(_rdIndx_sicherungen)
 					})
 				}
 				status.setLength(0)
-				status.append(Meldungen.M1032)
+				status.append(Meldungen::M1032)
 				sicherung.machSicherung
 			} catch (Exception ex) {
 				status.setLength(0)
-				status.append(Meldungen.M1033(ex.message))
+				status.append(Meldungen::M1033(ex.message))
 			} finally {
 				abbruch.append("Ende")
 			}
 			null as Void
 		] as Task<Void>)
-		var Thread th = new Thread(task)
+		var th = new Thread(task)
 		th.setDaemon(true)
 		th.start
 	}
@@ -368,7 +368,7 @@ class AG400SicherungenController extends BaseController<String> {
 			}
 			return null as Void
 		] as Task<Void>)
-		var Thread th = new Thread(task)
+		var th = new Thread(task)
 		th.setDaemon(true)
 		th.start
 	}
@@ -385,18 +385,17 @@ class AG400SicherungenController extends BaseController<String> {
 			onSicherungStatus
 			onSicherungStatusTimer
 			try {
-				// ServiceErgebnis<Void> r = FactoryService.getReplikationService.copyMandant(getServiceDaten,
-				// vonRep, Global.strInt(mandant.getText), status, abbruch);
+				// var r = FactoryService::replikationService.copyMandant(serviceDaten, vonRep, Global.strInt(mandant.text), status, abbruch)
 				// r.throwErstenFehler
 			} catch (Exception ex) {
 				status.setLength(0)
-				status.append(Meldungen.M1033(ex.getMessage))
+				status.append(Meldungen::M1033(ex.getMessage))
 			} finally {
 				abbruch.append("Ende")
 			}
 			return null as Void
 		] as Task<Void>)
-		var Thread th = new Thread(task)
+		var th = new Thread(task)
 		th.setDaemon(true)
 		th.start
 	}

@@ -45,9 +45,9 @@ class AG410SicherungController extends BaseController<MaEinstellung> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var boolean neu = DialogAufrufEnum.NEU.equals(aufruf)
-			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(aufruf)
-			var MaEinstellung k = getParameter1
+			var neu = DialogAufrufEnum::NEU.equals(aufruf)
+			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
+			var MaEinstellung k = parameter1
 			if (!neu && k !== null) {
 				nr.setText(Global.intStrFormat(k.mandantNr))
 				ziel.setText(k.schluessel)
@@ -57,7 +57,7 @@ class AG410SicherungController extends BaseController<MaEinstellung> {
 			ziel.setEditable(!loeschen)
 			quelle.setEditable(!loeschen)
 			if (loeschen) {
-				ok.setText(Meldungen.M2001)
+				ok.setText(Meldungen::M2001)
 			}
 		}
 		if (stufe <= 1) { // stufe = 0
@@ -77,15 +77,15 @@ class AG410SicherungController extends BaseController<MaEinstellung> {
 	 */
 	@FXML def void onOk() {
 
-		var MaEinstellung e = getParameter1
-		if (!DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
+		var MaEinstellung e = parameter1
+		if (!DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
 			if (Global.nes(ziel.text)) {
-				throw new MeldungException(Meldungen.M2023)
+				throw new MeldungException(Meldungen::M2023)
 			}
 			if (Global.nes(quelle.text)) {
-				throw new MeldungException(Meldungen.M2024)
+				throw new MeldungException(Meldungen::M2024)
 			}
-			if (e === null || DialogAufrufEnum.KOPIEREN.equals(aufruf)) {
+			if (e === null || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
 				e = new MaEinstellung
 			}
 			e.setSchluessel(ziel.text)

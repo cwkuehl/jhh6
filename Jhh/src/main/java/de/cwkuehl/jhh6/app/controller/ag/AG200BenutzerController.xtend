@@ -1,13 +1,12 @@
 package de.cwkuehl.jhh6.app.controller.ag
 
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.BenutzerLang
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.server.FactoryService
+import java.time.LocalDate
+import java.time.LocalDateTime
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -103,12 +102,10 @@ class AG200BenutzerController extends BaseController<String> {
 	 */
 	override protected void initDaten(int stufe) {
 
-		if (stufe <= 0) {
-			// stufe = 0;
+		if (stufe <= 0) { // stufe = 0
 		}
 		if (stufe <= 1) {
-			var List<BenutzerLang> l = get(
-				FactoryService::anmeldungService.getBenutzerListe(serviceDaten, true))
+			var l = get(FactoryService::anmeldungService.getBenutzerListe(serviceDaten, true))
 			getItems(l, null, [a|new BenutzerData(a)], benutzerData)
 		}
 		if (stufe <= 2) {
@@ -139,7 +136,7 @@ class AG200BenutzerController extends BaseController<String> {
 
 	def private void starteDialog(DialogAufrufEnum aufruf) {
 
-		var BenutzerLang k = getValue(benutzer, !DialogAufrufEnum.NEU.equals(aufruf))
+		var BenutzerLang k = getValue(benutzer, !DialogAufrufEnum::NEU.equals(aufruf))
 		starteFormular(AG210BenutzerController, aufruf, k)
 	}
 
@@ -170,28 +167,28 @@ class AG200BenutzerController extends BaseController<String> {
 	 * Event für Neu.
 	 */
 	@FXML def void onNeu() {
-		starteDialog(DialogAufrufEnum.NEU)
+		starteDialog(DialogAufrufEnum::NEU)
 	}
 
 	/** 
 	 * Event für Kopieren.
 	 */
 	@FXML def void onKopieren() {
-		starteDialog(DialogAufrufEnum.KOPIEREN)
+		starteDialog(DialogAufrufEnum::KOPIEREN)
 	}
 
 	/** 
 	 * Event für Aendern.
 	 */
 	@FXML def void onAendern() {
-		starteDialog(DialogAufrufEnum.AENDERN)
+		starteDialog(DialogAufrufEnum::AENDERN)
 	}
 
 	/** 
 	 * Event für Loeschen.
 	 */
 	@FXML def void onLoeschen() {
-		starteDialog(DialogAufrufEnum.LOESCHEN)
+		starteDialog(DialogAufrufEnum::LOESCHEN)
 	}
 
 	/** 

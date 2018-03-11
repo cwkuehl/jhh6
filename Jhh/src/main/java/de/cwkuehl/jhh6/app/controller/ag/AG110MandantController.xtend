@@ -50,10 +50,10 @@ class AG110MandantController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var boolean neu = DialogAufrufEnum.NEU.equals(aufruf)
-			var boolean kopieren = DialogAufrufEnum.KOPIEREN.equals(aufruf)
-			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(aufruf)
-			var MaMandant k = getParameter1
+			var neu = DialogAufrufEnum::NEU.equals(aufruf)
+			var kopieren = DialogAufrufEnum::KOPIEREN.equals(aufruf)
+			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
+			var MaMandant k = parameter1
 			if (!neu && k !== null) {
 				k = get(FactoryService::anmeldungService.getMandant(serviceDaten, k.nr))
 				if (k !== null) {
@@ -71,7 +71,7 @@ class AG110MandantController extends BaseController<String> {
 			angelegt.setEditable(false)
 			geaendert.setEditable(false)
 			if (loeschen) {
-				ok.setText(Meldungen.M2001)
+				ok.setText(Meldungen::M2001)
 			}
 		}
 		if (stufe <= 1) { // stufe = 0
@@ -91,15 +91,15 @@ class AG110MandantController extends BaseController<String> {
 	 */
 	@FXML def void onOk() {
 
-		var ServiceErgebnis<?> r = null
-		if (DialogAufrufEnum.NEU.equals(aufruf) || DialogAufrufEnum.KOPIEREN.equals(aufruf)) {
+		var ServiceErgebnis<?> r
+		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
 			r = FactoryService::anmeldungService.insertUpdateMandant(serviceDaten, Global.strInt(nr.text),
 				beschreibung.text, true)
-		} else if (DialogAufrufEnum.AENDERN.equals(aufruf)) {
+		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
 			r = FactoryService::anmeldungService.insertUpdateMandant(serviceDaten, Global.strInt(nr.text),
 				beschreibung.text, false)
-		} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
-			if (Werkzeug.showYesNoQuestion(Meldungen.AM005) === 0) {
+		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
+			if (Werkzeug.showYesNoQuestion(Meldungen::AM005) === 0) {
 				return
 			}
 			r = FactoryService::anmeldungService.deleteMandant(serviceDaten, Global.strInt(nr.text))

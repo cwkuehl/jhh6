@@ -7,7 +7,6 @@ import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.app.controller.am.AM500EinstellungenController
 import de.cwkuehl.jhh6.server.FactoryService
 import java.time.LocalDateTime
-import java.util.List
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -99,7 +98,7 @@ class AG100MandantenController extends BaseController<String> {
 		if (stufe <= 0) { // stufe = 0
 		}
 		if (stufe <= 1) {
-			var List<MaMandant> l = get(FactoryService::anmeldungService.getMandantListe(serviceDaten, false))
+			var l = get(FactoryService::anmeldungService.getMandantListe(serviceDaten, false))
 			getItems(l, null, [a|new MandantenData(a)], mandantenData)
 		}
 		if (stufe <= 2) {
@@ -127,7 +126,7 @@ class AG100MandantenController extends BaseController<String> {
 
 	def private void starteDialog(DialogAufrufEnum aufruf) {
 
-		var MaMandant k = getValue(mandanten, !DialogAufrufEnum.NEU.equals(aufruf))
+		var MaMandant k = getValue(mandanten, !DialogAufrufEnum::NEU.equals(aufruf))
 		starteFormular(typeof(AG110MandantController), aufruf, k)
 	}
 
@@ -160,28 +159,28 @@ class AG100MandantenController extends BaseController<String> {
 	 * Event für Neu.
 	 */
 	@FXML def void onNeu() {
-		starteDialog(DialogAufrufEnum.NEU)
+		starteDialog(DialogAufrufEnum::NEU)
 	}
 
 	/** 
 	 * Event für Kopieren.
 	 */
 	@FXML def void onKopieren() {
-		starteDialog(DialogAufrufEnum.KOPIEREN)
+		starteDialog(DialogAufrufEnum::KOPIEREN)
 	}
 
 	/** 
 	 * Event für Aendern.
 	 */
 	@FXML def void onAendern() {
-		starteDialog(DialogAufrufEnum.AENDERN)
+		starteDialog(DialogAufrufEnum::AENDERN)
 	}
 
 	/** 
 	 * Event für Loeschen.
 	 */
 	@FXML def void onLoeschen() {
-		starteDialog(DialogAufrufEnum.LOESCHEN)
+		starteDialog(DialogAufrufEnum::LOESCHEN)
 	}
 
 	/** 
@@ -190,7 +189,7 @@ class AG100MandantenController extends BaseController<String> {
 	@FXML def void onEinstellung() {
 
 		var MaMandant k = getValue(mandanten, true)
-		starteFormular(AM500EinstellungenController, DialogAufrufEnum.OHNE, k)
+		starteFormular(AM500EinstellungenController, DialogAufrufEnum::OHNE, k)
 	}
 
 	/** 
