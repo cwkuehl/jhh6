@@ -1,6 +1,5 @@
 package de.cwkuehl.jhh6.app.controller.mo
 
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.MaEinstellung
 import de.cwkuehl.jhh6.api.dto.MoMessdiener
 import de.cwkuehl.jhh6.api.message.Meldungen
@@ -172,22 +171,18 @@ class MO110MessdienerController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var List<MoMessdiener> mliste = get(
-				FactoryService::messdienerService.getMessdienerListe(serviceDaten, true))
+			var mliste = get(FactoryService::messdienerService.getMessdienerListe(serviceDaten, true))
 			mit.setItems(getItems(mliste, new MoMessdiener, [a|new MitData(a)], null))
-			var List<MaEinstellung> dliste = get(
-				FactoryService::messdienerService.getStandardDienstListe(serviceDaten))
+			var dliste = get(FactoryService::messdienerService.getStandardDienstListe(serviceDaten))
 			dienste.setItems(getItems(dliste, null, [a|new DiensteData(a)], null))
-			var List<MaEinstellung> vliste = get(
-				FactoryService::messdienerService.getStandardVerfuegbarListe(serviceDaten))
+			var vliste = get(FactoryService::messdienerService.getStandardVerfuegbarListe(serviceDaten))
 			verfuegbar.setItems(getItems(vliste, null, [a|new VerfuegbarData(a)], null))
-			var List<MaEinstellung> sliste = get(
-				FactoryService::messdienerService.getStandardStatusListe(serviceDaten))
+			var sliste = get(FactoryService::messdienerService.getStandardStatusListe(serviceDaten))
 			status.setItems(getItems(sliste, null, [a|new StatusData(a)], null))
 			status.getSelectionModel.select(0)
-			var boolean neu = DialogAufrufEnum::NEU.equals(aufruf)
-			var boolean loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
-			var MoMessdiener k = getParameter1
+			var neu = DialogAufrufEnum::NEU.equals(aufruf)
+			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
+			var MoMessdiener k = parameter1
 			if (!neu && k !== null) {
 				k = get(FactoryService::messdienerService.getMessdiener(serviceDaten, k.uid))
 				nr.setText(k.uid)
@@ -250,23 +245,23 @@ class MO110MessdienerController extends BaseController<String> {
 	 */
 	@FXML def void onOk() {
 
-		var ServiceErgebnis<?> r = null
+		var ServiceErgebnis<?> r
 		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
 			r = FactoryService::messdienerService.insertUpdateMessdiener(serviceDaten, null, name.text, vorname.text,
 				von.value, bis.value, adresse1.text, adresse2.text, adresse3.text, email1.text, email2.text,
 				telefon1.text, telefon2.text, getText(verfuegbar), getText(dienste), getText(mit), getText(status),
 				notiz.text)
 		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
-			r = FactoryService::messdienerService.insertUpdateMessdiener(serviceDaten, nr.text, name.text,
-				vorname.text, von.value, bis.value, adresse1.text, adresse2.text, adresse3.text, email1.text,
-				email2.text, telefon1.text, telefon2.text, getTexte(verfuegbar), getTexte(dienste), getText(mit),
-				getText(status), notiz.text)
+			r = FactoryService::messdienerService.insertUpdateMessdiener(serviceDaten, nr.text, name.text, vorname.text,
+				von.value, bis.value, adresse1.text, adresse2.text, adresse3.text, email1.text, email2.text,
+				telefon1.text, telefon2.text, getTexte(verfuegbar), getTexte(dienste), getText(mit), getText(status),
+				notiz.text)
 		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
 			r = FactoryService::messdienerService.deleteMessdiener(serviceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)
-			if (r.getFehler.isEmpty) {
+			if (r.fehler.isEmpty) {
 				updateParent
 				close
 			}

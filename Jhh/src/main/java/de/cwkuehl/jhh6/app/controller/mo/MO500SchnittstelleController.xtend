@@ -9,7 +9,6 @@ import de.cwkuehl.jhh6.app.base.Werkzeug
 import de.cwkuehl.jhh6.app.control.Datum
 import de.cwkuehl.jhh6.server.FactoryService
 import java.time.LocalDate
-import java.util.List
 import javafx.fxml.FXML
 import javafx.scene.control.CheckBox
 import javafx.scene.control.Label
@@ -72,8 +71,7 @@ class MO500SchnittstelleController extends BaseController<String> {
 	 * Event für DateiAuswahl.
 	 */
 	@FXML def void onDateiAuswahl() {
-		var String dateiname = DateiAuswahl.auswaehlen(true, "MO500.select.file", "MO500.select.ok", "csv",
-			"MO500.select.ext")
+		var dateiname = DateiAuswahl.auswaehlen(true, "MO500.select.file", "MO500.select.ok", "csv", "MO500.select.ext")
 		if (!Global.nes(dateiname)) {
 			datei.setText(dateiname)
 		}
@@ -84,13 +82,13 @@ class MO500SchnittstelleController extends BaseController<String> {
 	 */
 	@FXML def void onImport1() {
 
-		if (Global.nes(datei.getText)) {
-			throw new MeldungException(Meldungen.M1012)
+		if (Global.nes(datei.text)) {
+			throw new MeldungException(Meldungen::M1012)
 		}
-		if (Werkzeug.showYesNoQuestion(Meldungen.MO032) === 0) {
+		if (Werkzeug.showYesNoQuestion(Meldungen::MO032) === 0) {
 			return
 		}
-		var List<String> zeilen = Werkzeug.leseDatei(datei.text)
+		var zeilen = Werkzeug.leseDatei(datei.text)
 		var meldung = get(
 			FactoryService::messdienerService.importMessdienerListe(serviceDaten, zeilen, loeschen.isSelected))
 		if (!Global.nes(meldung)) {
@@ -105,10 +103,9 @@ class MO500SchnittstelleController extends BaseController<String> {
 	@FXML def void onExport() {
 
 		if (Global.nes(datei.text)) {
-			throw new MeldungException(Meldungen.M1012)
+			throw new MeldungException(Meldungen::M1012)
 		}
-		var List<String> zeilen = get(
-			FactoryService::messdienerService.exportMessdienerListe(serviceDaten, von.value, bis.value))
+		var zeilen = get(FactoryService::messdienerService.exportMessdienerListe(serviceDaten, von.value, bis.value))
 		Werkzeug.speicherDateiOeffnen(zeilen, null, datei.text, false)
 	}
 
@@ -118,13 +115,13 @@ class MO500SchnittstelleController extends BaseController<String> {
 	@FXML def void onImport2() {
 
 		if (Global.nes(datei.text)) {
-			throw new MeldungException(Meldungen.M1012)
+			throw new MeldungException(Meldungen::M1012)
 		}
-		if (Werkzeug.showYesNoQuestion(Meldungen.MO033) == 0) {
+		if (Werkzeug.showYesNoQuestion(Meldungen::MO033) == 0) {
 			return
 		}
-		var List<String> zeilen = Werkzeug.leseDatei(datei.text)
-		var String meldung = get(
+		var zeilen = Werkzeug.leseDatei(datei.text)
+		var meldung = get(
 			FactoryService::messdienerService.importGottesdienstListe(serviceDaten, zeilen, loeschen.isSelected))
 		if (!Global.nes(meldung)) {
 			updateParent

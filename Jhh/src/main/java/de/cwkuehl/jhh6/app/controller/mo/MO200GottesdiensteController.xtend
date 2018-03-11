@@ -11,7 +11,6 @@ import de.cwkuehl.jhh6.server.FactoryService
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.util.List
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -118,7 +117,7 @@ class MO200GottesdiensteController extends BaseController<String> {
 
 		if (stufe <= 0) {
 			// nächsten Montag vorblenden
-			var LocalDate d = LocalDate::now
+			var d = LocalDate::now
 			while (!d.getDayOfWeek.equals(DayOfWeek.MONDAY)) {
 				d = d.plusDays(1)
 			}
@@ -126,7 +125,7 @@ class MO200GottesdiensteController extends BaseController<String> {
 			bis.setValue(d.plusDays(20))
 		}
 		if (stufe <= 1) {
-			var List<MoGottesdienst> l = get(
+			var l = get(
 				FactoryService::messdienerService.getGottesdienstListe(serviceDaten, false, von.value, bis.value))
 			getItems(l, null, [a|new GottesdiensteData(a)], gottesdiensteData)
 		}
@@ -141,7 +140,7 @@ class MO200GottesdiensteController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		gottesdienste.setItems(gottesdiensteData)
-		colUid.setCellValueFactory([c|c.getValue.uid])
+		colUid.setCellValueFactory([c|c.value.uid])
 		colTermin.setCellValueFactory([c|c.value.termin])
 		colOrt.setCellValueFactory([c|c.value.ort])
 		colName.setCellValueFactory([c|c.value.name])
@@ -156,7 +155,7 @@ class MO200GottesdiensteController extends BaseController<String> {
 	}
 
 	def private void starteDialog(DialogAufrufEnum aufruf) {
-		var MoGottesdienst k = getValue(gottesdienste, !DialogAufrufEnum.NEU.equals(aufruf))
+		var MoGottesdienst k = getValue(gottesdienste, !DialogAufrufEnum::NEU.equals(aufruf))
 		starteFormular(MO210GottesdienstController, aufruf, k)
 	}
 
@@ -187,28 +186,28 @@ class MO200GottesdiensteController extends BaseController<String> {
 	 * Event für Neu.
 	 */
 	@FXML def void onNeu() {
-		starteDialog(DialogAufrufEnum.NEU)
+		starteDialog(DialogAufrufEnum::NEU)
 	}
 
 	/** 
 	 * Event für Kopieren.
 	 */
 	@FXML def void onKopieren() {
-		starteDialog(DialogAufrufEnum.KOPIEREN)
+		starteDialog(DialogAufrufEnum::KOPIEREN)
 	}
 
 	/** 
 	 * Event für Aendern.
 	 */
 	@FXML def void onAendern() {
-		starteDialog(DialogAufrufEnum.AENDERN)
+		starteDialog(DialogAufrufEnum::AENDERN)
 	}
 
 	/** 
 	 * Event für Loeschen.
 	 */
 	@FXML def void onLoeschen() {
-		starteDialog(DialogAufrufEnum.LOESCHEN)
+		starteDialog(DialogAufrufEnum::LOESCHEN)
 	}
 
 	/** 
@@ -218,14 +217,14 @@ class MO200GottesdiensteController extends BaseController<String> {
 
 		var byte[] pdf = get(
 			FactoryService::messdienerService.getReportMessdienerordnung(serviceDaten, von.value, bis.value))
-		Werkzeug.speicherReport(pdf, Meldungen.MO036(von.value.atStartOfDay, bis.value.atStartOfDay), false)
+		Werkzeug.speicherReport(pdf, Meldungen::MO036(von.value.atStartOfDay, bis.value.atStartOfDay), false)
 	}
 
 	/** 
 	 * Event für ImExport.
 	 */
 	@FXML def void onImExport() {
-		starteFormular(MO500SchnittstelleController, DialogAufrufEnum.OHNE)
+		starteFormular(MO500SchnittstelleController, DialogAufrufEnum::OHNE)
 	}
 
 	/** 

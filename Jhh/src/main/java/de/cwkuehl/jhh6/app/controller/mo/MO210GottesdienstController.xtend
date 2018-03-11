@@ -1,9 +1,5 @@
 package de.cwkuehl.jhh6.app.controller.mo
 
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.util.List
-import java.util.Optional
 import de.cwkuehl.jhh6.api.dto.MaEinstellung
 import de.cwkuehl.jhh6.api.dto.MoEinteilungLang
 import de.cwkuehl.jhh6.api.dto.MoGottesdienst
@@ -15,6 +11,10 @@ import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.app.control.Datum
 import de.cwkuehl.jhh6.server.FactoryService
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.List
+import java.util.Optional
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -182,7 +182,7 @@ class MO210GottesdienstController extends BaseController<String> {
 		tabbar = 0
 		super.initialize
 		nr0.setLabelFor(nr)
-		von0.setLabelFor(von.getLabelForNode, true)
+		von0.setLabelFor(von.labelForNode, true)
 		name0.setLabelFor(name, true)
 		ort0.setLabelFor(ort, true)
 		profil0.setLabelFor(profil, true)
@@ -203,21 +203,21 @@ class MO210GottesdienstController extends BaseController<String> {
 
 		if (stufe <= 0) {
 			von.setValue(LocalDate::now.atTime(18, 0))
-			var List<MaEinstellung> nliste = get(FactoryService::messdienerService.getStandardNameListe(serviceDaten))
+			var nliste = get(FactoryService::messdienerService.getStandardNameListe(serviceDaten))
 			name.setItems(getItems(nliste, null, [a|new NameData(a)], null))
 			name.getSelectionModel.select(0)
-			var List<MaEinstellung> oliste = get(FactoryService::messdienerService.getStandardOrtListe(serviceDaten))
+			var oliste = get(FactoryService::messdienerService.getStandardOrtListe(serviceDaten))
 			ort.setItems(getItems(oliste, null, [a|new OrtData(a)], null))
 			ort.getSelectionModel.select(0)
-			var List<MoProfil> pliste = get(FactoryService::messdienerService.getProfilListe(serviceDaten, true))
+			var pliste = get(FactoryService::messdienerService.getProfilListe(serviceDaten, true))
 			profil.setItems(getItems(pliste, new MoProfil, [a|new ProfilData(a)], null))
 			// profil.getSelectionModel.select(0)
-			var List<MaEinstellung> sliste = get(FactoryService::messdienerService.getStandardStatusListe(serviceDaten))
+			var sliste = get(FactoryService::messdienerService.getStandardStatusListe(serviceDaten))
 			status.setItems(getItems(sliste, null, [a|new StatusData(a)], null))
 			status.getSelectionModel.select(0)
-			var boolean neu0 = DialogAufrufEnum::NEU.equals(aufruf)
-			var boolean loeschen0 = DialogAufrufEnum::LOESCHEN.equals(aufruf)
-			var MoGottesdienst k = getParameter1
+			var neu0 = DialogAufrufEnum::NEU.equals(aufruf)
+			var loeschen0 = DialogAufrufEnum::LOESCHEN.equals(aufruf)
+			var MoGottesdienst k = parameter1
 			if (!neu0 && k !== null) {
 				k = get(FactoryService::messdienerService.getGottesdienst(serviceDaten, k.uid))
 				nr.setText(k.uid)
@@ -251,7 +251,7 @@ class MO210GottesdienstController extends BaseController<String> {
 			if (einteilungenData === null) {
 				einteilungenData = FXCollections::observableArrayList
 				if (!Global::nes(nr.text)) {
-					var List<MoEinteilungLang> l = get(
+					var l = get(
 						FactoryService::messdienerService.getEinteilungListe(serviceDaten, false, nr.text, null))
 					getItems(l, null, [a|new EinteilungenData(a)], einteilungenData)
 				}
@@ -342,7 +342,7 @@ class MO210GottesdienstController extends BaseController<String> {
 	 */
 	@FXML def void onOk() {
 
-		var ServiceErgebnis<?> r = null
+		var ServiceErgebnis<?> r
 		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
 			r = FactoryService::messdienerService.insertUpdateGottesdienst(serviceDaten, null, von.value2,
 				getText(name), getText(ort), getText(profil), getText(status), notiz.text, getAllValues(einteilungen))
@@ -354,7 +354,7 @@ class MO210GottesdienstController extends BaseController<String> {
 		}
 		if (r !== null) {
 			get(r)
-			if (r.getFehler.isEmpty) {
+			if (r.fehler.isEmpty) {
 				updateParent
 				close
 			}

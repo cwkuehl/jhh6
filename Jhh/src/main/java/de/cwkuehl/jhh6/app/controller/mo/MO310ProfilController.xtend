@@ -55,9 +55,9 @@ class MO310ProfilController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var boolean neu = DialogAufrufEnum.NEU.equals(aufruf)
-			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(aufruf)
-			var MoProfil k = getParameter1
+			var neu = DialogAufrufEnum::NEU.equals(aufruf)
+			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
+			var MoProfil k = parameter1
 			if (!neu && k !== null) {
 				k = get(FactoryService::messdienerService.getProfil(serviceDaten, k.uid))
 				nr.setText(k.uid)
@@ -74,7 +74,7 @@ class MO310ProfilController extends BaseController<String> {
 			angelegt.setEditable(false)
 			geaendert.setEditable(false)
 			if (loeschen) {
-				ok.setText(Meldungen.M2001)
+				ok.setText(Meldungen::M2001)
 			}
 		}
 		if (stufe <= 1) { // stufe = 0
@@ -94,19 +94,19 @@ class MO310ProfilController extends BaseController<String> {
 	 */
 	@FXML def void onOk() {
 
-		var ServiceErgebnis<?> r = null
-		if (DialogAufrufEnum.NEU.equals(aufruf) || DialogAufrufEnum.KOPIEREN.equals(aufruf)) {
+		var ServiceErgebnis<?> r
+		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
 			r = FactoryService::messdienerService.insertUpdateProfil(serviceDaten, null, name.text, dienste.text,
 				notiz.text)
-		} else if (DialogAufrufEnum.AENDERN.equals(aufruf)) {
+		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
 			r = FactoryService::messdienerService.insertUpdateProfil(serviceDaten, nr.text, name.text, dienste.text,
 				notiz.text)
-		} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
+		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
 			r = FactoryService::messdienerService.deleteProfil(serviceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)
-			if (r.getFehler.isEmpty) {
+			if (r.fehler.isEmpty) {
 				updateParent
 				close
 			}

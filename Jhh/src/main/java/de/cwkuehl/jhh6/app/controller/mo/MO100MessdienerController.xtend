@@ -1,13 +1,12 @@
 package de.cwkuehl.jhh6.app.controller.mo
 
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.MoMessdiener
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.server.FactoryService
+import java.time.LocalDate
+import java.time.LocalDateTime
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -108,8 +107,7 @@ class MO100MessdienerController extends BaseController<String> {
 		if (stufe <= 0) { // stufe = 0
 		}
 		if (stufe <= 1) {
-			var List<MoMessdiener> l = get(
-				FactoryService::messdienerService.getMessdienerListe(serviceDaten, false))
+			var l = get(FactoryService::messdienerService.getMessdienerListe(serviceDaten, false))
 			getItems(l, null, [a|new MessdienerData(a)], messdienerData)
 		}
 		if (stufe <= 2) {

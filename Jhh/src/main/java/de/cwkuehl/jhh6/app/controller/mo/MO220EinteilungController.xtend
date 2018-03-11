@@ -1,7 +1,5 @@
 package de.cwkuehl.jhh6.app.controller.mo
 
-import java.util.ArrayList
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.MaEinstellung
 import de.cwkuehl.jhh6.api.dto.MoEinteilungLang
 import de.cwkuehl.jhh6.api.dto.MoMessdienerLang
@@ -10,13 +8,11 @@ import de.cwkuehl.jhh6.api.global.Global
 import de.cwkuehl.jhh6.api.message.MeldungException
 import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.app.base.BaseController
-import de.cwkuehl.jhh6.app.base.BaseController.ComboBoxData
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.app.control.Datum
-import de.cwkuehl.jhh6.app.controller.mo.MO220EinteilungController.DienstData
-import de.cwkuehl.jhh6.app.controller.mo.MO220EinteilungController.Messdiener2Data
-import de.cwkuehl.jhh6.app.controller.mo.MO220EinteilungController.MessdienerData
 import de.cwkuehl.jhh6.server.FactoryService
+import java.util.ArrayList
+import java.util.List
 import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.ComboBox
@@ -129,11 +125,11 @@ class MO220EinteilungController extends BaseController<List<MoEinteilungLang>> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var List<MaEinstellung> nliste = get(FactoryService::messdienerService.getStandardDienstListe(serviceDaten))
+			var nliste = get(FactoryService::messdienerService.getStandardDienstListe(serviceDaten))
 			dienst.setItems(getItems(nliste, null, [a|new DienstData(a)], null))
-			var boolean neu = DialogAufrufEnum::NEU.equals(aufruf)
-			var boolean loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
-			var MoEinteilungLang k = getParameter1
+			var neu = DialogAufrufEnum::NEU.equals(aufruf)
+			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
+			var MoEinteilungLang k = parameter1
 			if (k !== null) {
 				einteilung = k
 				nr.setText(k.uid)
@@ -143,9 +139,9 @@ class MO220EinteilungController extends BaseController<List<MoEinteilungLang>> {
 				angelegt.setText(k.formatDatumVon(k.angelegtAm, k.angelegtVon))
 				geaendert.setText(k.formatDatumVon(k.geaendertAm, k.geaendertVon))
 			}
-			var List<MoEinteilungLang> eliste = getParameter2
+			var eliste = parameter2
 			if (eliste !== null) {
-				var StringBuffer sb = new StringBuffer
+				var sb = new StringBuffer
 				for (MoEinteilungLang e : eliste) {
 					if (einteilung === null || Global::nes(einteilung.messdienerUid) ||
 						Global::compString(einteilung.messdienerUid, e.messdienerUid) !== 0) {
@@ -175,7 +171,7 @@ class MO220EinteilungController extends BaseController<List<MoEinteilungLang>> {
 				dienst.getSelectionModel.select(0)
 			}
 			onDienst
-			if (einteilung !== null && !DialogAufrufEnum::NEU.equals(getAufruf)) {
+			if (einteilung !== null && !DialogAufrufEnum::NEU.equals(aufruf)) {
 				setText(messdiener, einteilung.messdienerUid)
 			}
 		}
@@ -199,7 +195,7 @@ class MO220EinteilungController extends BaseController<List<MoEinteilungLang>> {
 		if (DialogAufrufEnum::NEU.equals(aufruf)) {
 			messdiener2.setItems(getItems(getMessdienerListe, null, [a|new Messdiener2Data(a)], null))
 		} else {
-			var String uid = getText(messdiener)
+			var uid = getText(messdiener)
 			messdiener.setItems(getItems(getMessdienerListe, null, [a|new MessdienerData(a)], null))
 			setText(messdiener, uid)
 		}
@@ -207,17 +203,16 @@ class MO220EinteilungController extends BaseController<List<MoEinteilungLang>> {
 
 	def List<MoMessdienerLang> getMessdienerListe() {
 
-		var boolean automatisch = false
+		var automatisch = false
 		if (einteilung !== null && einteilung.getGottesdienstStatus !== null &&
 			einteilung.getGottesdienstStatus.equals(MoStatusEnum::AUTOMATISCH.toString)) {
 			automatisch = true
 		}
-		var List<MoMessdienerLang> messdiener = get(
-			FactoryService::messdienerService.getMessdienerListe(serviceDaten, automatisch, von.value2, //
-			getText(dienst)))
+		var messdiener = get(FactoryService::messdienerService.getMessdienerListe(serviceDaten, automatisch, von.value2, //
+		getText(dienst)))
 		if (messdiener !== null && (Global::listLaenge(messdiener) > 0 || einteilung !== null)) {
-			var boolean fehlt = true
-			var List<MoMessdienerLang> liste = new ArrayList<MoMessdienerLang>
+			var fehlt = true
+			var liste = new ArrayList<MoMessdienerLang>
 			for (MoMessdienerLang m : messdiener) {
 				if (fehlt && einteilung !== null && !Global::nes(einteilung.messdienerUid) &&
 					Global::compString(einteilung.messdienerUid, m.uid) === 0) {
@@ -248,7 +243,7 @@ class MO220EinteilungController extends BaseController<List<MoEinteilungLang>> {
 		if (Global::nes(getText(dienst))) {
 			throw new MeldungException(Meldungen::MO035)
 		}
-		var List<MoEinteilungLang> liste = new ArrayList
+		var liste = new ArrayList<MoEinteilungLang>
 		if (DialogAufrufEnum::NEU.equals(aufruf)) {
 			var List<MoMessdienerLang> liste2 = getValues(messdiener2, false)
 			if (Global::listLaenge(liste2) <= 0) {

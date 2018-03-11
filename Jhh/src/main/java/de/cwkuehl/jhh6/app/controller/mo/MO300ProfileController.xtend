@@ -1,12 +1,11 @@
 package de.cwkuehl.jhh6.app.controller.mo
 
-import java.time.LocalDateTime
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.MoProfil
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.server.FactoryService
+import java.time.LocalDateTime
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -96,7 +95,7 @@ class MO300ProfileController extends BaseController<String> {
 		if (stufe <= 0) { // stufe = 0
 		}
 		if (stufe <= 1) {
-			var List<MoProfil> l = get(FactoryService::messdienerService.getProfilListe(serviceDaten, false))
+			var l = get(FactoryService::messdienerService.getProfilListe(serviceDaten, false))
 			getItems(l, null, [a|new ProfileData(a)], profileData)
 		}
 		if (stufe <= 2) {
@@ -123,7 +122,7 @@ class MO300ProfileController extends BaseController<String> {
 	}
 
 	def private void starteDialog(DialogAufrufEnum aufruf) {
-		var MoProfil k = getValue(profile, !DialogAufrufEnum.NEU.equals(aufruf))
+		var MoProfil k = getValue(profile, !DialogAufrufEnum::NEU.equals(aufruf))
 		starteFormular(MO310ProfilController, aufruf, k)
 	}
 
@@ -154,28 +153,28 @@ class MO300ProfileController extends BaseController<String> {
 	 * Event für Neu.
 	 */
 	@FXML def void onNeu() {
-		starteDialog(DialogAufrufEnum.NEU)
+		starteDialog(DialogAufrufEnum::NEU)
 	}
 
 	/** 
 	 * Event für Kopieren.
 	 */
 	@FXML def void onKopieren() {
-		starteDialog(DialogAufrufEnum.KOPIEREN)
+		starteDialog(DialogAufrufEnum::KOPIEREN)
 	}
 
 	/** 
 	 * Event für Aendern.
 	 */
 	@FXML def void onAendern() {
-		starteDialog(DialogAufrufEnum.AENDERN)
+		starteDialog(DialogAufrufEnum::AENDERN)
 	}
 
 	/** 
 	 * Event für Loeschen.
 	 */
 	@FXML def void onLoeschen() {
-		starteDialog(DialogAufrufEnum.LOESCHEN)
+		starteDialog(DialogAufrufEnum::LOESCHEN)
 	}
 
 	/** 
