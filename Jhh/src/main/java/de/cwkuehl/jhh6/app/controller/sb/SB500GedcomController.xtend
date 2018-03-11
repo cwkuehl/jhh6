@@ -3,13 +3,11 @@ package de.cwkuehl.jhh6.app.controller.sb
 import de.cwkuehl.jhh6.api.global.Global
 import de.cwkuehl.jhh6.api.message.MeldungException
 import de.cwkuehl.jhh6.api.message.Meldungen
-import de.cwkuehl.jhh6.api.service.ServiceErgebnis
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DateiAuswahl
 import de.cwkuehl.jhh6.app.base.Profil
 import de.cwkuehl.jhh6.app.base.Werkzeug
 import de.cwkuehl.jhh6.server.FactoryService
-import java.util.List
 import javafx.fxml.FXML
 import javafx.scene.control.Label
 import javafx.scene.control.TextArea
@@ -24,13 +22,13 @@ class SB500GedcomController extends BaseController<String> {
 	@FXML @Profil TextField name
 	@FXML Label datei0
 	@FXML @Profil TextField datei
-	//@FXML Button dateiAuswahl
+	// @FXML Button dateiAuswahl
 	@FXML Label filter0
 	@FXML @Profil TextArea filter
-	//@FXML Button export
-	//@FXML Button importieren
-	//@FXML Button abbrechen
 
+	// @FXML Button export
+	// @FXML Button importieren
+	// @FXML Button abbrechen
 	/** 
 	 * Initialisierung des Dialogs.
 	 */
@@ -68,7 +66,7 @@ class SB500GedcomController extends BaseController<String> {
 	 * Event für DateiAuswahl.
 	 */
 	@FXML def void onDateiAuswahl() {
-		var String d = DateiAuswahl.auswaehlen(true, "SB500.select.file", "SB500.select.ok", "ged", "SB500.select.ext")
+		var d = DateiAuswahl.auswaehlen(true, "SB500.select.file", "SB500.select.ok", "ged", "SB500.select.ext")
 		if (!Global.nes(d)) {
 			datei.setText(d)
 		}
@@ -79,12 +77,10 @@ class SB500GedcomController extends BaseController<String> {
 	 */
 	@FXML def void onExport() {
 
-		var String d = datei.getText
-		var ServiceErgebnis<List<String>> zeilen = get2(
-			FactoryService.getStammbaumService.exportAhnen(getServiceDaten, d, name.getText, filter.getText,
-				null))
+		var d = datei.text
+		var zeilen = get2(FactoryService::stammbaumService.exportAhnen(serviceDaten, d, name.text, filter.text, null))
 		if (zeilen.ok) {
-			Werkzeug.speicherDateiOeffnen(zeilen.getErgebnis, null, d, false)
+			Werkzeug.speicherDateiOeffnen(zeilen.ergebnis, null, d, false)
 		}
 	}
 
@@ -94,13 +90,13 @@ class SB500GedcomController extends BaseController<String> {
 	@FXML def void onImport() {
 
 		if (Global.nes(datei.getText)) {
-			throw new MeldungException(Meldungen.M1012)
+			throw new MeldungException(Meldungen::M1012)
 		}
-		if (Werkzeug.showYesNoQuestion(Meldungen.SB029) === 0) {
+		if (Werkzeug.showYesNoQuestion(Meldungen::SB029) === 0) {
 			return;
 		}
-		var List<String> zeilen = Werkzeug.leseDatei(datei.getText)
-		var String meldung = get(FactoryService.getStammbaumService.importAhnen(getServiceDaten, zeilen))
+		var zeilen = Werkzeug.leseDatei(datei.getText)
+		var meldung = get(FactoryService::stammbaumService.importAhnen(serviceDaten, zeilen))
 		if (!Global.nes(meldung)) {
 			updateParent
 			Werkzeug.showInfo(meldung)

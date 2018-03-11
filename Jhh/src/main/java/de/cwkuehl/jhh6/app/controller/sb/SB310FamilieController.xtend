@@ -11,7 +11,6 @@ import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.server.FactoryService
 import java.time.LocalDateTime
-import java.util.List
 import java.util.stream.Collectors
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
@@ -65,8 +64,8 @@ class SB310FamilieController extends BaseController<String> {
 	@FXML Button ok
 	@FXML Button hinzufuegen
 	@FXML Button entfernen
-	//@FXML Button abbrechen
 
+	// @FXML Button abbrechen
 	/** 
 	 * Daten für ComboBox Vater.
 	 */
@@ -77,11 +76,11 @@ class SB310FamilieController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getGeburtsname
+			return getData.geburtsname
 		}
 	}
 
@@ -95,11 +94,11 @@ class SB310FamilieController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getGeburtsname
+			return getData.geburtsname
 		}
 	}
 
@@ -121,15 +120,15 @@ class SB310FamilieController extends BaseController<String> {
 		new(SbPersonLang v) {
 
 			super(v)
-			uid = new SimpleStringProperty(v.getUid)
-			geburtsname = new SimpleStringProperty(v.getGeburtsname)
-			vorname = new SimpleStringProperty(v.getVorname)
-			name = new SimpleStringProperty(v.getName)
-			geschlecht = new SimpleStringProperty(v.getGeschlecht)
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
+			uid = new SimpleStringProperty(v.uid)
+			geburtsname = new SimpleStringProperty(v.geburtsname)
+			vorname = new SimpleStringProperty(v.vorname)
+			name = new SimpleStringProperty(v.name)
+			geschlecht = new SimpleStringProperty(v.geschlecht)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
+			geaendertVon = new SimpleStringProperty(v.geaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
+			angelegtVon = new SimpleStringProperty(v.angelegtVon)
 		}
 
 		override String getId() {
@@ -147,11 +146,11 @@ class SB310FamilieController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getGeburtsname
+			return getData.geburtsname
 		}
 	}
 
@@ -182,36 +181,34 @@ class SB310FamilieController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var List<SbPersonLang> l = get(
-				FactoryService::getStammbaumService.getPersonListe(getServiceDaten, true, false, null, null, null))
+			var l = get(FactoryService::stammbaumService.getPersonListe(serviceDaten, true, false, null, null, null))
 			vater.setItems(
 				getItems(
 					l.stream.filter([a|!a.getGeschlecht.equals(GeschlechtEnum::WEIBLICH.toString)]).collect(
 						Collectors::toList), new SbPersonLang, [a|new VaterData(a)], null))
-			mutter.setItems(getItems(l.stream.filter([a |
+			mutter.setItems(getItems(l.stream.filter([ a |
 				!a.getGeschlecht.equals(GeschlechtEnum::MAENNLICH.toString)
 			]).collect(Collectors::toList), new SbPersonLang, [a|new MutterData(a)], null))
-			var boolean neu = DialogAufrufEnum::NEU.equals(getAufruf)
-			var boolean loeschen = DialogAufrufEnum::LOESCHEN.equals(getAufruf)
-			var SbFamilieLang k = getParameter1
+			var neu = DialogAufrufEnum::NEU.equals(aufruf)
+			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
+			var SbFamilieLang k = parameter1
 			if (!neu && k !== null) {
-				k = get(FactoryService::getStammbaumService.getFamilieLang(getServiceDaten, k.getUid))
+				k = get(FactoryService::stammbaumService.getFamilieLang(serviceDaten, k.uid))
 				if (k !== null) {
-					nr.setText(k.getUid)
-					setText(vater, k.getMannUid)
-					setText(mutter, k.getFrauUid)
-					angelegt.setText(k.formatDatumVon(k.getAngelegtAm, k.getAngelegtVon))
-					geaendert.setText(k.formatDatumVon(k.getGeaendertAm, k.getGeaendertVon))
-					var List<String> liste = get(
-						FactoryService::getStammbaumService.getFamilieEreignis(getServiceDaten, k.getUid,
+					nr.setText(k.uid)
+					setText(vater, k.mannUid)
+					setText(mutter, k.frauUid)
+					angelegt.setText(k.formatDatumVon(k.angelegtAm, k.angelegtVon))
+					geaendert.setText(k.formatDatumVon(k.geaendertAm, k.geaendertVon))
+					var liste = get(
+						FactoryService::stammbaumService.getFamilieEreignis(serviceDaten, k.uid,
 							GedcomEreignis::eHEIRAT.wert))
 					if (Global::listLaenge(liste) >= 3) {
 						heiratsdatum.setText(liste.get(0))
 						heiratsort.setText(liste.get(1))
 						heiratsbem.setText(liste.get(2))
 					}
-					var List<SbPersonLang> kliste = get(
-						FactoryService::getStammbaumService.getKindListe(getServiceDaten, k.getUid))
+					var kliste = get(FactoryService::stammbaumService.getKindListe(serviceDaten, k.uid))
 					getItems(kliste, null, [a|new KinderData(a)], kinderData)
 				}
 			}
@@ -231,8 +228,8 @@ class SB310FamilieController extends BaseController<String> {
 			entfernen.setVisible(!loeschen)
 			val v = getText(vater)
 			val m = getText(mutter)
-			kind.setItems(getItems(l.stream.filter([a |
-				!a.getUid.equals(v) && !a.getUid.equals(m) && a.getVaterUid === null && a.getMutterUid === null
+			kind.setItems(getItems(l.stream.filter([ a |
+				!a.uid.equals(v) && !a.uid.equals(m) && a.vaterUid === null && a.mutterUid === null
 			]).collect(Collectors::toList), new SbPersonLang, [a|new KindData(a)], null))
 		}
 		if (stufe <= 1) { // stufe = 1
@@ -248,15 +245,15 @@ class SB310FamilieController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		kinder.setItems(kinderData)
-		colUid.setCellValueFactory([c|c.getValue.uid])
-		colGeburtsname.setCellValueFactory([c|c.getValue.geburtsname])
-		colVorname.setCellValueFactory([c|c.getValue.vorname])
-		colName.setCellValueFactory([c|c.getValue.name])
-		colGeschlecht.setCellValueFactory([c|c.getValue.geschlecht])
-		colGv.setCellValueFactory([c|c.getValue.geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue.geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue.angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue.angelegtAm])
+		colUid.setCellValueFactory([c|c.value.uid])
+		colGeburtsname.setCellValueFactory([c|c.value.geburtsname])
+		colVorname.setCellValueFactory([c|c.value.vorname])
+		colName.setCellValueFactory([c|c.value.name])
+		colGeschlecht.setCellValueFactory([c|c.value.geschlecht])
+		colGv.setCellValueFactory([c|c.value.geaendertVon])
+		colGa.setCellValueFactory([c|c.value.geaendertAm])
+		colAv.setCellValueFactory([c|c.value.angelegtVon])
+		colAa.setCellValueFactory([c|c.value.angelegtAm])
 	}
 
 	/** 
@@ -264,7 +261,7 @@ class SB310FamilieController extends BaseController<String> {
 	 * @FXML
 	 */
 	def void onKinderMouseClick(MouseEvent e) {
-		if (e.clickCount > 1) {		// onAendern
+		if (e.clickCount > 1) { // onAendern
 		}
 	}
 
@@ -273,21 +270,20 @@ class SB310FamilieController extends BaseController<String> {
 	 */
 	@FXML def void onOk() {
 
-		var List<String> kliste = kinderData.stream.map([a|a.uid.getValue]).collect(Collectors::toList)
-		var ServiceErgebnis<?> r = null
+		var kliste = kinderData.stream.map([a|a.uid.value]).collect(Collectors::toList)
+		var ServiceErgebnis<?> r
 		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
-			r = FactoryService::getStammbaumService.insertUpdateFamilie(getServiceDaten, null, getText(vater),
-				getText(mutter), heiratsdatum.getText, heiratsort.getText, heiratsbem.getText, null, kliste)
+			r = FactoryService::stammbaumService.insertUpdateFamilie(serviceDaten, null, getText(vater),
+				getText(mutter), heiratsdatum.text, heiratsort.text, heiratsbem.text, null, kliste)
 		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
-			r = FactoryService::getStammbaumService.insertUpdateFamilie(getServiceDaten, nr.getText,
-				getText(vater), getText(mutter), heiratsdatum.getText, heiratsort.getText, heiratsbem.getText,
-				null, kliste)
+			r = FactoryService::stammbaumService.insertUpdateFamilie(serviceDaten, nr.text, getText(vater),
+				getText(mutter), heiratsdatum.text, heiratsort.text, heiratsbem.text, null, kliste)
 		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
-			r = FactoryService::getStammbaumService.deleteFamilie(getServiceDaten, nr.getText)
+			r = FactoryService::stammbaumService.deleteFamilie(serviceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)
-			if (r.getFehler.isEmpty) {
+			if (r.fehler.isEmpty) {
 				updateParent
 				close
 			}
@@ -300,10 +296,10 @@ class SB310FamilieController extends BaseController<String> {
 	@FXML def void onHinzufuegen() {
 
 		val kuid = getText(kind)
-		if (Global::nes(kuid) || kinderData.stream.anyMatch([a|Global::compString(a.uid.getValue, kuid) === 0])) {
+		if (Global::nes(kuid) || kinderData.stream.anyMatch([a|Global::compString(a.uid.value, kuid) === 0])) {
 			return;
 		}
-		var SbPersonLang k = get(FactoryService::getStammbaumService.getPersonLang(getServiceDaten, kuid))
+		var SbPersonLang k = get(FactoryService::stammbaumService.getPersonLang(serviceDaten, kuid))
 		if (k !== null) {
 			kinderData.add(new KinderData(k))
 		}
@@ -316,8 +312,7 @@ class SB310FamilieController extends BaseController<String> {
 
 		var SbPersonLang k = getValue(kinder, true)
 		val kuid = k.getUid
-		var kd = kinderData.stream.filter([a|Global::compString(a.uid.getValue, kuid) === 0]).
-			findFirst.orElse(null)
+		var kd = kinderData.stream.filter([a|Global::compString(a.uid.value, kuid) === 0]).findFirst.orElse(null)
 		if (kd !== null) {
 			kinderData.remove(kd)
 		}

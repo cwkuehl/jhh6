@@ -9,7 +9,6 @@ import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.server.FactoryService
 import java.time.LocalDateTime
-import java.util.List
 import javafx.application.Platform
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
@@ -107,8 +106,7 @@ class SB300FamilienController extends BaseController<String> {
 		if (stufe <= 0) { // stufe = 0
 		}
 		if (stufe <= 1) {
-			var List<SbFamilieLang> l = get(
-				FactoryService::getStammbaumService.getFamilieListe(getServiceDaten, true))
+			var l = get(FactoryService::stammbaumService.getFamilieListe(serviceDaten, true))
 			getItems(l, null, [a|new FamilienData(a)], familienData)
 		}
 		if (stufe <= 2) {
@@ -122,13 +120,13 @@ class SB300FamilienController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		familien.setItems(familienData)
-		colUid.setCellValueFactory([c|c.getValue.uid])
-		colVater.setCellValueFactory([c|c.getValue.vater])
-		colMutter.setCellValueFactory([c|c.getValue.mutter])
-		colGv.setCellValueFactory([c|c.getValue.geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue.geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue.angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue.angelegtAm])
+		colUid.setCellValueFactory([c|c.value.uid])
+		colVater.setCellValueFactory([c|c.value.vater])
+		colMutter.setCellValueFactory([c|c.value.mutter])
+		colGv.setCellValueFactory([c|c.value.geaendertVon])
+		colGa.setCellValueFactory([c|c.value.geaendertAm])
+		colAv.setCellValueFactory([c|c.value.angelegtVon])
+		colAa.setCellValueFactory([c|c.value.angelegtAm])
 	}
 
 	override protected void updateParent() {
@@ -206,8 +204,7 @@ class SB300FamilienController extends BaseController<String> {
 	@FXML def void onSpVater() {
 
 		val SbFamilieLang k = getValue(familien, true)
-		val SB200AhnenController c = (fokusFormular(typeof(SB200AhnenController),
-			DialogAufrufEnum::OHNE) as SB200AhnenController)
+		val c = fokusFormular(typeof(SB200AhnenController), DialogAufrufEnum::OHNE) as SB200AhnenController
 		if (c !== null) {
 			Platform::runLater([c.onSpFamilieVater(k.getMannUid)])
 		}
@@ -219,8 +216,7 @@ class SB300FamilienController extends BaseController<String> {
 	@FXML def void onSpMutter() {
 
 		val SbFamilieLang k = getValue(familien, true)
-		val c = (fokusFormular(typeof(SB200AhnenController),
-			DialogAufrufEnum::OHNE) as SB200AhnenController)
+		val c = fokusFormular(typeof(SB200AhnenController), DialogAufrufEnum::OHNE) as SB200AhnenController
 		if (c !== null) {
 			Platform::runLater([c.onSpFamilieMutter(k.getFrauUid)])
 		}
@@ -232,8 +228,7 @@ class SB300FamilienController extends BaseController<String> {
 	@FXML def void onSpKind() {
 
 		val SbFamilieLang k = getValue(familien, true)
-		val c = (fokusFormular(typeof(SB200AhnenController),
-			DialogAufrufEnum::OHNE) as SB200AhnenController)
+		val c = fokusFormular(typeof(SB200AhnenController), DialogAufrufEnum::OHNE) as SB200AhnenController
 		if (c !== null) {
 			Platform::runLater([c.onSpFamilieKind(k.getUid)])
 		}
@@ -245,10 +240,10 @@ class SB300FamilienController extends BaseController<String> {
 	def void onSpElternFamilie(SbPersonLang k) {
 
 		if (k !== null) {
-			var String r = get(FactoryService::getStammbaumService.getElternFamilie(getServiceDaten, k.getUid))
+			var r = get(FactoryService::stammbaumService.getElternFamilie(serviceDaten, k.uid))
 			setText(familien, r)
 			if (Global::nes(r)) {
-				Jhh6::setLeftStatus2(Meldungen.SB027)
+				Jhh6::setLeftStatus2(Meldungen::SB027)
 			}
 		}
 	}
@@ -259,7 +254,7 @@ class SB300FamilienController extends BaseController<String> {
 	def void onSpFamilienKind(SbPersonLang k) {
 
 		if (k !== null) {
-			var String r = get(FactoryService::getStammbaumService.getKindFamilie(getServiceDaten, k.getUid))
+			var r = get(FactoryService::stammbaumService.getKindFamilie(serviceDaten, k.uid))
 			setText(familien, r)
 		}
 	}

@@ -1,7 +1,5 @@
 package de.cwkuehl.jhh6.app.controller.sb
 
-import java.util.List
-import java.util.function.Consumer
 import de.cwkuehl.jhh6.api.dto.ByteDaten
 import de.cwkuehl.jhh6.api.dto.SbPerson
 import de.cwkuehl.jhh6.api.dto.SbPersonLang
@@ -16,6 +14,7 @@ import de.cwkuehl.jhh6.app.base.DateiAuswahl
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.app.control.Bild
 import de.cwkuehl.jhh6.server.FactoryService
+import java.util.function.Consumer
 import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.ComboBox
@@ -112,11 +111,11 @@ class SB210AhnController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getBeschreibung
+			return getData.beschreibung
 		}
 	}
 
@@ -171,38 +170,36 @@ class SB210AhnController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var List<SbQuelle> l = get(FactoryService::getStammbaumService.getQuelleListe(getServiceDaten, true))
+			var l = get(FactoryService::stammbaumService.getQuelleListe(serviceDaten, true))
 			quelle.setItems(getItems(l, new SbQuelle, [a|new QuelleData(a)], null))
-			var boolean neu = DialogAufrufEnum::NEU.equals(getAufruf)
-			var boolean loeschen = DialogAufrufEnum::LOESCHEN.equals(getAufruf)
-			var SbPersonLang k = getParameter1
+			var neu = DialogAufrufEnum::NEU.equals(aufruf)
+			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
+			var SbPersonLang k = parameter1
 			if (!neu && k !== null) {
-				k = get(FactoryService::getStammbaumService.getPersonLang(getServiceDaten, k.getUid))
+				k = get(FactoryService::stammbaumService.getPersonLang(serviceDaten, k.uid))
 				if (k !== null) {
-					nr.setText(k.getUid)
-					name.setText(k.getName)
-					vorname.setText(k.getVorname)
-					geburtsname.setText(k.getGeburtsname)
-					setText(geschlecht, k.getGeschlecht)
-					titel.setText(k.getTitel)
-					konfession.setText(k.getKonfession)
-					bemerkung.setText(k.getBemerkung)
-					vater.setText(
-						Global::ahnString(k.getVaterUid, k.getVaterGeburtsname, k.getVaterVorname, false, false))
-					mutter.setText(
-						Global::ahnString(k.getMutterUid, k.getMutterGeburtsname, k.getMutterVorname, false, false))
-					if (DialogAufrufEnum::KOPIEREN.equals(getAufruf)) {
-						vaterNr.setText(k.getVaterUid)
-						mutterNr.setText(k.getMutterUid)
+					nr.setText(k.uid)
+					name.setText(k.name)
+					vorname.setText(k.vorname)
+					geburtsname.setText(k.geburtsname)
+					setText(geschlecht, k.geschlecht)
+					titel.setText(k.titel)
+					konfession.setText(k.konfession)
+					bemerkung.setText(k.bemerkung)
+					vater.setText(Global::ahnString(k.vaterUid, k.vaterGeburtsname, k.vaterVorname, false, false))
+					mutter.setText(Global::ahnString(k.mutterUid, k.mutterGeburtsname, k.mutterVorname, false, false))
+					if (DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
+						vaterNr.setText(k.vaterUid)
+						mutterNr.setText(k.mutterUid)
 					}
-					setText(quelle, k.getQuelleUid)
-					status1.setText(Global::intStrFormat(k.getStatus1))
-					status2.setText(Global::intStrFormat(k.getStatus2))
-					status3.setText(Global::intStrFormat(k.getStatus3))
-					angelegt.setText(k.formatDatumVon(k.getAngelegtAm, k.getAngelegtVon))
-					geaendert.setText(k.formatDatumVon(k.getGeaendertAm, k.getGeaendertVon))
-					var List<String> liste = get(
-						FactoryService::getStammbaumService.getPersonEreignis(getServiceDaten, k.getUid,
+					setText(quelle, k.quelleUid)
+					status1.setText(Global::intStrFormat(k.status1))
+					status2.setText(Global::intStrFormat(k.status2))
+					status3.setText(Global::intStrFormat(k.status3))
+					angelegt.setText(k.formatDatumVon(k.angelegtAm, k.angelegtVon))
+					geaendert.setText(k.formatDatumVon(k.geaendertAm, k.geaendertVon))
+					var liste = get(
+						FactoryService::stammbaumService.getPersonEreignis(serviceDaten, k.uid,
 							GedcomEreignis::eGEBURT.wert))
 					if (Global::listLaenge(liste) >= 3) {
 						geburtsdatum.setText(liste.get(0))
@@ -210,7 +207,7 @@ class SB210AhnController extends BaseController<String> {
 						geburtsbem.setText(liste.get(2))
 					}
 					liste = get(
-						FactoryService::getStammbaumService.getPersonEreignis(getServiceDaten, k.getUid,
+						FactoryService::stammbaumService.getPersonEreignis(serviceDaten, k.uid,
 							GedcomEreignis::eTAUFE.wert))
 					if (Global::listLaenge(liste) >= 3) {
 						taufdatum.setText(liste.get(0))
@@ -218,7 +215,7 @@ class SB210AhnController extends BaseController<String> {
 						taufbem.setText(liste.get(2))
 					}
 					liste = get(
-						FactoryService::getStammbaumService.getPersonEreignis(getServiceDaten, k.getUid,
+						FactoryService::stammbaumService.getPersonEreignis(serviceDaten, k.uid,
 							GedcomEreignis::eTOD.wert))
 					if (Global::listLaenge(liste) >= 3) {
 						todesdatum.setText(liste.get(0))
@@ -226,32 +223,30 @@ class SB210AhnController extends BaseController<String> {
 						todesbem.setText(liste.get(2))
 					}
 					liste = get(
-						FactoryService::getStammbaumService.getPersonEreignis(getServiceDaten, k.getUid,
+						FactoryService::stammbaumService.getPersonEreignis(serviceDaten, k.uid,
 							GedcomEreignis::eBEGRAEBNIS.wert))
 					if (Global::listLaenge(liste) >= 3) {
 						begraebnisdatum.setText(liste.get(0))
 						begraebnisort.setText(liste.get(1))
 						begraebnisbem.setText(liste.get(2))
 					}
-					if (DialogAufrufEnum::KOPIEREN.equals(getAufruf)) {
-						gatteNr.setText(k.getUid)
+					if (DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
+						gatteNr.setText(k.uid)
 					}
-					var List<SbPerson> pliste = get(
-						FactoryService::getStammbaumService.getEhegatten(getServiceDaten, k.getUid))
+					var pliste = get(FactoryService::stammbaumService.getEhegatten(serviceDaten, k.uid))
 					if (Global::listLaenge(pliste) > 0) {
-						var StringBuffer sb = new StringBuffer
+						var sb = new StringBuffer
 						for (SbPerson p : pliste) {
 							Global::anhaengen(sb, "; ",
-								Global::ahnString(p.getUid, p.getGeburtsname, p.getVorname, false, false))
+								Global::ahnString(p.uid, p.geburtsname, p.vorname, false, false))
 						}
 						gatte.setText(sb.toString)
 					}
-					var List<ByteDaten> byteliste = get(
-						FactoryService::getHeilpraktikerService.getPatientBytesListe(getServiceDaten, k.getUid))
+					var byteliste = get(FactoryService::heilpraktikerService.getPatientBytesListe(serviceDaten, k.uid))
 					if (byteliste !== null) {
 						for (ByteDaten bd : byteliste) {
-							if (bd.getBytes !== null && bd.getMetadaten !== null) {
-								new Bild(bilder, null, bd.getBytes, null, bd.getMetadaten, refresh)
+							if (bd.bytes !== null && bd.metadaten !== null) {
+								new Bild(bilder, null, bd.bytes, null, bd.metadaten, refresh)
 							}
 						}
 					}
@@ -308,9 +303,9 @@ class SB210AhnController extends BaseController<String> {
 	 */
 	@FXML def void onOk() {
 
-		var ServiceErgebnis<?> r = null
+		var ServiceErgebnis<?> r
 		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
-			r = FactoryService::stammbaumService.insertUpdatePerson(getServiceDaten, null, name.text, vorname.text,
+			r = FactoryService::stammbaumService.insertUpdatePerson(serviceDaten, null, name.text, vorname.text,
 				geburtsname.text, getText(geschlecht), titel.text, konfession.text, bemerkung.text, getText(quelle),
 				Global::strInt(status1.text), Global::strInt(status2.text), Global::strInt(status3.text),
 				geburtsdatum.text, geburtsort.text, geburtsbem.text, null, taufdatum.text, taufort.text, taufbem.text,
@@ -318,19 +313,19 @@ class SB210AhnController extends BaseController<String> {
 				begraebnisbem.text, null, gatteNr.text, vaterNr.text, mutterNr.text,
 				Bild::parseBilddaten(bilddaten.text, Bild::getBytesListe(bilder)))
 		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
-			r = FactoryService::getStammbaumService.insertUpdatePerson(getServiceDaten, nr.text, name.text,
-				vorname.text, geburtsname.text, getText(geschlecht), titel.text, konfession.text, bemerkung.text,
-				getText(quelle), Global::strInt(status1.text), Global::strInt(status2.text),
-				Global::strInt(status3.text), geburtsdatum.text, geburtsort.text, geburtsbem.text, null, taufdatum.text,
-				taufort.text, taufbem.text, null, todesdatum.text, todesort.text, todesbem.text, null,
-				begraebnisdatum.text, begraebnisort.text, begraebnisbem.text, null, gatteNr.text, vaterNr.text,
-				mutterNr.text, Bild::parseBilddaten(bilddaten.text, Bild::getBytesListe(bilder)))
+			r = FactoryService::stammbaumService.insertUpdatePerson(serviceDaten, nr.text, name.text, vorname.text,
+				geburtsname.text, getText(geschlecht), titel.text, konfession.text, bemerkung.text, getText(quelle),
+				Global::strInt(status1.text), Global::strInt(status2.text), Global::strInt(status3.text),
+				geburtsdatum.text, geburtsort.text, geburtsbem.text, null, taufdatum.text, taufort.text, taufbem.text,
+				null, todesdatum.text, todesort.text, todesbem.text, null, begraebnisdatum.text, begraebnisort.text,
+				begraebnisbem.text, null, gatteNr.text, vaterNr.text, mutterNr.text,
+				Bild::parseBilddaten(bilddaten.text, Bild::getBytesListe(bilder)))
 		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
-			r = FactoryService::getStammbaumService.deletePerson(getServiceDaten, nr.text)
+			r = FactoryService::stammbaumService.deletePerson(serviceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)
-			if (r.getFehler.isEmpty) {
+			if (r.fehler.isEmpty) {
 				updateParent
 				close
 			}

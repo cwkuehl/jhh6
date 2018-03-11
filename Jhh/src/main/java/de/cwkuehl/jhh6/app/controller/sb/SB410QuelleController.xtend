@@ -32,8 +32,8 @@ class SB410QuelleController extends BaseController<String> {
 	@FXML Label geaendert0
 	@FXML TextField geaendert
 	@FXML Button ok
-	//@FXML Button abbrechen
 
+	// @FXML Button abbrechen
 	/** 
 	 * Initialisierung des Dialogs.
 	 */
@@ -58,19 +58,19 @@ class SB410QuelleController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var boolean neu = DialogAufrufEnum.NEU.equals(getAufruf)
-			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(getAufruf)
-			var SbQuelle k = getParameter1
+			var neu = DialogAufrufEnum::NEU.equals(aufruf)
+			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
+			var SbQuelle k = parameter1
 			if (!neu && k !== null) {
-				k = get(FactoryService.getStammbaumService.getQuelle(getServiceDaten, k.getUid))
+				k = get(FactoryService::stammbaumService.getQuelle(serviceDaten, k.uid))
 				if (k !== null) {
-					nr.setText(k.getUid)
-					autor.setText(k.getAutor)
-					beschreibung.setText(k.getBeschreibung)
-					zitat.setText(k.getZitat)
-					bemerkung.setText(k.getBemerkung)
-					angelegt.setText(k.formatDatumVon(k.getAngelegtAm, k.getAngelegtVon))
-					geaendert.setText(k.formatDatumVon(k.getGeaendertAm, k.getGeaendertVon))
+					nr.setText(k.uid)
+					autor.setText(k.autor)
+					beschreibung.setText(k.beschreibung)
+					zitat.setText(k.zitat)
+					bemerkung.setText(k.bemerkung)
+					angelegt.setText(k.formatDatumVon(k.angelegtAm, k.angelegtVon))
+					geaendert.setText(k.formatDatumVon(k.geaendertAm, k.geaendertVon))
 				}
 			}
 			nr.setEditable(false)
@@ -81,7 +81,7 @@ class SB410QuelleController extends BaseController<String> {
 			angelegt.setEditable(false)
 			geaendert.setEditable(false)
 			if (loeschen) {
-				ok.setText(Meldungen.M2001)
+				ok.setText(Meldungen::M2001)
 			}
 		}
 		if (stufe <= 1) { // stufe = 0
@@ -101,19 +101,19 @@ class SB410QuelleController extends BaseController<String> {
 	 */
 	@FXML def void onOk() {
 
-		var ServiceErgebnis<?> r = null
-		if (DialogAufrufEnum.NEU.equals(aufruf) || DialogAufrufEnum.KOPIEREN.equals(aufruf)) {
-			r = FactoryService.getStammbaumService.insertUpdateQuelle(getServiceDaten, null, autor.getText,
-				beschreibung.getText, zitat.getText, bemerkung.getText)
-		} else if (DialogAufrufEnum.AENDERN.equals(aufruf)) {
-			r = FactoryService.getStammbaumService.insertUpdateQuelle(getServiceDaten, nr.getText,
-				autor.getText, beschreibung.getText, zitat.getText, bemerkung.getText)
-		} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
-			r = FactoryService.getStammbaumService.deleteQuelle(getServiceDaten, nr.getText)
+		var ServiceErgebnis<?> r
+		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
+			r = FactoryService::stammbaumService.insertUpdateQuelle(serviceDaten, null, autor.text, beschreibung.text,
+				zitat.text, bemerkung.text)
+		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
+			r = FactoryService::stammbaumService.insertUpdateQuelle(serviceDaten, nr.text, autor.text,
+				beschreibung.text, zitat.text, bemerkung.text)
+		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
+			r = FactoryService::stammbaumService.deleteQuelle(serviceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)
-			if (r.getFehler.isEmpty) {
+			if (r.fehler.isEmpty) {
 				updateParent
 				close
 			}

@@ -146,7 +146,7 @@ class SbQuelleRep {
     override int updatePersonStatus2(ServiceDaten daten, int status2) {
 
         var anzahl = 0
-        var String quid = null
+        var String quid
 		var sql = new SqlBuilder
 		sql.praefix(null, " AND ")
 		sql.append(null, SbQuelle.STATUS2_NAME, "<>", status2, null)
@@ -154,14 +154,14 @@ class SbQuelleRep {
 		var order = new SqlBuilder("a.Mandant_Nr, a.Uid, b.Uid")
 		var liste = getListeStatus(daten, daten.mandantNr, sql, order)
         for (SbQuelleStatus p : liste) {
-            if (Global.compString(quid, p.getUid()) != 0) {
+            if (Global.compString(quid, p.uid) != 0) {
                 var q = get(daten, new SbQuelleKey(daten.mandantNr, p.uid))
                 var pU = new SbQuelleUpdate(q)
                 pU.setStatus2 = status2
                 update(daten, pU)
                 anzahl++
             }
-            quid = p.getUid()
+            quid = p.uid
         }
         return anzahl
     }

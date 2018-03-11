@@ -27,8 +27,8 @@ final class SbZeitangabe {
 	 * Standard-Konstruktor.
 	 */
 	new() {
-		datum1 = new SbDatum()
-		datum2 = new SbDatum()
+		datum1 = new SbDatum
+		datum2 = new SbDatum
 		datumTyp = ""
 	}
 
@@ -42,11 +42,11 @@ final class SbZeitangabe {
 
 		datum1 = sdatum1
 		if (datum1 === null) {
-			datum1 = new SbDatum()
+			datum1 = new SbDatum
 		}
 		datum2 = sdatum2
 		if (datum2 === null) {
-			datum2 = new SbDatum()
+			datum2 = new SbDatum
 		}
 		datumTyp = sdatumTyp
 		if (datumTyp === null) {
@@ -58,8 +58,8 @@ final class SbZeitangabe {
 	 * Initialisierung aller internen Variablen.
 	 */
 	def void init() {
-		datum1.init()
-		datum2.init()
+		datum1.init
+		datum2.init
 		datumTyp = ""
 	}
 
@@ -78,9 +78,9 @@ final class SbZeitangabe {
 	 */
 	def String deparse(boolean gedcom) {
 
-		var String datum = ""
-		var String dat1 = datum1.deparse(gedcom)
-		var String dat2 = datum2.deparse(gedcom)
+		var datum = ""
+		var dat1 = datum1.deparse(gedcom)
+		var dat2 = datum2.deparse(gedcom)
 		if (gedcom) {
 			if (datumTyp.equals("EXAC")) {
 				datum = datum1.deparse(gedcom)
@@ -118,7 +118,7 @@ final class SbZeitangabe {
 
 	def int getMonat(String monat) {
 
-		for (var int i = 0; i < monate.length; i++) {
+		for (var i = 0; i < monate.length; i++) {
 			if ({
 				val _rdIndx_monate = i
 				monate.get(_rdIndx_monate)
@@ -131,15 +131,15 @@ final class SbZeitangabe {
 
 	def boolean parse(String parseDatum, boolean gedcom) {
 
-		var String datum = parseDatum
+		var datum = parseDatum
 		if (gedcom) {
 			// [JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC] ersetzen durch
 			// Monatsnummer
-			var boolean weiter = true
-			var Matcher m = null
+			var weiter = true
+			var Matcher m
 			while (weiter) {
 				m = monat1.matcher(datum)
-				if (m.find()) {
+				if (m.find) {
 					datum = datum.replace(m.group(1) + m.group(3) +
 						m.group(4), '''«m.group(2)».«getMonat(m.group(3))».«m.group(5)»''')
 				} else {
@@ -149,7 +149,7 @@ final class SbZeitangabe {
 			weiter = true
 			while (weiter) {
 				m = monat2.matcher(datum)
-				if (m.find()) {
+				if (m.find) {
 					datum = datum.replace(m.group(1) + m.group(2), '''«getMonat(m.group(1))».«m.group(3)»''')
 				} else {
 					weiter = false
@@ -166,34 +166,34 @@ final class SbZeitangabe {
 	 */
 	def boolean parse(String datumString) {
 
-		var boolean mitText = false
-		var String hinten = ""
-		var String mitte = ""
-		var String vorn = ""
-		var String datum = datumString
-		init()
+		var mitText = false
+		var hinten = ""
+		var mitte = ""
+		var vorn = ""
+		var datum = datumString
+		init
 		if (!Global.nes(datum)) {
 			var Matcher m = null
 			if (datum.matches("[^\\d\\.]+")) {
 				mitText = true
 			}
 			m = Pattern.compile("^(.*?)([^\\d\\.]*)$").matcher(datum)
-			m.find()
+			m.find
 			datum = m.group(1)
 			hinten = m.group(2)
 			datum = datum2.parse(datum)
 			datumTyp = "EXAC"
 			m = Pattern.compile("^(.*?)([^\\d\\.]*)$").matcher(datum)
-			m.find()
+			m.find
 			datum = m.group(1)
 			mitte = m.group(2)
 			vorn = datum1.parse(datum)
 		}
-		var boolean b1 = !datum1.isLeer()
-		var boolean b2 = !datum2.isLeer()
+		var b1 = !datum1.isLeer
+		var b2 = !datum2.isLeer
 		vorn = vorn.replace(" ", "")
 		// Leerzeichen entfernen
-		mitte = mitte.replace(" ", "").toLowerCase()
+		mitte = mitte.replace(" ", "").toLowerCase
 		// Leerzeichen entfernen
 		hinten = hinten.replace(" ", "")
 		// Leerzeichen entfernen
@@ -213,7 +213,7 @@ final class SbZeitangabe {
 				datumTyp = ""
 			}
 		} else {
-			if (mitte.length() > 0) {
+			if (mitte.length > 0) {
 				if (mitte.matches("um|about|abt")) {
 					datumTyp = "ABT" // ungefähres Datum
 				} else if (mitte.matches("nach|frühestens|after|aft")) {
@@ -224,7 +224,7 @@ final class SbZeitangabe {
 					mitText = true // printf "unbekanntes Vorne: '$mitte' bei '$kopie'\n";
 				}
 			}
-			if (hinten.length() > 0) {
+			if (hinten.length > 0) {
 				if (hinten.matches("\\?")) {
 					// ungefähres Datum
 					datumTyp = "ABT"
@@ -234,7 +234,7 @@ final class SbZeitangabe {
 			}
 			if (b2) {
 				datum1.set(datum2)
-				datum2.init()
+				datum2.init
 			}
 		}
 		return mitText

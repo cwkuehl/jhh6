@@ -8,7 +8,6 @@ import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.server.FactoryService
 import java.time.LocalDateTime
-import java.util.List
 import javafx.application.Platform
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
@@ -88,17 +87,17 @@ class SB200AhnenController extends BaseController<String> {
 		new(SbPersonLang v) {
 
 			super(v)
-			uid = new SimpleStringProperty(v.getUid)
-			geburtsname = new SimpleStringProperty(v.getGeburtsname)
-			vorname = new SimpleStringProperty(v.getVorname)
-			name = new SimpleStringProperty(v.getName)
-			geschlecht = new SimpleStringProperty(v.getGeschlecht)
-			geburt = new SimpleStringProperty(v.getGeburtsdatum)
-			tod = new SimpleStringProperty(v.getTodesdatum)
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
+			uid = new SimpleStringProperty(v.uid)
+			geburtsname = new SimpleStringProperty(v.geburtsname)
+			vorname = new SimpleStringProperty(v.vorname)
+			name = new SimpleStringProperty(v.name)
+			geschlecht = new SimpleStringProperty(v.geschlecht)
+			geburt = new SimpleStringProperty(v.geburtsdatum)
+			tod = new SimpleStringProperty(v.todesdatum)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
+			geaendertVon = new SimpleStringProperty(v.geaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
+			angelegtVon = new SimpleStringProperty(v.angelegtVon)
 		}
 
 		override String getId() {
@@ -140,12 +139,12 @@ class SB200AhnenController extends BaseController<String> {
 			vorname.setText("%%")
 		}
 		if (stufe <= 1) {
-			var List<SbPersonLang> l = get(
-				FactoryService::getStammbaumService.getPersonListe(getServiceDaten, false, true,
+			var l = get(
+				FactoryService::stammbaumService.getPersonListe(serviceDaten, false, true,
 					if(filtern.isSelected) name.text else null, if(filtern.isSelected) vorname.text else null, null))
 			getItems(l, null, [a|new AhnenData(a)], ahnenData)
-			var int anz = Global::listLaenge(l)
-			var int anzg = 0
+			var anz = Global::listLaenge(l)
+			var anzg = 0
 			if (l !== null) {
 				for (SbPersonLang b : l) {
 					if (Global::nes(b.geburtsdatum)) {
@@ -153,7 +152,7 @@ class SB200AhnenController extends BaseController<String> {
 					}
 				}
 			}
-			ahnenStatus.setText(Meldungen.SB028(anz, anzg))
+			ahnenStatus.setText(Meldungen::SB028(anz, anzg))
 		}
 		if (stufe <= 2) {
 			initDatenTable
@@ -166,17 +165,17 @@ class SB200AhnenController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		ahnen.setItems(ahnenData)
-		colUid.setCellValueFactory([c|c.getValue.uid])
-		colGeburtsname.setCellValueFactory([c|c.getValue.geburtsname])
-		colVorname.setCellValueFactory([c|c.getValue.vorname])
-		colName.setCellValueFactory([c|c.getValue.name])
-		colGeschlecht.setCellValueFactory([c|c.getValue.geschlecht])
-		colGeburt.setCellValueFactory([c|c.getValue.geburt])
-		colTod.setCellValueFactory([c|c.getValue.tod])
-		colGv.setCellValueFactory([c|c.getValue.geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue.geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue.angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue.angelegtAm])
+		colUid.setCellValueFactory([c|c.value.uid])
+		colGeburtsname.setCellValueFactory([c|c.value.geburtsname])
+		colVorname.setCellValueFactory([c|c.value.vorname])
+		colName.setCellValueFactory([c|c.value.name])
+		colGeschlecht.setCellValueFactory([c|c.value.geschlecht])
+		colGeburt.setCellValueFactory([c|c.value.geburt])
+		colTod.setCellValueFactory([c|c.value.tod])
+		colGv.setCellValueFactory([c|c.value.geaendertVon])
+		colGa.setCellValueFactory([c|c.value.geaendertAm])
+		colAv.setCellValueFactory([c|c.value.angelegtVon])
+		colAa.setCellValueFactory([c|c.value.angelegtAm])
 	}
 
 	override protected void updateParent() {
@@ -274,7 +273,7 @@ class SB200AhnenController extends BaseController<String> {
 	 */
 	@FXML def void onSpName() {
 		var SbPersonLang k = getValue(ahnen, false)
-		var String r = get(
+		var r = get(
 			FactoryService::stammbaumService.getNaechstenNamen(serviceDaten, if(k === null) null else k.uid, name.text,
 				vorname.text))
 		setText(ahnen, r)
@@ -301,7 +300,7 @@ class SB200AhnenController extends BaseController<String> {
 	 */
 	@FXML def void onSpKind() {
 		var SbPersonLang k = getValue(ahnen, true)
-		var String r = get(FactoryService::stammbaumService.getErstesKind(serviceDaten, k.uid))
+		var r = get(FactoryService::stammbaumService.getErstesKind(serviceDaten, k.uid))
 		setText(ahnen, r)
 	}
 
@@ -310,7 +309,7 @@ class SB200AhnenController extends BaseController<String> {
 	 */
 	@FXML def void onSpEhegatte() {
 		var SbPersonLang k = getValue(ahnen, true)
-		var String r = get(FactoryService::stammbaumService.getNaechstenEhegatten(serviceDaten, k.uid))
+		var r = get(FactoryService::stammbaumService.getNaechstenEhegatten(serviceDaten, k.uid))
 		setText(ahnen, r)
 	}
 
@@ -366,7 +365,7 @@ class SB200AhnenController extends BaseController<String> {
 	 */
 	def void onSpFamilieKind(String uid) {
 		if (!Global::nes(uid)) {
-			var String r = get(FactoryService::stammbaumService.getErstesFamilienKind(serviceDaten, uid))
+			var r = get(FactoryService::stammbaumService.getErstesFamilienKind(serviceDaten, uid))
 			setText(ahnen, r)
 		}
 	}

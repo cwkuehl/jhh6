@@ -96,8 +96,8 @@ class SbDatum {
 	 */
 	def String deparse(boolean gedcom) {
 
-		var StringBuffer datum = new StringBuffer()
-		var String trenner = "."
+		var datum = new StringBuffer()
+		var trenner = "."
 		if (gedcom) {
 			trenner = " "
 		}
@@ -134,8 +134,8 @@ class SbDatum {
 	 */
 	def String parse(String parseDatum) {
 
-		var String datum = parseDatum
-		init()
+		var datum = parseDatum
+		init
 		if (datum !== null) /* !Global.nes(datum) */ {
 			var Matcher m = null
 			// alles außer Ziffern und Punkten am Ende entfernen
@@ -201,15 +201,15 @@ class SbDatum {
 
 	def LocalDate getDate(boolean anfang) {
 
-		var int t = tag
-		var int m = monat
-		var int j = jahr
+		var t = tag
+		var m = monat
+		var j = jahr
 		if (m <= 0) {
 			m = if(anfang) 1 else 12
 			t = 0
 		}
 		if (t <= 0) {
-			var LocalDate d = LocalDate.of(j, m, 1)
+			var d = LocalDate.of(j, m, 1)
 			if (anfang) {
 				return d
 			} else {

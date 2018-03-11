@@ -7,7 +7,6 @@ import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.Profil
 import de.cwkuehl.jhh6.app.base.Werkzeug
 import de.cwkuehl.jhh6.server.FactoryService
-import java.util.List
 import javafx.fxml.FXML
 import javafx.scene.control.CheckBox
 import javafx.scene.control.ComboBox
@@ -40,11 +39,11 @@ class SB220DruckenController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getGeburtsname
+			return getData.geburtsname
 		}
 	}
 
@@ -66,11 +65,10 @@ class SB220DruckenController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			if (Global::strInt(generation.getText) <= 0) {
+			if (Global::strInt(generation.text) <= 0) {
 				generation.setText("3")
 			}
-			var List<SbPersonLang> l = get(
-				FactoryService::stammbaumService.getPersonListe(serviceDaten, true, false, null, null, null))
+			var l = get(FactoryService::stammbaumService.getPersonListe(serviceDaten, true, false, null, null, null))
 			person.setItems(getItems(l, null, [a|new PersonData(a)], null))
 			setText(person, ahnUid)
 		}
@@ -94,7 +92,7 @@ class SB220DruckenController extends BaseController<String> {
 		var byte[] pdf = get(
 			FactoryService::stammbaumService.getReportAhnen(serviceDaten, getText(person),
 				Global::strInt(generation.text), geschwister.isSelected, nachfahren.isSelected, vorfahren.isSelected))
-		Werkzeug::speicherReport(pdf, Meldungen.SB030, true)
+		Werkzeug::speicherReport(pdf, Meldungen::SB030, true)
 	}
 
 	/** 

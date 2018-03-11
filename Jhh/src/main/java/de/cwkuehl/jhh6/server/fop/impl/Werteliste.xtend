@@ -8,7 +8,7 @@ class Werteliste {
 
 	def static String getKeyValue(String wertelistenName, String key) {
 
-		var String schluessel = key
+		var schluessel = key
 		if (wertelistenName !== null) {
 			schluessel = wertelistenName + key
 		}

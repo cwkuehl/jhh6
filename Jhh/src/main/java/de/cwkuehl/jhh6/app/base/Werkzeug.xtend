@@ -172,13 +172,13 @@ class Werkzeug {
 		var html = '''/«g("parm.AG_HILFE_DATEI.value")»''' // "/Jhh-Hilfe.html"
 		var url = Werkzeug.getClass.getResource(html)
 		if (url === null) {
-			html = Jhh6.einstellungen.hilfeDatei
+			html = Jhh6::einstellungen.hilfeDatei
 			url = Werkzeug.getClass.getResource(html)
 			if (url === null)
 				url = new File(html).toURI.toURL
 		}
 		if (url === null) {
-			we.loadContent('''<html>«Meldungen.M3000(html)»</html>''')
+			we.loadContent('''<html>«Meldungen::M3000(html)»</html>''')
 		} else {
 			we.load(url.toExternalForm)
 		}
@@ -236,7 +236,7 @@ class Werkzeug {
 	def public static String showInputDialog(String msg, String init) {
 
 		var dialog = new TextInputDialog(init)
-		dialog.setTitle(Meldungen.M1028)
+		dialog.setTitle(Meldungen::M1028)
 		dialog.setHeaderText(msg)
 		var result = dialog.showAndWait
 		if (result.isPresent) {
@@ -283,7 +283,7 @@ class Werkzeug {
 		g.y = s.y
 		g.width = s.width
 		g.height = s.height
-		Jhh6.einstellungen.setDialogGroesse(key, g)
+		Jhh6::einstellungen.setDialogGroesse(key, g)
 	// log.info('''setDialogGroesse «key» x «g.x» y «g.y» w «g.width» h «g.height»''')
 	}
 
@@ -311,7 +311,7 @@ class Werkzeug {
 	def public static void speicherReport(byte[] bytes, String name, boolean datumZufall) {
 
 		if (bytes !== null && bytes.length > 0) {
-			var pfad = Jhh6.einstellungen.tempVerzeichnis
+			var pfad = Jhh6::einstellungen.tempVerzeichnis
 			try {
 				var datei = Global.getDateiname(name, datumZufall, datumZufall, "pdf")
 				datei = pfadDatei(pfad, datei)
@@ -355,7 +355,7 @@ class Werkzeug {
 					]
 					t.start
 				} else {
-					throw new Exception(Meldungen.M1027)
+					throw new Exception(Meldungen::M1027)
 				}
 			}
 			rc = true
@@ -367,14 +367,14 @@ class Werkzeug {
 
 	def public static void speicherDateiOeffnen(List<String> zeilen, String pfad, String datei, boolean anhaengen) {
 
-		var String dateiname = Werkzeug.pfadDatei(pfad, datei)
+		var dateiname = Werkzeug.pfadDatei(pfad, datei)
 		speicherDatei(zeilen, dateiname, anhaengen)
 		oeffneTextEditor(dateiname)
 	}
 
 	def public static void speicherDateiOeffnen(byte[] bytes, String pfad, String datei, boolean anhaengen) {
 
-		var String dateiname = Werkzeug.pfadDatei(pfad, datei)
+		var dateiname = Werkzeug.pfadDatei(pfad, datei)
 		speicherDatei(bytes, dateiname, anhaengen)
 		oeffneTextEditor(dateiname)
 	}
@@ -396,7 +396,7 @@ class Werkzeug {
 		var zeilen = new ArrayList<String>
 		try {
 			f = new BufferedReader(new FileReader(datei))
-			var String zeile = null
+			var String zeile
 			while ((zeile = f.readLine) !== null) {
 				zeilen.add(zeile)
 			}
