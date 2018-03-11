@@ -41,11 +41,11 @@ class WP120ChartsEinstellungenController extends BaseController<List<String>> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getBezeichnung
+			return getData.bezeichnung
 		}
 	}
 
@@ -59,11 +59,11 @@ class WP120ChartsEinstellungenController extends BaseController<List<String>> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getBezeichnung
+			return getData.bezeichnung
 		}
 	}
 
@@ -90,17 +90,15 @@ class WP120ChartsEinstellungenController extends BaseController<List<String>> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var List<WpWertpapierLang> wliste = get(
-				FactoryService::getWertpapierService.getWertpapierListe(getServiceDaten, true, null, null, null))
+			var wliste = get(FactoryService::wertpapierService.getWertpapierListe(serviceDaten, true, null, null, null))
 			wertpapier1.setItems(getItems(wliste, new WpWertpapierLang, [a|new WertpapierData(a)], null))
 			wertpapier2.setItems(getItems(wliste, new WpWertpapierLang, [a|new WertpapierData(a)], null))
 			wertpapier3.setItems(getItems(wliste, new WpWertpapierLang, [a|new WertpapierData(a)], null))
-			var List<WpKonfigurationLang> kliste = get(
-				FactoryService::getWertpapierService.getKonfigurationListe(getServiceDaten, false, null))
+			var kliste = get(FactoryService::wertpapierService.getKonfigurationListe(serviceDaten, false, null))
 			konfiguration1.setItems(getItems(kliste, new WpKonfigurationLang, [a|new KonfigurationData(a)], null))
 			konfiguration2.setItems(getItems(kliste, new WpKonfigurationLang, [a|new KonfigurationData(a)], null))
 			konfiguration3.setItems(getItems(kliste, new WpKonfigurationLang, [a|new KonfigurationData(a)], null))
-			var List<String> uids = getParameter1
+			var List<String> uids = parameter1
 			if (Global::listLaenge(uids) >= 6) {
 				setText(wertpapier1, uids.get(0))
 				setText(konfiguration1, uids.get(1))
@@ -127,7 +125,7 @@ class WP120ChartsEinstellungenController extends BaseController<List<String>> {
 	 */
 	@FXML def void onOk() {
 
-		var List<String> uids = new ArrayList<String>
+		var uids = new ArrayList<String>
 		uids.add(getText(wertpapier1))
 		uids.add(getText(konfiguration1))
 		uids.add(getText(wertpapier2))

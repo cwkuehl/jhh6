@@ -1,8 +1,5 @@
 package de.cwkuehl.jhh6.app.controller.wp
 
-import java.time.LocalDate
-import java.util.List
-import de.cwkuehl.jhh6.api.dto.WpStand
 import de.cwkuehl.jhh6.api.dto.WpStandLang
 import de.cwkuehl.jhh6.api.dto.WpWertpapierLang
 import de.cwkuehl.jhh6.api.global.Global
@@ -12,6 +9,7 @@ import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.app.control.Datum
 import de.cwkuehl.jhh6.server.FactoryService
+import java.time.LocalDate
 import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.ComboBox
@@ -36,7 +34,7 @@ class WP510StandController extends BaseController<String> {
 	// @FXML Label buchung0
 	@FXML Button ok
 	// @FXML Button abbrechen
-	static LocalDate valutaZuletzt = LocalDate.now
+	static LocalDate valutaZuletzt = LocalDate::now
 
 	/** 
 	 * Daten für ComboBox Wertpapier.
@@ -48,11 +46,11 @@ class WP510StandController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getBezeichnung
+			return getData.bezeichnung
 		}
 	}
 
@@ -63,7 +61,7 @@ class WP510StandController extends BaseController<String> {
 
 		tabbar = 0
 		wertpapier0.setLabelFor(wertpapier, true)
-		valuta0.setLabelFor(valuta.getLabelForNode, true)
+		valuta0.setLabelFor(valuta.labelForNode, true)
 		betrag0.setLabelFor(betrag, true)
 		angelegt0.setLabelFor(angelegt)
 		geaendert0.setLabelFor(geaendert)
@@ -80,79 +78,74 @@ class WP510StandController extends BaseController<String> {
 		if (stufe <= 0) {
 			// letztes Datum einstellen
 			valuta.setValue(valutaZuletzt)
-			var List<WpWertpapierLang> l = get(
-				FactoryService.getWertpapierService.getWertpapierListe(getServiceDaten, true, null, null, null))
+			var l = get(FactoryService::wertpapierService.getWertpapierListe(serviceDaten, true, null, null, null))
 			wertpapier.setItems(getItems(l, null, [a|new WertpapierData(a)], null))
-			var boolean neu = DialogAufrufEnum.NEU.equals(getAufruf)
-			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(getAufruf)
-			var WpStandLang e = getParameter1
+			var neu = DialogAufrufEnum::NEU.equals(aufruf)
+			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
+			var WpStandLang e = parameter1
 			if (!neu && e !== null) {
-				var WpStand k = get(
-					FactoryService.getWertpapierService.getStand(getServiceDaten, e.getWertpapierUid,
-						e.getDatum))
-					if (k !== null) {
-						setText(wertpapier, k.getWertpapierUid)
-						valuta.setValue(k.getDatum)
-						betrag.setText(Global.dblStr4l(k.getStueckpreis))
-						angelegt.setText(k.formatDatumVon(k.getAngelegtAm, k.getAngelegtVon))
-						geaendert.setText(k.formatDatumVon(k.getGeaendertAm, k.getGeaendertVon))
-					}
-				}
-				setEditable(wertpapier, !loeschen)
-				valuta.setEditable(!loeschen)
-				betrag.setEditable(!loeschen)
-				angelegt.setEditable(false)
-				geaendert.setEditable(false)
-				if (loeschen) {
-					ok.setText(Meldungen.M2001)
+				var k = get(FactoryService::wertpapierService.getStand(serviceDaten, e.wertpapierUid, e.datum))
+				if (k !== null) {
+					setText(wertpapier, k.wertpapierUid)
+					valuta.setValue(k.datum)
+					betrag.setText(Global.dblStr4l(k.stueckpreis))
+					angelegt.setText(k.formatDatumVon(k.angelegtAm, k.angelegtVon))
+					geaendert.setText(k.formatDatumVon(k.geaendertAm, k.geaendertVon))
 				}
 			}
-			if (stufe <= 1) { // stufe = 0
-			}
-			if (stufe <= 2) { // initDatenTable
-			}
-		}
-
-		/** 
-		 * Tabellen-Daten initialisieren.
-		 */
-		def protected void initDatenTable() {
-		}
-
-		/** 
-		 * Event für Ok.
-		 */
-		@FXML def void onOk() {
-
-			var ServiceErgebnis<?> r = null
-			if (DialogAufrufEnum.NEU.equals(aufruf) || DialogAufrufEnum.KOPIEREN.equals(aufruf)) {
-				r = FactoryService.getWertpapierService.insertUpdateStand(getServiceDaten, getText(wertpapier),
-					valuta.getValue, Global.strDbl(betrag.getText))
-			} else if (DialogAufrufEnum.AENDERN.equals(aufruf)) {
-				r = FactoryService.getWertpapierService.insertUpdateStand(getServiceDaten, getText(wertpapier),
-					valuta.getValue, Global.strDbl(betrag.getText))
-			} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
-				r = FactoryService.getWertpapierService.deleteStand(getServiceDaten, getText(wertpapier),
-					valuta.getValue)
-			}
-			if (r !== null) {
-				get(r)
-				if (r.getFehler.isEmpty) {
-					if (r.getFehler.isEmpty) {
-						// letztes Datum merken
-						valutaZuletzt = valuta.getValue
-					}
-					updateParent
-					close
-				}
+			setEditable(wertpapier, !loeschen)
+			valuta.setEditable(!loeschen)
+			betrag.setEditable(!loeschen)
+			angelegt.setEditable(false)
+			geaendert.setEditable(false)
+			if (loeschen) {
+				ok.setText(Meldungen::M2001)
 			}
 		}
-
-		/** 
-		 * Event für Abbrechen.
-		 */
-		@FXML def void onAbbrechen() {
-			close
+		if (stufe <= 1) { // stufe = 0
+		}
+		if (stufe <= 2) { // initDatenTable
 		}
 	}
-	
+
+	/** 
+	 * Tabellen-Daten initialisieren.
+	 */
+	def protected void initDatenTable() {
+	}
+
+	/** 
+	 * Event für Ok.
+	 */
+	@FXML def void onOk() {
+
+		var ServiceErgebnis<?> r
+		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
+			r = FactoryService::wertpapierService.insertUpdateStand(serviceDaten, getText(wertpapier), valuta.value,
+				Global.strDbl(betrag.text))
+		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
+			r = FactoryService::wertpapierService.insertUpdateStand(serviceDaten, getText(wertpapier), valuta.value,
+				Global.strDbl(betrag.text))
+		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
+			r = FactoryService::wertpapierService.deleteStand(serviceDaten, getText(wertpapier), valuta.value)
+		}
+		if (r !== null) {
+			get(r)
+			if (r.fehler.isEmpty) {
+				if (r.fehler.isEmpty) {
+					// letztes Datum merken
+					valutaZuletzt = valuta.value
+				}
+				updateParent
+				close
+			}
+		}
+	}
+
+	/** 
+	 * Event für Abbrechen.
+	 */
+	@FXML def void onAbbrechen() {
+		close
+	}
+}

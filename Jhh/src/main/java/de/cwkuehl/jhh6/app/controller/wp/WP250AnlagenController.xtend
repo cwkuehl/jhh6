@@ -1,17 +1,15 @@
 package de.cwkuehl.jhh6.app.controller.wp
 
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.WpAnlageLang
 import de.cwkuehl.jhh6.api.dto.WpWertpapierLang
 import de.cwkuehl.jhh6.api.global.Global
-import de.cwkuehl.jhh6.api.service.ServiceErgebnis
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.app.base.Profil
 import de.cwkuehl.jhh6.server.FactoryService
+import java.time.LocalDate
+import java.time.LocalDateTime
 import javafx.application.Platform
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
@@ -32,7 +30,7 @@ import javafx.scene.input.MouseEvent
  */
 class WP250AnlagenController extends BaseController<String> {
 
-	//@FXML Button tab
+	// @FXML Button tab
 	@FXML Button aktuell
 	@FXML Button rueckgaengig
 	@FXML Button wiederherstellen
@@ -54,9 +52,9 @@ class WP250AnlagenController extends BaseController<String> {
 	@FXML TableColumn<AnlagenData, String> colAv
 	ObservableList<AnlagenData> anlagenData = FXCollections::observableArrayList
 	@FXML Label anlagenStatus
-	//@FXML Button alle
-	//@FXML Button berechnen
-	//@FXML Button abbrechen
+	// @FXML Button alle
+	// @FXML Button berechnen
+	// @FXML Button abbrechen
 	@FXML Label bezeichnung0
 	@FXML TextField bezeichnung
 	@FXML Label wertpapier0
@@ -90,20 +88,20 @@ class WP250AnlagenController extends BaseController<String> {
 		new(WpAnlageLang v) {
 
 			super(v)
-			wpbezeichnung = new SimpleStringProperty(v.getWertpapierBezeichnung)
-			bezeichnung = new SimpleStringProperty(v.getBezeichnung)
-			betrag = new SimpleObjectProperty<Double>(v.getBetrag)
-			wert = new SimpleObjectProperty<Double>(v.getWert)
-			gewinn = new SimpleObjectProperty<Double>(v.getGewinn)
-			waehrung = new SimpleStringProperty(v.getWaehrung)
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
+			wpbezeichnung = new SimpleStringProperty(v.wertpapierBezeichnung)
+			bezeichnung = new SimpleStringProperty(v.bezeichnung)
+			betrag = new SimpleObjectProperty<Double>(v.betrag)
+			wert = new SimpleObjectProperty<Double>(v.wert)
+			gewinn = new SimpleObjectProperty<Double>(v.gewinn)
+			waehrung = new SimpleStringProperty(v.waehrung)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
+			geaendertVon = new SimpleStringProperty(v.geaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
+			angelegtVon = new SimpleStringProperty(v.angelegtVon)
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 	}
 
@@ -117,11 +115,11 @@ class WP250AnlagenController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getBezeichnung
+			return getData.bezeichnung
 		}
 	}
 
@@ -155,28 +153,27 @@ class WP250AnlagenController extends BaseController<String> {
 
 		if (stufe <= 0) {
 			bezeichnung.setText("%%")
-			var List<WpWertpapierLang> kliste = get(
-				FactoryService::getWertpapierService.getWertpapierListe(getServiceDaten, true, null, null, null))
+			var kliste = get(FactoryService::wertpapierService.getWertpapierListe(serviceDaten, true, null, null, null))
 			wertpapier.setItems(getItems(kliste, new WpWertpapierLang, [a|new WertpapierData(a)], null))
 			setText(wertpapier, wertpapierUid)
 		}
 		if (stufe <= 1) {
-			var List<WpAnlageLang> l = get(
-				FactoryService::getWertpapierService.getAnlageListe(getServiceDaten, false, bezeichnung.getText,
-					null, getText(wertpapier)))
+			var l = get(
+				FactoryService::wertpapierService.getAnlageListe(getServiceDaten, false, bezeichnung.text, null,
+					getText(wertpapier)))
 			getItems(l, null, [a|new AnlagenData(a)], anlagenData)
-			var int anz = Global::listLaenge(l)
-			var double summe = 0
-			var double wert = 0
-			var double gewinn = 0
+			var anz = Global::listLaenge(l)
+			var summe = 0.0
+			var wert = 0.0
+			var gewinn = 0.0
 			if (l !== null) {
 				for (WpAnlageLang b : l) {
-					summe += b.getBetrag
-					wert += b.getWert
-					gewinn += b.getGewinn
+					summe += b.betrag
+					wert += b.wert
+					gewinn += b.gewinn
 				}
 			}
-			var StringBuffer sb = new StringBuffer
+			var sb = new StringBuffer
 			sb.append(
 				Global::format("Datensätze: {0}  Summe: {1}  Wert: {2}  Gewinn: {3}", anz, Global::dblStr(summe),
 					Global::dblStr(wert), Global::dblStr(gewinn)))
@@ -193,19 +190,19 @@ class WP250AnlagenController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		anlagen.setItems(anlagenData)
-		colWpbezeichnung.setCellValueFactory([c|c.getValue.wpbezeichnung])
-		colBezeichnung.setCellValueFactory([c|c.getValue.bezeichnung])
-		colBetrag.setCellValueFactory([c|c.getValue.betrag])
+		colWpbezeichnung.setCellValueFactory([c|c.value.wpbezeichnung])
+		colBezeichnung.setCellValueFactory([c|c.value.bezeichnung])
+		colBetrag.setCellValueFactory([c|c.value.betrag])
 		initColumnBetrag(colBetrag)
-		colWert.setCellValueFactory([c|c.getValue.wert])
+		colWert.setCellValueFactory([c|c.value.wert])
 		initColumnBetrag(colWert)
-		colGewinn.setCellValueFactory([c|c.getValue.gewinn])
+		colGewinn.setCellValueFactory([c|c.value.gewinn])
 		initColumnBetrag(colGewinn)
-		colWaehrung.setCellValueFactory([c|c.getValue.waehrung])
-		colGv.setCellValueFactory([c|c.getValue.geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue.geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue.angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue.angelegtAm])
+		colWaehrung.setCellValueFactory([c|c.value.waehrung])
+		colGv.setCellValueFactory([c|c.value.geaendertVon])
+		colGa.setCellValueFactory([c|c.value.geaendertAm])
+		colAv.setCellValueFactory([c|c.value.angelegtVon])
+		colAa.setCellValueFactory([c|c.value.angelegtAm])
 	}
 
 	override protected void updateParent() {
@@ -305,9 +302,8 @@ class WP250AnlagenController extends BaseController<String> {
 		var Task<Void> task = ([|
 			onStatusTimer
 			try {
-				var ServiceErgebnis<List<WpAnlageLang>> r = FactoryService::getWertpapierService.
-					bewerteteAnlageListe(getServiceDaten, false, bezeichnung.getText, null, getText(wertpapier),
-						LocalDate::now, status, abbruch)
+				var r = FactoryService::wertpapierService.bewerteteAnlageListe(serviceDaten, false, bezeichnung.text,
+					null, getText(wertpapier), LocalDate::now, status, abbruch)
 				r.throwErstenFehler
 				status.setLength(0)
 			} catch (Exception ex) {
@@ -316,14 +312,10 @@ class WP250AnlagenController extends BaseController<String> {
 			} finally {
 				abbruch.append("Ende")
 			}
-			Platform::runLater([
-				{
-					WP250AnlagenController.this.onAktuell
-				}
-			])
+			Platform::runLater([WP250AnlagenController.this.onAktuell])
 			return null as Void
 		] as Task<Void>)
-		var Thread th = new Thread(task)
+		var th = new Thread(task)
 		th.setDaemon(true)
 		th.start
 	}
@@ -344,7 +336,7 @@ class WP250AnlagenController extends BaseController<String> {
 			}
 			return null as Void
 		] as Task<Void>)
-		var Thread th = new Thread(task)
+		var th = new Thread(task)
 		th.setDaemon(true)
 		th.start
 	}

@@ -1,8 +1,5 @@
 package de.cwkuehl.jhh6.app.controller.wp
 
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.WpStandLang
 import de.cwkuehl.jhh6.api.dto.WpWertpapierLang
 import de.cwkuehl.jhh6.app.Jhh6
@@ -11,6 +8,8 @@ import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.app.base.Profil
 import de.cwkuehl.jhh6.app.control.Datum
 import de.cwkuehl.jhh6.server.FactoryService
+import java.time.LocalDate
+import java.time.LocalDateTime
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -28,7 +27,7 @@ import javafx.scene.input.MouseEvent
  */
 class WP500StaendeController extends BaseController<String> {
 
-	//@FXML Button tab
+	// @FXML Button tab
 	@FXML Button aktuell
 	@FXML Button rueckgaengig
 	@FXML Button wiederherstellen
@@ -46,7 +45,7 @@ class WP500StaendeController extends BaseController<String> {
 	@FXML TableColumn<StaendeData, LocalDateTime> colAa
 	@FXML TableColumn<StaendeData, String> colAv
 	ObservableList<StaendeData> staendeData = FXCollections.observableArrayList
-	//@FXML Button alle
+	// @FXML Button alle
 	@FXML Label wertpapier0
 	@FXML ComboBox<WertpapierData> wertpapier
 	@FXML Label von0
@@ -71,17 +70,17 @@ class WP500StaendeController extends BaseController<String> {
 		new(WpStandLang v) {
 
 			super(v)
-			wpbezeichnung = new SimpleStringProperty(v.getWertpapierBezeichnung)
-			datum = new SimpleObjectProperty<LocalDate>(v.getDatum)
-			betrag = new SimpleObjectProperty<Double>(v.getStueckpreis)
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
+			wpbezeichnung = new SimpleStringProperty(v.wertpapierBezeichnung)
+			datum = new SimpleObjectProperty<LocalDate>(v.datum)
+			betrag = new SimpleObjectProperty<Double>(v.stueckpreis)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
+			geaendertVon = new SimpleStringProperty(v.geaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
+			angelegtVon = new SimpleStringProperty(v.angelegtVon)
 		}
 
 		override String getId() {
-			return getData.getWertpapierUid + getData.getDatum.toString
+			return getData.wertpapierUid + getData.datum.toString
 		}
 	}
 
@@ -95,11 +94,11 @@ class WP500StaendeController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getBezeichnung
+			return getData.bezeichnung
 		}
 	}
 
@@ -133,17 +132,16 @@ class WP500StaendeController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			von.setValue((null as LocalDate))
-			bis.setValue((null as LocalDate))
-			var List<WpWertpapierLang> kliste = get(
-				FactoryService.getWertpapierService.getWertpapierListe(getServiceDaten, true, null, null, null))
+			von.setValue(null as LocalDate)
+			bis.setValue(null as LocalDate)
+			var kliste = get(FactoryService::wertpapierService.getWertpapierListe(serviceDaten, true, null, null, null))
 			wertpapier.setItems(getItems(kliste, new WpWertpapierLang, [a|new WertpapierData(a)], null))
 			setText(wertpapier, wertpapierUid)
 		}
 		if (stufe <= 1) {
-			var List<WpStandLang> l = get(
-				FactoryService.getWertpapierService.getStandListe(getServiceDaten, false, getText(wertpapier),
-					von.getValue, bis.getValue))
+			var l = get(
+				FactoryService::wertpapierService.getStandListe(serviceDaten, false, getText(wertpapier), von.value,
+					bis.value))
 			getItems(l, null, [a|new StaendeData(a)], staendeData)
 		}
 		if (stufe <= 2) {
@@ -157,14 +155,14 @@ class WP500StaendeController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		staende.setItems(staendeData)
-		colWpbezeichnung.setCellValueFactory([c|c.getValue.wpbezeichnung])
-		colDatum.setCellValueFactory([c|c.getValue.datum])
-		colBetrag.setCellValueFactory([c|c.getValue.betrag])
+		colWpbezeichnung.setCellValueFactory([c|c.value.wpbezeichnung])
+		colDatum.setCellValueFactory([c|c.value.datum])
+		colBetrag.setCellValueFactory([c|c.value.betrag])
 		initColumnBetrag(colBetrag)
-		colGv.setCellValueFactory([c|c.getValue.geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue.geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue.angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue.angelegtAm])
+		colGv.setCellValueFactory([c|c.value.geaendertVon])
+		colGa.setCellValueFactory([c|c.value.geaendertAm])
+		colAv.setCellValueFactory([c|c.value.angelegtVon])
+		colAa.setCellValueFactory([c|c.value.angelegtAm])
 	}
 
 	override protected void updateParent() {
@@ -172,7 +170,7 @@ class WP500StaendeController extends BaseController<String> {
 	}
 
 	def private void starteDialog(DialogAufrufEnum aufruf) {
-		var WpStandLang k = getValue(staende, !DialogAufrufEnum.NEU.equals(aufruf))
+		var WpStandLang k = getValue(staende, !DialogAufrufEnum::NEU.equals(aufruf))
 		starteFormular(WP510StandController, aufruf, k)
 	}
 
@@ -203,28 +201,28 @@ class WP500StaendeController extends BaseController<String> {
 	 * Event für Neu.
 	 */
 	@FXML def void onNeu() {
-		starteDialog(DialogAufrufEnum.NEU)
+		starteDialog(DialogAufrufEnum::NEU)
 	}
 
 	/** 
 	 * Event für Kopieren.
 	 */
 	@FXML def void onKopieren() {
-		starteDialog(DialogAufrufEnum.KOPIEREN)
+		starteDialog(DialogAufrufEnum::KOPIEREN)
 	}
 
 	/** 
 	 * Event für Aendern.
 	 */
 	@FXML def void onAendern() {
-		starteDialog(DialogAufrufEnum.AENDERN)
+		starteDialog(DialogAufrufEnum::AENDERN)
 	}
 
 	/** 
 	 * Event für Loeschen.
 	 */
 	@FXML def void onLoeschen() {
-		starteDialog(DialogAufrufEnum.LOESCHEN)
+		starteDialog(DialogAufrufEnum::LOESCHEN)
 	}
 
 	/** 

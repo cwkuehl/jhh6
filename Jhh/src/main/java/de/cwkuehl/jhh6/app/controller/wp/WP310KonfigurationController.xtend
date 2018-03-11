@@ -9,7 +9,6 @@ import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.server.FactoryService
 import de.cwkuehl.jhh6.server.fop.dto.PnfChart
-import java.util.List
 import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.CheckBox
@@ -58,11 +57,11 @@ class WP310KonfigurationController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getSchluessel
+			return getData.schluessel
 		}
 
 		override String toString() {
-			return getData.getWert
+			return getData.wert
 		}
 	}
 
@@ -76,11 +75,11 @@ class WP310KonfigurationController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getSchluessel
+			return getData.schluessel
 		}
 
 		override String toString() {
-			return getData.getWert
+			return getData.wert
 		}
 	}
 
@@ -94,11 +93,11 @@ class WP310KonfigurationController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getSchluessel
+			return getData.schluessel
 		}
 
 		override String toString() {
-			return getData.getWert
+			return getData.wert
 		}
 	}
 
@@ -130,33 +129,32 @@ class WP310KonfigurationController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var List<MaEinstellung> sliste = get(
-				FactoryService::getWertpapierService.getWertpapierStatusListe(getServiceDaten))
+			var sliste = get(FactoryService::wertpapierService.getWertpapierStatusListe(serviceDaten))
 			status.setItems(getItems(sliste, null, [a|new StatusData(a)], null))
 			status.getSelectionModel.select(0)
-			var List<MaEinstellung> skliste = PnfChart::getSkalaListe
+			var skliste = PnfChart::getSkalaListe
 			skala.setItems(getItems(skliste, null, [a|new SkalaData(a)], null))
 			skala.getSelectionModel.select(0)
-			var List<MaEinstellung> mliste = PnfChart::getMethodeListe
+			var mliste = PnfChart::getMethodeListe
 			methode.setItems(getItems(mliste, null, [a|new MethodeData(a)], null))
 			methode.getSelectionModel.select(0)
-			var boolean neu = DialogAufrufEnum::NEU.equals(getAufruf)
-			var boolean loeschen = DialogAufrufEnum::LOESCHEN.equals(getAufruf)
-			var WpKonfigurationLang k = getParameter1
+			var neu = DialogAufrufEnum::NEU.equals(aufruf)
+			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
+			var WpKonfigurationLang k = parameter1
 			if (!neu && k !== null) {
-				k = get(FactoryService::getWertpapierService.getKonfigurationLang(getServiceDaten, k.getUid))
-				nr.setText(k.getUid)
-				bezeichnung.setText(k.getBezeichnung)
-				box.setText(Global::dblStr(k.getBox))
-				setText(skala, Global::intStr(k.getSkala))
-				umkehr.setText(Global::intStr(k.getUmkehr))
-				setText(methode, Global::intStr(k.getMandantNr))
-				dauer.setText(Global::intStr(k.getDauer))
-				relativ.setSelected(k.getRelativ)
-				setText(status, k.getStatus)
-				notiz.setText(k.getNotiz)
-				angelegt.setText(k.formatDatumVon(k.getAngelegtAm, k.getAngelegtVon))
-				geaendert.setText(k.formatDatumVon(k.getGeaendertAm, k.getGeaendertVon))
+				k = get(FactoryService::wertpapierService.getKonfigurationLang(serviceDaten, k.uid))
+				nr.setText(k.uid)
+				bezeichnung.setText(k.bezeichnung)
+				box.setText(Global::dblStr(k.box))
+				setText(skala, Global::intStr(k.skala))
+				umkehr.setText(Global::intStr(k.umkehr))
+				setText(methode, Global::intStr(k.mandantNr))
+				dauer.setText(Global::intStr(k.dauer))
+				relativ.setSelected(k.relativ)
+				setText(status, k.status)
+				notiz.setText(k.notiz)
+				angelegt.setText(k.formatDatumVon(k.angelegtAm, k.angelegtVon))
+				geaendert.setText(k.formatDatumVon(k.geaendertAm, k.geaendertVon))
 			}
 			nr.setEditable(false)
 			bezeichnung.setEditable(!loeschen)
@@ -191,23 +189,23 @@ class WP310KonfigurationController extends BaseController<String> {
 	 */
 	@FXML def void onOk() {
 
-		var ServiceErgebnis<?> r = null
+		var ServiceErgebnis<?> r
 		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
-			r = FactoryService::getWertpapierService.insertUpdateKonfiguration(getServiceDaten, null,
-				bezeichnung.getText, Global::strDbl(box.getText), false, Global::strInt(umkehr.getText),
-				Global::strInt(getText(methode)), Global::strInt(dauer.getText), relativ.isSelected,
-				Global::strInt(getText(skala)), getText(status), notiz.getText)
+			r = FactoryService::wertpapierService.insertUpdateKonfiguration(serviceDaten, null, bezeichnung.text,
+				Global::strDbl(box.text), false, Global::strInt(umkehr.text), Global::strInt(getText(methode)),
+				Global::strInt(dauer.text), relativ.isSelected, Global::strInt(getText(skala)), getText(status), //
+				notiz.text)
 		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
-			r = FactoryService::getWertpapierService.insertUpdateKonfiguration(getServiceDaten, nr.getText,
-				bezeichnung.getText, Global::strDbl(box.getText), false, Global::strInt(umkehr.getText),
-				Global::strInt(getText(methode)), Global::strInt(dauer.getText), relativ.isSelected,
-				Global::strInt(getText(skala)), getText(status), notiz.getText)
+			r = FactoryService::wertpapierService.insertUpdateKonfiguration(serviceDaten, nr.text, bezeichnung.text,
+				Global::strDbl(box.text), false, Global::strInt(umkehr.text), Global::strInt(getText(methode)),
+				Global::strInt(dauer.text), relativ.isSelected, Global::strInt(getText(skala)), getText(status), //
+				notiz.text)
 		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
-			r = FactoryService::getWertpapierService.deleteKonfiguration(getServiceDaten, nr.getText)
+			r = FactoryService::wertpapierService.deleteKonfiguration(serviceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)
-			if (r.getFehler.isEmpty) {
+			if (r.fehler.isEmpty) {
 				updateParent
 				close
 			}

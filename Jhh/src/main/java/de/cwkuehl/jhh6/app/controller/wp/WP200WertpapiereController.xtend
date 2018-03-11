@@ -1,18 +1,16 @@
 package de.cwkuehl.jhh6.app.controller.wp
 
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.WpKonfigurationLang
 import de.cwkuehl.jhh6.api.dto.WpWertpapierLang
 import de.cwkuehl.jhh6.api.global.Global
-import de.cwkuehl.jhh6.api.service.ServiceErgebnis
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.app.base.Profil
 import de.cwkuehl.jhh6.app.control.Datum
 import de.cwkuehl.jhh6.server.FactoryService
+import java.time.LocalDate
+import java.time.LocalDateTime
 import javafx.application.Platform
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
@@ -33,7 +31,7 @@ import javafx.scene.input.MouseEvent
  */
 class WP200WertpapiereController extends BaseController<String> {
 
-	//@FXML Button tab
+	// @FXML Button tab
 	@FXML Button aktuell
 	@FXML Button rueckgaengig
 	@FXML Button wiederherstellen
@@ -71,9 +69,9 @@ class WP200WertpapiereController extends BaseController<String> {
 	ObservableList<WertpapiereData> wertpapiereData = FXCollections::observableArrayList
 	@FXML Label bis0
 	@FXML Datum bis
-	//@FXML Button alle
-	//@FXML Button berechnen
-	//@FXML Button abbrechen
+	// @FXML Button alle
+	// @FXML Button berechnen
+	// @FXML Button abbrechen
 	@FXML Label bezeichnung0
 	@FXML TextField bezeichnung
 	@FXML Label muster0
@@ -123,37 +121,36 @@ class WP200WertpapiereController extends BaseController<String> {
 		new(WpWertpapierLang v) {
 
 			super(v)
-			sort = new SimpleStringProperty(v.getSortierung)
-			bezeichnung = new SimpleStringProperty(v.getBezeichnung)
-			relation = new SimpleStringProperty(v.getRelationBezeichnung)
-			bewertung = new SimpleStringProperty(v.getBewertung)
-			trend = new SimpleObjectProperty<Integer>(
-				if(Global::nes(v.getTrend)) null else Global::strInt(v.getTrend))
-			bewertung1 = new SimpleStringProperty(v.getBewertung1)
-			trend1 = new SimpleStringProperty(v.getTrend1)
-			bewertung2 = new SimpleStringProperty(v.getBewertung2)
-			trend2 = new SimpleStringProperty(v.getTrend2)
-			bewertung3 = new SimpleStringProperty(v.getBewertung3)
-			trend3 = new SimpleStringProperty(v.getTrend3)
-			bewertung4 = new SimpleStringProperty(v.getBewertung4)
-			trend4 = new SimpleStringProperty(v.getTrend4)
-			bewertung5 = new SimpleStringProperty(v.getBewertung5)
-			trend5 = new SimpleStringProperty(v.getTrend5)
-			xo = new SimpleStringProperty(v.getXo)
+			sort = new SimpleStringProperty(v.sortierung)
+			bezeichnung = new SimpleStringProperty(v.bezeichnung)
+			relation = new SimpleStringProperty(v.relationBezeichnung)
+			bewertung = new SimpleStringProperty(v.bewertung)
+			trend = new SimpleObjectProperty<Integer>(if(Global::nes(v.trend)) null else Global::strInt(v.trend))
+			bewertung1 = new SimpleStringProperty(v.bewertung1)
+			trend1 = new SimpleStringProperty(v.trend1)
+			bewertung2 = new SimpleStringProperty(v.bewertung2)
+			trend2 = new SimpleStringProperty(v.trend2)
+			bewertung3 = new SimpleStringProperty(v.bewertung3)
+			trend3 = new SimpleStringProperty(v.trend3)
+			bewertung4 = new SimpleStringProperty(v.bewertung4)
+			trend4 = new SimpleStringProperty(v.trend4)
+			bewertung5 = new SimpleStringProperty(v.bewertung5)
+			trend5 = new SimpleStringProperty(v.trend5)
+			xo = new SimpleStringProperty(v.xo)
 			signalbew = new SimpleObjectProperty<Integer>(
-				if(Global::nes(v.getSignalbew)) null else Global::strInt(v.getSignalbew))
+				if(Global::nes(v.signalbew)) null else Global::strInt(v.signalbew))
 			signaldatum = new SimpleObjectProperty<LocalDate>(
-				if(Global::nes(v.getSignaldatum)) null else LocalDate::parse(v.getSignaldatum))
-			signalbez = new SimpleStringProperty(v.getSignalbez)
-			schnitt200 = new SimpleStringProperty(v.getSchnitt200)
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
+				if(Global::nes(v.signaldatum)) null else LocalDate::parse(v.signaldatum))
+			signalbez = new SimpleStringProperty(v.signalbez)
+			schnitt200 = new SimpleStringProperty(v.schnitt200)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
+			geaendertVon = new SimpleStringProperty(v.geaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
+			angelegtVon = new SimpleStringProperty(v.angelegtVon)
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 	}
 
@@ -167,11 +164,11 @@ class WP200WertpapiereController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getBezeichnung
+			return getData.bezeichnung
 		}
 	}
 
@@ -210,15 +207,14 @@ class WP200WertpapiereController extends BaseController<String> {
 			bis.setValue(LocalDate::now)
 			bezeichnung.setText("%%")
 			muster.setText("%%")
-			var List<WpKonfigurationLang> kliste = get(
-				FactoryService::getWertpapierService.getKonfigurationListe(getServiceDaten, true, "1"))
+			var kliste = get(FactoryService::wertpapierService.getKonfigurationListe(serviceDaten, true, "1"))
 			konfiguration.setItems(getItems(kliste, new WpKonfigurationLang, [a|new KonfigurationData(a)], null))
 			setText(konfiguration, konfUid)
 		}
 		if (stufe <= 1) {
-			var List<WpWertpapierLang> l = get(
-				FactoryService::getWertpapierService.getWertpapierListe(getServiceDaten, false,
-					bezeichnung.getText, muster.getText, null))
+			var l = get(
+				FactoryService::wertpapierService.getWertpapierListe(serviceDaten, false, bezeichnung.text, muster.text,
+					null))
 			getItems(l, null, [a|new WertpapiereData(a)], wertpapiereData)
 		}
 		if (stufe <= 2) {
@@ -232,30 +228,30 @@ class WP200WertpapiereController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		wertpapiere.setItems(wertpapiereData)
-		colSort.setCellValueFactory([c|c.getValue.sort])
-		colBezeichnung.setCellValueFactory([c|c.getValue.bezeichnung])
-		colRelation.setCellValueFactory([c|c.getValue.relation])
-		colBewertung.setCellValueFactory([c|c.getValue.bewertung])
-		colTrend.setCellValueFactory([c|c.getValue.trend])
-		colBewertung1.setCellValueFactory([c|c.getValue.bewertung1])
-		colTrend1.setCellValueFactory([c|c.getValue.trend1])
-		colBewertung2.setCellValueFactory([c|c.getValue.bewertung2])
-		colTrend2.setCellValueFactory([c|c.getValue.trend2])
-		colBewertung3.setCellValueFactory([c|c.getValue.bewertung3])
-		colTrend3.setCellValueFactory([c|c.getValue.trend3])
-		colBewertung4.setCellValueFactory([c|c.getValue.bewertung4])
-		colTrend4.setCellValueFactory([c|c.getValue.trend4])
-		colBewertung5.setCellValueFactory([c|c.getValue.bewertung5])
-		colTrend5.setCellValueFactory([c|c.getValue.trend5])
-		colXo.setCellValueFactory([c|c.getValue.xo])
-		colSignalbew.setCellValueFactory([c|c.getValue.signalbew])
-		colSignaldatum.setCellValueFactory([c|c.getValue.signaldatum])
-		colSignalbez.setCellValueFactory([c|c.getValue.signalbez])
-		colSchnitt200.setCellValueFactory([c|c.getValue.schnitt200])
-		colGv.setCellValueFactory([c|c.getValue.geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue.geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue.angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue.angelegtAm])
+		colSort.setCellValueFactory([c|c.value.sort])
+		colBezeichnung.setCellValueFactory([c|c.value.bezeichnung])
+		colRelation.setCellValueFactory([c|c.value.relation])
+		colBewertung.setCellValueFactory([c|c.value.bewertung])
+		colTrend.setCellValueFactory([c|c.value.trend])
+		colBewertung1.setCellValueFactory([c|c.value.bewertung1])
+		colTrend1.setCellValueFactory([c|c.value.trend1])
+		colBewertung2.setCellValueFactory([c|c.value.bewertung2])
+		colTrend2.setCellValueFactory([c|c.value.trend2])
+		colBewertung3.setCellValueFactory([c|c.value.bewertung3])
+		colTrend3.setCellValueFactory([c|c.value.trend3])
+		colBewertung4.setCellValueFactory([c|c.value.bewertung4])
+		colTrend4.setCellValueFactory([c|c.value.trend4])
+		colBewertung5.setCellValueFactory([c|c.value.bewertung5])
+		colTrend5.setCellValueFactory([c|c.value.trend5])
+		colXo.setCellValueFactory([c|c.value.xo])
+		colSignalbew.setCellValueFactory([c|c.value.signalbew])
+		colSignaldatum.setCellValueFactory([c|c.value.signaldatum])
+		colSignalbez.setCellValueFactory([c|c.value.signalbez])
+		colSchnitt200.setCellValueFactory([c|c.value.schnitt200])
+		colGv.setCellValueFactory([c|c.value.geaendertVon])
+		colGa.setCellValueFactory([c|c.value.geaendertAm])
+		colAv.setCellValueFactory([c|c.value.angelegtVon])
+		colAa.setCellValueFactory([c|c.value.angelegtAm])
 	}
 
 	override protected void updateParent() {
@@ -333,7 +329,7 @@ class WP200WertpapiereController extends BaseController<String> {
 		if (e.clickCount > 1) {
 			var WpWertpapierLang wp = getValue(wertpapiere, true)
 			var WpKonfigurationLang k = getValue(konfiguration, false)
-			starteFormular(typeof(WP100ChartController), DialogAufrufEnum::OHNE, bis.getValue, wp, k)
+			starteFormular(typeof(WP100ChartController), DialogAufrufEnum::OHNE, bis.value, wp, k)
 		}
 	}
 
@@ -352,9 +348,8 @@ class WP200WertpapiereController extends BaseController<String> {
 		var task = ([|
 			onStatusTimer
 			try {
-				var ServiceErgebnis<List<WpWertpapierLang>> r = FactoryService::getWertpapierService.
-					bewerteteWertpapierListe(getServiceDaten, false, bezeichnung.getText, muster.getText, null,
-						bis.getValue, getText(konfiguration), status, abbruch)
+				var r = FactoryService::wertpapierService.bewerteteWertpapierListe(serviceDaten, false,
+					bezeichnung.text, muster.text, null, bis.value, getText(konfiguration), status, abbruch)
 				r.throwErstenFehler
 				status.setLength(0)
 			} catch (Exception ex) {
@@ -363,11 +358,7 @@ class WP200WertpapiereController extends BaseController<String> {
 			} finally {
 				abbruch.append("Ende")
 			}
-			Platform::runLater([
-				{
-					WP200WertpapiereController.this.onAktuell
-				}
-			])
+			Platform::runLater([WP200WertpapiereController.this.onAktuell])
 			return null as Void
 		] as Task<Void>)
 		var th = new Thread(task)
@@ -391,7 +382,7 @@ class WP200WertpapiereController extends BaseController<String> {
 			}
 			return null as Void
 		] as Task<Void>)
-		var Thread th = new Thread(task)
+		var th = new Thread(task)
 		th.setDaemon(true)
 		th.start
 	}

@@ -1,6 +1,5 @@
 package de.cwkuehl.jhh6.app.controller.wp
 
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.MaEinstellung
 import de.cwkuehl.jhh6.api.dto.WpWertpapierLang
 import de.cwkuehl.jhh6.api.global.Global
@@ -60,11 +59,11 @@ class WP210WertpapierController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getSchluessel
+			return getData.schluessel
 		}
 
 		override String toString() {
-			return getData.getWert
+			return getData.wert
 		}
 	}
 
@@ -78,11 +77,11 @@ class WP210WertpapierController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getBezeichnung
+			return getData.bezeichnung
 		}
 	}
 
@@ -116,29 +115,28 @@ class WP210WertpapierController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var List<MaEinstellung> sliste = get(
-				FactoryService::getWertpapierService.getWertpapierStatusListe(getServiceDaten))
+			var sliste = get(FactoryService::wertpapierService.getWertpapierStatusListe(serviceDaten))
 			status.setItems(getItems(sliste, null, [a|new StatusData(a)], null))
 			status.getSelectionModel.select(0)
-			var boolean neu = DialogAufrufEnum::NEU.equals(getAufruf)
-			var boolean kopieren = DialogAufrufEnum::KOPIEREN.equals(getAufruf)
-			var boolean loeschen = DialogAufrufEnum::LOESCHEN.equals(getAufruf)
-			var WpWertpapierLang k = getParameter1
+			var neu = DialogAufrufEnum::NEU.equals(aufruf)
+			var kopieren = DialogAufrufEnum::KOPIEREN.equals(aufruf)
+			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
+			var WpWertpapierLang k = parameter1
 			if (!neu && k !== null) {
-				k = get(FactoryService::getWertpapierService.getWertpapierLang(getServiceDaten, k.getUid))
-				nr.setText(k.getUid)
-				bezeichnung.setText(k.getBezeichnung)
-				kuerzel.setText(k.getKuerzel)
-				aktKurs.setText(k.getAktuellerkurs)
-				stopKurs.setText(k.getStopkurs)
-				signalKurs1.setText(Global::dblStr2l(k.getSignalkurs1))
-				muster.setText(k.getMuster)
-				sortierung.setText(k.getSortierung)
-				setText(status, k.getStatus)
-				setText(relation, k.getRelationUid)
-				notiz.setText(k.getNotiz)
-				angelegt.setText(k.formatDatumVon(k.getAngelegtAm, k.getAngelegtVon))
-				geaendert.setText(k.formatDatumVon(k.getGeaendertAm, k.getGeaendertVon))
+				k = get(FactoryService::wertpapierService.getWertpapierLang(serviceDaten, k.uid))
+				nr.setText(k.uid)
+				bezeichnung.setText(k.bezeichnung)
+				kuerzel.setText(k.kuerzel)
+				aktKurs.setText(k.aktuellerkurs)
+				stopKurs.setText(k.stopkurs)
+				signalKurs1.setText(Global::dblStr2l(k.signalkurs1))
+				muster.setText(k.muster)
+				sortierung.setText(k.sortierung)
+				setText(status, k.status)
+				setText(relation, k.relationUid)
+				notiz.setText(k.notiz)
+				angelegt.setText(k.formatDatumVon(k.angelegtAm, k.angelegtVon))
+				geaendert.setText(k.formatDatumVon(k.geaendertAm, k.geaendertVon))
 			}
 			nr.setEditable(false)
 			bezeichnung.setEditable(!loeschen)
@@ -156,12 +154,12 @@ class WP210WertpapierController extends BaseController<String> {
 			if (loeschen) {
 				ok.setText(Meldungen::M2001)
 			}
-			var List<WpWertpapierLang> wliste = get(
-				FactoryService::getWertpapierService.getWertpapierListe(getServiceDaten, true, null, null,
-					if(kopieren) null else nr.getText))
+			var wliste = get(
+				FactoryService::wertpapierService.getWertpapierListe(serviceDaten, true, null, null,
+					if(kopieren) null else nr.text))
 			relation.setItems(getItems(wliste, new WpWertpapierLang, [a|new RelationData(a)], null))
 			if (!neu && k !== null) {
-				setText(relation, k.getRelationUid)
+				setText(relation, k.relationUid)
 			}
 		}
 		if (stufe <= 1) { // stufe = 0
@@ -179,23 +177,21 @@ class WP210WertpapierController extends BaseController<String> {
 	/** 
 	 * Event für Ok.
 	 */
-	@FXML @SuppressWarnings("unchecked") def void onOk() {
+	@FXML def void onOk() {
 
-		var ServiceErgebnis<?> r = null
+		var ServiceErgebnis<?> r
 		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
-			r = FactoryService::getWertpapierService.insertUpdateWertpapier(getServiceDaten, null,
-				bezeichnung.getText, kuerzel.getText, signalKurs1.getText, sortierung.getText, null,
-				getText(status), getText(relation), notiz.getText)
+			r = FactoryService::wertpapierService.insertUpdateWertpapier(serviceDaten, null, bezeichnung.text,
+				kuerzel.text, signalKurs1.text, sortierung.text, null, getText(status), getText(relation), notiz.text)
 		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
-			r = FactoryService::getWertpapierService.insertUpdateWertpapier(getServiceDaten, nr.getText,
-				bezeichnung.getText, kuerzel.getText, signalKurs1.getText, sortierung.getText, null,
-				getText(status), getText(relation), notiz.getText)
+			r = FactoryService::wertpapierService.insertUpdateWertpapier(serviceDaten, nr.text, bezeichnung.text,
+				kuerzel.text, signalKurs1.text, sortierung.text, null, getText(status), getText(relation), notiz.text)
 		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
-			r = FactoryService::getWertpapierService.deleteWertpapier(getServiceDaten, nr.getText)
+			r = FactoryService::wertpapierService.deleteWertpapier(serviceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)
-			if (r.getFehler.isEmpty) {
+			if (r.fehler.isEmpty) {
 				updateParent
 				close
 			}

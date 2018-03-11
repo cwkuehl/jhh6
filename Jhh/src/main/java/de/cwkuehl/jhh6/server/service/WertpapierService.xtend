@@ -131,25 +131,25 @@ class WertpapierService {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		if (!Global.nes(uid) && Global.nes(bez)) {
-			throw new MeldungException(Meldungen.WP001)
+			throw new MeldungException(Meldungen::WP001)
 		}
 		if (!Global.nes(uid) && Global.nes(status)) {
-			throw new MeldungException(Meldungen.WP002)
+			throw new MeldungException(Meldungen::WP002)
 		}
 		if (Global.compDouble4(box, 0) <= 0) {
-			throw new MeldungException(Meldungen.WP003)
+			throw new MeldungException(Meldungen::WP003)
 		}
 		if (umkehr <= 0) {
-			throw new MeldungException(Meldungen.WP004)
+			throw new MeldungException(Meldungen::WP004)
 		}
 		if (!Global.in(methode, 1, 5)) {
-			throw new MeldungException(Meldungen.WP005)
+			throw new MeldungException(Meldungen::WP005)
 		}
 		if (dauer <= 10) {
-			throw new MeldungException(Meldungen.WP006)
+			throw new MeldungException(Meldungen::WP006)
 		}
 		if (!Global.in(methode, 0, 2)) {
-			throw new MeldungException(Meldungen.WP007)
+			throw new MeldungException(Meldungen::WP007)
 		}
 		var sb = new StringBuilder
 		sb.append(box)
@@ -243,8 +243,8 @@ class WertpapierService {
 				val a = liste.get(i)
 				status.length = 0
 				status.append(
-					Meldungen.WP008(i + 1, l, a.bezeichnung, bis.atStartOfDay,
-						if(k === null) Meldungen.WP009 else k.bezeichnung))
+					Meldungen::WP008(i + 1, l, a.bezeichnung, bis.atStartOfDay,
+						if(k === null) Meldungen::WP009 else k.bezeichnung))
 				berechneBewertung(daten, von, bis, a, k, speichern)
 			}
 		}
@@ -290,7 +290,7 @@ class WertpapierService {
 			e.index3 = if(l <= 25) "" else array.get(25)
 			e.index4 = if(l <= 26) "" else array.get(26)
 			e.schnitt200 = if(l <= 27) "" else array.get(27)
-			e.konfiguration = if(k === null) Meldungen.WP010 else k.bezeichnung
+			e.konfiguration = if(k === null) Meldungen::WP010 else k.bezeichnung
 		}
 		return e
 	}
@@ -298,7 +298,7 @@ class WertpapierService {
 	def private void berechneBewertung(ServiceDaten daten, LocalDate dvon, LocalDate dbis, WpWertpapierLang wp,
 		WpKonfigurationLang k, boolean speichern) {
 
-		wp.bewertung = '''00 «Meldungen.WP010»'''
+		wp.bewertung = '''00 «Meldungen::WP010»'''
 		wp.bewertung1 = ""
 		wp.bewertung2 = ""
 		wp.bewertung3 = ""
@@ -334,7 +334,7 @@ class WertpapierService {
 			var kursdatum = if(liste.size > 0) liste.get(liste.size - 1).datum.toLocalDate else dbis
 			var signalbew = 0
 			var signaldatum = dvon
-			var String signalbez = null
+			var String signalbez
 			var double[] a = #[0.5, 1, 2, 3, 5]
 			var String[] t = #[null, null, null, null, null]
 			var int[] bew = #[0, 0, 0, 0, 0]
@@ -481,7 +481,7 @@ class WertpapierService {
 				wp.schnitt200 = Global.compDouble(schnitt200, schnitt214).toString
 			}
 		} catch (Exception ex) {
-			wp.bewertung = '''00 «Meldungen.WP011(ex.message)»'''
+			wp.bewertung = '''00 «Meldungen::WP011(ex.message)»'''
 		// throw new RuntimeException(ex)
 		} finally {
 			if (speichern) {
@@ -788,7 +788,7 @@ class WertpapierService {
 				return null
 			}
 			if (connection.responseCode != HttpURLConnection.HTTP_OK) {
-				throw new Exception(Meldungen.WP012(connection.responseCode, targetURL))
+				throw new Exception(Meldungen::WP012(connection.responseCode, targetURL))
 			}
 			var is = connection.getInputStream
 			var rd = new BufferedReader(new InputStreamReader(is, "UTF-8"))
@@ -827,7 +827,7 @@ class WertpapierService {
 			connection.connectTimeout = 3000
 			connection.readTimeout = 3000
 			if (connection.responseCode != HttpURLConnection.HTTP_OK) {
-				throw new Exception(Meldungen.WP012(connection.responseCode, targetURL))
+				throw new Exception(Meldungen::WP012(connection.responseCode, targetURL))
 			}
 			var is = connection.getInputStream
 			var rd = new BufferedReader(new InputStreamReader(is, "UTF-8"))
@@ -888,21 +888,21 @@ class WertpapierService {
 
 		if (Global.nes(uid)) {
 			if (Global.nes(strB)) {
-				strB = Meldungen.WP013(kuerzel)
+				strB = Meldungen::WP013(kuerzel)
 			}
 			if (Global.nes(strStatus)) {
 				strStatus = "0"
 			}
 		} else {
 			if (Global.nes(strB)) {
-				throw new MeldungException(Meldungen.WP001)
+				throw new MeldungException(Meldungen::WP001)
 			}
 			if (Global.nes(status)) {
-				throw new MeldungException(Meldungen.WP002)
+				throw new MeldungException(Meldungen::WP002)
 			}
 		}
 		if (Global.nes(kuerzel)) {
-			throw new MeldungException(Meldungen.WP014)
+			throw new MeldungException(Meldungen::WP014)
 		}
 		if (Global.nes(strQ)) {
 			strQ = "yahoo"
@@ -957,11 +957,11 @@ class WertpapierService {
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var liste = wertpapierRep.getWertpapierLangListe(daten, null, null, null, null, uid, false)
 		if (liste.size > 0) {
-			throw new MeldungException(Meldungen.WP015)
+			throw new MeldungException(Meldungen::WP015)
 		}
 		var aliste = anlageRep.getAnlageLangListe(daten, null, null, uid)
 		if (aliste.size > 0) {
-			throw new MeldungException(Meldungen.WP016)
+			throw new MeldungException(Meldungen::WP016)
 		}
 		wertpapierRep.delete(daten, new WpWertpapierKey(daten.mandantNr, uid))
 		var r = new ServiceErgebnis<Void>(null)
@@ -1362,7 +1362,7 @@ class WertpapierService {
 			for (var i = 0; i < l && abbruch.length <= 0; i++) {
 				val a = liste.get(i)
 				status.length = 0
-				status.append(Meldungen.WP008(i + 1, l, a.bezeichnung, bis.atStartOfDay, null))
+				status.append(Meldungen::WP008(i + 1, l, a.bezeichnung, bis.atStartOfDay, null))
 				var array = if(Global.nes(a.parameter)) newArrayOfSize(0) else a.parameter.split(";")
 				var waehrung = if(array.size >= 10 && !Global.excelNes(array.get(9))) array.get(9) else ''
 				var kurs = if (array.size >= 11 && !Global.excelNes(array.get(10)))
@@ -1449,13 +1449,13 @@ class WertpapierService {
 				a.kurs = Global.strDbl(array.get(10))
 			}
 			if (zusammengesetzt) {
-				var p0 = if(a.aktdatum === null) null else Meldungen.WP026(a.aktdatum)
-				var p1 = if(Global.nes(a.waehrung)) null else Meldungen.WP025(a.waehrung, a.kurs, p0)
+				var p0 = if(a.aktdatum === null) null else Meldungen::WP026(a.aktdatum)
+				var p1 = if(Global.nes(a.waehrung)) null else Meldungen::WP025(a.waehrung, a.kurs, p0)
 				var p2 = if (a.anteile == 0 || a.aktpreis == 0)
 						null
 					else
-						Meldungen.WP024(a.aktpreis, p1, a.wert, a.gewinn, a.pgewinn)
-				a.daten = if(a.anteile == 0) null else Meldungen.WP023(a.betrag, a.anteile, a.preis, a.zinsen, p2)
+						Meldungen::WP024(a.aktpreis, p1, a.wert, a.gewinn, a.pgewinn)
+				a.daten = if(a.anteile == 0) null else Meldungen::WP023(a.betrag, a.anteile, a.preis, a.zinsen, p2)
 			}
 		}
 		return liste
@@ -1474,12 +1474,12 @@ class WertpapierService {
 		String notiz) {
 
 		if (Global.nes(bez)) {
-			throw new MeldungException(Meldungen.WP001)
+			throw new MeldungException(Meldungen::WP001)
 		}
 		if (Global.nes(wpuid) || wertpapierRep.get(daten, new WpWertpapierKey(daten.mandantNr, wpuid)) === null) {
-			throw new MeldungException(Meldungen.WP017)
+			throw new MeldungException(Meldungen::WP017)
 		}
-		var String parameter = null
+		var String parameter
 		if (!Global.nes(uid)) {
 			var a = anlageRep.get(daten, new WpAnlageKey(daten.mandantNr, uid))
 			if (a !== null) {
@@ -1496,7 +1496,7 @@ class WertpapierService {
 
 		var bliste = buchungRep.getBuchungLangListe(daten, null, null, null, uid, false)
 		if (bliste.size > 0) {
-			throw new MeldungException(Meldungen.WP018)
+			throw new MeldungException(Meldungen::WP018)
 		}
 		anlageRep.delete(daten, new WpAnlageKey(daten.mandantNr, uid))
 		var r = new ServiceErgebnis<Void>(null)
@@ -1546,17 +1546,17 @@ class WertpapierService {
 			anlage = anlageRep.get(daten, new WpAnlageKey(daten.mandantNr, auid))
 		}
 		if (anlage === null) {
-			throw new MeldungException(Meldungen.WP019)
+			throw new MeldungException(Meldungen::WP019)
 		}
 		if (datum === null) {
-			throw new MeldungException(Meldungen.WP020)
+			throw new MeldungException(Meldungen::WP020)
 		}
 		if (Global.nes(btext)) {
-			throw new MeldungException(Meldungen.WP021)
+			throw new MeldungException(Meldungen::WP021)
 		}
 		if (Global.compDouble(betrag, 0) == 0 && Global.compDouble(rabatt, 0) == 0 &&
 			Global.compDouble4(anteile, 0) == 0 && Global.compDouble(zinsen, 0) == 0) {
-			throw new MeldungException(Meldungen.WP022)
+			throw new MeldungException(Meldungen::WP022)
 		}
 		var WpBuchung balt
 		if (!Global.nes(uid)) {
@@ -1625,7 +1625,7 @@ class WertpapierService {
 		double betrag) {
 
 		if (Global.nes(wpuid) || wertpapierRep.get(daten, new WpWertpapierKey(daten.mandantNr, wpuid)) === null) {
-			throw new MeldungException(Meldungen.WP017)
+			throw new MeldungException(Meldungen::WP017)
 		}
 		var e = standRep.iuWpStand(daten, null, wpuid, datum, betrag, null, null, null, null)
 		var r = new ServiceErgebnis<WpStand>(e)

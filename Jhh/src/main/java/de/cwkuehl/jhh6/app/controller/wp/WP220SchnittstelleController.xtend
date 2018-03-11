@@ -5,7 +5,6 @@ import de.cwkuehl.jhh6.api.dto.WpWertpapierLang
 import de.cwkuehl.jhh6.api.global.Global
 import de.cwkuehl.jhh6.api.message.MeldungException
 import de.cwkuehl.jhh6.api.message.Meldungen
-import de.cwkuehl.jhh6.api.service.ServiceErgebnis
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DateiAuswahl
@@ -14,7 +13,6 @@ import de.cwkuehl.jhh6.app.base.Werkzeug
 import de.cwkuehl.jhh6.app.control.Datum
 import de.cwkuehl.jhh6.server.FactoryService
 import java.time.LocalDate
-import java.util.List
 import javafx.concurrent.Task
 import javafx.fxml.FXML
 import javafx.scene.control.Label
@@ -70,11 +68,11 @@ class WP220SchnittstelleController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getBezeichnung
+			return getData.bezeichnung
 		}
 	}
 
@@ -88,11 +86,11 @@ class WP220SchnittstelleController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getBezeichnung
+			return getData.bezeichnung
 		}
 	}
 
@@ -123,17 +121,15 @@ class WP220SchnittstelleController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var LocalDate heute = LocalDate.now
+			var heute = LocalDate::now
 			datum.setValue(Global.werktag(heute))
 			datum2.setValue(Global.werktag(LocalDate.of(heute.getYear - 1, 1, 1)))
 			datum3.setValue(Global.werktag(LocalDate.of(heute.getYear, 1, 1)))
 			datum4.setValue(Global.werktag(heute))
-			var List<WpKonfigurationLang> kliste = get(
-				FactoryService.getWertpapierService.getKonfigurationListe(getServiceDaten, true, "1"))
+			var kliste = get(FactoryService::wertpapierService.getKonfigurationListe(serviceDaten, true, "1"))
 			konfiguration.setItems(getItems(kliste, new WpKonfigurationLang, [a|new KonfigurationData(a)], null))
 			leseResourceDaten(this, "konfiguration")
-			var List<WpWertpapierLang> wliste = get(
-				FactoryService.getWertpapierService.getWertpapierListe(getServiceDaten, true, null, null, null))
+			var wliste = get(FactoryService::wertpapierService.getWertpapierListe(serviceDaten, true, null, null, null))
 			wertpapier.setItems(getItems(wliste, null, [a|new WertpapierData(a)], null))
 			leseResourceDaten(this, "wertpapier")
 			statustext.setEditable(false)
@@ -148,7 +144,7 @@ class WP220SchnittstelleController extends BaseController<String> {
 	 * Event für DateiAuswahl.
 	 */
 	@FXML def void onDateiAuswahl() {
-		var String d = DateiAuswahl.auswaehlen(true, "WP220.select.file", "WP220.select.ok", "csv", "WP220.select.ext")
+		var d = DateiAuswahl.auswaehlen(true, "WP220.select.file", "WP220.select.ok", "csv", "WP220.select.ext")
 		if (!Global.nes(d)) {
 			datei.setText(d)
 		}
@@ -158,7 +154,7 @@ class WP220SchnittstelleController extends BaseController<String> {
 	 * Event für Datei2Auswahl.
 	 */
 	@FXML def void onDatei2Auswahl() {
-		var String d = DateiAuswahl.auswaehlen(true, "WP220.select2.file", "WP220.select2.ok", "xls", "WP220.select2.ext")
+		var d = DateiAuswahl.auswaehlen(true, "WP220.select2.file", "WP220.select2.ok", "xls", "WP220.select2.ext")
 		if (!Global.nes(d)) {
 			datei2.setText(d)
 		}
@@ -169,19 +165,18 @@ class WP220SchnittstelleController extends BaseController<String> {
 	 */
 	@FXML def void onExport() {
 
-		if (Global.nes(datei.getText)) {
-			throw new MeldungException(Meldungen.M1012)
+		if (Global.nes(datei.text)) {
+			throw new MeldungException(Meldungen::M1012)
 		}
 		var Task<Void> task = [
 			status.append("Vorbereitung ...")
 			onStatusTimer
 			try {
-				var ServiceErgebnis<List<String>> r = FactoryService.getWertpapierService.
-					exportWertpapierListe(getServiceDaten, bezeichnung.getText, null, null, getTexte(konfiguration),
-						datum.getValue, Global.strInt(anzahl.getText), status, abbruch)
+				var r = FactoryService::wertpapierService.exportWertpapierListe(serviceDaten, bezeichnung.text, null,
+					null, getTexte(konfiguration), datum.value, Global.strInt(anzahl.text), status, abbruch)
 				r.throwErstenFehler
 				if (abbruch.length <= 0) {
-					Werkzeug.speicherDateiOeffnen(r.getErgebnis, null, datei.getText, false)
+					Werkzeug.speicherDateiOeffnen(r.ergebnis, null, datei.text, false)
 				}
 				status.setLength(0)
 			} catch (Exception ex) {
@@ -192,7 +187,7 @@ class WP220SchnittstelleController extends BaseController<String> {
 			}
 			return null
 		]
-		var Thread th = new Thread(task)
+		var th = new Thread(task)
 		th.setDaemon(true)
 		th.start
 	}
@@ -203,21 +198,21 @@ class WP220SchnittstelleController extends BaseController<String> {
 	@FXML def void onExport2() {
 
 		if (Global.nes(getText(wertpapier))) {
-			throw new MeldungException(Meldungen.M2094)
+			throw new MeldungException(Meldungen::M2094)
 		}
-		if (Global.nes(datei2.getText)) {
-			throw new MeldungException(Meldungen.M1012)
+		if (Global.nes(datei2.text)) {
+			throw new MeldungException(Meldungen::M1012)
 		}
 		var Task<Void> task = [
 			status.append("Vorbereitung ...")
 			onStatusTimer
 			try {
-				var ServiceErgebnis<byte[]> r = FactoryService.getWertpapierService.
-					exportWertpapierVergleichListe(getServiceDaten, getTexte(wertpapier), getText(konfiguration),
-						datum2.getValue, datum3.getValue, datum4.getValue, status, abbruch)
+				var r = FactoryService::wertpapierService.exportWertpapierVergleichListe(serviceDaten,
+					getTexte(wertpapier), getText(konfiguration), datum2.value, datum3.value, datum4.value, status, //
+					abbruch)
 				r.throwErstenFehler
 				if (abbruch.length <= 0) {
-					Werkzeug.speicherDateiOeffnen(r.getErgebnis, null, datei2.getText, false)
+					Werkzeug.speicherDateiOeffnen(r.ergebnis, null, datei2.text, false)
 				}
 				status.setLength(0)
 			} catch (Exception ex) {
@@ -228,7 +223,7 @@ class WP220SchnittstelleController extends BaseController<String> {
 			}
 			return null
 		]
-		var Thread th = new Thread(task)
+		var th = new Thread(task)
 		th.setDaemon(true)
 		th.start
 	}
@@ -261,7 +256,7 @@ class WP220SchnittstelleController extends BaseController<String> {
 			}
 			return null
 		]
-		var Thread th = new Thread(task)
+		var th = new Thread(task)
 		th.setDaemon(true)
 		th.start
 	}

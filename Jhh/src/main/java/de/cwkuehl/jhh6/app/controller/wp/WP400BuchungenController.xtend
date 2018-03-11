@@ -1,8 +1,5 @@
 package de.cwkuehl.jhh6.app.controller.wp
 
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.WpAnlageLang
 import de.cwkuehl.jhh6.api.dto.WpBuchungLang
 import de.cwkuehl.jhh6.app.Jhh6
@@ -10,6 +7,8 @@ import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.app.base.Profil
 import de.cwkuehl.jhh6.server.FactoryService
+import java.time.LocalDate
+import java.time.LocalDateTime
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -28,7 +27,7 @@ import javafx.scene.input.MouseEvent
  */
 class WP400BuchungenController extends BaseController<String> {
 
-	//@FXML Button tab
+	// @FXML Button tab
 	@FXML Button aktuell
 	@FXML Button rueckgaengig
 	@FXML Button wiederherstellen
@@ -51,7 +50,7 @@ class WP400BuchungenController extends BaseController<String> {
 	@FXML TableColumn<BuchungenData, LocalDateTime> colAa
 	@FXML TableColumn<BuchungenData, String> colAv
 	ObservableList<BuchungenData> buchungenData = FXCollections.observableArrayList
-	//@FXML Button alle
+	// @FXML Button alle
 	@FXML Label bezeichnung0
 	@FXML TextField bezeichnung
 	@FXML Label anlage0
@@ -79,22 +78,22 @@ class WP400BuchungenController extends BaseController<String> {
 		new(WpBuchungLang v) {
 
 			super(v)
-			wpbezeichnung = new SimpleStringProperty(v.getWertpapierBezeichnung)
-			bezeichnung = new SimpleStringProperty(v.getAnlageBezeichnung)
-			datum = new SimpleObjectProperty<LocalDate>(v.getDatum)
-			text = new SimpleStringProperty(v.getBtext)
-			betrag = new SimpleObjectProperty<Double>(v.getZahlungsbetrag)
-			rabatt = new SimpleObjectProperty<Double>(v.getRabattbetrag)
-			anteile = new SimpleObjectProperty<Double>(v.getAnteile)
-			zinsen = new SimpleObjectProperty<Double>(v.getZinsen)
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
+			wpbezeichnung = new SimpleStringProperty(v.wertpapierBezeichnung)
+			bezeichnung = new SimpleStringProperty(v.anlageBezeichnung)
+			datum = new SimpleObjectProperty<LocalDate>(v.datum)
+			text = new SimpleStringProperty(v.btext)
+			betrag = new SimpleObjectProperty<Double>(v.zahlungsbetrag)
+			rabatt = new SimpleObjectProperty<Double>(v.rabattbetrag)
+			anteile = new SimpleObjectProperty<Double>(v.anteile)
+			zinsen = new SimpleObjectProperty<Double>(v.zinsen)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
+			geaendertVon = new SimpleStringProperty(v.geaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
+			angelegtVon = new SimpleStringProperty(v.angelegtVon)
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 	}
 
@@ -108,11 +107,11 @@ class WP400BuchungenController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getBezeichnung
+			return getData.bezeichnung
 		}
 	}
 
@@ -146,15 +145,14 @@ class WP400BuchungenController extends BaseController<String> {
 
 		if (stufe <= 0) {
 			bezeichnung.setText("%%")
-			var List<WpAnlageLang> kliste = get(
-				FactoryService.getWertpapierService.getAnlageListe(getServiceDaten, true, null, null, null))
+			var kliste = get(FactoryService::wertpapierService.getAnlageListe(serviceDaten, true, null, null, null))
 			anlage.setItems(getItems(kliste, new WpAnlageLang, [a|new AnlageData(a)], null))
 			setText(anlage, anlageUid)
 		}
 		if (stufe <= 1) {
-			var List<WpBuchungLang> l = get(
-				FactoryService.getWertpapierService.getBuchungListe(getServiceDaten, false, bezeichnung.getText,
-					null, null, getText(anlage)))
+			var l = get(
+				FactoryService::wertpapierService.getBuchungListe(serviceDaten, false, bezeichnung.text, null, null,
+					getText(anlage)))
 			getItems(l, null, [a|new BuchungenData(a)], buchungenData)
 		}
 		if (stufe <= 2) {
@@ -168,22 +166,22 @@ class WP400BuchungenController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		buchungen.setItems(buchungenData)
-		colWpbezeichnung.setCellValueFactory([c|c.getValue.wpbezeichnung])
-		colBezeichnung.setCellValueFactory([c|c.getValue.bezeichnung])
-		colDatum.setCellValueFactory([c|c.getValue.datum])
-		colText.setCellValueFactory([c|c.getValue.text])
-		colBetrag.setCellValueFactory([c|c.getValue.betrag])
+		colWpbezeichnung.setCellValueFactory([c|c.value.wpbezeichnung])
+		colBezeichnung.setCellValueFactory([c|c.value.bezeichnung])
+		colDatum.setCellValueFactory([c|c.value.datum])
+		colText.setCellValueFactory([c|c.value.text])
+		colBetrag.setCellValueFactory([c|c.value.betrag])
 		initColumnBetrag(colBetrag)
-		colRabatt.setCellValueFactory([c|c.getValue.rabatt])
+		colRabatt.setCellValueFactory([c|c.value.rabatt])
 		initColumnBetrag(colRabatt)
-		colAnteile.setCellValueFactory([c|c.getValue.anteile])
+		colAnteile.setCellValueFactory([c|c.value.anteile])
 		initColumnBetrag(colAnteile)
-		colZinsen.setCellValueFactory([c|c.getValue.zinsen])
+		colZinsen.setCellValueFactory([c|c.value.zinsen])
 		initColumnBetrag(colZinsen)
-		colGv.setCellValueFactory([c|c.getValue.geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue.geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue.angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue.angelegtAm])
+		colGv.setCellValueFactory([c|c.value.geaendertVon])
+		colGa.setCellValueFactory([c|c.value.geaendertAm])
+		colAv.setCellValueFactory([c|c.value.angelegtVon])
+		colAa.setCellValueFactory([c|c.value.angelegtAm])
 	}
 
 	override protected void updateParent() {
@@ -191,7 +189,7 @@ class WP400BuchungenController extends BaseController<String> {
 	}
 
 	def private void starteDialog(DialogAufrufEnum aufruf) {
-		var WpBuchungLang k = getValue(buchungen, !DialogAufrufEnum.NEU.equals(aufruf))
+		var WpBuchungLang k = getValue(buchungen, !DialogAufrufEnum::NEU.equals(aufruf))
 		starteFormular(WP410BuchungController, aufruf, k)
 	}
 
@@ -222,28 +220,28 @@ class WP400BuchungenController extends BaseController<String> {
 	 * Event für Neu.
 	 */
 	@FXML def void onNeu() {
-		starteDialog(DialogAufrufEnum.NEU)
+		starteDialog(DialogAufrufEnum::NEU)
 	}
 
 	/** 
 	 * Event für Kopieren.
 	 */
 	@FXML def void onKopieren() {
-		starteDialog(DialogAufrufEnum.KOPIEREN)
+		starteDialog(DialogAufrufEnum::KOPIEREN)
 	}
 
 	/** 
 	 * Event für Aendern.
 	 */
 	@FXML def void onAendern() {
-		starteDialog(DialogAufrufEnum.AENDERN)
+		starteDialog(DialogAufrufEnum::AENDERN)
 	}
 
 	/** 
 	 * Event für Loeschen.
 	 */
 	@FXML def void onLoeschen() {
-		starteDialog(DialogAufrufEnum.LOESCHEN)
+		starteDialog(DialogAufrufEnum::LOESCHEN)
 	}
 
 	/** 

@@ -1,19 +1,15 @@
 package de.cwkuehl.jhh6.app.controller.wp
 
-import java.time.LocalDate
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.WpAnlageLang
 import de.cwkuehl.jhh6.api.dto.WpBuchungLang
-import de.cwkuehl.jhh6.api.dto.WpStand
 import de.cwkuehl.jhh6.api.global.Global
 import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.api.service.ServiceErgebnis
 import de.cwkuehl.jhh6.app.base.BaseController
-import de.cwkuehl.jhh6.app.base.BaseController.ComboBoxData
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.app.control.Datum
-import de.cwkuehl.jhh6.app.controller.wp.WP410BuchungController.AnlageData
 import de.cwkuehl.jhh6.server.FactoryService
+import java.time.LocalDate
 import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.ComboBox
@@ -53,7 +49,7 @@ class WP410BuchungController extends BaseController<String> {
 	@FXML TextField buchung
 	@FXML Button ok
 	// @FXML Button abbrechen
-	static LocalDate valutaZuletzt = LocalDate.now
+	static LocalDate valutaZuletzt = LocalDate::now
 
 	/** 
 	 * Daten für ComboBox Anlage.
@@ -65,11 +61,11 @@ class WP410BuchungController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getBezeichnung
+			return getData.bezeichnung
 		}
 	}
 
@@ -81,7 +77,7 @@ class WP410BuchungController extends BaseController<String> {
 		tabbar = 0
 		nr0.setLabelFor(nr)
 		anlage0.setLabelFor(anlage, true)
-		valuta0.setLabelFor(valuta.getLabelForNode, true)
+		valuta0.setLabelFor(valuta.labelForNode, true)
 		preis0.setLabelFor(preis)
 		betrag0.setLabelFor(betrag)
 		rabatt0.setLabelFor(rabatt)
@@ -91,16 +87,8 @@ class WP410BuchungController extends BaseController<String> {
 		bText0.setLabelFor(bText, true)
 		angelegt0.setLabelFor(angelegt)
 		geaendert0.setLabelFor(geaendert)
-		betrag.textProperty.addListener([ observable, oldValue, newValue |
-			{
-				onAnteile
-			}
-		])
-		anteile.textProperty.addListener([ observable, oldValue, newValue |
-			{
-				onAnteile
-			}
-		])
+		betrag.textProperty.addListener([observable, oldValue, newValue|onAnteile])
+		anteile.textProperty.addListener([observable, oldValue, newValue|onAnteile])
 		initDaten(0)
 		betrag.requestFocus
 	}
@@ -114,27 +102,25 @@ class WP410BuchungController extends BaseController<String> {
 		if (stufe <= 0) {
 			// letztes Datum einstellen
 			valuta.setValue(valutaZuletzt)
-			var List<WpAnlageLang> l = get(
-				FactoryService.getWertpapierService.getAnlageListe(getServiceDaten, true, null, null, null))
+			var l = get(FactoryService::wertpapierService.getAnlageListe(serviceDaten, true, null, null, null))
 			anlage.setItems(getItems(l, null, [a|new AnlageData(a)], null))
-			var boolean neu = DialogAufrufEnum.NEU.equals(getAufruf)
-			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(getAufruf) ||
-				DialogAufrufEnum.STORNO.equals(getAufruf)
-			var WpBuchungLang e = getParameter1
+			var neu = DialogAufrufEnum::NEU.equals(aufruf)
+			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf) || DialogAufrufEnum::STORNO.equals(aufruf)
+			var WpBuchungLang e = parameter1
 			if (!neu && e !== null) {
-				var WpBuchungLang k = get(FactoryService.getWertpapierService.getBuchungLang(getServiceDaten, e.getUid))
+				var k = get(FactoryService::wertpapierService.getBuchungLang(serviceDaten, e.uid))
 				if (k !== null) {
-					nr.setText(k.getUid)
-					setText(anlage, k.getAnlageUid)
-					valuta.setValue(k.getDatum)
-					preis.setText(Global.dblStr4l(k.getStand))
-					betrag.setText(Global.dblStr2l(k.getZahlungsbetrag))
-					rabatt.setText(Global.dblStr2l(k.getRabattbetrag))
-					anteile.setText(Global.dblStr5l(k.getAnteile))
-					zinsen.setText(Global.dblStr2l(k.getZinsen))
-					bText.setText(k.getBtext)
-					angelegt.setText(k.formatDatumVon(k.getAngelegtAm, k.getAngelegtVon))
-					geaendert.setText(k.formatDatumVon(k.getGeaendertAm, k.getGeaendertVon))
+					nr.setText(k.uid)
+					setText(anlage, k.anlageUid)
+					valuta.setValue(k.datum)
+					preis.setText(Global.dblStr4l(k.stand))
+					betrag.setText(Global.dblStr2l(k.zahlungsbetrag))
+					rabatt.setText(Global.dblStr2l(k.rabattbetrag))
+					anteile.setText(Global.dblStr5l(k.anteile))
+					zinsen.setText(Global.dblStr2l(k.zinsen))
+					bText.setText(k.btext)
+					angelegt.setText(k.formatDatumVon(k.angelegtAm, k.angelegtVon))
+					geaendert.setText(k.formatDatumVon(k.geaendertAm, k.geaendertVon))
 				}
 			}
 			nr.setEditable(false)
@@ -151,10 +137,10 @@ class WP410BuchungController extends BaseController<String> {
 			geaendert.setEditable(false)
 			buchung.setEditable(false)
 			if (neu) {
-				ok.setText(Meldungen.M2004)
+				ok.setText(Meldungen::M2004)
 			} else if (loeschen) {
-				if (DialogAufrufEnum.LOESCHEN.equals(getAufruf)) {
-					ok.setText(Meldungen.M2001)
+				if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
+					ok.setText(Meldungen::M2001)
 				}
 			}
 		}
@@ -175,33 +161,31 @@ class WP410BuchungController extends BaseController<String> {
 	 */
 	@FXML def void onOk() {
 
-		var ServiceErgebnis<?> r = null
-		if (DialogAufrufEnum.NEU.equals(aufruf) || DialogAufrufEnum.KOPIEREN.equals(aufruf)) {
-			r = FactoryService.getWertpapierService.insertUpdateBuchung(getServiceDaten, null, getText(anlage),
-				valuta.getValue, Global.strDbl(betrag.getText), Global.strDbl(rabatt.getText),
-				Global.strDbl(anteile.getText), Global.strDbl(zinsen.getText), bText.getText, null,
-				Global.strDbl(preis.getText))
-		} else if (DialogAufrufEnum.AENDERN.equals(aufruf)) {
-			r = FactoryService.getWertpapierService.insertUpdateBuchung(getServiceDaten, nr.getText, getText(anlage),
-				valuta.getValue, Global.strDbl(betrag.getText), Global.strDbl(rabatt.getText),
-				Global.strDbl(anteile.getText), Global.strDbl(zinsen.getText), bText.getText, null,
-				Global.strDbl(preis.getText))
-		} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
-			r = FactoryService.getWertpapierService.deleteBuchung(getServiceDaten, nr.getText)
+		var ServiceErgebnis<?> r
+		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
+			r = FactoryService::wertpapierService.insertUpdateBuchung(serviceDaten, null, getText(anlage), valuta.value,
+				Global.strDbl(betrag.text), Global.strDbl(rabatt.text), Global.strDbl(anteile.text),
+				Global.strDbl(zinsen.text), bText.text, null, Global.strDbl(preis.text))
+		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
+			r = FactoryService::wertpapierService.insertUpdateBuchung(serviceDaten, nr.text, getText(anlage),
+				valuta.value, Global.strDbl(betrag.text), Global.strDbl(rabatt.text), Global.strDbl(anteile.text),
+				Global.strDbl(zinsen.text), bText.text, null, Global.strDbl(preis.text))
+		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
+			r = FactoryService::wertpapierService.deleteBuchung(serviceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)
-			if (r.getFehler.isEmpty) {
+			if (r.fehler.isEmpty) {
 				// letztes Datum merken	
-				valutaZuletzt = valuta.getValue
+				valutaZuletzt = valuta.value
 				updateParent
-				if (DialogAufrufEnum.NEU.equals(aufruf)) {
-					var StringBuffer sb = new StringBuffer
+				if (DialogAufrufEnum::NEU.equals(aufruf)) {
+					var sb = new StringBuffer
 					var WpAnlageLang a = getValue(anlage, true)
-					sb.append(Global.dateTimeStringForm(valuta.getValue.atStartOfDay)).append(", Betrag ").append(
-						betrag.getText).append(", Rabatt ").append(rabatt.getText).append(", Anteile ").append(
-						anteile.getText).append(", Zinsen ").append(zinsen.getText).append(", ").append(
-						a.getBezeichnung).append(", ").append(bText.getText)
+					sb.append(Global.dateTimeStringForm(valuta.value.atStartOfDay)).append(", Betrag ").append(
+						betrag.text).append(", Rabatt ").append(rabatt.text).append(", Anteile ").append(anteile.text).
+						append(", Zinsen ").append(zinsen.text).append(", ").append(a.bezeichnung).append(", ").append(
+							bText.text)
 					buchung.setText(sb.toString)
 					betrag.setText("")
 					rabatt.setText("")
@@ -226,13 +210,8 @@ class WP410BuchungController extends BaseController<String> {
 	@FXML def void onValuta() {
 
 		var WpAnlageLang a = getValue(anlage, true)
-		var WpStand s = get(
-			FactoryService.getWertpapierService.getStand(getServiceDaten, a.getWertpapierUid, valuta.getValue))
-		if (s === null) {
-			preis.setText(null)
-		} else {
-			preis.setText(Global.dblStr2l(s.getStueckpreis))
-		}
+		var s = get(FactoryService::wertpapierService.getStand(serviceDaten, a.wertpapierUid, valuta.value))
+		preis.text = if(s === null) null else Global.dblStr2l(s.stueckpreis)
 	}
 
 	/** 
@@ -240,12 +219,11 @@ class WP410BuchungController extends BaseController<String> {
 	 */
 	@FXML def void onAnteile() {
 
-		var b = Global.strDbl(betrag.getText)
-		var a = Global.strDbl(anteile.getText)
-		if (Global.compDouble4(a, 0) === 0 || Global.compDouble4(b, 0) === 0) {
-			preis2.setText(null)
-		} else {
-			preis2.setText(Global.dblStr6l(b / a))
-		}
+		var b = Global.strDbl(betrag.text)
+		var a = Global.strDbl(anteile.text)
+		preis2.text = if (Global.compDouble4(a, 0) === 0 || Global.compDouble4(b, 0) === 0)
+			null
+		else
+			Global.dblStr6l(b / a)
 	}
 }

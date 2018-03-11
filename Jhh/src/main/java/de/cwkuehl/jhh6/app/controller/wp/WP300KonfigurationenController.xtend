@@ -1,12 +1,11 @@
 package de.cwkuehl.jhh6.app.controller.wp
 
-import java.time.LocalDateTime
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.WpKonfigurationLang
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.server.FactoryService
+import java.time.LocalDateTime
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -55,12 +54,12 @@ class WP300KonfigurationenController extends BaseController<String> {
 		new(WpKonfigurationLang v) {
 
 			super(v)
-			uid = new SimpleStringProperty(v.getUid)
-			bezeichnung = new SimpleStringProperty(v.getBezeichnung)
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
+			uid = new SimpleStringProperty(v.uid)
+			bezeichnung = new SimpleStringProperty(v.bezeichnung)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
+			geaendertVon = new SimpleStringProperty(v.geaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
+			angelegtVon = new SimpleStringProperty(v.angelegtVon)
 		}
 
 		override String getId() {
@@ -96,8 +95,7 @@ class WP300KonfigurationenController extends BaseController<String> {
 		if (stufe <= 0) { // stufe = 0
 		}
 		if (stufe <= 1) {
-			var List<WpKonfigurationLang> l = get(
-				FactoryService.getWertpapierService.getKonfigurationListe(getServiceDaten, false, null))
+			var l = get(FactoryService::wertpapierService.getKonfigurationListe(serviceDaten, false, null))
 			getItems(l, null, [a|new KonfigurationenData(a)], konfigurationenData)
 		}
 		if (stufe <= 2) {
@@ -111,12 +109,12 @@ class WP300KonfigurationenController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		konfigurationen.setItems(konfigurationenData)
-		colUid.setCellValueFactory([c|c.getValue.uid])
-		colBezeichnung.setCellValueFactory([c|c.getValue.bezeichnung])
-		colGv.setCellValueFactory([c|c.getValue.geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue.geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue.angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue.angelegtAm])
+		colUid.setCellValueFactory([c|c.value.uid])
+		colBezeichnung.setCellValueFactory([c|c.value.bezeichnung])
+		colGv.setCellValueFactory([c|c.value.geaendertVon])
+		colGa.setCellValueFactory([c|c.value.geaendertAm])
+		colAv.setCellValueFactory([c|c.value.angelegtVon])
+		colAa.setCellValueFactory([c|c.value.angelegtAm])
 	}
 
 	override protected void updateParent() {
@@ -124,7 +122,7 @@ class WP300KonfigurationenController extends BaseController<String> {
 	}
 
 	def private void starteDialog(DialogAufrufEnum aufruf) {
-		var WpKonfigurationLang k = getValue(konfigurationen, !DialogAufrufEnum.NEU.equals(aufruf))
+		var WpKonfigurationLang k = getValue(konfigurationen, !DialogAufrufEnum::NEU.equals(aufruf))
 		starteFormular(WP310KonfigurationController, aufruf, k)
 	}
 
@@ -155,28 +153,28 @@ class WP300KonfigurationenController extends BaseController<String> {
 	 * Event für Neu.
 	 */
 	@FXML def void onNeu() {
-		starteDialog(DialogAufrufEnum.NEU)
+		starteDialog(DialogAufrufEnum::NEU)
 	}
 
 	/** 
 	 * Event für Kopieren.
 	 */
 	@FXML def void onKopieren() {
-		starteDialog(DialogAufrufEnum.KOPIEREN)
+		starteDialog(DialogAufrufEnum::KOPIEREN)
 	}
 
 	/** 
 	 * Event für Aendern.
 	 */
 	@FXML def void onAendern() {
-		starteDialog(DialogAufrufEnum.AENDERN)
+		starteDialog(DialogAufrufEnum::AENDERN)
 	}
 
 	/** 
 	 * Event für Loeschen.
 	 */
 	@FXML def void onLoeschen() {
-		starteDialog(DialogAufrufEnum.LOESCHEN)
+		starteDialog(DialogAufrufEnum::LOESCHEN)
 	}
 
 	/** 

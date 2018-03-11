@@ -1,15 +1,12 @@
 package de.cwkuehl.jhh6.app.controller.wp
 
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.MaEinstellung
 import de.cwkuehl.jhh6.api.dto.WpAnlageLang
 import de.cwkuehl.jhh6.api.dto.WpWertpapierLang
 import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.api.service.ServiceErgebnis
 import de.cwkuehl.jhh6.app.base.BaseController
-import de.cwkuehl.jhh6.app.base.BaseController.ComboBoxData
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
-import de.cwkuehl.jhh6.app.controller.wp.WP260AnlageController.RelationData
 import de.cwkuehl.jhh6.server.FactoryService
 import javafx.fxml.FXML
 import javafx.scene.control.Button
@@ -50,11 +47,11 @@ class WP260AnlageController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getSchluessel
+			return getData.schluessel
 		}
 
 		override String toString() {
-			return getData.getWert
+			return getData.wert
 		}
 	}
 
@@ -68,11 +65,11 @@ class WP260AnlageController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getBezeichnung
+			return getData.bezeichnung
 		}
 	}
 
@@ -100,23 +97,22 @@ class WP260AnlageController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var List<WpWertpapierLang> wliste = get(
-				FactoryService::getWertpapierService.getWertpapierListe(getServiceDaten, true, null, null, null))
+			var wliste = get(FactoryService::wertpapierService.getWertpapierListe(serviceDaten, true, null, null, null))
 			wertpapier.setItems(getItems(wliste, new WpWertpapierLang, [a|new RelationData(a)], null))
-			var boolean neu = DialogAufrufEnum::NEU.equals(getAufruf)
-			var boolean loeschen = DialogAufrufEnum::LOESCHEN.equals(getAufruf)
-			var WpAnlageLang k = getParameter1
+			var neu = DialogAufrufEnum::NEU.equals(aufruf)
+			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
+			var WpAnlageLang k = parameter1
 			if (!neu && k !== null) {
-				k = get(FactoryService::getWertpapierService.getAnlageLang(getServiceDaten, k.getUid))
+				k = get(FactoryService::wertpapierService.getAnlageLang(serviceDaten, k.uid))
 			}
 			if (!neu && k !== null) {
-				nr.setText(k.getUid)
-				setText(wertpapier, k.getWertpapierUid)
-				bezeichnung.setText(k.getBezeichnung)
-				daten.setText(k.getDaten)
-				notiz.setText(k.getNotiz)
-				angelegt.setText(k.formatDatumVon(k.getAngelegtAm, k.getAngelegtVon))
-				geaendert.setText(k.formatDatumVon(k.getGeaendertAm, k.getGeaendertVon))
+				nr.setText(k.uid)
+				setText(wertpapier, k.wertpapierUid)
+				bezeichnung.setText(k.bezeichnung)
+				daten.setText(k.daten)
+				notiz.setText(k.notiz)
+				angelegt.setText(k.formatDatumVon(k.angelegtAm, k.angelegtVon))
+				geaendert.setText(k.formatDatumVon(k.geaendertAm, k.geaendertVon))
 			}
 			nr.setEditable(false)
 			setEditable(wertpapier, neu)
@@ -145,21 +141,21 @@ class WP260AnlageController extends BaseController<String> {
 	/** 
 	 * Event für Ok.
 	 */
-	@FXML @SuppressWarnings("unchecked") def void onOk() {
+	@FXML def void onOk() {
 
-		var ServiceErgebnis<?> r = null
+		var ServiceErgebnis<?> r
 		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
-			r = FactoryService::getWertpapierService.insertUpdateAnlage(getServiceDaten, null, getText(wertpapier),
-				bezeichnung.getText, notiz.getText)
+			r = FactoryService::wertpapierService.insertUpdateAnlage(serviceDaten, null, getText(wertpapier),
+				bezeichnung.text, notiz.text)
 		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
-			r = FactoryService::getWertpapierService.insertUpdateAnlage(getServiceDaten, nr.getText,
-				getText(wertpapier), bezeichnung.getText, notiz.getText)
+			r = FactoryService::wertpapierService.insertUpdateAnlage(serviceDaten, nr.text, getText(wertpapier),
+				bezeichnung.text, notiz.text)
 		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
-			r = FactoryService::getWertpapierService.deleteAnlage(getServiceDaten, nr.getText)
+			r = FactoryService::wertpapierService.deleteAnlage(serviceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)
-			if (r.getFehler.isEmpty) {
+			if (r.fehler.isEmpty) {
 				updateParent
 				close
 			}

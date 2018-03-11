@@ -1,6 +1,5 @@
 package de.cwkuehl.jhh6.app.controller.wp
 
-import de.cwkuehl.jhh6.api.dto.SoKurse
 import de.cwkuehl.jhh6.api.dto.WpKonfigurationLang
 import de.cwkuehl.jhh6.api.dto.WpWertpapierLang
 import de.cwkuehl.jhh6.api.global.Global
@@ -75,15 +74,14 @@ class WP110ChartsController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			wliste = get(
-				FactoryService.getWertpapierService.getWertpapierListe(getServiceDaten, true, null, null, null))
-			kliste = get(FactoryService.getWertpapierService.getKonfigurationListe(getServiceDaten, false, null))
-			wp1 = wliste.stream.filter([a|a.getUid.equals(wp1Uid)]).findFirst.orElse(null)
-			wp2 = wliste.stream.filter([a|a.getUid.equals(wp2Uid)]).findFirst.orElse(null)
-			wp3 = wliste.stream.filter([a|a.getUid.equals(wp3Uid)]).findFirst.orElse(null)
-			k1 = kliste.stream.filter([a|a.getUid.equals(k1Uid)]).findFirst.orElse(null)
-			k2 = kliste.stream.filter([a|a.getUid.equals(k2Uid)]).findFirst.orElse(null)
-			k3 = kliste.stream.filter([a|a.getUid.equals(k3Uid)]).findFirst.orElse(null)
+			wliste = get(FactoryService::wertpapierService.getWertpapierListe(serviceDaten, true, null, null, null))
+			kliste = get(FactoryService::wertpapierService.getKonfigurationListe(serviceDaten, false, null))
+			wp1 = wliste.stream.filter([a|a.uid.equals(wp1Uid)]).findFirst.orElse(null)
+			wp2 = wliste.stream.filter([a|a.uid.equals(wp2Uid)]).findFirst.orElse(null)
+			wp3 = wliste.stream.filter([a|a.uid.equals(wp3Uid)]).findFirst.orElse(null)
+			k1 = kliste.stream.filter([a|a.uid.equals(k1Uid)]).findFirst.orElse(null)
+			k2 = kliste.stream.filter([a|a.uid.equals(k2Uid)]).findFirst.orElse(null)
+			k3 = kliste.stream.filter([a|a.uid.equals(k3Uid)]).findFirst.orElse(null)
 			if (wp1 === null) {
 				wp1 = new WpWertpapierLang
 				wp1.setBezeichnung("DAX")
@@ -119,69 +117,69 @@ class WP110ChartsController extends BaseController<String> {
 				k3.setBox(k2.getBox * 4)
 			}
 			// if (merken) {
-			// daten.setWp1Uid(wp1.getUid);
-			// daten.setWp2Uid(wp2.getUid);
-			// daten.setWp3Uid(wp3.getUid);
-			// daten.setK1Uid(k1.getUid);
-			// daten.setK2Uid(k2.getUid);
-			// daten.setK3Uid(k3.getUid);
+			// daten.setWp1Uid(wp1.uid)
+			// daten.setWp2Uid(wp2.uid)
+			// daten.setWp3Uid(wp3.uid)
+			// daten.setK1Uid(k1.uid)
+			// daten.setK2Uid(k2.uid)
+			// daten.setK3Uid(k3.uid)
 			// }
 			ChartPane.initChart0(chartpane1)
 			ChartPane.initChart0(chartpane2)
 			ChartPane.initChart0(chartpane3)
 		}
 		if (stufe <= 1) {
-			var LocalDate bis = LocalDate.now
-			var LocalDate von = bis.minusDays(k1.getDauer)
-			var List<SoKurse> liste = get(
-				FactoryService.getWertpapierService.holeKurse(getServiceDaten, von, bis, wp1.getKuerzel,
-					if(k1.getRelativ) wp1.getRelationKuerzel else null))
+			var bis = LocalDate::now
+			var von = bis.minusDays(k1.dauer)
+			var liste = get(
+				FactoryService::wertpapierService.holeKurse(serviceDaten, von, bis, wp1.kuerzel,
+					if(k1.relativ) wp1.relationKuerzel else null))
 			if (liste !== null && liste.size > 0) {
 				chart1 = new PnfChart
-				chart1.setBox(k1.getBox)
-				chart1.setSkala(k1.getSkala)
-				chart1.setUmkehr(k1.getUmkehr)
-				chart1.setBezeichnung(wp1.getBezeichnung)
-				chart1.setMethode(k1.getMethode)
-				chart1.setRelativ(k1.getRelativ)
-				chart1.setZiel(wp1.getSignalkurs1)
-				chart1.setStop(Global.strDbl(wp1.getStopkurs))
+				chart1.setBox(k1.box)
+				chart1.setSkala(k1.skala)
+				chart1.setUmkehr(k1.umkehr)
+				chart1.setBezeichnung(wp1.bezeichnung)
+				chart1.setMethode(k1.methode)
+				chart1.setRelativ(k1.relativ)
+				chart1.setZiel(wp1.signalkurs1)
+				chart1.setStop(Global.strDbl(wp1.stopkurs))
 				chart1.addKurse(liste)
 			}
-			if (k2.getDauer !== k1.getDauer || !wp2.getKuerzel.equals(wp1.getKuerzel)) {
-				von = bis.minusDays(k2.getDauer)
+			if (k2.getDauer !== k1.dauer || !wp2.getKuerzel.equals(wp1.kuerzel)) {
+				von = bis.minusDays(k2.dauer)
 				liste = get(
-					FactoryService.getWertpapierService.holeKurse(getServiceDaten, von, bis, wp2.getKuerzel,
-						if(k2.getRelativ) wp2.getRelationKuerzel else null))
+					FactoryService::wertpapierService.holeKurse(serviceDaten, von, bis, wp2.kuerzel,
+						if(k2.relativ) wp2.relationKuerzel else null))
 			}
 			if (liste !== null && liste.size > 0) {
 				chart2 = new PnfChart
-				chart2.setBox(k2.getBox)
-				chart2.setSkala(k2.getSkala)
-				chart2.setUmkehr(k2.getUmkehr)
-				chart2.setBezeichnung(wp2.getBezeichnung)
-				chart2.setMethode(k2.getMethode)
-				chart2.setRelativ(k2.getRelativ)
-				chart2.setZiel(wp2.getSignalkurs1)
-				chart2.setStop(Global.strDbl(wp2.getStopkurs))
+				chart2.setBox(k2.box)
+				chart2.setSkala(k2.skala)
+				chart2.setUmkehr(k2.umkehr)
+				chart2.setBezeichnung(wp2.bezeichnung)
+				chart2.setMethode(k2.methode)
+				chart2.setRelativ(k2.relativ)
+				chart2.setZiel(wp2.signalkurs1)
+				chart2.setStop(Global.strDbl(wp2.stopkurs))
 				chart2.addKurse(liste)
 			}
-			if (k3.getDauer !== k2.getDauer || !wp3.getKuerzel.equals(wp2.getKuerzel)) {
-				von = bis.minusDays(k3.getDauer)
+			if (k3.getDauer !== k2.dauer || !wp3.getKuerzel.equals(wp2.kuerzel)) {
+				von = bis.minusDays(k3.dauer)
 				liste = get(
-					FactoryService.getWertpapierService.holeKurse(getServiceDaten, von, bis, wp3.getKuerzel,
-						if(k3.getRelativ) wp3.getRelationKuerzel else null))
+					FactoryService::wertpapierService.holeKurse(serviceDaten, von, bis, wp3.kuerzel,
+						if(k3.relativ) wp3.relationKuerzel else null))
 			}
 			if (liste !== null && liste.size > 0) {
 				chart3 = new PnfChart
-				chart3.setBox(k3.getBox)
-				chart3.setSkala(k3.getSkala)
-				chart3.setUmkehr(k3.getUmkehr)
-				chart3.setBezeichnung(wp3.getBezeichnung)
-				chart3.setMethode(k3.getMethode)
-				chart3.setRelativ(k3.getRelativ)
-				chart3.setZiel(wp3.getSignalkurs1)
-				chart3.setStop(Global.strDbl(wp3.getStopkurs))
+				chart3.setBox(k3.box)
+				chart3.setSkala(k3.skala)
+				chart3.setUmkehr(k3.umkehr)
+				chart3.setBezeichnung(wp3.bezeichnung)
+				chart3.setMethode(k3.methode)
+				chart3.setRelativ(k3.relativ)
+				chart3.setZiel(wp3.signalkurs1)
+				chart3.setStop(Global.strDbl(wp3.stopkurs))
 				chart3.addKurse(liste)
 			}
 			ChartPane.initChart1(chartpane1, chart1)
@@ -235,14 +233,14 @@ class WP110ChartsController extends BaseController<String> {
 	 */
 	@FXML def void onEinstellung() {
 
-		var List<String> uids = new ArrayList<String>
+		var uids = new ArrayList<String>
 		uids.add(wp1Uid)
 		uids.add(k1Uid)
 		uids.add(wp2Uid)
 		uids.add(k2Uid)
 		uids.add(wp3Uid)
 		uids.add(k3Uid)
-		uids = starteDialog(WP120ChartsEinstellungenController, DialogAufrufEnum.OHNE, uids)
+		uids = starteDialog(WP120ChartsEinstellungenController, DialogAufrufEnum::OHNE, uids)
 		if (Global.listLaenge(uids) >= 6) {
 			wp1Uid = uids.get(0)
 			k1Uid = uids.get(1)
