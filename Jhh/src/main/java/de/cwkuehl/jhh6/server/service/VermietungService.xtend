@@ -107,7 +107,7 @@ class VermietungService {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		if (Global.nes(bez)) {
-			throw new MeldungException(Meldungen.VM001)
+			throw new MeldungException(Meldungen::VM001)
 		}
 		var e = hausRep.iuVmHaus(daten, null, uid, bez, strasse, plz, ort, notiz, null, null, null, null)
 		var r = new ServiceErgebnis<VmHaus>(e)
@@ -120,7 +120,7 @@ class VermietungService {
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var wliste = wohnungRep.getWohnungLangListe(daten, null, uid)
 		if (Global.listLaenge(wliste) > 0) {
-			throw new MeldungException(Meldungen.VM003)
+			throw new MeldungException(Meldungen::VM003)
 		}
 		hausRep.delete(daten, new VmHausKey(daten.mandantNr, uid))
 		var r = new ServiceErgebnis<Void>(null)
@@ -159,10 +159,10 @@ class VermietungService {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		if (Global.nes(hausUid)) {
-			throw new MeldungException(Meldungen.VM002)
+			throw new MeldungException(Meldungen::VM002)
 		}
 		if (Global.nes(bez)) {
-			throw new MeldungException(Meldungen.VM001)
+			throw new MeldungException(Meldungen::VM001)
 		}
 		var e = wohnungRep.iuVmWohnung(daten, null, uid, hausUid, bez, notiz, null, null, null, null)
 		var r = new ServiceErgebnis<VmWohnung>(e)
@@ -175,11 +175,11 @@ class VermietungService {
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var mliste = mieterRep.getMieterLangListe(daten, null, uid, null, null, null, false)
 		if (Global.listLaenge(mliste) > 0) {
-			throw new MeldungException(Meldungen.VM004)
+			throw new MeldungException(Meldungen::VM004)
 		}
 		var liste = mieteRep.getMieteLangListe(daten, null, uid, null, null)
 		if (Global.listLaenge(liste) > 0) {
-			throw new MeldungException(Meldungen.VM005)
+			throw new MeldungException(Meldungen::VM005)
 		}
 		wohnungRep.delete(daten, new VmWohnungKey(daten.mandantNr, uid))
 		var r = new ServiceErgebnis<Void>(null)
@@ -220,13 +220,13 @@ class VermietungService {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		if (Global.nes(wohnungUid)) {
-			throw new MeldungException(Meldungen.VM006)
+			throw new MeldungException(Meldungen::VM006)
 		}
 		if (Global.nes(name)) {
-			throw new MeldungException(Meldungen.VM008)
+			throw new MeldungException(Meldungen::VM008)
 		}
 		if (einzug === null) {
-			throw new MeldungException(Meldungen.VM009)
+			throw new MeldungException(Meldungen::VM009)
 		}
 		var e = mieterRep.iuVmMieter(daten, null, uid, wohnungUid, name, vorname, anrede, einzug, auszug, qm, miete,
 			kaution, antenne, status, notiz, null, null, null, null)
@@ -251,11 +251,11 @@ class VermietungService {
 		var haeuser = new ArrayList<FoHaus>
 		var hliste = hausRep.getHausListe(daten, hausUid, null)
 		if (Global.listLaenge(hliste) <= 0) {
-			throw new MeldungException(Meldungen.VM002)
+			throw new MeldungException(Meldungen::VM002)
 		}
 
 		var periode = Global.getPeriodeString(von, bis, false)
-		var ueberschrift = Meldungen.VM010(periode, daten.jetzt)
+		var ueberschrift = Meldungen::VM010(periode, daten.jetzt)
 		for (VmHaus h : hliste) {
 			var haus = new FoHaus
 			haus.bezeichnung = h.bezeichnung
@@ -297,7 +297,7 @@ class VermietungService {
 				}
 				if (mliste.size <= 0) {
 					var mieter = new FoMieter
-					mieter.setName(Meldungen.VM011)
+					mieter.setName(Meldungen::VM011)
 					wohnung.mieter.add(mieter)
 				}
 			}
@@ -361,29 +361,29 @@ class VermietungService {
 		if (l.size > 0) {
 			var m = l.get(0)
 			var summe = 0.0
-			var sb = new StringBuffer(Meldungen.VM012)
+			var sb = new StringBuffer(Meldungen::VM012)
 			sb.append(Global.dateTimeStringForm(m.datum.atStartOfDay))
 			if (Global.compDouble(m.miete, 0) > 0) {
 				summe += m.miete
-				sb.append(Meldungen.VM013).append(Global.dblStr2l(m.miete))
+				sb.append(Meldungen::VM013).append(Global.dblStr2l(m.miete))
 			}
 			if (Global.compDouble(m.garage, 0) > 0) {
 				summe += m.garage
-				sb.append(Meldungen.VM014).append(Global.dblStr2l(m.garage))
+				sb.append(Meldungen::VM014).append(Global.dblStr2l(m.garage))
 			}
 			if (Global.compDouble(m.nebenkosten, 0) > 0) {
 				summe += m.nebenkosten
-				sb.append(Meldungen.VM015).append(Global.dblStr2l(m.nebenkosten))
+				sb.append(Meldungen::VM015).append(Global.dblStr2l(m.nebenkosten))
 			}
 			if (Global.compDouble(m.heizung, 0) > 0) {
 				summe += m.heizung
-				sb.append(Meldungen.VM016).append(Global.dblStr2l(m.heizung))
+				sb.append(Meldungen::VM016).append(Global.dblStr2l(m.heizung))
 			}
 			if (Global.compDouble(summe, 0) > 0) {
-				sb.append(Meldungen.VM017).append(Global.dblStr2l(summe))
+				sb.append(Meldungen::VM017).append(Global.dblStr2l(summe))
 			}
 			if (m.personen > 0) {
-				sb.append(Meldungen.VM018).append(Global.intStr(m.personen))
+				sb.append(Meldungen::VM018).append(Global.intStr(m.personen))
 			}
 			m.text1 = sb.toString
 			r.ergebnis = m
@@ -397,10 +397,10 @@ class VermietungService {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		if (Global.nes(wohnungUid)) {
-			throw new MeldungException(Meldungen.VM006)
+			throw new MeldungException(Meldungen::VM006)
 		}
 		if (datum === null) {
-			throw new MeldungException(Meldungen.VM019)
+			throw new MeldungException(Meldungen::VM019)
 		}
 		var e = mieteRep.iuVmMiete(daten, null, uid, wohnungUid, datum, miete, nebenkosten, garage, heizung, personen,
 			notiz, null, null, null, null)
@@ -479,7 +479,7 @@ class VermietungService {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		if (hausUid === null && wohnungUid === null) {
-			throw new MeldungException(Meldungen.VM020)
+			throw new MeldungException(Meldungen::VM020)
 		}
 		var v = valuta.withDayOfMonth(1)
 		var buchung = false
@@ -498,7 +498,7 @@ class VermietungService {
 				if (bliste.empty) {
 					var ebetrag = e.miete + e.garage
 					var betrag = Global.konvDM(ebetrag)
-					var btext = Meldungen.VM022(v.atStartOfDay, mieter.wohnungBezeichnung, mieter.name)
+					var btext = Meldungen::VM022(v.atStartOfDay, mieter.wohnungBezeichnung, mieter.name)
 					haushaltService.insertUpdateBuchung(daten, null, v, betrag, ebetrag, mietforderung, sollmiete,
 						btext, null, v, schluessel, e.hausUid, e.wohnungUid, mieter.uid, null, true)
 					buchung = true
@@ -509,7 +509,7 @@ class VermietungService {
 				if (bliste.empty) {
 					var ebetrag = e.nebenkosten + e.heizung
 					var betrag = Global.konvDM(ebetrag)
-					var btext = Meldungen.VM023(v.atStartOfDay, mieter.wohnungBezeichnung, mieter.name)
+					var btext = Meldungen::VM023(v.atStartOfDay, mieter.wohnungBezeichnung, mieter.name)
 					haushaltService.insertUpdateBuchung(daten, null, v, betrag, ebetrag, mietforderung, anzahlung,
 						btext, null, v, schluessel, e.hausUid, e.wohnungUid, mieter.uid, null, true)
 					buchung = true
@@ -517,7 +517,7 @@ class VermietungService {
 			}
 		}
 		if (!buchung) {
-			throw new MeldungException(Meldungen.VM021)
+			throw new MeldungException(Meldungen::VM021)
 		}
 
 		var r = new ServiceErgebnis<Void>(null)
@@ -534,17 +534,17 @@ class VermietungService {
 		var v = valuta.withDayOfMonth(1)
 
 		if (Global.nes(mieterUid)) {
-			throw new MeldungException(Meldungen.VM024)
+			throw new MeldungException(Meldungen::VM024)
 		}
 		if (Global.compDouble(summeMiete, 0) <= 0 && Global.compDouble(summeBk, 0) <= 0) {
-			throw new MeldungException(Meldungen.VM025)
+			throw new MeldungException(Meldungen::VM025)
 		}
 
 		var buchung = false
 		var euro = isEuroIntern
 		var liste = mieterRep.getMieterLangListe(daten, mieterUid, null, v, v, null, true)
 		if (liste.isEmpty) {
-			throw new MeldungException(Meldungen.VM026(mieterUid))
+			throw new MeldungException(Meldungen::VM026(mieterUid))
 		}
 		var mieter = liste.get(0)
 		var hausUid = mieter.hausUid
@@ -559,7 +559,7 @@ class VermietungService {
 			if (bliste.empty) {
 				var ebetrag = summeMiete
 				var betrag = Global.konvDM(ebetrag)
-				var btext = Meldungen.VM029(v.atStartOfDay, mieter.wohnungBezeichnung, mieter.name)
+				var btext = Meldungen::VM029(v.atStartOfDay, mieter.wohnungBezeichnung, mieter.name)
 				haushaltService.insertUpdateBuchung(daten, null, v, betrag, ebetrag, bank, mietforderung, btext, null,
 					belegDatum, schluessel, hausUid, wohnungUid, mieterUid, null, true)
 				buchung = true
@@ -573,14 +573,14 @@ class VermietungService {
 			if (bliste.empty) {
 				var ebetrag = summeBk
 				var betrag = Global.konvDM(ebetrag)
-				var btext = Meldungen.VM030(v.atStartOfDay, mieter.wohnungBezeichnung, mieter.name)
+				var btext = Meldungen::VM030(v.atStartOfDay, mieter.wohnungBezeichnung, mieter.name)
 				haushaltService.insertUpdateBuchung(daten, null, v, betrag, ebetrag, bank, mietforderung, btext, null,
 					belegDatum, schluessel, hausUid, wohnungUid, mieterUid, null, true)
 				buchung = true
 			}
 		}
 		if (!buchung) {
-			throw new MeldungException(Meldungen.VM021)
+			throw new MeldungException(Meldungen::VM021)
 		}
 
 		var r = new ServiceErgebnis<Void>(null)
@@ -591,7 +591,7 @@ class VermietungService {
 
 		var vo = getKontoIntern(daten, schluessel)
 		if (vo === null) {
-			throw new MeldungException(Meldungen.VM027(schluessel))
+			throw new MeldungException(Meldungen::VM027(schluessel))
 		}
 		return vo.uid
 	}
@@ -740,18 +740,18 @@ class VermietungService {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var r = 1
-		var String wohnungUid = null
-		var String mieterUid = null
-		var VmAbrechnungSchluesselEnum e = null
-		var String wert = null
-		var Double betrag = null
-		var LocalDate datum = null
+		var String wohnungUid
+		var String mieterUid
+		var VmAbrechnungSchluesselEnum e
+		var String wert
+		var Double betrag
+		var LocalDate datum
 		if (Global.nes(hausUid)) {
-			throw new MeldungException(Meldungen.VM002)
+			throw new MeldungException(Meldungen::VM002)
 		}
 		var haus = hausRep.get(daten, new VmHausKey(daten.mandantNr, hausUid))
 		if (haus === null) {
-			throw new MeldungException(Meldungen.VM002)
+			throw new MeldungException(Meldungen::VM002)
 		}
 
 		e = VmAbrechnungSchluesselEnum.H_DATUM
@@ -1015,14 +1015,14 @@ class VermietungService {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		if (Global.nes(hausUid)) {
-			throw new MeldungException(Meldungen.VM002)
+			throw new MeldungException(Meldungen::VM002)
 		}
 		if (Global.nes(schluessel)) {
-			throw new MeldungException(Meldungen.VM007)
+			throw new MeldungException(Meldungen::VM007)
 		}
 		var haus = hausRep.get(daten, new VmHausKey(daten.mandantNr, hausUid))
 		if (haus === null) {
-			throw new MeldungException(Meldungen.VM002)
+			throw new MeldungException(Meldungen::VM002)
 		}
 		var e = abrechnungRep.iuVmAbrechnung(daten, null, uid, hausUid, wohnungUid, mieterUid, von, bis, schluessel,
 			beschreibung, wert, betrag, datum, reihenfolge, status, funktion, notiz, null, null, null, null)
@@ -1045,7 +1045,7 @@ class VermietungService {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		if (Global.nes(hausUid)) {
-			throw new MeldungException(Meldungen.VM002)
+			throw new MeldungException(Meldungen::VM002)
 		}
 
 		var haus = new FoHaus
@@ -1057,7 +1057,7 @@ class VermietungService {
 		var aliste = abrechnungRep.getAbrechnungLangListe(daten, null, null, hausUid, "null", "null", null, null, von,
 			bis)
 		if (aliste.size <= 0) {
-			throw new MeldungException(Meldungen.VM028)
+			throw new MeldungException(Meldungen::VM028)
 		}
 		var a0 = aliste.get(0)
 		if (a0.datumVon.isBefore(von)) {
@@ -1068,7 +1068,7 @@ class VermietungService {
 		}
 		var listeH = abrechnungRep.getAbrechnungLangListe(daten, null, null, hausUid, null, null, von, bis, null, null)
 		if (Global.listLaenge(listeH) <= 0) {
-			throw new MeldungException(Meldungen.VM028)
+			throw new MeldungException(Meldungen::VM028)
 		}
 		haus.setVon(von)
 		haus.setBis(bis)

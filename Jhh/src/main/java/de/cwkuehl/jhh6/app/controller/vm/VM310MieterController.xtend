@@ -1,7 +1,5 @@
 package de.cwkuehl.jhh6.app.controller.vm
 
-import java.time.LocalDate
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.VmMieteLang
 import de.cwkuehl.jhh6.api.dto.VmMieterLang
 import de.cwkuehl.jhh6.api.dto.VmWohnungLang
@@ -12,6 +10,7 @@ import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.app.control.Datum
 import de.cwkuehl.jhh6.server.FactoryService
+import java.time.LocalDate
 import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.ComboBox
@@ -69,11 +68,11 @@ class VM310MieterController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getBezeichnung
+			return getData.bezeichnung
 		}
 	}
 
@@ -107,15 +106,14 @@ class VM310MieterController extends BaseController<String> {
 		if (stufe <= 0) {
 			einzug.setValue(LocalDate::now.withDayOfMonth(1))
 			auszug.setValue(null as LocalDate)
-			var List<VmWohnungLang> wl = get(
-				FactoryService::vermietungService.getWohnungListe(getServiceDaten, true))
+			var wl = get(FactoryService::vermietungService.getWohnungListe(serviceDaten, true))
 			wohnung.setItems(getItems(wl, new VmWohnungLang, [a|new WohnungData(a)], null))
-			var boolean neu = DialogAufrufEnum::NEU.equals(getAufruf)
-			var boolean loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
-			var VmMieterLang k = getParameter1
+			var neu = DialogAufrufEnum::NEU.equals(aufruf)
+			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
+			var VmMieterLang k = parameter1
 			if (!neu && k !== null) {
-				k = get(FactoryService::vermietungService.getMieterLang(getServiceDaten, k.uid))
-				nr.setText(k.getUid)
+				k = get(FactoryService::vermietungService.getMieterLang(serviceDaten, k.uid))
+				nr.setText(k.uid)
 				setText(wohnung, k.wohnungUid)
 				name.setText(k.name)
 				vorname.setText(k.vorname)
@@ -152,9 +150,9 @@ class VM310MieterController extends BaseController<String> {
 		}
 		if (stufe <= 1) {
 			aktuelleMiete = get(
-				FactoryService::getVermietungService.getMieteLang(getServiceDaten, true, null, getText(wohnung),
+				FactoryService::vermietungService.getMieteLang(serviceDaten, true, null, getText(wohnung),
 					LocalDate::now))
-			miete.setText(if(aktuelleMiete === null) null else aktuelleMiete.getText1)
+			miete.setText(if(aktuelleMiete === null) null else aktuelleMiete.text1)
 		}
 		if (stufe <= 2) { // initDatenTable
 		}
@@ -175,25 +173,25 @@ class VM310MieterController extends BaseController<String> {
 	/** 
 	 * Event für Ok.
 	 */
-	@FXML @SuppressWarnings("unchecked") def void onOk() {
+	@FXML def void onOk() {
 
-		var ServiceErgebnis<?> r = null
+		var ServiceErgebnis<?> r
 		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
-			r = FactoryService::getVermietungService.insertUpdateMieter(getServiceDaten, null, getText(wohnung),
-				name.getText, vorname.getText, anrede.getText, einzug.getValue, auszug.getValue,
-				Global::strDbl(qm.getText), Global::strDbl(grundmiete.getText), Global::strDbl(kaution.getText),
-				Global::strDbl(antenne.getText), 0, notiz.getText)
+			r = FactoryService::vermietungService.insertUpdateMieter(serviceDaten, null, getText(wohnung), name.text,
+				vorname.text, anrede.text, einzug.value, auszug.value, Global::strDbl(qm.text),
+				Global::strDbl(grundmiete.text), Global::strDbl(kaution.text), Global::strDbl(antenne.text), 0, //
+				notiz.text)
 		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
-			r = FactoryService::getVermietungService.insertUpdateMieter(getServiceDaten, nr.getText,
-				getText(wohnung), name.getText, vorname.getText, anrede.getText, einzug.getValue,
-				auszug.getValue, Global::strDbl(qm.getText), Global::strDbl(grundmiete.getText),
-				Global::strDbl(kaution.getText), Global::strDbl(antenne.getText), 0, notiz.getText)
+			r = FactoryService::vermietungService.insertUpdateMieter(serviceDaten, nr.text, getText(wohnung), name.text,
+				vorname.text, anrede.text, einzug.value, auszug.value, Global::strDbl(qm.text),
+				Global::strDbl(grundmiete.text), Global::strDbl(kaution.text), Global::strDbl(antenne.text), 0, //
+				notiz.text)
 		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
-			r = FactoryService::getVermietungService.deleteMieter(getServiceDaten, nr.getText)
+			r = FactoryService::vermietungService.deleteMieter(serviceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)
-			if (r.getFehler.isEmpty) {
+			if (r.fehler.isEmpty) {
 				updateParent
 				close
 			}
@@ -205,11 +203,11 @@ class VM310MieterController extends BaseController<String> {
 	 */
 	@FXML def void onMieteAendern() {
 
-		var VmMieteLang k = aktuelleMiete
+		var k = aktuelleMiete
 		if (k === null) {
 			k = new VmMieteLang
 			k.setWohnungUid(getText(wohnung))
-			k.setDatum(einzug.getValue)
+			k.setDatum(einzug.value)
 		}
 		// starteDialog(typeof(VM410MieteController), DialogAufrufEnum::KOPIEREN, k)
 		initDaten(1)

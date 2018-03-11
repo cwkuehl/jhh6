@@ -14,7 +14,6 @@ import de.cwkuehl.jhh6.app.control.Datum
 import de.cwkuehl.jhh6.server.FactoryService
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.util.List
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -92,19 +91,19 @@ class VM920AbrechnungenController extends BaseController<String> {
 		new(VmAbrechnungLang v) {
 
 			super(v)
-			uid = new SimpleStringProperty(v.getUid)
-			haus = new SimpleStringProperty(v.getHausBezeichnung)
-			wohnung = new SimpleStringProperty(v.getWohnungBezeichnung)
-			mieter = new SimpleStringProperty(v.getMieterName)
-			schluessel = new SimpleStringProperty(v.getSchluessel)
-			wert = new SimpleStringProperty(v.getWert)
-			betrag = new SimpleObjectProperty<Double>(v.getBetrag)
-			von = new SimpleObjectProperty<LocalDate>(v.getDatumVon)
-			bis = new SimpleObjectProperty<LocalDate>(v.getDatumBis)
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
+			uid = new SimpleStringProperty(v.uid)
+			haus = new SimpleStringProperty(v.hausBezeichnung)
+			wohnung = new SimpleStringProperty(v.wohnungBezeichnung)
+			mieter = new SimpleStringProperty(v.mieterName)
+			schluessel = new SimpleStringProperty(v.schluessel)
+			wert = new SimpleStringProperty(v.wert)
+			betrag = new SimpleObjectProperty<Double>(v.betrag)
+			von = new SimpleObjectProperty<LocalDate>(v.datumVon)
+			bis = new SimpleObjectProperty<LocalDate>(v.datumBis)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
+			geaendertVon = new SimpleStringProperty(v.geaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
+			angelegtVon = new SimpleStringProperty(v.angelegtVon)
 		}
 
 		override String getId() {
@@ -122,11 +121,11 @@ class VM920AbrechnungenController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getBezeichnung
+			return getData.bezeichnung
 		}
 	}
 
@@ -140,11 +139,11 @@ class VM920AbrechnungenController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getBezeichnung
+			return getData.bezeichnung
 		}
 	}
 
@@ -158,11 +157,11 @@ class VM920AbrechnungenController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getName
+			return getData.name
 		}
 	}
 
@@ -176,11 +175,11 @@ class VM920AbrechnungenController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getSchluessel
+			return getData.schluessel
 		}
 
 		override String toString() {
-			return getData.getWert
+			return getData.wert
 		}
 	}
 
@@ -192,8 +191,8 @@ class VM920AbrechnungenController extends BaseController<String> {
 		tabbar = 1
 		super.initialize
 		mieten0.setLabelFor(abrechnungen)
-		von0.setLabelFor(von.getLabelForNode)
-		bis0.setLabelFor(bis.getLabelForNode)
+		von0.setLabelFor(von.labelForNode)
+		bis0.setLabelFor(bis.labelForNode)
 		haus0.setLabelFor(haus, false)
 		wohnung0.setLabelFor(wohnung, false)
 		mieter0.setLabelFor(mieter, false)
@@ -217,24 +216,22 @@ class VM920AbrechnungenController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var List<VmHaus> hl = get(FactoryService::vermietungService.getHausListe(serviceDaten, true))
+			var hl = get(FactoryService::vermietungService.getHausListe(serviceDaten, true))
 			haus.setItems(getItems(hl, new VmHaus, [a|new HausData(a)], null))
-			var List<VmWohnungLang> wl = get(
-				FactoryService::vermietungService.getWohnungListe(serviceDaten, true))
+			var wl = get(FactoryService::vermietungService.getWohnungListe(serviceDaten, true))
 			wohnung.setItems(getItems(wl, new VmWohnungLang, [a|new WohnungData(a)], null))
-			var List<VmMieterLang> ml = get(
-				FactoryService::vermietungService.getMieterListe(serviceDaten, true, null, null, null, null))
+			var ml = get(FactoryService::vermietungService.getMieterListe(serviceDaten, true, null, null, null, null))
 			mieter.setItems(getItems(ml, new VmMieterLang, [a|new MieterData(a)], null))
-			var List<MaEinstellung> sl = get(FactoryService::vermietungService.getSchluesselListe(serviceDaten))
+			var sl = get(FactoryService::vermietungService.getSchluesselListe(serviceDaten))
 			schluessel.setItems(getItems(sl, new MaEinstellung, [a|new SchluesselData(a)], null))
 			von.setValue(LocalDate::now.withDayOfYear(1).minusYears(1))
-			bis.setValue(von.getValue.plusYears(1).minusDays(1))
+			bis.setValue(von.value.plusYears(1).minusDays(1))
 			setText(haus, null)
 			setText(wohnung, null)
 			setText(mieter, null)
 		}
 		if (stufe <= 1) {
-			var List<VmAbrechnungLang> l = get(
+			var l = get(
 				FactoryService::vermietungService.getAbrechnungListe(serviceDaten, von.value, bis.value, getText(haus),
 					getText(wohnung), getText(mieter), getText(schluessel)))
 			getItems(l, null, [a|new AbrechnungenData(a)], abrechnungenData)
@@ -335,7 +332,7 @@ class VM920AbrechnungenController extends BaseController<String> {
 		var byte[] pdf = get(
 			FactoryService::vermietungService.getReportAbrechnung(serviceDaten, von.value, bis.value, k.hausUid,
 				k.mieterUid))
-		Werkzeug::speicherReport(pdf, Meldungen.VM032, true)
+		Werkzeug::speicherReport(pdf, Meldungen::VM032, true)
 	}
 
 	/** 

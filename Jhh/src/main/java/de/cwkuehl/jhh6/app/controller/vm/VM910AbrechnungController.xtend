@@ -1,7 +1,5 @@
 package de.cwkuehl.jhh6.app.controller.vm
 
-import java.time.LocalDate
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.VmAbrechnungKurz
 import de.cwkuehl.jhh6.api.dto.VmHaus
 import de.cwkuehl.jhh6.api.message.Meldungen
@@ -10,6 +8,7 @@ import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.app.control.Datum
 import de.cwkuehl.jhh6.server.FactoryService
+import java.time.LocalDate
 import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.ComboBox
@@ -37,11 +36,11 @@ class VM910AbrechnungController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getBezeichnung
+			return getData.bezeichnung
 		}
 	}
 
@@ -54,8 +53,8 @@ class VM910AbrechnungController extends BaseController<String> {
 	override protected void initialize() {
 
 		tabbar = 0
-		von0.setLabelFor(von.getLabelForNode, true)
-		bis0.setLabelFor(bis.getLabelForNode, true)
+		von0.setLabelFor(von.labelForNode, true)
+		bis0.setLabelFor(bis.labelForNode, true)
 		haus0.setLabelFor(haus, true)
 		initDaten(0)
 		von.requestFocus
@@ -68,17 +67,17 @@ class VM910AbrechnungController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var List<VmHaus> hl = get(FactoryService::getVermietungService.getHausListe(getServiceDaten, true))
+			var hl = get(FactoryService::vermietungService.getHausListe(serviceDaten, true))
 			haus.setItems(getItems(hl, null, [a|new HausData(a)], null))
 			von.setValue(LocalDate::now.minusYears(1).withDayOfYear(1))
-			bis.setValue(von.getValue.plusYears(1).minusDays(1))
+			bis.setValue(von.value.plusYears(1).minusDays(1))
 			haus.getSelectionModel.select(0)
-			var boolean loeschen = DialogAufrufEnum::LOESCHEN.equals(getAufruf)
-			var VmAbrechnungKurz k = getParameter1
+			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
+			var VmAbrechnungKurz k = parameter1
 			if (loeschen && k !== null) {
-				von.setValue(k.getDatumVon)
-				bis.setValue(k.getDatumBis)
-				setText(haus, k.getHausUid)
+				von.setValue(k.datumVon)
+				bis.setValue(k.datumBis)
+				setText(haus, k.hausUid)
 			}
 			von.setEditable(!loeschen)
 			bis.setEditable(!loeschen)
@@ -104,7 +103,7 @@ class VM910AbrechnungController extends BaseController<String> {
 	 * @FXML
 	 */
 	def void onVon() {
-		bis.setValue(von.getValue.plusYears(1).minusDays(1))
+		bis.setValue(von.value.plusYears(1).minusDays(1))
 	}
 
 	/** 
@@ -112,17 +111,17 @@ class VM910AbrechnungController extends BaseController<String> {
 	 */
 	@FXML def void onOk() {
 
-		var ServiceErgebnis<?> r = null
+		var ServiceErgebnis<?> r
 		if (DialogAufrufEnum::NEU.equals(aufruf)) {
-			r = FactoryService::getVermietungService.insertHausAbrechnung(getServiceDaten, von.getValue, bis.getValue,
+			r = FactoryService::vermietungService.insertHausAbrechnung(serviceDaten, von.value, bis.value,
 				getText(haus))
 		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
-			r = FactoryService::getVermietungService.deleteHausAbrechnung(getServiceDaten, von.getValue, bis.getValue,
+			r = FactoryService::vermietungService.deleteHausAbrechnung(serviceDaten, von.value, bis.value,
 				getText(haus))
 		}
 		if (r !== null) {
 			get(r)
-			if (r.getFehler.isEmpty) {
+			if (r.fehler.isEmpty) {
 				updateParent
 				close
 			}

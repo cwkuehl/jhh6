@@ -1,7 +1,5 @@
 package de.cwkuehl.jhh6.app.controller.vm
 
-import java.time.LocalDate
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.VmAbrechnungKurz
 import de.cwkuehl.jhh6.api.dto.VmHaus
 import de.cwkuehl.jhh6.app.Jhh6
@@ -9,6 +7,7 @@ import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.app.control.Datum
 import de.cwkuehl.jhh6.server.FactoryService
+import java.time.LocalDate
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -42,8 +41,8 @@ class VM900AbrechnungenController extends BaseController<String> {
 	@FXML Datum von
 	@FXML Label haus0
 	@FXML ComboBox<HausData> haus
-	//@FXML Button alle
 
+	// @FXML Button alle
 	/** 
 	 * Daten für Tabelle Abrechnungen.
 	 */
@@ -57,10 +56,10 @@ class VM900AbrechnungenController extends BaseController<String> {
 		new(VmAbrechnungKurz v) {
 
 			super(v)
-			uid = new SimpleStringProperty(v.getHausUid)
-			haus = new SimpleStringProperty(v.getHausBezeichnung)
-			von = new SimpleObjectProperty<LocalDate>(v.getDatumVon)
-			bis = new SimpleObjectProperty<LocalDate>(v.getDatumBis)
+			uid = new SimpleStringProperty(v.hausUid)
+			haus = new SimpleStringProperty(v.hausBezeichnung)
+			von = new SimpleObjectProperty<LocalDate>(v.datumVon)
+			bis = new SimpleObjectProperty<LocalDate>(v.datumBis)
 		}
 
 		override String getId() {
@@ -78,11 +77,11 @@ class VM900AbrechnungenController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getBezeichnung
+			return getData.bezeichnung
 		}
 	}
 
@@ -94,7 +93,7 @@ class VM900AbrechnungenController extends BaseController<String> {
 		tabbar = 1
 		super.initialize
 		mieten0.setLabelFor(abrechnungen)
-		von0.setLabelFor(von.getLabelForNode)
+		von0.setLabelFor(von.labelForNode)
 		haus0.setLabelFor(haus, false)
 		initAccelerator("A", aktuell)
 		initAccelerator("U", rueckgaengig)
@@ -112,15 +111,14 @@ class VM900AbrechnungenController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var List<VmHaus> hl = get(FactoryService::getVermietungService.getHausListe(getServiceDaten, true))
+			var hl = get(FactoryService::vermietungService.getHausListe(serviceDaten, true))
 			haus.setItems(getItems(hl, new VmHaus, [a|new HausData(a)], null))
 			von.setValue(LocalDate::now.minusYears(1).withDayOfYear(1))
 			setText(haus, null)
 		}
 		if (stufe <= 1) {
-			var List<VmAbrechnungKurz> l = get(
-				FactoryService::getVermietungService.getAbrechnungKurzListe(getServiceDaten, von.getValue,
-					getText(haus)))
+			var l = get(
+				FactoryService::vermietungService.getAbrechnungKurzListe(serviceDaten, von.value, getText(haus)))
 			getItems(l, null, [a|new AbrechnungenData(a)], abrechnungenData)
 		}
 		if (stufe <= 2) {
@@ -134,10 +132,10 @@ class VM900AbrechnungenController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		abrechnungen.setItems(abrechnungenData)
-		colUid.setCellValueFactory([c|c.getValue.uid])
-		colHaus.setCellValueFactory([c|c.getValue.haus])
-		colVon.setCellValueFactory([c|c.getValue.von])
-		colBis.setCellValueFactory([c|c.getValue.bis])
+		colUid.setCellValueFactory([c|c.value.uid])
+		colHaus.setCellValueFactory([c|c.value.haus])
+		colVon.setCellValueFactory([c|c.value.von])
+		colBis.setCellValueFactory([c|c.value.bis])
 	}
 
 	override protected void updateParent() {

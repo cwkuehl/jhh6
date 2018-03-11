@@ -3,12 +3,10 @@ package de.cwkuehl.jhh6.app.controller.vm
 import de.cwkuehl.jhh6.api.dto.VmHaus
 import de.cwkuehl.jhh6.api.dto.VmWohnungLang
 import de.cwkuehl.jhh6.api.global.Global
-import de.cwkuehl.jhh6.api.service.ServiceErgebnis
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.control.Datum
 import de.cwkuehl.jhh6.server.FactoryService
 import java.time.LocalDate
-import java.util.List
 import javafx.fxml.FXML
 import javafx.scene.control.ComboBox
 import javafx.scene.control.Label
@@ -44,11 +42,11 @@ class VM520SollstellungController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getBezeichnung
+			return getData.bezeichnung
 		}
 	}
 
@@ -62,11 +60,11 @@ class VM520SollstellungController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getBezeichnung
+			return getData.bezeichnung
 		}
 	}
 
@@ -94,9 +92,9 @@ class VM520SollstellungController extends BaseController<String> {
 		if (stufe <= 0) {
 			// letzten Monat einstellen
 			monat.setValue(monatZuletzt)
-			var List<VmHaus> hl = get(FactoryService::vermietungService.getHausListe(serviceDaten, true))
+			var hl = get(FactoryService::vermietungService.getHausListe(serviceDaten, true))
 			haus.setItems(getItems(hl, new VmHaus, [a|new HausData(a)], null))
-			var List<VmWohnungLang> wl = get(FactoryService::vermietungService.getWohnungListe(serviceDaten, true))
+			var wl = get(FactoryService::vermietungService.getWohnungListe(serviceDaten, true))
 			wohnung.setItems(getItems(wl, new VmWohnungLang, [a|new WohnungData(a)], null))
 			miete.setEditable(false)
 			nebenkosten.setEditable(false)
@@ -176,11 +174,11 @@ class VM520SollstellungController extends BaseController<String> {
 	 */
 	@FXML def void onOk() {
 
-		var ServiceErgebnis<Void> r = FactoryService::vermietungService.insertSollstellung(serviceDaten, monat.value,
-			getText(haus), getText(wohnung))
+		var r = FactoryService::vermietungService.insertSollstellung(serviceDaten, monat.value, getText(haus),
+			getText(wohnung))
 		if (r !== null) {
 			get(r)
-			if (r.getFehler.isEmpty) {
+			if (r.fehler.isEmpty) {
 				// letztes Datum merken
 				monatZuletzt = monat.value
 				close

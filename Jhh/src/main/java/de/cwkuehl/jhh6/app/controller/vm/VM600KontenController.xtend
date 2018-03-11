@@ -1,13 +1,12 @@
 package de.cwkuehl.jhh6.app.controller.vm
 
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.HhKontoVm
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.server.FactoryService
+import java.time.LocalDate
+import java.time.LocalDateTime
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -72,20 +71,20 @@ class VM600KontenController extends BaseController<String> {
 		new(HhKontoVm v) {
 
 			super(v)
-			uid = new SimpleStringProperty(v.getUid)
-			art = new SimpleStringProperty(v.getArt)
-			kz = new SimpleStringProperty(v.getKz)
-			name = new SimpleStringProperty(v.getName)
-			schluessel = new SimpleStringProperty(v.getSchluessel)
-			haus = new SimpleStringProperty(v.getHausBezeichnung)
-			wohnung = new SimpleStringProperty(v.getWohnungBezeichnung)
-			mieter = new SimpleStringProperty(v.getMieterName)
-			von = new SimpleObjectProperty<LocalDate>(v.getGueltigVon)
-			bis = new SimpleObjectProperty<LocalDate>(v.getGueltigBis)
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
+			uid = new SimpleStringProperty(v.uid)
+			art = new SimpleStringProperty(v.art)
+			kz = new SimpleStringProperty(v.kz)
+			name = new SimpleStringProperty(v.name)
+			schluessel = new SimpleStringProperty(v.schluessel)
+			haus = new SimpleStringProperty(v.hausBezeichnung)
+			wohnung = new SimpleStringProperty(v.wohnungBezeichnung)
+			mieter = new SimpleStringProperty(v.mieterName)
+			von = new SimpleObjectProperty<LocalDate>(v.gueltigVon)
+			bis = new SimpleObjectProperty<LocalDate>(v.gueltigBis)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
+			geaendertVon = new SimpleStringProperty(v.geaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
+			angelegtVon = new SimpleStringProperty(v.angelegtVon)
 		}
 
 		override String getId() {
@@ -119,10 +118,10 @@ class VM600KontenController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			get(FactoryService.getVermietungService.initKonten(getServiceDaten))
+			get(FactoryService::vermietungService.initKonten(serviceDaten))
 		}
 		if (stufe <= 1) {
-			var List<HhKontoVm> l = get(FactoryService.getVermietungService.getKontoListe(getServiceDaten))
+			var l = get(FactoryService::vermietungService.getKontoListe(serviceDaten))
 			getItems(l, null, [a|new KontenData(a)], kontenData)
 		}
 		if (stufe <= 2) {
@@ -136,20 +135,20 @@ class VM600KontenController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		konten.setItems(kontenData)
-		colUid.setCellValueFactory([c|c.getValue.uid])
-		colArt.setCellValueFactory([c|c.getValue.art])
-		colKz.setCellValueFactory([c|c.getValue.kz])
-		colName.setCellValueFactory([c|c.getValue.name])
-		colSchluessel.setCellValueFactory([c|c.getValue.schluessel])
-		colHaus.setCellValueFactory([c|c.getValue.haus])
-		colWohnung.setCellValueFactory([c|c.getValue.wohnung])
-		colMieter.setCellValueFactory([c|c.getValue.mieter])
-		colVon.setCellValueFactory([c|c.getValue.von])
-		colBis.setCellValueFactory([c|c.getValue.bis])
-		colGv.setCellValueFactory([c|c.getValue.geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue.geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue.angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue.angelegtAm])
+		colUid.setCellValueFactory([c|c.value.uid])
+		colArt.setCellValueFactory([c|c.value.art])
+		colKz.setCellValueFactory([c|c.value.kz])
+		colName.setCellValueFactory([c|c.value.name])
+		colSchluessel.setCellValueFactory([c|c.value.schluessel])
+		colHaus.setCellValueFactory([c|c.value.haus])
+		colWohnung.setCellValueFactory([c|c.value.wohnung])
+		colMieter.setCellValueFactory([c|c.value.mieter])
+		colVon.setCellValueFactory([c|c.value.von])
+		colBis.setCellValueFactory([c|c.value.bis])
+		colGv.setCellValueFactory([c|c.value.geaendertVon])
+		colGa.setCellValueFactory([c|c.value.geaendertAm])
+		colAv.setCellValueFactory([c|c.value.angelegtVon])
+		colAa.setCellValueFactory([c|c.value.angelegtAm])
 	}
 
 	override protected void updateParent() {
@@ -157,7 +156,7 @@ class VM600KontenController extends BaseController<String> {
 	}
 
 	def private void starteDialog(DialogAufrufEnum aufruf) {
-		var HhKontoVm k = getValue(konten, !DialogAufrufEnum.NEU.equals(aufruf))
+		var HhKontoVm k = getValue(konten, !DialogAufrufEnum::NEU.equals(aufruf))
 		starteFormular(VM610KontoController, aufruf, k)
 	}
 
@@ -188,28 +187,28 @@ class VM600KontenController extends BaseController<String> {
 	 * Event für Neu.
 	 */
 	@FXML def void onNeu() {
-		starteDialog(DialogAufrufEnum.NEU)
+		starteDialog(DialogAufrufEnum::NEU)
 	}
 
 	/** 
 	 * Event für Kopieren.
 	 */
 	@FXML def void onKopieren() {
-		starteDialog(DialogAufrufEnum.KOPIEREN)
+		starteDialog(DialogAufrufEnum::KOPIEREN)
 	}
 
 	/** 
 	 * Event für Aendern.
 	 */
 	@FXML def void onAendern() {
-		starteDialog(DialogAufrufEnum.AENDERN)
+		starteDialog(DialogAufrufEnum::AENDERN)
 	}
 
 	/** 
 	 * Event für Loeschen.
 	 */
 	@FXML def void onLoeschen() {
-		starteDialog(DialogAufrufEnum.LOESCHEN)
+		starteDialog(DialogAufrufEnum::LOESCHEN)
 	}
 
 	/** 

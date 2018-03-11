@@ -1,12 +1,11 @@
 package de.cwkuehl.jhh6.app.controller.vm
 
-import java.time.LocalDateTime
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.HhEreignisVm
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.server.FactoryService
+import java.time.LocalDateTime
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -69,19 +68,19 @@ class VM700EreignisseController extends BaseController<String> {
 		new(HhEreignisVm v) {
 
 			super(v)
-			uid = new SimpleStringProperty(v.getUid)
-			bezeichnung = new SimpleStringProperty(v.getBezeichnung)
-			text = new SimpleStringProperty(v.getEtext)
-			soll = new SimpleStringProperty(v.getSollName)
-			haben = new SimpleStringProperty(v.getHabenName)
-			schluessel = new SimpleStringProperty(v.getSchluessel)
-			haus = new SimpleStringProperty(v.getHausBezeichnung)
-			wohnung = new SimpleStringProperty(v.getWohnungBezeichnung)
-			mieter = new SimpleStringProperty(v.getMieterName)
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
+			uid = new SimpleStringProperty(v.uid)
+			bezeichnung = new SimpleStringProperty(v.bezeichnung)
+			text = new SimpleStringProperty(v.etext)
+			soll = new SimpleStringProperty(v.sollName)
+			haben = new SimpleStringProperty(v.habenName)
+			schluessel = new SimpleStringProperty(v.schluessel)
+			haus = new SimpleStringProperty(v.hausBezeichnung)
+			wohnung = new SimpleStringProperty(v.wohnungBezeichnung)
+			mieter = new SimpleStringProperty(v.mieterName)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
+			geaendertVon = new SimpleStringProperty(v.geaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
+			angelegtVon = new SimpleStringProperty(v.angelegtVon)
 		}
 
 		override String getId() {
@@ -117,8 +116,7 @@ class VM700EreignisseController extends BaseController<String> {
 		if (stufe <= 0) { // stufe = 0
 		}
 		if (stufe <= 1) {
-			var List<HhEreignisVm> l = get(
-				FactoryService.getVermietungService.getEreignisListe(getServiceDaten, null, null))
+			var l = get(FactoryService::vermietungService.getEreignisListe(serviceDaten, null, null))
 			getItems(l, null, [a|new EreignisseData(a)], ereignisseData)
 		}
 		if (stufe <= 2) {
@@ -132,19 +130,19 @@ class VM700EreignisseController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		ereignisse.setItems(ereignisseData)
-		colUid.setCellValueFactory([c|c.getValue.uid])
-		colBezeichnung.setCellValueFactory([c|c.getValue.bezeichnung])
-		colText.setCellValueFactory([c|c.getValue.text])
-		colSoll.setCellValueFactory([c|c.getValue.soll])
-		colHaben.setCellValueFactory([c|c.getValue.haben])
-		colSchluessel.setCellValueFactory([c|c.getValue.schluessel])
-		colHaus.setCellValueFactory([c|c.getValue.haus])
-		colWohnung.setCellValueFactory([c|c.getValue.wohnung])
-		colMieter.setCellValueFactory([c|c.getValue.mieter])
-		colGv.setCellValueFactory([c|c.getValue.geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue.geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue.angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue.angelegtAm])
+		colUid.setCellValueFactory([c|c.value.uid])
+		colBezeichnung.setCellValueFactory([c|c.value.bezeichnung])
+		colText.setCellValueFactory([c|c.value.text])
+		colSoll.setCellValueFactory([c|c.value.soll])
+		colHaben.setCellValueFactory([c|c.value.haben])
+		colSchluessel.setCellValueFactory([c|c.value.schluessel])
+		colHaus.setCellValueFactory([c|c.value.haus])
+		colWohnung.setCellValueFactory([c|c.value.wohnung])
+		colMieter.setCellValueFactory([c|c.value.mieter])
+		colGv.setCellValueFactory([c|c.value.geaendertVon])
+		colGa.setCellValueFactory([c|c.value.geaendertAm])
+		colAv.setCellValueFactory([c|c.value.angelegtVon])
+		colAa.setCellValueFactory([c|c.value.angelegtAm])
 	}
 
 	override protected void updateParent() {
@@ -152,7 +150,7 @@ class VM700EreignisseController extends BaseController<String> {
 	}
 
 	def private void starteDialog(DialogAufrufEnum aufruf) {
-		var HhEreignisVm k = getValue(ereignisse, !DialogAufrufEnum.NEU.equals(aufruf))
+		var HhEreignisVm k = getValue(ereignisse, !DialogAufrufEnum::NEU.equals(aufruf))
 		starteFormular(VM710EreignisController, aufruf, k)
 	}
 
@@ -183,28 +181,28 @@ class VM700EreignisseController extends BaseController<String> {
 	 * Event für Neu.
 	 */
 	@FXML def void onNeu() {
-		starteDialog(DialogAufrufEnum.NEU)
+		starteDialog(DialogAufrufEnum::NEU)
 	}
 
 	/** 
 	 * Event für Kopieren.
 	 */
 	@FXML def void onKopieren() {
-		starteDialog(DialogAufrufEnum.KOPIEREN)
+		starteDialog(DialogAufrufEnum::KOPIEREN)
 	}
 
 	/** 
 	 * Event für Aendern.
 	 */
 	@FXML def void onAendern() {
-		starteDialog(DialogAufrufEnum.AENDERN)
+		starteDialog(DialogAufrufEnum::AENDERN)
 	}
 
 	/** 
 	 * Event für Loeschen.
 	 */
 	@FXML def void onLoeschen() {
-		starteDialog(DialogAufrufEnum.LOESCHEN)
+		starteDialog(DialogAufrufEnum::LOESCHEN)
 	}
 
 	/** 

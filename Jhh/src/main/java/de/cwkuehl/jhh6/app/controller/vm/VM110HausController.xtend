@@ -33,8 +33,8 @@ class VM110HausController extends BaseController<String> {
 	@FXML Label geaendert0
 	@FXML TextField geaendert
 	@FXML Button ok
-	//@FXML Button abbrechen
 
+	// @FXML Button abbrechen
 	/** 
 	 * Initialisierung des Dialogs.
 	 */
@@ -59,19 +59,19 @@ class VM110HausController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var boolean neu = DialogAufrufEnum.NEU.equals(getAufruf)
-			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(getAufruf)
-			var VmHaus k = getParameter1
+			var neu = DialogAufrufEnum::NEU.equals(aufruf)
+			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
+			var VmHaus k = parameter1
 			if (!neu && k !== null) {
-				k = get(FactoryService.getVermietungService.getHaus(getServiceDaten, k.getUid))
-				nr.setText(k.getUid)
-				bezeichnung.setText(k.getBezeichnung)
-				strasse.setText(k.getStrasse)
-				plz.setText(k.getPlz)
-				ort.setText(k.getOrt)
-				notiz.setText(k.getNotiz)
-				angelegt.setText(k.formatDatumVon(k.getAngelegtAm, k.getAngelegtVon))
-				geaendert.setText(k.formatDatumVon(k.getGeaendertAm, k.getGeaendertVon))
+				k = get(FactoryService::vermietungService.getHaus(serviceDaten, k.uid))
+				nr.setText(k.uid)
+				bezeichnung.setText(k.bezeichnung)
+				strasse.setText(k.strasse)
+				plz.setText(k.plz)
+				ort.setText(k.ort)
+				notiz.setText(k.notiz)
+				angelegt.setText(k.formatDatumVon(k.angelegtAm, k.angelegtVon))
+				geaendert.setText(k.formatDatumVon(k.geaendertAm, k.geaendertVon))
 			}
 			nr.setEditable(false)
 			bezeichnung.setEditable(!loeschen)
@@ -82,7 +82,7 @@ class VM110HausController extends BaseController<String> {
 			angelegt.setEditable(false)
 			geaendert.setEditable(false)
 			if (loeschen) {
-				ok.setText(Meldungen.M2001)
+				ok.setText(Meldungen::M2001)
 			}
 		}
 		if (stufe <= 1) { // stufe = 0
@@ -102,19 +102,19 @@ class VM110HausController extends BaseController<String> {
 	 */
 	@FXML def void onOk() {
 
-		var ServiceErgebnis<?> r = null
-		if (DialogAufrufEnum.NEU.equals(aufruf) || DialogAufrufEnum.KOPIEREN.equals(aufruf)) {
-			r = FactoryService.getVermietungService.insertUpdateHaus(getServiceDaten, null, bezeichnung.getText,
-				strasse.getText, plz.getText, ort.getText, notiz.getText)
-		} else if (DialogAufrufEnum.AENDERN.equals(aufruf)) {
-			r = FactoryService.getVermietungService.insertUpdateHaus(getServiceDaten, nr.getText,
-				bezeichnung.getText, strasse.getText, plz.getText, ort.getText, notiz.getText)
-		} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
-			r = FactoryService.getVermietungService.deleteHaus(getServiceDaten, nr.getText)
+		var ServiceErgebnis<?> r
+		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
+			r = FactoryService::vermietungService.insertUpdateHaus(serviceDaten, null, bezeichnung.text, strasse.text,
+				plz.text, ort.text, notiz.text)
+		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
+			r = FactoryService::vermietungService.insertUpdateHaus(serviceDaten, nr.text, bezeichnung.text,
+				strasse.text, plz.text, ort.text, notiz.text)
+		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
+			r = FactoryService::vermietungService.deleteHaus(serviceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)
-			if (r.getFehler.isEmpty) {
+			if (r.fehler.isEmpty) {
 				updateParent
 				close
 			}

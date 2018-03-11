@@ -1,7 +1,5 @@
 package de.cwkuehl.jhh6.app.controller.vm
 
-import java.time.LocalDate
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.HhBuchungVm
 import de.cwkuehl.jhh6.api.dto.HhEreignisVm
 import de.cwkuehl.jhh6.api.dto.HhKonto
@@ -16,6 +14,7 @@ import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.app.control.Datum
 import de.cwkuehl.jhh6.server.FactoryService
+import java.time.LocalDate
 import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.ComboBox
@@ -83,11 +82,11 @@ class VM510BuchungController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getBezeichnung
+			return getData.bezeichnung
 		}
 	}
 
@@ -101,11 +100,11 @@ class VM510BuchungController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getName
+			return getData.name
 		}
 	}
 
@@ -119,11 +118,11 @@ class VM510BuchungController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getName
+			return getData.name
 		}
 	}
 
@@ -137,11 +136,11 @@ class VM510BuchungController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getBezeichnung
+			return getData.bezeichnung
 		}
 	}
 
@@ -155,11 +154,11 @@ class VM510BuchungController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getBezeichnung
+			return getData.bezeichnung
 		}
 	}
 
@@ -173,11 +172,11 @@ class VM510BuchungController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getName
+			return getData.name
 		}
 	}
 
@@ -188,7 +187,7 @@ class VM510BuchungController extends BaseController<String> {
 
 		tabbar = 0
 		nr0.setLabelFor(nr)
-		valuta0.setLabelFor(valuta.getLabelForNode, true)
+		valuta0.setLabelFor(valuta.labelForNode, true)
 		betrag0.setLabelFor(betrag, true)
 		summe0.setLabelFor(summe)
 		ereignis0.setLabelFor(ereignis)
@@ -199,7 +198,7 @@ class VM510BuchungController extends BaseController<String> {
 		initListView(habenkonto, ok)
 		bText0.setLabelFor(bText, true)
 		belegNr0.setLabelFor(belegNr)
-		belegDatum0.setLabelFor(belegDatum.getLabelForNode)
+		belegDatum0.setLabelFor(belegDatum.labelForNode)
 		schluessel0.setLabelFor(schluessel)
 		haus0.setLabelFor(haus, false)
 		wohnung0.setLabelFor(wohnung, false)
@@ -223,40 +222,37 @@ class VM510BuchungController extends BaseController<String> {
 			// letztes Datum einstellen
 			valuta.setValue(valutaZuletzt)
 			belegDatum.setValue(belegDatumZuletzt)
-			var boolean init = false
-			var List<VmHaus> hl = get(FactoryService::getVermietungService.getHausListe(getServiceDaten, true))
+			var init = false
+			var hl = get(FactoryService::vermietungService.getHausListe(serviceDaten, true))
 			haus.setItems(getItems(hl, new VmHaus, [a|new HausData(a)], null))
-			var List<VmWohnungLang> wl = get(
-				FactoryService::getVermietungService.getWohnungListe(getServiceDaten, true))
+			var wl = get(FactoryService::vermietungService.getWohnungListe(serviceDaten, true))
 			wohnung.setItems(getItems(wl, new VmWohnungLang, [a|new WohnungData(a)], null))
-			var List<VmMieterLang> ml = get(
-				FactoryService::getVermietungService.getMieterListe(getServiceDaten, true, null, null, null, null))
+			var ml = get(FactoryService::vermietungService.getMieterListe(serviceDaten, true, null, null, null, null))
 			mieter.setItems(getItems(ml, new VmMieterLang, [a|new MieterData(a)], null))
-			var boolean neu = DialogAufrufEnum::NEU.equals(getAufruf)
-			var boolean loeschen = DialogAufrufEnum::LOESCHEN.equals(getAufruf) ||
-				DialogAufrufEnum::STORNO.equals(getAufruf)
-			var HhBuchungVm e = getParameter1
+			var neu = DialogAufrufEnum::NEU.equals(aufruf)
+			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf) || DialogAufrufEnum::STORNO.equals(aufruf)
+			var HhBuchungVm e = parameter1
 			if (!neu && e !== null) {
-				var HhBuchungVm k = get(FactoryService::getVermietungService.getBuchungVm(getServiceDaten, e.getUid))
+				var HhBuchungVm k = get(FactoryService::vermietungService.getBuchungVm(serviceDaten, e.uid))
 				if (k !== null) {
-					nr.setText(k.getUid)
-					valuta.setValue(k.getSollValuta)
+					nr.setText(k.uid)
+					valuta.setValue(k.sollValuta)
 					initListen
 					init = true
-					betrag.setText(Global::dblStr2l(k.getEbetrag))
+					betrag.setText(Global::dblStr2l(k.ebetrag))
 					summe.setText(null)
-					setText(sollkonto, k.getSollKontoUid)
-					setText(habenkonto, k.getHabenKontoUid)
-					bText.setText(k.getBtext)
-					belegNr.setText(k.getBelegNr)
-					belegDatum.setValue(k.getBelegDatum)
-					schluessel.setText(k.getSchluessel)
-					setText(haus, k.getHausUid)
-					setText(wohnung, k.getWohnungUid)
-					setText(mieter, k.getMieterUid)
-					notiz.setText(k.getNotiz)
-					angelegt.setText(k.formatDatumVon(k.getAngelegtAm, k.getAngelegtVon))
-					geaendert.setText(k.formatDatumVon(k.getGeaendertAm, k.getGeaendertVon))
+					setText(sollkonto, k.sollKontoUid)
+					setText(habenkonto, k.habenKontoUid)
+					bText.setText(k.btext)
+					belegNr.setText(k.belegNr)
+					belegDatum.setValue(k.belegDatum)
+					schluessel.setText(k.schluessel)
+					setText(haus, k.hausUid)
+					setText(wohnung, k.wohnungUid)
+					setText(mieter, k.mieterUid)
+					notiz.setText(k.notiz)
+					angelegt.setText(k.formatDatumVon(k.angelegtAm, k.angelegtVon))
+					geaendert.setText(k.formatDatumVon(k.geaendertAm, k.geaendertVon))
 				}
 			}
 			if (!init) {
@@ -283,9 +279,9 @@ class VM510BuchungController extends BaseController<String> {
 			if (neu) {
 				ok.setText(Meldungen::M2004)
 			} else if (loeschen) {
-				if (DialogAufrufEnum::LOESCHEN.equals(getAufruf)) {
+				if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
 					ok.setText(Meldungen::M2001)
-				} else if (e !== null && Constant::KZB_STORNO.equals(e.getKz)) {
+				} else if (e !== null && Constant::KZB_STORNO.equals(e.kz)) {
 					ok.setText(Meldungen::M2005)
 				} else {
 					ok.setText(Meldungen::M2006)
@@ -303,11 +299,9 @@ class VM510BuchungController extends BaseController<String> {
 
 	def private void initListen() {
 
-		var List<HhEreignisVm> el = get(
-			FactoryService::getVermietungService.getEreignisListe(getServiceDaten, valuta.getValue, valuta.getValue))
+		var el = get(FactoryService::vermietungService.getEreignisListe(serviceDaten, valuta.value, valuta.value))
 		ereignis.setItems(getItems(el, null, [a|new EreignisData(a)], null))
-		var List<HhKonto> kl = get(
-			FactoryService::getHaushaltService.getKontoListe(getServiceDaten, valuta.getValue, valuta.getValue))
+		var kl = get(FactoryService::haushaltService.getKontoListe(serviceDaten, valuta.value, valuta.value))
 		sollkonto.setItems(getItems(kl, null, [a|new SollkontoData(a)], null))
 		habenkonto.setItems(getItems(kl, null, [a|new HabenkontoData(a)], null))
 	}
@@ -322,7 +316,7 @@ class VM510BuchungController extends BaseController<String> {
 	 * Event für Valuta.
 	 */
 	@FXML def void onValuta() {
-		belegDatum.setValue(valuta.getValue)
+		belegDatum.setValue(valuta.value)
 		initListen
 	}
 
@@ -333,22 +327,22 @@ class VM510BuchungController extends BaseController<String> {
 
 		var HhEreignisVm e = getValue(ereignis, false)
 		if (e !== null) {
-			setText(sollkonto, e.getSollKontoUid)
-			setText(habenkonto, e.getHabenKontoUid)
-			bText.setText(e.getEtext)
-			schluessel.setText(e.getSchluessel)
+			setText(sollkonto, e.sollKontoUid)
+			setText(habenkonto, e.habenKontoUid)
+			bText.setText(e.etext)
+			schluessel.setText(e.schluessel)
 			// nur Überschreiben, wenn nicht gesetzt bzw. gefüllt.
-			if (!Global::nes(e.getHausUid) && Global::nes(getText(haus))) {
-				setText(haus, e.getHausUid)
+			if (!Global::nes(e.hausUid) && Global::nes(getText(haus))) {
+				setText(haus, e.hausUid)
 			}
-			if (!Global::nes(e.getWohnungUid) && Global::nes(getText(wohnung))) {
-				setText(wohnung, e.getWohnungUid)
+			if (!Global::nes(e.wohnungUid) && Global::nes(getText(wohnung))) {
+				setText(wohnung, e.wohnungUid)
 			}
-			if (!Global::nes(e.getMieterUid) && Global::nes(getText(mieter))) {
-				setText(mieter, e.getMieterUid)
+			if (!Global::nes(e.mieterUid) && Global::nes(getText(mieter))) {
+				setText(mieter, e.mieterUid)
 			}
-			if (!Global::nes(e.getNotiz) && Global::nes(notiz.getText)) {
-				notiz.setText(e.getNotiz)
+			if (!Global::nes(e.notiz) && Global::nes(notiz.text)) {
+				notiz.setText(e.notiz)
 			}
 		}
 	}
@@ -357,8 +351,8 @@ class VM510BuchungController extends BaseController<String> {
 	 * Event für NeueNr.
 	 */
 	@FXML def void onNeueNr() {
-		if (Global::nes(belegNr.getText)) {
-			var String nr = get(FactoryService::getHaushaltService.getNeueBelegNr(getServiceDaten, belegDatum.getValue))
+		if (Global::nes(belegNr.text)) {
+			var nr = get(FactoryService::haushaltService.getNeueBelegNr(serviceDaten, belegDatum.value))
 			belegNr.setText(nr)
 		}
 	}
@@ -369,7 +363,7 @@ class VM510BuchungController extends BaseController<String> {
 	@FXML def void onHaus() {
 		var VmHaus h = getValue(haus, false)
 		var VmWohnungLang w = getValue(wohnung, false)
-		if (h !== null && w !== null && Global::compString(h.getUid, w.getHausUid) !== 0) {
+		if (h !== null && w !== null && Global::compString(h.uid, w.hausUid) !== 0) {
 			setText(wohnung, null)
 			setText(mieter, null)
 		}
@@ -380,10 +374,10 @@ class VM510BuchungController extends BaseController<String> {
 	 */
 	@FXML def void onWohnung() {
 		var VmWohnungLang w = getValue(wohnung, false)
-		if (w !== null && !Global::nes(w.getUid)) {
-			setText(haus, w.getHausUid)
+		if (w !== null && !Global::nes(w.uid)) {
+			setText(haus, w.hausUid)
 			var VmMieterLang m = getValue(mieter, false)
-			if (m !== null && Global::compString(w.getUid, m.getWohnungUid) !== 0) {
+			if (m !== null && Global::compString(w.uid, m.wohnungUid) !== 0) {
 				setText(mieter, null)
 			}
 		}
@@ -394,8 +388,8 @@ class VM510BuchungController extends BaseController<String> {
 	 */
 	@FXML def void onMieter() {
 		var VmMieterLang m = getValue(mieter, false)
-		if (m !== null && !Global::nes(m.getUid)) {
-			setText(wohnung, m.getWohnungUid)
+		if (m !== null && !Global::nes(m.uid)) {
+			setText(wohnung, m.wohnungUid)
 			onWohnung
 		}
 	}
@@ -403,46 +397,43 @@ class VM510BuchungController extends BaseController<String> {
 	/** 
 	 * Event für Ok.
 	 */
-	@SuppressWarnings("unchecked") @FXML def void onOk() {
+	@FXML def void onOk() {
 
-		var ServiceErgebnis<?> r = null
-		var double dbB
-		var double dbEB
-		var double b
-		dbEB = berechneBetrag
-		dbB = Global::konvDM(dbEB)
-		b = dbEB
+		var ServiceErgebnis<?> r
+		var dbEB = berechneBetrag
+		var dbB = Global::konvDM(dbEB)
+		var b = dbEB
 		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
-			r = FactoryService::getHaushaltService.insertUpdateBuchung(getServiceDaten, null, valuta.getValue, dbB,
-				dbEB, getText(sollkonto), getText(habenkonto), bText.getText, belegNr.getText, belegDatum.getValue,
-				schluessel.getText, getText(haus), getText(wohnung), getText(mieter), notiz.getText, true)
+			r = FactoryService::haushaltService.insertUpdateBuchung(serviceDaten, null, valuta.value, dbB, dbEB,
+				getText(sollkonto), getText(habenkonto), bText.text, belegNr.text, belegDatum.value, schluessel.text,
+				getText(haus), getText(wohnung), getText(mieter), notiz.text, true)
 		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
-			r = FactoryService::getHaushaltService.insertUpdateBuchung(getServiceDaten, nr.getText, valuta.getValue,
-				dbB, dbEB, getText(sollkonto), getText(habenkonto), bText.getText, belegNr.getText, belegDatum.getValue,
-				schluessel.getText, getText(haus), getText(wohnung), getText(mieter), notiz.getText, true)
+			r = FactoryService::haushaltService.insertUpdateBuchung(serviceDaten, nr.text, valuta.value, dbB, dbEB,
+				getText(sollkonto), getText(habenkonto), bText.text, belegNr.text, belegDatum.value, schluessel.text,
+				getText(haus), getText(wohnung), getText(mieter), notiz.text, true)
 		} else if (DialogAufrufEnum::STORNO.equals(aufruf)) {
-			r = FactoryService::getHaushaltService.storniereBuchung(getServiceDaten, nr.getText)
+			r = FactoryService::haushaltService.storniereBuchung(serviceDaten, nr.text)
 		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
-			r = FactoryService::getHaushaltService.deleteBuchung(getServiceDaten, nr.getText)
+			r = FactoryService::haushaltService.deleteBuchung(serviceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)
-			if (r.getFehler.isEmpty) {
+			if (r.fehler.isEmpty) {
 				// letztes Datum merken
-				valutaZuletzt = valuta.getValue
-				belegDatumZuletzt = belegDatum.getValue
+				valutaZuletzt = valuta.value
+				belegDatumZuletzt = belegDatum.value
 				updateParent
 				if (DialogAufrufEnum::NEU.equals(aufruf)) {
-					var StringBuffer sb = new StringBuffer
+					var sb = new StringBuffer
 					var HhKonto sk = getValue(sollkonto, true)
 					var HhKonto hk = getValue(habenkonto, true)
-					sb.append(Global::dateTimeStringForm(valuta.getValue.atStartOfDay)).append(", ").append(
-						Global::dblStr2l(b)).append(", ").append(sk.getName).append(" an ").append(hk.getName).
-						append(", ").append(bText.getText)
-					if (!Global::nes(belegNr.getText)) {
-						sb.append(", ").append(belegNr.getText)
+					sb.append(Meldungen::HH057(valuta.value.atStartOfDay, b, sk.name, hk.name, bText.text))
+					if (!Global.nes(belegNr.text)) {
+						sb.append(Meldungen::HH058(belegNr.text))
 					}
-					sb.append(", ").append(Global::dateTimeStringForm(belegDatum.getValue.atStartOfDay))
+					if (!valuta.value.equals(belegDatum.value)) {
+						sb.append(Meldungen::HH059(belegDatum.value.atStartOfDay))
+					}
 					buchung.setText(sb.toString)
 					betrag.setText("")
 					summe.setText("")
@@ -474,8 +465,8 @@ class VM510BuchungController extends BaseController<String> {
 	def private double berechneBetrag() {
 
 		var operator = ermittleOperator
-		var b = Global::strDbl(betrag.getText)
-		var d = Global::strDbl(summe.getText)
+		var b = Global::strDbl(betrag.text)
+		var d = Global::strDbl(summe.text)
 		if (Global::nes(operator)) {
 			d += b
 		} else if (operator.equals("*")) {
@@ -490,7 +481,7 @@ class VM510BuchungController extends BaseController<String> {
 	def private String ermittleOperator() {
 
 		var op = ""
-		var strBetrag = Global::objStr(betrag.getText)
+		var strBetrag = Global::objStr(betrag.text)
 		if (strBetrag.startsWith("+")) {
 			strBetrag = strBetrag.substring(1)
 		} else if (strBetrag.startsWith("*")) {

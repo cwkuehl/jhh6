@@ -1,7 +1,5 @@
 package de.cwkuehl.jhh6.app.controller.vm
 
-import java.time.LocalDate
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.VmMieteLang
 import de.cwkuehl.jhh6.api.dto.VmWohnungLang
 import de.cwkuehl.jhh6.api.global.Global
@@ -11,6 +9,7 @@ import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.app.control.Datum
 import de.cwkuehl.jhh6.server.FactoryService
+import java.time.LocalDate
 import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.ComboBox
@@ -64,11 +63,11 @@ class VM410MieteController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getBezeichnung
+			return getData.bezeichnung
 		}
 	}
 
@@ -80,7 +79,7 @@ class VM410MieteController extends BaseController<String> {
 		tabbar = 0
 		nr0.setLabelFor(nr)
 		wohnung0.setLabelFor(wohnung, true)
-		datum0.setLabelFor(datum.getLabelForNode, true)
+		datum0.setLabelFor(datum.labelForNode, true)
 		miete0.setLabelFor(miete, true)
 		garage0.setLabelFor(garage)
 		summe10.setLabelFor(summe1)
@@ -104,11 +103,11 @@ class VM410MieteController extends BaseController<String> {
 
 		if (stufe <= 0) {
 			datum.setValue(LocalDate::now)
-			var List<VmWohnungLang> wl = get(FactoryService::vermietungService.getWohnungListe(serviceDaten, true))
+			var wl = get(FactoryService::vermietungService.getWohnungListe(serviceDaten, true))
 			wohnung.setItems(getItems(wl, null, [a|new WohnungData(a)], null))
-			var boolean neu = DialogAufrufEnum::NEU.equals(aufruf)
-			var boolean loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
-			var VmMieteLang k = getParameter1
+			var neu = DialogAufrufEnum::NEU.equals(aufruf)
+			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
+			var VmMieteLang k = parameter1
 			if (!neu && k !== null) {
 				k = get(FactoryService::vermietungService.getMieteLang(serviceDaten, false, k.uid, null, null))
 				nr.setText(k.uid)
@@ -165,21 +164,21 @@ class VM410MieteController extends BaseController<String> {
 	 */
 	@FXML def void onOk() {
 
-		var ServiceErgebnis<?> r = null
+		var ServiceErgebnis<?> r
 		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
-			r = FactoryService::getVermietungService.insertUpdateMiete(getServiceDaten, null, getText(wohnung),
-				datum.getValue, Global::strDbl(miete.text), Global::strDbl(nebenkosten.text),
-				Global::strDbl(garage.text), Global::strDbl(heizung.text), Global::strInt(personen.text), notiz.text)
+			r = FactoryService::vermietungService.insertUpdateMiete(serviceDaten, null, getText(wohnung), datum.value,
+				Global::strDbl(miete.text), Global::strDbl(nebenkosten.text), Global::strDbl(garage.text),
+				Global::strDbl(heizung.text), Global::strInt(personen.text), notiz.text)
 		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
-			r = FactoryService::getVermietungService.insertUpdateMiete(getServiceDaten, nr.text, getText(wohnung),
-				datum.getValue, Global::strDbl(miete.text), Global::strDbl(nebenkosten.text),
-				Global::strDbl(garage.text), Global::strDbl(heizung.text), Global::strInt(personen.text), notiz.text)
+			r = FactoryService::vermietungService.insertUpdateMiete(serviceDaten, nr.text, getText(wohnung),
+				datum.value, Global::strDbl(miete.text), Global::strDbl(nebenkosten.text), Global::strDbl(garage.text),
+				Global::strDbl(heizung.text), Global::strInt(personen.text), notiz.text)
 		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
-			r = FactoryService::getVermietungService.deleteMiete(getServiceDaten, nr.text)
+			r = FactoryService::vermietungService.deleteMiete(serviceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)
-			if (r.getFehler.isEmpty) {
+			if (r.fehler.isEmpty) {
 				updateParent
 				close
 			}

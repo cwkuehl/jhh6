@@ -1,6 +1,5 @@
 package de.cwkuehl.jhh6.app.controller.vm
 
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.VmAbrechnungLang
 import de.cwkuehl.jhh6.api.dto.VmHaus
 import de.cwkuehl.jhh6.api.dto.VmMieterLang
@@ -71,11 +70,11 @@ class VM930AbrechnungController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getBezeichnung
+			return getData.bezeichnung
 		}
 	}
 
@@ -89,11 +88,11 @@ class VM930AbrechnungController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getBezeichnung
+			return getData.bezeichnung
 		}
 	}
 
@@ -107,11 +106,11 @@ class VM930AbrechnungController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getName
+			return getData.name
 		}
 	}
 
@@ -122,8 +121,8 @@ class VM930AbrechnungController extends BaseController<String> {
 
 		tabbar = 0
 		nr0.setLabelFor(nr)
-		von0.setLabelFor(von.getLabelForNode, true)
-		bis0.setLabelFor(bis.getLabelForNode, true)
+		von0.setLabelFor(von.labelForNode, true)
+		bis0.setLabelFor(bis.labelForNode, true)
 		haus0.setLabelFor(haus, true)
 		wohnung0.setLabelFor(wohnung, false)
 		mieter0.setLabelFor(mieter, false)
@@ -131,7 +130,7 @@ class VM930AbrechnungController extends BaseController<String> {
 		beschreibung0.setLabelFor(beschreibung)
 		wert0.setLabelFor(wert, true)
 		betrag0.setLabelFor(betrag)
-		datum0.setLabelFor(datum.getLabelForNode)
+		datum0.setLabelFor(datum.labelForNode)
 		reihenfolge0.setLabelFor(reihenfolge)
 		status0.setLabelFor(status)
 		funktion0.setLabelFor(funktion)
@@ -149,38 +148,36 @@ class VM930AbrechnungController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var List<VmHaus> hl = get(FactoryService::getVermietungService.getHausListe(getServiceDaten, true))
+			var hl = get(FactoryService::vermietungService.getHausListe(serviceDaten, true))
 			haus.setItems(getItems(hl, new VmHaus, [a|new HausData(a)], null))
-			var List<VmWohnungLang> wl = get(
-				FactoryService::getVermietungService.getWohnungListe(getServiceDaten, true))
+			var wl = get(FactoryService::vermietungService.getWohnungListe(serviceDaten, true))
 			wohnung.setItems(getItems(wl, new VmWohnungLang, [a|new WohnungData(a)], null))
-			var List<VmMieterLang> ml = get(
-				FactoryService::getVermietungService.getMieterListe(getServiceDaten, true, null, null, null, null))
+			var ml = get(FactoryService::vermietungService.getMieterListe(serviceDaten, true, null, null, null, null))
 			mieter.setItems(getItems(ml, new VmMieterLang, [a|new MieterData(a)], null))
-			var boolean neu = DialogAufrufEnum::NEU.equals(getAufruf)
-			var boolean aendern = DialogAufrufEnum::AENDERN.equals(getAufruf)
-			var boolean loeschen = DialogAufrufEnum::LOESCHEN.equals(getAufruf)
-			var VmAbrechnungLang k = getParameter1
+			var neu = DialogAufrufEnum::NEU.equals(aufruf)
+			var aendern = DialogAufrufEnum::AENDERN.equals(aufruf)
+			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
+			var VmAbrechnungLang k = parameter1
 			if (!neu && k !== null) {
-				k = get(FactoryService::getVermietungService.getAbrechnungLang(getServiceDaten, k.getUid))
+				k = get(FactoryService::vermietungService.getAbrechnungLang(serviceDaten, k.uid))
 				if (k !== null) {
-					nr.setText(k.getUid)
-					setText(haus, k.getHausUid)
-					setText(wohnung, k.getWohnungUid)
-					setText(mieter, k.getMieterUid)
-					von.setValue(k.getDatumVon)
-					bis.setValue(k.getDatumBis)
-					schluessel.setText(k.getSchluessel)
-					beschreibung.setText(k.getBeschreibung)
-					wert.setText(k.getWert)
-					betrag.setText(Global::dblStr2l(k.getBetrag))
-					datum.setValue(k.getDatum)
-					reihenfolge.setText(k.getReihenfolge)
-					status.setText(k.getStatus)
-					funktion.setText(k.getFunktion)
-					notiz.setText(k.getNotiz)
-					angelegt.setText(k.formatDatumVon(k.getAngelegtAm, k.getAngelegtVon))
-					geaendert.setText(k.formatDatumVon(k.getGeaendertAm, k.getGeaendertVon))
+					nr.setText(k.uid)
+					setText(haus, k.hausUid)
+					setText(wohnung, k.wohnungUid)
+					setText(mieter, k.mieterUid)
+					von.setValue(k.datumVon)
+					bis.setValue(k.datumBis)
+					schluessel.setText(k.schluessel)
+					beschreibung.setText(k.beschreibung)
+					wert.setText(k.wert)
+					betrag.setText(Global::dblStr2l(k.betrag))
+					datum.setValue(k.datum)
+					reihenfolge.setText(k.reihenfolge)
+					status.setText(k.status)
+					funktion.setText(k.funktion)
+					notiz.setText(k.notiz)
+					angelegt.setText(k.formatDatumVon(k.angelegtAm, k.angelegtVon))
+					geaendert.setText(k.formatDatumVon(k.geaendertAm, k.geaendertVon))
 				}
 			}
 			nr.setEditable(false)
@@ -230,7 +227,7 @@ class VM930AbrechnungController extends BaseController<String> {
 
 		var VmHaus h = getValue(haus, false)
 		var VmWohnungLang w = getValue(wohnung, false)
-		if (h !== null && w !== null && Global::compString(h.getUid, w.getHausUid) !== 0) {
+		if (h !== null && w !== null && Global::compString(h.uid, w.hausUid) !== 0) {
 			setText(wohnung, null)
 			setText(mieter, null)
 		}
@@ -242,10 +239,10 @@ class VM930AbrechnungController extends BaseController<String> {
 	@FXML def void onWohnung() {
 
 		var VmWohnungLang w = getValue(wohnung, false)
-		if (w !== null && !Global::nes(w.getUid)) {
-			setText(haus, w.getHausUid)
+		if (w !== null && !Global::nes(w.uid)) {
+			setText(haus, w.hausUid)
 			var VmMieterLang m = getValue(mieter, false)
-			if (m !== null && Global::compString(w.getUid, m.getWohnungUid) !== 0) {
+			if (m !== null && Global::compString(w.uid, m.wohnungUid) !== 0) {
 				setText(mieter, null)
 			}
 		}
@@ -257,8 +254,8 @@ class VM930AbrechnungController extends BaseController<String> {
 	@FXML def void onMieter() {
 
 		var VmMieterLang m = getValue(mieter, false)
-		if (m !== null && !Global::nes(m.getUid)) {
-			setText(wohnung, m.getWohnungUid)
+		if (m !== null && !Global::nes(m.uid)) {
+			setText(wohnung, m.wohnungUid)
 			onWohnung
 		}
 	}
@@ -266,25 +263,23 @@ class VM930AbrechnungController extends BaseController<String> {
 	/** 
 	 * Event für Ok.
 	 */
-	@FXML @SuppressWarnings("unchecked") def void onOk() {
+	@FXML def void onOk() {
 
-		var ServiceErgebnis<?> r = null
+		var ServiceErgebnis<?> r
 		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
-			r = FactoryService::getVermietungService.insertUpdateAbrechnung(getServiceDaten, null, getText(haus),
-				getText(wohnung), getText(mieter), von.getValue, bis.getValue, schluessel.getText,
-				beschreibung.getText, wert.getText, Global::strDbl(betrag.getText), datum.getValue2,
-				reihenfolge.getText, status.getText, funktion.getText, notiz.getText)
+			r = FactoryService::vermietungService.insertUpdateAbrechnung(serviceDaten, null, getText(haus),
+				getText(wohnung), getText(mieter), von.value, bis.value, schluessel.text, beschreibung.text, wert.text,
+				Global::strDbl(betrag.text), datum.value2, reihenfolge.text, status.text, funktion.text, notiz.text)
 		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
-			r = FactoryService::getVermietungService.insertUpdateAbrechnung(getServiceDaten, nr.getText,
-				getText(haus), getText(wohnung), getText(mieter), von.getValue, bis.getValue, schluessel.getText,
-				beschreibung.getText, wert.getText, Global::strDbl(betrag.getText), datum.getValue2,
-				reihenfolge.getText, status.getText, funktion.getText, notiz.getText)
+			r = FactoryService::vermietungService.insertUpdateAbrechnung(serviceDaten, nr.text, getText(haus),
+				getText(wohnung), getText(mieter), von.value, bis.value, schluessel.text, beschreibung.text, wert.text,
+				Global::strDbl(betrag.text), datum.value2, reihenfolge.text, status.text, funktion.text, notiz.text)
 		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
-			r = FactoryService::getVermietungService.deleteAbrechnung(getServiceDaten, nr.getText)
+			r = FactoryService::vermietungService.deleteAbrechnung(serviceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)
-			if (r.getFehler.isEmpty) {
+			if (r.fehler.isEmpty) {
 				updateParent
 				close
 			}

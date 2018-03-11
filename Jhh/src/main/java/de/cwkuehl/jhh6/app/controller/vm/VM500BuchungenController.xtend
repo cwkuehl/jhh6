@@ -13,7 +13,6 @@ import de.cwkuehl.jhh6.app.control.Datum
 import de.cwkuehl.jhh6.server.FactoryService
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.util.List
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -103,20 +102,20 @@ class VM500BuchungenController extends BaseController<String> {
 		new(HhBuchungVm v) {
 
 			super(v)
-			uid = new SimpleStringProperty(v.getUid)
-			valuta = new SimpleObjectProperty<LocalDate>(v.getSollValuta)
-			kz = new SimpleStringProperty(v.getKz)
-			betrag = new SimpleObjectProperty<Double>(v.getEbetrag)
-			text = new SimpleStringProperty(v.getBtext)
-			soll = new SimpleStringProperty(v.getSollName)
-			haben = new SimpleStringProperty(v.getHabenName)
-			haus = new SimpleStringProperty(v.getHausBezeichnung)
-			wohnung = new SimpleStringProperty(v.getWohnungBezeichnung)
-			mieter = new SimpleStringProperty(v.getMieterName)
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
+			uid = new SimpleStringProperty(v.uid)
+			valuta = new SimpleObjectProperty<LocalDate>(v.sollValuta)
+			kz = new SimpleStringProperty(v.kz)
+			betrag = new SimpleObjectProperty<Double>(v.ebetrag)
+			text = new SimpleStringProperty(v.btext)
+			soll = new SimpleStringProperty(v.sollName)
+			haben = new SimpleStringProperty(v.habenName)
+			haus = new SimpleStringProperty(v.hausBezeichnung)
+			wohnung = new SimpleStringProperty(v.wohnungBezeichnung)
+			mieter = new SimpleStringProperty(v.mieterName)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
+			geaendertVon = new SimpleStringProperty(v.geaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
+			angelegtVon = new SimpleStringProperty(v.angelegtVon)
 		}
 
 		override String getId() {
@@ -134,11 +133,11 @@ class VM500BuchungenController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getName
+			return getData.name
 		}
 	}
 
@@ -152,11 +151,11 @@ class VM500BuchungenController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getBezeichnung
+			return getData.bezeichnung
 		}
 	}
 
@@ -170,11 +169,11 @@ class VM500BuchungenController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getBezeichnung
+			return getData.bezeichnung
 		}
 	}
 
@@ -188,11 +187,11 @@ class VM500BuchungenController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getName
+			return getData.name
 		}
 	}
 
@@ -205,8 +204,8 @@ class VM500BuchungenController extends BaseController<String> {
 		super.initialize
 		buchungen0.setLabelFor(buchungen)
 		kennzeichen0.setLabelFor(kennzeichen, false)
-		von0.setLabelFor(von.getLabelForNode)
-		bis0.setLabelFor(bis.getLabelForNode)
+		von0.setLabelFor(von.labelForNode)
+		bis0.setLabelFor(bis.labelForNode)
 		bText0.setLabelFor(bText)
 		betrag0.setLabelFor(betrag)
 		konto0.setLabelFor(konto, false)
@@ -234,21 +233,18 @@ class VM500BuchungenController extends BaseController<String> {
 
 		if (stufe <= 0) {
 			setText(kennzeichen, "1")
-			var LocalDate d = LocalDate::now
+			var d = LocalDate::now
 			d = d.withDayOfMonth(d.lengthOfMonth)
 			bis.setValue(d)
 			von.setValue(d.minusMonths(13).withDayOfMonth(1))
 			bText.setText("%%")
-			var List<HhKonto> kl = get(
-				FactoryService::getHaushaltService.getKontoListe(getServiceDaten, bis.getValue, von.getValue))
+			var kl = get(FactoryService::haushaltService.getKontoListe(serviceDaten, bis.value, von.value))
 			konto.setItems(getItems(kl, new HhKonto, [a|new KontoData(a)], null))
-			var List<VmHaus> hl = get(FactoryService::getVermietungService.getHausListe(getServiceDaten, true))
+			var hl = get(FactoryService::vermietungService.getHausListe(serviceDaten, true))
 			haus.setItems(getItems(hl, new VmHaus, [a|new HausData(a)], null))
-			var List<VmWohnungLang> wl = get(
-				FactoryService::getVermietungService.getWohnungListe(getServiceDaten, true))
+			var wl = get(FactoryService::vermietungService.getWohnungListe(serviceDaten, true))
 			wohnung.setItems(getItems(wl, new VmWohnungLang, [a|new WohnungData(a)], null))
-			var List<VmMieterLang> ml = get(
-				FactoryService::getVermietungService.getMieterListe(getServiceDaten, true, null, null, null, null))
+			var ml = get(FactoryService::vermietungService.getMieterListe(serviceDaten, true, null, null, null, null))
 			mieter.setItems(getItems(ml, new VmMieterLang, [a|new MieterData(a)], null))
 			setText(konto, null)
 			setText(haus, null)
@@ -256,10 +252,10 @@ class VM500BuchungenController extends BaseController<String> {
 			setText(mieter, null)
 		}
 		if (stufe <= 1) {
-			var List<HhBuchungVm> l = get(
-				FactoryService::getVermietungService.getBuchungListe(getServiceDaten,
-					Global::objBool(getText(kennzeichen)), von.getValue, bis.getValue, bText.getText, getText(konto),
-					betrag.getText, getText(haus), getText(wohnung), getText(mieter)))
+			var l = get(
+				FactoryService::vermietungService.getBuchungListe(serviceDaten, Global::objBool(getText(kennzeichen)),
+					von.value, bis.value, bText.text, getText(konto), betrag.text, getText(haus), getText(wohnung),
+					getText(mieter)))
 			getItems(l, null, [a|new BuchungenData(a)], buchungenData)
 		}
 		if (stufe <= 2) {
@@ -273,21 +269,21 @@ class VM500BuchungenController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		buchungen.setItems(buchungenData)
-		colUid.setCellValueFactory([c|c.getValue.uid])
-		colValuta.setCellValueFactory([c|c.getValue.valuta])
-		colKz.setCellValueFactory([c|c.getValue.kz])
-		colText.setCellValueFactory([c|c.getValue.text])
-		colBetrag.setCellValueFactory([c|c.getValue.betrag])
+		colUid.setCellValueFactory([c|c.value.uid])
+		colValuta.setCellValueFactory([c|c.value.valuta])
+		colKz.setCellValueFactory([c|c.value.kz])
+		colText.setCellValueFactory([c|c.value.text])
+		colBetrag.setCellValueFactory([c|c.value.betrag])
 		initColumnBetrag(colBetrag)
-		colSoll.setCellValueFactory([c|c.getValue.soll])
-		colHaben.setCellValueFactory([c|c.getValue.haben])
-		colHaus.setCellValueFactory([c|c.getValue.haus])
-		colWohnung.setCellValueFactory([c|c.getValue.wohnung])
-		colMieter.setCellValueFactory([c|c.getValue.mieter])
-		colGv.setCellValueFactory([c|c.getValue.geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue.geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue.angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue.angelegtAm])
+		colSoll.setCellValueFactory([c|c.value.soll])
+		colHaben.setCellValueFactory([c|c.value.haben])
+		colHaus.setCellValueFactory([c|c.value.haus])
+		colWohnung.setCellValueFactory([c|c.value.wohnung])
+		colMieter.setCellValueFactory([c|c.value.mieter])
+		colGv.setCellValueFactory([c|c.value.geaendertVon])
+		colGa.setCellValueFactory([c|c.value.geaendertAm])
+		colAv.setCellValueFactory([c|c.value.angelegtVon])
+		colAa.setCellValueFactory([c|c.value.angelegtAm])
 	}
 
 	override protected void updateParent() {
@@ -299,10 +295,10 @@ class VM500BuchungenController extends BaseController<String> {
 		var aufruf = faufruf
 		var HhBuchungVm k = getValue(buchungen, !DialogAufrufEnum::NEU.equals(aufruf))
 		if (DialogAufrufEnum::STORNO.equals(aufruf)) {
-			if (Global::compString(letzterStorno, k.getUid) === 0) {
+			if (Global::compString(letzterStorno, k.uid) === 0) {
 				aufruf = DialogAufrufEnum::LOESCHEN
 			}
-			letzterStorno = k.getUid
+			letzterStorno = k.uid
 		}
 		starteFormular(typeof(VM510BuchungController), aufruf, k)
 	}
@@ -410,7 +406,7 @@ class VM500BuchungenController extends BaseController<String> {
 	@FXML def void onHaus() {
 		var VmHaus h = getValue(haus, false)
 		var VmWohnungLang w = getValue(wohnung, false)
-		if (h !== null && w !== null && Global::compString(h.getUid, w.getHausUid) !== 0) {
+		if (h !== null && w !== null && Global::compString(h.uid, w.hausUid) !== 0) {
 			setText(wohnung, null)
 			setText(mieter, null)
 		}
@@ -421,10 +417,10 @@ class VM500BuchungenController extends BaseController<String> {
 	 */
 	@FXML def void onWohnung() {
 		var VmWohnungLang w = getValue(wohnung, false)
-		if (w !== null && !Global::nes(w.getUid)) {
-			setText(haus, w.getHausUid)
+		if (w !== null && !Global::nes(w.uid)) {
+			setText(haus, w.hausUid)
 			var VmMieterLang m = getValue(mieter, false)
-			if (m !== null && Global::compString(w.getUid, m.getWohnungUid) !== 0) {
+			if (m !== null && Global::compString(w.uid, m.wohnungUid) !== 0) {
 				setText(mieter, null)
 			}
 		}
@@ -435,8 +431,8 @@ class VM500BuchungenController extends BaseController<String> {
 	 */
 	@FXML def void onMieter() {
 		var VmMieterLang m = getValue(mieter, false)
-		if (m !== null && !Global::nes(m.getUid)) {
-			setText(wohnung, m.getWohnungUid)
+		if (m !== null && !Global::nes(m.uid)) {
+			setText(wohnung, m.wohnungUid)
 			onWohnung
 		}
 	}

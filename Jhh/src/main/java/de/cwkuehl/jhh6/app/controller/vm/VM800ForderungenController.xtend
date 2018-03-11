@@ -1,21 +1,14 @@
 package de.cwkuehl.jhh6.app.controller.vm
 
-import java.time.LocalDate
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.HhBuchungVm
 import de.cwkuehl.jhh6.api.dto.VmHaus
 import de.cwkuehl.jhh6.api.dto.VmMieterLang
 import de.cwkuehl.jhh6.api.dto.VmWohnungLang
 import de.cwkuehl.jhh6.api.global.Global
 import de.cwkuehl.jhh6.app.base.BaseController
-import de.cwkuehl.jhh6.app.base.BaseController.ComboBoxData
-import de.cwkuehl.jhh6.app.base.BaseController.TableViewData
 import de.cwkuehl.jhh6.app.control.Datum
-import de.cwkuehl.jhh6.app.controller.vm.VM800ForderungenController.ForderungenData
-import de.cwkuehl.jhh6.app.controller.vm.VM800ForderungenController.HausData
-import de.cwkuehl.jhh6.app.controller.vm.VM800ForderungenController.MieterData
-import de.cwkuehl.jhh6.app.controller.vm.VM800ForderungenController.WohnungData
 import de.cwkuehl.jhh6.server.FactoryService
+import java.time.LocalDate
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -54,8 +47,8 @@ class VM800ForderungenController extends BaseController<String> {
 	@FXML ComboBox<WohnungData> wohnung
 	@FXML Label mieter0
 	@FXML ComboBox<MieterData> mieter
-	//@FXML Button alle
 
+	// @FXML Button alle
 	/** 
 	 * Daten für Tabelle Forderungen.
 	 */
@@ -71,12 +64,12 @@ class VM800ForderungenController extends BaseController<String> {
 		new(HhBuchungVm v) {
 
 			super(v)
-			mieter = new SimpleStringProperty(v.getMieterName)
-			wohnung = new SimpleStringProperty(v.getWohnungBezeichnung)
-			haus = new SimpleStringProperty(v.getHausBezeichnung)
-			valuta = new SimpleObjectProperty<LocalDate>(v.getSollValuta)
-			soll = new SimpleObjectProperty<Double>(v.getBetrag)
-			ist = new SimpleObjectProperty<Double>(v.getEbetrag)
+			mieter = new SimpleStringProperty(v.mieterName)
+			wohnung = new SimpleStringProperty(v.wohnungBezeichnung)
+			haus = new SimpleStringProperty(v.hausBezeichnung)
+			valuta = new SimpleObjectProperty<LocalDate>(v.sollValuta)
+			soll = new SimpleObjectProperty<Double>(v.betrag)
+			ist = new SimpleObjectProperty<Double>(v.ebetrag)
 		}
 
 		override String getId() {
@@ -94,11 +87,11 @@ class VM800ForderungenController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getBezeichnung
+			return getData.bezeichnung
 		}
 	}
 
@@ -112,11 +105,11 @@ class VM800ForderungenController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getBezeichnung
+			return getData.bezeichnung
 		}
 	}
 
@@ -130,11 +123,11 @@ class VM800ForderungenController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getName
+			return getData.name
 		}
 	}
 
@@ -146,8 +139,8 @@ class VM800ForderungenController extends BaseController<String> {
 		tabbar = 1
 		super.initialize
 		forderungen0.setLabelFor(forderungen)
-		von0.setLabelFor(von.getLabelForNode)
-		bis0.setLabelFor(bis.getLabelForNode)
+		von0.setLabelFor(von.labelForNode)
+		bis0.setLabelFor(bis.labelForNode)
 		haus0.setLabelFor(haus, false)
 		wohnung0.setLabelFor(wohnung, false)
 		mieter0.setLabelFor(mieter, false)
@@ -164,24 +157,22 @@ class VM800ForderungenController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var List<VmHaus> hl = get(FactoryService::getVermietungService.getHausListe(getServiceDaten, true))
+			var hl = get(FactoryService::vermietungService.getHausListe(serviceDaten, true))
 			haus.setItems(getItems(hl, new VmHaus, [a|new HausData(a)], null))
-			var List<VmWohnungLang> wl = get(
-				FactoryService::getVermietungService.getWohnungListe(getServiceDaten, true))
+			var wl = get(FactoryService::vermietungService.getWohnungListe(serviceDaten, true))
 			wohnung.setItems(getItems(wl, new VmWohnungLang, [a|new WohnungData(a)], null))
-			var List<VmMieterLang> ml = get(
-				FactoryService::getVermietungService.getMieterListe(getServiceDaten, true, null, null, null, null))
+			var ml = get(FactoryService::vermietungService.getMieterListe(serviceDaten, true, null, null, null, null))
 			mieter.setItems(getItems(ml, new VmMieterLang, [a|new MieterData(a)], null))
 			von.setValue(LocalDate::now.withDayOfYear(1))
-			bis.setValue(von.getValue.plusYears(1).minusDays(1))
+			bis.setValue(von.value.plusYears(1).minusDays(1))
 			setText(haus, null)
 			setText(wohnung, null)
 			setText(mieter, null)
 		}
 		if (stufe <= 1) {
-			var List<HhBuchungVm> l = get(
-				FactoryService::getVermietungService.getForderungListe(getServiceDaten, von.getValue,
-					bis.getValue, getText(haus), getText(wohnung), getText(mieter)))
+			var l = get(
+				FactoryService::vermietungService.getForderungListe(serviceDaten, von.value, bis.value, getText(haus),
+					getText(wohnung), getText(mieter)))
 			getItems(l, null, [a|new ForderungenData(a)], forderungenData)
 		}
 		if (stufe <= 2) {
@@ -195,12 +186,12 @@ class VM800ForderungenController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		forderungen.setItems(forderungenData)
-		colMieter.setCellValueFactory([c|c.getValue.mieter])
-		colWohnung.setCellValueFactory([c|c.getValue.wohnung])
-		colHaus.setCellValueFactory([c|c.getValue.haus])
-		colValuta.setCellValueFactory([c|c.getValue.valuta])
-		colSoll.setCellValueFactory([c|c.getValue.soll])
-		colIst.setCellValueFactory([c|c.getValue.ist])
+		colMieter.setCellValueFactory([c|c.value.mieter])
+		colWohnung.setCellValueFactory([c|c.value.wohnung])
+		colHaus.setCellValueFactory([c|c.value.haus])
+		colValuta.setCellValueFactory([c|c.value.valuta])
+		colSoll.setCellValueFactory([c|c.value.soll])
+		colIst.setCellValueFactory([c|c.value.ist])
 		initColumnBetrag(colSoll)
 		initColumnBetrag(colIst)
 	}
@@ -227,7 +218,7 @@ class VM800ForderungenController extends BaseController<String> {
 
 		var VmHaus h = getValue(haus, false)
 		var VmWohnungLang w = getValue(wohnung, false)
-		if (h !== null && w !== null && Global::compString(h.getUid, w.getHausUid) !== 0) {
+		if (h !== null && w !== null && Global::compString(h.uid, w.hausUid) !== 0) {
 			setText(wohnung, null)
 			setText(mieter, null)
 		}
@@ -239,10 +230,10 @@ class VM800ForderungenController extends BaseController<String> {
 	@FXML def void onWohnung() {
 
 		var VmWohnungLang w = getValue(wohnung, false)
-		if (w !== null && !Global::nes(w.getUid)) {
-			setText(haus, w.getHausUid)
+		if (w !== null && !Global::nes(w.uid)) {
+			setText(haus, w.hausUid)
 			var VmMieterLang m = getValue(mieter, false)
-			if (m !== null && Global::compString(w.getUid, m.getWohnungUid) !== 0) {
+			if (m !== null && Global::compString(w.uid, m.wohnungUid) !== 0) {
 				setText(mieter, null)
 			}
 		}
@@ -254,8 +245,8 @@ class VM800ForderungenController extends BaseController<String> {
 	@FXML def void onMieter() {
 
 		var VmMieterLang m = getValue(mieter, false)
-		if (m !== null && !Global::nes(m.getUid)) {
-			setText(wohnung, m.getWohnungUid)
+		if (m !== null && !Global::nes(m.uid)) {
+			setText(wohnung, m.wohnungUid)
 			onWohnung
 		}
 	}

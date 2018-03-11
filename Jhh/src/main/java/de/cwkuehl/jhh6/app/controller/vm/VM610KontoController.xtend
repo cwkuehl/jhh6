@@ -13,7 +13,6 @@ import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.app.control.Datum
 import de.cwkuehl.jhh6.server.FactoryService
-import java.util.List
 import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.ComboBox
@@ -67,11 +66,11 @@ class VM610KontoController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getBezeichnung
+			return getData.bezeichnung
 		}
 	}
 
@@ -85,11 +84,11 @@ class VM610KontoController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getBezeichnung
+			return getData.bezeichnung
 		}
 	}
 
@@ -103,11 +102,11 @@ class VM610KontoController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getName
+			return getData.name
 		}
 	}
 
@@ -121,8 +120,8 @@ class VM610KontoController extends BaseController<String> {
 		bezeichnung0.setLabelFor(bezeichnung, true)
 		kennzeichen0.setLabelFor(kennzeichen, false)
 		kontoart0.setLabelFor(kontoart, true)
-		von0.setLabelFor(von.getLabelForNode)
-		bis0.setLabelFor(bis.getLabelForNode)
+		von0.setLabelFor(von.labelForNode)
+		bis0.setLabelFor(bis.labelForNode)
 		schluessel0.setLabelFor(schluessel)
 		haus0.setLabelFor(haus, false)
 		wohnung0.setLabelFor(wohnung, false)
@@ -143,35 +142,32 @@ class VM610KontoController extends BaseController<String> {
 		if (stufe <= 0) {
 			setText(kontoart, KontoartEnum::AKTIVKONTO.toString)
 			setText(kennzeichen, KontokennzeichenEnum::OHNE.toString)
-			var List<VmHaus> hl = get(FactoryService::getVermietungService.getHausListe(getServiceDaten, true))
+			var hl = get(FactoryService::vermietungService.getHausListe(serviceDaten, true))
 			haus.setItems(getItems(hl, new VmHaus, [a|new HausData(a)], null))
-			var List<VmWohnungLang> wl = get(
-				FactoryService::getVermietungService.getWohnungListe(getServiceDaten, true))
+			var wl = get(FactoryService::vermietungService.getWohnungListe(serviceDaten, true))
 			wohnung.setItems(getItems(wl, new VmWohnungLang, [a|new WohnungData(a)], null))
-			var List<VmMieterLang> ml = get(
-				FactoryService::getVermietungService.getMieterListe(getServiceDaten, true, null, null, null, null))
+			var ml = get(FactoryService::vermietungService.getMieterListe(serviceDaten, true, null, null, null, null))
 			mieter.setItems(getItems(ml, new VmMieterLang, [a|new MieterData(a)], null))
-			var boolean neu = DialogAufrufEnum::NEU.equals(getAufruf)
-			var boolean aendern = DialogAufrufEnum::AENDERN.equals(getAufruf)
-			var boolean loeschen = DialogAufrufEnum::LOESCHEN.equals(getAufruf) ||
-				DialogAufrufEnum::STORNO.equals(getAufruf)
-			var HhKontoVm k = getParameter1
+			var neu = DialogAufrufEnum::NEU.equals(aufruf)
+			var aendern = DialogAufrufEnum::AENDERN.equals(aufruf)
+			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf) || DialogAufrufEnum::STORNO.equals(aufruf)
+			var HhKontoVm k = parameter1
 			if (!neu && k !== null) {
-				k = get(FactoryService::getVermietungService.getKontoVm(getServiceDaten, k.getUid))
+				k = get(FactoryService::vermietungService.getKontoVm(serviceDaten, k.uid))
 				if (k !== null) {
-					nr.setText(k.getUid)
-					bezeichnung.setText(k.getName)
-					setText(kontoart, k.getArt)
-					setText(kennzeichen, k.getKz)
-					von.setValue(k.getGueltigVon)
-					bis.setValue(k.getGueltigBis)
-					schluessel.setText(k.getSchluessel)
-					setText(haus, k.getHausUid)
-					setText(wohnung, k.getWohnungUid)
-					setText(mieter, k.getMieterUid)
-					notiz.setText(k.getNotiz)
-					angelegt.setText(k.formatDatumVon(k.getAngelegtAm, k.getAngelegtVon))
-					geaendert.setText(k.formatDatumVon(k.getGeaendertAm, k.getGeaendertVon))
+					nr.setText(k.uid)
+					bezeichnung.setText(k.name)
+					setText(kontoart, k.art)
+					setText(kennzeichen, k.kz)
+					von.setValue(k.gueltigVon)
+					bis.setValue(k.gueltigBis)
+					schluessel.setText(k.schluessel)
+					setText(haus, k.hausUid)
+					setText(wohnung, k.wohnungUid)
+					setText(mieter, k.mieterUid)
+					notiz.setText(k.notiz)
+					angelegt.setText(k.formatDatumVon(k.angelegtAm, k.angelegtVon))
+					geaendert.setText(k.formatDatumVon(k.geaendertAm, k.geaendertVon))
 				}
 			}
 			nr.setEditable(false)
@@ -210,7 +206,7 @@ class VM610KontoController extends BaseController<String> {
 
 		var VmHaus h = getValue(haus, false)
 		var VmWohnungLang w = getValue(wohnung, false)
-		if (h !== null && w !== null && Global::compString(h.getUid, w.getHausUid) !== 0) {
+		if (h !== null && w !== null && Global::compString(h.uid, w.hausUid) !== 0) {
 			setText(wohnung, null)
 			setText(mieter, null)
 		}
@@ -222,10 +218,10 @@ class VM610KontoController extends BaseController<String> {
 	@FXML def void onWohnung() {
 
 		var VmWohnungLang w = getValue(wohnung, false)
-		if (w !== null && !Global::nes(w.getUid)) {
-			setText(haus, w.getHausUid)
+		if (w !== null && !Global::nes(w.uid)) {
+			setText(haus, w.hausUid)
 			var VmMieterLang m = getValue(mieter, false)
-			if (m !== null && Global::compString(w.getUid, m.getWohnungUid) !== 0) {
+			if (m !== null && Global::compString(w.uid, m.wohnungUid) !== 0) {
 				setText(mieter, null)
 			}
 		}
@@ -237,8 +233,8 @@ class VM610KontoController extends BaseController<String> {
 	@FXML def void onMieter() {
 
 		var VmMieterLang m = getValue(mieter, false)
-		if (m !== null && !Global::nes(m.getUid)) {
-			setText(wohnung, m.getWohnungUid)
+		if (m !== null && !Global::nes(m.uid)) {
+			setText(wohnung, m.wohnungUid)
 			onWohnung
 		}
 	}
@@ -248,21 +244,21 @@ class VM610KontoController extends BaseController<String> {
 	 */
 	@FXML def void onOk() {
 
-		var ServiceErgebnis<?> r = null
+		var ServiceErgebnis<?> r
 		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
-			r = FactoryService::getHaushaltService.insertUpdateKonto(getServiceDaten, null, getText(kontoart),
-				getText(kennzeichen), bezeichnung.getText, von.getValue, bis.getValue, schluessel.getText,
-				getText(haus), getText(wohnung), getText(mieter), notiz.getText, true)
+			r = FactoryService::haushaltService.insertUpdateKonto(serviceDaten, null, getText(kontoart),
+				getText(kennzeichen), bezeichnung.text, von.value, bis.value, schluessel.text, getText(haus),
+				getText(wohnung), getText(mieter), notiz.text, true)
 		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
-			r = FactoryService::getHaushaltService.insertUpdateKonto(getServiceDaten, nr.getText,
-				getText(kontoart), getText(kennzeichen), bezeichnung.getText, von.getValue, bis.getValue,
-				schluessel.getText, getText(haus), getText(wohnung), getText(mieter), notiz.getText, true)
+			r = FactoryService::haushaltService.insertUpdateKonto(serviceDaten, nr.text, getText(kontoart),
+				getText(kennzeichen), bezeichnung.text, von.value, bis.value, schluessel.text, getText(haus),
+				getText(wohnung), getText(mieter), notiz.text, true)
 		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
-			r = FactoryService::getHaushaltService.deleteKonto(getServiceDaten, nr.getText)
+			r = FactoryService::haushaltService.deleteKonto(serviceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)
-			if (r.getFehler.isEmpty) {
+			if (r.fehler.isEmpty) {
 				updateParent
 				close
 			}

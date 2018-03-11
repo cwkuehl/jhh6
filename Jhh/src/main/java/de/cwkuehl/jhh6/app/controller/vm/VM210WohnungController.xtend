@@ -1,13 +1,11 @@
 package de.cwkuehl.jhh6.app.controller.vm
 
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.VmHaus
 import de.cwkuehl.jhh6.api.dto.VmWohnungLang
 import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.api.service.ServiceErgebnis
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
-import de.cwkuehl.jhh6.app.controller.vm.VM210WohnungController.HausData
 import de.cwkuehl.jhh6.server.FactoryService
 import javafx.fxml.FXML
 import javafx.scene.control.Button
@@ -46,11 +44,11 @@ class VM210WohnungController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getBezeichnung
+			return getData.bezeichnung
 		}
 	}
 
@@ -77,19 +75,19 @@ class VM210WohnungController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var List<VmHaus> hl = get(FactoryService::getVermietungService.getHausListe(getServiceDaten, true))
+			var hl = get(FactoryService::vermietungService.getHausListe(serviceDaten, true))
 			haus.setItems(getItems(hl, null, [a|new HausData(a)], null))
-			var boolean neu = DialogAufrufEnum::NEU.equals(getAufruf)
-			var boolean loeschen = DialogAufrufEnum::LOESCHEN.equals(getAufruf)
-			var VmWohnungLang k = getParameter1
+			var neu = DialogAufrufEnum::NEU.equals(aufruf)
+			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
+			var VmWohnungLang k = parameter1
 			if (!neu && k !== null) {
-				k = get(FactoryService::getVermietungService.getWohnungLang(getServiceDaten, k.getUid))
-				nr.setText(k.getUid)
-				setText(haus, k.getHausUid)
-				bezeichnung.setText(k.getBezeichnung)
-				notiz.setText(k.getNotiz)
-				angelegt.setText(k.formatDatumVon(k.getAngelegtAm, k.getAngelegtVon))
-				geaendert.setText(k.formatDatumVon(k.getGeaendertAm, k.getGeaendertVon))
+				k = get(FactoryService::vermietungService.getWohnungLang(serviceDaten, k.uid))
+				nr.setText(k.uid)
+				setText(haus, k.hausUid)
+				bezeichnung.setText(k.bezeichnung)
+				notiz.setText(k.notiz)
+				angelegt.setText(k.formatDatumVon(k.angelegtAm, k.angelegtVon))
+				geaendert.setText(k.formatDatumVon(k.geaendertAm, k.geaendertVon))
 			}
 			nr.setEditable(false)
 			setEditable(haus, !loeschen)
@@ -118,19 +116,19 @@ class VM210WohnungController extends BaseController<String> {
 	 */
 	@FXML def void onOk() {
 
-		var ServiceErgebnis<?> r = null
+		var ServiceErgebnis<?> r
 		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
-			r = FactoryService::getVermietungService.insertUpdateWohnung(getServiceDaten, null, getText(haus),
-				bezeichnung.getText, notiz.getText)
+			r = FactoryService::vermietungService.insertUpdateWohnung(serviceDaten, null, getText(haus),
+				bezeichnung.text, notiz.text)
 		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
-			r = FactoryService::getVermietungService.insertUpdateWohnung(getServiceDaten, nr.getText, getText(haus),
-				bezeichnung.getText, notiz.getText)
+			r = FactoryService::vermietungService.insertUpdateWohnung(serviceDaten, nr.text, getText(haus),
+				bezeichnung.text, notiz.text)
 		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
-			r = FactoryService::getVermietungService.deleteWohnung(getServiceDaten, nr.getText)
+			r = FactoryService::vermietungService.deleteWohnung(serviceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)
-			if (r.getFehler.isEmpty) {
+			if (r.fehler.isEmpty) {
 				updateParent
 				close
 			}

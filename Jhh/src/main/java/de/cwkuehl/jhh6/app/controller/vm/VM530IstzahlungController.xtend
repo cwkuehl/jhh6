@@ -1,13 +1,11 @@
 package de.cwkuehl.jhh6.app.controller.vm
 
-import de.cwkuehl.jhh6.api.dto.VmMieteLang
 import de.cwkuehl.jhh6.api.dto.VmMieterLang
 import de.cwkuehl.jhh6.api.global.Global
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.control.Datum
 import de.cwkuehl.jhh6.server.FactoryService
 import java.time.LocalDate
-import java.util.List
 import javafx.fxml.FXML
 import javafx.scene.control.ComboBox
 import javafx.scene.control.Label
@@ -49,11 +47,11 @@ class VM530IstzahlungController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getName
+			return getData.name
 		}
 	}
 
@@ -85,8 +83,7 @@ class VM530IstzahlungController extends BaseController<String> {
 			// letzten Monat einstellen
 			monat.setValue(monatZuletzt)
 			belegDatum.setValue(belegDatumZuletzt)
-			var List<VmMieterLang> ml = get(
-				FactoryService::getVermietungService.getMieterListe(getServiceDaten, true, null, null, null, null))
+			var ml = get(FactoryService::vermietungService.getMieterListe(serviceDaten, true, null, null, null, null))
 			mieter.setItems(getItems(ml, null, [a|new MieterData(a)], null))
 			summe.setEditable(false)
 		// onMieter
@@ -108,23 +105,22 @@ class VM530IstzahlungController extends BaseController<String> {
 	 */
 	@FXML def void onMieter() {
 
-		var VmMieteLang vo = get(
-			FactoryService::getVermietungService.getMieteSollstellung(getServiceDaten, monat.getValue, null, null,
+		var vo = get(
+			FactoryService::vermietungService.getMieteSollstellung(serviceDaten, monat.value, null, null,
 				getText(mieter), false))
-		miete.setText(Global::dblStr2l(vo.getMiete))
-		garage.setText(Global::dblStr2l(vo.getGarage))
-		nebenkosten.setText(Global::dblStr2l(vo.getNebenkosten))
-		heizung.setText(Global::dblStr2l(vo.getHeizung))
-		var double s = vo.getMiete + vo.getGarage + vo.getNebenkosten + vo.getHeizung
-		summe.setText(Global::dblStr2l(s))
+		miete.setText(Global::dblStr2l(vo.miete))
+		garage.setText(Global::dblStr2l(vo.garage))
+		nebenkosten.setText(Global::dblStr2l(vo.nebenkosten))
+		heizung.setText(Global::dblStr2l(vo.heizung))
+		summe.setText(Global::dblStr2l(vo.miete + vo.garage + vo.nebenkosten + vo.heizung))
 	}
 
 	/** 
 	 * Event für Summenberechnung.
 	 */
 	@FXML def void onSummen() {
-		var double s = Global::strDbl(miete.getText) + Global::strDbl(garage.getText) +
-			Global::strDbl(nebenkosten.getText) + Global::strDbl(heizung.getText)
+		var s = Global::strDbl(miete.text) + Global::strDbl(garage.text) + Global::strDbl(nebenkosten.text) +
+			Global::strDbl(heizung.text)
 		summe.setText(Global::dblStr2l(s))
 	}
 
@@ -133,15 +129,15 @@ class VM530IstzahlungController extends BaseController<String> {
 	 */
 	@FXML def void onOk() {
 
-		var r = FactoryService::getVermietungService.insertIstzahlung(getServiceDaten, monat.getValue,
-			belegDatum.getValue, getText(mieter), Global::strDbl(miete.getText),
-			Global::strDbl(nebenkosten.getText), Global::strDbl(garage.getText), Global::strDbl(heizung.getText))
+		var r = FactoryService::vermietungService.insertIstzahlung(serviceDaten, monat.value, belegDatum.value,
+			getText(mieter), Global::strDbl(miete.text), Global::strDbl(nebenkosten.text), Global::strDbl(garage.text),
+			Global::strDbl(heizung.text))
 		if (r !== null) {
 			get(r)
-			if (r.getFehler.isEmpty) {
+			if (r.fehler.isEmpty) {
 				// letztes Datum merken
-				monatZuletzt = monat.getValue
-				belegDatumZuletzt = belegDatum.getValue
+				monatZuletzt = monat.value
+				belegDatumZuletzt = belegDatum.value
 				miete.setText(null)
 				garage.setText(null)
 				nebenkosten.setText(null)

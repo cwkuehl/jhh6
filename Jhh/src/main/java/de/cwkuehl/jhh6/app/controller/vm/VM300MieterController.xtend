@@ -1,17 +1,17 @@
 package de.cwkuehl.jhh6.app.controller.vm
 
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.VmHaus
 import de.cwkuehl.jhh6.api.dto.VmMieterLang
 import de.cwkuehl.jhh6.api.dto.VmWohnungLang
+import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.app.base.Werkzeug
 import de.cwkuehl.jhh6.app.control.Datum
 import de.cwkuehl.jhh6.server.FactoryService
+import java.time.LocalDate
+import java.time.LocalDateTime
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -23,7 +23,6 @@ import javafx.scene.control.Label
 import javafx.scene.control.TableColumn
 import javafx.scene.control.TableView
 import javafx.scene.input.MouseEvent
-import de.cwkuehl.jhh6.api.message.Meldungen
 
 /** 
  * Controller für Dialog VM300Mieter.
@@ -82,17 +81,17 @@ class VM300MieterController extends BaseController<String> {
 		new(VmMieterLang v) {
 
 			super(v)
-			uid = new SimpleStringProperty(v.getUid)
-			name = new SimpleStringProperty(v.getName)
-			wohnung = new SimpleStringProperty(v.getWohnungBezeichnung)
-			haus = new SimpleStringProperty(v.getHausBezeichnung)
-			einzug = new SimpleObjectProperty<LocalDate>(v.getEinzugdatum)
-			auszug = new SimpleObjectProperty<LocalDate>(v.getAuszugdatum)
-			qm = new SimpleObjectProperty<Double>(v.getWohnungQm)
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
+			uid = new SimpleStringProperty(v.uid)
+			name = new SimpleStringProperty(v.name)
+			wohnung = new SimpleStringProperty(v.wohnungBezeichnung)
+			haus = new SimpleStringProperty(v.hausBezeichnung)
+			einzug = new SimpleObjectProperty<LocalDate>(v.einzugdatum)
+			auszug = new SimpleObjectProperty<LocalDate>(v.auszugdatum)
+			qm = new SimpleObjectProperty<Double>(v.wohnungQm)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
+			geaendertVon = new SimpleStringProperty(v.geaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
+			angelegtVon = new SimpleStringProperty(v.angelegtVon)
 		}
 
 		override String getId() {
@@ -110,11 +109,11 @@ class VM300MieterController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getBezeichnung
+			return getData.bezeichnung
 		}
 	}
 
@@ -128,11 +127,11 @@ class VM300MieterController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getBezeichnung
+			return getData.bezeichnung
 		}
 	}
 
@@ -144,8 +143,8 @@ class VM300MieterController extends BaseController<String> {
 		tabbar = 1
 		super.initialize
 		mieter0.setLabelFor(mieter)
-		von0.setLabelFor(von.getLabelForNode)
-		bis0.setLabelFor(bis.getLabelForNode)
+		von0.setLabelFor(von.labelForNode)
+		bis0.setLabelFor(bis.labelForNode)
 		haus0.setLabelFor(haus)
 		wohnung0.setLabelFor(wohnung)
 		initAccelerator("A", aktuell)
@@ -167,17 +166,17 @@ class VM300MieterController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var List<VmHaus> pl = get(FactoryService::vermietungService.getHausListe(serviceDaten, true))
+			var pl = get(FactoryService::vermietungService.getHausListe(serviceDaten, true))
 			haus.setItems(getItems(pl, new VmHaus, [a|new HausData(a)], null))
-			var List<VmWohnungLang> wl = get(FactoryService::vermietungService.getWohnungListe(serviceDaten, true))
+			var wl = get(FactoryService::vermietungService.getWohnungListe(serviceDaten, true))
 			wohnung.setItems(getItems(wl, new VmWohnungLang, [a|new WohnungData(a)], null))
 			von.setValue(LocalDate::now.withDayOfYear(1))
-			bis.setValue(von.getValue.plusYears(1).minusDays(1))
+			bis.setValue(von.value.plusYears(1).minusDays(1))
 			setText(haus, null)
 			setText(wohnung, null)
 		}
 		if (stufe <= 1) {
-			var List<VmMieterLang> l = get(
+			var l = get(
 				FactoryService::vermietungService.getMieterListe(serviceDaten, false, von.value, bis.value,
 					getText(haus), getText(wohnung)))
 			getItems(l, null, [a|new MieterData(a)], mieterData)
@@ -193,18 +192,18 @@ class VM300MieterController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		mieter.setItems(mieterData)
-		colUid.setCellValueFactory([c|c.getValue.uid])
-		colName.setCellValueFactory([c|c.getValue.name])
-		colWohnung.setCellValueFactory([c|c.getValue.wohnung])
-		colHaus.setCellValueFactory([c|c.getValue.haus])
-		colEinzug.setCellValueFactory([c|c.getValue.einzug])
-		colAuszug.setCellValueFactory([c|c.getValue.auszug])
-		colQm.setCellValueFactory([c|c.getValue.qm])
+		colUid.setCellValueFactory([c|c.value.uid])
+		colName.setCellValueFactory([c|c.value.name])
+		colWohnung.setCellValueFactory([c|c.value.wohnung])
+		colHaus.setCellValueFactory([c|c.value.haus])
+		colEinzug.setCellValueFactory([c|c.value.einzug])
+		colAuszug.setCellValueFactory([c|c.value.auszug])
+		colQm.setCellValueFactory([c|c.value.qm])
 		initColumnBetrag(colQm)
-		colGv.setCellValueFactory([c|c.getValue.geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue.geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue.angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue.angelegtAm])
+		colGv.setCellValueFactory([c|c.value.geaendertVon])
+		colGa.setCellValueFactory([c|c.value.geaendertAm])
+		colAv.setCellValueFactory([c|c.value.angelegtVon])
+		colAa.setCellValueFactory([c|c.value.angelegtAm])
 	}
 
 	override protected void updateParent() {
@@ -271,9 +270,9 @@ class VM300MieterController extends BaseController<String> {
 	 * Event für Drucken.
 	 */
 	@FXML def void onDrucken() {
-		var byte[] pdf = get(
+		var pdf = get(
 			FactoryService::vermietungService.getReportMieterliste(serviceDaten, von.value, bis.value, getText(haus)))
-		Werkzeug::speicherReport(pdf, Meldungen.VM031, true)
+		Werkzeug::speicherReport(pdf, Meldungen::VM031, true)
 	}
 
 	/** 
