@@ -178,7 +178,7 @@ class AG400SicherungenController extends BaseController<String> {
 				k.schluessel.set(e.schluessel)
 				k.wert.set(e.getWert)
 			} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
-				verzeichnisse.getItems.remove(k)
+				verzeichnisse.items.remove(k)
 			}
 		}
 		speichern
@@ -300,7 +300,7 @@ class AG400SicherungenController extends BaseController<String> {
 	def private void speichern() {
 
 		var i = 0
-		for (VerzeichnisseData e : verzeichnisse.getItems) {
+		for (VerzeichnisseData e : verzeichnisse.items) {
 			i++
 			Jhh6::getEinstellungen.
 				setzeResourceDaten('''Sicherung_«i»''', '''«e.getData.getSchluessel»<«e.getData.getWert»''')

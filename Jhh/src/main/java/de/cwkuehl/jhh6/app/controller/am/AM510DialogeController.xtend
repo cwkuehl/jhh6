@@ -4,7 +4,6 @@ import de.cwkuehl.jhh6.api.dto.MaEinstellung
 import de.cwkuehl.jhh6.api.global.Global
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
-import de.cwkuehl.jhh6.app.base.StartDialog
 import de.cwkuehl.jhh6.app.controller.Jhh6Controller
 import java.util.ArrayList
 import java.util.HashSet
@@ -42,18 +41,17 @@ class AM510DialogeController extends BaseController<String> {
 
 		new(MaEinstellung v) {
 			super(v)
-			schluessel = new SimpleStringProperty(v.getSchluessel())
-			wert = new SimpleStringProperty(v.getWert())
+			schluessel = new SimpleStringProperty(v.schluessel)
+			wert = new SimpleStringProperty(v.wert)
 		}
 
 		override String getId() {
-			return schluessel.get()
+			return schluessel.get
 		}
 
 		override String toString() {
-			return wert.get()
-		} // stufe = 0;
-		// initDatenTable();
+			return wert.get
+		}
 	}
 
 	/** 
@@ -67,7 +65,7 @@ class AM510DialogeController extends BaseController<String> {
 		zudialoge0.setLabelFor(zudialoge)
 		initListView(zudialoge, null)
 		initDaten(0)
-		dialoge.requestFocus()
+		dialoge.requestFocus
 	}
 
 	/** 
@@ -77,21 +75,21 @@ class AM510DialogeController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var List<StartDialog> dliste = Jhh6Controller::getDialogListe()
-			var String str = Global::nn(Jhh6::getEinstellungen().getStartdialoge(getServiceDaten().getMandantNr()))
-			var String[] array = str.split(Pattern::quote("|"))
-			val HashSet<String> map = new HashSet()
+			var dliste = Jhh6Controller::dialogListe
+			var str = Global::nn(Jhh6::einstellungen.getStartdialoge(serviceDaten.mandantNr))
+			var array = str.split(Pattern::quote("|"))
+			val map = new HashSet<String>
 			for (String s : array) {
 				map.add(s)
 			}
-			val List<MaEinstellung> liste = new ArrayList<MaEinstellung>()
-			val List<MaEinstellung> zuliste = new ArrayList<MaEinstellung>()
-			dliste.stream().forEach([ a |
+			val List<MaEinstellung> liste = new ArrayList<MaEinstellung>
+			val List<MaEinstellung> zuliste = new ArrayList<MaEinstellung>
+			dliste.stream.forEach([ a |
 				{
-					var MaEinstellung me = new MaEinstellung()
-					me.setSchluessel(a.getId())
-					me.setWert(a.getTitel())
-					if (map.contains(a.getId())) {
+					var me = new MaEinstellung
+					me.setSchluessel(a.getId)
+					me.setWert(a.getTitel)
+					if (map.contains(a.getId)) {
 						zuliste.add(me)
 					} else {
 						liste.add(me)
@@ -101,9 +99,9 @@ class AM510DialogeController extends BaseController<String> {
 			dialoge.setItems(getItems(liste, null, [a|new DialogeData(a)], null))
 			zudialoge.setItems(getItems(zuliste, null, [a|new DialogeData(a)], null))
 		}
-		if (stufe <= 1) {
+		if (stufe <= 1) { // stufe = 0
 		}
-		if (stufe <= 2) {
+		if (stufe <= 2) { // initDatenTable
 		}
 	}
 
@@ -120,8 +118,8 @@ class AM510DialogeController extends BaseController<String> {
 
 		var DialogeData d = getValue2(dialoge, false)
 		if (d !== null) {
-			dialoge.getItems().remove(d)
-			zudialoge.getItems().add(d)
+			dialoge.items.remove(d)
+			zudialoge.items.add(d)
 		}
 	}
 
@@ -132,8 +130,8 @@ class AM510DialogeController extends BaseController<String> {
 
 		var DialogeData d = getValue2(zudialoge, false)
 		if (d !== null) {
-			zudialoge.getItems().remove(d)
-			dialoge.getItems().add(d)
+			zudialoge.items.remove(d)
+			dialoge.items.add(d)
 		}
 	}
 
@@ -144,11 +142,11 @@ class AM510DialogeController extends BaseController<String> {
 
 		var DialogeData d = getValue2(zudialoge, false)
 		if (d !== null) {
-			var int i = zudialoge.getItems().indexOf(d)
+			var i = zudialoge.items.indexOf(d)
 			if (i > 0) {
-				zudialoge.getItems().remove(d)
-				zudialoge.getItems().add(i - 1, d)
-				setText(zudialoge, d.getData().getSchluessel())
+				zudialoge.items.remove(d)
+				zudialoge.items.add(i - 1, d)
+				setText(zudialoge, d.data.schluessel)
 			}
 		}
 	}
@@ -160,11 +158,11 @@ class AM510DialogeController extends BaseController<String> {
 
 		var DialogeData d = getValue2(zudialoge, false)
 		if (d !== null) {
-			var int i = zudialoge.getItems().indexOf(d)
-			if (i < zudialoge.getItems().size() - 1) {
-				zudialoge.getItems().remove(d)
-				zudialoge.getItems().add(i + 1, d)
-				setText(zudialoge, d.getData().getSchluessel())
+			var i = zudialoge.items.indexOf(d)
+			if (i < zudialoge.items.size - 1) {
+				zudialoge.items.remove(d)
+				zudialoge.items.add(i + 1, d)
+				setText(zudialoge, d.data.schluessel)
 			}
 		}
 	}
@@ -175,16 +173,16 @@ class AM510DialogeController extends BaseController<String> {
 	@FXML def void onOk() {
 
 		val sb = new StringBuffer
-		zudialoge.getItems().forEach([ a |
+		zudialoge.items.forEach([ a |
 			{
 				if (sb.length > 0) {
 					sb.append("|")
 				}
-				sb.append(a.getData().getSchluessel())
+				sb.append(a.data.schluessel)
 			}
 		])
-		Jhh6::getEinstellungen().setStartdialoge(getServiceDaten().getMandantNr(), sb.toString())
-		Jhh6::getEinstellungen().save()
+		Jhh6::einstellungen.setStartdialoge(serviceDaten.mandantNr, sb.toString)
+		Jhh6::einstellungen.save
 		close
 	}
 
@@ -196,14 +194,12 @@ class AM510DialogeController extends BaseController<String> {
 	}
 
 	@FXML def void onDialoge(MouseEvent e) {
-
 		if (e.clickCount > 1) {
 			onZuordnen
 		}
 	}
 
 	@FXML def void onZudialoge(MouseEvent e) {
-
 		if (e.clickCount > 1) {
 			onEntfernen
 		}

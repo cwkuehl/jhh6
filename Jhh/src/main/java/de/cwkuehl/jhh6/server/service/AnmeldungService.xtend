@@ -66,27 +66,27 @@ class AnmeldungService {
 
 		if (daten.mandantNr < 0) {
 			// Die Anmeldedaten sind ungültig. Mandant ungültig.
-			throw new MeldungException(Meldungen.AM001)
+			throw new MeldungException(Meldungen::AM001)
 		}
 		if (Global.nes(daten.benutzerId)) {
 			// Die Anmeldedaten sind ungültig. Benutzer ungültig.
-			throw new MeldungException(Meldungen.AM001)
+			throw new MeldungException(Meldungen::AM001)
 		}
 
 		if (Global.nes(passwortNeu)) {
 			// Das neue Kennwort darf nicht leer sein.
-			throw new MeldungException(Meldungen.AM002)
+			throw new MeldungException(Meldungen::AM002)
 		}
 		// getBerechService.pruefeBerechtigungAktuellerBenutzerOderAdmin(daten, mandantNr, benutzerId)
 		var benutzerKey = new BenutzerKey(mandantNr, benutzerId)
 		var benutzer = benutzerRep.get(daten, benutzerKey)
 		if (benutzer === null) {
 			// Die Anmeldedaten sind ungültig. Der Benutzer wurde nicht gefunden.
-			throw new MeldungException(Meldungen.AM001)
+			throw new MeldungException(Meldungen::AM001)
 		}
 		if (Global.compString(benutzer.passwort, passwortAlt) != 0) {
 			// Die Anmeldedaten sind ungültig. Altes Kennwort ist falsch.
-			throw new MeldungException(Meldungen.AM001)
+			throw new MeldungException(Meldungen::AM001)
 		}
 		var benutzerU = new BenutzerUpdate(benutzer)
 		benutzerU.setPasswort(passwortNeu)
@@ -103,11 +103,11 @@ class AnmeldungService {
 
 		if (daten.mandantNr < 0) {
 			// Die Anmeldedaten sind ungültig. Mandant ungültig.
-			throw new MeldungException(Meldungen.AM001)
+			throw new MeldungException(Meldungen::AM001)
 		}
 		if (Global.nes(daten.benutzerId)) {
 			// Die Anmeldedaten sind ungültig. Benutzer ungültig.
-			throw new MeldungException(Meldungen.AM001)
+			throw new MeldungException(Meldungen::AM001)
 		}
 
 		var r = new ServiceErgebnis<Void>
@@ -117,7 +117,7 @@ class AnmeldungService {
 		benutzer = benutzerRep.get(daten, benutzerKey)
 		if (benutzer !== null) {
 			// Benutzer vorhanden.
-			log.debug(Meldungen.AM003(daten.mandantNr, daten.benutzerId))
+			log.debug(Meldungen::AM003(daten.mandantNr, daten.benutzerId))
 			var wert = getOhneAnmelden(daten)
 			if (!Global.nes(wert) && wert.equals(daten.benutzerId)) {
 				// Anmeldung ohne Kennwort
@@ -152,7 +152,7 @@ class AnmeldungService {
 		}
 
 		// Die Anmeldedaten sind ungültig. Mandant, Benutzer oder Kennwort ungültig.
-		throw new MeldungException(Meldungen.AM001)
+		throw new MeldungException(Meldungen::AM001)
 	}
 
 	@Transaction
@@ -209,10 +209,7 @@ class AnmeldungService {
 
 	def private void Speichern(ServiceDaten daten, int mandantNr, String benutzerId, boolean speichern) {
 
-		var MaEinstellung maEinstellung = null
-		var String wert = null
-
-		maEinstellung = maEinstellungRep.get(daten, new MaEinstellungKey(mandantNr, EINST_MA_OHNE_ANMELDUNG))
+		var maEinstellung = maEinstellungRep.get(daten, new MaEinstellungKey(mandantNr, EINST_MA_OHNE_ANMELDUNG))
 		if (maEinstellung === null) {
 			maEinstellung = new MaEinstellung
 			maEinstellung.setMandantNr(mandantNr)
@@ -221,7 +218,7 @@ class AnmeldungService {
 			maEinstellungRep.insert(daten, maEinstellung)
 		}
 		var maEinstellungU = new MaEinstellungUpdate(maEinstellung)
-		wert = maEinstellung.wert
+		var wert = maEinstellung.wert
 		if (!speichern && !Global.nes(wert) && wert.equals(benutzerId)) {
 			maEinstellungU.setWert("")
 			// System.out.println("Ist  " + maEinstellung.toBuffer(null))
@@ -319,7 +316,7 @@ class AnmeldungService {
 		if (b == BerechtigungEnum.ALLES) {
 			return
 		}
-		throw new Exception(Meldungen.AM006)
+		throw new Exception(Meldungen::AM006)
 	}
 
 	def private void pruefeBerechtigungAdmin(ServiceDaten daten, int mandantNr) {
@@ -328,7 +325,7 @@ class AnmeldungService {
 		if (b == BerechtigungEnum.ALLES || (b == BerechtigungEnum.ADMIN && daten.mandantNr == mandantNr)) {
 			return
 		}
-		throw new Exception(Meldungen.AM007)
+		throw new Exception(Meldungen::AM007)
 	}
 
 	@Transaction(false)
@@ -360,7 +357,7 @@ class AnmeldungService {
 
 		pruefeBerechtigungAdmin(daten, nr)
 		if (Global.nes(beschreibung)) {
-			throw new MeldungException(Meldungen.AM008)
+			throw new MeldungException(Meldungen::AM008)
 		}
 		var mnr = nr
 		if (insert && mnr <= 0) {
@@ -400,7 +397,7 @@ class AnmeldungService {
 		pruefeBerechtigungAlleMandanten(daten, nr)
 		if (nr == daten.mandantNr) {
 			// Der aktuelle Mandant kann nicht gelöscht werden.
-			throw new MeldungException(Meldungen.AM004)
+			throw new MeldungException(Meldungen::AM004)
 		}
 		// Mandant in allen mandantenabhängigen Tabellen löschen
 		var tabellen = replikationService.getAlleTabellen(daten).ergebnis
@@ -459,15 +456,15 @@ class AnmeldungService {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		if (Global.nes(benutzerId)) {
-			throw new MeldungException(Meldungen.AM009)
+			throw new MeldungException(Meldungen::AM009)
 		}
 		if (getBerechtigung(daten, daten.mandantNr, daten.benutzerId).intValue < berechtigung) {
-			throw new MeldungException(Meldungen.AM010)
+			throw new MeldungException(Meldungen::AM010)
 		}
 		var enr = personNr
 		var liste = benutzerRep.getBenutzerLangListe(daten, 0, benutzerId, enr)
 		if (liste.size > 0) {
-			throw new MeldungException(Meldungen.AM011)
+			throw new MeldungException(Meldungen::AM011)
 		}
 		if (enr <= 0) {
 			enr = Constant.AW_MIN

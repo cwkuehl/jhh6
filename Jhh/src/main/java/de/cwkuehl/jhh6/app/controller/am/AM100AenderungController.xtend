@@ -1,7 +1,6 @@
 package de.cwkuehl.jhh6.app.controller.am
 
 import de.cwkuehl.jhh6.api.global.Global
-import de.cwkuehl.jhh6.api.service.ServiceErgebnis
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.server.FactoryService
 import javafx.application.Platform
@@ -59,8 +58,8 @@ class AM100AenderungController extends BaseController<String> {
 	def void onOk() {
 
 		var daten = getServiceDaten
-		var ServiceErgebnis<Void> r = FactoryService::anmeldungService.aendern(daten, daten.mandantNr, daten.benutzerId,
-			kennwortAlt.text, kennwortNeu.text, speichern.isSelected)
+		var r = FactoryService::anmeldungService.aendern(daten, daten.mandantNr, daten.benutzerId, kennwortAlt.text,
+			kennwortNeu.text, speichern.isSelected)
 		get(r)
 		if (r.ok) {
 			close

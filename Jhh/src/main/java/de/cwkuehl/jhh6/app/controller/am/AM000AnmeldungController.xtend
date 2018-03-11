@@ -32,7 +32,7 @@ class AM000AnmeldungController extends BaseController<String> {
 		get(r)
 		if (r.ok) {
 			setServiceDaten(daten)
-			get(FactoryService.replikationService.createExamples(daten))
+			get(FactoryService::replikationService.createExamples(daten))
 			close("Anmelden")
 		}
 	}
