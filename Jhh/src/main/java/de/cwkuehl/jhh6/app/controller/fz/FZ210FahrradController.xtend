@@ -55,9 +55,9 @@ class FZ210FahrradController extends BaseController<String> {
 
 		if (stufe <= 0) {
 			setText(typ, FzFahrradTypEnum.TOUR.toString)
-			var boolean neu = DialogAufrufEnum.NEU.equals(aufruf)
-			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(aufruf)
-			var FzFahrradLang k = getParameter1
+			var neu = DialogAufrufEnum::NEU.equals(aufruf)
+			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
+			var FzFahrradLang k = parameter1
 			if (!neu && k !== null) {
 				k = get(FactoryService::freizeitService.getFahrradLang(serviceDaten, k.uid))
 				nr.setText(k.uid)
@@ -72,7 +72,7 @@ class FZ210FahrradController extends BaseController<String> {
 			angelegt.setEditable(false)
 			geaendert.setEditable(false)
 			if (loeschen) {
-				ok.setText(Meldungen.M2001)
+				ok.setText(Meldungen::M2001)
 			}
 		}
 		if (stufe <= 1) { // stufe = 0
@@ -92,19 +92,19 @@ class FZ210FahrradController extends BaseController<String> {
 	 */
 	@FXML def void onOk() {
 
-		var ServiceErgebnis<?> r = null
-		if (DialogAufrufEnum.NEU.equals(aufruf) || DialogAufrufEnum.KOPIEREN.equals(aufruf)) {
+		var ServiceErgebnis<?> r
+		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
 			r = FactoryService::freizeitService.insertUpdateFahrrad(serviceDaten, null, bezeichnung.text,
 				Global.strInt(getText(typ)))
-		} else if (DialogAufrufEnum.AENDERN.equals(aufruf)) {
+		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
 			r = FactoryService::freizeitService.insertUpdateFahrrad(serviceDaten, nr.text, bezeichnung.getText,
 				Global.strInt(getText(typ)))
-		} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
+		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
 			r = FactoryService::freizeitService.deleteFahrrad(serviceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)
-			if (r.getFehler.isEmpty) {
+			if (r.fehler.isEmpty) {
 				updateParent
 				close
 			}

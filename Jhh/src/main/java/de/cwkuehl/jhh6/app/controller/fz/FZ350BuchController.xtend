@@ -1,7 +1,5 @@
 package de.cwkuehl.jhh6.app.controller.fz
 
-import java.time.LocalDate
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.FzBuchLang
 import de.cwkuehl.jhh6.api.dto.FzBuchautor
 import de.cwkuehl.jhh6.api.dto.FzBuchserie
@@ -13,6 +11,7 @@ import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.app.control.Datum
 import de.cwkuehl.jhh6.server.FactoryService
+import java.time.LocalDate
 import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.CheckBox
@@ -45,11 +44,11 @@ class FZ350BuchController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getName
+			return getData.name
 		}
 	}
 
@@ -120,9 +119,9 @@ class FZ350BuchController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var List<FzBuchautor> al = get(FactoryService::freizeitService.getAutorListe(serviceDaten, true, null))
+			var al = get(FactoryService::freizeitService.getAutorListe(serviceDaten, true, null))
 			autor.setItems(getItems(al, null, [a|new AutorData(a)], null))
-			var List<FzBuchserie> sl = get(FactoryService::freizeitService.getSerieListe(serviceDaten, null))
+			var sl = get(FactoryService::freizeitService.getSerieListe(serviceDaten, null))
 			serie.setItems(getItems(sl, null, [a|new SerieData(a)], null))
 			if (al.size > 0) {
 				setText(autor, al.get(0).getUid)
@@ -132,13 +131,13 @@ class FZ350BuchController extends BaseController<String> {
 			}
 			setText(sprache, SpracheEnum.DEUTSCH.toString)
 			besitz.setSelected(true)
-			lesedatum.setValue(LocalDate.now)
-			hoerdatum.setValue((null as LocalDate))
+			lesedatum.setValue(LocalDate::now)
+			hoerdatum.setValue(null as LocalDate)
 		}
 		if (stufe <= 1) {
-			var boolean neu = DialogAufrufEnum.NEU.equals(getAufruf)
-			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(getAufruf)
-			var FzBuchLang k = getParameter1
+			var neu = DialogAufrufEnum::NEU.equals(aufruf)
+			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
+			var FzBuchLang k = parameter1
 			if (!neu && k !== null) {
 				k = get(FactoryService::freizeitService.getBuchLang(serviceDaten, k.uid))
 				nr.setText(k.uid)
@@ -167,7 +166,7 @@ class FZ350BuchController extends BaseController<String> {
 			angelegt.setEditable(false)
 			geaendert.setEditable(false)
 			if (loeschen) {
-				ok.setText(Meldungen.M2001)
+				ok.setText(Meldungen::M2001)
 			}
 		}
 		if (stufe <= 2) { // initDatenTable
@@ -185,9 +184,9 @@ class FZ350BuchController extends BaseController<String> {
 	 */
 	@FXML def void onAutorNeu() {
 
-		var FzBuchautor k = starteDialog(FZ310AutorController, DialogAufrufEnum.NEU)
+		var FzBuchautor k = starteDialog(FZ310AutorController, DialogAufrufEnum::NEU)
 		if (k !== null) {
-			var List<FzBuchautor> al = get(FactoryService::freizeitService.getAutorListe(serviceDaten, true, null))
+			var al = get(FactoryService::freizeitService.getAutorListe(serviceDaten, true, null))
 			autor.setItems(getItems(al, null, [a|new AutorData(a)], null))
 			setText(autor, k.uid)
 		}
@@ -198,9 +197,9 @@ class FZ350BuchController extends BaseController<String> {
 	 */
 	@FXML def void onSerieNeu() {
 
-		var FzBuchserie k = starteDialog(FZ330SerieController, DialogAufrufEnum.NEU)
+		var FzBuchserie k = starteDialog(FZ330SerieController, DialogAufrufEnum::NEU)
 		if (k !== null) {
-			var List<FzBuchserie> sl = get(FactoryService::freizeitService.getSerieListe(serviceDaten, null))
+			var sl = get(FactoryService::freizeitService.getSerieListe(serviceDaten, null))
 			serie.setItems(getItems(sl, null, [a|new SerieData(a)], null))
 			setText(serie, k.uid)
 		}
@@ -212,21 +211,21 @@ class FZ350BuchController extends BaseController<String> {
 	@FXML
 	def void onOk() {
 
-		var ServiceErgebnis<?> r = null
-		if (DialogAufrufEnum.NEU.equals(aufruf) || DialogAufrufEnum.KOPIEREN.equals(aufruf)) {
+		var ServiceErgebnis<?> r
+		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
 			r = FactoryService::freizeitService.insertUpdateBuch(serviceDaten, null, getText(autor), getText(serie),
 				Global.strInt(seriennummer.text), titel.text, Global.strInt(seiten.text), getText(sprache),
 				besitz.isSelected, lesedatum.value, hoerdatum.value)
-		} else if (DialogAufrufEnum.AENDERN.equals(aufruf)) {
+		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
 			r = FactoryService::freizeitService.insertUpdateBuch(serviceDaten, nr.text, getText(autor), getText(serie),
 				Global.strInt(seriennummer.text), titel.text, Global.strInt(seiten.text), getText(sprache),
 				besitz.isSelected, lesedatum.value, hoerdatum.value)
-		} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
+		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
 			r = FactoryService::freizeitService.deleteBuch(serviceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)
-			if (r.getFehler.isEmpty) {
+			if (r.fehler.isEmpty) {
 				updateParent
 				close
 			}

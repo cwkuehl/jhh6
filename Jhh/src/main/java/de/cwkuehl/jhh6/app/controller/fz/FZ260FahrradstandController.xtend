@@ -10,7 +10,6 @@ import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.app.control.Datum
 import de.cwkuehl.jhh6.server.FactoryService
 import java.time.LocalDate
-import java.util.List
 import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.ComboBox
@@ -52,11 +51,11 @@ class FZ260FahrradstandController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getBezeichnung
+			return getData.bezeichnung
 		}
 	}
 
@@ -87,23 +86,23 @@ class FZ260FahrradstandController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var List<FzFahrradLang> fl = get(FactoryService::freizeitService.getFahrradListe(serviceDaten, true))
+			var fl = get(FactoryService::freizeitService.getFahrradListe(serviceDaten, true))
 			fahrrad.setItems(getItems(fl, null, [a|new FahrradData(a)], null))
-			datum.setValue(LocalDate.now)
+			datum.setValue(LocalDate::now)
 			if (fl.size > 0) {
-				setText(fahrrad, fl.get(0).getUid)
+				setText(fahrrad, fl.get(0).uid)
 			}
-			var boolean neu = DialogAufrufEnum.NEU.equals(aufruf)
-			var boolean kopieren = DialogAufrufEnum.KOPIEREN.equals(aufruf)
-			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(aufruf)
-			var FzFahrradstandLang k = getParameter1
+			var neu = DialogAufrufEnum::NEU.equals(aufruf)
+			var kopieren = DialogAufrufEnum::KOPIEREN.equals(aufruf)
+			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
+			var FzFahrradstandLang k = parameter1
 			if (!neu && k !== null) {
 				k = get(FactoryService::freizeitService.getFahrradstandLang(serviceDaten, k.fahrradUid, k.datum, k.nr))
 				nr.setText(Global.intStrFormat(k.nr))
 				setText(fahrrad, k.fahrradUid)
 				datum.setValue(k.datum)
-				zaehler.setText(Global.lngStr((k.zaehlerKm as long)))
-				km.setText(Global.lngStr((k.periodeKm as long)))
+				zaehler.setText(Global.lngStr(k.zaehlerKm as long))
+				km.setText(Global.lngStr(k.periodeKm as long))
 				schnitt.setText(Global.dblStr2l(k.periodeSchnitt))
 				beschreibung.setText(k.beschreibung)
 				angelegt.setText(k.formatDatumVon(k.angelegtAm, k.angelegtVon))
@@ -119,7 +118,7 @@ class FZ260FahrradstandController extends BaseController<String> {
 			angelegt.setEditable(false)
 			geaendert.setEditable(false)
 			if (loeschen) {
-				ok.setText(Meldungen.M2001)
+				ok.setText(Meldungen::M2001)
 			}
 		}
 		if (stufe <= 1) { // stufe = 0
@@ -153,22 +152,22 @@ class FZ260FahrradstandController extends BaseController<String> {
 	 */
 	@FXML def void onOk() {
 
-		var ServiceErgebnis<?> r = null
-		if (DialogAufrufEnum.NEU.equals(aufruf) || DialogAufrufEnum.KOPIEREN.equals(aufruf)) {
+		var ServiceErgebnis<?> r
+		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
 			r = FactoryService::freizeitService.insertUpdateFahrradstand(getServiceDaten, getText(fahrrad),
 				datum.value2, -1, Global.strDbl(zaehler.text), Global.strDbl(km.text), Global.strDbl(schnitt.text),
 				beschreibung.text)
-		} else if (DialogAufrufEnum.AENDERN.equals(aufruf)) {
+		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
 			r = FactoryService::freizeitService.insertUpdateFahrradstand(serviceDaten, getText(fahrrad), datum.value2,
 				Global.strInt(nr.text), Global.strDbl(zaehler.text), Global.strDbl(km.text),
 				Global.strDbl(schnitt.text), beschreibung.text)
-		} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
+		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
 			r = FactoryService::freizeitService.deleteFahrradstand(serviceDaten, getText(fahrrad), datum.value2,
 				Global.strInt(nr.text))
 		}
 		if (r !== null) {
 			get(r)
-			if (r.getFehler.isEmpty) {
+			if (r.fehler.isEmpty) {
 				updateParent
 				close
 			}

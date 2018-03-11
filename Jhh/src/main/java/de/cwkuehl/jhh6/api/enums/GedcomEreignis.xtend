@@ -14,7 +14,7 @@ final class GedcomEreignis implements Comparable<GedcomEreignis> {
 		wert = null
 		symbol = null
 		nr = 0
-		throw new RuntimeException(Meldungen.M1000(typeof(GedcomEreignis).name))
+		throw new RuntimeException(Meldungen::M1000(typeof(GedcomEreignis).name))
 	}
 
 	/** 
@@ -128,7 +128,7 @@ final class GedcomEreignis implements Comparable<GedcomEreignis> {
 	 */
 	def static String symbolVon(String pWert) {
 
-		for (var int i = 0; i < enums.length; i++) {
+		for (var i = 0; i < enums.length; i++) {
 			if ({
 				val _rdIndx_enums = i
 				enums.get(_rdIndx_enums)

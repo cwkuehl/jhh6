@@ -51,9 +51,9 @@ class FZ310AutorController extends BaseController<FzBuchautor> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var boolean neu = DialogAufrufEnum.NEU.equals(aufruf)
-			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(aufruf)
-			var FzBuchautor k = getParameter1
+			var neu = DialogAufrufEnum::NEU.equals(aufruf)
+			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
+			var FzBuchautor k = parameter1
 			if (!neu && k !== null) {
 				k = get(FactoryService::freizeitService.getAutor(serviceDaten, k.uid))
 				nr.setText(k.uid)
@@ -68,7 +68,7 @@ class FZ310AutorController extends BaseController<FzBuchautor> {
 			angelegt.setEditable(false)
 			geaendert.setEditable(false)
 			if (loeschen) {
-				ok.setText(Meldungen.M2001)
+				ok.setText(Meldungen::M2001)
 			}
 		}
 		if (stufe <= 1) { // stufe = 0
@@ -88,21 +88,20 @@ class FZ310AutorController extends BaseController<FzBuchautor> {
 	 */
 	@FXML def void onOk() {
 
-		var ServiceErgebnis<?> r = null
-		var FzBuchautor s = null
-		if (DialogAufrufEnum.NEU.equals(aufruf) || DialogAufrufEnum.KOPIEREN.equals(aufruf)) {
-			var ServiceErgebnis<FzBuchautor> r1 = FactoryService::freizeitService.insertUpdateAutor(serviceDaten, null,
-				name.text, vorname.text)
-			s = r1.getErgebnis
+		var ServiceErgebnis<?> r
+		var FzBuchautor s
+		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
+			var r1 = FactoryService::freizeitService.insertUpdateAutor(serviceDaten, null, name.text, vorname.text)
+			s = r1.ergebnis
 			r = r1
-		} else if (DialogAufrufEnum.AENDERN.equals(aufruf)) {
+		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
 			r = FactoryService::freizeitService.insertUpdateAutor(serviceDaten, nr.text, name.text, vorname.text)
-		} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
+		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
 			r = FactoryService::freizeitService.deleteAutor(serviceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)
-			if (r.getFehler.isEmpty) {
+			if (r.fehler.isEmpty) {
 				updateParent
 				close(s)
 			}

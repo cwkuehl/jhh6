@@ -1,14 +1,13 @@
 package de.cwkuehl.jhh6.app.controller.fz
 
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.FzFahrradLang
 import de.cwkuehl.jhh6.api.dto.FzFahrradstandLang
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.server.FactoryService
+import java.time.LocalDate
+import java.time.LocalDateTime
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -138,14 +137,13 @@ class FZ250FahrradstaendeController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var List<FzFahrradLang> fl = get(FactoryService::freizeitService.getFahrradListe(serviceDaten, true))
+			var fl = get(FactoryService::freizeitService.getFahrradListe(serviceDaten, true))
 			fahrrad.setItems(getItems(fl, new FzFahrradLang, [a|new FahrradData(a)], null))
 			setText(fahrrad, null)
 			text.setText("%%")
 		}
 		if (stufe <= 1) {
-			var List<FzFahrradstandLang> l = get(
-				FactoryService::freizeitService.getFahrradstandListe(serviceDaten, getText(fahrrad), text.text))
+			var l = get(FactoryService::freizeitService.getFahrradstandListe(serviceDaten, getText(fahrrad), text.text))
 			getItems(l, null, [a|new FahrradstaendeData(a)], fahrradstaendeData)
 		}
 		if (stufe <= 2) {
@@ -178,7 +176,7 @@ class FZ250FahrradstaendeController extends BaseController<String> {
 	}
 
 	def private void starteDialog(DialogAufrufEnum aufruf) {
-		var FzFahrradstandLang k = getValue(fahrradstaende, !DialogAufrufEnum.NEU.equals(aufruf))
+		var FzFahrradstandLang k = getValue(fahrradstaende, !DialogAufrufEnum::NEU.equals(aufruf))
 		starteFormular(FZ260FahrradstandController, aufruf, k)
 	}
 
@@ -209,28 +207,28 @@ class FZ250FahrradstaendeController extends BaseController<String> {
 	 * Event für Neu.
 	 */
 	@FXML def void onNeu() {
-		starteDialog(DialogAufrufEnum.NEU)
+		starteDialog(DialogAufrufEnum::NEU)
 	}
 
 	/** 
 	 * Event für Kopieren.
 	 */
 	@FXML def void onKopieren() {
-		starteDialog(DialogAufrufEnum.KOPIEREN)
+		starteDialog(DialogAufrufEnum::KOPIEREN)
 	}
 
 	/** 
 	 * Event für Aendern.
 	 */
 	@FXML def void onAendern() {
-		starteDialog(DialogAufrufEnum.AENDERN)
+		starteDialog(DialogAufrufEnum::AENDERN)
 	}
 
 	/** 
 	 * Event für Loeschen.
 	 */
 	@FXML def void onLoeschen() {
-		starteDialog(DialogAufrufEnum.LOESCHEN)
+		starteDialog(DialogAufrufEnum::LOESCHEN)
 	}
 
 	/** 

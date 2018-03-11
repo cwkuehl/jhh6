@@ -1,12 +1,11 @@
 package de.cwkuehl.jhh6.app.controller.fz
 
-import java.time.LocalDateTime
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.FzFahrradLang
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.server.FactoryService
+import java.time.LocalDateTime
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -99,7 +98,7 @@ class FZ200FahrraederController extends BaseController<String> {
 		if (stufe <= 0) { // stufe = 0
 		}
 		if (stufe <= 1) {
-			var List<FzFahrradLang> l = get(FactoryService::freizeitService.getFahrradListe(serviceDaten, false))
+			var l = get(FactoryService::freizeitService.getFahrradListe(serviceDaten, false))
 			getItems(l, null, [a|new FahrraederData(a)], fahrraederData)
 		}
 		if (stufe <= 2) {
@@ -127,7 +126,7 @@ class FZ200FahrraederController extends BaseController<String> {
 	}
 
 	def private void starteDialog(DialogAufrufEnum aufruf) {
-		var FzFahrradLang k = getValue(fahrraeder, !DialogAufrufEnum.NEU.equals(aufruf))
+		var FzFahrradLang k = getValue(fahrraeder, !DialogAufrufEnum::NEU.equals(aufruf))
 		starteFormular(FZ210FahrradController, aufruf, k)
 	}
 
@@ -158,28 +157,28 @@ class FZ200FahrraederController extends BaseController<String> {
 	 * Event für Neu.
 	 */
 	@FXML def void onNeu() {
-		starteDialog(DialogAufrufEnum.NEU)
+		starteDialog(DialogAufrufEnum::NEU)
 	}
 
 	/** 
 	 * Event für Kopieren.
 	 */
 	@FXML def void onKopieren() {
-		starteDialog(DialogAufrufEnum.KOPIEREN)
+		starteDialog(DialogAufrufEnum::KOPIEREN)
 	}
 
 	/** 
 	 * Event für Aendern.
 	 */
 	@FXML def void onAendern() {
-		starteDialog(DialogAufrufEnum.AENDERN)
+		starteDialog(DialogAufrufEnum::AENDERN)
 	}
 
 	/** 
 	 * Event für Loeschen.
 	 */
 	@FXML def void onLoeschen() {
-		starteDialog(DialogAufrufEnum.LOESCHEN)
+		starteDialog(DialogAufrufEnum::LOESCHEN)
 	}
 
 	/** 

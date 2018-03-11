@@ -47,10 +47,10 @@ class FZ100StatistikController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			datum.setValue(LocalDate.now)
+			datum.setValue(LocalDate::now)
 		}
 		if (stufe <= 1) {
-			var String str = get(FactoryService::freizeitService.getStatistik(serviceDaten, 1, datum.value))
+			var str = get(FactoryService::freizeitService.getStatistik(serviceDaten, 1, datum.value))
 			bilanz.setText(str)
 			str = get(FactoryService::freizeitService.getStatistik(serviceDaten, 2, datum.value))
 			buecher.setText(str)

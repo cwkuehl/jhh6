@@ -1,9 +1,5 @@
 package de.cwkuehl.jhh6.app.controller.fz
 
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.util.Collections
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.FzBuchLang
 import de.cwkuehl.jhh6.api.dto.FzBuchautor
 import de.cwkuehl.jhh6.api.global.Global
@@ -11,6 +7,9 @@ import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.server.FactoryService
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.Collections
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -113,11 +112,11 @@ class FZ340BuecherController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getName
+			return getData.name
 		}
 	}
 
@@ -149,22 +148,21 @@ class FZ340BuecherController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var List<FzBuchautor> al = get(FactoryService::freizeitService.getAutorListe(serviceDaten, true, null))
+			var al = get(FactoryService::freizeitService.getAutorListe(serviceDaten, true, null))
 			autor.setItems(getItems(al, new FzBuchautor, [a|new AutorData(a)], null))
 			setText(autor, null)
 			titel.setText("%%")
 		}
 		if (stufe <= 1) {
-			var List<FzBuchLang> l = get(
-				FactoryService::freizeitService.getBuchListe(serviceDaten, true, getText(autor), null, null, //
-				titel.text))
+			var l = get(FactoryService::freizeitService.getBuchListe(serviceDaten, true, getText(autor), null, null, //
+			titel.text))
 			getItems(l, null, [a|new BuecherData(a)], buecherData)
 			// Absteigend nach Lesedatum
 			Collections.sort(buecherData, [ a, b |
 				{
-					var LocalDate al = a.lesedatum.get
+					var al = a.lesedatum.get
 					al = if(al === null) a.hoerdatum.get else al
-					var LocalDate bl = b.lesedatum.get
+					var bl = b.lesedatum.get
 					bl = if(bl === null) b.hoerdatum.get else bl
 					if (al === null) {
 						if (bl === null) {
@@ -210,7 +208,7 @@ class FZ340BuecherController extends BaseController<String> {
 	}
 
 	def private void starteDialog(DialogAufrufEnum aufruf) {
-		var FzBuchLang k = getValue(buecher, !DialogAufrufEnum.NEU.equals(aufruf))
+		var FzBuchLang k = getValue(buecher, !DialogAufrufEnum::NEU.equals(aufruf))
 		starteFormular(FZ350BuchController, aufruf, k)
 	}
 
@@ -241,28 +239,28 @@ class FZ340BuecherController extends BaseController<String> {
 	 * Event für Neu.
 	 */
 	@FXML def void onNeu() {
-		starteDialog(DialogAufrufEnum.NEU)
+		starteDialog(DialogAufrufEnum::NEU)
 	}
 
 	/** 
 	 * Event für Kopieren.
 	 */
 	@FXML def void onKopieren() {
-		starteDialog(DialogAufrufEnum.KOPIEREN)
+		starteDialog(DialogAufrufEnum::KOPIEREN)
 	}
 
 	/** 
 	 * Event für Aendern.
 	 */
 	@FXML def void onAendern() {
-		starteDialog(DialogAufrufEnum.AENDERN)
+		starteDialog(DialogAufrufEnum::AENDERN)
 	}
 
 	/** 
 	 * Event für Loeschen.
 	 */
 	@FXML def void onLoeschen() {
-		starteDialog(DialogAufrufEnum.LOESCHEN)
+		starteDialog(DialogAufrufEnum::LOESCHEN)
 	}
 
 	/** 

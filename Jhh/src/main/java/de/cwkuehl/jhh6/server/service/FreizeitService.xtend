@@ -84,7 +84,7 @@ class FreizeitService {
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var r = new ServiceErgebnis<FzNotiz>(null)
 		if (Global.nes(thema)) {
-			throw new MeldungException(Meldungen.FZ035)
+			throw new MeldungException(Meldungen::FZ035)
 		}
 		r.ergebnis = notizRep.iuFzNotiz(daten, null, uid, thema, notiz, null, null, null, null)
 		return r
@@ -137,12 +137,12 @@ class FreizeitService {
 				for (HhBilanz e : hhBilanz) {
 					db = if(euro) e.ebetrag else e.betrag
 					if (!Double.isNaN(alt)) {
-						sb.append(Meldungen.FZ002(Global.dblStr2(alt - db))) // .append(strE)
+						sb.append(Meldungen::FZ002(Global.dblStr2(alt - db))) // .append(strE)
 					}
 					if (sb.length > 0) {
 						sb.append(Constant.CRLF)
 					}
-					sb.append(Meldungen.FZ001(Meldungen.HH001, e.geaendertAm, db)) // .append(strE)
+					sb.append(Meldungen::FZ001(Meldungen::HH001, e.geaendertAm, db)) // .append(strE)
 					alt = db
 				}
 			}
@@ -152,7 +152,7 @@ class FreizeitService {
 			var prSerie = ""
 			var benutzer = benutzerRep.get(daten, new BenutzerKey(daten.mandantNr, daten.benutzerId))
 			if (benutzer === null) {
-				throw new MeldungException(Meldungen.FZ036(daten.benutzerId))
+				throw new MeldungException(Meldungen::FZ036(daten.benutzerId))
 			}
 			var geburt = benutzer.geburt
 			var wk = benutzer.benutzerId.toLowerCase.equals("wolfgang")
@@ -165,46 +165,46 @@ class FreizeitService {
 					prSerie = sliste.get(0).uid
 				}
 			}
-			sb.append(Meldungen.FZ003(benutzer.benutzerId.toFirstUpper))
+			sb.append(Meldungen::FZ003(benutzer.benutzerId.toFirstUpper))
 			if (geburt !== null) {
 				anzahlTage = ChronoUnit.DAYS.between(geburt, jetzt)
 			}
 			if (anzahlTage > 0) {
-				sb.append(Constant.CRLF).append(Meldungen.FZ004(anzahlTage))
+				sb.append(Constant.CRLF).append(Meldungen::FZ004(anzahlTage))
 			}
 			var anzahl = buchRep.getBuchLangAnzahl(daten, -1, null, prSerie, jetzt, null, null)
-			sb.append(Constant.CRLF).append(Meldungen.FZ005(anzahl))
+			sb.append(Constant.CRLF).append(Meldungen::FZ005(anzahl))
 			var anzahl2 = buchRep.getBuchLangAnzahl(daten, -1, null, prSerie, jetzt, jetzt, null)
-			sb.append(Constant.CRLF).append(Meldungen.FZ006(anzahl2))
+			sb.append(Constant.CRLF).append(Meldungen::FZ006(anzahl2))
 			if (anzahl !== 0) {
-				sb.append(Meldungen.FZ008(anzahl2 as double / anzahl * 100))
+				sb.append(Meldungen::FZ008(anzahl2 as double / anzahl * 100))
 			}
 			anzahl2 = buchRep.getBuchLangAnzahl(daten, -1, null, prSerie, jetzt, null, jetzt)
-			sb.append(Constant.CRLF).append(Meldungen.FZ007(anzahl2))
+			sb.append(Constant.CRLF).append(Meldungen::FZ007(anzahl2))
 			if (anzahl !== 0) {
-				sb.append(Meldungen.FZ008(anzahl2 as double / anzahl * 100))
+				sb.append(Meldungen::FZ008(anzahl2 as double / anzahl * 100))
 			}
 			anzahl = buchRep.getBuchLangAnzahl(daten, SpracheEnum.ENGLISCH.intValue, null, null, jetzt, null, null)
-			sb.append(Constant.CRLF).append(Meldungen.FZ009(anzahl))
+			sb.append(Constant.CRLF).append(Meldungen::FZ009(anzahl))
 			if (wk && !Global.nes(prSerie)) {
 				anzahl = buchRep.getBuchLangAnzahl(daten, -1, prSerie, null, jetzt, null, null)
-				sb.append(Constant.CRLF).append(Meldungen.FZ010(anzahl))
+				sb.append(Constant.CRLF).append(Meldungen::FZ010(anzahl))
 				anzahl2 = buchRep.getBuchLangAnzahl(daten, -1, prSerie, null, jetzt, jetzt, null)
-				sb.append(Constant.CRLF).append(Meldungen.FZ011(anzahl2))
+				sb.append(Constant.CRLF).append(Meldungen::FZ011(anzahl2))
 				if (anzahl !== 0) {
-					sb.append(Meldungen.FZ008(anzahl2 as double / anzahl * 100))
+					sb.append(Meldungen::FZ008(anzahl2 as double / anzahl * 100))
 				}
 			}
 			anzahl2 = buchRep.getBuchLangSeitenSumme(daten, -1, null, prSerie, jetzt, jetzt, null) as int
-			sb.append(Constant.CRLF).append(Meldungen.FZ012(anzahl2))
+			sb.append(Constant.CRLF).append(Meldungen::FZ012(anzahl2))
 			if (wk && !Global.nes(prSerie)) {
 				anzahl2 = buchRep.getBuchLangSeitenSumme(daten, -1, prSerie, null, jetzt, jetzt, null) as int
-				sb.append(Constant.CRLF).append(Meldungen.FZ013(anzahl2))
+				sb.append(Constant.CRLF).append(Meldungen::FZ013(anzahl2))
 			}
 			anzahl2 = buchRep.getBuchLangSeitenSumme(daten, -1, null, null, jetzt, jetzt, null) as int
-			sb.append(Constant.CRLF).append(Meldungen.FZ014(anzahl2))
+			sb.append(Constant.CRLF).append(Meldungen::FZ014(anzahl2))
 			if (anzahlTage > 0) {
-				sb.append(Constant.CRLF).append(Meldungen.FZ015(anzahl2 as double / anzahlTage))
+				sb.append(Constant.CRLF).append(Meldungen::FZ015(anzahl2 as double / anzahlTage))
 			}
 			r.ergebnis = sb.toString
 		} else if (nr == 3) {
@@ -212,7 +212,7 @@ class FreizeitService {
 			var summe = 0.0
 			var summeJahr = 0.0
 			val laenge = 18
-			var LocalDateTime anfangMin = null
+			var LocalDateTime anfangMin
 			var long anzahlTageMax = 0
 			val jahresTage = 365.25
 			var sb = new StringBuffer()
@@ -227,7 +227,7 @@ class FreizeitService {
 				var kmJahr = standRep.getFahrradstandPeriodeKmSumme(daten, vo.uid, aktJahr, jetzt1)
 				var long anzahlTage = 0
 				var liste = standRep.getFahrradstandListe(daten, vo.uid, null, jetzt1.atStartOfDay, false, 1)
-				var LocalDateTime anfang = null
+				var LocalDateTime anfang
 				if (liste.size > 0) {
 					anfang = liste.get(0).datum
 					if (anfangMin === null || anfangMin.isAfter(anfang)) {
@@ -243,19 +243,19 @@ class FreizeitService {
 				if (sb.length > 0) {
 					sb.append(Constant.CRLF)
 				}
-				sb.append(Meldungen.FZ016(Global.fixiereString(vo.bezeichnung + ": ", laenge, true, " "), km, kmJahr))
+				sb.append(Meldungen::FZ016(Global.fixiereString(vo.bezeichnung + ": ", laenge, true, " "), km, kmJahr))
 				if (anzahlTage > 0) {
 					sb.append(Constant.CRLF).append(
-						Meldungen.FZ017(
+						Meldungen::FZ017(
 							Global.fixiereString(" " + Global.dateString0(anfang.toLocalDate) + ": ", laenge, true,
 								" "), km / anzahlTage, km / anzahlTage * jahresTage))
 				}
 			}
 			if (anzahlTageMax > 0) {
 				sb.append(Constant.CRLF).append(
-					Meldungen.FZ016(Global.fixiereString(Meldungen.FZ018 + ": ", laenge, true, " "), summe, summeJahr))
+					Meldungen::FZ016(Global.fixiereString(Meldungen::FZ018 + ": ", laenge, true, " "), summe, summeJahr))
 				sb.append(Constant.CRLF).append(
-					Meldungen.FZ017(
+					Meldungen::FZ017(
 						Global.fixiereString(" " + Global.dateString0(anfangMin.toLocalDate) + ": ", laenge, true, " "),
 						summe / anzahlTageMax, summe / anzahlTageMax * jahresTage))
 			}
@@ -296,11 +296,11 @@ class FreizeitService {
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var r = new ServiceErgebnis<FzFahrrad>(null)
 		if (Global.nes(bez)) {
-			throw new MeldungException(Meldungen.FZ037)
+			throw new MeldungException(Meldungen::FZ037)
 		}
 		// Typ prüfen
 		if (FzFahrradTypEnum.fromValue(Global.intStr(typ)) === null) {
-			throw new MeldungException(Meldungen.FZ038)
+			throw new MeldungException(Meldungen::FZ038)
 		}
 		r.ergebnis = fahrradRep.iuFzFahrrad(daten, null, uid, bez, typ, null, null, null, null)
 		return r
@@ -369,30 +369,30 @@ class FreizeitService {
 		val protag = 10 + 1
 
 		if (Global.nes(fahrradUid)) {
-			throw new MeldungException(Meldungen.FZ019)
+			throw new MeldungException(Meldungen::FZ019)
 		}
 		if (Global.compDouble(zaehlerAktuell, 0) < 0) {
-			throw new MeldungException(Meldungen.FZ020)
+			throw new MeldungException(Meldungen::FZ020)
 		}
 		if (Global.compDouble(periodeAktuell, 0) < 0) {
-			throw new MeldungException(Meldungen.FZ021)
+			throw new MeldungException(Meldungen::FZ021)
 		}
 		if (Global.compDouble(schnitt, 0) < 0) {
-			throw new MeldungException(Meldungen.FZ022)
+			throw new MeldungException(Meldungen::FZ022)
 		}
 		if (Global.compDouble(zaehlerAktuell, 0) == 0 && Global.compDouble(periodeAktuell, 0) == 0) {
 			zaehlerNull = true
 		}
 		if (datum === null) {
-			throw new MeldungException(Meldungen.FZ023)
+			throw new MeldungException(Meldungen::FZ023)
 		}
 		var fzFahrrad = fahrradRep.get(daten, new FzFahrradKey(daten.mandantNr, fahrradUid))
 		if (fzFahrrad === null) {
-			throw new MeldungException(Meldungen.FZ024(fahrradUid))
+			throw new MeldungException(Meldungen::FZ024(fahrradUid))
 		}
 		var typ = FzFahrradTypEnum.fromValue(Global.intStr(fzFahrrad.typ))
 		if (typ === null) {
-			throw new MeldungException(Meldungen.FZ038)
+			throw new MeldungException(Meldungen::FZ038)
 		}
 		if (insert && typ == FzFahrradTypEnum.WOECHENTLICH) { // insert neuen Stand
 		// evtl. vorhandenen Satz in der gleichen Woche lesen
@@ -442,7 +442,7 @@ class FreizeitService {
 				} else {
 					periodeAktuell = zaehlerAktuell - zaehlerVorher
 					if (Global.compDouble(periodeAktuell, 0) < 0) {
-						throw new MeldungException(Meldungen.FZ025(zaehlerVorher))
+						throw new MeldungException(Meldungen::FZ025(zaehlerVorher))
 					}
 				}
 			}
@@ -453,7 +453,7 @@ class FreizeitService {
 					nr = voNachher.nr
 					dAktuell = voNachher.datum
 				} else {
-					throw new MeldungException(Meldungen.FZ026)
+					throw new MeldungException(Meldungen::FZ026)
 				}
 			}
 			if (!zaehlerNull) {
@@ -462,7 +462,7 @@ class FreizeitService {
 			}
 		}
 		if (voNachher !== null /* nachherNr > 0 */ && zaehlerNull) {
-			throw new MeldungException(Meldungen.FZ027)
+			throw new MeldungException(Meldungen::FZ027)
 		}
 		if (!zaehlerNull) {
 			if (Global.compDouble(zaehlerAktuell, periodeAktuell) < 0) {
@@ -479,7 +479,7 @@ class FreizeitService {
 			if (voVorher !== null /* vorherNr > 0 */ ) {
 				var woche = voVorher.datum.plusDays(7)
 				while (woche.isBefore(dAktuell)) {
-					standRep.iuFzFahrradstand(daten, null, fahrradUid, woche, 0, zaehlerVorher, 0, 0, Meldungen.FZ028,
+					standRep.iuFzFahrradstand(daten, null, fahrradUid, woche, 0, zaehlerVorher, 0, 0, Meldungen::FZ028,
 						null, null, null, null)
 					woche = woche.plusDays(7)
 				}
@@ -490,7 +490,7 @@ class FreizeitService {
 		if (vo === null) {
 			// Autowert
 			if (nr > 0 && neueNr) {
-				throw new MeldungException(Meldungen.FZ029(nr))
+				throw new MeldungException(Meldungen::FZ029(nr))
 			}
 			var l = standRep.getFahrradstandListe(daten, fahrradUid, dAktuell, dAktuell, true, 1)
 			nr = 0
@@ -503,7 +503,7 @@ class FreizeitService {
 		if (voNachher !== null /* nachherNr > 0 */ && !(dAktuell.equals(voNachher.datum) && nr == voNachher.nr) &&
 			Global.compDouble(periodeNachher, zaehlerNachher - zaehlerAktuell) !== 0) {
 			if (Global.compDouble(0, zaehlerNachher - zaehlerAktuell) > 0) {
-				throw new MeldungException(Meldungen.FZ030)
+				throw new MeldungException(Meldungen::FZ030)
 			}
 			var voNachherU = new FzFahrradstandUpdate(voNachher)
 			voNachherU.setPeriodeKm(zaehlerNachher - zaehlerAktuell)
@@ -523,12 +523,12 @@ class FreizeitService {
 		var key = new FzFahrradstandKey(daten.mandantNr, fuid, datum, nr)
 		var fzFahrradstand = standRep.get(daten, key)
 		if (fzFahrradstand === null) {
-			throw new MeldungException(Meldungen.FZ029(nr))
+			throw new MeldungException(Meldungen::FZ029(nr))
 		}
 		var liste = standRep.getFahrradstandListe(daten, fuid, datum, null, false, 0)
 		for (FzFahrradstand stand : liste) {
 			if (stand.datum.isAfter(key.datum) || stand.nr > key.nr) {
-				throw new MeldungException(Meldungen.FZ031)
+				throw new MeldungException(Meldungen::FZ031)
 			}
 		}
 		standRep.delete(daten, key)
@@ -566,7 +566,7 @@ class FreizeitService {
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var r = new ServiceErgebnis<FzBuchautor>(null)
 		if (Global.nes(name)) {
-			throw new MeldungException(Meldungen.FZ032)
+			throw new MeldungException(Meldungen::FZ032)
 		}
 		r.ergebnis = autorRep.iuFzBuchautor(daten, null, uid, name, vorname, null, null, null, null)
 		return r
@@ -578,7 +578,7 @@ class FreizeitService {
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var liste = buchRep.getBuchLangListe(daten, null, uid, null, null, 0, 1)
 		if (liste.size > 0) {
-			throw new MeldungException(Meldungen.FZ039)
+			throw new MeldungException(Meldungen::FZ039)
 		}
 		autorRep.delete(daten, new FzBuchautorKey(daten.mandantNr, uid))
 		var r = new ServiceErgebnis<Void>(null)
@@ -608,7 +608,7 @@ class FreizeitService {
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var r = new ServiceErgebnis<FzBuchserie>(null)
 		if (Global.nes(name)) {
-			throw new MeldungException(Meldungen.FZ033)
+			throw new MeldungException(Meldungen::FZ033)
 		}
 		r.ergebnis = serieRep.iuFzBuchserie(daten, null, uid, name, null, null, null, null)
 		return r
@@ -620,7 +620,7 @@ class FreizeitService {
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var liste = buchRep.getBuchLangListe(daten, null, null, uid, null, 0, 1)
 		if (liste.size > 0) {
-			throw new MeldungException(Meldungen.FZ040)
+			throw new MeldungException(Meldungen::FZ040)
 		}
 		serieRep.delete(daten, new FzBuchserieKey(daten.mandantNr, uid))
 		var r = new ServiceErgebnis<Void>(null)
@@ -660,13 +660,13 @@ class FreizeitService {
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var r = new ServiceErgebnis<FzBuch>(null)
 		if (Global.nes(titel)) {
-			throw new MeldungException(Meldungen.FZ041)
+			throw new MeldungException(Meldungen::FZ041)
 		}
 		if (Global.nes(autorUid)) {
-			throw new MeldungException(Meldungen.FZ042)
+			throw new MeldungException(Meldungen::FZ042)
 		}
 		if (Global.nes(serieUid)) {
-			throw new MeldungException(Meldungen.FZ043)
+			throw new MeldungException(Meldungen::FZ043)
 		}
 		// Sprache prüfen
 		SpracheEnum.fromValue(sp)
@@ -675,7 +675,7 @@ class FreizeitService {
 		if (Global.nes(uid) && !Global.nes(serieUid)) {
 			var keineSerie = false
 			var serie = serieRep.get(daten, new FzBuchserieKey(daten.mandantNr, serieUid))
-			if (serie !== null && serie.name.toLowerCase.endsWith(Meldungen.FZ034.toLowerCase)) {
+			if (serie !== null && serie.name.toLowerCase.endsWith(Meldungen::FZ034.toLowerCase)) {
 				keineSerie = true
 				seriennummer = 0
 			}

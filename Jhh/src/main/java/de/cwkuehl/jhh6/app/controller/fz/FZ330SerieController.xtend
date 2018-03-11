@@ -50,9 +50,9 @@ class FZ330SerieController extends BaseController<FzBuchserie> {
 		if (stufe <= 0) { // stufe = 0
 		}
 		if (stufe <= 1) {
-			var boolean neu = DialogAufrufEnum.NEU.equals(getAufruf)
-			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(getAufruf)
-			var FzBuchserie k = getParameter1
+			var neu = DialogAufrufEnum::NEU.equals(aufruf)
+			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
+			var FzBuchserie k = parameter1
 			if (!neu && k !== null) {
 				k = get(FactoryService::freizeitService.getSerie(serviceDaten, k.uid))
 				nr.setText(k.uid)
@@ -65,7 +65,7 @@ class FZ330SerieController extends BaseController<FzBuchserie> {
 			angelegt.setEditable(false)
 			geaendert.setEditable(false)
 			if (loeschen) {
-				ok.setText(Meldungen.M2001)
+				ok.setText(Meldungen::M2001)
 			}
 		}
 		if (stufe <= 2) { // initDatenTable
@@ -83,21 +83,20 @@ class FZ330SerieController extends BaseController<FzBuchserie> {
 	 */
 	@FXML def void onOk() {
 
-		var ServiceErgebnis<?> r = null
-		var FzBuchserie s = null
-		if (DialogAufrufEnum.NEU.equals(aufruf) || DialogAufrufEnum.KOPIEREN.equals(aufruf)) {
-			var ServiceErgebnis<FzBuchserie> r1 = FactoryService::freizeitService.insertUpdateSerie(serviceDaten, null,
-				name.text)
-			s = r1.getErgebnis
+		var ServiceErgebnis<?> r
+		var FzBuchserie s
+		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
+			var r1 = FactoryService::freizeitService.insertUpdateSerie(serviceDaten, null, name.text)
+			s = r1.ergebnis
 			r = r1
-		} else if (DialogAufrufEnum.AENDERN.equals(aufruf)) {
+		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
 			r = FactoryService::freizeitService.insertUpdateSerie(serviceDaten, nr.text, name.text)
-		} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
+		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
 			r = FactoryService::freizeitService.deleteSerie(serviceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)
-			if (r.getFehler.isEmpty) {
+			if (r.fehler.isEmpty) {
 				updateParent
 				close(s)
 			}
