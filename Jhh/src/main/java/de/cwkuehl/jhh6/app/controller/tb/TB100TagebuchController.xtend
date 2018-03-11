@@ -90,7 +90,7 @@ class TB100TagebuchController extends BaseController<String> {
 		zurueck10.setLabelFor(zurueck1)
 		zurueck20.setLabelFor(zurueck2)
 		zurueck30.setLabelFor(zurueck3)
-		datum0.setLabelFor(datum.getLabelForNode)
+		datum0.setLabelFor(datum.labelForNode)
 		eintrag0.setLabelFor(eintrag)
 		angelegt0.setLabelFor(angelegt)
 		geaendert0.setLabelFor(geaendert)
@@ -109,7 +109,7 @@ class TB100TagebuchController extends BaseController<String> {
 
 		if (stufe <= 0) {
 			leerenSuche
-			eintragAlt.setDatum(LocalDate.now)
+			eintragAlt.setDatum(LocalDate::now)
 			datum.setValue(eintragAlt.getDatum)
 			bearbeiteEintraege(false, true)
 			onEnde
@@ -124,7 +124,7 @@ class TB100TagebuchController extends BaseController<String> {
 	 * Event für Kopieren.
 	 */
 	@FXML def void onKopieren() {
-		kopie = eintrag.getText
+		kopie = eintrag.text
 	}
 
 	/** 
@@ -159,9 +159,9 @@ class TB100TagebuchController extends BaseController<String> {
 		// Bericht erzeugen
 		bearbeiteEintraege(true, false)
 		var pfad = Jhh6::einstellungen.tempVerzeichnis
-		var datei = Global.getDateiname(Meldungen.TB005, true, true, "txt")
-		Werkzeug.speicherDateiOeffnen(get(FactoryService::tagebuchService.holeDatei(serviceDaten, getSuche)), pfad,
-			datei, false)
+		var datei = Global.getDateiname(Meldungen::TB005, true, true, "txt")
+		Werkzeug.speicherDateiOeffnen(get(FactoryService::tagebuchService.holeDatei(serviceDaten, suche)), pfad, datei,
+			false)
 	}
 
 	/** 
@@ -271,14 +271,14 @@ class TB100TagebuchController extends BaseController<String> {
 		// Rekursion vermeiden
 		if (speichern && geladen) {
 			// alten Eintrag von vorher merken
-			var String str = eintragAlt.eintrag
+			var str = eintragAlt.eintrag
 			// nur speichern, wenn etwas geändert ist.
 			if (str === null || Global.compString(str, eintrag.text) !== 0) {
 				get(FactoryService::tagebuchService.speichereEintrag(daten, eintragAlt.datum, eintrag.text))
 			}
 		}
 		if (laden) {
-			var LocalDate d = datum.value
+			var d = datum.value
 			ladeEintraege(d)
 			geladen = true
 		}
@@ -296,8 +296,7 @@ class TB100TagebuchController extends BaseController<String> {
 	 */
 	def private void sucheEintraege(int stelle) {
 		bearbeiteEintraege(true, false)
-		var LocalDate d = get(
-			FactoryService::tagebuchService.holeSucheDatum(serviceDaten, stelle, datum.value, getSuche))
+		var d = get(FactoryService::tagebuchService.holeSucheDatum(serviceDaten, stelle, datum.value, getSuche))
 		if (d !== null) {
 			datum.setValue(d)
 			bearbeiteEintraege(false, true)

@@ -362,77 +362,77 @@ class ReplikationService {
 		var pl = personRep.getListe(daten, mnr, null, null)
 		if (pl.size <= 0) {
 			var p = new AdPersonSitzAdresse
-			p.name1 = Meldungen.M9000
-			p.name = Meldungen.M9000
-			p.ort = Meldungen.M9000
+			p.name1 = Meldungen::M9000
+			p.name = Meldungen::M9000
+			p.ort = Meldungen::M9000
 			adresseService.insertUpdatePerson(daten, p)
 		}
 		var fl = fahrradRep.getListe(daten, mnr, null, null)
 		if (fl.size <= 0) {
-			var f = freizeitService.insertUpdateFahrrad(daten, null, Meldungen.M9000,
+			var f = freizeitService.insertUpdateFahrrad(daten, null, Meldungen::M9000,
 				Global.strInt(FzFahrradTypEnum.TOUR.toString)).ergebnis
 			freizeitService.insertUpdateFahrradstand(daten, f.uid, daten.heute.atStartOfDay, 0, 10, 0, 20.5,
-				Meldungen.M9000)
+				Meldungen::M9000)
 		}
 		var bl = buchRep.getListe(daten, mnr, null, null)
 		if (bl.size <= 0) {
-			var a = freizeitService.insertUpdateAutor(daten, null, Meldungen.M9000, Meldungen.M9000).ergebnis
-			freizeitService.insertUpdateSerie(daten, null, Meldungen.FZ034)
-			var s = freizeitService.insertUpdateSerie(daten, null, Meldungen.M9000).ergebnis
-			freizeitService.insertUpdateBuch(daten, null, a.uid, s.uid, 1, Meldungen.M9000, 200,
+			var a = freizeitService.insertUpdateAutor(daten, null, Meldungen::M9000, Meldungen::M9000).ergebnis
+			freizeitService.insertUpdateSerie(daten, null, Meldungen::FZ034)
+			var s = freizeitService.insertUpdateSerie(daten, null, Meldungen::M9000).ergebnis
+			freizeitService.insertUpdateBuch(daten, null, a.uid, s.uid, 1, Meldungen::M9000, 200,
 				SpracheEnum.ENGLISCH.toString, false, daten.heute, null)
 		}
 		var nl = notizRep.getListe(daten, mnr, null, null)
 		if (nl.size <= 0) {
-			freizeitService.insertUpdateNotiz(daten, null, Meldungen.M9000, Meldungen.M9000)
+			freizeitService.insertUpdateNotiz(daten, null, Meldungen::M9000, Meldungen::M9000)
 		}
 		var kl = kontoRep.getListe(daten, mnr, null, null)
 		if (kl.size <= 2) {
 			haushaltService.anlegenPeriode(daten, 12, true)
 			insertInitialKonten(daten, mnr)
 			var ak = haushaltService.insertUpdateKonto(daten, null, KontoartEnum.AKTIVKONTO.toString,
-				KontokennzeichenEnum.OHNE.toString, Meldungen.M9000 + " AK", null, null, null, null, null, null, //
+				KontokennzeichenEnum.OHNE.toString, Meldungen::M9000 + " AK", null, null, null, null, null, null, //
 				null, false).ergebnis
 			var aw = haushaltService.insertUpdateKonto(daten, null, KontoartEnum.AUFWANDSKONTO.toString,
-				KontokennzeichenEnum.OHNE.toString, Meldungen.M9000 + " AW", null, null, null, null, null, null, //
+				KontokennzeichenEnum.OHNE.toString, Meldungen::M9000 + " AW", null, null, null, null, null, null, //
 				null, false).ergebnis
-			haushaltService.insertUpdateEreignis(daten, null, null, ak.uid, aw.uid, Meldungen.M9000, Meldungen.M9000,
+			haushaltService.insertUpdateEreignis(daten, null, null, ak.uid, aw.uid, Meldungen::M9000, Meldungen::M9000,
 				null, null, null, null, null, false)
-			haushaltService.insertUpdateBuchung(daten, null, daten.heute, 1, 2.5, ak.uid, aw.uid, Meldungen.M9000,
-				Meldungen.M9000, daten.heute, null, null, null, null, null, false)
+			haushaltService.insertUpdateBuchung(daten, null, daten.heute, 1, 2.5, ak.uid, aw.uid, Meldungen::M9000,
+				Meldungen::M9000, daten.heute, null, null, null, null, null, false)
 		}
 		var pal = patientRep.getListe(daten, mnr, null, null)
 		if (pal.size <= 0) {
-			var s = hpService.insertUpdateStatus(daten, null, Meldungen.M9000, Meldungen.M9000, 10, 10, null).ergebnis
-			var l = hpService.insertUpdateLeistung(daten, null, Meldungen.M9000, null, Meldungen.M9000, null, 2, 10,
+			var s = hpService.insertUpdateStatus(daten, null, Meldungen::M9000, Meldungen::M9000, 10, 10, null).ergebnis
+			var l = hpService.insertUpdateLeistung(daten, null, Meldungen::M9000, null, Meldungen::M9000, null, 2, 10,
 				null, null).ergebnis
-			var l2 = hpService.insertUpdateLeistung(daten, null, Meldungen.M9000, null, Meldungen.M9000, null, 2, 10,
+			var l2 = hpService.insertUpdateLeistung(daten, null, Meldungen::M9000, null, Meldungen::M9000, null, 2, 10,
 				null, null).ergebnis
-			hpService.insertUpdateLeistungsgruppe(daten, null, Meldungen.M9000, l2.uid, 10, null, null)
-			var p = hpService.insertUpdatePatient(daten, null, Meldungen.M9000 + "2", null, null, null, null, null,
+			hpService.insertUpdateLeistungsgruppe(daten, null, Meldungen::M9000, l2.uid, 10, null, null)
+			var p = hpService.insertUpdatePatient(daten, null, Meldungen::M9000 + "2", null, null, null, null, null,
 				null, null, null, null, null).ergebnis
-			var b = hpService.insertUpdateBehandlung(daten, null, p.uid, daten.heute, 10, Meldungen.M9000, l.uid, s.uid,
-				null, null, null, null, null, null).ergebnis
-			hpService.insertUpdateBehandlung(daten, null, p.uid, daten.heute, 20, Meldungen.M9000, l2.uid, s.uid, null,
+			var b = hpService.insertUpdateBehandlung(daten, null, p.uid, daten.heute, 10, Meldungen::M9000, l.uid,
+				s.uid, null, null, null, null, null, null).ergebnis
+			hpService.insertUpdateBehandlung(daten, null, p.uid, daten.heute, 20, Meldungen::M9000, l2.uid, s.uid, null,
 				null, null, null, null, null)
 			var bhl = hpService.getBehandlungLeistungListe(daten, true, p.uid, null, b.uid, null, null, false, true).
 				ergebnis
-			hpService.insertUpdateRechnung(daten, null, daten.heute.toString, daten.heute, p.uid, 22, Meldungen.M9000,
+			hpService.insertUpdateRechnung(daten, null, daten.heute.toString, daten.heute, p.uid, 22, Meldungen::M9000,
 				s.uid, null, bhl)
 		}
 		var ml = messdienerRep.getListe(daten, mnr, null, null)
 		if (ml.size <= 0) {
 			var dliste = mdService.getStandardDienstListe(daten).ergebnis
-			var m = mdService.insertUpdateMessdiener(daten, null, Meldungen.M9000, Meldungen.M9000,
+			var m = mdService.insertUpdateMessdiener(daten, null, Meldungen::M9000, Meldungen::M9000,
 				daten.heute.minusYears(2), null, null, null, null, null, null, null, null, null, null, null, null, //
 				null).ergebnis
-			var m2 = mdService.insertUpdateMessdiener(daten, null, Meldungen.M9001, Meldungen.M9001,
+			var m2 = mdService.insertUpdateMessdiener(daten, null, Meldungen::M9001, Meldungen::M9001,
 				daten.heute.minusYears(1), null, null, null, null, null, null, null, null, null, null, null, null, //
 				null).ergebnis
 			var MoProfil p
 			if (dliste.size > 0) {
 				var sv = '''«dliste.get(0).schluessel»;2'''
-				p = mdService.insertUpdateProfil(daten, null, Meldungen.M9000, sv, null).ergebnis
+				p = mdService.insertUpdateProfil(daten, null, Meldungen::M9000, sv, null).ergebnis
 				var e1 = new MoEinteilungLang
 				e1.messdienerUid = m.uid
 				e1.dienst = dliste.get(0).schluessel
@@ -440,52 +440,52 @@ class ReplikationService {
 				e2.messdienerUid = m2.uid
 				e2.dienst = dliste.get(0).schluessel
 				var et = #[e1, e2]
-				mdService.insertUpdateGottesdienst(daten, null, daten.heute.atTime(8, 0), Meldungen.M9000,
-					Meldungen.M9000, p?.uid, null, null, et)
+				mdService.insertUpdateGottesdienst(daten, null, daten.heute.atTime(8, 0), Meldungen::M9000,
+					Meldungen::M9000, p?.uid, null, null, et)
 			}
 		}
 		var al = sbpersonRep.getListe(daten, mnr, null, null)
 		if (al.size <= 0) {
-			var q = sbService.insertUpdateQuelle(daten, null, Meldungen.M9000, Meldungen.M9001, Meldungen.M9002,
-				Meldungen.M9000).ergebnis
-			var a = sbService.insertUpdatePerson(daten, null, Meldungen.M9000, null, Meldungen.M9000,
+			var q = sbService.insertUpdateQuelle(daten, null, Meldungen::M9000, Meldungen::M9001, Meldungen::M9002,
+				Meldungen::M9000).ergebnis
+			var a = sbService.insertUpdatePerson(daten, null, Meldungen::M9000, null, Meldungen::M9000,
 				GeschlechtEnum.MAENNLICH.toString, null, null, null, q.uid, 0, 0, 0, null, null, null, null, null, null,
 				null, null, null, null, null, null, null, null, null, null, null, null, null, null).ergebnis
-			var a2 = sbService.insertUpdatePerson(daten, null, Meldungen.M9001, null, Meldungen.M9001,
+			var a2 = sbService.insertUpdatePerson(daten, null, Meldungen::M9001, null, Meldungen::M9001,
 				GeschlechtEnum.WEIBLICH.toString, null, null, null, q.uid, 0, 0, 0, null, null, null, null, null, null,
 				null, null, null, null, null, null, null, null, null, null, null, null, null, null).ergebnis
-			var a3 = sbService.insertUpdatePerson(daten, null, Meldungen.M9002, null, Meldungen.M9002,
+			var a3 = sbService.insertUpdatePerson(daten, null, Meldungen::M9002, null, Meldungen::M9002,
 				GeschlechtEnum.NEUTRUM.toString, null, null, null, q.uid, 0, 0, 0, null, null, null, null, null, null,
 				null, null, null, null, null, null, null, null, null, null, null, null, null, null).ergebnis
 			var kliste = #[a3.uid]
-			sbService.insertUpdateFamilie(daten, null, a.uid, a2.uid, null, null, Meldungen.M9000, q.uid, kliste)
+			sbService.insertUpdateFamilie(daten, null, a.uid, a2.uid, null, null, Meldungen::M9000, q.uid, kliste)
 		}
 		var tl = tagebuchRep.getListe(daten, mnr, null, null)
 		if (tl.size <= 0) {
-			tagebuchService.speichereEintrag(daten, daten.heute, Meldungen.M9000)
+			tagebuchService.speichereEintrag(daten, daten.heute, Meldungen::M9000)
 		}
 		var hl = hausRep.getListe(daten, mnr, null, null)
 		if (hl.size <= 0) {
-			var h = vmService.insertUpdateHaus(daten, null, Meldungen.M9000, null, null, null, null).ergebnis
-			var w = vmService.insertUpdateWohnung(daten, null, h.uid, Meldungen.M9000, null).ergebnis
-			var w2 = vmService.insertUpdateWohnung(daten, null, h.uid, Meldungen.M9001, null).ergebnis
-			vmService.insertUpdateMieter(daten, null, w.uid, Meldungen.M9000, null, null, daten.heute.minusYears(1),
+			var h = vmService.insertUpdateHaus(daten, null, Meldungen::M9000, null, null, null, null).ergebnis
+			var w = vmService.insertUpdateWohnung(daten, null, h.uid, Meldungen::M9000, null).ergebnis
+			var w2 = vmService.insertUpdateWohnung(daten, null, h.uid, Meldungen::M9001, null).ergebnis
+			vmService.insertUpdateMieter(daten, null, w.uid, Meldungen::M9000, null, null, daten.heute.minusYears(1),
 				null, 50, 120, 500, 5, 0, null)
-			vmService.insertUpdateMieter(daten, null, w2.uid, Meldungen.M9001, null, null, daten.heute.minusYears(2),
+			vmService.insertUpdateMieter(daten, null, w2.uid, Meldungen::M9001, null, null, daten.heute.minusYears(2),
 				null, 60, 140, 600, 5, 0, null)
 			vmService.insertUpdateMiete(daten, null, w.uid, daten.heute.minusYears(1), 50, 120, 20, 50, 1, null)
 			vmService.insertUpdateMiete(daten, null, w2.uid, daten.heute.minusYears(2), 60, 140, 20, 50, 1, null)
 		}
 		var wl = wertpapierRep.getListe(daten, mnr, null, null)
 		if (wl.size <= 1) {
-			wpService.insertUpdateKonfiguration(daten, null, Meldungen.M9000, 0.5, false, 3, 1, 182, false, 2, "1",
+			wpService.insertUpdateKonfiguration(daten, null, Meldungen::M9000, 0.5, false, 3, 1, 182, false, 2, "1",
 				null)
 			var w0 = wpService.insertUpdateWertpapier(daten, null, "DAX", "^GDAXI", null, "A", null, "1", null, null).
 				ergebnis
 			var w = wpService.insertUpdateWertpapier(daten, null, "Deutsche Bank", "DBK.DE", null, "A", null, "1",
 				w0.uid, null).ergebnis
 			var a = wpService.insertUpdateAnlage(daten, null, w.uid, w.kuerzel, null).ergebnis
-			wpService.insertUpdateBuchung(daten, null, a.uid, daten.heute, 100, -5, 7, 0, Meldungen.M9000, null, 14.28)
+			wpService.insertUpdateBuchung(daten, null, a.uid, daten.heute, 100, -5, 7, 0, Meldungen::M9000, null, 14.28)
 		}
 		maeinstellungRep.iuMaEinstellung(daten, null, Constant.EINST_MA_EXAMPLES, "1", null, null, null, null)
 		return r
@@ -503,7 +503,7 @@ class ReplikationService {
 			hh.uid = Global.UID
 			hh.art = KontoartEnum.PASSIVKONTO.toString
 			hh.kz = KontokennzeichenEnum.EIGENKAPITEL.toString
-			hh.name = Meldungen.HH001
+			hh.name = Meldungen::HH001
 			hh.gueltigVon = null
 			hh.gueltigBis = null
 			hh.periodeVon = -1
@@ -524,7 +524,7 @@ class ReplikationService {
 			hh.uid = Global.UID
 			hh.art = KontoartEnum.ERTRAGSKONTO.toString
 			hh.kz = KontokennzeichenEnum.GEWINN_VERLUST.toString
-			hh.name = Meldungen.HH002
+			hh.name = Meldungen::HH002
 			hh.setGueltigVon(null)
 			hh.gueltigVon = null
 			hh.gueltigBis = null
@@ -867,7 +867,7 @@ class ReplikationService {
 			for (r : rbListe.liste) {
 				var rep = reps.get(r.eintrag.class)
 				if (rep === null) {
-					throw new RuntimeException(Meldungen.M1001(r.eintrag.class.toString))
+					throw new RuntimeException(Meldungen::M1001(r.eintrag.class.toString))
 				}
 				switch (r.art) {
 					case RollbackArtEnum.INSERT: rep.delete(daten, r.eintrag)
@@ -891,7 +891,7 @@ class ReplikationService {
 			for (r : rbListe.liste.reverseView) {
 				var rep = reps.get(r.eintrag.class)
 				if (rep === null) {
-					throw new RuntimeException(Meldungen.M1001(r.eintrag.class.toString))
+					throw new RuntimeException(Meldungen::M1001(r.eintrag.class.toString))
 				}
 				switch (r.art) {
 					case RollbackArtEnum.INSERT: rep.insert(daten, r.eintrag)
@@ -970,21 +970,21 @@ class ReplikationService {
 		var vonuid = von.getMandantEinstellungWert(Constant.EINST_MA_REPLIKATION_UID)
 		var nachuid = nach.getMandantEinstellungWert(Constant.EINST_MA_REPLIKATION_UID)
 		if (Global.nes(vonuid) || Global.nes(nachuid)) {
-			throw new MeldungException(Meldungen.M1002)
+			throw new MeldungException(Meldungen::M1002)
 		}
 		if (Global.compString(vonuid, nachuid) == 0) {
-			throw new MeldungException(Meldungen.M1003)
+			throw new MeldungException(Meldungen::M1003)
 		}
 		var vonbeginn = von.getMandantEinstellungWert(Constant.EINST_MA_REPLIKATION_BEGINN)
 		var nachbeginn = nach.getMandantEinstellungWert(Constant.EINST_MA_REPLIKATION_BEGINN)
 		if (!Global.nes(vonbeginn) || !Global.nes(nachbeginn)) {
-			throw new MeldungException(Meldungen.M1004)
+			throw new MeldungException(Meldungen::M1004)
 		}
 		// Datenbank-Struktur vergleichen
 		var vonversion = Global.strInt(von.getEinstellungWert(Constant.EINST_DB_VERSION))
 		var nachversion = Global.strInt(nach.getEinstellungWert(Constant.EINST_DB_VERSION))
 		if (vonversion == 0 || nachversion == 0 || vonversion != nachversion) {
-			throw new MeldungException(Meldungen.M1005)
+			throw new MeldungException(Meldungen::M1005)
 		}
 	}
 
@@ -1005,12 +1005,12 @@ class ReplikationService {
 			var liste = alleTabellen
 			var abgleich = true
 			for (t : liste) {
-				log.debug(Meldungen.M1006(t.name))
+				log.debug(Meldungen::M1006(t.name))
 				status.length = 0
-				status.append(Meldungen.M1006(t.name)).append(Constant.CRLF)
-				status.append(Meldungen.M1007(anzahl))
+				status.append(Meldungen::M1006(t.name)).append(Constant.CRLF)
+				status.append(Meldungen::M1007(anzahl))
 				if (abbruch.length > 0) {
-					throw new MeldungException(Meldungen.M1008)
+					throw new MeldungException(Meldungen::M1008)
 				}
 				if (t.loeschen || t.kopieren) {
 					if (abgleich) {
@@ -1030,7 +1030,7 @@ class ReplikationService {
 			// Thread.sleep(100)
 			}
 		} finally {
-			log.debug(Meldungen.M1009)
+			log.debug(Meldungen::M1009)
 			if (von !== null) {
 				von.con.close
 			}
@@ -1038,8 +1038,8 @@ class ReplikationService {
 				nach.con.close
 			}
 			if (e !== null) {
-				maeinstellungRep.iuMaEinstellung(daten, null, Constant.EINST_MA_REPLIKATION_BEGINN, "", null,
-					null, null, null)
+				maeinstellungRep.iuMaEinstellung(daten, null, Constant.EINST_MA_REPLIKATION_BEGINN, "", null, null,
+					null, null)
 			}
 		}
 		var r = new ServiceErgebnis<Void>(null)

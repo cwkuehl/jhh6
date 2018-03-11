@@ -12,7 +12,6 @@ import de.cwkuehl.jhh6.app.controller.Jhh6Controller
 import de.cwkuehl.jhh6.server.FactoryService
 import java.io.IOException
 import java.lang.reflect.InvocationTargetException
-import java.net.URL
 import javafx.application.Application
 import javafx.application.Platform
 import javafx.fxml.FXMLLoader
@@ -36,7 +35,7 @@ class Jhh6 extends Application {
 		// Locale.setDefault(Locale.ENGLISH);
 		if (Global::isWebStart) {
 			if (args !== null) {
-				log.error(Meldungen.M1021(String::join(" ", args)))
+				log.error(Meldungen::M1021(String::join(" ", args)))
 			}
 		}
 		launch(args)
@@ -62,13 +61,13 @@ class Jhh6 extends Application {
 				if (!(t instanceof MeldungException)) {
 					log.error("UncaughtExceptionHandler", t)
 				}
-				var String s = Global::getExceptionText(t)
+				var s = Global::getExceptionText(t)
 				setLeftStatus(s)
 			}
 		])
-		var ClassLoader classLoader = Thread::currentThread.getContextClassLoader
-		var URL fxmlURL = classLoader.getResource("dialog/Jhh6.fxml")
-		var FXMLLoader loader = new FXMLLoader(fxmlURL, Global::bundle)
+		var classLoader = Thread::currentThread.getContextClassLoader
+		var fxmlURL = classLoader.getResource("dialog/Jhh6.fxml")
+		var loader = new FXMLLoader(fxmlURL, Global::bundle)
 		var Parent p = loader.load
 		controller = loader.getController
 		controller.init(stage, null)
@@ -119,7 +118,7 @@ class Jhh6 extends Application {
 	}
 
 	def static ServiceDaten getServiceDaten() {
-		return new ServiceDaten(serviceDaten.getMandantNr, serviceDaten.getBenutzerId)
+		return new ServiceDaten(serviceDaten.mandantNr, serviceDaten.benutzerId)
 	}
 
 	def static void setServiceDaten(ServiceDaten daten) {
@@ -127,7 +126,7 @@ class Jhh6 extends Application {
 		if (daten === null) {
 			serviceDaten = new ServiceDaten(0, Constant.USER_ID)
 		} else {
-			serviceDaten = new ServiceDaten(daten.getMandantNr, daten.getBenutzerId)
+			serviceDaten = new ServiceDaten(daten.mandantNr, daten.benutzerId)
 		}
 	}
 
@@ -144,16 +143,16 @@ class Jhh6 extends Application {
 
 		var str = new StringBuffer
 		if (getEinstellungen.isTest) {
-			str.append(Meldungen.M1024)
+			str.append(Meldungen::M1024)
 		}
 		str.append("JHH6 ")
 		str.append(getEinstellungen.getAnwendungsTitel(serviceDaten.mandantNr))
 		str.append(" W. Kuehl")
 		var mandantNr = getServiceDaten.getMandantNr
 		if (mandantNr <= 0) {
-			str.append(Meldungen.M1022)
+			str.append(Meldungen::M1022)
 		} else if (mandantNr !== 1) {
-			str.append(Meldungen.M1023(mandantNr))
+			str.append(Meldungen::M1023(mandantNr))
 		}
 		return str.toString
 	}
@@ -188,7 +187,7 @@ class Jhh6 extends Application {
 
 	def static ServiceErgebnis<Void> rollback() {
 
-		var ServiceErgebnis<Void> r = FactoryService.getReplikationService.rollback(getServiceDaten)
+		var r = FactoryService::replikationService.rollback(getServiceDaten)
 		if (r.ok) {
 			getEinstellungen.refreshMandant
 		}
@@ -197,7 +196,7 @@ class Jhh6 extends Application {
 
 	def static ServiceErgebnis<Void> redo() {
 
-		var ServiceErgebnis<Void> r = FactoryService.getReplikationService.redo(getServiceDaten)
+		var r = FactoryService::replikationService.redo(getServiceDaten)
 		if (r.ok) {
 			getEinstellungen.refreshMandant
 		}

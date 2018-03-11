@@ -51,7 +51,7 @@ class HsqldbTest extends TestBase {
 			INSERT INTO zEinstellung(Schluessel, Wert, Angelegt_Von, Angelegt_Am, Geaendert_Von, Geaendert_Am)
 			  VALUES (?, ?, ?, ?, ?, ?)
 		'''
-		val params = #["Schluessel234", "Wert", "Von", conv(LocalDateTime.now), null, null]
+		val params = #["Schluessel234", "Wert", "Von", conv(LocalDateTime::now), null, null]
 		insert(con, sql, params)
 		sql = '''
 			SELECT a.Schluessel, a.Wert, a.Angelegt_Von, a.Angelegt_Am, a.Geaendert_Von, a.Geaendert_Am
@@ -92,7 +92,7 @@ class HsqldbTest extends TestBase {
 			INSERT INTO zEinstellung(Schluessel, Wert, Angelegt_Von, Angelegt_Am, Geaendert_Von, Geaendert_Am)
 			  VALUES (?, ?, ?, ?, ?, ?)
 		'''
-		val params = #["Schluessel240", "Wert", "Von", conv(LocalDateTime.now), null, null]
+		val params = #["Schluessel240", "Wert", "Von", conv(LocalDateTime::now), null, null]
 		insert(con, sql, params)
 		sql = '''
 			SELECT a.Schluessel, a.Wert, a.Angelegt_Von, a.Angelegt_Am, a.Geaendert_Von, a.Geaendert_Am
@@ -167,8 +167,8 @@ class HsqldbTest extends TestBase {
 		if (s === null || s == "") {
 			return 0
 		}
-		var PreparedStatement stmt = null
-		var int rs
+		var PreparedStatement stmt
+		var rs = 0
 		try {
 			stmt = con.prepareStatement(s)
 			rs = stmt.executeUpdate
@@ -182,8 +182,8 @@ class HsqldbTest extends TestBase {
 
 	def protected int insert(Connection con, String sql, Object[] params) {
 
-		var PreparedStatement stmt = null
-		var int rs
+		var PreparedStatement stmt
+		var rs = 0
 		try {
 			stmt = con.prepareStatement(sql.toString)
 			var i = 1
@@ -206,9 +206,9 @@ class HsqldbTest extends TestBase {
 	def protected Zeinstellung selectOne(Connection con, String sql, Object[] params,
 		Function<ResultSet, Zeinstellung> inst) {
 
-		var PreparedStatement stmt = null
-		var ResultSet rs = null
-		var Zeinstellung t = null
+		var PreparedStatement stmt
+		var ResultSet rs
+		var Zeinstellung t
 		try {
 			stmt = con.prepareStatement(sql.toString)
 			if (params !== null) {
