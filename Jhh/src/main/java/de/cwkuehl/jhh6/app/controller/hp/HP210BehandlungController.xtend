@@ -1,6 +1,5 @@
 package de.cwkuehl.jhh6.app.controller.hp
 
-import de.cwkuehl.jhh6.api.dto.HpBehandlung
 import de.cwkuehl.jhh6.api.dto.HpBehandlungLang
 import de.cwkuehl.jhh6.api.dto.HpBehandlungLeistungLang
 import de.cwkuehl.jhh6.api.dto.HpLeistung
@@ -16,8 +15,6 @@ import de.cwkuehl.jhh6.app.control.AutoEditor
 import de.cwkuehl.jhh6.app.control.Datum
 import de.cwkuehl.jhh6.server.FactoryService
 import java.time.LocalDate
-import java.util.List
-import javafx.collections.ObservableList
 import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.ComboBox
@@ -85,11 +82,11 @@ class HP210BehandlungController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getName1
+			return getData.name1
 		}
 	}
 
@@ -103,11 +100,11 @@ class HP210BehandlungController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getBeschreibungFett
+			return getData.beschreibungFett
 		}
 	}
 
@@ -121,11 +118,11 @@ class HP210BehandlungController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getLeistungBeschreibungFett
+			return getData.leistungBeschreibungFett
 		}
 	}
 
@@ -139,11 +136,11 @@ class HP210BehandlungController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getStatus
+			return getData.status
 		}
 	}
 
@@ -155,7 +152,7 @@ class HP210BehandlungController extends BaseController<String> {
 		tabbar = 0
 		nr0.setLabelFor(nr)
 		patient0.setLabelFor(patient, true)
-		datum0.setLabelFor(datum.getLabelForNode, true)
+		datum0.setLabelFor(datum.labelForNode, true)
 		leistung0.setLabelFor(leistung, true)
 		dauer0.setLabelFor(dauer)
 		leistungen0.setLabelFor(leistungen)
@@ -181,47 +178,43 @@ class HP210BehandlungController extends BaseController<String> {
 
 		if (stufe <= 0) {
 			datum.setValue(LocalDate::now)
-			var List<HpPatient> pl = get(
-				FactoryService::getHeilpraktikerService.getPatientListe(getServiceDaten, true))
+			var pl = get(FactoryService::heilpraktikerService.getPatientListe(serviceDaten, true))
 			patient.setItems(getItems(pl, null, [a|new PatientData(a)], null))
-			var List<HpLeistung> ll = get(
-				FactoryService::getHeilpraktikerService.getLeistungListe(getServiceDaten, true, true))
+			var ll = get(FactoryService::heilpraktikerService.getLeistungListe(serviceDaten, true, true))
 			leistung.setItems(getItems(ll, new HpLeistung, [a|new LeistungData(a)], null))
-			var List<HpStatus> sl = get(
-				FactoryService::getHeilpraktikerService.getStatusListe(getServiceDaten, true))
+			var sl = get(FactoryService::heilpraktikerService.getStatusListe(serviceDaten, true))
 			status.setItems(getItems(sl, null, [a|new StatusData(a)], null))
-			var boolean neu0 = DialogAufrufEnum::NEU.equals(getAufruf)
-			var boolean kopieren = DialogAufrufEnum::KOPIEREN.equals(getAufruf)
-			var boolean loeschen0 = DialogAufrufEnum::LOESCHEN.equals(getAufruf)
-			if (getParameter1 instanceof String) {
-				setText(patient, (getParameter1 as String))
-			} else if (!neu0 && getParameter1 instanceof HpBehandlungLang) {
-				var HpBehandlungLang l = (getParameter1 as HpBehandlungLang)
-				var HpBehandlung k = get(
-					FactoryService::getHeilpraktikerService.getBehandlung(getServiceDaten, l.getUid))
-				nr.setText(k.getUid)
-				setText(patient, k.getPatientUid)
-				datum.setValue(k.getDatum)
-				dauer.setText(Global::dblStr2l(k.getDauer))
-				diagnose.setText(k.getDiagnose)
-				setText(leistung, k.getLeistungUid)
-				setText(status, k.getStatusUid)
-				mittel.setText(k.getMittel)
-				potenz.setText(k.getPotenz)
-				dosierung.setText(k.getDosierung)
-				verordnung.setText(k.getVerordnung)
-				notiz.replaceText(Global.nn(k.getNotiz))
-				angelegt.setText(k.formatDatumVon(k.getAngelegtAm, k.getAngelegtVon))
-				geaendert.setText(k.formatDatumVon(k.getGeaendertAm, k.getGeaendertVon))
+			var neu0 = DialogAufrufEnum::NEU.equals(aufruf)
+			var kopieren = DialogAufrufEnum::KOPIEREN.equals(aufruf)
+			var loeschen0 = DialogAufrufEnum::LOESCHEN.equals(aufruf)
+			if (parameter1 instanceof String) {
+				setText(patient, parameter1 as String)
+			} else if (!neu0 && parameter1 instanceof HpBehandlungLang) {
+				var l = parameter1 as HpBehandlungLang
+				var k = get(FactoryService::heilpraktikerService.getBehandlung(serviceDaten, l.uid))
+				nr.setText(k.uid)
+				setText(patient, k.patientUid)
+				datum.setValue(k.datum)
+				dauer.setText(Global::dblStr2l(k.dauer))
+				diagnose.setText(k.diagnose)
+				setText(leistung, k.leistungUid)
+				setText(status, k.statusUid)
+				mittel.setText(k.mittel)
+				potenz.setText(k.potenz)
+				dosierung.setText(k.dosierung)
+				verordnung.setText(k.verordnung)
+				notiz.replaceText(Global.nn(k.notiz))
+				angelegt.setText(k.formatDatumVon(k.angelegtAm, k.angelegtVon))
+				geaendert.setText(k.formatDatumVon(k.geaendertAm, k.geaendertVon))
 			}
-			var List<HpBehandlungLeistungLang> bhl = get(
-				FactoryService::getHeilpraktikerService.getBehandlungLeistungListe(getServiceDaten, true, null,
-					null, nr.text, null, null, false, true))
+			var bhl = get(
+				FactoryService::heilpraktikerService.getBehandlungLeistungListe(serviceDaten, true, null, null, nr.text,
+					null, null, false, true))
 			leistungen.setItems(getItems(bhl, null, [a|new LeistungenData(a)], null))
 			if (neu0) {
-				var HpStatus k = get(FactoryService::getHeilpraktikerService.getStandardStatus(getServiceDaten, 1))
+				var HpStatus k = get(FactoryService::heilpraktikerService.getStandardStatus(serviceDaten, 1))
 				if (k !== null) {
-					setText(status, k.getUid)
+					setText(status, k.uid)
 				}
 			}
 			nr.setEditable(false)
@@ -265,17 +258,17 @@ class HP210BehandlungController extends BaseController<String> {
 	 * Event für Symptome.
 	 */
 	@FXML def void onSymptomeMouseClick(MouseEvent e) {
-		if (e.clickCount > 1) {		// onAendern
+		if (e.clickCount > 1) { // onAendern
 		}
 	}
 
 	def private void hinzufuegen(HpLeistung l, double d) {
 
-		var ObservableList<LeistungenData> liste = leistungen.getItems
-		var HpBehandlungLeistungLang bh = null
-		var boolean neu = false
+		var liste = leistungen.items
+		var HpBehandlungLeistungLang bh
+		var neu = false
 		for (LeistungenData ld : liste) {
-			if (ld.getData.getLeistungUid.equals(l.getUid)) {
+			if (ld.getData.getLeistungUid.equals(l.uid)) {
 				bh = ld.getData
 			}
 		}
@@ -283,12 +276,12 @@ class HP210BehandlungController extends BaseController<String> {
 			neu = true
 			bh = new HpBehandlungLeistungLang
 		}
-		bh.setLeistungUid(l.getUid)
-		bh.setLeistungZiffer(l.getZiffer)
-		bh.setLeistungBeschreibungFett(l.getBeschreibungFett)
+		bh.setLeistungUid(l.uid)
+		bh.setLeistungZiffer(l.ziffer)
+		bh.setLeistungBeschreibungFett(l.beschreibungFett)
 		bh.setDauer(d)
-		var StringBuffer sb = new StringBuffer(bh.getLeistungBeschreibungFett)
-		Global::anhaengen(sb, ", ", Global::dblStr2l(bh.getDauer))
+		var sb = new StringBuffer(bh.leistungBeschreibungFett)
+		Global::anhaengen(sb, ", ", Global::dblStr2l(bh.dauer))
 		bh.setLeistungBeschreibungFett(sb.toString)
 		if (neu) {
 			liste.add(new LeistungenData(bh))
@@ -301,27 +294,26 @@ class HP210BehandlungController extends BaseController<String> {
 	@FXML def void onHinzufuegen() {
 
 		var HpLeistung l = getValue(leistung, true)
-		var double d = Global::strDbl(dauer.text)
-		if (Global::nes(l.getZiffer)) {
-            // Leistungsgruppe
-			var List<HpBehandlungLeistungLang> liste = get(
-				FactoryService::getHeilpraktikerService.getLeistungsgruppeLeistungListe(getServiceDaten, false,
-					l.getUid, false))
+		var d = Global::strDbl(dauer.text)
+		if (Global::nes(l.ziffer)) {
+			// Leistungsgruppe
+			var liste = get(
+				FactoryService::heilpraktikerService.getLeistungsgruppeLeistungListe(serviceDaten, false, l.uid, false))
 			if (liste !== null) {
-				var double summe = 0
+				var summe = 0.0
 				for (HpBehandlungLeistungLang e : liste) {
-					summe += e.getDauer
+					summe += e.dauer
 				}
 				if (Global::compDouble(summe, 0) === 0) {
 					summe = 1
 				}
 				for (HpBehandlungLeistungLang e : liste) {
 					l = new HpLeistung
-					l.setUid(e.getLeistungUid)
-					l.setZiffer(e.getLeistungZiffer)
-					l.setZifferAlt(e.getLeistungZifferAlt)
-					l.setBeschreibungFett(e.getLeistungBeschreibungFett)
-					hinzufuegen(l, d * e.getDauer / summe)
+					l.setUid(e.leistungUid)
+					l.setZiffer(e.leistungZiffer)
+					l.setZifferAlt(e.leistungZifferAlt)
+					l.setBeschreibungFett(e.leistungBeschreibungFett)
+					hinzufuegen(l, d * e.dauer / summe)
 				}
 			}
 		} else {
@@ -335,11 +327,11 @@ class HP210BehandlungController extends BaseController<String> {
 	 */
 	@FXML def void onEntfernen() {
 
-		var ObservableList<LeistungenData> liste = leistungen.getItems
-		var List<HpBehandlungLeistungLang> sel = getValues(leistungen, false)
+		var liste = leistungen.items
+		var sel = getValues(leistungen, false)
 		for (HpBehandlungLeistungLang s : sel) {
 			for (LeistungenData l : liste) {
-				if (s.getLeistungUid.equals(l.getData.getLeistungUid)) {
+				if (s.leistungUid.equals(l.getData.leistungUid)) {
 					liste.remove(l)
 					return;
 				}
@@ -352,23 +344,21 @@ class HP210BehandlungController extends BaseController<String> {
 	 */
 	@FXML def void onOk() {
 
-		var ServiceErgebnis<?> r = null
+		var ServiceErgebnis<?> r
 		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
-			r = FactoryService::getHeilpraktikerService.insertUpdateBehandlung(getServiceDaten, null,
-				getText(patient), datum.value, Global::strInt(dauer.text), diagnose.text,
-				getText(leistung), getText(status), mittel.text, potenz.text, dosierung.text,
-				verordnung.text, notiz.text, getAllValues(leistungen))
+			r = FactoryService::heilpraktikerService.insertUpdateBehandlung(serviceDaten, null, getText(patient),
+				datum.value, Global::strInt(dauer.text), diagnose.text, getText(leistung), getText(status), mittel.text,
+				potenz.text, dosierung.text, verordnung.text, notiz.text, getAllValues(leistungen))
 		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
-			r = FactoryService::getHeilpraktikerService.insertUpdateBehandlung(getServiceDaten, nr.text,
-				getText(patient), datum.getValue, Global::strInt(dauer.text), diagnose.text,
-				getText(leistung), getText(status), mittel.text, potenz.text, dosierung.text,
-				verordnung.text, notiz.text, getAllValues(leistungen))
+			r = FactoryService::heilpraktikerService.insertUpdateBehandlung(serviceDaten, nr.text, getText(patient),
+				datum.value, Global::strInt(dauer.text), diagnose.text, getText(leistung), getText(status), mittel.text,
+				potenz.text, dosierung.text, verordnung.text, notiz.text, getAllValues(leistungen))
 		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
-			r = FactoryService::getHeilpraktikerService.deleteBehandlung(getServiceDaten, nr.text)
+			r = FactoryService::heilpraktikerService.deleteBehandlung(serviceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)
-			if (r.getFehler.isEmpty) {
+			if (r.fehler.isEmpty) {
 				updateParent
 				close
 			}
@@ -380,9 +370,8 @@ class HP210BehandlungController extends BaseController<String> {
 	 */
 	@FXML def void onDrucken() {
 		var byte[] pdf = get(
-			FactoryService::getHeilpraktikerService.getReportPatientenakte(getServiceDaten, getText(patient), null,
-				null))
-		Werkzeug::speicherReport(pdf, Meldungen.HP018, true)
+			FactoryService::heilpraktikerService.getReportPatientenakte(serviceDaten, getText(patient), null, null))
+		Werkzeug::speicherReport(pdf, Meldungen::HP018, true)
 	}
 
 	/** 

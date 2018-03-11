@@ -124,10 +124,10 @@ class FZ350BuchController extends BaseController<String> {
 			var sl = get(FactoryService::freizeitService.getSerieListe(serviceDaten, null))
 			serie.setItems(getItems(sl, null, [a|new SerieData(a)], null))
 			if (al.size > 0) {
-				setText(autor, al.get(0).getUid)
+				setText(autor, al.get(0).uid)
 			}
 			if (sl.size > 0) {
-				setText(serie, sl.get(0).getUid)
+				setText(serie, sl.get(0).uid)
 			}
 			setText(sprache, SpracheEnum.DEUTSCH.toString)
 			besitz.setSelected(true)

@@ -304,7 +304,7 @@ class HH410BuchungController extends BaseController<String> {
 					var HhKonto sk = getValue(sollkonto, true)
 					var HhKonto hk = getValue(habenkonto, true)
 					sb.append(Meldungen::HH057(valuta.value.atStartOfDay, b, sk.name, hk.name, bText.text))
-					if (!Global.nes(belegNr.getText)) {
+					if (!Global.nes(belegNr.text)) {
 						sb.append(Meldungen::HH058(belegNr.text))
 					}
 					if (!valuta.value.equals(belegDatum.value)) {

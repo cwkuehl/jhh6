@@ -6,7 +6,6 @@ import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.server.FactoryService
 import java.time.LocalDateTime
-import java.util.List
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -63,16 +62,16 @@ class HP300LeistungenController extends BaseController<String> {
 		new(HpLeistung v) {
 
 			super(v)
-			uid = new SimpleStringProperty(v.getUid)
-			ziffer = new SimpleStringProperty(v.getZiffer)
-			zifferAlt = new SimpleStringProperty(v.getZifferAlt)
-			beschreibungFett = new SimpleStringProperty(v.getBeschreibungFett)
-			faktor = new SimpleObjectProperty<Double>(v.getFaktor)
-			festbetrag = new SimpleObjectProperty<Double>(v.getFestbetrag)
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
+			uid = new SimpleStringProperty(v.uid)
+			ziffer = new SimpleStringProperty(v.ziffer)
+			zifferAlt = new SimpleStringProperty(v.zifferAlt)
+			beschreibungFett = new SimpleStringProperty(v.beschreibungFett)
+			faktor = new SimpleObjectProperty<Double>(v.faktor)
+			festbetrag = new SimpleObjectProperty<Double>(v.festbetrag)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
+			geaendertVon = new SimpleStringProperty(v.geaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
+			angelegtVon = new SimpleStringProperty(v.angelegtVon)
 		}
 
 		override String getId() {
@@ -108,8 +107,7 @@ class HP300LeistungenController extends BaseController<String> {
 		if (stufe <= 0) { // stufe = 0
 		}
 		if (stufe <= 1) {
-			var List<HpLeistung> l = get(
-				FactoryService.getHeilpraktikerService.getLeistungListe(getServiceDaten, false, false))
+			var l = get(FactoryService::heilpraktikerService.getLeistungListe(getServiceDaten, false, false))
 			getItems(l, null, [a|new LeistungenData(a)], leistungenData)
 		}
 		if (stufe <= 2) {
@@ -123,18 +121,18 @@ class HP300LeistungenController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		leistungen.setItems(leistungenData)
-		colUid.setCellValueFactory([c|c.getValue.uid])
-		colZiffer.setCellValueFactory([c|c.getValue.ziffer])
-		colZifferAlt.setCellValueFactory([c|c.getValue.zifferAlt])
-		colBeschreibungFett.setCellValueFactory([c|c.getValue.beschreibungFett])
-		colFaktor.setCellValueFactory([c|c.getValue.faktor])
+		colUid.setCellValueFactory([c|c.value.uid])
+		colZiffer.setCellValueFactory([c|c.value.ziffer])
+		colZifferAlt.setCellValueFactory([c|c.value.zifferAlt])
+		colBeschreibungFett.setCellValueFactory([c|c.value.beschreibungFett])
+		colFaktor.setCellValueFactory([c|c.value.faktor])
 		initColumnBetrag(colFaktor)
-		colFestbetrag.setCellValueFactory([c|c.getValue.festbetrag])
+		colFestbetrag.setCellValueFactory([c|c.value.festbetrag])
 		initColumnBetrag(colFestbetrag)
-		colGv.setCellValueFactory([c|c.getValue.geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue.geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue.angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue.angelegtAm])
+		colGv.setCellValueFactory([c|c.value.geaendertVon])
+		colGa.setCellValueFactory([c|c.value.geaendertAm])
+		colAv.setCellValueFactory([c|c.value.angelegtVon])
+		colAa.setCellValueFactory([c|c.value.angelegtAm])
 	}
 
 	override protected void updateParent() {
@@ -142,7 +140,7 @@ class HP300LeistungenController extends BaseController<String> {
 	}
 
 	def private void starteDialog(DialogAufrufEnum aufruf) {
-		var HpLeistung k = getValue(leistungen, !DialogAufrufEnum.NEU.equals(aufruf))
+		var HpLeistung k = getValue(leistungen, !DialogAufrufEnum::NEU.equals(aufruf))
 		starteFormular(HP310LeistungController, aufruf, k)
 	}
 
@@ -173,28 +171,28 @@ class HP300LeistungenController extends BaseController<String> {
 	 * Event für Neu.
 	 */
 	@FXML def void onNeu() {
-		starteDialog(DialogAufrufEnum.NEU)
+		starteDialog(DialogAufrufEnum::NEU)
 	}
 
 	/** 
 	 * Event für Kopieren.
 	 */
 	@FXML def void onKopieren() {
-		starteDialog(DialogAufrufEnum.KOPIEREN)
+		starteDialog(DialogAufrufEnum::KOPIEREN)
 	}
 
 	/** 
 	 * Event für Aendern.
 	 */
 	@FXML def void onAendern() {
-		starteDialog(DialogAufrufEnum.AENDERN)
+		starteDialog(DialogAufrufEnum::AENDERN)
 	}
 
 	/** 
 	 * Event für Loeschen.
 	 */
 	@FXML def void onLoeschen() {
-		starteDialog(DialogAufrufEnum.LOESCHEN)
+		starteDialog(DialogAufrufEnum::LOESCHEN)
 	}
 
 	/** 

@@ -9,7 +9,6 @@ import de.cwkuehl.jhh6.app.base.Werkzeug
 import de.cwkuehl.jhh6.server.FactoryService
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.util.List
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -65,15 +64,15 @@ class HP400RechnungenController extends BaseController<String> {
 		new(HpRechnungLang v) {
 
 			super(v)
-			uid = new SimpleStringProperty(v.getUid)
-			datum = new SimpleObjectProperty<LocalDate>(v.getDatum)
-			rechnungsnummer = new SimpleStringProperty(v.getRechnungsnummer)
-			name = new SimpleStringProperty(v.getPatientName)
-			betrag = new SimpleObjectProperty<Double>(v.getBetrag)
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
+			uid = new SimpleStringProperty(v.uid)
+			datum = new SimpleObjectProperty<LocalDate>(v.datum)
+			rechnungsnummer = new SimpleStringProperty(v.rechnungsnummer)
+			name = new SimpleStringProperty(v.patientName)
+			betrag = new SimpleObjectProperty<Double>(v.betrag)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
+			geaendertVon = new SimpleStringProperty(v.geaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
+			angelegtVon = new SimpleStringProperty(v.angelegtVon)
 		}
 
 		override String getId() {
@@ -110,7 +109,7 @@ class HP400RechnungenController extends BaseController<String> {
 		if (stufe <= 0) { // stufe = 0
 		}
 		if (stufe <= 1) {
-			var List<HpRechnungLang> l = get(FactoryService::heilpraktikerService.getRechnungListe(serviceDaten, false))
+			var l = get(FactoryService::heilpraktikerService.getRechnungListe(serviceDaten, false))
 			getItems(l, null, [a|new RechnungenData(a)], rechnungenData)
 		}
 		if (stufe <= 2) {
@@ -124,16 +123,16 @@ class HP400RechnungenController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		rechnungen.setItems(rechnungenData)
-		colUid.setCellValueFactory([c|c.getValue.uid])
-		colDatum.setCellValueFactory([c|c.getValue.datum])
-		colRechnungsnummer.setCellValueFactory([c|c.getValue.rechnungsnummer])
-		colName.setCellValueFactory([c|c.getValue.name])
-		colBetrag.setCellValueFactory([c|c.getValue.betrag])
+		colUid.setCellValueFactory([c|c.value.uid])
+		colDatum.setCellValueFactory([c|c.value.datum])
+		colRechnungsnummer.setCellValueFactory([c|c.value.rechnungsnummer])
+		colName.setCellValueFactory([c|c.value.name])
+		colBetrag.setCellValueFactory([c|c.value.betrag])
 		initColumnBetrag(colBetrag)
-		colGv.setCellValueFactory([c|c.getValue.geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue.geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue.angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue.angelegtAm])
+		colGv.setCellValueFactory([c|c.value.geaendertVon])
+		colGa.setCellValueFactory([c|c.value.geaendertAm])
+		colAv.setCellValueFactory([c|c.value.angelegtVon])
+		colAa.setCellValueFactory([c|c.value.angelegtAm])
 	}
 
 	override protected void updateParent() {
@@ -141,7 +140,7 @@ class HP400RechnungenController extends BaseController<String> {
 	}
 
 	def private void starteDialog(DialogAufrufEnum aufruf) {
-		var HpRechnungLang k = getValue(rechnungen, !DialogAufrufEnum.NEU.equals(aufruf))
+		var HpRechnungLang k = getValue(rechnungen, !DialogAufrufEnum::NEU.equals(aufruf))
 		starteFormular(HP410RechnungController, aufruf, k)
 	}
 
@@ -172,28 +171,28 @@ class HP400RechnungenController extends BaseController<String> {
 	 * Event für Neu.
 	 */
 	@FXML def void onNeu() {
-		starteDialog(DialogAufrufEnum.NEU)
+		starteDialog(DialogAufrufEnum::NEU)
 	}
 
 	/** 
 	 * Event für Kopieren.
 	 */
 	@FXML def void onKopieren() {
-		starteDialog(DialogAufrufEnum.KOPIEREN)
+		starteDialog(DialogAufrufEnum::KOPIEREN)
 	}
 
 	/** 
 	 * Event für Aendern.
 	 */
 	@FXML def void onAendern() {
-		starteDialog(DialogAufrufEnum.AENDERN)
+		starteDialog(DialogAufrufEnum::AENDERN)
 	}
 
 	/** 
 	 * Event für Loeschen.
 	 */
 	@FXML def void onLoeschen() {
-		starteDialog(DialogAufrufEnum.LOESCHEN)
+		starteDialog(DialogAufrufEnum::LOESCHEN)
 	}
 
 	/** 
@@ -201,8 +200,8 @@ class HP400RechnungenController extends BaseController<String> {
 	 */
 	@FXML def void onDrucken() {
 		var HpRechnungLang k = getValue(rechnungen, true)
-		var byte[] pdf = get(FactoryService::heilpraktikerService.getReportRechnung(serviceDaten, k.getUid))
-		Werkzeug.speicherReport(pdf, Meldungen.HP019, true)
+		var byte[] pdf = get(FactoryService::heilpraktikerService.getReportRechnung(serviceDaten, k.uid))
+		Werkzeug.speicherReport(pdf, Meldungen::HP019, true)
 	}
 
 	/** 

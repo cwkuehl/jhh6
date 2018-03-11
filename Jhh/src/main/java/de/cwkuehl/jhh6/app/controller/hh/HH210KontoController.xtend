@@ -70,7 +70,7 @@ class HH210KontoController extends BaseController<String> {
 			bis.setValue(null as LocalDate)
 			setText(kontoart, KontoartEnum.AKTIVKONTO.toString)
 			setText(kennzeichen, KontokennzeichenEnum.OHNE.toString)
-			var neu = DialogAufrufEnum::NEU.equals(getAufruf)
+			var neu = DialogAufrufEnum::NEU.equals(aufruf)
 			var aendern = DialogAufrufEnum::AENDERN.equals(aufruf)
 			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
 			var HhKonto k = parameter1

@@ -97,7 +97,7 @@ class FZ210FahrradController extends BaseController<String> {
 			r = FactoryService::freizeitService.insertUpdateFahrrad(serviceDaten, null, bezeichnung.text,
 				Global.strInt(getText(typ)))
 		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
-			r = FactoryService::freizeitService.insertUpdateFahrrad(serviceDaten, nr.text, bezeichnung.getText,
+			r = FactoryService::freizeitService.insertUpdateFahrrad(serviceDaten, nr.text, bezeichnung.text,
 				Global.strInt(getText(typ)))
 		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
 			r = FactoryService::freizeitService.deleteFahrrad(serviceDaten, nr.text)

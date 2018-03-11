@@ -11,7 +11,6 @@ import de.cwkuehl.jhh6.app.control.Datum
 import de.cwkuehl.jhh6.server.FactoryService
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.util.List
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -57,8 +56,8 @@ class HP200BehandlungenController extends BaseController<String> {
 	@FXML Datum von
 	@FXML Label bis0
 	@FXML Datum bis
-	//@FXML Button alle
 
+	// @FXML Button alle
 	/** 
 	 * Daten für Tabelle Behandlungen.
 	 */
@@ -79,17 +78,17 @@ class HP200BehandlungenController extends BaseController<String> {
 		new(HpBehandlungLang v) {
 
 			super(v)
-			uid = new SimpleStringProperty(v.getUid)
-			patientName = new SimpleStringProperty(v.getPatientName)
-			datum = new SimpleObjectProperty<LocalDate>(v.getDatum)
-			leistung = new SimpleStringProperty(v.getLeistungZiffer)
-			dauer = new SimpleObjectProperty<Double>(v.getDauer)
-			diagnose = new SimpleStringProperty(v.getDiagnose)
-			status = new SimpleStringProperty(v.getStatusStatus)
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
+			uid = new SimpleStringProperty(v.uid)
+			patientName = new SimpleStringProperty(v.patientName)
+			datum = new SimpleObjectProperty<LocalDate>(v.datum)
+			leistung = new SimpleStringProperty(v.leistungZiffer)
+			dauer = new SimpleObjectProperty<Double>(v.dauer)
+			diagnose = new SimpleStringProperty(v.diagnose)
+			status = new SimpleStringProperty(v.statusStatus)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
+			geaendertVon = new SimpleStringProperty(v.geaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
+			angelegtVon = new SimpleStringProperty(v.angelegtVon)
 		}
 
 		override String getId() {
@@ -101,16 +100,17 @@ class HP200BehandlungenController extends BaseController<String> {
 	 * Daten für ComboBox Patient.
 	 */
 	static class PatientData extends BaseController.ComboBoxData<HpPatient> {
+
 		new(HpPatient v) {
 			super(v)
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getName1
+			return getData.name1
 		}
 	}
 
@@ -123,8 +123,8 @@ class HP200BehandlungenController extends BaseController<String> {
 		super.initialize
 		behandlungen0.setLabelFor(behandlungen)
 		patient0.setLabelFor(patient, false)
-		von0.setLabelFor(von.getLabelForNode)
-		bis0.setLabelFor(bis.getLabelForNode)
+		von0.setLabelFor(von.labelForNode)
+		bis0.setLabelFor(bis.labelForNode)
 		initAccelerator("A", aktuell)
 		initAccelerator("U", rueckgaengig)
 		initAccelerator("W", wiederherstellen)
@@ -144,20 +144,19 @@ class HP200BehandlungenController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var List<HpPatient> l = get(
-				FactoryService.getHeilpraktikerService.getPatientListe(getServiceDaten, true))
+			var l = get(FactoryService::heilpraktikerService.getPatientListe(serviceDaten, true))
 			patient.setItems(getItems(l, new HpPatient, [a|new PatientData(a)], null))
-			var HpPatient k = getParameter1
-			setText(patient, if(k === null) null else k.getUid)
-			var LocalDate d = LocalDate.now
+			var HpPatient k = parameter1
+			setText(patient, if(k === null) null else k.uid)
+			var d = LocalDate::now
 			d = d.withDayOfMonth(d.lengthOfMonth)
 			bis.setValue(d)
 			von.setValue(d.minusYears(1).withDayOfMonth(1))
 		}
 		if (stufe <= 1) {
-			var List<HpBehandlungLang> l = get(
-				FactoryService.getHeilpraktikerService.getBehandlungListe(getServiceDaten, false, getText(patient),
-					von.getValue, bis.getValue))
+			var l = get(
+				FactoryService::heilpraktikerService.getBehandlungListe(serviceDaten, false, getText(patient),
+					von.value, bis.value))
 			getItems(l, null, [a|new BehandlungenData(a)], behandlungenData)
 		}
 		if (stufe <= 2) {
@@ -171,17 +170,17 @@ class HP200BehandlungenController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		behandlungen.setItems(behandlungenData)
-		colPatientUid.setCellValueFactory([c|c.getValue.uid])
-		colPatientName.setCellValueFactory([c|c.getValue.patientName])
-		colDatum.setCellValueFactory([c|c.getValue.datum])
-		colLeistung.setCellValueFactory([c|c.getValue.leistung])
-		colDauer.setCellValueFactory([c|c.getValue.dauer])
-		colDiagnose.setCellValueFactory([c|c.getValue.diagnose])
-		colStatus.setCellValueFactory([c|c.getValue.status])
-		colGv.setCellValueFactory([c|c.getValue.geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue.geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue.angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue.angelegtAm])
+		colPatientUid.setCellValueFactory([c|c.value.uid])
+		colPatientName.setCellValueFactory([c|c.value.patientName])
+		colDatum.setCellValueFactory([c|c.value.datum])
+		colLeistung.setCellValueFactory([c|c.value.leistung])
+		colDauer.setCellValueFactory([c|c.value.dauer])
+		colDiagnose.setCellValueFactory([c|c.value.diagnose])
+		colStatus.setCellValueFactory([c|c.value.status])
+		colGv.setCellValueFactory([c|c.value.geaendertVon])
+		colGa.setCellValueFactory([c|c.value.geaendertAm])
+		colAv.setCellValueFactory([c|c.value.angelegtVon])
+		colAa.setCellValueFactory([c|c.value.angelegtAm])
 	}
 
 	override protected void updateParent() {
@@ -190,11 +189,11 @@ class HP200BehandlungenController extends BaseController<String> {
 
 	def private void starteDialog(DialogAufrufEnum aufruf) {
 
-		if (DialogAufrufEnum.NEU.equals(aufruf)) {
-			var String k = getText(patient)
+		if (DialogAufrufEnum::NEU.equals(aufruf)) {
+			var k = getText(patient)
 			starteFormular(HP210BehandlungController, aufruf, k)
 		} else {
-			var HpBehandlungLang k = getValue(behandlungen, !DialogAufrufEnum.NEU.equals(aufruf))
+			var HpBehandlungLang k = getValue(behandlungen, !DialogAufrufEnum::NEU.equals(aufruf))
 			starteFormular(HP210BehandlungController, aufruf, k)
 		}
 	}
@@ -226,28 +225,28 @@ class HP200BehandlungenController extends BaseController<String> {
 	 * Event für Neu.
 	 */
 	@FXML def void onNeu() {
-		starteDialog(DialogAufrufEnum.NEU)
+		starteDialog(DialogAufrufEnum::NEU)
 	}
 
 	/** 
 	 * Event für Kopieren.
 	 */
 	@FXML def void onKopieren() {
-		starteDialog(DialogAufrufEnum.KOPIEREN)
+		starteDialog(DialogAufrufEnum::KOPIEREN)
 	}
 
 	/** 
 	 * Event für Aendern.
 	 */
 	@FXML def void onAendern() {
-		starteDialog(DialogAufrufEnum.AENDERN)
+		starteDialog(DialogAufrufEnum::AENDERN)
 	}
 
 	/** 
 	 * Event für Loeschen.
 	 */
 	@FXML def void onLoeschen() {
-		starteDialog(DialogAufrufEnum.LOESCHEN)
+		starteDialog(DialogAufrufEnum::LOESCHEN)
 	}
 
 	/** 
@@ -255,9 +254,9 @@ class HP200BehandlungenController extends BaseController<String> {
 	 */
 	@FXML def void onDrucken() {
 		var byte[] pdf = get(
-			FactoryService.getHeilpraktikerService.getReportPatientenakte(getServiceDaten, getText(patient),
-				von.getValue, bis.getValue))
-		Werkzeug.speicherReport(pdf, Meldungen.HP018, true)
+			FactoryService::heilpraktikerService.getReportPatientenakte(serviceDaten, getText(patient), von.value,
+				bis.value))
+		Werkzeug.speicherReport(pdf, Meldungen::HP018, true)
 	}
 
 	/** 

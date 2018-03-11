@@ -1,6 +1,5 @@
 package de.cwkuehl.jhh6.app.controller.hp
 
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.HpBehandlungLeistungLang
 import de.cwkuehl.jhh6.api.dto.HpLeistung
 import de.cwkuehl.jhh6.api.dto.HpLeistungsgruppe
@@ -11,7 +10,6 @@ import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.app.controller.hp.HP210BehandlungController.LeistungData
 import de.cwkuehl.jhh6.server.FactoryService
-import javafx.collections.ObservableList
 import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.ComboBox
@@ -56,11 +54,11 @@ class HP360LeistungsgruppeController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getLeistungBeschreibungFett
+			return getData.leistungBeschreibungFett
 		}
 	}
 
@@ -90,19 +88,18 @@ class HP360LeistungsgruppeController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var List<HpLeistung> ll = get(
-				FactoryService.getHeilpraktikerService.getLeistungListe(getServiceDaten, true, false))
+			var ll = get(FactoryService::heilpraktikerService.getLeistungListe(serviceDaten, true, false))
 			leistung.setItems(getItems(ll, null, [a|new LeistungData(a)], null))
-			var boolean neu = DialogAufrufEnum.NEU.equals(getAufruf)
-			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(getAufruf)
-			var HpLeistungsgruppe k = getParameter1
+			var neu = DialogAufrufEnum::NEU.equals(aufruf)
+			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
+			var HpLeistungsgruppe k = parameter1
 			if (!neu && k !== null) {
-				k = get(FactoryService.getHeilpraktikerService.getLeistungsgruppe(getServiceDaten, k.getUid))
-				nr.setText(k.getUid)
-				bezeichnung.setText(k.getBezeichnung)
-				notiz.setText(k.getNotiz)
-				angelegt.setText(k.formatDatumVon(k.getAngelegtAm, k.getAngelegtVon))
-				geaendert.setText(k.formatDatumVon(k.getGeaendertAm, k.getGeaendertVon))
+				k = get(FactoryService::heilpraktikerService.getLeistungsgruppe(serviceDaten, k.uid))
+				nr.setText(k.uid)
+				bezeichnung.setText(k.bezeichnung)
+				notiz.setText(k.notiz)
+				angelegt.setText(k.formatDatumVon(k.angelegtAm, k.angelegtVon))
+				geaendert.setText(k.formatDatumVon(k.geaendertAm, k.geaendertVon))
 			}
 			nr.setEditable(false)
 			bezeichnung.setEditable(!loeschen)
@@ -110,11 +107,10 @@ class HP360LeistungsgruppeController extends BaseController<String> {
 			angelegt.setEditable(false)
 			geaendert.setEditable(false)
 			if (loeschen) {
-				ok.setText(Meldungen.M2001)
+				ok.setText(Meldungen::M2001)
 			}
-			var List<HpBehandlungLeistungLang> bhl = get(
-				FactoryService.getHeilpraktikerService.getLeistungsgruppeLeistungListe(getServiceDaten, true,
-					nr.getText, true))
+			var bhl = get(
+				FactoryService::heilpraktikerService.getLeistungsgruppeLeistungListe(serviceDaten, true, nr.text, true))
 			leistungen.setItems(getItems(bhl, null, [a|new LeistungenData(a)], null))
 		}
 		if (stufe <= 1) { // stufe = 0
@@ -134,21 +130,19 @@ class HP360LeistungsgruppeController extends BaseController<String> {
 	 */
 	@FXML def void onOk() {
 
-		var ServiceErgebnis<?> r = null
-		if (DialogAufrufEnum.NEU.equals(aufruf) || DialogAufrufEnum.KOPIEREN.equals(aufruf)) {
-			r = FactoryService.getHeilpraktikerService.insertUpdateLeistungsgruppe(getServiceDaten, null,
-				bezeichnung.getText, getText(leistung), Global.strDbl(dauer.getText), notiz.getText,
-				getAllValues(leistungen))
-		} else if (DialogAufrufEnum.AENDERN.equals(aufruf)) {
-			r = FactoryService.getHeilpraktikerService.insertUpdateLeistungsgruppe(getServiceDaten, nr.getText,
-				bezeichnung.getText, getText(leistung), Global.strDbl(dauer.getText), notiz.getText,
-				getAllValues(leistungen))
-		} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
-			r = FactoryService.getHeilpraktikerService.deleteLeistungsgruppe(getServiceDaten, nr.getText)
+		var ServiceErgebnis<?> r
+		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
+			r = FactoryService::heilpraktikerService.insertUpdateLeistungsgruppe(serviceDaten, null, bezeichnung.text,
+				getText(leistung), Global.strDbl(dauer.text), notiz.text, getAllValues(leistungen))
+		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
+			r = FactoryService::heilpraktikerService.insertUpdateLeistungsgruppe(serviceDaten, nr.text,
+				bezeichnung.text, getText(leistung), Global.strDbl(dauer.text), notiz.text, getAllValues(leistungen))
+		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
+			r = FactoryService::heilpraktikerService.deleteLeistungsgruppe(serviceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)
-			if (r.getFehler.isEmpty) {
+			if (r.fehler.isEmpty) {
 				updateParent
 				close
 			}
@@ -160,25 +154,25 @@ class HP360LeistungsgruppeController extends BaseController<String> {
 	 */
 	@FXML def void onHinzufuegen() {
 
-		var ObservableList<LeistungenData> liste = leistungen.getItems
+		var liste = leistungen.items
 		var HpLeistung l = getValue(leistung, true)
 		var HpBehandlungLeistungLang bh = null
-		var boolean neu = false
+		var neu = false
 		for (LeistungenData ld : liste) {
-			if (ld.getData.getLeistungUid.equals(l.getUid)) {
-				bh = ld.getData
+			if (ld.getData.getLeistungUid.equals(l.uid)) {
+				bh = ld.data
 			}
 		}
 		if (bh === null) {
 			neu = true
 			bh = new HpBehandlungLeistungLang
 		}
-		bh.setLeistungUid(l.getUid)
-		bh.setLeistungZiffer(l.getZiffer)
-		bh.setLeistungBeschreibungFett(l.getBeschreibungFett)
-		bh.setDauer(Global.strDbl(dauer.getText))
-		var StringBuffer sb = new StringBuffer(bh.getLeistungBeschreibungFett)
-		Global.anhaengen(sb, ", ", Global.dblStr2l(bh.getDauer))
+		bh.setLeistungUid(l.uid)
+		bh.setLeistungZiffer(l.ziffer)
+		bh.setLeistungBeschreibungFett(l.beschreibungFett)
+		bh.setDauer(Global.strDbl(dauer.text))
+		var sb = new StringBuffer(bh.leistungBeschreibungFett)
+		Global.anhaengen(sb, ", ", Global.dblStr2l(bh.dauer))
 		bh.setLeistungBeschreibungFett(sb.toString)
 		if (neu) {
 			liste.add(new LeistungenData(bh))
@@ -191,11 +185,11 @@ class HP360LeistungsgruppeController extends BaseController<String> {
 	 */
 	@FXML def void onEntfernen() {
 
-		var ObservableList<LeistungenData> liste = leistungen.getItems
-		var List<HpBehandlungLeistungLang> sel = getValues(leistungen, false)
+		var liste = leistungen.items
+		var sel = getValues(leistungen, false)
 		for (HpBehandlungLeistungLang s : sel) {
 			for (LeistungenData l : liste) {
-				if (s.getLeistungUid.equals(l.getData.getLeistungUid)) {
+				if (s.getLeistungUid.equals(l.data.leistungUid)) {
 					liste.remove(l)
 					return
 				}

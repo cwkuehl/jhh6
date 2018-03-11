@@ -1,13 +1,7 @@
 package de.cwkuehl.jhh6.app.controller.hp
 
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.util.ArrayList
-import java.util.List
-import java.util.Vector
 import de.cwkuehl.jhh6.api.dto.HpBehandlungLeistungLang
 import de.cwkuehl.jhh6.api.dto.HpPatient
-import de.cwkuehl.jhh6.api.dto.HpRechnung
 import de.cwkuehl.jhh6.api.dto.HpRechnungLang
 import de.cwkuehl.jhh6.api.dto.HpStatus
 import de.cwkuehl.jhh6.api.global.Global
@@ -17,6 +11,11 @@ import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.app.control.Datum
 import de.cwkuehl.jhh6.server.FactoryService
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.ArrayList
+import java.util.List
+import java.util.Vector
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -66,16 +65,17 @@ class HP410RechnungController extends BaseController<String> {
 	 * Daten für ComboBox Patient.
 	 */
 	static class PatientData extends ComboBoxData<HpPatient> {
+
 		new(HpPatient v) {
 			super(v)
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getName1
+			return getData.name1
 		}
 	}
 
@@ -89,11 +89,11 @@ class HP410RechnungController extends BaseController<String> {
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getStatus
+			return getData.status
 		}
 	}
 
@@ -130,19 +130,19 @@ class HP410RechnungController extends BaseController<String> {
 		new(HpBehandlungLeistungLang v) {
 
 			super(v)
-			datum = new SimpleObjectProperty<LocalDate>(v.getBehandlungDatum)
-			leistung = new SimpleStringProperty(v.getLeistungZiffer)
-			dauer = new SimpleObjectProperty<Double>(v.getDauer)
-			diagnose = new SimpleStringProperty(v.getBehandlungDiagnose)
-			status = new SimpleStringProperty(v.getBehandlungStatus)
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
+			datum = new SimpleObjectProperty<LocalDate>(v.behandlungDatum)
+			leistung = new SimpleStringProperty(v.leistungZiffer)
+			dauer = new SimpleObjectProperty<Double>(v.dauer)
+			diagnose = new SimpleStringProperty(v.behandlungDiagnose)
+			status = new SimpleStringProperty(v.behandlungStatus)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
+			geaendertVon = new SimpleStringProperty(v.geaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
+			angelegtVon = new SimpleStringProperty(v.angelegtVon)
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 	}
 
@@ -154,7 +154,7 @@ class HP410RechnungController extends BaseController<String> {
 		tabbar = 0
 		nr0.setLabelFor(nr)
 		patient0.setLabelFor(patient, true)
-		datum0.setLabelFor(datum.getLabelForNode, true)
+		datum0.setLabelFor(datum.labelForNode, true)
 		rechnungsnummer0.setLabelFor(rechnungsnummer, true)
 		diagnose0.setLabelFor(diagnose, true)
 		betrag0.setLabelFor(betrag, true)
@@ -174,36 +174,36 @@ class HP410RechnungController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			datum.setValue(LocalDate.now)
+			datum.setValue(LocalDate::now)
 			rechnungsnummer.setText(
-				get(FactoryService.getHeilpraktikerService.getRechnungsnummer(getServiceDaten, null, LocalDate.now)))
-			var List<HpPatient> pl = get(FactoryService.getHeilpraktikerService.getPatientListe(getServiceDaten, true))
+				get(FactoryService::heilpraktikerService.getRechnungsnummer(serviceDaten, null, LocalDate::now)))
+			var pl = get(FactoryService::heilpraktikerService.getPatientListe(serviceDaten, true))
 			patient.setItems(getItems(pl, null, [a|new PatientData(a)], null))
-			var List<HpStatus> sl = get(FactoryService.getHeilpraktikerService.getStatusListe(getServiceDaten, true))
+			var sl = get(FactoryService::heilpraktikerService.getStatusListe(serviceDaten, true))
 			status.setItems(getItems(sl, null, [a|new StatusData(a)], null))
-			var boolean neu = DialogAufrufEnum.NEU.equals(getAufruf)
-			var boolean kopieren = DialogAufrufEnum.KOPIEREN.equals(getAufruf)
-			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(getAufruf)
-			if (getParameter1 instanceof String) {
-				setText(patient, (getParameter1 as String))
-			} else if (!neu && getParameter1 instanceof HpRechnungLang) {
-				var HpRechnungLang l = (getParameter1 as HpRechnungLang)
-				var HpRechnung k = get(FactoryService.getHeilpraktikerService.getRechnung(getServiceDaten, l.getUid))
-				nr.setText(k.getUid)
-				setText(patient, k.getPatientUid)
-				datum.setValue(k.getDatum)
-				rechnungsnummer.setText(k.getRechnungsnummer)
-				diagnose.setText(k.getDiagnose)
-				betrag.setText(Global.dblStr(k.getBetrag))
-				setText(status, k.getStatusUid)
-				notiz.setText(k.getNotiz)
-				angelegt.setText(k.formatDatumVon(k.getAngelegtAm, k.getAngelegtVon))
-				geaendert.setText(k.formatDatumVon(k.getGeaendertAm, k.getGeaendertVon))
+			var neu = DialogAufrufEnum::NEU.equals(aufruf)
+			var kopieren = DialogAufrufEnum::KOPIEREN.equals(aufruf)
+			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
+			if (parameter1 instanceof String) {
+				setText(patient, parameter1 as String)
+			} else if (!neu && parameter1 instanceof HpRechnungLang) {
+				var l = parameter1 as HpRechnungLang
+				var k = get(FactoryService::heilpraktikerService.getRechnung(serviceDaten, l.uid))
+				nr.setText(k.uid)
+				setText(patient, k.patientUid)
+				datum.setValue(k.datum)
+				rechnungsnummer.setText(k.rechnungsnummer)
+				diagnose.setText(k.diagnose)
+				betrag.setText(Global.dblStr(k.betrag))
+				setText(status, k.statusUid)
+				notiz.setText(k.notiz)
+				angelegt.setText(k.formatDatumVon(k.angelegtAm, k.angelegtVon))
+				geaendert.setText(k.formatDatumVon(k.geaendertAm, k.geaendertVon))
 			}
 			if (neu) {
-				var HpStatus k = get(FactoryService.getHeilpraktikerService.getStandardStatus(getServiceDaten, 2))
+				var HpStatus k = get(FactoryService::heilpraktikerService.getStandardStatus(serviceDaten, 2))
 				if (k !== null) {
-					setText(status, k.getUid)
+					setText(status, k.uid)
 				}
 			}
 			nr.setEditable(false)
@@ -217,36 +217,36 @@ class HP410RechnungController extends BaseController<String> {
 			angelegt.setEditable(false)
 			geaendert.setEditable(false)
 			if (loeschen) {
-				ok.setText(Meldungen.M2001)
+				ok.setText(Meldungen::M2001)
 			}
 			hinzufuegen.setVisible(!loeschen)
 			entfernen.setVisible(!loeschen)
 		}
 		if (stufe <= 1) {
-			var Vector<HpBehandlungLeistungLang> vliste = new Vector<HpBehandlungLeistungLang>
-			var String puid = getText(patient)
-			var List<HpBehandlungLeistungLang> liste = null
-			if (Global.nes(nr.getText)) {
+			var vliste = new Vector<HpBehandlungLeistungLang>
+			var puid = getText(patient)
+			var List<HpBehandlungLeistungLang> liste
+			if (Global.nes(nr.text)) {
 				// alle Behandlungen des Patienten ohne Rechnung
 				liste = get(
-					FactoryService.getHeilpraktikerService.getBehandlungLeistungListe(getServiceDaten, true, puid,
+					FactoryService::heilpraktikerService.getBehandlungLeistungListe(serviceDaten, true, puid,
 						"xxx", null, null, null, true, false))
 			} else {
 				// alle Behandlungen der Rechnung
 				liste = get(
-					FactoryService.getHeilpraktikerService.getBehandlungLeistungListe(getServiceDaten, true, puid,
-						nr.getText, null, null, null, false, false)) // nr,-1
+					FactoryService::heilpraktikerService.getBehandlungLeistungListe(serviceDaten, true, puid,
+						nr.text, null, null, null, false, false)) // nr,-1
 			}
 			for (HpBehandlungLeistungLang e : liste) {
-				if (istUidEnthalten(listeVorher, e.getUid) < 0) {
+				if (istUidEnthalten(listeVorher, e.uid) < 0) {
 					listeVorher.add(e)
 				}
 			}
-			var double summe = 0
+			var summe = 0.0
 			summe = addierenListe(puid, listeVorher, vliste, listeEntfernt, summe)
 			summe = addierenListe(puid, listeHinzu, vliste, listeEntfernt, summe)
 			betrag.setText(Global.dblStr2l(summe))
-			diagnose.setText(getDiagnose1(diagnose.getText, vliste))
+			diagnose.setText(getDiagnose1(diagnose.text, vliste))
 			getItems(vliste, null, [a|new BehandlungenData(a)], behandlungenData)
 		}
 		if (stufe <= 2) {
@@ -259,16 +259,16 @@ class HP410RechnungController extends BaseController<String> {
 	 */
 	def protected void initDatenTable() {
 		behandlungen.setItems(behandlungenData)
-		colDatum.setCellValueFactory([c|c.getValue.datum])
-		colLeistung.setCellValueFactory([c|c.getValue.leistung])
-		colDauer.setCellValueFactory([c|c.getValue.dauer])
+		colDatum.setCellValueFactory([c|c.value.datum])
+		colLeistung.setCellValueFactory([c|c.value.leistung])
+		colDauer.setCellValueFactory([c|c.value.dauer])
 		initColumnBetrag(colDauer)
-		colDiagnose.setCellValueFactory([c|c.getValue.diagnose])
-		colStatus.setCellValueFactory([c|c.getValue.status])
-		colGv.setCellValueFactory([c|c.getValue.geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue.geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue.angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue.angelegtAm])
+		colDiagnose.setCellValueFactory([c|c.value.diagnose])
+		colStatus.setCellValueFactory([c|c.value.status])
+		colGv.setCellValueFactory([c|c.value.geaendertVon])
+		colGa.setCellValueFactory([c|c.value.geaendertAm])
+		colAv.setCellValueFactory([c|c.value.angelegtVon])
+		colAa.setCellValueFactory([c|c.value.angelegtAm])
 	}
 
 	/** 
@@ -287,7 +287,7 @@ class HP410RechnungController extends BaseController<String> {
 	 */
 	@FXML def void onBehandlungenMouseClick(MouseEvent e) {
 		if (e.clickCount > 1) {
-			// onAendern;
+			// onAendern
 		}
 	}
 
@@ -296,25 +296,25 @@ class HP410RechnungController extends BaseController<String> {
 	 */
 	@FXML def void onOk() {
 
-		var ServiceErgebnis<?> r = null
-		var List<HpBehandlungLeistungLang> bliste = new ArrayList<HpBehandlungLeistungLang>
-		for (BehandlungenData b : behandlungen.getItems) {
+		var ServiceErgebnis<?> r
+		var bliste = new ArrayList<HpBehandlungLeistungLang>
+		for (BehandlungenData b : behandlungen.items) {
 			bliste.add(b.getData)
 		}
-		if (DialogAufrufEnum.NEU.equals(aufruf) || DialogAufrufEnum.KOPIEREN.equals(aufruf)) {
-			r = FactoryService.getHeilpraktikerService.insertUpdateRechnung(getServiceDaten, null,
-				rechnungsnummer.getText, datum.getValue, getText(patient), Global.strDbl(betrag.getText),
-				diagnose.getText, getText(status), notiz.getText, bliste)
-		} else if (DialogAufrufEnum.AENDERN.equals(aufruf)) {
-			r = FactoryService.getHeilpraktikerService.insertUpdateRechnung(getServiceDaten, nr.getText,
-				rechnungsnummer.getText, datum.getValue, getText(patient), Global.strDbl(betrag.getText),
-				diagnose.getText, getText(status), notiz.getText, bliste)
-		} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
-			r = FactoryService.getHeilpraktikerService.deleteRechnung(getServiceDaten, nr.getText)
+		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
+			r = FactoryService::heilpraktikerService.insertUpdateRechnung(serviceDaten, null, rechnungsnummer.text,
+				datum.value, getText(patient), Global.strDbl(betrag.text), diagnose.text, getText(status), notiz.text, //
+				bliste)
+		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
+			r = FactoryService::heilpraktikerService.insertUpdateRechnung(serviceDaten, nr.text, rechnungsnummer.text,
+				datum.value, getText(patient), Global.strDbl(betrag.text), diagnose.text, getText(status), notiz.text, //
+				bliste)
+		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
+			r = FactoryService::heilpraktikerService.deleteRechnung(serviceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)
-			if (r.getFehler.isEmpty) {
+			if (r.fehler.isEmpty) {
 				updateParent
 				close
 			}
@@ -327,17 +327,17 @@ class HP410RechnungController extends BaseController<String> {
 	@FXML def void onHinzufuegen() {
 
 		var HpRechnungLang k = new HpRechnungLang
-		k.setUid(nr.getText)
+		k.setUid(nr.text)
 		k.setPatientUid(getText(patient))
-		var List<HpBehandlungLeistungLang> l = starteDialog(HP420BehandlungenController, DialogAufrufEnum.OHNE, k)
+		var List<HpBehandlungLeistungLang> l = starteDialog(HP420BehandlungenController, DialogAufrufEnum::OHNE, k)
 		if (l !== null) {
 			for (HpBehandlungLeistungLang e : l) {
 				if (e !== null) {
-					var int i = istUidEnthalten(listeEntfernt, e.getUid)
+					var i = istUidEnthalten(listeEntfernt, e.uid)
 					if (i >= 0) {
 						listeEntfernt.remove(i)
 					}
-					if (istUidEnthalten(listeHinzu, e.getUid) < 0) {
+					if (istUidEnthalten(listeHinzu, e.uid) < 0) {
 						listeHinzu.add(e)
 					}
 				}
@@ -354,21 +354,21 @@ class HP410RechnungController extends BaseController<String> {
 		var HpBehandlungLeistungLang e = getValue(behandlungen, false)
 		if (e !== null) {
 			for (HpBehandlungLeistungLang b : listeVorher) {
-				if (Global.compString(e.getUid, b.getUid) === 0 ||
-					Global.compString(e.getBehandlungUid, b.getBehandlungUid) === 0) {
-					var int i = istUidEnthalten(listeHinzu, b.getUid)
+				if (Global.compString(e.uid, b.uid) === 0 ||
+					Global.compString(e.behandlungUid, b.behandlungUid) === 0) {
+					var i = istUidEnthalten(listeHinzu, b.uid)
 					if (i >= 0) {
 						listeHinzu.remove(i)
 					} else {
-						i = istBehEnthalten(listeHinzu, b.getBehandlungUid)
+						i = istBehEnthalten(listeHinzu, b.behandlungUid)
 						if (i >= 0) {
 							listeHinzu.remove(i)
 						}
 					}
-					if (istUidEnthalten(listeEntfernt, b.getUid) < 0) {
+					if (istUidEnthalten(listeEntfernt, b.uid) < 0) {
 						listeEntfernt.add(b)
 					}
-					if (istBehEnthalten(listeEntfernt, b.getBehandlungUid) < 0) {
+					if (istBehEnthalten(listeEntfernt, b.behandlungUid) < 0) {
 						listeEntfernt.add(b)
 					}
 				}
@@ -387,7 +387,7 @@ class HP410RechnungController extends BaseController<String> {
 	def private int istUidEnthalten(List<HpBehandlungLeistungLang> liste, String uid) {
 
 		for (HpBehandlungLeistungLang e : liste) {
-			if (Global.compString(e.getUid, uid) === 0) {
+			if (Global.compString(e.uid, uid) === 0) {
 				return liste.indexOf(e)
 			}
 		}
@@ -397,7 +397,7 @@ class HP410RechnungController extends BaseController<String> {
 	def private int istBehEnthalten(List<HpBehandlungLeistungLang> liste, String uid) {
 
 		for (HpBehandlungLeistungLang e : liste) {
-			if (Global.compString(e.getBehandlungUid, uid) === 0) {
+			if (Global.compString(e.behandlungUid, uid) === 0) {
 				return liste.indexOf(e)
 			}
 		}
@@ -407,8 +407,8 @@ class HP410RechnungController extends BaseController<String> {
 	def private boolean istNichtEnthaltenNichtEntfernt(HpBehandlungLeistungLang e, String patientUid,
 		List<HpBehandlungLeistungLang> liste, List<HpBehandlungLeistungLang> listeEntfernt) {
 
-		if (Global.compString(e.getPatientUid, patientUid) === 0 && istUidEnthalten(liste, e.getUid) < 0 &&
-			istUidEnthalten(listeEntfernt, e.getUid) < 0) {
+		if (Global.compString(e.patientUid, patientUid) === 0 && istUidEnthalten(liste, e.uid) < 0 &&
+			istUidEnthalten(listeEntfernt, e.uid) < 0) {
 			return true
 		}
 		return false
@@ -422,7 +422,7 @@ class HP410RechnungController extends BaseController<String> {
 		for (HpBehandlungLeistungLang e : liste) {
 			if (istNichtEnthaltenNichtEntfernt(e, patientUid, vliste, listeEntfernt)) {
 				vliste.add(e)
-				summe += e.getLeistungBetrag
+				summe += e.leistungBetrag
 			}
 		}
 		return summe
@@ -431,20 +431,19 @@ class HP410RechnungController extends BaseController<String> {
 	def private String getDiagnose1(String fdiagnose, List<HpBehandlungLeistungLang> vliste) {
 
 		var diagnose = fdiagnose // Diagnose aus 1. Eintrag
-		var String diagnose1 = ""
+		var diagnose1 = ""
 		diagnose = Global.objStr(diagnose)
 		if (vliste.size > 0) {
-			diagnose1 = Global.objStr(vliste.get(0).getBehandlungDiagnose)
+			diagnose1 = Global.objStr(vliste.get(0).behandlungDiagnose)
 		}
 		if (Global.nes(diagnose)) {
 			diagnose = diagnose1
 		} else {
 			// Diagnose aus 1. Satz, falls Diagnose aus keinen Eintrag passt
-			var boolean gefunden = false
-			for (var int i = 0; i < vliste.size && !gefunden; i++) {
+			var gefunden = false
+			for (var i = 0; i < vliste.size && !gefunden; i++) {
 				var HpBehandlungLeistungLang e = vliste.get(i)
-				if (!Global.nes(e.getBehandlungDiagnose) &&
-					diagnose.startsWith(Global.objStr(e.getBehandlungDiagnose))) {
+				if (!Global.nes(e.behandlungDiagnose) && diagnose.startsWith(Global.objStr(e.behandlungDiagnose))) {
 					gefunden = true
 				}
 			}

@@ -6,7 +6,6 @@ import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.server.FactoryService
 import java.time.LocalDateTime
-import java.util.List
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -59,13 +58,13 @@ class HP100PatientenController extends BaseController<String> {
 		new(HpPatient v) {
 
 			super(v)
-			uid = new SimpleStringProperty(v.getUid)
-			vorname = new SimpleStringProperty(v.getVorname)
-			name1 = new SimpleStringProperty(v.getName1)
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
+			uid = new SimpleStringProperty(v.uid)
+			vorname = new SimpleStringProperty(v.vorname)
+			name1 = new SimpleStringProperty(v.name1)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
+			geaendertVon = new SimpleStringProperty(v.geaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
+			angelegtVon = new SimpleStringProperty(v.angelegtVon)
 		}
 
 		override String getId() {
@@ -103,7 +102,7 @@ class HP100PatientenController extends BaseController<String> {
 		if (stufe <= 0) { // stufe = 0
 		}
 		if (stufe <= 1) {
-			var List<HpPatient> l = get(FactoryService::getHeilpraktikerService.getPatientListe(getServiceDaten, false))
+			var l = get(FactoryService::heilpraktikerService.getPatientListe(serviceDaten, false))
 			getItems(l, null, [a|new PatientenData(a)], patientenData)
 		}
 		if (stufe <= 2) {
@@ -117,13 +116,13 @@ class HP100PatientenController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		patienten.setItems(patientenData)
-		colUid.setCellValueFactory([c|c.getValue.uid])
-		colVorname.setCellValueFactory([c|c.getValue.vorname])
-		colName1.setCellValueFactory([c|c.getValue.name1])
-		colGv.setCellValueFactory([c|c.getValue.geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue.geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue.angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue.angelegtAm])
+		colUid.setCellValueFactory([c|c.value.uid])
+		colVorname.setCellValueFactory([c|c.value.vorname])
+		colName1.setCellValueFactory([c|c.value.name1])
+		colGv.setCellValueFactory([c|c.value.geaendertVon])
+		colGa.setCellValueFactory([c|c.value.geaendertAm])
+		colAv.setCellValueFactory([c|c.value.angelegtVon])
+		colAa.setCellValueFactory([c|c.value.angelegtAm])
 	}
 
 	override protected void updateParent() {
@@ -202,6 +201,6 @@ class HP100PatientenController extends BaseController<String> {
 
 	@FXML def void onAbrechnen() {
 		var HpPatient k = getValue(patienten, true)
-		starteFormular(typeof(HP410RechnungController), DialogAufrufEnum::NEU, k.getUid)
+		starteFormular(typeof(HP410RechnungController), DialogAufrufEnum::NEU, k.uid)
 	}
 }

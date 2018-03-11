@@ -219,7 +219,7 @@ class AD110PersonController extends BaseController<String> {
 		e.setName1(name1.text)
 		e.setName2(name2.text)
 		e.setGeschlecht(getText(geschlecht))
-		e.setGeburt(geburt.getValue())
+		e.setGeburt(geburt.value)
 		e.setPersonStatus(Global.strInt(getText(personStatus)))
 		e.setName(name.text)
 		e.setStrasse(strasse.text)

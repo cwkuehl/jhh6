@@ -1,7 +1,5 @@
 package de.cwkuehl.jhh6.app.controller.hp
 
-import java.util.List
-import java.util.function.Consumer
 import de.cwkuehl.jhh6.api.dto.ByteDaten
 import de.cwkuehl.jhh6.api.dto.HpPatient
 import de.cwkuehl.jhh6.api.global.Constant
@@ -14,6 +12,7 @@ import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.app.control.Bild
 import de.cwkuehl.jhh6.app.control.Datum
 import de.cwkuehl.jhh6.server.FactoryService
+import java.util.function.Consumer
 import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.ComboBox
@@ -62,16 +61,17 @@ class HP110PatientController extends BaseController<String> {
 	 * Daten für ComboBox Rechnung.
 	 */
 	static class RechnungData extends ComboBoxData<HpPatient> {
+
 		new(HpPatient v) {
 			super(v)
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 
 		override String toString() {
-			return getData.getName1
+			return getData.name1
 		}
 	}
 
@@ -88,15 +88,11 @@ class HP110PatientController extends BaseController<String> {
 		bilddaten0.setLabelFor(bilddaten)
 		adresse10.setLabelFor(adresse1)
 		rechnung0.setLabelFor(rechnung, false)
-		geburt0.setLabelFor(geburt.getLabelForNode)
+		geburt0.setLabelFor(geburt.labelForNode)
 		notiz0.setLabelFor(notiz)
 		angelegt0.setLabelFor(angelegt)
 		geaendert0.setLabelFor(geaendert)
-		refresh = [ s |
-			{
-				bilddaten.setText(Global.anhaengen(bilddaten.getText, Constant.CRLF, s))
-			}
-		]
+		refresh = [s|bilddaten.setText(Global.anhaengen(bilddaten.text, Constant.CRLF, s))]
 		Bild.addDragNdrop(bilder, refresh)
 		initDaten(0)
 		name1.requestFocus
@@ -109,33 +105,31 @@ class HP110PatientController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var List<HpPatient> l = get(
-				FactoryService.getHeilpraktikerService.getPatientListe(getServiceDaten, true))
+			var l = get(FactoryService::heilpraktikerService.getPatientListe(serviceDaten, true))
 			rechnung.setItems(getItems(l, new HpPatient, [a|new RechnungData(a)], null))
-			var boolean neu = DialogAufrufEnum.NEU.equals(getAufruf)
-			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(getAufruf)
-			var HpPatient k = getParameter1
+			var neu = DialogAufrufEnum::NEU.equals(aufruf)
+			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
+			var HpPatient k = parameter1
 			if (!neu && k !== null) {
-				k = get(FactoryService.getHeilpraktikerService.getPatient(getServiceDaten, k.getUid))
+				k = get(FactoryService::heilpraktikerService.getPatient(serviceDaten, k.uid))
 				if (k !== null) {
-					nr.setText(k.getUid)
-					name1.setText(k.getName1)
-					vorname.setText(k.getVorname)
-					setText(geschlecht, k.getGeschlecht)
-					adresse1.setText(k.getAdresse1)
-					adresse2.setText(k.getAdresse2)
-					adresse3.setText(k.getAdresse3)
-					geburt.setValue(k.getGeburt)
-					setText(rechnung, k.getRechnungPatientUid)
-					notiz.setText(k.getNotiz)
-					angelegt.setText(k.formatDatumVon(k.getAngelegtAm, k.getAngelegtVon))
-					geaendert.setText(k.formatDatumVon(k.getGeaendertAm, k.getGeaendertVon))
-					var List<ByteDaten> byteliste = get(
-						FactoryService.getHeilpraktikerService.getPatientBytesListe(getServiceDaten, k.getUid))
+					nr.setText(k.uid)
+					name1.setText(k.name1)
+					vorname.setText(k.vorname)
+					setText(geschlecht, k.geschlecht)
+					adresse1.setText(k.adresse1)
+					adresse2.setText(k.adresse2)
+					adresse3.setText(k.adresse3)
+					geburt.setValue(k.geburt)
+					setText(rechnung, k.rechnungPatientUid)
+					notiz.setText(k.notiz)
+					angelegt.setText(k.formatDatumVon(k.angelegtAm, k.angelegtVon))
+					geaendert.setText(k.formatDatumVon(k.geaendertAm, k.geaendertVon))
+					var byteliste = get(FactoryService::heilpraktikerService.getPatientBytesListe(serviceDaten, k.uid))
 					if (byteliste !== null) {
 						for (ByteDaten bd : byteliste) {
-							if (bd.getBytes !== null && bd.getMetadaten !== null) {
-								new Bild(bilder, null, bd.getBytes, null, bd.getMetadaten, refresh)
+							if (bd.getBytes !== null && bd.metadaten !== null) {
+								new Bild(bilder, null, bd.bytes, null, bd.metadaten, refresh)
 							}
 						}
 					}
@@ -155,7 +149,7 @@ class HP110PatientController extends BaseController<String> {
 			angelegt.setEditable(false)
 			geaendert.setEditable(false)
 			if (loeschen) {
-				ok.setText(Meldungen.M2001)
+				ok.setText(Meldungen::M2001)
 			}
 			hinzufuegen.setVisible(!loeschen)
 		}
@@ -176,23 +170,21 @@ class HP110PatientController extends BaseController<String> {
 	 */
 	@FXML def void onOk() {
 
-		var ServiceErgebnis<?> r = null
-		if (DialogAufrufEnum.NEU.equals(aufruf) || DialogAufrufEnum.KOPIEREN.equals(aufruf)) {
-			r = FactoryService.getHeilpraktikerService.insertUpdatePatient(getServiceDaten, null, name1.getText,
-				vorname.getText, adresse1.getText, adresse2.getText, adresse3.getText, getText(geschlecht),
-				geburt.getValue, getText(rechnung), null, notiz.getText,
-				Bild.parseBilddaten(bilddaten.getText, Bild.getBytesListe(bilder)))
-		} else if (DialogAufrufEnum.AENDERN.equals(aufruf)) {
-			r = FactoryService.getHeilpraktikerService.insertUpdatePatient(getServiceDaten, nr.getText,
-				name1.getText, vorname.getText, adresse1.getText, adresse2.getText, adresse3.getText,
-				getText(geschlecht), geburt.getValue, getText(rechnung), null, notiz.getText,
-				Bild.parseBilddaten(bilddaten.getText, Bild.getBytesListe(bilder)))
-		} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
-			r = FactoryService.getHeilpraktikerService.deletePatient(getServiceDaten, nr.getText)
+		var ServiceErgebnis<?> r
+		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
+			r = FactoryService::heilpraktikerService.insertUpdatePatient(serviceDaten, null, name1.text, vorname.text,
+				adresse1.text, adresse2.text, adresse3.text, getText(geschlecht), geburt.value, getText(rechnung), null,
+				notiz.text, Bild.parseBilddaten(bilddaten.text, Bild.getBytesListe(bilder)))
+		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
+			r = FactoryService::heilpraktikerService.insertUpdatePatient(serviceDaten, nr.text, name1.text,
+				vorname.text, adresse1.text, adresse2.text, adresse3.text, getText(geschlecht), geburt.value,
+				getText(rechnung), null, notiz.text, Bild.parseBilddaten(bilddaten.text, Bild.getBytesListe(bilder)))
+		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
+			r = FactoryService::heilpraktikerService.deletePatient(serviceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)
-			if (r.getFehler.isEmpty) {
+			if (r.fehler.isEmpty) {
 				updateParent
 				close
 			}
@@ -203,7 +195,7 @@ class HP110PatientController extends BaseController<String> {
 	 * Event für Hinzufuegen.
 	 */
 	@FXML def void onHinzufuegen() {
-		var String datei = DateiAuswahl.auswaehlen(true, "HP110.select.file", "HP110.select.ok", "png", "HP110.select.ext")
+		var datei = DateiAuswahl.auswaehlen(true, "HP110.select.file", "HP110.select.ok", "png", "HP110.select.ext")
 		if (!Global.nes(datei)) {
 			new Bild(bilder, datei, null, null, null, refresh)
 		}

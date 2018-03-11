@@ -58,20 +58,20 @@ class HP420BehandlungenController extends BaseController<List<HpBehandlungLeistu
 		new(HpBehandlungLeistungLang v) {
 
 			super(v)
-			patientName = new SimpleStringProperty(v.getPatientName)
-			datum = new SimpleObjectProperty<LocalDate>(v.getBehandlungDatum)
-			leistung = new SimpleStringProperty(v.getLeistungZiffer)
-			dauer = new SimpleObjectProperty<Double>(v.getDauer)
-			diagnose = new SimpleStringProperty(v.getBehandlungDiagnose)
-			status = new SimpleStringProperty(v.getBehandlungStatus)
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
+			patientName = new SimpleStringProperty(v.patientName)
+			datum = new SimpleObjectProperty<LocalDate>(v.behandlungDatum)
+			leistung = new SimpleStringProperty(v.leistungZiffer)
+			dauer = new SimpleObjectProperty<Double>(v.dauer)
+			diagnose = new SimpleStringProperty(v.behandlungDiagnose)
+			status = new SimpleStringProperty(v.behandlungStatus)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
+			geaendertVon = new SimpleStringProperty(v.geaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
+			angelegtVon = new SimpleStringProperty(v.angelegtVon)
 		}
 
 		override String getId() {
-			return getData.getUid
+			return getData.uid
 		}
 	}
 
@@ -97,12 +97,12 @@ class HP420BehandlungenController extends BaseController<List<HpBehandlungLeistu
 		if (stufe <= 0) { // stufe = 0
 		}
 		if (stufe <= 1) {
-			if (getParameter1 instanceof HpRechnungLang) {
+			if (parameter1 instanceof HpRechnungLang) {
 				// alle Behandlungen der Rechnung oder nicht zugeordnete
-				var HpRechnungLang k = (getParameter1 as HpRechnungLang)
-				var List<HpBehandlungLeistungLang> l = get(
-					FactoryService.getHeilpraktikerService.getBehandlungLeistungListe(getServiceDaten, true,
-						k.getPatientUid, k.getUid, null, null, null, true, false)) // 0,nr
+				var k = parameter1 as HpRechnungLang
+				var l = get(
+					FactoryService::heilpraktikerService.getBehandlungLeistungListe(serviceDaten, true, k.patientUid,
+						k.uid, null, null, null, true, false)) // 0,nr
 				getItems(l, null, [a|new BehandlungenData(a)], behandlungenData)
 			}
 		}
@@ -118,17 +118,17 @@ class HP420BehandlungenController extends BaseController<List<HpBehandlungLeistu
 
 		behandlungen.setItems(behandlungenData)
 		behandlungen.getSelectionModel.setSelectionMode(SelectionMode.MULTIPLE)
-		colPatientName.setCellValueFactory([c|c.getValue.patientName])
-		colDatum.setCellValueFactory([c|c.getValue.datum])
-		colLeistung.setCellValueFactory([c|c.getValue.leistung])
-		colDauer.setCellValueFactory([c|c.getValue.dauer])
+		colPatientName.setCellValueFactory([c|c.value.patientName])
+		colDatum.setCellValueFactory([c|c.value.datum])
+		colLeistung.setCellValueFactory([c|c.value.leistung])
+		colDauer.setCellValueFactory([c|c.value.dauer])
 		initColumnBetrag(colDauer)
-		colDiagnose.setCellValueFactory([c|c.getValue.diagnose])
-		colStatus.setCellValueFactory([c|c.getValue.status])
-		colGv.setCellValueFactory([c|c.getValue.geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue.geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue.angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue.angelegtAm])
+		colDiagnose.setCellValueFactory([c|c.value.diagnose])
+		colStatus.setCellValueFactory([c|c.value.status])
+		colGv.setCellValueFactory([c|c.value.geaendertVon])
+		colGa.setCellValueFactory([c|c.value.geaendertAm])
+		colAv.setCellValueFactory([c|c.value.angelegtVon])
+		colAa.setCellValueFactory([c|c.value.angelegtAm])
 	}
 
 	/** 
@@ -147,10 +147,10 @@ class HP420BehandlungenController extends BaseController<List<HpBehandlungLeistu
 		// Alle Leistungen von allen selektierten Behandlungen dazunehmen.
 		var List<HpBehandlungLeistungLang> sel = getValues(behandlungen, true)
 		var List<HpBehandlungLeistungLang> alle = getAllValues(behandlungen)
-		var List<HpBehandlungLeistungLang> dazu = new ArrayList<HpBehandlungLeistungLang>
+		var dazu = new ArrayList<HpBehandlungLeistungLang>
 		for (HpBehandlungLeistungLang s : sel) {
 			for (HpBehandlungLeistungLang a : alle) {
-				if (Global.compString(s.getBehandlungUid, a.getBehandlungUid) === 0) {
+				if (Global.compString(s.behandlungUid, a.behandlungUid) === 0) {
 					dazu.add(a)
 				}
 			}

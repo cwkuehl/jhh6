@@ -1,13 +1,12 @@
 package de.cwkuehl.jhh6.app.controller.hp
 
-import java.time.LocalDateTime
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.HpStatus
 import de.cwkuehl.jhh6.api.global.Global
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.server.FactoryService
+import java.time.LocalDateTime
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -60,14 +59,14 @@ class HP150StatusController extends BaseController<String> {
 		new(HpStatus v) {
 
 			super(v)
-			uid = new SimpleStringProperty(v.getUid)
-			status = new SimpleStringProperty(v.getStatus)
-			beschreibung = new SimpleStringProperty(v.getBeschreibung)
-			sortierung = new SimpleStringProperty(Global.intStrFormat(v.getSortierung))
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
+			uid = new SimpleStringProperty(v.uid)
+			status = new SimpleStringProperty(v.status)
+			beschreibung = new SimpleStringProperty(v.beschreibung)
+			sortierung = new SimpleStringProperty(Global.intStrFormat(v.sortierung))
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
+			geaendertVon = new SimpleStringProperty(v.geaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
+			angelegtVon = new SimpleStringProperty(v.angelegtVon)
 		}
 
 		override String getId() {
@@ -103,7 +102,7 @@ class HP150StatusController extends BaseController<String> {
 		if (stufe <= 0) { // stufe = 0
 		}
 		if (stufe <= 1) {
-			var List<HpStatus> l = get(FactoryService.getHeilpraktikerService.getStatusListe(getServiceDaten, false))
+			var l = get(FactoryService::heilpraktikerService.getStatusListe(serviceDaten, false))
 			getItems(l, null, [a|new StatusData(a)], statusData)
 		}
 		if (stufe <= 2) {
@@ -117,14 +116,14 @@ class HP150StatusController extends BaseController<String> {
 	def protected void initDatenTable() {
 
 		status.setItems(statusData)
-		colUid.setCellValueFactory([c|c.getValue.uid])
-		colStatus.setCellValueFactory([c|c.getValue.status])
-		colBeschreibung.setCellValueFactory([c|c.getValue.beschreibung])
-		colSortierung.setCellValueFactory([c|c.getValue.sortierung])
-		colGv.setCellValueFactory([c|c.getValue.geaendertVon])
-		colGa.setCellValueFactory([c|c.getValue.geaendertAm])
-		colAv.setCellValueFactory([c|c.getValue.angelegtVon])
-		colAa.setCellValueFactory([c|c.getValue.angelegtAm])
+		colUid.setCellValueFactory([c|c.value.uid])
+		colStatus.setCellValueFactory([c|c.value.status])
+		colBeschreibung.setCellValueFactory([c|c.value.beschreibung])
+		colSortierung.setCellValueFactory([c|c.value.sortierung])
+		colGv.setCellValueFactory([c|c.value.geaendertVon])
+		colGa.setCellValueFactory([c|c.value.geaendertAm])
+		colAv.setCellValueFactory([c|c.value.angelegtVon])
+		colAa.setCellValueFactory([c|c.value.angelegtAm])
 	}
 
 	override protected void updateParent() {
@@ -132,7 +131,7 @@ class HP150StatusController extends BaseController<String> {
 	}
 
 	def private void starteDialog(DialogAufrufEnum aufruf) {
-		var HpStatus k = getValue(status, !DialogAufrufEnum.NEU.equals(aufruf))
+		var HpStatus k = getValue(status, !DialogAufrufEnum::NEU.equals(aufruf))
 		starteFormular(HP160StatusController, aufruf, k)
 	}
 
@@ -163,28 +162,28 @@ class HP150StatusController extends BaseController<String> {
 	 * Event für Neu.
 	 */
 	@FXML def void onNeu() {
-		starteDialog(DialogAufrufEnum.NEU)
+		starteDialog(DialogAufrufEnum::NEU)
 	}
 
 	/** 
 	 * Event für Kopieren.
 	 */
 	@FXML def void onKopieren() {
-		starteDialog(DialogAufrufEnum.KOPIEREN)
+		starteDialog(DialogAufrufEnum::KOPIEREN)
 	}
 
 	/** 
 	 * Event für Aendern.
 	 */
 	@FXML def void onAendern() {
-		starteDialog(DialogAufrufEnum.AENDERN)
+		starteDialog(DialogAufrufEnum::AENDERN)
 	}
 
 	/** 
 	 * Event für Loeschen.
 	 */
 	@FXML def void onLoeschen() {
-		starteDialog(DialogAufrufEnum.LOESCHEN)
+		starteDialog(DialogAufrufEnum::LOESCHEN)
 	}
 
 	/** 

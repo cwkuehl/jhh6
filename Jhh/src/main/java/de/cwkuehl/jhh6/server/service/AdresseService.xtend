@@ -85,8 +85,8 @@ class AdresseService {
 			var String pnr
 			for (AdPersonSitzAdresse e : l) {
 				var strB = new StringBuffer
-				if (Global.compString(pnr, e.getUid) != 0) {
-					pnr = e.getUid
+				if (Global.compString(pnr, e.uid) != 0) {
+					pnr = e.uid
 					if (e.getPersonStatus != PersonStatusEnum.AKTUELL.intValue) {
 						strB.append("(")
 					}
@@ -158,7 +158,7 @@ class AdresseService {
 		var reihenfolge = 1
 		for (AdSitz e : liste) {
 			var voU = new AdSitzUpdate(e)
-			if (Global.compString(sitzUid, e.getUid) == 0) {
+			if (Global.compString(sitzUid, e.uid) == 0) {
 				voU.setReihenfolge(1)
 			} else {
 				reihenfolge = reihenfolge + 1
@@ -531,7 +531,7 @@ class AdresseService {
 								person.geburt, person.geburtk, person.anrede, person.fanrede, person.name1,
 								person.name2, person.praedikat, person.vorname, person.titel, person.personStatus,
 								person.angelegtVon, person.angelegtAm, person.geaendertVon, person.geaendertAm)
-							pnr = person.getUid
+							pnr = person.uid
 						} else {
 							personRep.iuAdPerson(daten, personEvent, pnr, person.typ, person.geschlecht, person.geburt,
 								person.geburtk, person.anrede, person.fanrede, person.name1, person.name2,
@@ -620,7 +620,7 @@ class AdresseService {
 									adresse = adresseRep.iuAdAdresse(daten, adresseEvent, null, adresse.staat,
 										adresse.plz, adresse.ort, adresse.strasse, adresse.hausnr, adresse.angelegtVon,
 										adresse.angelegtAm, adresse.geaendertVon, adresse.geaendertAm)
-									anr = adresse.getUid
+									anr = adresse.uid
 								}
 							} else {
 								adresse = adresseRep.iuAdAdresse(daten, adresseEvent, anr, adresse.staat, adresse.plz,

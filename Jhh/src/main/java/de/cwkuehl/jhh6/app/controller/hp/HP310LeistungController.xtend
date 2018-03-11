@@ -68,21 +68,21 @@ class HP310LeistungController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var boolean neu = DialogAufrufEnum.NEU.equals(getAufruf)
-			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(getAufruf)
-			var HpLeistung k = getParameter1
+			var neu = DialogAufrufEnum::NEU.equals(aufruf)
+			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
+			var HpLeistung k = parameter1
 			if (!neu && k !== null) {
-				k = get(FactoryService.getHeilpraktikerService.getLeistung(getServiceDaten, k.getUid))
-				nr.setText(k.getUid)
-				ziffer.setText(k.getZiffer)
-				ziffer2.setText(k.getZifferAlt)
-				beschreibungFett.setText(k.getBeschreibungFett)
-				beschreibung.setText(k.getBeschreibung)
-				faktor.setText(Global.dblStr2l(k.getFaktor))
-				betrag.setText(Global.dblStr2l(k.getFestbetrag))
-				notiz.setText(k.getNotiz)
-				angelegt.setText(k.formatDatumVon(k.getAngelegtAm, k.getAngelegtVon))
-				geaendert.setText(k.formatDatumVon(k.getGeaendertAm, k.getGeaendertVon))
+				k = get(FactoryService::heilpraktikerService.getLeistung(serviceDaten, k.uid))
+				nr.setText(k.uid)
+				ziffer.setText(k.ziffer)
+				ziffer2.setText(k.zifferAlt)
+				beschreibungFett.setText(k.beschreibungFett)
+				beschreibung.setText(k.beschreibung)
+				faktor.setText(Global.dblStr2l(k.faktor))
+				betrag.setText(Global.dblStr2l(k.festbetrag))
+				notiz.setText(k.notiz)
+				angelegt.setText(k.formatDatumVon(k.angelegtAm, k.angelegtVon))
+				geaendert.setText(k.formatDatumVon(k.geaendertAm, k.geaendertVon))
 			}
 			nr.setEditable(false)
 			ziffer.setEditable(!loeschen)
@@ -95,7 +95,7 @@ class HP310LeistungController extends BaseController<String> {
 			angelegt.setEditable(false)
 			geaendert.setEditable(false)
 			if (loeschen) {
-				ok.setText(Meldungen.M2001)
+				ok.setText(Meldungen::M2001)
 			}
 		}
 		if (stufe <= 1) { // stufe = 0
@@ -115,21 +115,21 @@ class HP310LeistungController extends BaseController<String> {
 	 */
 	@FXML def void onOk() {
 
-		var ServiceErgebnis<?> r = null
-		if (DialogAufrufEnum.NEU.equals(aufruf) || DialogAufrufEnum.KOPIEREN.equals(aufruf)) {
-			r = FactoryService.getHeilpraktikerService.insertUpdateLeistung(getServiceDaten, null, ziffer.getText,
-				ziffer2.getText, beschreibungFett.getText, beschreibung.getText, Global.strDbl(faktor.getText),
-				Global.strDbl(betrag.getText), null, notiz.getText)
-		} else if (DialogAufrufEnum.AENDERN.equals(aufruf)) {
-			r = FactoryService.getHeilpraktikerService.insertUpdateLeistung(getServiceDaten, nr.getText, ziffer.getText,
-				ziffer2.getText, beschreibungFett.getText, beschreibung.getText, Global.strDbl(faktor.getText),
-				Global.strDbl(betrag.getText), null, notiz.getText)
-		} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
-			r = FactoryService.getHeilpraktikerService.deleteLeistung(getServiceDaten, nr.getText)
+		var ServiceErgebnis<?> r
+		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
+			r = FactoryService::heilpraktikerService.insertUpdateLeistung(serviceDaten, null, ziffer.text, ziffer2.text,
+				beschreibungFett.text, beschreibung.text, Global.strDbl(faktor.text), Global.strDbl(betrag.text), null,
+				notiz.text)
+		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
+			r = FactoryService::heilpraktikerService.insertUpdateLeistung(serviceDaten, nr.text, ziffer.text,
+				ziffer2.text, beschreibungFett.text, beschreibung.text, Global.strDbl(faktor.text),
+				Global.strDbl(betrag.text), null, notiz.text)
+		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
+			r = FactoryService::heilpraktikerService.deleteLeistung(serviceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)
-			if (r.getFehler.isEmpty) {
+			if (r.fehler.isEmpty) {
 				updateParent
 				close
 			}

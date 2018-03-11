@@ -95,7 +95,7 @@ class Datum extends HBox {
 		ohne.setOnAction([ e |
 			{
 				if (ohne.isSelected) {
-					if (datum.getValue !== null) {
+					if (datum.value !== null) {
 						date = datum.value
 					}
 					datum.setValue(null)
@@ -181,9 +181,8 @@ class Datum extends HBox {
 	def void setWochentagGroesse(double v) {
 
 		if (v > 0) {
-			text.setMinWidth(v) // datum.addEventHandler(ActionEvent.ACTION, (e) -> {
-			// text.setText(Global.holeWochentag(datum.getValue));
-			// });
+			text.setMinWidth(v)
+		// datum.addEventHandler(ActionEvent.ACTION, (e) -> { text.setText(Global.holeWochentag(datum.value)) })
 		} else {
 			text.setVisible(false)
 		}
@@ -298,7 +297,7 @@ class Datum extends HBox {
 
 	@FXML def void onMinus() {
 
-		if (datum.getValue !== null) {
+		if (datum.value !== null) {
 			datum.setValue(datum.value.minusDays(1))
 		}
 	}
@@ -309,7 +308,7 @@ class Datum extends HBox {
 
 	@FXML def void onPlus() {
 
-		if (datum.getValue !== null) {
+		if (datum.value !== null) {
 			datum.setValue(datum.value.plusDays(1))
 		}
 	}

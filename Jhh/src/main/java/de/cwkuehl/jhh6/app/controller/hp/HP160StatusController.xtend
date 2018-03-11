@@ -1,6 +1,5 @@
 package de.cwkuehl.jhh6.app.controller.hp
 
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.HpStatus
 import de.cwkuehl.jhh6.api.dto.MaEinstellung
 import de.cwkuehl.jhh6.api.global.Global
@@ -44,16 +43,17 @@ class HP160StatusController extends BaseController<String> {
 	 * Daten für ComboBox Standard.
 	 */
 	static class StandardData extends ComboBoxData<MaEinstellung> {
+
 		new(MaEinstellung v) {
 			super(v)
 		}
 
 		override String getId() {
-			return getData.getSchluessel
+			return getData.schluessel
 		}
 
 		override String toString() {
-			return getData.getWert
+			return getData.wert
 		}
 	}
 
@@ -82,24 +82,23 @@ class HP160StatusController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var List<MaEinstellung> l = get(
-				FactoryService.getHeilpraktikerService.getStandardStatusListe(getServiceDaten))
+			var l = get(FactoryService::heilpraktikerService.getStandardStatusListe(serviceDaten))
 			standard.setItems(getItems(l, null, [a|new StandardData(a)], null))
 			standard.getSelectionModel.select(0)
-			var boolean neu = DialogAufrufEnum.NEU.equals(getAufruf)
-			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(getAufruf)
-			var HpStatus k = getParameter1
+			var neu = DialogAufrufEnum::NEU.equals(aufruf)
+			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
+			var HpStatus k = parameter1
 			if (!neu && k !== null) {
-				k = get(FactoryService.getHeilpraktikerService.getStatus(getServiceDaten, k.getUid))
+				k = get(FactoryService::heilpraktikerService.getStatus(serviceDaten, k.uid))
 				if (k !== null) {
-					nr.setText(k.getUid)
-					status.setText(k.getStatus)
-					beschreibung.setText(k.getBeschreibung)
-					sortierung.setText(Global.intStrFormat(k.getSortierung))
-					standard.getSelectionModel.clearAndSelect(k.getStandard)
-					notiz.setText(k.getNotiz)
-					angelegt.setText(k.formatDatumVon(k.getAngelegtAm, k.getAngelegtVon))
-					geaendert.setText(k.formatDatumVon(k.getGeaendertAm, k.getGeaendertVon))
+					nr.setText(k.uid)
+					status.setText(k.status)
+					beschreibung.setText(k.beschreibung)
+					sortierung.setText(Global.intStrFormat(k.sortierung))
+					standard.getSelectionModel.clearAndSelect(k.standard)
+					notiz.setText(k.notiz)
+					angelegt.setText(k.formatDatumVon(k.angelegtAm, k.angelegtVon))
+					geaendert.setText(k.formatDatumVon(k.geaendertAm, k.geaendertVon))
 				}
 			}
 			nr.setEditable(false)
@@ -111,7 +110,7 @@ class HP160StatusController extends BaseController<String> {
 			angelegt.setEditable(false)
 			geaendert.setEditable(false)
 			if (loeschen) {
-				ok.setText(Meldungen.M2001)
+				ok.setText(Meldungen::M2001)
 			}
 		}
 		if (stufe <= 1) { // stufe = 0
@@ -131,21 +130,19 @@ class HP160StatusController extends BaseController<String> {
 	 */
 	@FXML def void onOk() {
 
-		var ServiceErgebnis<?> r = null
-		if (DialogAufrufEnum.NEU.equals(aufruf) || DialogAufrufEnum.KOPIEREN.equals(aufruf)) {
-			r = FactoryService.getHeilpraktikerService.insertUpdateStatus(getServiceDaten, null, status.getText,
-				beschreibung.getText, Global.strInt(sortierung.getText), standard.getSelectionModel.getSelectedIndex,
-				notiz.getText)
-		} else if (DialogAufrufEnum.AENDERN.equals(aufruf)) {
-			r = FactoryService.getHeilpraktikerService.insertUpdateStatus(getServiceDaten, nr.getText, status.getText,
-				beschreibung.getText, Global.strInt(sortierung.getText), standard.getSelectionModel.getSelectedIndex,
-				notiz.getText)
-		} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
-			r = FactoryService.getHeilpraktikerService.deleteStatus(getServiceDaten, nr.getText)
+		var ServiceErgebnis<?> r
+		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
+			r = FactoryService::heilpraktikerService.insertUpdateStatus(serviceDaten, null, status.text,
+				beschreibung.text, Global.strInt(sortierung.text), standard.getSelectionModel.selectedIndex, notiz.text)
+		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
+			r = FactoryService::heilpraktikerService.insertUpdateStatus(serviceDaten, nr.text, status.text,
+				beschreibung.text, Global.strInt(sortierung.text), standard.getSelectionModel.selectedIndex, notiz.text)
+		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
+			r = FactoryService::heilpraktikerService.deleteStatus(getServiceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)
-			if (r.getFehler.isEmpty) {
+			if (r.fehler.isEmpty) {
 				updateParent
 				close
 			}

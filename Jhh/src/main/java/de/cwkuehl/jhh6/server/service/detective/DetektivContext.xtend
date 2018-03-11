@@ -70,73 +70,73 @@ class DetektivContext implements Serializable {
 			// Spieler
 			spieler = new LinkedHashMap<String, Kategorie>
 			k = new Kategorie(Global::UID, "Benjamin", "B")
-			spieler.put(k.getId, k)
+			spieler.put(k.id, k)
 			k = new Kategorie(Global::UID, "Claudia", "C")
-			spieler.put(k.getId, k)
+			spieler.put(k.id, k)
 			k = new Kategorie(Global::UID, "Deborah", "D")
-			spieler.put(k.getId, k)
+			spieler.put(k.id, k)
 			k = new Kategorie(Global::UID, "Viktoria", "V")
-			spieler.put(k.getId, k)
+			spieler.put(k.id, k)
 			k = new Kategorie(Global::UID, "Wolfgang", "W")
-			spieler.put(k.getId, k)
+			spieler.put(k.id, k)
 		} else {
-			k = getNr(spieler, 1) // if (k != null && "C".equals(k.getKurz)) {
-			// spieler.remove(k.getId)
+			k = getNr(spieler, 1) // if (k != null && "C".equals(k.kurz)) {
+			// spieler.remove(k.id)
 			// }
 		}
 		if (verdaechtige === null) {
 			// Verdächtige
 			verdaechtige = new LinkedHashMap<String, Kategorie>
 			k = new Kategorie(Global::UID, "Prof. Bloom", "Blo")
-			verdaechtige.put(k.getId, k)
+			verdaechtige.put(k.id, k)
 			k = new Kategorie(Global::UID, "Baronin von Porz", "Por")
-			verdaechtige.put(k.getId, k)
+			verdaechtige.put(k.id, k)
 			k = new Kategorie(Global::UID, "Frl. Ming", "Min")
-			verdaechtige.put(k.getId, k)
+			verdaechtige.put(k.id, k)
 			k = new Kategorie(Global::UID, "Frau Weiß", "Wei")
-			verdaechtige.put(k.getId, k)
+			verdaechtige.put(k.id, k)
 			k = new Kategorie(Global::UID, "Oberst von Gatow", "Gat")
-			verdaechtige.put(k.getId, k)
+			verdaechtige.put(k.id, k)
 			k = new Kategorie(Global::UID, "Herr Dir. Grün", "Grü")
-			verdaechtige.put(k.getId, k)
+			verdaechtige.put(k.id, k)
 		}
 		if (werkzeuge === null) {
 			// Werkzeuge
 			werkzeuge = new LinkedHashMap<String, Kategorie>
 			k = new Kategorie(Global::UID, "Heizungsrohr", "H")
-			werkzeuge.put(k.getId, k)
+			werkzeuge.put(k.id, k)
 			k = new Kategorie(Global::UID, "Leuchter", "L")
-			werkzeuge.put(k.getId, k)
+			werkzeuge.put(k.id, k)
 			k = new Kategorie(Global::UID, "Pistole", "P")
-			werkzeuge.put(k.getId, k)
+			werkzeuge.put(k.id, k)
 			k = new Kategorie(Global::UID, "Seil", "S")
-			werkzeuge.put(k.getId, k)
+			werkzeuge.put(k.id, k)
 			k = new Kategorie(Global::UID, "Dolch", "D")
-			werkzeuge.put(k.getId, k)
+			werkzeuge.put(k.id, k)
 			k = new Kategorie(Global::UID, "Rohrzange", "R")
-			werkzeuge.put(k.getId, k)
+			werkzeuge.put(k.id, k)
 		}
 		if (raeume === null) {
 			// Räume
 			raeume = new LinkedHashMap<String, Kategorie>
 			k = new Kategorie(Global::UID, "Küche", "Kü")
-			raeume.put(k.getId, k)
+			raeume.put(k.id, k)
 			k = new Kategorie(Global::UID, "Bibliothek", "Bi")
-			raeume.put(k.getId, k)
+			raeume.put(k.id, k)
 			k = new Kategorie(Global::UID, "Salon", "Sa")
-			raeume.put(k.getId, k)
+			raeume.put(k.id, k)
 			k = new Kategorie(Global::UID, "Speisezimmer", "Sp")
-			raeume.put(k.getId, k)
+			raeume.put(k.id, k)
 			k = new Kategorie(Global::UID, "Billardzimmer", "Bd")
-			raeume.put(k.getId, k)
+			raeume.put(k.id, k)
 			k = new Kategorie(Global::UID, "Eingangshalle", "Ei")
-			raeume.put(k.getId, k)
+			raeume.put(k.id, k)
 			k = new Kategorie(Global::UID, "Veranda", "Ve")
-			raeume.put(k.getId, k)
+			raeume.put(k.id, k)
 			k = new Kategorie(Global::UID, "Arbeitszimmer", "Ar")
-			raeume.put(k.getId, k)
+			raeume.put(k.id, k)
 			k = new Kategorie(Global::UID, "Musikzimmer", "Mu")
-			raeume.put(k.getId, k)
+			raeume.put(k.id, k)
 		}
 		if (runden === null) {
 			// Runden
@@ -145,7 +145,7 @@ class DetektivContext implements Serializable {
 			r = new Runde(Global::UID, getNr(spieler, spieler.size - 1).id, toList(getNr(verdaechtige, 3).id), true,
 				toList(getNr(werkzeuge, 0).id, getNr(werkzeuge, 2).id), true, toList(getNr(raeume, 6).id), true, toList,
 				getNr(spieler, 4).id)
-			runden.put(r.getId, r)
+			runden.put(r.id, r)
 		}
 	}
 
@@ -251,20 +251,20 @@ class DetektivContext implements Serializable {
 		new(DetektivContext c, Runde v) {
 
 			super(v)
-			uid = new SimpleStringProperty(v.getId)
-			spieler = new SimpleStringProperty(if (c.spieler.get(v.getSpieler) === null)
-				'''Fehler: «v.getSpieler»'''
+			uid = new SimpleStringProperty(v.id)
+			spieler = new SimpleStringProperty(if (c.spieler.get(v.spieler) === null)
+				'''Fehler: «v.spieler»'''
 			else
-				c.spieler.get(v.getSpieler).getKurz)
-			verdaechtige = new SimpleStringProperty(c.toString(c.verdaechtige, v.getVerdaechtige))
+				c.spieler.get(v.spieler).kurz)
+			verdaechtige = new SimpleStringProperty(c.toString(c.verdaechtige, v.verdaechtige))
 			besitzv = new SimpleObjectProperty<Boolean>(v.isBesitzv)
-			werkzeuge = new SimpleStringProperty(c.toString(c.werkzeuge, v.getWerkzeuge))
+			werkzeuge = new SimpleStringProperty(c.toString(c.werkzeuge, v.werkzeuge))
 			besitzw = new SimpleObjectProperty<Boolean>(v.isBesitzw)
-			raeume = new SimpleStringProperty(c.toString(c.raeume, v.getRaeume))
+			raeume = new SimpleStringProperty(c.toString(c.raeume, v.raeume))
 			besitzr = new SimpleObjectProperty<Boolean>(v.isBesitzr)
-			spielerohne = new SimpleStringProperty(c.toString(c.spieler, v.getSpielerOhne))
+			spielerohne = new SimpleStringProperty(c.toString(c.spieler, v.spielerOhne))
 			spielermit = new SimpleStringProperty(
-				if(c.spieler.get(v.getSpielerMit) === null) null else c.spieler.get(v.getSpielerMit).getKurz)
+				if(c.spieler.get(v.spielerMit) === null) null else c.spieler.get(v.spielerMit).kurz)
 		}
 
 		override String getId() {
@@ -289,22 +289,22 @@ class DetektivContext implements Serializable {
 		new(DetektivContext c, Ergebnis v) {
 
 			super(v)
-			uid = new SimpleStringProperty(v.getId)
-			kategorie = new SimpleStringProperty(v.getKategorie)
-			kurz = new SimpleStringProperty(v.getKurz)
+			uid = new SimpleStringProperty(v.id)
+			kategorie = new SimpleStringProperty(v.kategorie)
+			kurz = new SimpleStringProperty(v.kurz)
 			spieler = new SimpleStringProperty(
-				if(c.spieler.get(v.getSpieler) === null) null else c.spieler.get(v.getSpieler).getKurz)
-			ohne = new SimpleStringProperty(if (v.getSpielerOhne === null)
+				if(c.spieler.get(v.spieler) === null) null else c.spieler.get(v.spieler).kurz)
+			ohne = new SimpleStringProperty(if (v.spielerOhne === null)
 				null
 			else
-				c.toString(c.spieler, new ArrayList<String>(v.getSpielerOhne)))
-			moeglich = new SimpleStringProperty(if (v.getSpielerWahr === null)
+				c.toString(c.spieler, new ArrayList<String>(v.spielerOhne)))
+			moeglich = new SimpleStringProperty(if (v.spielerWahr === null)
 				null
 			else
-				c.toString(c.spieler, new ArrayList<String>(v.getSpielerWahr)))
+				c.toString(c.spieler, new ArrayList<String>(v.spielerWahr)))
 			frage = new SimpleStringProperty(
-				if(v.getSpielerFrage === null) null else c.toString(c.spieler, v.getSpielerFrage))
-			wahrscheinlich = new SimpleObjectProperty(v.getWahrscheinlichkeit)
+				if(v.spielerFrage === null) null else c.toString(c.spieler, v.spielerFrage))
+			wahrscheinlich = new SimpleObjectProperty(v.wahrscheinlichkeit)
 		}
 
 		override String getId() {
@@ -344,7 +344,7 @@ class DetektivContext implements Serializable {
 			liste.add(e)
 		}
 		Collections.sort(liste, [ Ergebnis o1, Ergebnis o2 |
-			return Global.compDouble(o2.getWahrscheinlichkeit, o1.getWahrscheinlichkeit)
+			return Global.compDouble(o2.wahrscheinlichkeit, o1.wahrscheinlichkeit)
 		])
 		return liste
 	}
@@ -358,76 +358,76 @@ class DetektivContext implements Serializable {
 		// Ergebnisse aus allen Kategorien
 		w = 100.0 / verdaechtige.size
 		for (Kategorie k : verdaechtige.values) {
-			e = new Ergebnis(k.getId, KAT_VERDAECHTIGER, k.getKurz, null, null, null, null, w)
-			ergebnisse.put(e.getId, e)
+			e = new Ergebnis(k.id, KAT_VERDAECHTIGER, k.kurz, null, null, null, null, w)
+			ergebnisse.put(e.id, e)
 		}
 		w = 100.0 / werkzeuge.size
 		for (Kategorie k : werkzeuge.values) {
-			e = new Ergebnis(k.getId, KAT_WERKZEUG, k.getKurz, null, null, null, null, w)
-			ergebnisse.put(e.getId, e)
+			e = new Ergebnis(k.id, KAT_WERKZEUG, k.kurz, null, null, null, null, w)
+			ergebnisse.put(e.id, e)
 		}
 		w = 100.0 / raeume.size
 		for (Kategorie k : raeume.values) {
-			e = new Ergebnis(k.getId, KAT_RAUM, k.getKurz, null, null, null, null, w)
-			ergebnisse.put(e.getId, e)
+			e = new Ergebnis(k.id, KAT_RAUM, k.kurz, null, null, null, null, w)
+			ergebnisse.put(e.id, e)
 		}
 		// Auswertung der Runde
 		for (Runde r : runden.values) {
 			// Fragen merken
-			if (!Global.nes(r.getSpieler) && !r.getSpieler.equals(r.getSpielerMit)) {
+			if (!Global.nes(r.spieler) && !r.spieler.equals(r.spielerMit)) {
 				// nicht beim eigenen Stand
-				for (String s : r.getVerdaechtige) {
+				for (String s : r.verdaechtige) {
 					e = ergebnisse.get(s)
 					if (e !== null) {
-						e.addSpielerFrage(r.getSpieler)
+						e.addSpielerFrage(r.spieler)
 					}
 				}
-				for (String s : r.getWerkzeuge) {
+				for (String s : r.werkzeuge) {
 					e = ergebnisse.get(s)
 					if (e !== null) {
-						e.addSpielerFrage(r.getSpieler)
+						e.addSpielerFrage(r.spieler)
 					}
 				}
-				for (String s : r.getRaeume) {
+				for (String s : r.raeume) {
 					e = ergebnisse.get(s)
 					if (e !== null) {
-						e.addSpielerFrage(r.getSpieler)
+						e.addSpielerFrage(r.spieler)
 					}
 				}
 			}
 			// Besitz auswerten
-			if (!Global.nes(r.getSpielerMit)) {
-				if (r.isBesitzv && r.getVerdaechtige !== null) {
-					for (String s : r.getVerdaechtige) {
+			if (!Global.nes(r.spielerMit)) {
+				if (r.isBesitzv && r.verdaechtige !== null) {
+					for (String s : r.verdaechtige) {
 						e = ergebnisse.get(s)
 						if (e !== null) {
-							if (Global.nes(e.getSpieler)) {
-								e.setSpieler(r.getSpielerMit)
-							} else if (widerspruch && !e.getSpieler.equals(s)) {
+							if (Global.nes(e.spieler)) {
+								e.setSpieler(r.spielerMit)
+							} else if (widerspruch && !e.spieler.equals(s)) {
 								throw new MeldungException("Ein anderer Spieler hat schon den Verdächtigen.")
 							}
 						}
 					}
 				}
-				if (r.isBesitzw && r.getWerkzeuge !== null) {
-					for (String s : r.getWerkzeuge) {
+				if (r.isBesitzw && r.werkzeuge !== null) {
+					for (String s : r.werkzeuge) {
 						e = ergebnisse.get(s)
 						if (e !== null) {
-							if (Global.nes(e.getSpieler)) {
-								e.setSpieler(r.getSpielerMit)
-							} else if (widerspruch && !e.getSpieler.equals(s)) {
+							if (Global.nes(e.spieler)) {
+								e.setSpieler(r.spielerMit)
+							} else if (widerspruch && !e.spieler.equals(s)) {
 								throw new MeldungException("Ein anderer Spieler hat schon das Tatwerkzeug.")
 							}
 						}
 					}
 				}
-				if (r.isBesitzr && r.getRaeume !== null) {
-					for (String s : r.getRaeume) {
+				if (r.isBesitzr && r.raeume !== null) {
+					for (String s : r.raeume) {
 						e = ergebnisse.get(s)
 						if (e !== null) {
-							if (Global.nes(e.getSpieler)) {
-								e.setSpieler(r.getSpielerMit)
-							} else if (widerspruch && !e.getSpieler.equals(s)) {
+							if (Global.nes(e.spieler)) {
+								e.setSpieler(r.spielerMit)
+							} else if (widerspruch && !e.spieler.equals(s)) {
 								throw new MeldungException("Ein anderer Spieler hat schon den Raum.")
 							}
 						}
@@ -435,21 +435,21 @@ class DetektivContext implements Serializable {
 				}
 			}
 			// Nicht-Besitz auswerten
-			if (Global.listLaenge(r.getSpielerOhne) > 0) {
-				for (String s : r.getSpielerOhne) {
-					for (String v : r.getVerdaechtige) {
+			if (Global.listLaenge(r.spielerOhne) > 0) {
+				for (String s : r.spielerOhne) {
+					for (String v : r.verdaechtige) {
 						e = ergebnisse.get(v)
 						if (e !== null) {
 							e.addSpielerOhne(s)
 						}
 					}
-					for (String v : r.getWerkzeuge) {
+					for (String v : r.werkzeuge) {
 						e = ergebnisse.get(v)
 						if (e !== null) {
 							e.addSpielerOhne(s)
 						}
 					}
-					for (String v : r.getRaeume) {
+					for (String v : r.raeume) {
 						e = ergebnisse.get(v)
 						if (e !== null) {
 							e.addSpielerOhne(s)
@@ -460,22 +460,22 @@ class DetektivContext implements Serializable {
 		}
 		// Möglichkeiten berechnen
 		for (Runde r : runden.values) {
-			if (!Global.nes(r.getSpielerMit) && !r.isBesitzv && !r.isBesitzw && !r.isBesitzr) {
+			if (!Global.nes(r.spielerMit) && !r.isBesitzv && !r.isBesitzw && !r.isBesitzr) {
 				var sliste = new Vector<String>
-				for (String s : r.getVerdaechtige) {
+				for (String s : r.verdaechtige) {
 					sliste.add(s)
 				}
-				for (String s : r.getWerkzeuge) {
+				for (String s : r.werkzeuge) {
 					sliste.add(s)
 				}
-				for (String s : r.getRaeume) {
+				for (String s : r.raeume) {
 					sliste.add(s)
 				}
 				var keiner = true
 				for (String s : sliste) {
 					var Ergebnis er = ergebnisse.get(s)
 					if (er !== null) {
-						if (r.getSpielerMit.equals(er.getSpieler)) {
+						if (r.spielerMit.equals(er.spieler)) {
 							keiner = false
 						}
 					}
@@ -484,7 +484,7 @@ class DetektivContext implements Serializable {
 					for (String s : sliste) {
 						var Ergebnis er = ergebnisse.get(s)
 						if (er !== null) {
-							er.addSpielerWahr(r.getSpielerMit)
+							er.addSpielerWahr(r.spielerMit)
 						}
 					}
 				}
@@ -498,30 +498,29 @@ class DetektivContext implements Serializable {
 		katw.put(KAT_RAUM, new Statistik(KAT_RAUM))
 		// Zählen
 		for (Ergebnis er : ergebnisse.values) {
-			s = katw.get(er.getKategorie)
-			s.setAnzahl(s.getAnzahl + 1)
-			if (er.getSpielerOhneAnzahl >= anzahl) {
+			s = katw.get(er.kategorie)
+			s.setAnzahl(s.anzahl + 1)
+			if (er.spielerOhneAnzahl >= anzahl) {
 				// Lösung dieser Kategorie gefunden
-				s.setGefundenId(er.getId)
+				s.setGefundenId(er.id)
 			}
-			if (Global.nes(er.getSpieler)) {
-				s.setAnzahl2(s.getAnzahl2 + 1)
-				s.setAnzahlNicht(s.getAnzahlNicht + 1 + er.getSpielerOhneAnzahl + er.getSpielerWahrAnzahl)
+			if (Global.nes(er.spieler)) {
+				s.setAnzahl2(s.anzahl2 + 1)
+				s.setAnzahlNicht(s.anzahlNicht + 1 + er.spielerOhneAnzahl + er.spielerWahrAnzahl)
 			}
 		}
 		// Wahrscheinlichkeiten eintragen
 		for (Ergebnis er : ergebnisse.values) {
-			s = katw.get(er.getKategorie)
-			if (Global.nes(s.getGefundenId)) {
-				if (Global.nes(er.getSpieler) && s.getAnzahlNicht > 0) {
-					er.setWahrscheinlichkeit(100.0 * (1 + er.getSpielerOhneAnzahl + er.getSpielerWahrAnzahl) /
-						s.getAnzahlNicht)
-				// er.setWahrscheinlichkeit(100.0 / s.getAnzahl2);
+			s = katw.get(er.kategorie)
+			if (Global.nes(s.gefundenId)) {
+				if (Global.nes(er.spieler) && s.anzahlNicht > 0) {
+					er.setWahrscheinlichkeit(100.0 * (1 + er.spielerOhneAnzahl + er.spielerWahrAnzahl) / s.anzahlNicht)
+				// er.setWahrscheinlichkeit(100.0 / s.anzahl2)
 				} else {
 					er.setWahrscheinlichkeit(0)
 				}
 			} else {
-				if (s.getGefundenId.equals(er.getId)) {
+				if (s.gefundenId.equals(er.id)) {
 					er.setWahrscheinlichkeit(100)
 				} else {
 					er.setWahrscheinlichkeit(0)
@@ -540,10 +539,10 @@ class DetektivContext implements Serializable {
 		if (r === null) {
 			return
 		}
-		if (r.getSpieler === null) {
+		if (r.spieler === null) {
 			throw new MeldungException("Bitte einen Spieler auswählen.")
 		}
-		runden.put(r.getId, r)
+		runden.put(r.id, r)
 	}
 
 	def void updateRunde(Runde r) {
@@ -551,20 +550,20 @@ class DetektivContext implements Serializable {
 		if (r === null) {
 			return;
 		}
-		if (r.getSpieler === null) {
+		if (r.spieler === null) {
 			throw new MeldungException("Bitte einen Spieler auswählen.")
 		}
-		var Runde rU = runden.get(r.getId)
+		var Runde rU = runden.get(r.id)
 		if (rU !== null) {
-			rU.setSpieler(r.getSpieler)
-			rU.setVerdaechtige(r.getVerdaechtige)
+			rU.setSpieler(r.spieler)
+			rU.setVerdaechtige(r.verdaechtige)
 			rU.setBesitzv(r.isBesitzv)
-			rU.setWerkzeuge(r.getWerkzeuge)
+			rU.setWerkzeuge(r.werkzeuge)
 			rU.setBesitzw(r.isBesitzw)
-			rU.setRaeume(r.getRaeume)
+			rU.setRaeume(r.raeume)
 			rU.setBesitzr(r.isBesitzr)
-			rU.setSpielerOhne(r.getSpielerOhne)
-			rU.setSpielerMit(r.getSpielerMit)
+			rU.setSpielerOhne(r.spielerOhne)
+			rU.setSpielerMit(r.spielerMit)
 		}
 	}
 
@@ -587,17 +586,17 @@ class DetektivContext implements Serializable {
 		var pliste = r.ergebnis
 		if (Global.listLaenge(pliste) > 0 && !Global.nes(pliste.get(0).wert)) {
 			var s = pliste.get(0).wert
-			var bytes = Base64.getDecoder.decode(s)
+			var bytes = Base64.decoder.decode(s)
 			var bs = new ByteArrayInputStream(bytes)
 			try {
 				var in = new ObjectInputStream(bs)
 				context = in.readObject as DetektivContext
 			} catch (IOException e1) {
 				e1.printStackTrace
-				throw new MeldungException(e1.getMessage)
+				throw new MeldungException(e1.message)
 			} catch (ClassNotFoundException e1) {
 				e1.printStackTrace
-				throw new MeldungException(e1.getMessage)
+				throw new MeldungException(e1.message)
 			}
 
 		}
@@ -621,7 +620,7 @@ class DetektivContext implements Serializable {
 			bs.close
 			var byte[] bytes = bs.toByteArray
 			p.setSchluessel(SCHLUESSEL)
-			p.setWert(Base64.getEncoder.encodeToString(bytes))
+			p.setWert(Base64.encoder.encodeToString(bytes))
 			var r = FactoryService::anmeldungService.updateParameterListe(daten, pliste)
 			r.throwErstenFehler
 		} catch (Exception e1) {
