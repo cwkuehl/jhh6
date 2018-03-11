@@ -8,7 +8,6 @@ import de.cwkuehl.jhh6.app.base.DateiAuswahl
 import de.cwkuehl.jhh6.app.base.Profil
 import de.cwkuehl.jhh6.app.base.Werkzeug
 import de.cwkuehl.jhh6.server.FactoryService
-import java.util.List
 import javafx.fxml.FXML
 import javafx.scene.control.CheckBox
 import javafx.scene.control.Label
@@ -71,9 +70,9 @@ class AD200SchnittstelleController extends BaseController<String> {
 	@FXML def void onExport() {
 
 		if (Global.nes(datei.text)) {
-			throw new MeldungException(Meldungen.M1012)
+			throw new MeldungException(Meldungen::M1012)
 		}
-		var List<String> zeilen = get(FactoryService::adresseService.exportAdresseListe(serviceDaten))
+		var zeilen = get(FactoryService::adresseService.exportAdresseListe(serviceDaten))
 		Werkzeug.speicherDateiOeffnen(zeilen, null, datei.text, false)
 	}
 
@@ -83,14 +82,13 @@ class AD200SchnittstelleController extends BaseController<String> {
 	@FXML def void onImport() {
 
 		if (Global.nes(datei.text)) {
-			throw new MeldungException(Meldungen.M1012)
+			throw new MeldungException(Meldungen::M1012)
 		}
-		if (Werkzeug.showYesNoQuestion(Meldungen.AD011) === 0) {
+		if (Werkzeug.showYesNoQuestion(Meldungen::AD011) === 0) {
 			return
 		}
-		var List<String> zeilen = Werkzeug.leseDatei(datei.text)
-		var String meldung = get(
-			FactoryService::adresseService.importAdresseListe(serviceDaten, zeilen, loeschen.isSelected))
+		var zeilen = Werkzeug.leseDatei(datei.text)
+		var meldung = get(FactoryService::adresseService.importAdresseListe(serviceDaten, zeilen, loeschen.isSelected))
 		if (!Global.nes(meldung)) {
 			updateParent
 			Werkzeug.showInfo(meldung)

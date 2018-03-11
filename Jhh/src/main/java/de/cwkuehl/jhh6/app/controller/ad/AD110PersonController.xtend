@@ -93,7 +93,7 @@ class AD110PersonController extends BaseController<String> {
 		name10.setLabelFor(name1, true)
 		name20.setLabelFor(name2)
 		geschlecht0.setLabelFor(geschlecht, true)
-		geburt0.setLabelFor(geburt.getLabelForNode())
+		geburt0.setLabelFor(geburt.labelForNode)
 		personStatus0.setLabelFor(personStatus, true)
 		name0.setLabelFor(name)
 		strasse0.setLabelFor(strasse)
@@ -112,9 +112,9 @@ class AD110PersonController extends BaseController<String> {
 		adresseAnzahl0.setLabelFor(adresseAnzahl)
 		angelegt0.setLabelFor(angelegt)
 		geaendert0.setLabelFor(geaendert)
-		var neu = DialogAufrufEnum.NEU.equals(aufruf)
-		var loeschen = DialogAufrufEnum.LOESCHEN.equals(aufruf)
-		var AdPersonSitzAdresse k = getParameter1()
+		var neu = DialogAufrufEnum::NEU.equals(aufruf)
+		var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
+		var AdPersonSitzAdresse k = parameter1
 		if (!neu && k !== null) {
 			var l = get(
 				FactoryService::adresseService.getPersonenSitzAdresseListe(serviceDaten, false, false, null, null,
@@ -150,7 +150,7 @@ class AD110PersonController extends BaseController<String> {
 					get(FactoryService::adresseService.getAdresseAnzahl(serviceDaten, k.adresseUid)))
 				angelegt.text = k.formatDatumVon(k.angelegtAm, k.angelegtVon)
 				geaendert.text = k.formatDatumVon(k.geaendertAm, k.geaendertVon)
-				if (DialogAufrufEnum.KOPIEREN2.equals(aufruf)) {
+				if (DialogAufrufEnum::KOPIEREN2.equals(aufruf)) {
 					sitzNr.text = null
 					adressNr.text = null
 				}
@@ -187,7 +187,7 @@ class AD110PersonController extends BaseController<String> {
 		adresseDupl.setVisible(!loeschen)
 		adresseWechseln.setVisible(!loeschen)
 		if (loeschen) {
-			ok.text = Meldungen.M2001
+			ok.text = Meldungen::M2001
 		}
 		initDaten(0)
 		titel.requestFocus
@@ -243,17 +243,17 @@ class AD110PersonController extends BaseController<String> {
 	 */
 	@FXML def void onOk() {
 
-		var ServiceErgebnis<?> r = null
-		if (DialogAufrufEnum.NEU.equals(aufruf) || DialogAufrufEnum.KOPIEREN.equals(aufruf)) {
+		var ServiceErgebnis<?> r
+		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
 			var AdPersonSitzAdresse p = getData()
 			p.setUid(null)
 			p.setSiUid(null)
 			p.setAdresseUid(null)
 			r = FactoryService::adresseService.insertUpdatePerson(serviceDaten, p)
-		} else if (DialogAufrufEnum.AENDERN.equals(aufruf) || DialogAufrufEnum.KOPIEREN2.equals(aufruf)) {
+		} else if (DialogAufrufEnum::AENDERN.equals(aufruf) || DialogAufrufEnum::KOPIEREN2.equals(aufruf)) {
 			var AdPersonSitzAdresse p = getData()
 			r = FactoryService::adresseService.insertUpdatePerson(serviceDaten, p)
-		} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
+		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
 			r = FactoryService::adresseService.deleteSitz(serviceDaten, nr.text, sitzNr.text)
 		}
 		if (r !== null) {
@@ -278,7 +278,7 @@ class AD110PersonController extends BaseController<String> {
 	 */
 	@FXML def void onAdresseWechseln() {
 
-		var AdAdresse k = starteDialog(typeof(AD130AdressenController), DialogAufrufEnum.OHNE)
+		var AdAdresse k = starteDialog(typeof(AD130AdressenController), DialogAufrufEnum::OHNE)
 		if (k !== null) {
 			var diff = 0
 			if (Global.compString(k.uid, adressNr.text) != 0) {

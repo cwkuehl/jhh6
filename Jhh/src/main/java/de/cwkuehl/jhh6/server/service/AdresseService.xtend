@@ -50,7 +50,7 @@ class AdresseService {
 		var j = datum.year
 		var j1 = 0
 		var dv = dvon.monthValue * 100 + dvon.dayOfMonth
-		v.add(Meldungen.AD001(dvon.atStartOfDay, dbis.atStartOfDay))
+		v.add(Meldungen::AD001(dvon.atStartOfDay, dbis.atStartOfDay))
 		var i = if(j != dvon.year) 1 else if(j != dbis.year) 2 else 0
 		var liste = personRep.getGeburtstagListe(daten, dvon, dbis)
 		for (AdPerson vo : liste) {
@@ -64,7 +64,7 @@ class AdresseService {
 					j1 = dbis.year - vo.geburt.year
 				}
 			}
-			v.add(Meldungen.AD002(vo.geburt.atStartOfDay, Global.anhaengen(vo.name1, ", ", vo.vorname), j1))
+			v.add(Meldungen::AD002(vo.geburt.atStartOfDay, Global.anhaengen(vo.name1, ", ", vo.vorname), j1))
 		}
 		r.ergebnis = v
 		return r
@@ -82,7 +82,7 @@ class AdresseService {
 		var r = new ServiceErgebnis<List<AdPersonSitzAdresse>>(null)
 		var l = personRep.getPersonenSitzAdresseListe(daten, nurAktuelle, name, vorname, puid, suid)
 		if (zusammengesetzt) {
-			var String pnr = null
+			var String pnr
 			for (AdPersonSitzAdresse e : l) {
 				var strB = new StringBuffer
 				if (Global.compString(pnr, e.getUid) != 0) {
@@ -141,7 +141,7 @@ class AdresseService {
 	override ServiceErgebnis<byte[]> getReportAdresse(ServiceDaten daten) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
-		var ueberschrift = Meldungen.AD003(daten.getJetzt)
+		var ueberschrift = Meldungen::AD003(daten.jetzt)
 		var liste = personRep.getPersonenSitzAdresseListe(daten, true, null, null, null, null)
 		var doc = newFopDokument
 		doc.addAdressenliste(true, ueberschrift, liste)
@@ -155,7 +155,7 @@ class AdresseService {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var liste = sitzRep.getSitzListe(daten, personUid, null, null)
-		var int reihenfolge = 1
+		var reihenfolge = 1
 		for (AdSitz e : liste) {
 			var voU = new AdSitzUpdate(e)
 			if (Global.compString(sitzUid, e.getUid) == 0) {
@@ -165,7 +165,7 @@ class AdresseService {
 				voU.setReihenfolge(reihenfolge)
 			}
 			if (voU.isChanged) {
-				voU.machGeaendert(daten.getJetzt, daten.getBenutzerId)
+				voU.machGeaendert(daten.jetzt, daten.benutzerId)
 				sitzRep.update(daten, voU)
 			}
 		}
@@ -185,8 +185,8 @@ class AdresseService {
 
 	def private boolean isAdresseLeer(AdPersonSitzAdresse adresse) {
 
-		if ((Global.nes(adresse.getStaat) || "D".equals(adresse.getStaat)) && Global.nes(adresse.getPlz) &&
-			Global.nes(adresse.getOrt) && Global.nes(adresse.getStrasse) && Global.nes(adresse.getHausnr)) {
+		if ((Global.nes(adresse.staat) || "D".equals(adresse.staat)) && Global.nes(adresse.plz) &&
+			Global.nes(adresse.ort) && Global.nes(adresse.strasse) && Global.nes(adresse.hausnr)) {
 			return true
 		}
 		return false
@@ -222,10 +222,11 @@ class AdresseService {
 	}
 
 	val private BiConsumer<AdPerson, AdPersonUpdate> personEvent = [ AdPerson e, AdPersonUpdate u |
+
 		var String uid
 		var String name1
 		var LocalDate geburt
-		var int geburtk = 0
+		var geburtk = 0
 		var String geschlecht
 		if (e !== null) {
 			uid = e.uid
@@ -402,7 +403,7 @@ class AdresseService {
 		var person = new AdPerson
 		var sitz = new AdSitz
 		var adresse = new AdAdresse
-		var List<String> felder = null
+		var List<String> felder
 		var werte = new Vector<Object>
 		var pAnzahl = 0
 		var sAnzahl = 0
@@ -470,15 +471,14 @@ class AdresseService {
 				for (AdPerson b : peListe) {
 					personRep.delete(daten, b)
 				}
-				log.debug(Meldungen.AD004)
+				log.debug(Meldungen::AD004)
 			}
 
-			var String pnr = null
-			var String snr = null
-			var String anr = null
+			var String pnr
+			var String snr
+			var String anr
 			var fehler = false
-			var String feld = null
-
+			var String feld
 			for (String zeile : zeilen) {
 				felder = Global.decodeCSV(zeile)
 				if (geprueft) {
@@ -539,7 +539,7 @@ class AdresseService {
 								person.angelegtAm, person.geaendertVon, person.geaendertAm)
 						}
 					} catch (Exception ex) {
-						log.error(Meldungen.AD007, ex)
+						log.error(Meldungen::AD007, ex)
 						fehler = true
 						pFehler++
 						if (Global.nes(pnr)) {
@@ -628,7 +628,7 @@ class AdresseService {
 									adresse.angelegtAm, adresse.geaendertVon, adresse.geaendertAm)
 							}
 						} catch (Exception ex) {
-							log.error(Meldungen.AD009, ex)
+							log.error(Meldungen::AD009, ex)
 							fehler = true
 							aFehler++
 							if (Global.nes(anr)) {
@@ -655,7 +655,7 @@ class AdresseService {
 									sitz.angelegtAm, sitz.geaendertVon, sitz.geaendertAm)
 							}
 						} catch (Exception ex) {
-							log.error(Meldungen.AD008, ex)
+							log.error(Meldungen::AD008, ex)
 							fehler = true
 							sFehler++
 							if (Global.nes(snr)) {
@@ -682,17 +682,17 @@ class AdresseService {
 						}
 					}
 					if (!geprueft) {
-						throw new MeldungException(Meldungen.AD005)
+						throw new MeldungException(Meldungen::AD005)
 					}
 				}
 			}
 			if (!geprueft) {
-				throw new MeldungException(Meldungen.AD006)
+				throw new MeldungException(Meldungen::AD006)
 			}
 		} finally {
 			Global.machNichts
 		}
-		var r = new ServiceErgebnis<String>(Meldungen.AD010(pAnzahl, pFehler, sAnzahl, sFehler, aAnzahl, aFehler))
+		var r = new ServiceErgebnis<String>(Meldungen::AD010(pAnzahl, pFehler, sAnzahl, sFehler, aAnzahl, aFehler))
 		return r
 	}
 

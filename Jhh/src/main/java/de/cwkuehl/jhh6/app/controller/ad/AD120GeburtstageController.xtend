@@ -41,7 +41,7 @@ class AD120GeburtstageController extends BaseController<String> {
 		if (t <= 0) {
 			tage.setText("12")
 		}
-		datum.setValue(LocalDate.now)
+		datum.setValue(LocalDate::now)
 		ok.requestFocus
 		starten.hashCode
 		initDaten(0)

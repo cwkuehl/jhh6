@@ -8,7 +8,6 @@ import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.app.base.Werkzeug
 import de.cwkuehl.jhh6.server.FactoryService
 import java.time.LocalDateTime
-import java.util.List
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -68,14 +67,15 @@ class AD100PersonenController extends BaseController<String> {
 		final SimpleStringProperty angelegtVon
 
 		new(AdPersonSitzAdresse v) {
+
 			super(v)
-			uid = new SimpleStringProperty(v.getUid)
-			name1 = new SimpleStringProperty(v.getName1)
-			name = new SimpleStringProperty(v.getName)
-			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.getGeaendertAm)
-			geaendertVon = new SimpleStringProperty(v.getGeaendertVon)
-			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.getAngelegtAm)
-			angelegtVon = new SimpleStringProperty(v.getAngelegtVon)
+			uid = new SimpleStringProperty(v.uid)
+			name1 = new SimpleStringProperty(v.name1)
+			name = new SimpleStringProperty(v.name)
+			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
+			geaendertVon = new SimpleStringProperty(v.geaendertVon)
+			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
+			angelegtVon = new SimpleStringProperty(v.angelegtVon)
 		}
 
 		override String getId() {
@@ -132,7 +132,7 @@ class AD100PersonenController extends BaseController<String> {
 			vorname.setText("%%")
 		}
 		if (stufe <= 1) {
-			var List<AdPersonSitzAdresse> l = get(
+			var l = get(
 				FactoryService::adresseService.getPersonenSitzAdresseListe(serviceDaten, true, false, name.text,
 					vorname.text, null, null))
 			getItems(l, null, [a|new PersonenData(a)], personenData)
@@ -162,7 +162,7 @@ class AD100PersonenController extends BaseController<String> {
 	}
 
 	def private void starteDialog(DialogAufrufEnum aufruf) {
-		var AdPersonSitzAdresse k = getValue(personen, !DialogAufrufEnum.NEU.equals(aufruf))
+		var AdPersonSitzAdresse k = getValue(personen, !DialogAufrufEnum::NEU.equals(aufruf))
 		starteFormular(AD110PersonController, aufruf, k)
 	}
 
@@ -193,28 +193,28 @@ class AD100PersonenController extends BaseController<String> {
 	 * Event für Neu.
 	 */
 	@FXML def void onNeu() {
-		starteDialog(DialogAufrufEnum.NEU)
+		starteDialog(DialogAufrufEnum::NEU)
 	}
 
 	/** 
 	 * Event für Kopieren.
 	 */
 	@FXML def void onKopieren() {
-		starteDialog(DialogAufrufEnum.KOPIEREN)
+		starteDialog(DialogAufrufEnum::KOPIEREN)
 	}
 
 	/** 
 	 * Event für Aendern.
 	 */
 	@FXML def void onAendern() {
-		starteDialog(DialogAufrufEnum.AENDERN)
+		starteDialog(DialogAufrufEnum::AENDERN)
 	}
 
 	/** 
 	 * Event für Loeschen.
 	 */
 	@FXML def void onLoeschen() {
-		starteDialog(DialogAufrufEnum.LOESCHEN)
+		starteDialog(DialogAufrufEnum::LOESCHEN)
 	}
 
 	/** 
@@ -222,14 +222,14 @@ class AD100PersonenController extends BaseController<String> {
 	 */
 	@FXML def void onDrucken() {
 		var byte[] pdf = get(FactoryService::adresseService.getReportAdresse(serviceDaten))
-		Werkzeug.speicherReport(pdf, Meldungen.AD012, true)
+		Werkzeug.speicherReport(pdf, Meldungen::AD012, true)
 	}
 
 	/** 
 	 * Event für ImExport.
 	 */
 	@FXML def void onImExport() {
-		starteFormular(typeof(AD200SchnittstelleController), DialogAufrufEnum.OHNE);
+		starteFormular(typeof(AD200SchnittstelleController), DialogAufrufEnum::OHNE);
 	}
 
 	/** 
@@ -252,7 +252,7 @@ class AD100PersonenController extends BaseController<String> {
 	 * Event für SitzNeu.
 	 */
 	@FXML def void onSitzNeu() {
-		starteDialog(DialogAufrufEnum.KOPIEREN2)
+		starteDialog(DialogAufrufEnum::KOPIEREN2)
 	}
 
 	/** 
@@ -271,6 +271,6 @@ class AD100PersonenController extends BaseController<String> {
 	 * Event für GebListe.
 	 */
 	@FXML def void onGebListe() {
-		starteFormular(typeof(AD120GeburtstageController), DialogAufrufEnum.OHNE);
+		starteFormular(typeof(AD120GeburtstageController), DialogAufrufEnum::OHNE);
 	}
 }
