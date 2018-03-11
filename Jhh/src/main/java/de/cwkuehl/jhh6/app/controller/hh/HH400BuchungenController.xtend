@@ -13,7 +13,6 @@ import de.cwkuehl.jhh6.app.control.Datum
 import de.cwkuehl.jhh6.server.FactoryService
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.util.List
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -172,39 +171,38 @@ class HH400BuchungenController extends BaseController<String> {
 
 		if (stufe <= 0) {
 			setText(kennzeichen, "1")
-			var LocalDate d = LocalDate::now
+			var d = LocalDate::now
 			d = d.withDayOfMonth(d.lengthOfMonth)
 			bis.setValue(d)
 			von.setValue(d.minusMonths(13).withDayOfMonth(1))
 			bText.setText("%%")
 			betrag.setText(null)
-			var List<HhKonto> kl = get(
-				FactoryService::getHaushaltService.getKontoListe(serviceDaten, bis.value, von.value))
+			var kl = get(FactoryService::haushaltService.getKontoListe(serviceDaten, bis.value, von.value))
 			konto.setItems(getItems(kl, new HhKonto, [a|new KontoData(a)], null))
 			setText(konto, null)
-			var LocalDate v = getParameter1
+			var v = parameter1 as LocalDate
 			if (v !== null) {
 				von.setValue(v)
 			}
-			var LocalDate b = getParameter2
+			var b = parameter2 as LocalDate
 			if (b !== null) {
 				bis.setValue(b)
 			}
-			val HhBilanzSb bi = getParameter3
+			val bi = parameter3 as HhBilanzSb
 			if (bi !== null) {
 				setText(konto, bi.kontoUid)
 				titel = kl.stream.filter([a|a.uid.equals(bi.kontoUid)]).map([a|a.name]).findFirst.orElse(null)
 			}
 		}
 		if (stufe <= 1) {
-			var List<HhBuchungLang> l = get(
-				FactoryService::getHaushaltService.getBuchungListe(serviceDaten, Global::objBool(getText(kennzeichen)),
+			var l = get(
+				FactoryService::haushaltService.getBuchungListe(serviceDaten, Global::objBool(getText(kennzeichen)),
 					von.value, bis.value, bText.text, getText(konto), betrag.text))
 			getItems(l, null, [a|new BuchungenData(a)], buchungenData)
-			var int anz = Global::listLaenge(l)
-			var double summe = 0
-			var double saldo = 0
-			var String uid = getText(konto)
+			var anz = Global::listLaenge(l)
+			var summe = 0.0
+			var saldo = 0.0
+			var uid = getText(konto)
 			if (l !== null) {
 				for (HhBuchungLang b : l) {
 					summe += b.ebetrag
@@ -216,9 +214,9 @@ class HH400BuchungenController extends BaseController<String> {
 				}
 			}
 			var sb = new StringBuffer
-			sb.append(Global::format(Meldungen.HH054(anz, summe)))
+			sb.append(Global::format(Meldungen::HH054(anz, summe)))
 			if (!Global::nes(uid)) {
-				sb.append(Meldungen.HH055(saldo))
+				sb.append(Meldungen::HH055(saldo))
 			}
 			buchungenStatus.setText(sb.toString)
 		}
@@ -320,10 +318,10 @@ class HH400BuchungenController extends BaseController<String> {
 	 */
 	@FXML def void onExport() {
 
-		var String pfad = Jhh6::einstellungen.tempVerzeichnis
-		var String datei = Global::getDateiname(Meldungen.HH056, true, true, "csv")
-		var List<String> zeilen = get(
-			FactoryService::getHaushaltService.exportBuchungListe(serviceDaten, Global::objBool(getText(kennzeichen)),
+		var pfad = Jhh6::einstellungen.tempVerzeichnis
+		var datei = Global::getDateiname(Meldungen::HH056, true, true, "csv")
+		var zeilen = get(
+			FactoryService::haushaltService.exportBuchungListe(serviceDaten, Global::objBool(getText(kennzeichen)),
 				von.value, bis.value, bText.text, getText(konto), betrag.text))
 		Werkzeug::speicherDateiOeffnen(zeilen, pfad, datei, false)
 	}

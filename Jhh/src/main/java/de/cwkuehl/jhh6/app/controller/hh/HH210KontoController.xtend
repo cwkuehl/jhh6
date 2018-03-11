@@ -66,14 +66,14 @@ class HH210KontoController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			von.setValue(LocalDate.now)
-			bis.setValue((null as LocalDate))
+			von.setValue(LocalDate::now)
+			bis.setValue(null as LocalDate)
 			setText(kontoart, KontoartEnum.AKTIVKONTO.toString)
 			setText(kennzeichen, KontokennzeichenEnum.OHNE.toString)
-			var boolean neu = DialogAufrufEnum.NEU.equals(getAufruf)
-			var boolean aendern = DialogAufrufEnum.AENDERN.equals(getAufruf)
-			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(getAufruf)
-			var HhKonto k = getParameter1
+			var neu = DialogAufrufEnum::NEU.equals(getAufruf)
+			var aendern = DialogAufrufEnum::AENDERN.equals(aufruf)
+			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
+			var HhKonto k = parameter1
 			if (!neu && k !== null) {
 				k = get(FactoryService::haushaltService.getKonto(serviceDaten, k.uid))
 				if (k !== null) {
@@ -97,7 +97,7 @@ class HH210KontoController extends BaseController<String> {
 			angelegt.setEditable(false)
 			geaendert.setEditable(false)
 			if (loeschen) {
-				ok.setText(Meldungen.M2001)
+				ok.setText(Meldungen::M2001)
 			}
 		}
 		if (stufe <= 1) { // stufe = 0
@@ -117,19 +117,19 @@ class HH210KontoController extends BaseController<String> {
 	 */
 	@FXML def void onOk() {
 
-		var ServiceErgebnis<?> r = null
-		if (DialogAufrufEnum.NEU.equals(aufruf) || DialogAufrufEnum.KOPIEREN.equals(aufruf)) {
+		var ServiceErgebnis<?> r
+		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
 			r = FactoryService::haushaltService.insertUpdateKonto(serviceDaten, null, getText(kontoart),
 				getText(kennzeichen), bezeichnung.text, von.value, bis.value, null, null, null, null, null, false)
-		} else if (DialogAufrufEnum.AENDERN.equals(aufruf)) {
+		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
 			r = FactoryService::haushaltService.insertUpdateKonto(serviceDaten, nr.text, getText(kontoart),
 				getText(kennzeichen), bezeichnung.text, von.value, bis.value, null, null, null, null, null, false)
-		} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
-			r = FactoryService::haushaltService.deleteKonto(serviceDaten, nr.getText())
+		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
+			r = FactoryService::haushaltService.deleteKonto(serviceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)
-			if (r.getFehler.isEmpty) {
+			if (r.fehler.isEmpty) {
 				updateParent
 				close
 			}

@@ -1,13 +1,12 @@
 package de.cwkuehl.jhh6.app.controller.hh
 
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.HhKonto
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.server.FactoryService
+import java.time.LocalDate
+import java.time.LocalDateTime
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -109,7 +108,7 @@ class HH200KontenController extends BaseController<String> {
 		if (stufe <= 0) {
 		}
 		if (stufe <= 1) {
-			var List<HhKonto> l = get(FactoryService::haushaltService.getKontoListe(serviceDaten, null, null))
+			var l = get(FactoryService::haushaltService.getKontoListe(serviceDaten, null, null))
 			getItems(l, null, [a|new KontenData(a)], kontenData)
 		}
 		if (stufe <= 2) {
@@ -140,7 +139,7 @@ class HH200KontenController extends BaseController<String> {
 	}
 
 	def private void starteDialog(DialogAufrufEnum aufruf) {
-		var HhKonto k = getValue(konten, !DialogAufrufEnum.NEU.equals(aufruf))
+		var HhKonto k = getValue(konten, !DialogAufrufEnum::NEU.equals(aufruf))
 		starteFormular(HH210KontoController, aufruf, k)
 	}
 
@@ -171,28 +170,28 @@ class HH200KontenController extends BaseController<String> {
 	 * Event für Neu.
 	 */
 	@FXML def void onNeu() {
-		starteDialog(DialogAufrufEnum.NEU)
+		starteDialog(DialogAufrufEnum::NEU)
 	}
 
 	/** 
 	 * Event für Kopieren.
 	 */
 	@FXML def void onKopieren() {
-		starteDialog(DialogAufrufEnum.KOPIEREN)
+		starteDialog(DialogAufrufEnum::KOPIEREN)
 	}
 
 	/** 
 	 * Event für Aendern.
 	 */
 	@FXML def void onAendern() {
-		starteDialog(DialogAufrufEnum.AENDERN)
+		starteDialog(DialogAufrufEnum::AENDERN)
 	}
 
 	/** 
 	 * Event für Loeschen.
 	 */
 	@FXML def void onLoeschen() {
-		starteDialog(DialogAufrufEnum.LOESCHEN)
+		starteDialog(DialogAufrufEnum::LOESCHEN)
 	}
 
 	/** 

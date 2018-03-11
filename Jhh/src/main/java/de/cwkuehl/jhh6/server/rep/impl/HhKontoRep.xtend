@@ -257,7 +257,7 @@ class HhKontoRep {
 
 	override String findKontoSortierung(ServiceDaten daten, String uid) {
 
-		var String sort = null
+		var String sort
 		while (Global.nes(sort)) {
 			sort = Global.fixiereString(Global.objStr(Global.getNextRandom()), HhKonto.SORTIERUNG_LAENGE, false, "0")
 			var k = getMinKonto(daten, uid, null, sort, null)

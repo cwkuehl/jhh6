@@ -1,14 +1,13 @@
 package de.cwkuehl.jhh6.app.controller.hh
 
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.HhPeriodeLang
 import de.cwkuehl.jhh6.api.global.Global
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.Profil
 import de.cwkuehl.jhh6.server.FactoryService
+import java.time.LocalDate
+import java.time.LocalDateTime
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -115,7 +114,7 @@ class HH100PeriodenController extends BaseController<String> {
 			ende.setEditable(false)
 		}
 		if (stufe <= 1) {
-			var List<HhPeriodeLang> l = get(FactoryService::haushaltService.getPeriodeListe(serviceDaten))
+			var l = get(FactoryService::haushaltService.getPeriodeListe(serviceDaten))
 			getItems(l, null, [a|new PeriodenData(a)], periodenData)
 			if (l !== null && l.size > 0) {
 				anfang.setText(Global.dateTimeStringForm(l.get(l.size - 1).datumVon.atStartOfDay))

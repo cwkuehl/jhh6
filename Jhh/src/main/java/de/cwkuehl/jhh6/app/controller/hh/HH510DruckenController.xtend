@@ -49,8 +49,8 @@ class HH510DruckenController extends BaseController<String> {
 
 		tabbar = 0
 		titel0.setLabelFor(titel)
-		von0.setLabelFor(von.getLabelForNode)
-		bis0.setLabelFor(bis.getLabelForNode)
+		von0.setLabelFor(von.labelForNode)
+		bis0.setLabelFor(bis.labelForNode)
 		initDaten(0)
 	}
 
@@ -61,7 +61,7 @@ class HH510DruckenController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var List<Object> e = getParameter1
+			var List<Object> e = parameter1
 			if (e !== null && e.size >= 3 && e.get(0) instanceof String && e.get(1) instanceof LocalDate &&
 				e.get(2) instanceof LocalDate) {
 				var kz = e.get(0) as String
@@ -106,8 +106,7 @@ class HH510DruckenController extends BaseController<String> {
 	 * Event für DateiAuswahl.
 	 */
 	@FXML def void onDateiAuswahl() {
-		var String dateiname = DateiAuswahl.auswaehlen(true, "HH510.select.file", "HH510.select.ok", "csv",
-			"HH510.select.ext")
+		var dateiname = DateiAuswahl.auswaehlen(true, "HH510.select.file", "HH510.select.ok", "csv", "HH510.select.ext")
 		if (!Global.nes(dateiname)) {
 			datei.setText(dateiname)
 		}
@@ -119,13 +118,13 @@ class HH510DruckenController extends BaseController<String> {
 	@FXML def void onImport1() {
 
 		if (Global.nes(datei.text)) {
-			throw new MeldungException(Meldungen.M1012)
+			throw new MeldungException(Meldungen::M1012)
 		}
-		if (Werkzeug.showYesNoQuestion(Meldungen.HH052) === 0) {
+		if (Werkzeug.showYesNoQuestion(Meldungen::HH052) === 0) {
 			return
 		}
-		var List<String> zeilen = Werkzeug.leseDatei(datei.text)
-		var meldung = get(FactoryService.haushaltService.importBuchungListe(serviceDaten, zeilen, loeschen.isSelected))
+		var zeilen = Werkzeug.leseDatei(datei.text)
+		var meldung = get(FactoryService::haushaltService.importBuchungListe(serviceDaten, zeilen, loeschen.isSelected))
 		if (!Global.nes(meldung)) {
 			updateParent
 			Werkzeug.showInfo(meldung)
@@ -141,12 +140,12 @@ class HH510DruckenController extends BaseController<String> {
 			val byte[] pdf = get(
 				FactoryService::haushaltService.getReportJahresbericht(serviceDaten, von.value, bis.value, titel.text,
 					eb.isSelected, gv.isSelected, sb.isSelected))
-			Platform.runLater([Werkzeug.speicherReport(pdf, Meldungen.HH048, true)])
+			Platform.runLater([Werkzeug.speicherReport(pdf, Meldungen::HH048, true)])
 		}
 		if (kassenbericht.isSelected) {
 			val byte[] pdf = get(
 				FactoryService::haushaltService.getReportKassenbericht(serviceDaten, von.value, bis.value, titel.text))
-			Platform.runLater([Werkzeug.speicherReport(pdf, Meldungen.HH049, true)])
+			Platform.runLater([Werkzeug.speicherReport(pdf, Meldungen::HH049, true)])
 		}
 	}
 

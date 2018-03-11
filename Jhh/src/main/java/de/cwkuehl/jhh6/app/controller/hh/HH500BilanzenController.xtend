@@ -1,7 +1,6 @@
 package de.cwkuehl.jhh6.app.controller.hh
 
 import de.cwkuehl.jhh6.api.dto.HhBilanzSb
-import de.cwkuehl.jhh6.api.dto.HhPeriode
 import de.cwkuehl.jhh6.api.global.Constant
 import de.cwkuehl.jhh6.api.global.Global
 import de.cwkuehl.jhh6.api.service.ServiceErgebnis
@@ -87,7 +86,7 @@ class HH500BilanzenController extends BaseController<String> {
 	 * Titel des Dialogs.
 	 */
 	override protected String getTitel() {
-		return super.getTitel(getParameter1)
+		return super.getTitel(parameter1)
 	}
 
 	/** 
@@ -119,15 +118,15 @@ class HH500BilanzenController extends BaseController<String> {
 	 */
 	override protected void initDaten(int stufe) {
 
-		var String parameter = getParameter1
+		var String parameter = parameter1
 		if (stufe <= 0) {
-			var HhPeriode max = get(FactoryService::haushaltService.holeMinMaxPerioden(serviceDaten))
-			var LocalDate dB = LocalDate::now
+			var max = get(FactoryService::haushaltService.holeMinMaxPerioden(serviceDaten))
+			var dB = LocalDate::now
 			dB = dB.withDayOfMonth(dB.lengthOfMonth)
 			if (max !== null && max.datumBis !== null && max.datumBis.isBefore(dB)) {
 				dB = max.datumBis
 			}
-			var LocalDate dV = dB.withDayOfYear(1)
+			var dV = dB.withDayOfYear(1)
 			if (max !== null && max.datumVon !== null && max.datumVon.isAfter(dV)) {
 				dV = max.datumVon
 			}
@@ -153,8 +152,8 @@ class HH500BilanzenController extends BaseController<String> {
 			}
 		}
 		if (stufe <= 1) {
-			var LocalDate dV = null
-			var LocalDate dB = null
+			var LocalDate dV
+			var LocalDate dB
 			if (Constant.KZBI_GV.equals(parameter)) {
 				dV = von.value
 				dB = bis.value
@@ -162,12 +161,11 @@ class HH500BilanzenController extends BaseController<String> {
 				dV = von.value
 				dB = von.value
 			}
-			var List<HhBilanzSb> liste = get(
-				FactoryService::haushaltService.getBilanzZeilen(serviceDaten, parameter, dV, dB))
-			var List<HhBilanzSb> listeS = new ArrayList<HhBilanzSb>
-			var List<HhBilanzSb> listeH = new ArrayList<HhBilanzSb>
-			var double summeS = 0
-			var double summeH = 0
+			var liste = get(FactoryService::haushaltService.getBilanzZeilen(serviceDaten, parameter, dV, dB))
+			var listeS = new ArrayList<HhBilanzSb>
+			var listeH = new ArrayList<HhBilanzSb>
+			var summeS = 0.0
+			var summeH = 0.0
 			if (liste !== null) {
 				for (HhBilanzSb b : liste) {
 					if (b.getArt > 0) {
@@ -220,10 +218,10 @@ class HH500BilanzenController extends BaseController<String> {
 	@FXML def void onBerechnen() {
 
 		val Task<Void> task = ([|
-			var boolean keine = true
-			var int weiter = 2
-			var LocalDate v = null
-			var ServiceErgebnis<String[]> r = null
+			var keine = true
+			var weiter = 2
+			var LocalDate v
+			var ServiceErgebnis<String[]> r
 			try {
 				Jhh6.setLeftStatus2(Global.g0("HH500.calculate1"))
 				if (mlBerechnen > 0) {
@@ -234,7 +232,7 @@ class HH500BilanzenController extends BaseController<String> {
 					r = FactoryService::haushaltService.aktualisiereBilanz(serviceDaten, false, v)
 					v = null
 					if (r.ok) {
-						var String[] l = r.getErgebnis
+						var l = r.ergebnis
 						if (Global.arrayLaenge(l) >= 1) {
 							weiter = Global.strInt(l.get(0))
 							if (weiter > 0) {
@@ -260,7 +258,7 @@ class HH500BilanzenController extends BaseController<String> {
 			}
 			null as Void
 		] as Task<Void>)
-		var Thread th = new Thread(task)
+		var th = new Thread(task)
 		th.setDaemon(true)
 		th.start
 	}
@@ -286,11 +284,11 @@ class HH500BilanzenController extends BaseController<String> {
 	 */
 	@FXML def void onDrucken() {
 
-		var List<Object> d = new ArrayList<Object>
-		d.add(getParameter1)
+		var d = new ArrayList<Object>
+		d.add(parameter1)
 		d.add(von.value)
 		d.add(bis.value)
-		starteFormular(HH510DruckenController, DialogAufrufEnum.OHNE, d)
+		starteFormular(HH510DruckenController, DialogAufrufEnum::OHNE, d)
 	}
 
 	/** 
@@ -315,15 +313,15 @@ class HH500BilanzenController extends BaseController<String> {
 	def private void starteBuchungen(HhBilanzSb bi) {
 
 		if (bi !== null) {
-			var LocalDate v = von.value
-			var LocalDate b = bis.value
-			if (Constant.KZBI_EROEFFNUNG.equals(getParameter1)) {
+			var v = von.value
+			var b = bis.value
+			if (Constant.KZBI_EROEFFNUNG.equals(parameter1)) {
 				b = v.plusYears(1).minusDays(1)
-			} else if (Constant.KZBI_SCHLUSS.equals(getParameter1)) {
+			} else if (Constant.KZBI_SCHLUSS.equals(parameter1)) {
 				b = v
 				v = b.withDayOfYear(1)
 			}
-			starteFormular(HH400BuchungenController, DialogAufrufEnum.OHNE, v, b, bi)
+			starteFormular(HH400BuchungenController, DialogAufrufEnum::OHNE, v, b, bi)
 		}
 	}
 
@@ -371,9 +369,9 @@ class HH500BilanzenController extends BaseController<String> {
 
 	def private void tauschen(boolean oben) {
 
-		var List<HhBilanzSb> l = null
-		var int r = 0
-		var int d = if(oben) -1 else 1
+		var List<HhBilanzSb> l
+		var r = 0
+		var d = if(oben) -1 else 1
 		if (sollTabelle) {
 			r = soll.getSelectionModel.selectedIndex
 			l = getAllValues(soll)
@@ -385,7 +383,7 @@ class HH500BilanzenController extends BaseController<String> {
 			var HhBilanzSb k = l.get(r)
 			var HhBilanzSb k2 = l.get(r + d)
 			get(FactoryService::haushaltService.tauscheKontoSortierung(serviceDaten, k.kontoUid, k2.kontoUid))
-			var int r2
+			var r2 = 0
 			if (sollTabelle) {
 				r = r + d
 				r2 = haben.getSelectionModel.selectedIndex

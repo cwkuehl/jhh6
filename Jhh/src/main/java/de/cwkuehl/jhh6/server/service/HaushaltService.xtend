@@ -89,7 +89,7 @@ class HaushaltService {
 	override ServiceErgebnis<Void> anlegenPeriode(ServiceDaten daten, int iMonate, boolean bEnde) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
-		var dVon = LocalDate.now.withDayOfYear(1)
+		var dVon = LocalDate::now.withDayOfYear(1)
 		var dBis = dVon.minusDays(1)
 		var lNr = 0
 		var pdiff = 0
@@ -113,7 +113,7 @@ class HaushaltService {
 			dBis = dBis.plusMonths(iMonate)
 		} else {
 			if (min === null || max === null) {
-				throw new MeldungException(Meldungen.HH003)
+				throw new MeldungException(Meldungen::HH003)
 			}
 			dVon = min.datumVon
 			dBis = max.datumBis
@@ -155,7 +155,7 @@ class HaushaltService {
 		var minNr = periodeRep.getMaxMinPeriodeNr(daten, true)
 		var maxNr = periodeRep.getMaxMinPeriodeNr(daten, false)
 		if (minNr >= maxNr) {
-			throw new MeldungException(Meldungen.HH004)
+			throw new MeldungException(Meldungen::HH004)
 		}
 		if (bEnde) {
 			lNr = maxNr
@@ -180,7 +180,7 @@ class HaushaltService {
 	def private void setzeBerPeriode(ServiceDaten daten, int nr) {
 
 		if (periodeRep.get(daten, new HhPeriodeKey(daten.mandantNr, nr)) === null) {
-			throw new MeldungException(Meldungen.HH005(nr))
+			throw new MeldungException(Meldungen::HH005(nr))
 		}
 		var lBer = holeBerPeriodeIntern(daten)
 		if (lBer >= Constant.MIN_PERIODE && lBer < nr) {
@@ -202,7 +202,7 @@ class HaushaltService {
 		var minNr = periodeRep.getMaxMinPeriodeNr(daten, true)
 		if (nr >= minNr) {
 			if (periodeRep.get(daten, new HhPeriodeKey(daten.mandantNr, nr)) === null) {
-				throw new MeldungException(Meldungen.HH005(nr))
+				throw new MeldungException(Meldungen::HH005(nr))
 			}
 			if (berechnet) {
 				nr++
@@ -249,7 +249,7 @@ class HaushaltService {
 		var vListe = new Vector<String>
 		var longPNr = new Long(pnr)
 		var HhBilanz hhBilanz = null
-		var double dbB = dbBetrag
+		var dbB = dbBetrag
 		var dbEB = dbEBetrag
 
 		// Bilanz-Einträge für eine Periode und ein oder alle Konten erstellen
@@ -257,10 +257,10 @@ class HaushaltService {
 		for (HhKonto hhKonto : hhKontos) {
 			var longKNr2 = hhKonto.uid
 			if (istAktivPassivKontoIntern(hhKonto.art.toString)) {
-				vListe.add(Meldungen.HH006(longPNr, Constant.KZBI_EROEFFNUNG, holeBilanzSH(hhKonto.art), longKNr2))
-				vListe.add(Meldungen.HH006(longPNr, Constant.KZBI_SCHLUSS, holeBilanzSH(hhKonto.art), longKNr2))
+				vListe.add(Meldungen::HH006(longPNr, Constant.KZBI_EROEFFNUNG, holeBilanzSH(hhKonto.art), longKNr2))
+				vListe.add(Meldungen::HH006(longPNr, Constant.KZBI_SCHLUSS, holeBilanzSH(hhKonto.art), longKNr2))
 			} else {
-				vListe.add(Meldungen.HH006(longPNr, Constant.KZBI_GV, holeBilanzSH(hhKonto.art), longKNr2))
+				vListe.add(Meldungen::HH006(longPNr, Constant.KZBI_GV, holeBilanzSH(hhKonto.art), longKNr2))
 			}
 		}
 
@@ -368,25 +368,25 @@ class HaushaltService {
 		var lBer = Constant.MAX_PERIODE
 		var strN = strName
 		var anzahl = 0
-		var String sort = null
+		var String sort
 		var insert = Global.nes(uid)
-		var HhKonto hhKonto = null
+		var HhKonto hhKonto
 
 		if (Global.nes(strN)) {
-			throw new MeldungException(Meldungen.HH007)
+			throw new MeldungException(Meldungen::HH007)
 		}
 		if (KontoartEnum.fromValue(strA) === null) {
-			throw new MeldungException(Meldungen.HH008(strA))
+			throw new MeldungException(Meldungen::HH008(strA))
 		}
 		if (KontokennzeichenEnum.fromValue(strK) === null || strK.length > 1) {
-			throw new MeldungException(Meldungen.HH009(strK))
+			throw new MeldungException(Meldungen::HH009(strK))
 		}
 		if (istSpezialKontokennzeichen(strK)) {
 			if (!Global.nes(kontoRep.getMinKonto(daten, uid, strK, null, null))) {
-				throw new MeldungException(Meldungen.HH010(strK))
+				throw new MeldungException(Meldungen::HH010(strK))
 			}
 			if (dVon !== null || dBis !== null) {
-				throw new MeldungException(Meldungen.HH011)
+				throw new MeldungException(Meldungen::HH011)
 			}
 		}
 		if (dVon !== null) {
@@ -395,11 +395,11 @@ class HaushaltService {
 		if (!insert) {
 			hhKonto = getKontoIntern(daten, uid, true)
 			if (!hhKonto.art.equals(strA)) {
-				throw new MeldungException(Meldungen.HH012)
+				throw new MeldungException(Meldungen::HH012)
 			}
 			var kzAlt = hhKonto.kz
 			if (istSpezialKontokennzeichen(kzAlt) && !kzAlt.equals(strK)) {
-				throw new MeldungException(Meldungen.HH013(kzAlt))
+				throw new MeldungException(Meldungen::HH013(kzAlt))
 			}
 			lVonAlt = hhKonto.periodeVon
 			lVonAlt = Math.max(lVonAlt, Constant.MIN_PERIODE)
@@ -408,27 +408,27 @@ class HaushaltService {
 			sort = hhKonto.sortierung
 			if (dVon !== null) {
 				if (buchungRep.countKontoValutaVorNach(daten, uid, dVon, null, Constant.KZB_AKTIV) > 0) {
-					throw new MeldungException(Meldungen.HH014)
+					throw new MeldungException(Meldungen::HH014)
 				}
 			}
 		}
 		if (dBis !== null) {
 			if (dVon !== null && dBis.isBefore(dVon)) {
-				throw new MeldungException(Meldungen.HH015)
+				throw new MeldungException(Meldungen::HH015)
 			}
 			lBis = periodeRep.getMaxMinNr(daten, true, dBis)
 			if (lBis <= 0) {
 				lBis = Constant.MAX_PERIODE
 			}
 			if (!insert && buchungRep.countKontoValutaVorNach(daten, uid, null, dBis, Constant.KZB_AKTIV) > 0) {
-				throw new MeldungException(Meldungen.HH016)
+				throw new MeldungException(Meldungen::HH016)
 			}
 		}
 		if (Global.nes(sort)) {
 			sort = kontoRep.findKontoSortierung(daten, knr)
 		}
 		if (!Global.nes(kontoRep.getMinKonto(daten, knr, null, null, strN))) {
-			throw new MeldungException(Meldungen.HH017(strN))
+			throw new MeldungException(Meldungen::HH017(strN))
 		}
 		if (insert) {
 			knr = Global.getUID
@@ -458,7 +458,7 @@ class HaushaltService {
 				anzahl = insertBilanzPerioden(daten, hhBilanz, dVon, dBis)
 			}
 			if (anzahl <= 0) {
-				throw new MeldungException(Meldungen.HH018)
+				throw new MeldungException(Meldungen::HH018)
 			}
 			hhKonto = new HhKonto
 			hhKonto.mandantNr = daten.mandantNr
@@ -556,7 +556,7 @@ class HaushaltService {
 
 		var hhKonto = kontoRep.get(daten, new HhKontoKey(daten.mandantNr, uid))
 		if (exception && hhKonto === null) {
-			throw new MeldungException(Meldungen.HH019(uid))
+			throw new MeldungException(Meldungen::HH019(uid))
 		}
 		return hhKonto
 	}
@@ -572,10 +572,10 @@ class HaushaltService {
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var hhKonto = getKontoIntern(daten, uid, true)
 		if (buchungRep.countKontoValutaVorNach(daten, uid, null, null, null) > 0) {
-			throw new MeldungException(Meldungen.HH020)
+			throw new MeldungException(Meldungen::HH020)
 		}
 		if (istSpezialKontokennzeichen(hhKonto.kz)) {
-			throw new MeldungException(Meldungen.HH021)
+			throw new MeldungException(Meldungen::HH021)
 		}
 		var biliste = bilanzRep.getBilanzListe(daten, null, Constant.PN_BERECHNET, Constant.PN_BERECHNET, uid)
 		for (HhBilanz b : biliste) {
@@ -599,13 +599,13 @@ class HaushaltService {
 	override ServiceErgebnis<String> holeMinMaxKontoText(ServiceDaten daten, String kontoUid) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
-		var r = new ServiceErgebnis<String>(Meldungen.HH022)
+		var r = new ServiceErgebnis<String>(Meldungen::HH022)
 		var min = buchungRep.getBuchungMaxMin(daten, kontoUid, true)
 		if (min !== null) {
 			var max = buchungRep.getBuchungMaxMin(daten, kontoUid, false)
 			var dMin = min.sollValuta.atStartOfDay
 			var dMax = max.sollValuta.atStartOfDay
-			r.ergebnis = Meldungen.HH023(dMin, dMax)
+			r.ergebnis = Meldungen::HH023(dMin, dMax)
 		}
 		return r
 	}
@@ -652,27 +652,27 @@ class HaushaltService {
 		}
 		if (Global.nes(bez)) {
 			if (u !== null) {
-				throw new MeldungException(Meldungen.HH024)
+				throw new MeldungException(Meldungen::HH024)
 			}
-			bez = Meldungen.HH025(uid)
+			bez = Meldungen::HH025(uid)
 		}
 		if (kz !== null && kz.length > HhEreignis.KZ_LAENGE) {
-			throw new MeldungException(Meldungen.HH026(HhEreignis.KZ_LAENGE))
+			throw new MeldungException(Meldungen::HH026(HhEreignis.KZ_LAENGE))
 		}
 		if (Global.nes(text)) {
-			throw new MeldungException(Meldungen.HH027)
+			throw new MeldungException(Meldungen::HH027)
 		}
 		if (text.length > HhEreignis.ETEXT_LAENGE) {
 			text = text.substring(0, HhEreignis.ETEXT_LAENGE)
 		}
 		if (Global.nes(suid)) {
-			throw new MeldungException(Meldungen.HH028)
+			throw new MeldungException(Meldungen::HH028)
 		}
 		if (Global.nes(huid)) {
-			throw new MeldungException(Meldungen.HH029)
+			throw new MeldungException(Meldungen::HH029)
 		}
 		if (suid.equals(huid)) {
-			throw new MeldungException(Meldungen.HH030)
+			throw new MeldungException(Meldungen::HH030)
 		}
 		if (e !== null) {
 			e.bezeichnung = bez
@@ -803,7 +803,7 @@ class HaushaltService {
 
 		var ek = kontoRep.getMinKonto(daten, null, KontokennzeichenEnum.EIGENKAPITEL.toString, null, null)
 		if (exception && Global.nes(ek)) {
-			throw new MeldungException(Meldungen.HH031)
+			throw new MeldungException(Meldungen::HH031)
 		}
 		return ek
 	}
@@ -818,7 +818,7 @@ class HaushaltService {
 
 		var gv = kontoRep.getMinKonto(daten, null, KontokennzeichenEnum.GEWINN_VERLUST.toString, null, null)
 		if (exception && Global.nes(gv)) {
-			throw new MeldungException(Meldungen.HH032)
+			throw new MeldungException(Meldungen::HH032)
 		}
 		return gv
 	}
@@ -832,50 +832,50 @@ class HaushaltService {
 		String habenUid, String text, String bn, LocalDate bd) {
 
 		if (sv === null) {
-			throw new MeldungException(Meldungen.HH033)
+			throw new MeldungException(Meldungen::HH033)
 		}
 		if (Global.compDouble(b, 0) <= 0 || Global.compDouble(eb, 0) <= 0) {
-			throw new MeldungException(Meldungen.HH034)
+			throw new MeldungException(Meldungen::HH034)
 		}
 		if (Global.nes(sollUid)) {
-			throw new MeldungException(Meldungen.HH028)
+			throw new MeldungException(Meldungen::HH028)
 		}
 		if (Global.nes(habenUid)) {
-			throw new MeldungException(Meldungen.HH029)
+			throw new MeldungException(Meldungen::HH029)
 		}
 		if (habenUid == sollUid) {
-			throw new MeldungException(Meldungen.HH030)
+			throw new MeldungException(Meldungen::HH030)
 		}
 		var ek = holeEkKonto(daten, true)
 		var gv = holeGvKonto(daten, true)
 		if (sollUid.equals(ek) || habenUid.equals(ek) || sollUid.equals(gv) || habenUid.equals(gv)) {
-			throw new MeldungException(Meldungen.HH035)
+			throw new MeldungException(Meldungen::HH035)
 		}
 		if (Global.nes(text)) {
-			throw new MeldungException(Meldungen.HH027)
+			throw new MeldungException(Meldungen::HH027)
 		}
 		if (bd === null) {
-			throw new MeldungException(Meldungen.HH036)
+			throw new MeldungException(Meldungen::HH036)
 		}
 		var hhKonto = getKontoIntern(daten, sollUid, false)
 		if (hhKonto === null) {
-			throw new MeldungException(Meldungen.HH037)
+			throw new MeldungException(Meldungen::HH037)
 		}
 		if (hhKonto.gueltigVon !== null && sv.isBefore(hhKonto.gueltigVon)) {
-			throw new MeldungException(Meldungen.HH038(hhKonto.gueltigVon.atStartOfDay))
+			throw new MeldungException(Meldungen::HH038(hhKonto.gueltigVon.atStartOfDay))
 		}
 		if (hhKonto.gueltigBis !== null && sv.isAfter(hhKonto.gueltigBis)) {
-			throw new MeldungException(Meldungen.HH039(hhKonto.gueltigBis.atStartOfDay))
+			throw new MeldungException(Meldungen::HH039(hhKonto.gueltigBis.atStartOfDay))
 		}
 		hhKonto = getKontoIntern(daten, habenUid, false)
 		if (hhKonto === null) {
-			throw new MeldungException(Meldungen.HH040)
+			throw new MeldungException(Meldungen::HH040)
 		}
 		if (hhKonto.gueltigVon !== null && sv.isBefore(hhKonto.gueltigVon)) {
-			throw new MeldungException(Meldungen.HH041(hhKonto.gueltigVon.atStartOfDay))
+			throw new MeldungException(Meldungen::HH041(hhKonto.gueltigVon.atStartOfDay))
 		}
 		if (hhKonto.gueltigBis !== null && sv.isAfter(hhKonto.gueltigBis)) {
-			throw new MeldungException(Meldungen.HH042(hhKonto.gueltigBis.atStartOfDay))
+			throw new MeldungException(Meldungen::HH042(hhKonto.gueltigBis.atStartOfDay))
 		}
 	}
 
@@ -917,8 +917,8 @@ class HaushaltService {
 		var strKz = Constant.KZB_AKTIV
 		var strT = text
 		var insert = Global.nes(uid)
-		var LocalDate dValt = null
-		var HhBuchung balt = null
+		var LocalDate dValt
+		var HhBuchung balt
 
 		if (!insert) {
 			balt = buchungRep.get(daten, new HhBuchungKey(daten.mandantNr, uid))
@@ -980,7 +980,7 @@ class HaushaltService {
 
 		var p = periodeRep.getMaxMinPeriode(daten, false, d)
 		if (p === null && exception) {
-			throw new MeldungException(Meldungen.HH018)
+			throw new MeldungException(Meldungen::HH018)
 		}
 		return p
 	}
@@ -996,7 +996,7 @@ class HaushaltService {
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var hhBuchung = buchungRep.get(daten, new HhBuchungKey(daten.mandantNr, uid))
 		if (hhBuchung === null) {
-			throw new MeldungException(Meldungen.HH043(uid))
+			throw new MeldungException(Meldungen::HH043(uid))
 		}
 		var hhBuchungU = new HhBuchungUpdate(hhBuchung)
 		if (Constant.KZB_AKTIV.equals(hhBuchung.kz)) {
@@ -1030,7 +1030,7 @@ class HaushaltService {
 		var key = new HhBuchungKey(daten.mandantNr, uid)
 		var hhBuchung = buchungRep.get(daten, key)
 		if (hhBuchung === null) {
-			throw new MeldungException(Meldungen.HH043(uid))
+			throw new MeldungException(Meldungen::HH043(uid))
 		}
 		setzePassendeBerPeriode(daten, hhBuchung.sollValuta)
 		buchungRep.delete(daten, key)
@@ -1052,7 +1052,7 @@ class HaushaltService {
 		var dB = dBis
 		var berechnen = false
 		var nullen = false
-		var String ek = null
+		var String ek
 		var kz = kz0
 
 		var pVon = holePassendePeriode(daten, dVon, false)
@@ -1087,7 +1087,7 @@ class HaushaltService {
 
 		var result = bilanzRep.getBilanzSbListe(daten, kz, pVon.nr, pBis.nr, null)
 		var betrag = 0.0
-		var String sh = null
+		var String sh
 
 		if (berechnen) {
 			var hash = new HashMap<String, HhBilanzSb>
@@ -1374,17 +1374,17 @@ class HaushaltService {
 
 		var vo = periodeRep.get(daten, new HhPeriodeKey(daten.mandantNr, pnr))
 		if (vo === null) {
-			throw new MeldungException(Meldungen.HH005(pnr))
+			throw new MeldungException(Meldungen::HH005(pnr))
 		}
 		uebernehmenBilanz(daten, pnr, Constant.KZBI_EROEFFNUNG, pnr, Constant.KZBI_SCHLUSS, false, ek, gv)
 		uebernehmenBilanz(daten, 0, "", pnr, Constant.KZBI_GV, false, ek, gv)
 
-		var String knr = null
-		var String knr2 = null
+		var String knr
+		var String knr2
 		var betrag = 0.0
 		var ebetrag = 0.0
-		var String strA = null
-		var String strKz = null
+		var String strA
+		var String strKz
 		var i = -1
 		var liste = buchungRep.getBuchungHabenListe(daten, null, vo.datumVon, vo.datumBis, Constant.KZB_AKTIV)
 		var listeSoll = buchungRep.getBuchungSollListe(daten, null, vo.datumVon, vo.datumBis, Constant.KZB_AKTIV)
@@ -1446,7 +1446,7 @@ class HaushaltService {
 		var k = getKontoIntern(daten, uid, true)
 		var k2 = getKontoIntern(daten, uid2, true)
 		if (k === null || k2 === null) {
-			throw new MeldungException(Meldungen.HH044)
+			throw new MeldungException(Meldungen::HH044)
 		}
 		var s = k.sortierung
 		var s2 = k2.sortierung
@@ -1479,15 +1479,15 @@ class HaushaltService {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		if (Global.nes(titel)) {
-			throw new MeldungException(Meldungen.HH045)
+			throw new MeldungException(Meldungen::HH045)
 		}
-		var List<HhBilanzSb> liste = null
-		var List<HhBilanzDruck> ebListe = null
-		var List<HhBilanzDruck> gvListe = null
-		var List<HhBilanzDruck> sbListe = null
+		var List<HhBilanzSb> liste
+		var List<HhBilanzDruck> ebListe
+		var List<HhBilanzDruck> gvListe
+		var List<HhBilanzDruck> sbListe
 		var periode = Global.getPeriodeString(dVon, dBis, false)
 		var euro = isEuroIntern
-		var ueberschrift = Meldungen.HH046(periode, titel, daten.jetzt)
+		var ueberschrift = Meldungen::HH046(periode, titel, daten.jetzt)
 		var HhBilanzDruck z = null
 		if (eb) {
 			z = new HhBilanzDruck
@@ -1570,7 +1570,7 @@ class HaushaltService {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		if (Global.nes(titel)) {
-			throw new MeldungException(Meldungen.HH045)
+			throw new MeldungException(Meldungen::HH045)
 		}
 		var periode = Global.getPeriodeString(dVon, dBis, false)
 		var euro = isEuroIntern
@@ -1579,7 +1579,7 @@ class HaushaltService {
 		var dbE = 0.0
 		var dbA = 0.0
 		var dbS = 0.0
-		var ueberschrift = Meldungen.HH047(periode, titel, daten.jetzt)
+		var ueberschrift = Meldungen::HH047(periode, titel, daten.jetzt)
 		var ek = holeEkKonto(daten, true)
 		var gv = holeGvKonto(daten, true)
 		var ebListe = getBilanzZeilenIntern(daten, Constant.KZBI_EROEFFNUNG, dVon, dVon)
@@ -1661,9 +1661,9 @@ class HaushaltService {
 	def private double getKontoStandIntern(ServiceDaten daten, String uid, LocalDate dVon) {
 
 		var euro = isEuroIntern
-		var HhPeriode pVon = null
-		var LocalDate dV = null
-		var LocalDate dB = null
+		var HhPeriode pVon
+		var LocalDate dV
+		var LocalDate dB
 		var berechnen = false
 		var String strKz
 		var betrag = 0.0
@@ -1757,7 +1757,7 @@ class HaushaltService {
 			}
 		}
 		if (Global.arrayLaenge(zeilen) <= 1) {
-			throw new MeldungException(Meldungen.HH050)
+			throw new MeldungException(Meldungen::HH050)
 		}
 		var h = new HashMap<BuchungSpalten, Integer>
 		for (BuchungSpalten e : BuchungSpalten.values) {
@@ -1772,14 +1772,14 @@ class HaushaltService {
 		}
 		for (BuchungSpalten e : BuchungSpalten.values) {
 			if (e.muss && h.get(e) < 0) {
-				throw new MeldungException(Meldungen.HH051(e.name))
+				throw new MeldungException(Meldungen::HH051(e.name))
 			}
 		}
 		var anzahl = 0
 		for (var i = 1; zeilen !== null && i < zeilen.size; i++) {
 			werte = Global.decodeCSV(zeilen.get(i))
 			var wert = getWertM(werte, BuchungSpalten.VALUTA, h)
-			var LocalDate valuta = null
+			var LocalDate valuta
 			if (wert !== null) {
 				var d = new SbDatum
 				d.parse(wert)
@@ -1808,7 +1808,7 @@ class HaushaltService {
 			var btext = getWertM(werte, BuchungSpalten.TEXT, h)
 			var belegnr = getWertM(werte, BuchungSpalten.BELEGNR, h)
 			wert = getWertM(werte, BuchungSpalten.VALUTA, h)
-			var LocalDate belegdatum = null
+			var LocalDate belegdatum
 			if (wert !== null) {
 				var d = new SbDatum
 				d.parse(wert)
@@ -1818,13 +1818,13 @@ class HaushaltService {
 			}
 			var angelegtVon = getWertM(werte, BuchungSpalten.ANGELEGTVON, h)
 			var angelegtAm = Global.objDat(getWertM(werte, BuchungSpalten.ANGELEGTAM, h))
-			var String geaendertVon = getWertM(werte, BuchungSpalten.GEAENDERTVON, h)
+			var geaendertVon = getWertM(werte, BuchungSpalten.GEAENDERTVON, h)
 			var geaendertAm = Global.objDat(getWertM(werte, BuchungSpalten.GEAENDERTAM, h))
 			insertUpdateBuchungIntern(daten, null, valuta, betrag, ebetrag, solluid, habenuid, btext, belegnr,
 				belegdatum, null, null, null, null, null, false, angelegtVon, angelegtAm, geaendertVon, geaendertAm)
 			anzahl++
 		}
-		var r = new ServiceErgebnis<String>(Meldungen.HH053(anzahl))
+		var r = new ServiceErgebnis<String>(Meldungen::HH053(anzahl))
 		return r
 	}
 }

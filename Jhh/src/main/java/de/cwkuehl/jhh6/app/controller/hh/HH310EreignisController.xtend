@@ -1,6 +1,5 @@
 package de.cwkuehl.jhh6.app.controller.hh
 
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.HhEreignis
 import de.cwkuehl.jhh6.api.dto.HhEreignisLang
 import de.cwkuehl.jhh6.api.dto.HhKonto
@@ -103,12 +102,12 @@ class HH310EreignisController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			var List<HhKonto> kl = get(FactoryService::haushaltService.getKontoListe(serviceDaten, null, null))
+			var kl = get(FactoryService::haushaltService.getKontoListe(serviceDaten, null, null))
 			sollkonto.setItems(getItems(kl, null, [a|new SollkontoData(a)], null))
 			habenkonto.setItems(getItems(kl, null, [a|new HabenkontoData(a)], null))
-			var boolean neu = DialogAufrufEnum.NEU.equals(getAufruf)
-			var boolean loeschen = DialogAufrufEnum.LOESCHEN.equals(getAufruf)
-			var HhEreignisLang e = getParameter1
+			var neu = DialogAufrufEnum::NEU.equals(aufruf)
+			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
+			var HhEreignisLang e = parameter1
 			if (!neu && e !== null) {
 				var HhEreignis k = get(FactoryService::haushaltService.getEreignis(serviceDaten, e.uid))
 				if (k !== null) {
@@ -131,7 +130,7 @@ class HH310EreignisController extends BaseController<String> {
 			angelegt.setEditable(false)
 			geaendert.setEditable(false)
 			if (loeschen) {
-				ok.setText(Meldungen.M2001)
+				ok.setText(Meldungen::M2001)
 			}
 			kontentausch.setVisible(!loeschen)
 		}
@@ -154,21 +153,21 @@ class HH310EreignisController extends BaseController<String> {
 	 */
 	@FXML def void onOk() {
 
-		var ServiceErgebnis<?> r = null
-		if (DialogAufrufEnum.NEU.equals(aufruf) || DialogAufrufEnum.KOPIEREN.equals(aufruf)) {
+		var ServiceErgebnis<?> r
+		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
 			r = FactoryService::haushaltService.insertUpdateEreignis(serviceDaten, null, kennzeichen.text,
 				getText(sollkonto), getText(habenkonto), bezeichnung.text, eText.text, null, null, null, null, null, //
 				false)
-		} else if (DialogAufrufEnum.AENDERN.equals(aufruf)) {
+		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
 			r = FactoryService::haushaltService.insertUpdateEreignis(serviceDaten, nr.text, kennzeichen.text,
 				getText(sollkonto), getText(habenkonto), bezeichnung.text, eText.text, null, null, null, null, null, //
 				false)
-		} else if (DialogAufrufEnum.LOESCHEN.equals(aufruf)) {
+		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
 			r = FactoryService::haushaltService.deleteEreignis(serviceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)
-			if (r.getFehler.isEmpty) {
+			if (r.fehler.isEmpty) {
 				updateParent
 				close
 			}
@@ -179,8 +178,8 @@ class HH310EreignisController extends BaseController<String> {
 	 * Event für Kontentausch.
 	 */
 	@FXML def void onKontentausch() {
-		var String s = getText(sollkonto)
-		var String h = getText(habenkonto)
+		var s = getText(sollkonto)
+		var h = getText(habenkonto)
 		setText(sollkonto, h)
 		setText(habenkonto, s)
 	}
