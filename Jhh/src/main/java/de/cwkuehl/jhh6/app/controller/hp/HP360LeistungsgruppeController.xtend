@@ -159,7 +159,7 @@ class HP360LeistungsgruppeController extends BaseController<String> {
 		var HpBehandlungLeistungLang bh = null
 		var neu = false
 		for (LeistungenData ld : liste) {
-			if (ld.getData.getLeistungUid.equals(l.uid)) {
+			if (ld.data.leistungUid.equals(l.uid)) {
 				bh = ld.data
 			}
 		}
@@ -189,7 +189,7 @@ class HP360LeistungsgruppeController extends BaseController<String> {
 		var sel = getValues(leistungen, false)
 		for (HpBehandlungLeistungLang s : sel) {
 			for (LeistungenData l : liste) {
-				if (s.getLeistungUid.equals(l.data.leistungUid)) {
+				if (s.leistungUid.equals(l.data.leistungUid)) {
 					liste.remove(l)
 					return
 				}

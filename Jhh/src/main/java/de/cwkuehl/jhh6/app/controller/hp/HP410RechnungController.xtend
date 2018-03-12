@@ -201,7 +201,7 @@ class HP410RechnungController extends BaseController<String> {
 				geaendert.setText(k.formatDatumVon(k.geaendertAm, k.geaendertVon))
 			}
 			if (neu) {
-				var HpStatus k = get(FactoryService::heilpraktikerService.getStandardStatus(serviceDaten, 2))
+				var k = get(FactoryService::heilpraktikerService.getStandardStatus(serviceDaten, 2))
 				if (k !== null) {
 					setText(status, k.uid)
 				}
@@ -299,7 +299,7 @@ class HP410RechnungController extends BaseController<String> {
 		var ServiceErgebnis<?> r
 		var bliste = new ArrayList<HpBehandlungLeistungLang>
 		for (BehandlungenData b : behandlungen.items) {
-			bliste.add(b.getData)
+			bliste.add(b.data)
 		}
 		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
 			r = FactoryService::heilpraktikerService.insertUpdateRechnung(serviceDaten, null, rechnungsnummer.text,
@@ -326,7 +326,7 @@ class HP410RechnungController extends BaseController<String> {
 	 */
 	@FXML def void onHinzufuegen() {
 
-		var HpRechnungLang k = new HpRechnungLang
+		var k = new HpRechnungLang
 		k.setUid(nr.text)
 		k.setPatientUid(getText(patient))
 		var List<HpBehandlungLeistungLang> l = starteDialog(HP420BehandlungenController, DialogAufrufEnum::OHNE, k)
@@ -442,7 +442,7 @@ class HP410RechnungController extends BaseController<String> {
 			// Diagnose aus 1. Satz, falls Diagnose aus keinen Eintrag passt
 			var gefunden = false
 			for (var i = 0; i < vliste.size && !gefunden; i++) {
-				var HpBehandlungLeistungLang e = vliste.get(i)
+				var e = vliste.get(i)
 				if (!Global.nes(e.behandlungDiagnose) && diagnose.startsWith(Global.objStr(e.behandlungDiagnose))) {
 					gefunden = true
 				}

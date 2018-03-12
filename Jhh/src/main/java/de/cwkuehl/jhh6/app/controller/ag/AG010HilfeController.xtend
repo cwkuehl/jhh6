@@ -4,7 +4,6 @@ import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.Werkzeug
 import javafx.application.Platform
 import javafx.fxml.FXML
-import javafx.scene.web.WebEngine
 import javafx.scene.web.WebView
 
 import static de.cwkuehl.jhh6.app.base.Werkzeug.*

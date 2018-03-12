@@ -117,7 +117,7 @@ class HP420BehandlungenController extends BaseController<List<HpBehandlungLeistu
 	def protected void initDatenTable() {
 
 		behandlungen.setItems(behandlungenData)
-		behandlungen.getSelectionModel.setSelectionMode(SelectionMode.MULTIPLE)
+		behandlungen.selectionModel.setSelectionMode(SelectionMode.MULTIPLE)
 		colPatientName.setCellValueFactory([c|c.value.patientName])
 		colDatum.setCellValueFactory([c|c.value.datum])
 		colLeistung.setCellValueFactory([c|c.value.leistung])

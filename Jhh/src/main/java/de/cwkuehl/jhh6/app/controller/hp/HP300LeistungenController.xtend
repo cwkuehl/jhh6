@@ -107,7 +107,7 @@ class HP300LeistungenController extends BaseController<String> {
 		if (stufe <= 0) { // stufe = 0
 		}
 		if (stufe <= 1) {
-			var l = get(FactoryService::heilpraktikerService.getLeistungListe(getServiceDaten, false, false))
+			var l = get(FactoryService::heilpraktikerService.getLeistungListe(serviceDaten, false, false))
 			getItems(l, null, [a|new LeistungenData(a)], leistungenData)
 		}
 		if (stufe <= 2) {

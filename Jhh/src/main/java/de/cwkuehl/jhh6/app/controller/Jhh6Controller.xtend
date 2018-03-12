@@ -172,17 +172,17 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 
 	override void initialize(URL location, ResourceBundle resources) {
 
-		// StyleManager.getInstance.addUserAgentStylesheet("com/sun/javafx/scene/control/skin/modena/whiteOnBlack.css")
-		var Timer timer = new Timer
+		// StyleManager.instance.addUserAgentStylesheet("com/sun/javafx/scene/control/skin/modena/whiteOnBlack.css")
+		var timer = new Timer
 		timer.schedule(([|
-			tabs.getSelectionModel.selectedItemProperty.addListener(
+			tabs.selectionModel.selectedItemProperty.addListener(
 				([ ObservableValue<? extends Tab> ov, Tab alt, Tab neu |
-					if (alt !== null && alt.getUserData instanceof BaseController<?>) {
-						var BaseController<?> bc = (alt.getUserData as BaseController<?>)
+					if (alt !== null && alt.userData instanceof BaseController<?>) {
+						var bc = alt.userData as BaseController<?>
 						bc.removeAccelerators
 					}
-					if (neu !== null && neu.getUserData instanceof BaseController<?>) {
-						var BaseController<?> bc = (neu.getUserData as BaseController<?>)
+					if (neu !== null && neu.userData instanceof BaseController<?>) {
+						var bc = neu.userData as BaseController<?>
 						bc.addAccelerators
 					}
 				] as ChangeListener<Tab>))
@@ -238,8 +238,8 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 			setRechte(daten.mandantNr, false)
 			// alle Tabs schließen
 			for (Tab t : getTabs.tabs) {
-				if (t.getOnClosed !== null) {
-					t.getOnClosed.handle(null)
+				if (t.onClosed !== null) {
+					t.onClosed.handle(null)
 				}
 			}
 			getTabs.tabs.clear
@@ -351,7 +351,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 				val map = new HashMap<String, StartDialog>
 				dliste.stream.forEach([a|map.put(a.id, a)])
 				for (String s : array) {
-					var StartDialog d = map.get(s)
+					var d = map.get(s)
 					if (d !== null) {
 						starteFormular(d.clazz, DialogAufrufEnum::OHNE, d.parameter)
 					}
@@ -646,7 +646,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 
 		for (Tab t : tabs.tabs) {
 			// Close-Event händisch aufrufen
-			t.getOnClosed.handle(null)
+			t.onClosed.handle(null)
 		}
 		tabs.tabs.removeAll(tabs.tabs)
 	}

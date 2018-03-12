@@ -158,8 +158,8 @@ class MO110MessdienerController extends BaseController<String> {
 		notiz0.setLabelFor(notiz)
 		angelegt0.setLabelFor(angelegt)
 		geaendert0.setLabelFor(geaendert)
-		dienste.getSelectionModel.setSelectionMode(SelectionMode::MULTIPLE)
-		verfuegbar.getSelectionModel.setSelectionMode(SelectionMode::MULTIPLE)
+		dienste.selectionModel.setSelectionMode(SelectionMode::MULTIPLE)
+		verfuegbar.selectionModel.setSelectionMode(SelectionMode::MULTIPLE)
 		initDaten(0)
 		name.requestFocus
 	}
@@ -179,7 +179,7 @@ class MO110MessdienerController extends BaseController<String> {
 			verfuegbar.setItems(getItems(vliste, null, [a|new VerfuegbarData(a)], null))
 			var sliste = get(FactoryService::messdienerService.getStandardStatusListe(serviceDaten))
 			status.setItems(getItems(sliste, null, [a|new StatusData(a)], null))
-			status.getSelectionModel.select(0)
+			status.selectionModel.select(0)
 			var neu = DialogAufrufEnum::NEU.equals(aufruf)
 			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
 			var MoMessdiener k = parameter1

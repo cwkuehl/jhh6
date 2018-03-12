@@ -118,7 +118,7 @@ class MO200GottesdiensteController extends BaseController<String> {
 		if (stufe <= 0) {
 			// nächsten Montag vorblenden
 			var d = LocalDate::now
-			while (!d.getDayOfWeek.equals(DayOfWeek.MONDAY)) {
+			while (!d.dayOfWeek.equals(DayOfWeek.MONDAY)) {
 				d = d.plusDays(1)
 			}
 			von.setValue(d)
@@ -214,9 +214,7 @@ class MO200GottesdiensteController extends BaseController<String> {
 	 * Event für Drucken.
 	 */
 	@FXML def void onDrucken() {
-
-		var byte[] pdf = get(
-			FactoryService::messdienerService.getReportMessdienerordnung(serviceDaten, von.value, bis.value))
+		var pdf = get(FactoryService::messdienerService.getReportMessdienerordnung(serviceDaten, von.value, bis.value))
 		Werkzeug.speicherReport(pdf, Meldungen::MO036(von.value.atStartOfDay, bis.value.atStartOfDay), false)
 	}
 

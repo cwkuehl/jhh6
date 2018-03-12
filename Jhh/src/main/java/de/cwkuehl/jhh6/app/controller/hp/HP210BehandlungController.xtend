@@ -212,7 +212,7 @@ class HP210BehandlungController extends BaseController<String> {
 					null, null, false, true))
 			leistungen.setItems(getItems(bhl, null, [a|new LeistungenData(a)], null))
 			if (neu0) {
-				var HpStatus k = get(FactoryService::heilpraktikerService.getStandardStatus(serviceDaten, 1))
+				var k = get(FactoryService::heilpraktikerService.getStandardStatus(serviceDaten, 1))
 				if (k !== null) {
 					setText(status, k.uid)
 				}
@@ -268,8 +268,8 @@ class HP210BehandlungController extends BaseController<String> {
 		var HpBehandlungLeistungLang bh
 		var neu = false
 		for (LeistungenData ld : liste) {
-			if (ld.getData.getLeistungUid.equals(l.uid)) {
-				bh = ld.getData
+			if (ld.data.leistungUid.equals(l.uid)) {
+				bh = ld.data
 			}
 		}
 		if (bh === null) {
@@ -331,7 +331,7 @@ class HP210BehandlungController extends BaseController<String> {
 		var sel = getValues(leistungen, false)
 		for (HpBehandlungLeistungLang s : sel) {
 			for (LeistungenData l : liste) {
-				if (s.leistungUid.equals(l.getData.leistungUid)) {
+				if (s.leistungUid.equals(l.data.leistungUid)) {
 					liste.remove(l)
 					return;
 				}
@@ -369,7 +369,7 @@ class HP210BehandlungController extends BaseController<String> {
 	 * Event für Drucken.
 	 */
 	@FXML def void onDrucken() {
-		var byte[] pdf = get(
+		var pdf = get(
 			FactoryService::heilpraktikerService.getReportPatientenakte(serviceDaten, getText(patient), null, null))
 		Werkzeug::speicherReport(pdf, Meldungen::HP018, true)
 	}

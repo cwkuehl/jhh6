@@ -211,7 +211,7 @@ class MachDto {
 
 		// Attribute und Key-Attribute bestimmen
 		vo.declaredFields.forEach [
-			var Attribute ka = null
+			var Attribute ka
 			var a = findAnnotation(coa)
 			if (a !== null) {
 				ka = new Attribute

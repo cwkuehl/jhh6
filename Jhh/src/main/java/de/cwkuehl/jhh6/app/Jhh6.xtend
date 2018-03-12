@@ -15,7 +15,6 @@ import java.lang.reflect.InvocationTargetException
 import javafx.application.Application
 import javafx.application.Platform
 import javafx.fxml.FXMLLoader
-import javafx.scene.Parent
 import javafx.scene.Scene
 import javafx.scene.image.Image
 import javafx.stage.Stage
@@ -48,12 +47,12 @@ class Jhh6 extends Application {
 				var Throwable t = t0
 				if (t instanceof RuntimeException) {
 					var ex = t
-					if (ex.getCause !== null) {
-						t = ex.getCause
+					if (ex.cause !== null) {
+						t = ex.cause
 						if (t instanceof InvocationTargetException) {
 							var ex2 = t
-							if (ex2.getTargetException !== null) {
-								t = ex2.getTargetException
+							if (ex2.targetException !== null) {
+								t = ex2.targetException
 							}
 						}
 					}
@@ -65,18 +64,18 @@ class Jhh6 extends Application {
 				setLeftStatus(s)
 			}
 		])
-		var classLoader = Thread::currentThread.getContextClassLoader
+		var classLoader = Thread::currentThread.contextClassLoader
 		var fxmlURL = classLoader.getResource("dialog/Jhh6.fxml")
 		var loader = new FXMLLoader(fxmlURL, Global::bundle)
-		var Parent p = loader.load
-		controller = loader.getController
+		var p = loader.load
+		controller = loader.controller
 		controller.init(stage, null)
-		var Scene scene = new Scene(p)
+		var scene = new Scene(p)
 		stage.setScene(scene)
 		stage.setTitle(getTitel)
 		if (Global::istLinux) {
 			// Absturz verhindern: https://bugs.openjdk.java.net/browse/JDK-8141687
-			stage.getIcons.add(new Image(classLoader.getResourceAsStream("WKHH.gif")))
+			stage.icons.add(new Image(classLoader.getResourceAsStream("WKHH.gif")))
 		}
 		stage.show
 		if (Jhh6::stage === null) {
@@ -148,7 +147,7 @@ class Jhh6 extends Application {
 		str.append("JHH6 ")
 		str.append(getEinstellungen.getAnwendungsTitel(serviceDaten.mandantNr))
 		str.append(" W. Kuehl")
-		var mandantNr = getServiceDaten.getMandantNr
+		var mandantNr = getServiceDaten.mandantNr
 		if (mandantNr <= 0) {
 			str.append(Meldungen::M1022)
 		} else if (mandantNr !== 1) {

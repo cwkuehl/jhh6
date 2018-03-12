@@ -58,10 +58,10 @@ class RemoteDb extends RepositoryBase {
 			msql.append(" ORDER BY ").append(t.pk)
 		}
 
-		var PreparedStatement mstmt = null
-		var ResultSet mr = null
-		var PreparedStatement rstmt = null
-		var ResultSet rr = null
+		var PreparedStatement mstmt
+		var ResultSet mr
+		var PreparedStatement rstmt
+		var ResultSet rr
 		try {
 			mstmt = con.prepareStatement(msql.toString)
 			var j = 1
@@ -152,9 +152,9 @@ class RemoteDb extends RepositoryBase {
 		if (!t.loeschen || Global.nes(t.mandantnr)) {
 			return 0
 		}
-		var PreparedStatement mstmt = null
-		var ResultSet mr = null
-		var PreparedStatement rstmt = null
+		var PreparedStatement mstmt
+		var ResultSet mr
+		var PreparedStatement rstmt
 		try {
 			var rsql = new SqlBuilder("DELETE FROM ")
 			rsql.append(t.name)
@@ -271,7 +271,7 @@ class RemoteDb extends RepositoryBase {
 			if (objAlt.toString.equals(neu.toString)) {
 				gleich = true
 			} else if (objAlt instanceof Date && neu instanceof Date) {
-				if ((objAlt as Date).getTime == (neu as Date).getTime) {
+				if ((objAlt as Date).time == (neu as Date).time) {
 					gleich = true
 				}
 			} else if (objAlt instanceof BigDecimal && neu instanceof Double) {
@@ -317,12 +317,12 @@ class RemoteDb extends RepositoryBase {
 		}
 		var del = false
 		var ins = false
-		var PreparedStatement mstmt = null
-		var ResultSet mr = null
-		var PreparedStatement rstmt = null
-		var ResultSet rr = null
-		var PreparedStatement insert = null
-		var PreparedStatement delete = null
+		var PreparedStatement mstmt
+		var ResultSet mr
+		var PreparedStatement rstmt
+		var ResultSet rr
+		var PreparedStatement insert
+		var PreparedStatement delete
 		try {
 			mstmt = con.prepareStatement(msql.toString)
 			var j = 1

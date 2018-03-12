@@ -253,7 +253,7 @@ class HP200BehandlungenController extends BaseController<String> {
 	 * Event für Drucken.
 	 */
 	@FXML def void onDrucken() {
-		var byte[] pdf = get(
+		var pdf = get(
 			FactoryService::heilpraktikerService.getReportPatientenakte(serviceDaten, getText(patient), von.value,
 				bis.value))
 		Werkzeug.speicherReport(pdf, Meldungen::HP018, true)

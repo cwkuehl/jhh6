@@ -113,7 +113,7 @@ class MO220EinteilungController extends BaseController<List<MoEinteilungLang>> {
 		initListView(messdiener2, null)
 		angelegt0.setLabelFor(angelegt)
 		geaendert0.setLabelFor(geaendert)
-		messdiener2.getSelectionModel.setSelectionMode(SelectionMode::MULTIPLE)
+		messdiener2.selectionModel.setSelectionMode(SelectionMode::MULTIPLE)
 		initDaten(0)
 		dienst.requestFocus
 	}
@@ -167,8 +167,8 @@ class MO220EinteilungController extends BaseController<List<MoEinteilungLang>> {
 			if (loeschen) {
 				ok.setText(Meldungen::M2001)
 			}
-			if (dienst.getSelectionModel.getSelectedIndex < 0) {
-				dienst.getSelectionModel.select(0)
+			if (dienst.selectionModel.selectedIndex < 0) {
+				dienst.selectionModel.select(0)
 			}
 			onDienst
 			if (einteilung !== null && !DialogAufrufEnum::NEU.equals(aufruf)) {
@@ -204,8 +204,8 @@ class MO220EinteilungController extends BaseController<List<MoEinteilungLang>> {
 	def List<MoMessdienerLang> getMessdienerListe() {
 
 		var automatisch = false
-		if (einteilung !== null && einteilung.getGottesdienstStatus !== null &&
-			einteilung.getGottesdienstStatus.equals(MoStatusEnum::AUTOMATISCH.toString)) {
+		if (einteilung !== null && einteilung.gottesdienstStatus !== null &&
+			einteilung.gottesdienstStatus.equals(MoStatusEnum::AUTOMATISCH.toString)) {
 			automatisch = true
 		}
 		var messdiener = get(FactoryService::messdienerService.getMessdienerListe(serviceDaten, automatisch, von.value2, //
@@ -223,7 +223,7 @@ class MO220EinteilungController extends BaseController<List<MoEinteilungLang>> {
 				}
 			}
 			if (einteilung !== null && !Global::nes(einteilung.messdienerUid) && fehlt) {
-				var MoMessdienerLang m = new MoMessdienerLang
+				var m = new MoMessdienerLang
 				m.setUid(einteilung.messdienerUid)
 				m.setName(einteilung.messdienerName)
 				m.setVorname(einteilung.messdienerVorname)
@@ -250,7 +250,7 @@ class MO220EinteilungController extends BaseController<List<MoEinteilungLang>> {
 				throw new MeldungException(Meldungen::MO034)
 			}
 			for (MoMessdienerLang m : liste2) {
-				var MoEinteilungLang a = new MoEinteilungLang
+				var a = new MoEinteilungLang
 				a.setMessdienerUid(m.uid)
 				a.setMessdienerName(m.name)
 				a.setMessdienerVorname(m.vorname)

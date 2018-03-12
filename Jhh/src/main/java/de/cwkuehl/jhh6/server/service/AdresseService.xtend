@@ -344,7 +344,7 @@ class AdresseService {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var liste = sitzRep.getSitzListe(daten, personUid, sitzUid, null)
-		var AdSitz adSitz = null
+		var AdSitz adSitz
 		if (liste !== null && liste.size > 0) {
 			adSitz = liste.get(0)
 			if (!Global.nes(adSitz.adresseUid)) {

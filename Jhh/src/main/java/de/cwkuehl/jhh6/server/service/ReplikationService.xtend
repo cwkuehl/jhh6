@@ -565,7 +565,7 @@ class ReplikationService {
 
 		daten.rbListe.rollbackRedo = true
 		synchronized (rbStack) {
-			var RollbackListe rbListe = null
+			var RollbackListe rbListe
 			if (!rbStack.empty()) {
 				rbListe = rbStack.peek
 			}
@@ -588,7 +588,7 @@ class ReplikationService {
 
 		daten.rbListe.rollbackRedo = true
 		synchronized (redoStack) {
-			var RollbackListe rbListe = null
+			var RollbackListe rbListe
 			if (!redoStack.empty()) {
 				rbListe = redoStack.peek
 			}
@@ -992,9 +992,9 @@ class ReplikationService {
 	override public ServiceErgebnis<Void> copyMandant(ServiceDaten daten, boolean vonRep, int repmandant,
 		StringBuffer status, StringBuffer abbruch) {
 
-		var RemoteDb von = null
-		var RemoteDb nach = null
-		var MaEinstellung e = null
+		var RemoteDb von
+		var RemoteDb nach
+		var MaEinstellung e
 		try {
 			von = getRemoteDb(if(vonRep) repmandant else daten.mandantNr, vonRep)
 			nach = getRemoteDb(if(!vonRep) repmandant else daten.mandantNr, !vonRep)

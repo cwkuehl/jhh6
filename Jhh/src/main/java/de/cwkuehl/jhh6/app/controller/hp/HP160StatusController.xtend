@@ -84,7 +84,7 @@ class HP160StatusController extends BaseController<String> {
 		if (stufe <= 0) {
 			var l = get(FactoryService::heilpraktikerService.getStandardStatusListe(serviceDaten))
 			standard.setItems(getItems(l, null, [a|new StandardData(a)], null))
-			standard.getSelectionModel.select(0)
+			standard.selectionModel.select(0)
 			var neu = DialogAufrufEnum::NEU.equals(aufruf)
 			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
 			var HpStatus k = parameter1
@@ -95,7 +95,7 @@ class HP160StatusController extends BaseController<String> {
 					status.setText(k.status)
 					beschreibung.setText(k.beschreibung)
 					sortierung.setText(Global.intStrFormat(k.sortierung))
-					standard.getSelectionModel.clearAndSelect(k.standard)
+					standard.selectionModel.clearAndSelect(k.standard)
 					notiz.setText(k.notiz)
 					angelegt.setText(k.formatDatumVon(k.angelegtAm, k.angelegtVon))
 					geaendert.setText(k.formatDatumVon(k.geaendertAm, k.geaendertVon))
@@ -133,12 +133,12 @@ class HP160StatusController extends BaseController<String> {
 		var ServiceErgebnis<?> r
 		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
 			r = FactoryService::heilpraktikerService.insertUpdateStatus(serviceDaten, null, status.text,
-				beschreibung.text, Global.strInt(sortierung.text), standard.getSelectionModel.selectedIndex, notiz.text)
+				beschreibung.text, Global.strInt(sortierung.text), standard.selectionModel.selectedIndex, notiz.text)
 		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
 			r = FactoryService::heilpraktikerService.insertUpdateStatus(serviceDaten, nr.text, status.text,
-				beschreibung.text, Global.strInt(sortierung.text), standard.getSelectionModel.selectedIndex, notiz.text)
+				beschreibung.text, Global.strInt(sortierung.text), standard.selectionModel.selectedIndex, notiz.text)
 		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
-			r = FactoryService::heilpraktikerService.deleteStatus(getServiceDaten, nr.text)
+			r = FactoryService::heilpraktikerService.deleteStatus(serviceDaten, nr.text)
 		}
 		if (r !== null) {
 			get(r)

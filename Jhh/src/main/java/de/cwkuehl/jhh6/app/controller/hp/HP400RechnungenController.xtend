@@ -200,7 +200,7 @@ class HP400RechnungenController extends BaseController<String> {
 	 */
 	@FXML def void onDrucken() {
 		var HpRechnungLang k = getValue(rechnungen, true)
-		var byte[] pdf = get(FactoryService::heilpraktikerService.getReportRechnung(serviceDaten, k.uid))
+		var pdf = get(FactoryService::heilpraktikerService.getReportRechnung(serviceDaten, k.uid))
 		Werkzeug.speicherReport(pdf, Meldungen::HP019, true)
 	}
 

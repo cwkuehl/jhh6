@@ -128,7 +128,7 @@ class HP110PatientController extends BaseController<String> {
 					var byteliste = get(FactoryService::heilpraktikerService.getPatientBytesListe(serviceDaten, k.uid))
 					if (byteliste !== null) {
 						for (ByteDaten bd : byteliste) {
-							if (bd.getBytes !== null && bd.metadaten !== null) {
+							if (bd.bytes !== null && bd.metadaten !== null) {
 								new Bild(bilder, null, bd.bytes, null, bd.metadaten, refresh)
 							}
 						}

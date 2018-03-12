@@ -410,7 +410,7 @@ class MessdienerService {
 				throw new MeldungException(Meldungen::MO013)
 			}
 			var hash = pruefDienste(daten, p.dienste)
-			var Integer i = null
+			var Integer i
 			if (einteilungen !== null) {
 				for (MoEinteilungLang e : einteilungen) {
 					i = hash.get(e.dienst)

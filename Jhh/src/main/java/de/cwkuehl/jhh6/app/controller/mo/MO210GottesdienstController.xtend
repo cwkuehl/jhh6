@@ -14,7 +14,6 @@ import de.cwkuehl.jhh6.server.FactoryService
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.List
-import java.util.Optional
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -205,16 +204,16 @@ class MO210GottesdienstController extends BaseController<String> {
 			von.setValue(LocalDate::now.atTime(18, 0))
 			var nliste = get(FactoryService::messdienerService.getStandardNameListe(serviceDaten))
 			name.setItems(getItems(nliste, null, [a|new NameData(a)], null))
-			name.getSelectionModel.select(0)
+			name.selectionModel.select(0)
 			var oliste = get(FactoryService::messdienerService.getStandardOrtListe(serviceDaten))
 			ort.setItems(getItems(oliste, null, [a|new OrtData(a)], null))
-			ort.getSelectionModel.select(0)
+			ort.selectionModel.select(0)
 			var pliste = get(FactoryService::messdienerService.getProfilListe(serviceDaten, true))
 			profil.setItems(getItems(pliste, new MoProfil, [a|new ProfilData(a)], null))
-			// profil.getSelectionModel.select(0)
+			// profil.selectionModel.select(0)
 			var sliste = get(FactoryService::messdienerService.getStandardStatusListe(serviceDaten))
 			status.setItems(getItems(sliste, null, [a|new StatusData(a)], null))
-			status.getSelectionModel.select(0)
+			status.selectionModel.select(0)
 			var neu0 = DialogAufrufEnum::NEU.equals(aufruf)
 			var loeschen0 = DialogAufrufEnum::LOESCHEN.equals(aufruf)
 			var MoGottesdienst k = parameter1
@@ -290,8 +289,8 @@ class MO210GottesdienstController extends BaseController<String> {
 		if (liste !== null) {
 			if (DialogAufrufEnum::NEU.equals(aufruf)) {
 				for (MoEinteilungLang s : liste) {
-					var Optional<EinteilungenData> d = einteilungenData.stream.filter([ a |
-						Global::compString(a.getData.messdienerUid, s.messdienerUid) === 0
+					var d = einteilungenData.stream.filter([ a |
+						Global::compString(a.data.messdienerUid, s.messdienerUid) === 0
 					]).findFirst
 					if (!d.isPresent) {
 						einteilungenData.add(new EinteilungenData(s))
@@ -299,8 +298,8 @@ class MO210GottesdienstController extends BaseController<String> {
 				}
 			} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
 				for (MoEinteilungLang s : liste) {
-					var Optional<EinteilungenData> d = einteilungenData.stream.filter([ a |
-						Global::compString(a.getData.messdienerUid, s.messdienerUid) === 0
+					var d = einteilungenData.stream.filter([ a |
+						Global::compString(a.data.messdienerUid, s.messdienerUid) === 0
 					]).findFirst
 					if (d.isPresent) {
 						einteilungenData.remove(d.get)
@@ -308,8 +307,8 @@ class MO210GottesdienstController extends BaseController<String> {
 				}
 			} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
 				for (MoEinteilungLang s : liste) {
-					var Optional<EinteilungenData> d = einteilungenData.stream.filter([ a |
-						Global::compString(a.getData.uid, s.uid) === 0
+					var d = einteilungenData.stream.filter([ a |
+						Global::compString(a.data.uid, s.uid) === 0
 					]).findFirst
 					if (d.isPresent) {
 						einteilungenData.remove(d.get)

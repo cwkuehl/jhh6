@@ -142,9 +142,9 @@ class RepositoryBase {
 	/** Lesen eines Datensatzes. */		
 	def protected Object selectOne(Connection con, SqlBuilder sql) {
 
-		var PreparedStatement stmt = null
-		var ResultSet rs = null
-		var Object t = null
+		var PreparedStatement stmt
+		var ResultSet rs
+		var Object t
 		try {
 			log.info('''selectOne: «sql.toString»''')
 			stmt = con.prepareStatement(sql.toString)
@@ -175,7 +175,7 @@ class RepositoryBase {
 		val con = daten.db.con
 		var PreparedStatement stmt
 		var ResultSet rs
-		var T t = null
+		var T t
 		try {
 			log.info('''selectOne: «sql.toString»''')
 			stmt = con.prepareStatement(sql.toString)
@@ -207,7 +207,7 @@ class RepositoryBase {
 		var PreparedStatement stmt
 		var ResultSet rs
 		var list = new ArrayList<T>
-		var T t = null
+		var T t
 
 		if (inst === null) {
 			return list

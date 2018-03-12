@@ -47,12 +47,12 @@ class JhhFopDokumentImpl {
 	 * @see de.cwkuehl.jhh.server.service.fop.JhhFopDokument#erzeugePdf()
 	 */
 	def byte[] erzeugePdf() {
-		if (multiDoc.getAnzahl <= 0) {
+		if (multiDoc.anzahl <= 0) {
 			throw new JhhFopException("Es ist kein Ausgangsdokument hinzugefügt worden.")
 		}
-		var ByteArrayOutputStream bs = new ByteArrayOutputStream
+		var bs = new ByteArrayOutputStream
 		// multiDoc.writeDocument("/home/wolfgang/temp/test.fo");
-		jhhFop.machPdf(multiDoc.getSource, null, null, bs)
+		jhhFop.machPdf(multiDoc.source, null, null, bs)
 		return bs.toByteArray
 	}
 
@@ -61,11 +61,11 @@ class JhhFopDokumentImpl {
 	 * @see de.cwkuehl.jhh.server.service.fop.JhhFopDokument#erzeugeRtf()
 	 */
 	def byte[] erzeugeRtf() {
-		if (multiDoc.getAnzahl <= 0) {
+		if (multiDoc.anzahl <= 0) {
 			throw new JhhFopException("Es ist kein Ausgangsdokument hinzugefügt worden.")
 		}
-		var ByteArrayOutputStream bs = new ByteArrayOutputStream
-		jhhFop.machRtf(multiDoc.getSource, null, null, bs)
+		var bs = new ByteArrayOutputStream
+		jhhFop.machRtf(multiDoc.source, null, null, bs)
 		return bs.toByteArray
 	}
 
@@ -74,7 +74,7 @@ class JhhFopDokumentImpl {
 	 * @see de.cwkuehl.jhh.server.service.fop.JhhFopDokument#addAdressenliste(boolean, String, java.util.List)
 	 */
 	def void addAdressenliste(boolean reset, String ueberschrift, List<AdPersonSitzAdresse> liste) {
-		var FoAdressenliste doc = new FoAdressenliste
+		var doc = new FoAdressenliste
 		multiDoc.add(doc, reset)
 		doc.generate(ueberschrift, liste)
 	}
