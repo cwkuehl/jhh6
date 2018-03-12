@@ -406,7 +406,7 @@ class HeilpraktikerService {
 				}
 				if (listeAlt !== null) {
 					// Löschen aus der alten Liste
-					var HpBehandlungLeistung d = null
+					var HpBehandlungLeistung d
 					for (HpBehandlungLeistung vo2 : listeAlt) {
 						if (Global.compString(vo2.leistungUid, vo.leistungUid) == 0) {
 							d = vo2
@@ -701,7 +701,7 @@ class HeilpraktikerService {
 		}
 
 		var r = new ServiceErgebnis<HpBehandlung>(null)
-		var String rechnungUid = null
+		var String rechnungUid
 		if (!Global.nes(uid)) {
 			var b = behandlungRep.get(daten, new HpBehandlungKey(daten.mandantNr, uid))
 			if (b !== null) {
@@ -727,7 +727,7 @@ class HeilpraktikerService {
 				}
 				if (listeAlt !== null) {
 					// Löschen aus der alten Liste
-					var HpBehandlungLeistung d = null
+					var HpBehandlungLeistung d
 					for (HpBehandlungLeistung vo2 : listeAlt) {
 						if (Global.compString(vo2.leistungUid, vo.leistungUid) == 0) {
 							d = vo2
@@ -784,10 +784,10 @@ class HeilpraktikerService {
 		var liste = behandlungRep.getBehandlungLangListe(daten, patientUid, von, bis)
 		for (HpBehandlungLang e : liste) {
 			var z = new HpBehandlungDruck
-			z.setDatum(e.getDatum)
-			z.setLeistung(e.getDiagnose)
+			z.setDatum(e.datum)
+			z.setLeistung(e.diagnose)
 			var sb = new StringBuffer
-			sb.append(e.getNotiz)
+			sb.append(e.notiz)
 			var leer = Global.nes(e.mittel) && Global.nes(e.potenz) && Global.nes(e.dosierung) &&
 				Global.nes(e.verordnung)
 			if (!leer) {
@@ -900,7 +900,7 @@ class HeilpraktikerService {
 				}
 				if (listeAlt !== null) {
 					// Löschen aus der alten Liste
-					var HpBehandlung d = null
+					var HpBehandlung d
 					for (HpBehandlung vo2 : listeAlt) {
 						if (Global.compString(vo2.uid, vo.behandlungUid) == 0) {
 							d = vo2
@@ -980,7 +980,7 @@ class HeilpraktikerService {
 		if (p === null) {
 			throw new MeldungException(Meldungen::HP011)
 		}
-		var HpPatient p2 = null
+		var HpPatient p2
 		if (!Global.nes(p.rechnungPatientUid)) {
 			p2 = patientRep.get(daten, new HpPatientKey(daten.mandantNr, p.rechnungPatientUid))
 			if (p2 === null) {
@@ -999,7 +999,7 @@ class HeilpraktikerService {
 			var z = new HpBehandlungDruck
 			z.datum = e.behandlungDatum
 			z.ziffer = e.leistungZiffer
-			z.zifferAlt = e.getLeistungZifferAlt
+			z.zifferAlt = e.leistungZifferAlt
 			z.leistung = e.leistungBeschreibungFett
 			var leistung = e.leistungBeschreibung
 			if (Global.nes(leistung)) {

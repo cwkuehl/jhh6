@@ -157,7 +157,7 @@ class FreizeitService {
 			var geburt = benutzer.geburt
 			var wk = benutzer.benutzerId.toLowerCase.equals("wolfgang")
 			var sb = new StringBuffer
-			var long anzahlTage = 0
+			var anzahlTage = 0l
 			var jetzt = jetzt0.plusDays(1)
 			if (wk) {
 				var sliste = serieRep.getBuchserieListe(daten, "%Perry Rhodan")
@@ -225,7 +225,7 @@ class FreizeitService {
 				}
 				var km = standRep.getFahrradstandPeriodeKmSumme(daten, vo.uid, null, jetzt1)
 				var kmJahr = standRep.getFahrradstandPeriodeKmSumme(daten, vo.uid, aktJahr, jetzt1)
-				var long anzahlTage = 0
+				var anzahlTage = 0l
 				var liste = standRep.getFahrradstandListe(daten, vo.uid, null, jetzt1.atStartOfDay, false, 1)
 				var LocalDateTime anfang
 				if (liste.size > 0) {
@@ -361,8 +361,8 @@ class FreizeitService {
 		var dAktuell = datum
 		var nr = if(insert) 0 else nr0
 		var besch = besch0
-		var FzFahrradstand voVorher = null
-		var FzFahrradstand voNachher = null
+		var FzFahrradstand voVorher
+		var FzFahrradstand voNachher
 		var zaehlerAktuell = zaehler
 		var periodeAktuell = periode
 		var zaehlerNull = false

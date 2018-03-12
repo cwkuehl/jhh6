@@ -87,9 +87,9 @@ class AM510DialogeController extends BaseController<String> {
 			dliste.stream.forEach([ a |
 				{
 					var me = new MaEinstellung
-					me.setSchluessel(a.getId)
-					me.setWert(a.getTitel)
-					if (map.contains(a.getId)) {
+					me.setSchluessel(a.id)
+					me.setWert(a.titel)
+					if (map.contains(a.id)) {
 						zuliste.add(me)
 					} else {
 						liste.add(me)

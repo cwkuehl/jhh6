@@ -112,7 +112,7 @@ class AnmeldungService {
 
 		var r = new ServiceErgebnis<Void>
 		var benutzerKey = new BenutzerKey(daten.mandantNr, daten.benutzerId)
-		var Benutzer benutzer = null
+		var Benutzer benutzer
 
 		benutzer = benutzerRep.get(daten, benutzerKey)
 		if (benutzer !== null) {

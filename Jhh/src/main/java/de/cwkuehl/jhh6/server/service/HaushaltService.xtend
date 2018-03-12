@@ -248,7 +248,7 @@ class HaushaltService {
 
 		var vListe = new Vector<String>
 		var longPNr = new Long(pnr)
-		var HhBilanz hhBilanz = null
+		var HhBilanz hhBilanz
 		var dbB = dbBetrag
 		var dbEB = dbEBetrag
 
@@ -431,7 +431,7 @@ class HaushaltService {
 			throw new MeldungException(Meldungen::HH017(strN))
 		}
 		if (insert) {
-			knr = Global.getUID
+			knr = Global::UID
 			var hhBilanz = new HhBilanz
 			hhBilanz.mandantNr = daten.mandantNr
 			hhBilanz.setKontoUid(knr)
@@ -1488,7 +1488,7 @@ class HaushaltService {
 		var periode = Global.getPeriodeString(dVon, dBis, false)
 		var euro = isEuroIntern
 		var ueberschrift = Meldungen::HH046(periode, titel, daten.jetzt)
-		var HhBilanzDruck z = null
+		var HhBilanzDruck z
 		if (eb) {
 			z = new HhBilanzDruck
 			z.setName(Constant.KZBI_EROEFFNUNG)
@@ -1624,7 +1624,7 @@ class HaushaltService {
 				var bKey = b.sollKontoUid + b.habenKontoUid
 				var b2 = bMap.get(bKey)
 				if (b2 === null) {
-					bMap.put(bKey, b.getClone)
+					bMap.put(bKey, b.clone)
 				} else {
 					b2.ebetrag = b2.ebetrag + b.ebetrag
 					b2.belegNr = b2.belegNr + ", " + b.belegNr
@@ -1639,7 +1639,7 @@ class HaushaltService {
 				var bKey = b.sollKontoUid + b.habenKontoUid
 				var b2 = bMap.get(bKey)
 				if (b2 === null) {
-					bMap.put(bKey, b.getClone)
+					bMap.put(bKey, b.clone)
 				} else {
 					b2.ebetrag = b2.ebetrag + b.ebetrag
 					b2.belegNr = b2.belegNr + ", " + b.belegNr

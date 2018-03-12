@@ -1,6 +1,5 @@
 package de.cwkuehl.jhh6.app.controller.hh
 
-import de.cwkuehl.jhh6.api.dto.HhEreignis
 import de.cwkuehl.jhh6.api.dto.HhEreignisLang
 import de.cwkuehl.jhh6.api.dto.HhKonto
 import de.cwkuehl.jhh6.api.message.Meldungen
@@ -109,7 +108,7 @@ class HH310EreignisController extends BaseController<String> {
 			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
 			var HhEreignisLang e = parameter1
 			if (!neu && e !== null) {
-				var HhEreignis k = get(FactoryService::haushaltService.getEreignis(serviceDaten, e.uid))
+				var k = get(FactoryService::haushaltService.getEreignis(serviceDaten, e.uid))
 				if (k !== null) {
 					nr.setText(k.uid)
 					bezeichnung.setText(k.bezeichnung)

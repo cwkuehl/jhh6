@@ -80,14 +80,14 @@ class ByteDatenRep {
 
 		var liste = getBytesListe(daten, typ, uid)
 		var anzahl = Global.listLaenge(byteliste)
-		var ByteDaten bds = null
-		var ByteDaten bdn = null
+		var ByteDaten bds
+		var ByteDaten bdn
 		for (var nr = 1; nr <= anzahl; nr++) {
 			bdn = byteliste.get(nr - 1)
-			bds = null;
+			bds = null
 			for (ByteDaten bd : liste) {
 				if (bd.lfdNr == nr) {
-					bds = bd;
+					bds = bd
 				}
 			}
 			if (bds === null) {

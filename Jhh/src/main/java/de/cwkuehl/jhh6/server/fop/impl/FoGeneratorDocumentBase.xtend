@@ -43,20 +43,12 @@ class FoGeneratorDocumentBase {
 	 * @throws IOException
 	 */
 	def private void appendAttribute(String... attrNameValue) throws IOException {
+
 		if (attrNameValue !== null) {
 			var anzahl = attrNameValue.length / 2
 			for (var i = 0; i < anzahl; i++) {
-				if ({
-					val _rdIndx_attrNameValue = i + i
-					attrNameValue.get(_rdIndx_attrNameValue)
-				} !== null) {
-					fds.append(getAttribut({
-						val _rdIndx_attrNameValue = i + i
-						attrNameValue.get(_rdIndx_attrNameValue)
-					}, {
-						val _rdIndx_attrNameValue = i + i + 1
-						attrNameValue.get(_rdIndx_attrNameValue)
-					}))
+				if (attrNameValue.get(i + i) !== null) {
+					fds.append(getAttribut(attrNameValue.get(i + i), attrNameValue.get(i + i + 1)))
 				}
 			}
 		}
@@ -72,7 +64,8 @@ class FoGeneratorDocumentBase {
 	 * @return Attribut-Array für Font-Eigenschaften oder null.
 	 */
 	def private String[] getFontArray(String fontname, int size, String weight, String style, int lineheight) {
-		var ArrayList<String> array = new ArrayList<String>
+
+		var array = new ArrayList<String>
 		if (fontname !== null) {
 			array.add("font-family")
 			array.add(fontname)
@@ -622,7 +615,7 @@ class FoGeneratorDocumentBase {
 		var sb = new StringBuffer
 		while (anzahl > 0) {
 			anzahl--
-			sb.append(FoGeneratorDocumentStream.getCR)
+			sb.append(FoGeneratorDocumentStream.CR)
 		}
 		if (size <= 0) {
 			startBlock(sb.toString, "linefeed-treatment", "preserve")
@@ -658,7 +651,7 @@ class FoGeneratorDocumentBase {
 		}
 		var sb = new StringBuffer
 		sb.append("url('data:image/jpeg;base64,")
-		sb.append(Base64.getEncoder.encodeToString(bytes))
+		sb.append(Base64.encoder.encodeToString(bytes))
 		sb.append("')")
 		startTag("fo:external-graphic", true, "src", sb.toString, "content-height", "scale-to-fit", "height", height,
 			"margin-top", "0mm")
@@ -697,7 +690,7 @@ class FoGeneratorDocumentBase {
 	 * @return StreamSource.
 	 */
 	def Source getSource() {
-		return fds.getSource
+		return fds.source
 	}
 
 	/** 
@@ -791,7 +784,7 @@ class FoGeneratorDocumentBase {
 	 * @return SHA-1-Hash des momentanen FO-Dokuments.
 	 */
 	def byte[] getSha1Hash() {
-		return fds.getSha1Hash
+		return fds.sha1Hash
 	}
 
 	/** 

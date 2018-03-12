@@ -138,7 +138,7 @@ class Global {
 	 */
 	def public static long strLng(String str) {
 
-		var long l = 0
+		var l = 0l
 		if (!nes(str)) {
 			try {
 				l = Long.parseLong(str)
@@ -1015,7 +1015,7 @@ class Global {
 	 */
 	def public static String dateTimeStringForm(LocalDateTime d) {
 
-		if (d === null /* || d.getTime == datumZeit0.getTime*/ ) {
+		if (d === null) {
 			return ""
 		}
 		var str = ""
@@ -1288,13 +1288,13 @@ class Global {
 		if (file === null || is === null) {
 			throw new Exception(Meldungen::M1012)
 		}
-		var byte[] bytes = null
+		var byte[] bytes
 
 		try {
 			// Get the size of the file
 			var length = file.length
 			if (length > max) {
-				throw new Exception(Meldungen::M1014(file.getName))
+				throw new Exception(Meldungen::M1014(file.name))
 			}
 
 			// Byte-Array anlegen
@@ -1311,7 +1311,7 @@ class Global {
 			}
 			// Alles gelesen?
 			if (offset < bytes.length) {
-				throw new IOException(Meldungen::M1015(file.getName))
+				throw new IOException(Meldungen::M1015(file.name))
 			}
 		} finally {
 			// Close the input stream and return bytes
@@ -1550,10 +1550,10 @@ class Global {
 
 		var str = "Unbekannt"
 		try {
-			var url = clazz.getProtectionDomain.codeSource.location
+			var url = clazz.protectionDomain.codeSource.location
 			str += " " + url.path
 			var file = new File(url.path)
-			var JarFile jar = null
+			var JarFile jar
 			try {
 				jar = new JarFile(file)
 				var manifest = jar.manifest

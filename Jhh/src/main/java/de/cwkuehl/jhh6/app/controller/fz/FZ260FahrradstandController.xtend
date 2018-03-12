@@ -154,7 +154,7 @@ class FZ260FahrradstandController extends BaseController<String> {
 
 		var ServiceErgebnis<?> r
 		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
-			r = FactoryService::freizeitService.insertUpdateFahrradstand(getServiceDaten, getText(fahrrad),
+			r = FactoryService::freizeitService.insertUpdateFahrradstand(serviceDaten, getText(fahrrad),
 				datum.value2, -1, Global.strDbl(zaehler.text), Global.strDbl(km.text), Global.strDbl(schnitt.text),
 				beschreibung.text)
 		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {

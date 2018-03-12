@@ -87,12 +87,12 @@ class AdresseService {
 				var strB = new StringBuffer
 				if (Global.compString(pnr, e.uid) != 0) {
 					pnr = e.uid
-					if (e.getPersonStatus != PersonStatusEnum.AKTUELL.intValue) {
+					if (e.personStatus != PersonStatusEnum.AKTUELL.intValue) {
 						strB.append("(")
 					}
-					strB.append(e.getName1)
-					Global.anhaengen(strB, ", ", e.getVorname)
-					if (e.getPersonStatus != PersonStatusEnum.AKTUELL.intValue) {
+					strB.append(e.name1)
+					Global.anhaengen(strB, ", ", e.vorname)
+					if (e.personStatus != PersonStatusEnum.AKTUELL.intValue) {
 						strB.append(")")
 					}
 				}
@@ -101,13 +101,13 @@ class AdresseService {
 				if (e.sitzStatus != PersonStatusEnum.AKTUELL.intValue) {
 					strB.append("(")
 				}
-				strB.append(e.getName)
-				Global.anhaengen(strB, ", ", e.getOrt)
+				strB.append(e.name)
+				Global.anhaengen(strB, ", ", e.ort)
 				if (e.sitzStatus != PersonStatusEnum.AKTUELL.intValue) {
 					strB.append(")")
 				}
 				e.setName(strB.toString)
-				if (Global.excelNes(e.getName)) {
+				if (Global.excelNes(e.name)) {
 					e.setName("")
 				}
 			}
@@ -203,9 +203,9 @@ class AdresseService {
 
 	def private boolean isSitzLeer(AdPersonSitzAdresse sitz) {
 
-		if (sitz.getTyp == 0 && Global.nes(sitz.getName) && Global.nes(sitz.getTelefon) && Global.nes(sitz.getFax) &&
-			Global.nes(sitz.getMobil) && Global.nes(sitz.getEmail) && Global.nes(sitz.getHomepage) &&
-			Global.nes(sitz.getPostfach) && Global.nes(sitz.getBemerkung) && sitz.getSitzStatus == 0) {
+		if (sitz.typ == 0 && Global.nes(sitz.name) && Global.nes(sitz.telefon) && Global.nes(sitz.fax) &&
+			Global.nes(sitz.mobil) && Global.nes(sitz.email) && Global.nes(sitz.homepage) &&
+			Global.nes(sitz.postfach) && Global.nes(sitz.bemerkung) && sitz.sitzStatus == 0) {
 			return true
 		}
 		return false
@@ -332,7 +332,7 @@ class AdresseService {
 			}
 			// leerer Sitz wird nicht angelegt.
 			var si = sitzRep.iuAdSitz(daten, sitzEvent, p.uid, p.reihenfolge, p.siUid, p.siTyp, p.name, p.adresseUid,
-				p.telefon, p.fax, p.mobil, p.email, p.homepage, p.getPostfach, p.bemerkung, p.sitzStatus, null, null,
+				p.telefon, p.fax, p.mobil, p.email, p.homepage, p.postfach, p.bemerkung, p.sitzStatus, null, null,
 				null, null)
 			p.siUid = si.uid
 		}
@@ -347,7 +347,7 @@ class AdresseService {
 		var AdSitz adSitz = null
 		if (liste !== null && liste.size > 0) {
 			adSitz = liste.get(0)
-			if (!Global.nes(adSitz.getAdresseUid)) {
+			if (!Global.nes(adSitz.adresseUid)) {
 				liste = sitzRep.getSitzListe(daten, null, null, adSitz.adresseUid)
 				if (liste.size <= 1) {
 					// nicht mehr verwendete Adresse löschen

@@ -75,7 +75,7 @@ class FoUtils {
 	 */
 	def static Date getDatum(int tag, int monat, int jahr) {
 
-		var Calendar cal = getCalendar(null)
+		var cal = getCalendar(null)
 		cal.set(Calendar.DAY_OF_MONTH, tag)
 		cal.set(Calendar.MONTH, monat - 1)
 		cal.set(Calendar.YEAR, jahr)
@@ -83,7 +83,7 @@ class FoUtils {
 		cal.set(Calendar.MINUTE, 0)
 		cal.set(Calendar.SECOND, 0)
 		cal.set(Calendar.MILLISECOND, 0)
-		return new Date(cal.getTimeInMillis)
+		return new Date(cal.timeInMillis)
 	}
 
 	/** 
@@ -92,7 +92,7 @@ class FoUtils {
 	 * @return Tag im Monat.
 	 */
 	def static int getTag(Date datum) {
-		var Calendar cal = getCalendar(datum)
+		var cal = getCalendar(datum)
 		return cal.get(Calendar.DAY_OF_MONTH)
 	}
 
@@ -103,7 +103,7 @@ class FoUtils {
 	 * @return Monatsletztent.
 	 */
 	def static int getMonatsletzten(int monat, int jahr) {
-		var Calendar cal = getCalendar(getDatum(1, monat, jahr))
+		var cal = getCalendar(getDatum(1, monat, jahr))
 		return cal.getActualMaximum(Calendar.DAY_OF_MONTH)
 	}
 
@@ -113,7 +113,7 @@ class FoUtils {
 	 * @return Monat ab 1.
 	 */
 	def static int getMonat(Date datum) {
-		var Calendar cal = getCalendar(datum)
+		var cal = getCalendar(datum)
 		return cal.get(Calendar.MONTH) + 1
 	}
 
@@ -178,13 +178,13 @@ class FoUtils {
 	 */
 	def static Date addMonate(Date datum, int anzahl, boolean ultimo) {
 
-		var Calendar calendar = getCalendar(datum)
+		var calendar = getCalendar(datum)
 		calendar.set(Calendar.HOUR_OF_DAY, 0)
 		calendar.set(Calendar.MINUTE, 0)
 		calendar.set(Calendar.SECOND, 0)
 		calendar.set(Calendar.MILLISECOND, 0)
 		addMonateIntern(calendar, anzahl, ultimo, calendar.get(Calendar.DAY_OF_MONTH))
-		return new Date(calendar.getTimeInMillis)
+		return new Date(calendar.timeInMillis)
 	}
 
 	/** 
@@ -195,18 +195,18 @@ class FoUtils {
 	 */
 	def static Date addTage(Date datum, int anzahl) {
 
-		var Calendar calendar = getCalendar(datum)
+		var calendar = getCalendar(datum)
 		calendar.set(Calendar.HOUR_OF_DAY, 0)
 		calendar.set(Calendar.MINUTE, 0)
 		calendar.set(Calendar.SECOND, 0)
 		calendar.set(Calendar.MILLISECOND, 0)
 		calendar.add(Calendar.DAY_OF_MONTH, anzahl)
-		return new Date(calendar.getTimeInMillis)
+		return new Date(calendar.timeInMillis)
 	}
 
 	def private static Calendar getCalendar(Date datum) {
 
-		var Calendar calendar = new GregorianCalendar
+		var calendar = new GregorianCalendar
 		if (datum !== null) {
 			calendar.setTime(datum)
 		}

@@ -1,6 +1,5 @@
 package de.cwkuehl.jhh6.app.controller.fz
 
-import de.cwkuehl.jhh6.api.dto.FzNotiz
 import de.cwkuehl.jhh6.api.dto.FzNotizKurz
 import de.cwkuehl.jhh6.api.service.ServiceErgebnis
 import de.cwkuehl.jhh6.app.base.BaseController
@@ -65,7 +64,7 @@ class FZ710NotizController extends BaseController<String> {
 			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
 			var FzNotizKurz k = parameter1
 			if (!neu && k !== null) {
-				var FzNotiz l = get(FactoryService::freizeitService.getNotiz(serviceDaten, k.uid))
+				var l = get(FactoryService::freizeitService.getNotiz(serviceDaten, k.uid))
 				if (l !== null) {
 					nr.setText(l.uid)
 					thema.setText(l.thema)
@@ -96,7 +95,7 @@ class FZ710NotizController extends BaseController<String> {
 	 */
 	@FXML def void onOk() {
 
-		var pos = splitpane.getDividerPositions
+		var pos = splitpane.dividerPositions
 		if (pos !== null && pos.length > 0) {
 			daten.setDivider(pos.get(0))
 		}

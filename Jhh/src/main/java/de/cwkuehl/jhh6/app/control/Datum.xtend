@@ -50,7 +50,7 @@ class Datum extends HBox {
 
 	new() {
 
-		var FXMLLoader fxmlLoader = new FXMLLoader(getClass.getResource("/control/Datum.fxml"), Global::bundle)
+		var fxmlLoader = new FXMLLoader(getClass.getResource("/control/Datum.fxml"), Global::bundle)
 		fxmlLoader.setRoot(this)
 		fxmlLoader.setController(this)
 		try {
@@ -122,8 +122,8 @@ class Datum extends HBox {
 		if (z === null || z.length <= 0) {
 			return d.atStartOfDay
 		}
-		var DateTimeFormatter f = DateTimeFormatter::ofPattern("HH:mm")
-		var LocalTime t = LocalTime::from(f.parse(z))
+		var f = DateTimeFormatter::ofPattern("HH:mm")
+		var t = LocalTime::from(f.parse(z))
 		return d.atTime(t.hour, t.minute)
 	}
 
@@ -161,7 +161,7 @@ class Datum extends HBox {
 	}
 
 	def double getUhrzeitGroesse() {
-		return zeit.getMinWidth
+		return zeit.minWidth
 	}
 
 	def void setUhrzeitGroesse(double v) {
@@ -175,7 +175,7 @@ class Datum extends HBox {
 	}
 
 	def double getWochentagGroesse() {
-		return datum.getMinWidth
+		return datum.minWidth
 	}
 
 	def void setWochentagGroesse(double v) {
@@ -194,9 +194,9 @@ class Datum extends HBox {
 
 	def void setNullText(String v) {
 
-		ohne.setText(v)
+		ohne.text = v
 		notnull = v === null || v.equals("")
-		ohne.setVisible(!notnull)
+		ohne.visible = !notnull
 		if (notnull) {
 			this.children.remove(ohne)
 			setValue(null as LocalDateTime)
@@ -217,10 +217,10 @@ class Datum extends HBox {
 			getChildren.removeAll(plus, heute, minus)
 			Platform::runLater([
 				{
-					var Scene s = datum.getScene
+					var s = datum.scene
 					if (s !== null) {
 						for (Entry<KeyCodeCombination, Runnable> e : accelators.entrySet) {
-							s.getAccelerators.remove(e.key, e.value)
+							s.accelerators.remove(e.key, e.value)
 						}
 					}
 				}
@@ -233,10 +233,10 @@ class Datum extends HBox {
 			}
 			Platform::runLater([
 				{
-					var Scene s = datum.getScene
+					var s = datum.scene
 					if (s !== null) {
 						for (Entry<KeyCodeCombination, Runnable> e : accelators.entrySet) {
-							s.getAccelerators.put(e.key, e.value)
+							s.accelerators.put(e.key, e.value)
 						}
 					}
 				}

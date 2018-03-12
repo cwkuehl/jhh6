@@ -104,8 +104,8 @@ class HH500BilanzenController extends BaseController<String> {
 		initAccelerator("U", rueckgaengig)
 		initAccelerator("W", wiederherstellen)
 		initAccelerator("D", drucken)
-		soll.getSelectionModel.selectedItemProperty.addListener([e|onSoll])
-		haben.getSelectionModel.selectedItemProperty.addListener([e|onHaben])
+		soll.selectionModel.selectedItemProperty.addListener([e|onSoll])
+		haben.selectionModel.selectedItemProperty.addListener([e|onHaben])
 		initDaten(0)
 		soll.setPrefWidth(1000)
 		haben.setPrefWidth(1000)
@@ -168,12 +168,12 @@ class HH500BilanzenController extends BaseController<String> {
 			var summeH = 0.0
 			if (liste !== null) {
 				for (HhBilanzSb b : liste) {
-					if (b.getArt > 0) {
+					if (b.art > 0) {
 						listeS.add(b)
-						summeS += b.getEsumme
+						summeS += b.esumme
 					} else {
 						listeH.add(b)
-						summeH += b.getEsumme
+						summeH += b.esumme
 					}
 				}
 			}
@@ -373,30 +373,30 @@ class HH500BilanzenController extends BaseController<String> {
 		var r = 0
 		var d = if(oben) -1 else 1
 		if (sollTabelle) {
-			r = soll.getSelectionModel.selectedIndex
+			r = soll.selectionModel.selectedIndex
 			l = getAllValues(soll)
 		} else {
-			r = haben.getSelectionModel.selectedIndex
+			r = haben.selectionModel.selectedIndex
 			l = getAllValues(haben)
 		}
 		if (0 <= r && r < l.size && 0 <= r + d && r + d < l.size) {
-			var HhBilanzSb k = l.get(r)
-			var HhBilanzSb k2 = l.get(r + d)
+			var k = l.get(r)
+			var k2 = l.get(r + d)
 			get(FactoryService::haushaltService.tauscheKontoSortierung(serviceDaten, k.kontoUid, k2.kontoUid))
 			var r2 = 0
 			if (sollTabelle) {
 				r = r + d
-				r2 = haben.getSelectionModel.selectedIndex
+				r2 = haben.selectionModel.selectedIndex
 			} else {
 				r2 = r + d
-				r = soll.getSelectionModel.selectedIndex
+				r = soll.selectionModel.selectedIndex
 			}
 			onAktuell
 			if (r >= 0) {
-				soll.getSelectionModel.select(r)
+				soll.selectionModel.select(r)
 			}
 			if (r2 >= 0) {
-				haben.getSelectionModel.select(r2)
+				haben.selectionModel.select(r2)
 			}
 		}
 	}

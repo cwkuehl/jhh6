@@ -65,7 +65,7 @@ class DetektivContext implements Serializable {
 
 	def private void initCluedo() {
 
-		var Kategorie k = null
+		var Kategorie k
 		if (spieler === null) {
 			// Spieler
 			spieler = new LinkedHashMap<String, Kategorie>
@@ -140,7 +140,7 @@ class DetektivContext implements Serializable {
 		}
 		if (runden === null) {
 			// Runden
-			var Runde r = null
+			var Runde r
 			runden = new LinkedHashMap<String, Runde>
 			r = new Runde(Global::UID, getNr(spieler, spieler.size - 1).id, toList(getNr(verdaechtige, 3).id), true,
 				toList(getNr(werkzeuge, 0).id, getNr(werkzeuge, 2).id), true, toList(getNr(raeume, 6).id), true, toList,
@@ -163,9 +163,9 @@ class DetektivContext implements Serializable {
 	def private Kategorie getNr(LinkedHashMap<String, Kategorie> hm, int fnr) {
 
 		var nr = fnr
-		var Kategorie k = null
+		var Kategorie k
 		if (hm !== null) {
-			var Iterator<String> it = hm.keySet.iterator
+			var it = hm.keySet.iterator
 			var String key
 			while (it.hasNext && nr >= 0) {
 				key = it.next
@@ -202,7 +202,7 @@ class DetektivContext implements Serializable {
 
 		var sb = new StringBuffer
 		if (hm !== null && liste !== null) {
-			var Kategorie k = null
+			var Kategorie k
 			for (String id : liste) {
 				k = hm.get(id)
 				if (k !== null) {
@@ -217,12 +217,12 @@ class DetektivContext implements Serializable {
 
 		var sb = new StringBuffer
 		if (hm !== null && liste !== null) {
-			var Kategorie k = null
+			var Kategorie k
 			for (String id : liste.keySet) {
 				k = hm.get(id)
 				if (k !== null) {
 					Global.anhaengen(sb, " ", k.kurz)
-					var Integer i = liste.get(id)
+					var i = liste.get(id)
 					if (i !== null && i > 1) {
 						Global.anhaengen(sb, "", i.toString)
 					}
@@ -352,7 +352,7 @@ class DetektivContext implements Serializable {
 	def private void berechneErgebnisse(boolean widerspruch) {
 
 		ergebnisse = new LinkedHashMap<String, Ergebnis>
-		var Ergebnis e = null
+		var Ergebnis e
 		var anzahl = spieler.size
 		var w = 0.0
 		// Ergebnisse aus allen Kategorien
@@ -473,7 +473,7 @@ class DetektivContext implements Serializable {
 				}
 				var keiner = true
 				for (String s : sliste) {
-					var Ergebnis er = ergebnisse.get(s)
+					var er = ergebnisse.get(s)
 					if (er !== null) {
 						if (r.spielerMit.equals(er.spieler)) {
 							keiner = false
@@ -482,7 +482,7 @@ class DetektivContext implements Serializable {
 				}
 				if (keiner) {
 					for (String s : sliste) {
-						var Ergebnis er = ergebnisse.get(s)
+						var er = ergebnisse.get(s)
 						if (er !== null) {
 							er.addSpielerWahr(r.spielerMit)
 						}
@@ -492,7 +492,7 @@ class DetektivContext implements Serializable {
 		}
 		// Wahrscheinlichkeiten berechnen
 		var katw = new HashMap<String, Statistik>
-		var Statistik s = null
+		var Statistik s
 		katw.put(KAT_VERDAECHTIGER, new Statistik(KAT_VERDAECHTIGER))
 		katw.put(KAT_WERKZEUG, new Statistik(KAT_WERKZEUG))
 		katw.put(KAT_RAUM, new Statistik(KAT_RAUM))
@@ -553,7 +553,7 @@ class DetektivContext implements Serializable {
 		if (r.spieler === null) {
 			throw new MeldungException("Bitte einen Spieler auswählen.")
 		}
-		var Runde rU = runden.get(r.id)
+		var rU = runden.get(r.id)
 		if (rU !== null) {
 			rU.setSpieler(r.spieler)
 			rU.setVerdaechtige(r.verdaechtige)
@@ -618,7 +618,7 @@ class DetektivContext implements Serializable {
 			out.writeObject(context)
 			out.close
 			bs.close
-			var byte[] bytes = bs.toByteArray
+			var bytes = bs.toByteArray
 			p.setSchluessel(SCHLUESSEL)
 			p.setWert(Base64.encoder.encodeToString(bytes))
 			var r = FactoryService::anmeldungService.updateParameterListe(daten, pliste)
@@ -638,7 +638,7 @@ class DetektivContext implements Serializable {
 		var array = sp.split(", *")
 		spieler = new LinkedHashMap<String, Kategorie>
 		for (String s : array) {
-			var Kategorie k = new Kategorie(Global::UID, s, s.substring(0, 1))
+			var k = new Kategorie(Global::UID, s, s.substring(0, 1))
 			spieler.put(k.id, k)
 		}
 	}

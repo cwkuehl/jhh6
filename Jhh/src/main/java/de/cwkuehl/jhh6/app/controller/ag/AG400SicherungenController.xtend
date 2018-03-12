@@ -133,7 +133,7 @@ class AG400SicherungenController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			mandant.setText(Global::intStr(getServiceDaten.mandantNr))
+			mandant.setText(Global::intStr(serviceDaten.mandantNr))
 		// mandant.setText("3")
 		}
 		if (stufe <= 1) {
@@ -168,7 +168,7 @@ class AG400SicherungenController extends BaseController<String> {
 	def private void starteDialog(DialogAufrufEnum aufruf) {
 
 		var VerzeichnisseData k = getValue2(verzeichnisse, !DialogAufrufEnum::NEU.equals(aufruf))
-		var MaEinstellung e = if(k === null) null else k.getData
+		var MaEinstellung e = if(k === null) null else k.data
 		e = starteDialog(typeof(AG410SicherungController), aufruf, e)
 		if (e !== null) {
 			if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
@@ -176,7 +176,7 @@ class AG400SicherungenController extends BaseController<String> {
 				verzeichnisseData.add(new VerzeichnisseData(e))
 			} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
 				k.schluessel.set(e.schluessel)
-				k.wert.set(e.getWert)
+				k.wert.set(e.wert)
 			} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
 				verzeichnisse.items.remove(k)
 			}
@@ -302,8 +302,7 @@ class AG400SicherungenController extends BaseController<String> {
 		var i = 0
 		for (VerzeichnisseData e : verzeichnisse.items) {
 			i++
-			Jhh6::getEinstellungen.
-				setzeResourceDaten('''Sicherung_«i»''', '''«e.getData.getSchluessel»<«e.getData.getWert»''')
+			Jhh6::getEinstellungen.setzeResourceDaten('''Sicherung_«i»''', '''«e.data.schluessel»<«e.data.wert»''')
 		}
 		Jhh6::getEinstellungen.setzeResourceDaten('''Sicherung_«(i + 1)»''', "")
 	}
@@ -316,7 +315,7 @@ class AG400SicherungenController extends BaseController<String> {
 			abbruch.setLength(0)
 			kopierFehler.clear
 			onSicherungStatus
-			var sicherung0 = '''«k.getSchluessel»<«k.wert»'''
+			var sicherung0 = '''«k.schluessel»<«k.wert»'''
 			var String[] sicherungen = #[sicherung0] as String[]
 			onSicherungStatusTimer
 			try {
@@ -349,7 +348,7 @@ class AG400SicherungenController extends BaseController<String> {
 
 		// Platform.runLater(() -> statusText.setText(status.toString))
 		statusText.setText(status.toString)
-		// view.setKopierFehler(model.getDaten.getKopierFehler)
+		// view.setKopierFehler(model.daten.kopierFehler)
 		if (abbruch.length > 0) {
 			throw new RuntimeException("")
 		}
@@ -389,7 +388,7 @@ class AG400SicherungenController extends BaseController<String> {
 				// r.throwErstenFehler
 			} catch (Exception ex) {
 				status.setLength(0)
-				status.append(Meldungen::M1033(ex.getMessage))
+				status.append(Meldungen::M1033(ex.message))
 			} finally {
 				abbruch.append("Ende")
 			}

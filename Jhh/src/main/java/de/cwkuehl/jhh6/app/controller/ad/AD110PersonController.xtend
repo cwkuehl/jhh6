@@ -245,13 +245,13 @@ class AD110PersonController extends BaseController<String> {
 
 		var ServiceErgebnis<?> r
 		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
-			var AdPersonSitzAdresse p = getData()
+			var p = data
 			p.setUid(null)
 			p.setSiUid(null)
 			p.setAdresseUid(null)
 			r = FactoryService::adresseService.insertUpdatePerson(serviceDaten, p)
 		} else if (DialogAufrufEnum::AENDERN.equals(aufruf) || DialogAufrufEnum::KOPIEREN2.equals(aufruf)) {
-			var AdPersonSitzAdresse p = getData()
+			var p = data
 			r = FactoryService::adresseService.insertUpdatePerson(serviceDaten, p)
 		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
 			r = FactoryService::adresseService.deleteSitz(serviceDaten, nr.text, sitzNr.text)

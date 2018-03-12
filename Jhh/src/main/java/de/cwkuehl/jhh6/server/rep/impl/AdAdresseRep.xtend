@@ -78,22 +78,22 @@ class AdAdresseRep {
 		} else {
 			sql.append("a.", AdAdresse.STAAT_NAME, "=", p.staat, null)
 		}
-		if (p.getPlz() === null) {
+		if (p.plz === null) {
 			sql.append('''a.«AdAdresse.PLZ_NAME» IS NULL''')
 		} else {
 			sql.append("a.", AdAdresse.PLZ_NAME, "=", p.plz, null)
 		}
-		if (p.getOrt() === null) {
+		if (p.ort === null) {
 			sql.append('''a.«AdAdresse.ORT_NAME» IS NULL''')
 		} else {
 			sql.append("a.", AdAdresse.ORT_NAME, "=", p.ort, null)
 		}
-		if (p.getStrasse() === null) {
+		if (p.strasse === null) {
 			sql.append('''a.«AdAdresse.STRASSE_NAME» IS NULL''')
 		} else {
 			sql.append("a.", AdAdresse.STRASSE_NAME, "=", p.strasse, null)
 		}
-		if (p.getHausnr() === null) {
+		if (p.hausnr === null) {
 			sql.append('''a.«AdAdresse.HAUSNR_NAME» IS NULL''')
 		} else {
 			sql.append("a.", AdAdresse.HAUSNR_NAME, "=", p.hausnr, null)

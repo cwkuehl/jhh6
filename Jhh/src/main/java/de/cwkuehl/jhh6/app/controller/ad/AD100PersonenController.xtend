@@ -221,7 +221,7 @@ class AD100PersonenController extends BaseController<String> {
 	 * Event für Drucken.
 	 */
 	@FXML def void onDrucken() {
-		var byte[] pdf = get(FactoryService::adresseService.getReportAdresse(serviceDaten))
+		var pdf = get(FactoryService::adresseService.getReportAdresse(serviceDaten))
 		Werkzeug.speicherReport(pdf, Meldungen::AD012, true)
 	}
 

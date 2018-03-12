@@ -259,7 +259,7 @@ class HhKontoRep {
 
 		var String sort
 		while (Global.nes(sort)) {
-			sort = Global.fixiereString(Global.objStr(Global.getNextRandom()), HhKonto.SORTIERUNG_LAENGE, false, "0")
+			sort = Global.fixiereString(Global.objStr(Global.nextRandom), HhKonto.SORTIERUNG_LAENGE, false, "0")
 			var k = getMinKonto(daten, uid, null, sort, null)
 			if (k !== null) {
 				sort = null

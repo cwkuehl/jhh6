@@ -265,8 +265,8 @@ class HhBilanzRep {
 		} else {
 			var hhBilanzU = new HhBilanzUpdate(hhBilanz2)
 			if (nurBetrag) {
-				hhBilanzU.setBetrag(hhBilanz2.getBetrag() + dbB)
-				hhBilanzU.setEbetrag(hhBilanz2.getEbetrag() + dbEB)
+				hhBilanzU.setBetrag(hhBilanz2.betrag + dbB)
+				hhBilanzU.setEbetrag(hhBilanz2.ebetrag + dbEB)
 			} else {
 				hhBilanzU.setSh(strSh)
 				hhBilanzU.setBetrag(dbB)

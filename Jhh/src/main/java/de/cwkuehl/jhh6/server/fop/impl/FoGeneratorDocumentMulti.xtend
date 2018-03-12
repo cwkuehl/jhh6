@@ -55,7 +55,7 @@ class FoGeneratorDocumentMulti {
 
 		try {
 			if (fds.isEmpty) {
-				var FoGeneratorDocument doc1 = null
+				var FoGeneratorDocument doc1
 				if (!liste.isEmpty) {
 					doc1 = liste.get(0)
 				}
@@ -102,7 +102,7 @@ class FoGeneratorDocumentMulti {
 	 */
 	def Source getSource() {
 		generate
-		return fds.getSource
+		return fds.source
 	}
 
 	/** 
@@ -111,7 +111,7 @@ class FoGeneratorDocumentMulti {
 	 */
 	def byte[] getSha1Hash() {
 		generate
-		return fds.getSha1Hash
+		return fds.sha1Hash
 	}
 
 	/** 

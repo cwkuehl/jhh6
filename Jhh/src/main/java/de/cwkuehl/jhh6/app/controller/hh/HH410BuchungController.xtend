@@ -1,6 +1,5 @@
 package de.cwkuehl.jhh6.app.controller.hh
 
-import de.cwkuehl.jhh6.api.dto.HhBuchung
 import de.cwkuehl.jhh6.api.dto.HhBuchungLang
 import de.cwkuehl.jhh6.api.dto.HhEreignisLang
 import de.cwkuehl.jhh6.api.dto.HhKonto
@@ -133,7 +132,7 @@ class HH410BuchungController extends BaseController<String> {
 		belegDatum0.setLabelFor(belegDatum.labelForNode)
 		angelegt0.setLabelFor(angelegt)
 		geaendert0.setLabelFor(geaendert)
-		ereignis.getSelectionModel.selectedItemProperty.addListener([e|onEreignis])
+		ereignis.selectionModel.selectedItemProperty.addListener([e|onEreignis])
 		initDaten(0)
 		betrag.requestFocus
 		betrag.selectAll
@@ -154,7 +153,7 @@ class HH410BuchungController extends BaseController<String> {
 			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf) || DialogAufrufEnum::STORNO.equals(aufruf)
 			var HhBuchungLang e = parameter1
 			if (!neu && e !== null) {
-				var HhBuchung k = get(FactoryService::haushaltService.getBuchung(serviceDaten, e.uid))
+				var k = get(FactoryService::haushaltService.getBuchung(serviceDaten, e.uid))
 				if (k !== null) {
 					nr.setText(k.uid)
 					valuta.setValue(k.sollValuta)
@@ -284,7 +283,7 @@ class HH410BuchungController extends BaseController<String> {
 				getText(sollkonto), getText(habenkonto), bText.text, belegNr.text, belegDatum.value, null, null, null,
 				null, null, false)
 		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
-			r = FactoryService::haushaltService.insertUpdateBuchung(getServiceDaten, nr.text, valuta.value, dbB, dbEB,
+			r = FactoryService::haushaltService.insertUpdateBuchung(serviceDaten, nr.text, valuta.value, dbB, dbEB,
 				getText(sollkonto), getText(habenkonto), bText.text, belegNr.text, belegDatum.value, null, null, null,
 				null, null, false)
 		} else if (DialogAufrufEnum::STORNO.equals(aufruf)) {

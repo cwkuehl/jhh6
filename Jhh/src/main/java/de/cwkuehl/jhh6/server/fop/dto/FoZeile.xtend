@@ -14,11 +14,11 @@ class FoZeile {
 	}
 
 	new(VmAbrechnungLang a) {
-		beschreibung = a.getBeschreibung()
-		wert = a.getWert()
-		betrag = a.getBetrag()
-		status = a.getStatus()
-		reihenfolge = a.getReihenfolge()
+		beschreibung = a.beschreibung
+		wert = a.wert
+		betrag = a.betrag
+		status = a.status
+		reihenfolge = a.reihenfolge
 	}
 
 	def String getBeschreibung() {

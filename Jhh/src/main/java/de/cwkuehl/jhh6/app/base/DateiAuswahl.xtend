@@ -12,7 +12,7 @@ class DateiAuswahl {
 	def static String auswaehlen(boolean tempVerz, String dateiname, String ok, String endung, String endungLang) {
 
 		var pfad = ""
-		var File theFile = null
+		var File theFile
 		if (tempVerz) {
 			pfad += Jhh6::einstellungen.tempVerzeichnis
 		}
@@ -35,7 +35,7 @@ class DateiAuswahl {
 					if (f.isDirectory) {
 						return true
 					}
-					var filename = f.getName
+					var filename = f.name
 					var String ^extension
 					var i = filename.lastIndexOf(Character.valueOf('.').charValue)
 					if (i > 0 && i < filename.length - 1) {

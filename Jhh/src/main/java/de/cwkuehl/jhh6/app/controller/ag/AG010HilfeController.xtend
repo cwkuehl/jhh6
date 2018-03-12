@@ -22,7 +22,7 @@ class AG010HilfeController extends BaseController<String> {
 	 */
 	override protected void initialize() {
 
-		var WebEngine we = webview.engine
+		var we = webview.engine
 		Werkzeug.help = we
 	}
 
