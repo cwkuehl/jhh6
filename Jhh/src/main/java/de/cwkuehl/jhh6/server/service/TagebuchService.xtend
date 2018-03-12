@@ -34,7 +34,7 @@ class TagebuchService {
 	@Transaction(false)
 	override ServiceErgebnis<TbEintrag> getEintrag(ServiceDaten daten, LocalDate datum) {
 
-		// getBerechService().pruefeBerechtigungAdmin(daten, mandantNr);
+		// getBerechService.pruefeBerechtigungAdmin(daten, mandantNr)
 		var r = new ServiceErgebnis<TbEintrag>(null)
 		if (datum === null) {
 			return r
@@ -62,10 +62,10 @@ class TagebuchService {
 			return r
 		}
 
-		// getBerechService().pruefeBerechtigungAdmin(daten, mandantNr);
-		var tbEintragKey = new TbEintragKey(daten.mandantNr, datum);
-		var TbEintragUpdate tbEintragU = null;
-		var strEintrag = strText;
+		// getBerechService.pruefeBerechtigungAdmin(daten, mandantNr)
+		var tbEintragKey = new TbEintragKey(daten.mandantNr, datum)
+		var TbEintragUpdate tbEintragU
+		var strEintrag = strText
 
 		if (!Global.nes(strEintrag)) {
 			strEintrag = strEintrag.trim
@@ -74,9 +74,9 @@ class TagebuchService {
 		var tbEintrag = tagebuchRep.get(daten, tbEintragKey)
 		if (tbEintrag === null) {
 			if (!leer) {
-				tbEintrag = new TbEintrag()
-				if (tbEintrag.getReplikationUid() === null) {
-					tbEintrag.setReplikationUid(Global.getUID())
+				tbEintrag = new TbEintrag
+				if (tbEintrag.replikationUid === null) {
+					tbEintrag.setReplikationUid(Global::UID)
 				}
 				tbEintrag.setMandantNr(daten.mandantNr)
 				tbEintrag.setDatum(datum)
@@ -84,10 +84,10 @@ class TagebuchService {
 				tagebuchRep.insert(daten, tbEintrag)
 			}
 		} else if (!leer) {
-			if (!strEintrag.equals(tbEintrag.getEintrag())) {
+			if (!strEintrag.equals(tbEintrag.getEintrag)) {
 				tbEintragU = new TbEintragUpdate(tbEintrag)
-				if (tbEintragU.getReplikationUid() === null) {
-					tbEintragU.setReplikationUid(Global.getUID())
+				if (tbEintragU.replikationUid === null) {
+					tbEintragU.setReplikationUid(Global::UID)
 				}
 				tbEintragU.setEintrag(strEintrag)
 				tagebuchRep.update(daten, tbEintragU)
@@ -118,7 +118,7 @@ class TagebuchService {
 			return r
 		}
 
-		// getBerechService().pruefeBerechtigungAdmin(daten, mandantNr);
+		// getBerechService.pruefeBerechtigungAdmin(daten, mandantNr);
 		pruefeSuche(suche)
 		var datum = tagebuchRep.sucheDatum(daten, stelle, aktDatum, suche)
 		if (datum !== null && stelle == Constant.TB_ENDE && suche.get(0).equals("%")) {
@@ -174,7 +174,7 @@ class TagebuchService {
 	@Transaction(false)
 	override ServiceErgebnis<List<String>> holeDatei(ServiceDaten daten, String[] suche) {
 
-		// getBerechService().pruefeBerechtigungAdmin(daten, mandantNr);
+		// getBerechService.pruefeBerechtigungAdmin(daten, mandantNr);
 		pruefeSuche(suche)
 
 		var v = new ArrayList<String>
@@ -191,7 +191,7 @@ class TagebuchService {
 					muster = muster.substring(1)
 				}
 				if (muster.endsWith("%")) {
-					muster = muster.substring(0, muster.length() - 1)
+					muster = muster.substring(0, muster.length - 1)
 				}
 				str = str.replaceAll("####", "")
 				rf = true
@@ -214,13 +214,13 @@ class TagebuchService {
 			)
 		}
 		if (rf) {
-			var long z = -1
+			var z = -1l
 			var p = Pattern.compile(muster)
 			for (e : liste) {
 				str = e.eintrag
 				if (!Global.nes(str)) {
 					var m = p.matcher(str)
-					if (m.find()) {
+					if (m.find) {
 						var l = Global.strLng(m.group(1))
 						if (z < 0) {
 							z = l

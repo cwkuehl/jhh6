@@ -218,7 +218,7 @@ class WertpapierService {
 		String muster, String uid, LocalDate bewertungsdatum, String kuid, boolean nuraktiv, boolean speichern,
 		StringBuffer status, StringBuffer abbruch) {
 
-		var WpKonfigurationLang k = null
+		var WpKonfigurationLang k
 		if (!Global.nes(kuid)) {
 			var l = konfigurationRep.getKonfigurationLangListe(daten, kuid, null)
 			if (Global.listLaenge(l) > 0) {
@@ -597,7 +597,7 @@ class WertpapierService {
 				var jhigh = jquote.getJSONArray("high")
 				for (var i = 0; jts !== null && i < jts.size; i++) {
 					var k = new SoKurse
-					k.datum = Instant.ofEpochSecond(jts.getLong(i)).atZone(ZoneId.systemDefault()).toLocalDate().
+					k.datum = Instant.ofEpochSecond(jts.getLong(i)).atZone(ZoneId.systemDefault).toLocalDate.
 						atStartOfDay
 					k.open = jopen.optDouble(i, 0)
 					k.high = jhigh.optDouble(i, 0)
@@ -746,7 +746,7 @@ class WertpapierService {
 	def private List<String> executeHttp(String targetURL, String urlParameters, boolean lines, StringBuffer cookie) {
 
 		var URL url
-		var HttpURLConnection connection = null
+		var HttpURLConnection connection
 		try {
 			// Create connection
 			url = new URL(targetURL)
@@ -770,7 +770,7 @@ class WertpapierService {
 			connection.readTimeout = 3000
 
 			// Send request
-			var wr = new DataOutputStream(connection.getOutputStream)
+			var wr = new DataOutputStream(connection.outputStream)
 			if (!Global.nes(urlParameters)) {
 				wr.writeBytes(urlParameters)
 			}
@@ -779,7 +779,7 @@ class WertpapierService {
 
 			// Get Response
 			if (cookie !== null && cookie.length <= 0) {
-				var cookies = connection.getHeaderFields.get("set-cookie")
+				var cookies = connection.headerFields.get("set-cookie")
 				if (cookies !== null && cookies.length > 0) {
 					var c = cookies.get(0)
 					if (c !== null)
@@ -790,7 +790,7 @@ class WertpapierService {
 			if (connection.responseCode != HttpURLConnection.HTTP_OK) {
 				throw new Exception(Meldungen::WP012(connection.responseCode, targetURL))
 			}
-			var is = connection.getInputStream
+			var is = connection.inputStream
 			var rd = new BufferedReader(new InputStreamReader(is, "UTF-8"))
 			var v = new ArrayList<String>
 			var String line
@@ -819,7 +819,7 @@ class WertpapierService {
 	def private List<String> executeHttps(String targetURL, String urlParameters, boolean lines, StringBuffer cookie) {
 
 		var URL url
-		var HttpsURLConnection connection = null
+		var HttpsURLConnection connection
 		try {
 			// Create connection
 			url = new URL(targetURL)
@@ -1035,11 +1035,11 @@ class WertpapierService {
 
 		val xgroesse = c.xgroesse as double
 		val ygroesse = c.ygroesse as double
-		val max = c.getPosmax as double
+		val max = c.posmax as double
 		val xoffset = xgroesse * 1.5
 		val yoffset = ygroesse * 4.0
-		val xanzahl = c.getSaeulen().size as double
-		val yanzahl = c.getWerte().size as double
+		val xanzahl = c.saeulen.size as double
+		val yanzahl = c.werte.size as double
 		var b = 0.0
 		var h = 0.0
 		var x = 0.0
@@ -1060,7 +1060,7 @@ class WertpapierService {
 		var aktkurs = c.kurs
 		var yakt = -1;
 		if (Global.compDouble4(aktkurs, 0) > 0) {
-			var d = c.getMax() + 1;
+			var d = c.max + 1;
 			for (var i = 0; i < yanzahl; i++) {
 				if (Global.compDouble4(c.werte.get(i), d) < 0 && Global.compDouble4(c.werte.get(i), aktkurs) > 0) {
 					d = c.werte.get(i)
@@ -1077,7 +1077,7 @@ class WertpapierService {
 					font = fontplain
 					color = Color.lightGray
 				} else {
-					drawString(p, x + 5, y, Global.dblStr(Global.round(c.getWerte().get(i))), font, color)
+					drawString(p, x + 5, y, Global.dblStr(Global.round(c.werte.get(i))), font, color)
 				}
 			}
 			drawLine(p, xoffset, y, x, y, color, stroke) // waagerechte Linien
@@ -1089,9 +1089,9 @@ class WertpapierService {
 		y = yoffset + yanzahl * ygroesse
 		for (var i = 0; i < xanzahl + 3; i++) {
 			drawLine(p, x, yoffset, x, y, color, stroke) // senkrechte Linien
-			if (i % 6 == 0 && i < xanzahl && c.getSaeulen().get(i).getDatum() !== null) {
+			if (i % 6 == 0 && i < xanzahl && c.saeulen.get(i).datum !== null) {
 				drawString(p, x + xgroesse, y + ygroesse * 1.5,
-					Global.dateTimeStringForm(c.getSaeulen().get(i).getDatum()), font, color)
+					Global.dateTimeStringForm(c.saeulen.get(i).datum), font, color)
 			}
 			x += xgroesse
 		}
@@ -1105,7 +1105,7 @@ class WertpapierService {
 		// var xd = xgroesse / 2
 		// var yd = ygroesse / 2
 		for (s : c.saeulen) {
-			h = s.getYpos()
+			h = s.ypos
 			var array = s.chars
 			for (char xo : array) {
 				x = b
@@ -1129,18 +1129,18 @@ class WertpapierService {
 		// Trendlinien
 		stroke = 2
 		for (t : c.trends) {
-			x = (t.getXpos() + 1) * xgroesse + xoffset
-			y = (max - t.getYpos()) * ygroesse + yoffset
-			b = t.getLaenge() * xgroesse
-			if (t.getBoxtyp() == 0) {
+			x = (t.xpos + 1) * xgroesse + xoffset
+			y = (max - t.ypos) * ygroesse + yoffset
+			b = t.laenge * xgroesse
+			if (t.boxtyp == 0) {
 				b += xgroesse
 				h = 0
 				color = Color.red
-			} else if (t.getBoxtyp() == 1) {
-				h = -t.getLaenge() * ygroesse
+			} else if (t.boxtyp == 1) {
+				h = -t.laenge * ygroesse
 				color = Color.blue
 			} else {
-				h = t.getLaenge() * ygroesse
+				h = t.laenge * ygroesse
 				y += ygroesse
 				color = Color.blue
 			}
@@ -1150,10 +1150,10 @@ class WertpapierService {
 		// Muster
 		stroke = 2
 		color = new Color(0.5803922f, 0.0f, 0.827451f) // DARKVIOLET
-		for (pa : c.getPattern()) {
-			x = (pa.getXpos() + 1) * xgroesse + xoffset
-			y = (max - pa.getYpos()) * ygroesse + yoffset
-			drawString(p, x, y, pa.getBezeichnung(), font, color)
+		for (pa : c.pattern) {
+			x = (pa.xpos + 1) * xgroesse + xoffset
+			y = (max - pa.ypos) * ygroesse + yoffset
+			drawString(p, x, y, pa.bezeichnung, font, color)
 		}
 	}
 
@@ -1220,7 +1220,7 @@ class WertpapierService {
 //			osp.close
 //		}
 //		var drawing = sheet.createDrawingPatriarch
-//		var helper = wb.getCreationHelper()
+//		var helper = wb.creationHelper
 //		// add a picture shape
 //		var anchor = helper.createClientAnchor
 //		// set top-left corner of the picture,
@@ -1243,7 +1243,7 @@ class WertpapierService {
 			return r
 		}
 //		var wb = new HSSFWorkbook
-//		var WpKonfigurationLang k = null
+//		var WpKonfigurationLang k
 //		if(!Global.nes(kuid)) {
 //			var l = konfigurationRep.getKonfigurationLangListe(daten, kuid, null)
 //			if(Global.listLaenge(l) > 0) {

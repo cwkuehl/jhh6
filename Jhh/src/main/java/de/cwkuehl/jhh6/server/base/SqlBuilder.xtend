@@ -9,16 +9,16 @@ class SqlBuilder {
 	private val sql = new StringBuffer
 
 	/** 1. Präfix. */
-	private var String praefix1 = null
+	private String praefix1 = null
 
 	/** Folgendes Präfix. */
-	private var String praefix2 = null
+	private String praefix2 = null
 
 	/** Ist Präfix 1 dran? */
-	private var praefixEins = true
+	private boolean praefixEins = true
 
 	/** Maximale Anzahl von Datensätzen. */
-	@Accessors var int max = 0
+	@Accessors int max = 0
 
 	/** Liste von SQL-Parametern. */
 	@Accessors(PUBLIC_GETTER) private val params = new ArrayList<SqlParameter>

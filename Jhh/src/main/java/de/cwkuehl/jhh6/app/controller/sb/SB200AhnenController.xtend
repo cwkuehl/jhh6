@@ -284,7 +284,7 @@ class SB200AhnenController extends BaseController<String> {
 	 */
 	@FXML def void onSpVater() {
 		var SbPersonLang k = getValue(ahnen, true)
-		setText(ahnen, k.getVaterUid)
+		setText(ahnen, k.vaterUid)
 	}
 
 	/** 
@@ -292,7 +292,7 @@ class SB200AhnenController extends BaseController<String> {
 	 */
 	@FXML def void onSpMutter() {
 		var SbPersonLang k = getValue(ahnen, true)
-		setText(ahnen, k.getMutterUid)
+		setText(ahnen, k.mutterUid)
 	}
 
 	/** 

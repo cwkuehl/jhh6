@@ -167,13 +167,13 @@ class SO210RundeController extends BaseController<String> {
 		spieler0.setLabelFor(spieler)
 		initListView(spieler, null)
 		verdaechtiger0.setLabelFor(verdaechtiger)
-		verdaechtiger.getSelectionModel.setSelectionMode(SelectionMode.MULTIPLE)
+		verdaechtiger.selectionModel.setSelectionMode(SelectionMode.MULTIPLE)
 		werkzeug0.setLabelFor(werkzeug)
-		werkzeug.getSelectionModel.setSelectionMode(SelectionMode.MULTIPLE)
+		werkzeug.selectionModel.setSelectionMode(SelectionMode.MULTIPLE)
 		raum0.setLabelFor(raum)
-		raum.getSelectionModel.setSelectionMode(SelectionMode.MULTIPLE)
+		raum.selectionModel.setSelectionMode(SelectionMode.MULTIPLE)
 		spielerOhne0.setLabelFor(spielerOhne)
-		spielerOhne.getSelectionModel.setSelectionMode(SelectionMode.MULTIPLE)
+		spielerOhne.selectionModel.setSelectionMode(SelectionMode.MULTIPLE)
 		spielerMit0.setLabelFor(spielerMit)
 		initListView(spielerMit, null)
 		angelegt0.setLabelFor(angelegt)
@@ -190,15 +190,15 @@ class SO210RundeController extends BaseController<String> {
 
 		if (stufe <= 0) {
 			context = parameter1
-			var sl = context.getSpieler
+			var sl = context.spieler
 			spieler.setItems(getItems(sl, null, [a|new SpielerData(a)], null))
 			spielerMit.setItems(getItems(sl, null, [a|new SpielerMitData(a)], null))
 			spielerOhne.setItems(getItems(sl, null, [a|new SpielerOhneData(a)], null))
-			var vl = context.getVerdaechtige
+			var vl = context.verdaechtige
 			verdaechtiger.setItems(getItems(vl, null, [a|new VerdaechtigerData(a)], null))
-			var wl = context.getWerkzeuge
+			var wl = context.werkzeuge
 			werkzeug.setItems(getItems(wl, null, [a|new WerkzeugData(a)], null))
-			var rl = context.getRaeume
+			var rl = context.raeume
 			raum.setItems(getItems(rl, null, [a|new RaumData(a)], null))
 			var neu = DialogAufrufEnum::NEU.equals(aufruf)
 			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)

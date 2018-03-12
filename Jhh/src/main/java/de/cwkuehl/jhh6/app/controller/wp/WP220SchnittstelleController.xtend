@@ -106,12 +106,12 @@ class WP220SchnittstelleController extends BaseController<String> {
 		konfiguration0.setLabelFor(konfiguration)
 		datei0.setLabelFor(datei)
 		initDaten(0)
-		konfiguration.getSelectionModel.setSelectionMode(SelectionMode.MULTIPLE)
+		konfiguration.selectionModel.setSelectionMode(SelectionMode.MULTIPLE)
 		datei.setPrefWidth(9999)
 		datei.requestFocus
 		datum20.setLabelFor(datum2)
 		wertpapier0.setLabelFor(wertpapier)
-		wertpapier.getSelectionModel.setSelectionMode(SelectionMode.MULTIPLE)
+		wertpapier.selectionModel.setSelectionMode(SelectionMode.MULTIPLE)
 	}
 
 	/** 
@@ -123,8 +123,8 @@ class WP220SchnittstelleController extends BaseController<String> {
 		if (stufe <= 0) {
 			var heute = LocalDate::now
 			datum.setValue(Global.werktag(heute))
-			datum2.setValue(Global.werktag(LocalDate.of(heute.getYear - 1, 1, 1)))
-			datum3.setValue(Global.werktag(LocalDate.of(heute.getYear, 1, 1)))
+			datum2.setValue(Global.werktag(LocalDate.of(heute.year - 1, 1, 1)))
+			datum3.setValue(Global.werktag(LocalDate.of(heute.year, 1, 1)))
 			datum4.setValue(Global.werktag(heute))
 			var kliste = get(FactoryService::wertpapierService.getKonfigurationListe(serviceDaten, true, "1"))
 			konfiguration.setItems(getItems(kliste, new WpKonfigurationLang, [a|new KonfigurationData(a)], null))
@@ -168,7 +168,7 @@ class WP220SchnittstelleController extends BaseController<String> {
 		if (Global.nes(datei.text)) {
 			throw new MeldungException(Meldungen::M1012)
 		}
-		var Task<Void> task = [
+		var task = [
 			status.append("Vorbereitung ...")
 			onStatusTimer
 			try {
@@ -181,12 +181,12 @@ class WP220SchnittstelleController extends BaseController<String> {
 				status.setLength(0)
 			} catch (Exception ex) {
 				status.setLength(0)
-				status.append('''Fehler: «ex.getMessage»''')
+				status.append('''Fehler: «ex.message»''')
 			} finally {
 				abbruch.append("Ende")
 			}
-			return null
-		]
+			return null as Void
+		] as Task<Void>
 		var th = new Thread(task)
 		th.setDaemon(true)
 		th.start
@@ -203,7 +203,7 @@ class WP220SchnittstelleController extends BaseController<String> {
 		if (Global.nes(datei2.text)) {
 			throw new MeldungException(Meldungen::M1012)
 		}
-		var Task<Void> task = [
+		var task = [
 			status.append("Vorbereitung ...")
 			onStatusTimer
 			try {
@@ -217,12 +217,12 @@ class WP220SchnittstelleController extends BaseController<String> {
 				status.setLength(0)
 			} catch (Exception ex) {
 				status.setLength(0)
-				status.append('''Fehler: «ex.getMessage»''')
+				status.append('''Fehler: «ex.message»''')
 			} finally {
 				abbruch.append("Ende")
 			}
-			return null
-		]
+			return null as Void
+		] as Task<Void>
 		var th = new Thread(task)
 		th.setDaemon(true)
 		th.start
@@ -245,7 +245,7 @@ class WP220SchnittstelleController extends BaseController<String> {
 		status.setLength(0)
 		abbruch.setLength(0)
 		onStatus
-		var Task<Void> task = [
+		var task = [
 			try {
 				while (true) {
 					onStatus
@@ -254,8 +254,8 @@ class WP220SchnittstelleController extends BaseController<String> {
 			} catch (Exception ex) {
 				Global.machNichts
 			}
-			return null
-		]
+			return null as Void
+		] as Task<Void>
 		var th = new Thread(task)
 		th.setDaemon(true)
 		th.start

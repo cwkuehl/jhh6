@@ -99,22 +99,22 @@ class WP110ChartsController extends BaseController<String> {
 				k1.setRelativ(false)
 			}
 			if (wp2 === null) {
-				wp2 = wp1.getClone
+				wp2 = wp1.clone
 				wp2.setUid(null)
 			}
 			if (k2 === null) {
-				k2 = k1.getClone
+				k2 = k1.clone
 				k2.setUid(null)
-				k2.setBox(k1.getBox / 2)
+				k2.setBox(k1.box / 2)
 			}
 			if (wp3 === null) {
-				wp3 = wp1.getClone
+				wp3 = wp1.clone
 				wp3.setUid(null)
 			}
 			if (k3 === null) {
-				k3 = k2.getClone
+				k3 = k2.clone
 				k3.setUid(null)
-				k3.setBox(k2.getBox * 4)
+				k3.setBox(k2.box * 4)
 			}
 			// if (merken) {
 			// daten.setWp1Uid(wp1.uid)
@@ -146,7 +146,7 @@ class WP110ChartsController extends BaseController<String> {
 				chart1.setStop(Global.strDbl(wp1.stopkurs))
 				chart1.addKurse(liste)
 			}
-			if (k2.getDauer !== k1.dauer || !wp2.getKuerzel.equals(wp1.kuerzel)) {
+			if (k2.dauer !== k1.dauer || !wp2.kuerzel.equals(wp1.kuerzel)) {
 				von = bis.minusDays(k2.dauer)
 				liste = get(
 					FactoryService::wertpapierService.holeKurse(serviceDaten, von, bis, wp2.kuerzel,
@@ -164,7 +164,7 @@ class WP110ChartsController extends BaseController<String> {
 				chart2.setStop(Global.strDbl(wp2.stopkurs))
 				chart2.addKurse(liste)
 			}
-			if (k3.getDauer !== k2.dauer || !wp3.getKuerzel.equals(wp2.kuerzel)) {
+			if (k3.dauer !== k2.dauer || !wp3.kuerzel.equals(wp2.kuerzel)) {
 				von = bis.minusDays(k3.dauer)
 				liste = get(
 					FactoryService::wertpapierService.holeKurse(serviceDaten, von, bis, wp3.kuerzel,

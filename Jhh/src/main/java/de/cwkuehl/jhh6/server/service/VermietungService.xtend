@@ -1051,9 +1051,9 @@ class VermietungService {
 		var haus = new FoHaus
 		var von = von0
 		var bis = bis0
-		var FoZeile z = null
-		var FoWohnung wohnung = null
-		var FoMieter mieter = null
+		var FoZeile z
+		var FoWohnung wohnung
+		var FoMieter mieter
 		var aliste = abrechnungRep.getAbrechnungLangListe(daten, null, null, hausUid, "null", "null", null, null, von,
 			bis)
 		if (aliste.size <= 0) {

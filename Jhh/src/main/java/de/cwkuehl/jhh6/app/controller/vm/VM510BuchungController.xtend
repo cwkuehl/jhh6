@@ -206,7 +206,7 @@ class VM510BuchungController extends BaseController<String> {
 		notiz0.setLabelFor(notiz)
 		angelegt0.setLabelFor(angelegt)
 		geaendert0.setLabelFor(geaendert)
-		ereignis.getSelectionModel.selectedItemProperty.addListener([e|onEreignis])
+		ereignis.selectionModel.selectedItemProperty.addListener([e|onEreignis])
 		initDaten(0)
 		betrag.requestFocus
 		betrag.selectAll
@@ -233,7 +233,7 @@ class VM510BuchungController extends BaseController<String> {
 			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf) || DialogAufrufEnum::STORNO.equals(aufruf)
 			var HhBuchungVm e = parameter1
 			if (!neu && e !== null) {
-				var HhBuchungVm k = get(FactoryService::vermietungService.getBuchungVm(serviceDaten, e.uid))
+				var k = get(FactoryService::vermietungService.getBuchungVm(serviceDaten, e.uid))
 				if (k !== null) {
 					nr.setText(k.uid)
 					valuta.setValue(k.sollValuta)

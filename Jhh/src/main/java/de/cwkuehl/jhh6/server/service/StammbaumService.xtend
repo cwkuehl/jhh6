@@ -301,8 +301,7 @@ class StammbaumService {
 		var liste = personRep.getPersonLangListe(daten, null, null, null, fuid, null, null)
 		// if (zusammengesetzt) {
 		// for (SbPersonLang e : liste) {
-		// e.setGeburtsname(Global.ahnString(e.getNr,
-		// e.getGeburtsname, e.getVorname))
+		// e.setGeburtsname(Global.ahnString(e.nr, e.geburtsname, e.vorname))
 		// }
 		// }
 		var r = new ServiceErgebnis<List<SbPersonLang>>(liste)
@@ -320,7 +319,7 @@ class StammbaumService {
 		// bestehende Kinder lesen
 		var listeAlt = kindRep.getKindListe(daten, e.uid, null, null, null, null)
 		for (String i : kinder) {
-			var SbKind vo = null
+			var SbKind vo
 			for (SbKind vo2 : listeAlt) {
 				if (Global.compString(vo2.kindUid, i) == 0) {
 					vo = vo2
@@ -1667,7 +1666,7 @@ class StammbaumService {
 	@Transaction(false)
 	override ServiceErgebnis<String> getNaechstenNamen(ServiceDaten daten, String puid, String name, String vorname) {
 
-		var SbPersonLang p0 = null
+		var SbPersonLang p0
 		if (!Global.nes(puid)) {
 			var liste0 = personRep.getPersonLangListe(daten, puid, null, null, null, null, null)
 			p0 = if(liste0.size > 0) liste0.get(0) else null

@@ -142,7 +142,7 @@ class VM400MietenController extends BaseController<String> {
 
 		var VmMieteLang k = getValue(mieten, !DialogAufrufEnum::NEU.equals(aufruf))
 		if (k !== null) {
-			k = k.getClone
+			k = k.clone
 			k.setMiete(k.miete - k.garage)
 			k.setNebenkosten(k.nebenkosten - k.heizung)
 		}

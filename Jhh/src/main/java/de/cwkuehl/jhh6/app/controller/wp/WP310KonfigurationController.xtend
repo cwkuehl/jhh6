@@ -131,13 +131,13 @@ class WP310KonfigurationController extends BaseController<String> {
 		if (stufe <= 0) {
 			var sliste = get(FactoryService::wertpapierService.getWertpapierStatusListe(serviceDaten))
 			status.setItems(getItems(sliste, null, [a|new StatusData(a)], null))
-			status.getSelectionModel.select(0)
+			status.selectionModel.select(0)
 			var skliste = PnfChart::getSkalaListe
 			skala.setItems(getItems(skliste, null, [a|new SkalaData(a)], null))
-			skala.getSelectionModel.select(0)
+			skala.selectionModel.select(0)
 			var mliste = PnfChart::getMethodeListe
 			methode.setItems(getItems(mliste, null, [a|new MethodeData(a)], null))
-			methode.getSelectionModel.select(0)
+			methode.selectionModel.select(0)
 			var neu = DialogAufrufEnum::NEU.equals(aufruf)
 			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
 			var WpKonfigurationLang k = parameter1

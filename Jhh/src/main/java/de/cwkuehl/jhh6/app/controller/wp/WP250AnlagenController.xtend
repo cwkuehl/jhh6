@@ -159,7 +159,7 @@ class WP250AnlagenController extends BaseController<String> {
 		}
 		if (stufe <= 1) {
 			var l = get(
-				FactoryService::wertpapierService.getAnlageListe(getServiceDaten, false, bezeichnung.text, null,
+				FactoryService::wertpapierService.getAnlageListe(serviceDaten, false, bezeichnung.text, null,
 					getText(wertpapier)))
 			getItems(l, null, [a|new AnlagenData(a)], anlagenData)
 			var anz = Global::listLaenge(l)
@@ -299,7 +299,7 @@ class WP250AnlagenController extends BaseController<String> {
 	 */
 	@FXML def void onBerechnen() {
 
-		var Task<Void> task = ([|
+		var task = [|
 			onStatusTimer
 			try {
 				var r = FactoryService::wertpapierService.bewerteteAnlageListe(serviceDaten, false, bezeichnung.text,
@@ -308,13 +308,13 @@ class WP250AnlagenController extends BaseController<String> {
 				status.setLength(0)
 			} catch (Exception ex) {
 				status.setLength(0)
-				status.append('''Fehler: «ex.getMessage»'''.toString)
+				status.append('''Fehler: «ex.message»'''.toString)
 			} finally {
 				abbruch.append("Ende")
 			}
 			Platform::runLater([WP250AnlagenController.this.onAktuell])
 			return null as Void
-		] as Task<Void>)
+		] as Task<Void>
 		var th = new Thread(task)
 		th.setDaemon(true)
 		th.start
@@ -325,7 +325,7 @@ class WP250AnlagenController extends BaseController<String> {
 		status.setLength(0)
 		abbruch.setLength(0)
 		onStatus
-		var Task<Void> task = ([|
+		var task = [|
 			try {
 				while (true) {
 					onStatus
@@ -335,7 +335,7 @@ class WP250AnlagenController extends BaseController<String> {
 				Global::machNichts
 			}
 			return null as Void
-		] as Task<Void>)
+		] as Task<Void>
 		var th = new Thread(task)
 		th.setDaemon(true)
 		th.start

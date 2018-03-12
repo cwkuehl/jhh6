@@ -87,7 +87,7 @@ class SO200DetektivController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
-			context = DetektivContext.readObject(Jhh6.getServiceDaten)
+			context = DetektivContext.readObject(Jhh6::serviceDaten)
 		}
 		if (stufe <= 1) {
 			// Runden

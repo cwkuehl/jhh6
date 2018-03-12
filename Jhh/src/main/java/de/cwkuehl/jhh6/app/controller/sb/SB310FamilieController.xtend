@@ -184,10 +184,10 @@ class SB310FamilieController extends BaseController<String> {
 			var l = get(FactoryService::stammbaumService.getPersonListe(serviceDaten, true, false, null, null, null))
 			vater.setItems(
 				getItems(
-					l.stream.filter([a|!a.getGeschlecht.equals(GeschlechtEnum::WEIBLICH.toString)]).collect(
+					l.stream.filter([a|!a.geschlecht.equals(GeschlechtEnum::WEIBLICH.toString)]).collect(
 						Collectors::toList), new SbPersonLang, [a|new VaterData(a)], null))
 			mutter.setItems(getItems(l.stream.filter([ a |
-				!a.getGeschlecht.equals(GeschlechtEnum::MAENNLICH.toString)
+				!a.geschlecht.equals(GeschlechtEnum::MAENNLICH.toString)
 			]).collect(Collectors::toList), new SbPersonLang, [a|new MutterData(a)], null))
 			var neu = DialogAufrufEnum::NEU.equals(aufruf)
 			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
@@ -299,7 +299,7 @@ class SB310FamilieController extends BaseController<String> {
 		if (Global::nes(kuid) || kinderData.stream.anyMatch([a|Global::compString(a.uid.value, kuid) === 0])) {
 			return;
 		}
-		var SbPersonLang k = get(FactoryService::stammbaumService.getPersonLang(serviceDaten, kuid))
+		var k = get(FactoryService::stammbaumService.getPersonLang(serviceDaten, kuid))
 		if (k !== null) {
 			kinderData.add(new KinderData(k))
 		}

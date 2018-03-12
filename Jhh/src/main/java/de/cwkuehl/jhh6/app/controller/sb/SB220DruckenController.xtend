@@ -89,7 +89,7 @@ class SB220DruckenController extends BaseController<String> {
 	 */
 	@FXML def void onOk() {
 
-		var byte[] pdf = get(
+		var pdf = get(
 			FactoryService::stammbaumService.getReportAhnen(serviceDaten, getText(person),
 				Global::strInt(generation.text), geschwister.isSelected, nachfahren.isSelected, vorfahren.isSelected))
 		Werkzeug::speicherReport(pdf, Meldungen::SB030, true)

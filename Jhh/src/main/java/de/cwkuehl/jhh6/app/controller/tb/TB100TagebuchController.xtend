@@ -110,7 +110,7 @@ class TB100TagebuchController extends BaseController<String> {
 		if (stufe <= 0) {
 			leerenSuche
 			eintragAlt.setDatum(LocalDate::now)
-			datum.setValue(eintragAlt.getDatum)
+			datum.setValue(eintragAlt.datum)
 			bearbeiteEintraege(false, true)
 			onEnde
 		}
@@ -233,7 +233,7 @@ class TB100TagebuchController extends BaseController<String> {
 	def private void ladeEintraege(LocalDate d) {
 
 		var daten = serviceDaten
-		var TbEintrag tb = null
+		var TbEintrag tb
 		tb = get(FactoryService::tagebuchService.getEintrag(daten, d.minusDays(1)))
 		zurueck1.setText(if(tb === null) null else tb.eintrag)
 		tb = get(FactoryService::tagebuchService.getEintrag(daten, d.minusMonths(1)))
@@ -246,12 +246,12 @@ class TB100TagebuchController extends BaseController<String> {
 			angelegt.setText(null)
 			geaendert.setText(null)
 		} else {
-			eintragAlt.setEintrag(tb.getEintrag)
+			eintragAlt.setEintrag(tb.eintrag)
 			angelegt.setText(tb.formatDatumVon(tb.angelegtAm, tb.angelegtVon))
 			geaendert.setText(tb.formatDatumVon(tb.geaendertAm, tb.geaendertVon))
 		}
 		eintragAlt.setDatum(d)
-		eintrag.setText(eintragAlt.getEintrag)
+		eintrag.setText(eintragAlt.eintrag)
 		tb = get(FactoryService::tagebuchService.getEintrag(daten, d.plusDays(1)))
 		vor1.setText(if(tb === null) null else tb.eintrag)
 		tb = get(FactoryService::tagebuchService.getEintrag(daten, d.plusMonths(1)))

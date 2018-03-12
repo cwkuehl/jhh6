@@ -71,7 +71,7 @@ class VM910AbrechnungController extends BaseController<String> {
 			haus.setItems(getItems(hl, null, [a|new HausData(a)], null))
 			von.setValue(LocalDate::now.minusYears(1).withDayOfYear(1))
 			bis.setValue(von.value.plusYears(1).minusDays(1))
-			haus.getSelectionModel.select(0)
+			haus.selectionModel.select(0)
 			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
 			var VmAbrechnungKurz k = parameter1
 			if (loeschen && k !== null) {

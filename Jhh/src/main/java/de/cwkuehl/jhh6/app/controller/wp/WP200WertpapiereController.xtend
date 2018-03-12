@@ -354,7 +354,7 @@ class WP200WertpapiereController extends BaseController<String> {
 				status.setLength(0)
 			} catch (Exception ex) {
 				status.setLength(0)
-				status.append('''Fehler: «ex.getMessage»'''.toString)
+				status.append('''Fehler: «ex.message»'''.toString)
 			} finally {
 				abbruch.append("Ende")
 			}
@@ -371,7 +371,7 @@ class WP200WertpapiereController extends BaseController<String> {
 		status.setLength(0)
 		abbruch.setLength(0)
 		onStatus
-		var Task<Void> task = ([|
+		var task = [|
 			try {
 				while (true) {
 					onStatus
@@ -381,7 +381,7 @@ class WP200WertpapiereController extends BaseController<String> {
 				Global::machNichts
 			}
 			return null as Void
-		] as Task<Void>)
+		] as Task<Void>
 		var th = new Thread(task)
 		th.setDaemon(true)
 		th.start

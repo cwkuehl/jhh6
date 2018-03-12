@@ -32,7 +32,7 @@ class SbDatum {
 	 * Standard-Konstruktor.
 	 */
 	new() {
-		init()
+		init
 	}
 
 	/** 
@@ -78,9 +78,9 @@ class SbDatum {
 	 * @param datum Anderes Datum.
 	 */
 	def void set(LocalDate datum) {
-		tag = datum.getDayOfMonth()
-		monat = datum.getMonthValue()
-		jahr = datum.getYear()
+		tag = datum.dayOfMonth
+		monat = datum.monthValue
+		jahr = datum.year
 	}
 
 	/** 
@@ -96,7 +96,7 @@ class SbDatum {
 	 */
 	def String deparse(boolean gedcom) {
 
-		var datum = new StringBuffer()
+		var datum = new StringBuffer
 		var trenner = "."
 		if (gedcom) {
 			trenner = " "
@@ -105,17 +105,17 @@ class SbDatum {
 			datum.append(Global.fixiereString(Global.intStr(tag), 2, false, "0"))
 		}
 		if (monat !== 0) {
-			if (datum.length() > 0) {
+			if (datum.length > 0) {
 				datum.append(trenner)
 			}
 			if (gedcom) {
-				datum.append(LocalDate.of(Constant.JAHR_MONAT, monat, 1).format(mf2).toUpperCase())
+				datum.append(LocalDate.of(Constant.JAHR_MONAT, monat, 1).format(mf2).toUpperCase)
 			} else {
 				datum.append(Global.fixiereString(Global.intStr(monat), 2, false, "0"))
 			}
 		}
 		if (jahr !== 0) {
-			if (datum.length() > 0) {
+			if (datum.length > 0) {
 				datum.append(trenner)
 			}
 			if (jahr < JAHR_KURZ) {
@@ -124,7 +124,7 @@ class SbDatum {
 				datum.append(Global.fixiereString(Global.intStr(jahr), 5, false, "0"))
 			}
 		}
-		return datum.toString()
+		return datum.toString
 	}
 
 	/** 
@@ -137,23 +137,23 @@ class SbDatum {
 		var datum = parseDatum
 		init
 		if (datum !== null) /* !Global.nes(datum) */ {
-			var Matcher m = null
+			var Matcher m
 			// alles außer Ziffern und Punkten am Ende entfernen
 			m = Pattern.compile("(.+?)[^\\d\\.]*$").matcher(datum)
-			if (m.find()) {
+			if (m.find) {
 				datum = m.group(1)
 				m = Pattern.compile("(.*?)([\\d]+)$").matcher(datum)
-				if (m.find()) {
+				if (m.find) {
 					// letzte Zahl ist Jahr
 					datum = m.group(1)
 					jahr = Global.strInt(m.group(2))
 					m = Pattern.compile("(.*?)([\\d]+)\\.$").matcher(datum)
-					if (m.find()) {
+					if (m.find) {
 						// letzte Zahl mit Punkt ist Monat
 						datum = m.group(1)
 						monat = Global.strInt(m.group(2))
 						m = Pattern.compile("(.*?)([\\d]+)\\.$").matcher(datum)
-						if (m.find()) {
+						if (m.find) {
 							// letzte Zahl mit Punkt ist Tag
 							datum = m.group(1)
 							tag = Global.strInt(m.group(2))
@@ -213,7 +213,7 @@ class SbDatum {
 			if (anfang) {
 				return d
 			} else {
-				return d.withDayOfMonth(d.lengthOfMonth())
+				return d.withDayOfMonth(d.lengthOfMonth)
 			}
 		}
 		return LocalDate.of(j, m, t)

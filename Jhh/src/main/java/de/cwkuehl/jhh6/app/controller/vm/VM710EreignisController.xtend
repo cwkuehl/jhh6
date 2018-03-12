@@ -283,7 +283,7 @@ class VM710EreignisController extends BaseController<String> {
 
 		var ServiceErgebnis<?> r
 		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
-			r = FactoryService::haushaltService.insertUpdateEreignis(getServiceDaten, null, kennzeichen.text,
+			r = FactoryService::haushaltService.insertUpdateEreignis(serviceDaten, null, kennzeichen.text,
 				getText(sollkonto), getText(habenkonto), bezeichnung.text, eText.text, schluessel.text, getText(haus),
 				getText(wohnung), getText(mieter), notiz.text, true)
 		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {

@@ -61,7 +61,7 @@ class ServiceBase {
 
 	def protected void exit(ServiceDaten d, boolean commit) {
 
-		val db = if(d === null) null else d.getDb
+		val db = if(d === null) null else d.db
 		if (db === null) {
 			return
 		}
@@ -90,7 +90,7 @@ class ServiceBase {
 
 	def protected void handleException(ServiceDaten d, Throwable ex, ServiceErgebnis<?> r) {
 
-		val db = if(d === null) null else d.getDb
+		val db = if(d === null) null else d.db
 		if (db === null || db.tiefe == 0) {
 			if (r !== null) {
 				r.fehler.add(new Meldung(Global.getExceptionText(ex)))
@@ -130,7 +130,7 @@ class ServiceBase {
 	def private DataSource getDataSource(boolean replikation) {
 
 		val props = new Properties()
-		val input = typeof(RepositoryBase).getClassLoader().getResourceAsStream("ServerConfig.properties")
+		val input = typeof(RepositoryBase).classLoader.getResourceAsStream("ServerConfig.properties")
 		props.load(input)
 		val config = new HikariConfig
 		if (replikation) {
@@ -249,7 +249,7 @@ class ServiceBase {
 	def protected JhhFopDokumentImpl newFopDokument() {
 
 		if (jhhFop === null) {
-			var stream = getClass().getResourceAsStream("/fop.xconf")
+			var stream = getClass.getResourceAsStream("/fop.xconf")
 			var cfgBuilder = new DefaultConfigurationBuilder
 			var cfg = cfgBuilder.build(stream)
 			var baseUri = new File(".").toURI
@@ -269,7 +269,7 @@ class ServiceBase {
 		val Class<?>[] keinParameter = newArrayOfSize(0)
 
 		for (s : spaltennamen) {
-			methods.add(dto.getClass().getMethod("get" + s, keinParameter))
+			methods.add(dto.getClass.getMethod("get" + s, keinParameter))
 		}
 		for (z : zeilen) {
 			var felder = new ArrayList<String>()

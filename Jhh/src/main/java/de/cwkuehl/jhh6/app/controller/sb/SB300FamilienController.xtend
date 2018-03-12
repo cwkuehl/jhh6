@@ -206,7 +206,7 @@ class SB300FamilienController extends BaseController<String> {
 		val SbFamilieLang k = getValue(familien, true)
 		val c = fokusFormular(typeof(SB200AhnenController), DialogAufrufEnum::OHNE) as SB200AhnenController
 		if (c !== null) {
-			Platform::runLater([c.onSpFamilieVater(k.getMannUid)])
+			Platform::runLater([c.onSpFamilieVater(k.mannUid)])
 		}
 	}
 
@@ -218,7 +218,7 @@ class SB300FamilienController extends BaseController<String> {
 		val SbFamilieLang k = getValue(familien, true)
 		val c = fokusFormular(typeof(SB200AhnenController), DialogAufrufEnum::OHNE) as SB200AhnenController
 		if (c !== null) {
-			Platform::runLater([c.onSpFamilieMutter(k.getFrauUid)])
+			Platform::runLater([c.onSpFamilieMutter(k.frauUid)])
 		}
 	}
 

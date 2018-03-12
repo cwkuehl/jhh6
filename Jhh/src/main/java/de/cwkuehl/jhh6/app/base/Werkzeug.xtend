@@ -141,7 +141,7 @@ class Werkzeug {
 	/** Is an update available? */
 	def public static boolean isUpdateAvailable() {
 
-		var BufferedInputStream in = null
+		var BufferedInputStream in
 		try {
 			in = new BufferedInputStream(
 				new URL("http://cwkuehl.de/wp-content/uploads/2018/02/update.txt").openStream)
@@ -224,7 +224,7 @@ class Werkzeug {
 		expContent.setMaxWidth(Double.MAX_VALUE)
 		expContent.add(label, 0, 0)
 		expContent.add(textArea, 0, 1)
-		// alert.getDialogPane.setExpandableContent(expContent)
+		// alert.dialogPane.setExpandableContent(expContent)
 		alert.dialogPane.setContent(expContent)
 		var r = alert.showAndWait
 		if (r.present && r.get == ButtonType.OK) {
@@ -293,7 +293,7 @@ class Werkzeug {
 			return
 		}
 
-		var Writer f = null
+		var Writer f
 		try {
 			f = new BufferedWriter(new FileWriter(datei, anhaengen))
 			for (z : zeilen) {
@@ -325,7 +325,7 @@ class Werkzeug {
 
 	def private static void speicherDatei(byte[] bytes, String datei, boolean anhaengen) {
 
-		var FileOutputStream f = null
+		var FileOutputStream f
 		try {
 			f = new FileOutputStream(datei, anhaengen)
 			if (bytes !== null && bytes.length > 0) {
@@ -381,7 +381,7 @@ class Werkzeug {
 
 	def public static String pfadDatei(String pfad, String datei) {
 
-		var File f = null
+		var File f
 		if (Global.nes(pfad)) {
 			f = new File(datei)
 		} else {
@@ -392,7 +392,7 @@ class Werkzeug {
 
 	def public static List<String> leseDatei(String datei) {
 
-		var BufferedReader f = null
+		var BufferedReader f
 		var zeilen = new ArrayList<String>
 		try {
 			f = new BufferedReader(new FileReader(datei))
