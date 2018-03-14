@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.cwkuehl.jhh6.api.global.Global;
+import de.cwkuehl.jhh6.api.message.Meldungen;
 import de.cwkuehl.jhh6.app.Jhh6;
 import de.cwkuehl.jhh6.app.base.BaseController;
 import de.cwkuehl.jhh6.server.service.sudoku.SudokuContext;
@@ -397,7 +398,7 @@ public class SO100SudokuController extends BaseController<String> {
      * Event für Aktuell.
      */
     private void onAktuell2() {
-        anzahl.setText("Gefüllt: " + context.getAnzahl());
+        anzahl.setText(Meldungen.SO002(context.getAnzahl()));
     }
 
     /**
@@ -483,7 +484,7 @@ public class SO100SudokuController extends BaseController<String> {
         Jhh6.setLeftStatus2(null);
         int feld = SudokuContext.sudokuTest(new SudokuContext(context.zahlen, diagonal.isSelected()), false);
         if (feld >= 0) {
-            Jhh6.setLeftStatus2("Widerspruch in Zeile " + (feld / MAX + 1) + " und Spalte " + (feld % MAX + 1) + ".");
+            Jhh6.setLeftStatus2(Meldungen.SO003(feld / MAX + 1, feld % MAX + 1));
         }
     }
 

@@ -3,11 +3,11 @@ package de.cwkuehl.jhh6.app.base;
 import de.cwkuehl.jhh6.api.global.Global;
 
 /**
- * Generierte Datei. BITTE NICHT AENDERN!
- * Generierte Aufzählung DialogAufrufEnum.
+ * Aufzählung DialogAufrufEnum.
  */
 @SuppressWarnings("all")
 public enum DialogAufrufEnum {
+
     /**
      * Dialog-Aufrufart: ohne.
      */
@@ -42,6 +42,7 @@ public enum DialogAufrufEnum {
      * Dialog-Aufrufart: stornieren.
      */
     STORNO;
+
     public String toString() {
 
         if (equals(OHNE)) {
@@ -80,18 +81,19 @@ public enum DialogAufrufEnum {
 
     }
 
-    public static DialogAufrufEnum fromValue(final String v) {
-        if (v != null) {
-            for (DialogAufrufEnum e : values()) {
-                if (v.equals(e.toString())) {
-                    return e;
-                }
-            }
-        }
-        throw new IllegalArgumentException("ungültige DialogAufrufEnum: " + v);
-    }
-
-    public String getItemValue() {
-        return toString();
-    }
+    // public static DialogAufrufEnum fromValue(final String v) {
+    //
+    // if (v != null) {
+    // for (DialogAufrufEnum e : values()) {
+    // if (v.equals(e.toString())) {
+    // return e;
+    // }
+    // }
+    // }
+    // throw new IllegalArgumentException("ungültige DialogAufrufEnum: " + v);
+    // }
+    //
+    // public String getItemValue() {
+    // return toString();
+    // }
 }

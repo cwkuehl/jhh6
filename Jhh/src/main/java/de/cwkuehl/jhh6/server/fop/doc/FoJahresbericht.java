@@ -60,21 +60,24 @@ public class FoJahresbericht extends FoGeneratorDocument {
                 d.addNewLine(0);
             }
             if (Global.listLaenge(ebListe) > 0) {
-                bilanzkonto("Eröffnungsbilanz", "Aktiva", "Passiva", ebListe);
+                bilanzkonto(Global.g0("HH500.title.EB"), Global.g("HH500.soll.EB"), Global.g("HH500.haben.EB"),
+                        ebListe);
                 newPage = true;
             }
             if (Global.listLaenge(gvListe) > 0) {
                 if (newPage) {
                     d.startBlock(null, true, "page-break-after", "always");
                 }
-                bilanzkonto("Gewinn- und Verlustrechnung", "Aufwand", "Ertrag", gvListe);
+                bilanzkonto(Global.g0("HH500.title.GV"), Global.g("HH500.soll.GV"), Global.g("HH500.haben.GV"),
+                        gvListe);
                 newPage = true;
             }
             if (Global.listLaenge(sbListe) > 0) {
                 if (newPage) {
                     d.startBlock(null, true, "page-break-after", "always");
                 }
-                bilanzkonto("Schlussbilanz", "Aktiva", "Passiva", sbListe);
+                bilanzkonto(Global.g0("HH500.title.SB"), Global.g("HH500.soll.EB"), Global.g("HH500.haben.EB"),
+                        sbListe);
                 newPage = true;
             }
             // String xml = "<svg:svg xmlns:svg=\"http://www.w3.org/2000/svg\" width=\"20pt\" height=\"20pt\">"
@@ -143,7 +146,7 @@ public class FoJahresbericht extends FoGeneratorDocument {
         d.startTag("fo:table-row");
         d.startTag("fo:table-cell", "number-columns-spanned", "2", "border-before-style", "solid",
                 "border-before-width", "0.7pt");
-        d.startBlock("Summe", true, null, 0, "bold", null);
+        d.startBlock(Global.g0("HH500.sollSumme"), true, null, 0, "bold", null);
         d.endTag("fo:table-cell");
         d.startTag("fo:table-cell", "border-before-style", "solid", "border-before-width", "0.7pt", "border-end-style",
                 "solid", "border-end-width", "0.7pt", "padding-right", "1mm", "text-align", "right");
@@ -151,7 +154,7 @@ public class FoJahresbericht extends FoGeneratorDocument {
         d.endTag("fo:table-cell");
         d.startTag("fo:table-cell", "number-columns-spanned", "2", "border-before-style", "solid",
                 "border-before-width", "0.7pt");
-        d.startBlock("Summe", true, null, 0, "bold", null);
+        d.startBlock(Global.g0("HH500.habenSumme"), true, null, 0, "bold", null);
         d.endTag("fo:table-cell");
         d.startTag("fo:table-cell", "border-before-style", "solid", "border-before-width", "0.7pt", "text-align",
                 "right");

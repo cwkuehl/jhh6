@@ -3,6 +3,7 @@ package de.cwkuehl.jhh6.server.service.sudoku;
 import java.util.Stack;
 
 import de.cwkuehl.jhh6.api.message.MeldungException;
+import de.cwkuehl.jhh6.api.message.Meldungen;
 
 public class SudokuContext {
 
@@ -336,7 +337,7 @@ public class SudokuContext {
                         // Genau eine Zahl passt in der Zeile.
                         if (anzahlz == 1) {
                             if (anzahls < 1 || anzahlk < 1) {
-                                throw new MeldungException("Widerspruch Zeile in (" + (row + 1) + "," + (col + 1) + ")");
+                                throw new MeldungException(Meldungen.SO004(row + 1, col + 1));
                             }
                             c.zahlen[row * MAX + col] = versuchz;
                             feld = row * MAX + col;
@@ -345,8 +346,7 @@ public class SudokuContext {
                         // Genau eine Zahl passt in der Spalte.
                         if (anzahls == 1) {
                             if (anzahlz < 1 || anzahlk < 1) {
-                                throw new MeldungException("Widerspruch Spalte in (" + (row + 1) + "," + (col + 1)
-                                        + ")");
+                                throw new MeldungException(Meldungen.SO005(row + 1, col + 1));
                             }
                             c.zahlen[row * MAX + col] = versuchs;
                             feld = row * MAX + col;
@@ -355,8 +355,7 @@ public class SudokuContext {
                         // Genau eine Zahl passt im Kasten.
                         if (anzahlk == 1) {
                             if (anzahlz < 1 || anzahls < 1) {
-                                throw new MeldungException("Widerspruch Kasten in (" + (row + 1) + "," + (col + 1)
-                                        + ")");
+                                throw new MeldungException(Meldungen.SO006(row + 1, col + 1));
                             }
                             c.zahlen[row * MAX + col] = versuchk;
                             feld = row * MAX + col;

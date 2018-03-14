@@ -655,7 +655,7 @@ public class DbAnpassung {
             strDBTyp = mhtTyp.get(miDBZiel.symbol() + "#" + strTyp);
         }
         if (Global.nes(strDBTyp)) {
-            strDBTyp = "Falscher Datentyp: " + strTyp;
+            strDBTyp = "Data type " + strTyp + " is missing.";
         }
         return strDBTyp;
     }
@@ -747,8 +747,7 @@ public class DbAnpassung {
     // str2
     // .append(Global.iif(((Boolean) wert).booleanValue(), "1", "0"));
     // } else {
-    // throw new JhhException("machSkriptTabelle: Fehlender Typ "
-    // + strTyp + "!");
+    // throw new JhhException("machSkriptTabelle: Data type " + strTyp + " is missing.");
     // }
     // }
     // }
