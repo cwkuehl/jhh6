@@ -169,7 +169,7 @@ class WP220SchnittstelleController extends BaseController<String> {
 			throw new MeldungException(Meldungen::M1012)
 		}
 		var task = [
-			status.append("Vorbereitung ...")
+			status.append(Meldungen::WP027)
 			onStatusTimer
 			try {
 				var r = FactoryService::wertpapierService.exportWertpapierListe(serviceDaten, bezeichnung.text, null,
@@ -181,7 +181,7 @@ class WP220SchnittstelleController extends BaseController<String> {
 				status.setLength(0)
 			} catch (Exception ex) {
 				status.setLength(0)
-				status.append('''Fehler: «ex.message»''')
+				status.append(Meldungen::WP028(ex.message))
 			} finally {
 				abbruch.append("Ende")
 			}
@@ -204,7 +204,7 @@ class WP220SchnittstelleController extends BaseController<String> {
 			throw new MeldungException(Meldungen::M1012)
 		}
 		var task = [
-			status.append("Vorbereitung ...")
+			status.append(Meldungen::WP027)
 			onStatusTimer
 			try {
 				var r = FactoryService::wertpapierService.exportWertpapierVergleichListe(serviceDaten,
@@ -217,7 +217,7 @@ class WP220SchnittstelleController extends BaseController<String> {
 				status.setLength(0)
 			} catch (Exception ex) {
 				status.setLength(0)
-				status.append('''Fehler: «ex.message»''')
+				status.append(Meldungen::WP028(ex.message))
 			} finally {
 				abbruch.append("Ende")
 			}

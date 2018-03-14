@@ -240,7 +240,7 @@ class AdresseService {
 			geschlecht = u.geschlecht
 		}
 		if (Global.nes(name1)) {
-			name1 = "Person " + uid
+			name1 = Meldungen::AD013(uid)
 		}
 		if (geburt !== null) {
 			geburtk = geburt.monthValue * 100 + geburt.dayOfMonth
@@ -272,7 +272,7 @@ class AdresseService {
 			name = u.name
 		}
 		if (Global.nes(name)) {
-			name = "Sitz"
+			name = Meldungen::AD014
 		}
 		if (e !== null) {
 			e.name = name

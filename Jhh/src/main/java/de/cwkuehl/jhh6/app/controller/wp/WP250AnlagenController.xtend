@@ -3,6 +3,7 @@ package de.cwkuehl.jhh6.app.controller.wp
 import de.cwkuehl.jhh6.api.dto.WpAnlageLang
 import de.cwkuehl.jhh6.api.dto.WpWertpapierLang
 import de.cwkuehl.jhh6.api.global.Global
+import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
@@ -173,11 +174,7 @@ class WP250AnlagenController extends BaseController<String> {
 					gewinn += b.gewinn
 				}
 			}
-			var sb = new StringBuffer
-			sb.append(
-				Global::format("Datensätze: {0}  Summe: {1}  Wert: {2}  Gewinn: {3}", anz, Global::dblStr(summe),
-					Global::dblStr(wert), Global::dblStr(gewinn)))
-			anlagenStatus.setText(sb.toString)
+			anlagenStatus.setText(Meldungen::WP029(anz, summe, wert, gewinn))
 		}
 		if (stufe <= 2) {
 			initDatenTable

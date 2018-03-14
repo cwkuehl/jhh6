@@ -180,15 +180,11 @@ class WP410BuchungController extends BaseController<String> {
 				valutaZuletzt = valuta.value
 				updateParent
 				if (DialogAufrufEnum::NEU.equals(aufruf)) {
-					var sb = new StringBuffer
 					var WpAnlageLang a = getValue(anlage, true)
-					sb.append(Global.dateTimeStringForm(valuta.value.atStartOfDay)).append(", Betrag ").append(
-						betrag.text).append(", Rabatt ").append(rabatt.text).append(", Anteile ").append(anteile.text).
-						append(", Zinsen ").append(zinsen.text).append(", ").append(a.bezeichnung).append(", ").append(
-							bText.text)
-					buchung.setText(sb.toString)
-					betrag.setText("")
-					rabatt.setText("")
+					buchung.text = Meldungen::WP030(valuta.value.atStartOfDay, betrag.text, rabatt.text, anteile.text,
+						zinsen.text, a.bezeichnung, bText.text)
+					betrag.text = null
+					rabatt.text = null
 					betrag.requestFocus
 				} else {
 					close

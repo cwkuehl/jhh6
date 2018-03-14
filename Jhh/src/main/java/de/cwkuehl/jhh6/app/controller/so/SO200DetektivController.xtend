@@ -1,6 +1,7 @@
 package de.cwkuehl.jhh6.app.controller.so
 
 import de.cwkuehl.jhh6.api.global.Global
+import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.api.service.detective.Runde
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
@@ -211,8 +212,7 @@ class SO200DetektivController extends BaseController<String> {
 	 */
 	@FXML def void onReset() {
 
-		var spieler = Werkzeug.showInputDialog("Bitte geben Sie die Spieler ein, getrennt mit Komma:",
-			"Wolfgang, Claudia, Deborah, Viktoria, Benjamin")
+		var spieler = Werkzeug.showInputDialog(Meldungen::SO001, "Wolfgang, Claudia, Deborah, Viktoria, Benjamin")
 		if (!Global.nes(spieler)) {
 			context.deleteRunde(null)
 			context.setSpieler(spieler)

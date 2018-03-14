@@ -88,7 +88,8 @@ class ServiceProcessor extends AbstractClassProcessor {
 			if (method.visibility == Visibility.PUBLIC && !method.static) {
 
 				if (method.parameters.length <= 0 || method.parameters.get(0).type.name != serviceDatenName) {
-					method.addError("Die Service-Funktion braucht einen ersten Parameter vom Typ ServiceDaten.")
+					// Die Service-Funktion braucht einen ersten Parameter vom Typ ServiceDaten.
+					method.addError("The first parameter of a service function must be of type ServiceDaten.")
 				} else {
 					interfaceType.addMethod(method.simpleName) [
 						if (method.docComment !== null) {

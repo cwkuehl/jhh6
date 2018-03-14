@@ -3,6 +3,7 @@ package de.cwkuehl.jhh6.app.controller.hh
 import de.cwkuehl.jhh6.api.dto.HhBilanzSb
 import de.cwkuehl.jhh6.api.global.Constant
 import de.cwkuehl.jhh6.api.global.Global
+import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.api.service.ServiceErgebnis
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
@@ -223,7 +224,7 @@ class HH500BilanzenController extends BaseController<String> {
 			var LocalDate v
 			var ServiceErgebnis<String[]> r
 			try {
-				Jhh6.setLeftStatus2(Global.g0("HH500.calculate1"))
+				Jhh6.setLeftStatus2(Meldungen::HH060)
 				if (mlBerechnen > 0) {
 					v = von.value
 					mlBerechnen = 0
@@ -240,7 +241,7 @@ class HH500BilanzenController extends BaseController<String> {
 							}
 						}
 						if (Global.arrayLaenge(l) >= 2 && !Global.nes(l.get(1))) {
-							Jhh6.setLeftStatus2('''«Global.g0("HH500.calculate2")» «l.get(1)»''')
+							Jhh6.setLeftStatus2(Meldungen::HH061(l.get(1)))
 						}
 					} else {
 						get(r)
