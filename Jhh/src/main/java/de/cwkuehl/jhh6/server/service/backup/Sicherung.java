@@ -16,6 +16,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 import de.cwkuehl.jhh6.api.global.Global;
+import de.cwkuehl.jhh6.api.message.Meldungen;
 import de.cwkuehl.jhh6.api.service.backup.Sicherungsdatei;
 import de.cwkuehl.jhh6.api.service.backup.Sicherungsdaten;
 
@@ -112,7 +113,7 @@ public class Sicherung {
         array = str.split("<", 2);
         if (Global.arrayLaenge(array) < 2) {
             if (exception) {
-                throw new RuntimeException("Der Sicherungspfad muss mit '<' getrennt werden.");
+                throw new RuntimeException(Meldungen.M1034());
             }
             array = new String[2];
             array[0] = str;
@@ -135,13 +136,13 @@ public class Sicherung {
         String[] array2 = null;
 
         if (Global.nes(strPfade)) {
-            throw new Exception("Der Sicherungspfad darf nicht leer sein.");
+            throw new Exception(Meldungen.M1035());
         }
         array1 = splitQuelleZiel(strPfade, true);
         strSicherPfad = array1[0];
         array2 = array1[1].split(";");
         if (Global.arrayLaenge(array2) <= 0) {
-            throw new Exception("Die zu sichernden Verzeichnisse fehlen.");
+            throw new Exception(Meldungen.M1036());
         }
         for (int i = 0; i < array2.length; i++) {
             strPfad = array2[i];
@@ -547,7 +548,7 @@ public class Sicherung {
                     mod = liste[i].lastModified();
                     if (sichPfad == null) {
                         // dateien.put(datei, new Sicherungsdatei(mod, null));
-                        throw new Exception("Der Sicherungspfad darf nicht leer sein.");
+                        throw new Exception(Meldungen.M1035());
                     } else if (diff) {
                         // sichMod = 0;
                         // sichF = new File(sichPfad, datei);

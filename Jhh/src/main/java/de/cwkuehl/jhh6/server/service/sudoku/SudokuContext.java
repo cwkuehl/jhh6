@@ -85,8 +85,7 @@ public class SudokuContext {
                             zeilen[row * MAX + wert - 1] = wert;
                         } else {
                             if (exception) {
-                                throw new MeldungException("Widerspruch in Zeile " + (row + 1) + " mit Zahl " + wert
-                                        + ".");
+                                throw new MeldungException(Meldungen.SO007(row + 1, wert));
                             }
                             return row * MAX + col;
                         }
@@ -94,8 +93,7 @@ public class SudokuContext {
                             spalten[col * MAX + wert - 1] = wert;
                         } else {
                             if (exception) {
-                                throw new MeldungException("Widerspruch in Spalte " + (col + 1) + " mit Zahl " + wert
-                                        + ".");
+                                throw new MeldungException(Meldungen.SO008(col + 1, wert));
                             }
                             return row * MAX + col;
                         }
@@ -103,8 +101,7 @@ public class SudokuContext {
                             kaesten[knr * MAX + wert - 1] = wert;
                         } else {
                             if (exception) {
-                                throw new MeldungException("Widerspruch in Kasten " + (knr + 1) + " mit Zahl " + wert
-                                        + ".");
+                                throw new MeldungException(Meldungen.SO009(knr + 1, wert));
                             }
                             return row * MAX + col;
                         }
@@ -114,8 +111,7 @@ public class SudokuContext {
                                     diagonalen[wert - 1] = wert;
                                 } else {
                                     if (exception) {
-                                        throw new MeldungException("Widerspruch in Diagonale 1 Zeile " + (row + 1)
-                                                + " mit Zahl " + wert + ".");
+                                        throw new MeldungException(Meldungen.SO010(1, row + 1, wert));
                                     }
                                     return row * MAX + col;
                                 }
@@ -125,8 +121,7 @@ public class SudokuContext {
                                     diagonalen[MAX + wert - 1] = wert;
                                 } else {
                                     if (exception) {
-                                        throw new MeldungException("Widerspruch in Diagonale 2 Zeile " + (row + 1)
-                                                + " mit Zahl " + wert + ".");
+                                        throw new MeldungException(Meldungen.SO010(2, row + 1, wert));
                                     }
                                     return row * MAX + col;
                                 }
@@ -163,7 +158,7 @@ public class SudokuContext {
 
         sudokuTest(c, true);
         if (c.getAnzahl() >= MAX * MAX) {
-            throw new MeldungException("Sudoku ist schon vollständig gelöst.");
+            throw new MeldungException(Meldungen.SO011());
         }
         if (nur1Zug) {
             clone1 = c.zahlen.clone();
@@ -173,8 +168,7 @@ public class SudokuContext {
             do {
                 anzahl++;
                 ergebnis = sudokuEinzeln(c, anzahl, feld, varianten);
-                // System.out.println("Anzahl: " + miAnzahl + " Variante: " +
-                // varianten + " Ergebnis: " + ergebnis);
+                // System.out.println("Anzahl: " + miAnzahl + " Variante: " + varianten + " Ergebnis: " + ergebnis);
                 if (ergebnis == -3) {
                     c.zahlen[feld[0]] = varianten[0];
                     // Andere Varianten merken.
@@ -189,7 +183,7 @@ public class SudokuContext {
                         // Andere Variante versuchen wegen Widerspruch.
                         if (list.empty()) {
                             if (loesung == null) {
-                                throw new MeldungException("Sudoku nicht lösbar (fehlende Variante).");
+                                throw new MeldungException(Meldungen.SO012());
                             }
                             ende = true;
                         } else {
@@ -210,7 +204,7 @@ public class SudokuContext {
                 } else {
                     SudokuContext.copy(c.zahlen, loesung);
                     if (!list.empty()) {
-                        throw new MeldungException("Sudoku lösbar, aber nicht eindeutig.");
+                        throw new MeldungException(Meldungen.SO013());
                     }
                 }
             }
@@ -228,11 +222,11 @@ public class SudokuContext {
                 }
             }
             if (i >= clone1.length) {
-                throw new MeldungException("Keine Zahl mehr gefunden.");
+                throw new MeldungException(Meldungen.SO014());
             }
             SudokuContext.copy(c.zahlen, clone1);
         } else if (c.getAnzahl() < MAX * MAX) {
-            throw new MeldungException("Sudoku nicht vollständig lösbar.");
+            throw new MeldungException(Meldungen.SO015());
         }
     }
 
