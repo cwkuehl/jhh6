@@ -41,6 +41,7 @@ class Global {
 	private new() {
 		throw new RuntimeException(Meldungen::M1000(typeof(Global).name))
 	}
+
 	/**
 	 * Diese Funktion macht nichts und wird gebraucht, damit Checkstyle nicht leere Blocks bemängelt.
 	 * @return 0.
@@ -69,21 +70,22 @@ class Global {
 	 * @return Konvertierter int-Wert.
 	 */
 	def public static int strInt(String str) {
+		return strInt(str, Locale.^default)
+	}
+
+	/**
+	 * Konvertierung eines String in int. Eine Exception wird abgefangen und 0 als Ergebnis geliefert.
+	 * @param str Beliebiger String.
+	 * @return Konvertierter int-Wert.
+	 */
+	def public static int strInt(String str, Locale l) {
 
 		var i = 0
 		if (!nes(str)) {
 			try {
-				i = Integer.parseInt(str)
+				i = NumberFormat.getNumberInstance(l).parse(str).intValue
 			} catch (Exception ex) {
-				try {
-					i = Double.parseDouble(str).intValue
-				} catch (Exception ex2) {
-					try {
-						i = NumberFormat.getNumberInstance(Locale.GERMAN).parse(str).intValue
-					} catch (Exception ex3) {
-						machNichts
-					}
-				}
+				machNichts
 			}
 		}
 		return i
@@ -95,7 +97,7 @@ class Global {
 	 * @return Konvertierter int-Wert.
 	 */
 	def public static int objInt(Object str) {
-		return if (str === null) 0 else strInt(str.toString)
+		return if(str === null) 0 else strInt(str.toString)
 	}
 
 	/**
@@ -104,7 +106,7 @@ class Global {
 	 * @return Konvertierter int-Wert.
 	 */
 	def public static double objDbl(Object str) {
-		return if (str === null) 0.0 else strDbl(str.toString)
+		return if(str === null) 0.0 else strDbl(str.toString)
 	}
 
 	/**
@@ -137,21 +139,22 @@ class Global {
 	 * @return Konvertierter long-Wert.
 	 */
 	def public static long strLng(String str) {
+		return strLng(str, Locale.^default)
+	}
+
+	/**
+	 * Konvertierung eines String in long. Eine Exception wird abgefangen und 0 als Ergebnis geliefert.
+	 * @param str Beliebiger String.
+	 * @return Konvertierter long-Wert.
+	 */
+	def public static long strLng(String str, Locale lc) {
 
 		var l = 0l
 		if (!nes(str)) {
 			try {
-				l = Long.parseLong(str)
-			} catch (Exception ex) {
-				try {
-					l = Double.parseDouble(str).longValue
-				} catch (Exception ex2) {
-					try {
-						l = NumberFormat.getNumberInstance(Locale.GERMAN).parse(str).longValue
-					} catch (Exception ex3) {
-						machNichts
-					}
-				}
+				l = NumberFormat.getNumberInstance(lc).parse(str).longValue
+			} catch (Exception ex3) {
+				machNichts
 			}
 		}
 		return l
@@ -169,22 +172,27 @@ class Global {
 	}
 
 	/**
-	 * Konvertierung eines Object in double. Eine Exception wird abgefangen und 0 als Ergebnis geliefert.
+	 * Konvertierung eines Strings in double. Eine Exception wird abgefangen und 0 als Ergebnis geliefert.
 	 * @param str Beliebiger String.
 	 * @return Konvertierter double-Wert.
 	 */
 	def public static double strDbl(String str) {
+		return strDbl(str, Locale.^default)
+	}
+
+	/**
+	 * Konvertierung eines Strings in double. Eine Exception wird abgefangen und 0 als Ergebnis geliefert.
+	 * @param str Beliebiger String.
+	 * @return Konvertierter double-Wert.
+	 */
+	def public static double strDbl(String str, Locale l) {
 
 		var d = 0.0
 		if (!nes(str)) {
 			try {
-				d = Double.parseDouble(str)
+				d = NumberFormat.getNumberInstance(l).parse(str).doubleValue
 			} catch (Exception ex) {
-				try {
-					d = NumberFormat.getNumberInstance(Locale.GERMAN).parse(str).doubleValue
-				} catch (Exception ex2) {
-					return 0
-				}
+				return 0
 			}
 		}
 		return d
@@ -588,7 +596,7 @@ class Global {
 
 	/** Liefert leeren String, wenn null; sonst den String */
 	def public static String nn(String s) {
-		if (s === null) "" else s
+		if(s === null) "" else s
 	}
 
 	/**
@@ -1695,7 +1703,7 @@ class Global {
 			sb.append("</b>")
 		}
 		sb.append(" (")
-		sb.append(if (xref) toXref(uid) else uid)
+		sb.append(if(xref) toXref(uid) else uid)
 		sb.append(")")
 		return sb.toString
 	}
