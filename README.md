@@ -22,7 +22,7 @@ Here are the some of the Features:
 * Wertpapiere mit Point and Figure-Charts (Bereich Wertpapiere)
 * Messdienerordnungen erstellen (Bereich Messdiener)
 
-You can download the actual version [JHH5](http://cwkuehl.de/jhh5).
+You can download the actual version [JHH6](http://cwkuehl.de/jhh6).
 
 ## Technical Overview
 * Java 8 Runtime with JavaFX
