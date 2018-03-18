@@ -166,10 +166,10 @@ public class Sicherung {
 
         // Plausis
         if (Global.nes(strPfad)) {
-            throw new Exception("Das zu sichernde Verzeichnis darf nicht leer sein.");
+            throw new Exception(Meldungen.M1037());
         }
         if (Global.nes(strSicherPfad)) {
-            throw new Exception("Das Sicherungs-Verzeichnis darf nicht leer sein.");
+            throw new Exception(Meldungen.M1035());
         }
         if (daten == null) {
             daten = new ArrayList<Sicherungsdaten>();
@@ -178,7 +178,7 @@ public class Sicherung {
         pfadPfad = umsetzenPfadDatei(strPfad, true);
         pfad = new File(pfadPfad);
         if (!pfad.exists() || !pfad.isDirectory()) {
-            throw new Exception("Der Pfad '" + strPfad + "' ist kein Verzeichnis.");
+            throw new Exception(Meldungen.M1038(strPfad));
         }
         sichPfad = umsetzenPfadDatei(strSicherPfad, true);
         sichBasisPfad = sichPfad;
@@ -186,7 +186,7 @@ public class Sicherung {
         sicherung = new File(sichPfad + pfad.getName());
         if (sicherung.exists()) {
             if (!sicherung.isDirectory()) {
-                throw new Exception("Der Pfad '" + sichPfad + pfad.getName() + "' ist kein Verzeichnis.");
+                throw new Exception(Meldungen.M1038(sichPfad + pfad.getName()));
             }
         } else {
             // Evtl. auch Ober-Verzeichnisse des Sicherungs-Verzeichnisses
@@ -222,7 +222,7 @@ public class Sicherung {
         Hashtable<String, Sicherungsdatei> dateiListe = null;
 
         if (diffSicherung && rueckSicherung) {
-            throw new Exception("Die Rücksicherung ist nur" + " ohne Differenz-Sicherung möglich.");
+            throw new Exception(Meldungen.M1039());
         }
         // Dateilisten aufbauen
         pfadHt = new Hashtable<String, Sicherungsdatei>();
@@ -238,7 +238,7 @@ public class Sicherung {
         String[] diffDirs = basisPfad.list(fnf);
         if (Global.arrayLaenge(diffDirs) > 0) {
             if (!diffSicherung && !rueckSicherung) {
-                throw new Exception("Wegen vorhandener Differenz-Sicherung" + " kann nicht komplett gesichert werden.");
+                throw new Exception(Meldungen.M1040());
             }
             Arrays.sort(diffDirs);
             File diffSicherung = null;
@@ -353,14 +353,8 @@ public class Sicherung {
         int zaehler = 0;
         int fehler = 0;
 
-        if (daten == null) {
-            throw new Exception("Die Datenliste ist nicht initialisiert.");
-        }
-        if (kopierFehler == null) {
-            throw new Exception("Die Kopier-Fehler-Liste ist nicht initialisiert.");
-        }
-        if (status == null) {
-            throw new Exception("Der Status ist nicht initialisiert.");
+        if (daten == null || kopierFehler == null || status == null) {
+            throw new Exception(Meldungen.M1041());
         }
 
         anzahl = daten.size();
@@ -368,12 +362,7 @@ public class Sicherung {
             zaehler++;
             // Status vor der Aktion setzen
             status.setLength(0);
-            status.append(zaehler).append("/").append(anzahl);
-            if (fehler > 0) {
-                status.append(" (").append(fehler).append(")");
-            }
-            status.append(" ").append(sichdaten.getName());
-
+            status.append(Meldungen.M1042(zaehler, anzahl, fehler, sichdaten.getName()));
             aktion = sichdaten.getAktion();
             try {
                 if (!sichdaten.isErledigt()) {
@@ -452,11 +441,11 @@ public class Sicherung {
         }
         status.setLength(0);
         if (maxFehler > 0 && fehler > maxFehler) {
-            status.append("Wegen zu vieler Fehler beendet.");
+            status.append(Meldungen.M1043());
         } else if (abbruch != null && abbruch.length() > 0) {
-            status.append("Abbruch durch den Benutzer.");
+            status.append(Meldungen.M1044());
         } else {
-            status.append("Beendet. (").append(anzahl).append(" Änderungen)");
+            status.append(Meldungen.M1045(anzahl));
         }
     }
 
