@@ -511,10 +511,10 @@ class WertpapierService {
 	def private List<SoKurse> holeKurseIntern(ServiceDaten daten, LocalDate dvon, LocalDate dbis, String kursname,
 		String kursnameRelation) {
 
-		var liste = holeKurse(daten, dvon, dbis, kursname, true)
+		var liste = holeKursListe(daten, dvon, dbis, kursname, true, 0)
 		if (!Global.nes(kursnameRelation)) {
 			var rliste = new ArrayList<SoKurse>
-			var liste2 = holeKurse(daten, dvon, dbis, kursnameRelation, true)
+			var liste2 = holeKursListe(daten, dvon, dbis, kursnameRelation, true, 0)
 			var h = new HashMap<Long, SoKurse>
 			for (SoKurse k : liste2) {
 				h.put(k.datum.toEpochSecond(ZoneOffset.UTC), k)
@@ -552,8 +552,8 @@ class WertpapierService {
 		return liste
 	}
 
-	def private List<SoKurse> holeKurse(ServiceDaten daten, LocalDate dvon, LocalDate dbis, String kursname,
-		boolean letzter) {
+	def private List<SoKurse> holeKursListe(ServiceDaten daten, LocalDate dvon, LocalDate dbis, String kursname,
+		boolean letzter, double klf) {
 
 		var bis = if(dbis === null) daten.heute else dbis
 		var von = if(dvon === null || !dvon.isBefore(bis)) bis.minusDays(182) else dvon
@@ -577,7 +577,7 @@ class WertpapierService {
 			von.atStartOfDay(ZoneOffset.UTC).toEpochSecond.toString,
 			bis.atStartOfDay(ZoneOffset.UTC).toEpochSecond.toString)
 		var v = executeHttp(url, null, false, null)
-		var kl = 0.0
+		var kl = klf
 		var liste = new ArrayList<SoKurse>
 		if (v !== null && v.size > 0) {
 			try {
@@ -699,7 +699,7 @@ class WertpapierService {
 		// }
 		// }
 		var von = heute.minusDays(7)
-		var l = holeKurse(daten, von, heute, kuerzel, false)
+		var l = holeKursListe(daten, von, heute, kuerzel, false, kl)
 		if (l !== null && l.size > 0) {
 			return l.get(l.size - 1)
 		}
@@ -1090,8 +1090,8 @@ class WertpapierService {
 		for (var i = 0; i < xanzahl + 3; i++) {
 			drawLine(p, x, yoffset, x, y, color, stroke) // senkrechte Linien
 			if (i % 6 == 0 && i < xanzahl && c.saeulen.get(i).datum !== null) {
-				drawString(p, x + xgroesse, y + ygroesse * 1.5,
-					Global.dateTimeStringForm(c.saeulen.get(i).datum), font, color)
+				drawString(p, x + xgroesse, y + ygroesse * 1.5, Global.dateTimeStringForm(c.saeulen.get(i).datum), font,
+					color)
 			}
 			x += xgroesse
 		}
