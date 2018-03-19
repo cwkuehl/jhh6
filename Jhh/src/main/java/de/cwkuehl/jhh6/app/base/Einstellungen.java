@@ -6,12 +6,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Properties;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
@@ -123,10 +125,10 @@ public class Einstellungen {
             String[] array = strGroesse.split(";");
             if (array.length >= 4) {
                 try {
-                    groesse.setWidth(Global.strInt(array[0]));
-                    groesse.setHeight(Global.strInt(array[1]));
-                    groesse.setX(Global.strInt(array[2]));
-                    groesse.setY(Global.strInt(array[3]));
+                    groesse.setWidth(Global.strInt(array[0], Locale.ENGLISH));
+                    groesse.setHeight(Global.strInt(array[1], Locale.ENGLISH));
+                    groesse.setX(Global.strInt(array[2], Locale.ENGLISH));
+                    groesse.setY(Global.strInt(array[3], Locale.ENGLISH));
                     // if (Global.istLinux()) {
                     // groesse.y -= 28;
                     // }
@@ -145,7 +147,8 @@ public class Einstellungen {
      */
     public void setDialogGroesse(final String key, Groesse g) {
 
-        String groesse = "" + g.getWidth() + ";" + g.getHeight() + ";" + g.getX() + ";" + g.getY();
+        String groesse = MessageFormat.format("{0,number,0};{1,number,0};{2,number,0};{3,number,0}", g.getWidth(), g
+                .getHeight(), g.getX(), g.getY());
         setzeResourceDaten(key, groesse);
     }
 

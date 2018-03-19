@@ -7,6 +7,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  */
 @Accessors
 public class Groesse {
+
 	/** Breite. */
 	double width = 0
 	/** Höhe. */

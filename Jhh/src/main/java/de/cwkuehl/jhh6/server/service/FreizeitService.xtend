@@ -215,7 +215,7 @@ class FreizeitService {
 			var LocalDateTime anfangMin
 			var long anzahlTageMax = 0
 			val jahresTage = 365.25
-			var sb = new StringBuffer()
+			var sb = new StringBuffer
 			var aktJahr = jetzt0.withDayOfYear(1)
 			var fliste = fahrradRep.getFahrradLangListe(daten, null)
 			for (vo : fliste) {

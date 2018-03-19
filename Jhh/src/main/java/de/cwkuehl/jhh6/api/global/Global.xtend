@@ -106,7 +106,8 @@ class Global {
 	 * @return Konvertierter int-Wert.
 	 */
 	def public static double objDbl(Object str) {
-		return if(str === null) 0.0 else strDbl(str.toString)
+		return if(str === null) 0.0 else if(str instanceof BigDecimal) strDbl(str.toString, Locale.ENGLISH) else strDbl(
+			str.toString)
 	}
 
 	/**
