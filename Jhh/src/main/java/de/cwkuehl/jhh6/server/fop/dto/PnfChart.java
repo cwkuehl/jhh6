@@ -8,6 +8,7 @@ import java.util.List;
 import de.cwkuehl.jhh6.api.dto.MaEinstellung;
 import de.cwkuehl.jhh6.api.dto.SoKurse;
 import de.cwkuehl.jhh6.api.global.Global;
+import de.cwkuehl.jhh6.api.message.Meldungen;
 
 /**
  * Point & Figure-Chart.<br>
@@ -221,8 +222,8 @@ public class PnfChart {
                     double d = getMax() + 1;
                     int yanzahl = getWerte().size();
                     for (int i = 0; i < yanzahl; i++) {
-                        if (Global.compDouble4(getWerte().get(i), d) < 0
-                                && Global.compDouble4(getWerte().get(i), akt) > 0) {
+                        if (Global.compDouble4(getWerte().get(i), d) < 0 && Global.compDouble4(getWerte().get(i),
+                                akt) > 0) {
                             d = getWerte().get(i);
                             yakt = i;
                         }
@@ -279,18 +280,16 @@ public class PnfChart {
             return;
         }
         if (methode == 1 && Global.compDouble4(k0.getClose(), 0) <= 0) {
-            throw new RuntimeException("Fehlender Schlusskurs");
-        } else if ((methode == 2 || methode == 3)
-                && (Global.compDouble4(k0.getHigh(), 0) <= 0 || Global.compDouble4(k0.getLow(), 0) <= 0)) {
-            throw new RuntimeException("Fehlende Höchst- oder Tiefstkurse");
-        } else if (methode == 4
-                && (Global.compDouble4(k0.getOpen(), 0) <= 0 || Global.compDouble4(k0.getHigh(), 0) <= 0
-                        || Global.compDouble4(k0.getLow(), 0) <= 0 || Global.compDouble4(k0.getClose(), 0) <= 0)) {
-            throw new RuntimeException("Fehlende Eröffnungs-, Höchst-, Tiefst- oder Schlusskurse");
-        } else if (methode == 5
-                && (Global.compDouble4(k0.getHigh(), 0) <= 0 || Global.compDouble4(k0.getLow(), 0) <= 0 || Global
-                        .compDouble4(k0.getClose(), 0) <= 0)) {
-            throw new RuntimeException("Fehlende Höchst-, Tiefst- oder Schlusskurse");
+            throw new RuntimeException(Meldungen.WP031());
+        } else if ((methode == 2 || methode == 3) && (Global.compDouble4(k0.getHigh(), 0) <= 0 || Global.compDouble4(k0
+                .getLow(), 0) <= 0)) {
+            throw new RuntimeException(Meldungen.WP032());
+        } else if (methode == 4 && (Global.compDouble4(k0.getOpen(), 0) <= 0 || Global.compDouble4(k0.getHigh(), 0) <= 0
+                || Global.compDouble4(k0.getLow(), 0) <= 0 || Global.compDouble4(k0.getClose(), 0) <= 0)) {
+            throw new RuntimeException(Meldungen.WP033());
+        } else if (methode == 5 && (Global.compDouble4(k0.getHigh(), 0) <= 0 || Global.compDouble4(k0.getLow(), 0) <= 0
+                || Global.compDouble4(k0.getClose(), 0) <= 0)) {
+            throw new RuntimeException(Meldungen.WP034());
         }
         kurse.add(k0);
         double k = k0.getClose();
@@ -818,45 +817,46 @@ public class PnfChart {
         if (sb.length() > 0) {
             sb.append(" ");
         }
-        sb.append("(Box");
+        sb.append("(").append(Meldungen.WP035());
         if (Global.compDouble(box, 0) > 0) {
             sb.append(" ").append(Global.dblStr(box));
         }
+        sb.append(" ");
         if (skala == 0) {
-            sb.append(" fix");
+            sb.append(Meldungen.WP036());
         } else if (skala == 1) {
-            sb.append(" Prozent");
+            sb.append(Meldungen.WP037());
         } else {
-            sb.append(" dynamisch");
+            sb.append(Meldungen.WP038());
         }
         if (sb.length() > 0) {
             sb.append(", ");
         }
-        sb.append("Umkehr ").append(umkehr);
+        sb.append(Meldungen.WP039(umkehr));
         if (sb.length() > 0) {
             sb.append(", ");
         }
         switch (methode) {
         case 2:
-            sb.append("High-Low-Trendfolge");
+            sb.append(Meldungen.WP040());
             break;
         case 3:
-            sb.append("High-Low-Trendumkehr");
+            sb.append(Meldungen.WP041());
             break;
         case 4:
-            sb.append("Open-High-Low-Close");
+            sb.append(Meldungen.WP042());
             break;
         case 5:
-            sb.append("Typischer Preis");
+            sb.append(Meldungen.WP043());
             break;
         default:
-            sb.append("Schlusskurse");
+            sb.append(Meldungen.WP044());
         }
         if (relativ) {
-            sb.append(" relativ");
+            sb.append(" ").append(Meldungen.WP045());
         }
         if (dauer > 0) {
-            sb.append(", ").append(dauer).append(" Tage");
+            sb.append(", ").append(Meldungen.WP046(dauer));
         }
         sb.append(")");
         return sb.toString();
@@ -873,8 +873,7 @@ public class PnfChart {
             LocalDateTime von = kurse.get(0).getDatum();
             LocalDateTime bis = kurse.get(kurse.size() - 1).getDatum();
             if (von != null && bis != null) {
-                sb.append(Global.dateTimeStringForm(von));
-                sb.append(" - ").append(Global.dateTimeStringForm(bis));
+                sb.append(Meldungen.WP047(von, bis));
             }
             sb.append(" O:").append(Global.dblStrFormat(Global.round(kurse.get(0).getClose()), false));
             sb.append(" H:").append(Global.dblStrFormat(Global.round(max), false));
@@ -968,15 +967,15 @@ public class PnfChart {
         List<MaEinstellung> liste = new ArrayList<MaEinstellung>();
         MaEinstellung e = new MaEinstellung();
         e.setSchluessel("0");
-        e.setWert("feste Boxgröße");
+        e.setWert(Meldungen.WP036());
         liste.add(e);
         e = new MaEinstellung();
         e.setSchluessel("1");
-        e.setWert("prozentual");
+        e.setWert(Meldungen.WP037());
         liste.add(e);
         e = new MaEinstellung();
         e.setSchluessel("2");
-        e.setWert("dynamisch");
+        e.setWert(Meldungen.WP038());
         liste.add(e);
         return liste;
     }
@@ -986,23 +985,23 @@ public class PnfChart {
         List<MaEinstellung> liste = new ArrayList<MaEinstellung>();
         MaEinstellung e = new MaEinstellung();
         e.setSchluessel("1");
-        e.setWert("Schlusskurse");
+        e.setWert(Meldungen.WP044());
         liste.add(e);
         e = new MaEinstellung();
         e.setSchluessel("2");
-        e.setWert("High-Low-Trendfolge");
+        e.setWert(Meldungen.WP040());
         liste.add(e);
         e = new MaEinstellung();
         e.setSchluessel("3");
-        e.setWert("High-Low-Trendumkehr");
+        e.setWert(Meldungen.WP041());
         liste.add(e);
         e = new MaEinstellung();
         e.setSchluessel("4");
-        e.setWert("Open-High-Low-Close");
+        e.setWert(Meldungen.WP042());
         liste.add(e);
         e = new MaEinstellung();
         e.setSchluessel("5");
-        e.setWert("Typischer Preis");
+        e.setWert(Meldungen.WP043());
         liste.add(e);
         return liste;
     }
