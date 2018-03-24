@@ -295,7 +295,7 @@ class Meldungen {
 	val WP021 = "The posting text must not be empty."
 	val WP022 = "Type in a value for payment or shares."
 	val WP023 = "Payment amount:  {0,number,0.00}\nShares:          {1,number,0.00000}\nPrice per share: {2,number,0.0000}\nInterest:        {3,number,0.00}\n{4}"
-	val WP024 = "Actual price:    {0,number,0.0000}{1}\nActual value:    {2,number,0.00}\nProfit or loss:  {3,number,0.00} ({4,number,0.0000} %)"
+	val WP024 = "Actual price:    {0,number,0.0000}{1}\nActual value:    {2,number,0.00}\nProfit or loss:  {3,number,0.00} ({4,number,0.0000}%)"
 	val WP025 = " ({0} {1,number,0.0000}){2}"
 	val WP026 = " ({0,date,yyyy-MM-dd})"
 	val WP027 = "Preparing ..."
