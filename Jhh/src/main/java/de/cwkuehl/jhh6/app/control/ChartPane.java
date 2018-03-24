@@ -55,7 +55,6 @@ public class ChartPane {
 
             public void printComponenet() {
 
-                // System.out.println("Drucken...");
                 PrinterJob job = PrinterJob.createPrinterJob();
                 if (job != null) {
                     job.getJobSettings().setJobName(b.getString("menu.chart.print"));

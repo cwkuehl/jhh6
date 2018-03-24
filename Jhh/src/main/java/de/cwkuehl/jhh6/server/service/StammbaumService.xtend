@@ -1,6 +1,8 @@
 package de.cwkuehl.jhh6.server.service
 
 import de.cwkuehl.jhh6.api.dto.ByteDaten
+import de.cwkuehl.jhh6.api.dto.MaParameter
+import de.cwkuehl.jhh6.api.dto.MaParameterKey
 import de.cwkuehl.jhh6.api.dto.SbEreignis
 import de.cwkuehl.jhh6.api.dto.SbFamilie
 import de.cwkuehl.jhh6.api.dto.SbFamilieKey
@@ -17,6 +19,7 @@ import de.cwkuehl.jhh6.api.enums.GedcomEreignis
 import de.cwkuehl.jhh6.api.enums.GeschlechtEnum
 import de.cwkuehl.jhh6.api.global.Constant
 import de.cwkuehl.jhh6.api.global.Global
+import de.cwkuehl.jhh6.api.global.Parameter
 import de.cwkuehl.jhh6.api.message.MeldungException
 import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.api.service.ServiceDaten
@@ -1041,29 +1044,53 @@ class StammbaumService {
 		}
 	}
 
+	def private MaParameter getParameter(ServiceDaten daten, String schluessel) {
+
+		var key = new MaParameterKey(daten.mandantNr, schluessel)
+		var r = parameterRep.get(daten, key)
+		if (r === null) {
+			r = new MaParameter
+			r.mandantNr = daten.mandantNr
+			r.schluessel = schluessel
+			var p = Parameter.get(schluessel)
+			if (p !== null)
+				r.wert = p.wert
+		}
+		return r
+	}
+
 	/**
 	 * Schreibt den Schluss einer GEDCOM-Datei.
 	 * @param out String-Vector zum Schreiben.
 	 * @param version Version der zu schreibenden GEDCOM-Schnittstelle, z.B. '5.5'.
-	 * @param strName Bezeichnung des Stammbaums.
+	 * @param name Bezeichnung des Stammbaums.
 	 */
-	def private void schreibeFuss(List<String> out, String version, String strName) {
+	def private void schreibeFuss(ServiceDaten daten, List<String> out, String version, String name) {
 
 		if (version.compareTo("5.5") >= 0) {
 			// # submitter
-			out.add("0 @999999@ SUBM" + Constant.CRLF)
-			out.add("1 NAME Wolfgang /Kühl/" + Constant.CRLF)
-			out.add("1 ADDR Im Mörsch 4" + Constant.CRLF)
-			out.add("2 CONT 55294 Bodenheim" + Constant.CRLF)
-			out.add("2 CONT Germany" + Constant.CRLF)
-			out.add("2 CONT wolfgangATcwkuehl.de" + Constant.CRLF)
-		// out.add("1 PHON 06131-934534" + Constant.CRLF)
+			var p = getParameter(daten, Parameter.SB_SUBMITTER)
+			if (p !== null && !Global.nes(p.wert)) {
+				var arr = p.wert.split(';')
+				out.add("0 @999999@ SUBM" + Constant.CRLF)
+				if (arr.length > 0)
+				out.add("1 NAME " + arr.get(0) + Constant.CRLF)
+				if (arr.length > 1)
+				out.add("1 ADDR " + arr.get(1) + Constant.CRLF)
+				if (arr.length > 2)
+				out.add("2 CONT " + arr.get(2) + Constant.CRLF)
+				if (arr.length > 3)
+				out.add("2 CONT " + arr.get(3) + Constant.CRLF)
+				if (arr.length > 4)
+				out.add("2 CONT " + arr.get(4) + Constant.CRLF)
+			// out.add("1 PHON 00000-11111" + Constant.CRLF)
+			}
 		}
 		if (version.compareTo("5.5") >= 0) {
 			// submission
 			out.add("0 @999998@ SUBN" + Constant.CRLF)
 			out.add("1 SUBM @999999@" + Constant.CRLF)
-			out.add("1 FAMF " + strName + Constant.CRLF)
+			out.add("1 FAMF " + name + Constant.CRLF)
 		}
 		out.add("0 TRLR" + Constant.CRLF)
 	}
@@ -1126,7 +1153,7 @@ class StammbaumService {
 		schreibeIndividual(daten, out, map, version, status2)
 		schreibeFamily(daten, out, map, status2, operator, tot)
 		schreibeSource(daten, out, map, status2)
-		schreibeFuss(out, version, name)
+		schreibeFuss(daten, out, version, name)
 		var r = new ServiceErgebnis<List<String>>(out)
 		return r
 	}

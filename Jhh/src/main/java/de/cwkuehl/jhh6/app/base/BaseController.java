@@ -1071,7 +1071,7 @@ public abstract class BaseController<R> {
                         setTexte(t, wert);
                     }
                 } else {
-                    throw new Exception("leseResourceDaten: Typ " + clazz + " fehlt.");
+                    throw new Exception(Meldungen.M1025(clazz.toString()));
                 }
             } catch (Exception ex) {
                 log.error("leseResourceDaten", ex);

@@ -76,6 +76,9 @@ class Parameter {
 	/** Heilpraktiker-Parameter: Logo-Dateiname unten. */
 	public static final String HP_LOGO_UNTEN = "HP_LOGO_UNTEN"
 
+	/** Stammbaum-Schlüssel: Herausgeber für GEDCOM-Datei. */
+	public static final String SB_SUBMITTER = "SB_SUBMITTER"
+
 	/** Vermietung-Abrechnungs-Haus-Schlüssel: Name des Vermieters oder Mieters. */
 	public static final String VM_NAME = "VM_NAME"
 	/** Vermietung-Abrechnungs-Haus-Schlüssel: Telefonnummer des Vermieters. */
@@ -127,6 +130,7 @@ class Parameter {
 				new Parameter(HP_GRUSS, true, true, true, false),
 				new Parameter(HP_BANK, true, true, true, false),
 				new Parameter(HP_LOGO_UNTEN, true, true, true, false),
+				new Parameter(SB_SUBMITTER, true, true, true, false),
 				new Parameter(VM_NAME, true, true, true, false),
 				new Parameter(VM_TELEFON, true, true, true, false),
 				new Parameter(VM_STRASSE, true, true, true, false),

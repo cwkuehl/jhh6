@@ -43,10 +43,8 @@ public class DbInit {
         if (version != 0 && dbart.equals(DatenbankArt.HSQLDB)) {
             BufferedReader f = null;
             try {
-                // SET TABLE TB_EINTRAG TYPE CACHED
                 try {
-                    f = new BufferedReader(new FileReader(
-                            "/home/wolfgang/workspaces/ws2015jhh4/Allgemein/src/installation/datenbank/WebHH_HSQLDB.sql"));
+                    f = new BufferedReader(new FileReader("WebHH_HSQLDB.sql"));
                     StringBuffer sb = new StringBuffer();
                     String zeile = null;
                     while ((zeile = f.readLine()) != null) {
