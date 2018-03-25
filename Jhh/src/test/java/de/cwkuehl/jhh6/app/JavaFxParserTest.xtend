@@ -277,7 +277,7 @@ class JavaFxParserTest extends TestBase {
 		if (skipForBuild) {
 			return
 		}
-		var clipboard = Toolkit.getDefaultToolkit.getSystemClipboard
+		var clipboard = Toolkit.defaultToolkit.systemClipboard
 		var s = clipboard.getData(DataFlavor.stringFlavor) as String
 		if (Global.nes(s)) {
 			return

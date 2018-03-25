@@ -198,7 +198,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 			var daten = new ServiceDaten(mandantNr, Jhh6::einstellungen.benutzer)
 			var r = FactoryService::anmeldungService.istOhneAnmelden(daten)
 			if (get(r)) {
-				Jhh6.setServiceDaten(daten)
+				Jhh6::setServiceDaten(daten)
 				setRechte(daten.mandantNr, true)
 				startDialoge(daten.mandantNr)
 			} else {
@@ -219,8 +219,9 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 
 	@FXML def protected void handleAnmelden(ActionEvent e) {
 
-		if (Werkzeug::isUpdateAvailable) {
-			setLeftStatus(Meldungen::M3001)
+		if (!Werkzeug::isUpdateAvailable) {
+			if (!Jhh6::displayMessage(Meldungen::M3001))
+				setLeftStatus(Meldungen::M3001)
 		}
 		var daten = serviceDaten
 		if (menueAnmelden.isVisible) {

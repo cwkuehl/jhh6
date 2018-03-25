@@ -10,6 +10,13 @@ import de.cwkuehl.jhh6.app.base.Einstellungen
 import de.cwkuehl.jhh6.app.base.Werkzeug
 import de.cwkuehl.jhh6.app.controller.Jhh6Controller
 import de.cwkuehl.jhh6.server.FactoryService
+import java.awt.AWTException
+import java.awt.MenuItem
+import java.awt.PopupMenu
+import java.awt.SystemTray
+import java.awt.Toolkit
+import java.awt.TrayIcon
+import java.awt.TrayIcon.MessageType
 import java.io.IOException
 import java.lang.reflect.InvocationTargetException
 import javafx.application.Application
@@ -26,6 +33,7 @@ class Jhh6 extends Application {
 	static ServiceDaten serviceDaten = new ServiceDaten(0, Constant.USER_ID)
 	static Einstellungen einstellungen = null
 	static Stage stage = null
+	static TrayIcon trayIcon = null
 	static Jhh6Controller controller = null
 	protected static Logger log = LoggerFactory::getLogger(typeof(Jhh6))
 
@@ -89,12 +97,45 @@ class Jhh6 extends Application {
 		stage.setOnCloseRequest([ event |
 			Platform::exit // Anwendung beenden
 		])
+		initSystemTray
+	}
+
+	def private static void initSystemTray() {
+
+		if (!SystemTray::isSupported) {
+			return
+		}
+		val popup = new PopupMenu
+		val image = Thread::currentThread.contextClassLoader.getResource("WKHH.gif")
+		trayIcon = new TrayIcon(Toolkit::defaultToolkit.getImage(image), titelKurz)
+		trayIcon.imageAutoSize = true
+		val tray = SystemTray.systemTray
+		val infoItem = new MenuItem(Global.g0("tray.info"))
+		val exitItem = new MenuItem(Global.g0("tray.quit"))
+		popup.add(infoItem)
+		popup.add(exitItem)
+		infoItem.addActionListener([ e |
+			displayMessage(if(Werkzeug::isUpdateAvailable) Meldungen::M3001 else Meldungen::M3002)
+		])
+		exitItem.addActionListener([e|Platform.runLater([Platform::exit])])
+		trayIcon.setPopupMenu(popup)
+		try {
+			tray.add(trayIcon)
+		} catch (AWTException ex) {
+			Werkzeug.showException(ex)
+		}
 	}
 
 	override void stop() {
 
 		controller.closeTabs
 		Werkzeug.setDialogGroesse("Rahmen", stage)
+		if (SystemTray::isSupported) {
+			val tray = SystemTray.systemTray
+			if (tray !== null && trayIcon !== null) {
+				tray.remove(trayIcon)
+			}
+		}
 		getEinstellungen.save
 	}
 
@@ -132,7 +173,7 @@ class Jhh6 extends Application {
 	def static String getTitelKurz() {
 
 		var str = new StringBuffer
-		str.append("JHH6 ")
+		str.append(Global.g0("title")).append(" ")
 		str.append(getEinstellungen.getAnwendungsTitel(serviceDaten.mandantNr))
 		str.append(" W. Kuehl")
 		return str.toString
@@ -144,7 +185,7 @@ class Jhh6 extends Application {
 		if (getEinstellungen.isTest) {
 			str.append(Meldungen::M1024)
 		}
-		str.append("JHH6 ")
+		str.append(Global.g0("title")).append(" ")
 		str.append(getEinstellungen.getAnwendungsTitel(serviceDaten.mandantNr))
 		str.append(" W. Kuehl")
 		var mandantNr = getServiceDaten.mandantNr
@@ -157,10 +198,20 @@ class Jhh6 extends Application {
 	}
 
 	def static void aktualisiereTitel() {
-
 		if (stage !== null) {
 			stage.setTitle(getTitel)
 		}
+	}
+
+	/** 
+	 * Anzeige einer Meldung im TrayIcon. 
+	 */
+	def static boolean displayMessage(String str) {
+
+		if (trayIcon === null || Global.nes(str))
+			return false
+		trayIcon.displayMessage(str, Global.g0("title"), MessageType.INFO)
+		return true
 	}
 
 	/** 

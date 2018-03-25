@@ -376,6 +376,7 @@ class Meldungen {
 	val M2095 = "Select a configuration."
 	val M3000 = "The help file ({0}) is missing."
 	val M3001 = "There is an update available. Please close the application and start the batch file #InstallUpdateJhh6."
+	val M3002 = "The program is up to date."
 	val M9000 = "Example"
 	val M9001 = "Example2"
 	val M9002 = "Example3"
