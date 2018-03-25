@@ -219,7 +219,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 
 	@FXML def protected void handleAnmelden(ActionEvent e) {
 
-		if (!Werkzeug::isUpdateAvailable) {
+		if (Werkzeug::isUpdateAvailable) {
 			if (!Jhh6::displayMessage(Meldungen::M3001))
 				setLeftStatus(Meldungen::M3001)
 		}
