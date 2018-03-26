@@ -53,7 +53,7 @@ class AD120GeburtstageController extends BaseController<String> {
 		var liste = get(r)
 		if (liste === null || liste.size <= 1) {
 			if (stufe <= 0) {
-				Platform.runLater([close])
+				Platform::runLater([close])
 			}
 			geburtstage.text = null
 			return

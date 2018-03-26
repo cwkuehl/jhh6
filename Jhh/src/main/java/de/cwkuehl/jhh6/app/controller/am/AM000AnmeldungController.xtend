@@ -54,11 +54,13 @@ class AM000AnmeldungController extends BaseController<String> {
 			mandant.text = "1"
 		}
 		anmelden.disableProperty.bind(mandant.textProperty.isEmpty.or(benutzer.textProperty.isEmpty))
-		Platform.runLater([
-			{
-				if(Global.nes(mandant.text)) mandant.requestFocus else if(Global.nes(benutzer.text)) benutzer.
-					requestFocus else kennwort.requestFocus
-			}
+		Platform::runLater([
+			if (Global.nes(mandant.text))
+				mandant.requestFocus
+			else if (Global.nes(benutzer.text))
+				benutzer.requestFocus
+			else
+				kennwort.requestFocus
 		])
 	}
 }

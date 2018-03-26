@@ -82,7 +82,7 @@ class FZ710NotizController extends BaseController<String> {
 			geaendert.setEditable(false)
 			daten.initContextMenu(getStage)
 			daten.fireTableStructureChanged
-			Platform.runLater([splitpane.setDividerPosition(0, daten.divider)])
+			Platform::runLater([splitpane.setDividerPosition(0, daten.divider)])
 		}
 		if (stufe <= 1) { // stufe = 0
 		}

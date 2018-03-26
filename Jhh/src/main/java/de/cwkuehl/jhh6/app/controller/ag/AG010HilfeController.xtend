@@ -39,7 +39,7 @@ class AG010HilfeController extends BaseController<String> {
 	 */
 	def void onBack() {
 
-		Platform.runLater([
+		Platform::runLater([
 			val we = webview.engine
 			val ci = we.history.currentIndex
 			if (ci <= 0) {

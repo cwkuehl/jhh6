@@ -346,7 +346,6 @@ class AG400SicherungenController extends BaseController<String> {
 
 	def private void onSicherungStatus() {
 
-		// Platform.runLater(() -> statusText.setText(status.toString))
 		statusText.setText(status.toString)
 		// view.setKopierFehler(model.daten.kopierFehler)
 		if (abbruch.length > 0) {

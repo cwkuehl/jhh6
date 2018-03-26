@@ -140,12 +140,12 @@ class HH510DruckenController extends BaseController<String> {
 			val byte[] pdf = get(
 				FactoryService::haushaltService.getReportJahresbericht(serviceDaten, von.value, bis.value, titel.text,
 					eb.isSelected, gv.isSelected, sb.isSelected))
-			Platform.runLater([Werkzeug.speicherReport(pdf, Meldungen::HH048, true)])
+			Platform::runLater([Werkzeug.speicherReport(pdf, Meldungen::HH048, true)])
 		}
 		if (kassenbericht.isSelected) {
 			val byte[] pdf = get(
 				FactoryService::haushaltService.getReportKassenbericht(serviceDaten, von.value, bis.value, titel.text))
-			Platform.runLater([Werkzeug.speicherReport(pdf, Meldungen::HH049, true)])
+			Platform::runLater([Werkzeug.speicherReport(pdf, Meldungen::HH049, true)])
 		}
 	}
 

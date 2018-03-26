@@ -251,7 +251,7 @@ class HH500BilanzenController extends BaseController<String> {
 				if (keine) {
 					mlBerechnen++
 				} else {
-					Platform.runLater([onVon])
+					Platform::runLater([onVon])
 				}
 				if (r === null || r.ok) {
 					Jhh6.setLeftStatus2("")

@@ -202,7 +202,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 				setRechte(daten.mandantNr, true)
 				startDialoge(daten.mandantNr)
 			} else {
-				Platform.runLater([handleAnmelden(null)])
+				Platform::runLater([handleAnmelden(null)])
 			}
 		] as TimerTask), 100)
 	}
@@ -251,9 +251,9 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 	}
 
 	@FXML def protected void handleBeenden(ActionEvent e) {
-		Platform::exit // Anwendung beenden
+		Jhh6::exit
 	}
-
+	
 	def private void setRechte(int mandantNr, boolean ok) {
 
 		sepFi1.setVisible(ok)

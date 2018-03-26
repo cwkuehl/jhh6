@@ -6,6 +6,7 @@ import de.cwkuehl.jhh6.api.message.MeldungException
 import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.api.service.ServiceDaten
 import de.cwkuehl.jhh6.api.service.ServiceErgebnis
+import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.Einstellungen
 import de.cwkuehl.jhh6.app.base.Werkzeug
 import de.cwkuehl.jhh6.app.controller.Jhh6Controller
@@ -94,10 +95,18 @@ class Jhh6 extends Application {
 		stage.y = g.y
 		stage.width = g.width
 		stage.height = g.height
-		stage.setOnCloseRequest([ event |
-			Platform::exit // Anwendung beenden
-		])
+		stage.setOnCloseRequest([e|exit])
 		initSystemTray
+	}
+
+	/** Anwendung beenden, modale Dialoge vorher schließen. */
+	def static void exit() {
+
+		while (BaseController.modalWindow !== null) {
+			Platform::runLater([BaseController.modalWindow.close])
+			Thread::sleep(1000)
+		}
+		Platform::exit
 	}
 
 	def private static void initSystemTray() {
@@ -117,7 +126,7 @@ class Jhh6 extends Application {
 		infoItem.addActionListener([ e |
 			displayMessage(if(Werkzeug::isUpdateAvailable) Meldungen::M3001 else Meldungen::M3002)
 		])
-		exitItem.addActionListener([e|Platform.runLater([Platform::exit])])
+		exitItem.addActionListener([e|exit])
 		trayIcon.setPopupMenu(popup)
 		try {
 			tray.add(trayIcon)
@@ -220,7 +229,7 @@ class Jhh6 extends Application {
 	def static void setLeftStatus(String str) {
 
 		if (!Global::nes(str)) {
-			Platform.runLater([Werkzeug.showError(str)])
+			Platform::runLater([Werkzeug.showError(str)])
 		}
 		setLeftStatus2(str)
 	}
@@ -231,7 +240,7 @@ class Jhh6 extends Application {
 	def static void setLeftStatus2(String str) {
 
 		if (controller !== null) {
-			Platform.runLater([controller.setLeftStatus(str)])
+			Platform::runLater([controller.setLeftStatus(str)])
 		}
 	}
 

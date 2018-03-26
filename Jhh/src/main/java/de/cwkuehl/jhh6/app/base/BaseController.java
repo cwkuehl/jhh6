@@ -63,6 +63,7 @@ public abstract class BaseController<R> {
     /** Logger-Instanz. */
     protected static Logger                             log          = LoggerFactory.getLogger(BaseController.class);
 
+    public static Stage                                 modalWindow  = null;
     private Stage                                       window       = null;
     private DialogAufrufEnum                            aufruf       = null;
     private Object[]                                    parameter    = null;
@@ -290,8 +291,14 @@ public abstract class BaseController<R> {
             throw new RuntimeException(e);
         }
         if (dialog) {
-            stage.showAndWait();
-            c.onHidden();
+            Stage md = modalWindow;
+            try {
+                modalWindow = stage;
+                stage.showAndWait();
+                c.onHidden();
+            } finally {
+                modalWindow = md;
+            }
         } else {
             Jhh6Controller cc = getJhh6Controller(c);
             if (c.tabbar == 1 && cc != null) {

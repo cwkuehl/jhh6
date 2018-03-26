@@ -48,7 +48,7 @@ class AG000InfoController extends BaseController<String> {
 	 */
 	def void onBack() {
 
-		Platform.runLater([
+		Platform::runLater([
 			val we = lizenz.engine
 			val ci = we.history.currentIndex
 			if (ci <= 0) {

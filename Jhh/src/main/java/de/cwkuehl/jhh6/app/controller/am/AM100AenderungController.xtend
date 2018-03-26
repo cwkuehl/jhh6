@@ -46,7 +46,7 @@ class AM100AenderungController extends BaseController<String> {
 		if (daten !== null) {
 			mandant.setText(Global.intStr(daten.mandantNr))
 			benutzer.setText(daten.benutzerId)
-			Platform.runLater([kennwortAlt.requestFocus])
+			Platform::runLater([kennwortAlt.requestFocus])
 		}
 		ok.disableProperty.bind(kennwortNeu.textProperty.isEqualTo(kennwortNeu2.textProperty).not)
 	}
