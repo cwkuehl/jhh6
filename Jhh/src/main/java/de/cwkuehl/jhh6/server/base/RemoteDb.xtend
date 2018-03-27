@@ -2,6 +2,7 @@ package de.cwkuehl.jhh6.server.base
 
 import de.cwkuehl.jhh6.api.global.Global
 import de.cwkuehl.jhh6.api.message.MeldungException
+import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.server.service.impl.ReplTabelle
 import java.math.BigDecimal
 import java.sql.Blob
@@ -99,14 +100,14 @@ class RemoteDb extends RepositoryBase {
 			while (mr.next) {
 				if (anzahl % 100 == 0) {
 					status.length = 0
-					status.append(anzahl).append(" Datensätze aus Tabelle ").append(t.name).append(" verglichen")
+					status.append(Meldungen.M1053(anzahl, t.name))
 				}
 				anzahl++
 				// if (anzahl == 237) {
 				// anzahl = 237
 				// }
 				if (!rr.next) {
-					throw new MeldungException('''Tabelle «t.name» auf dem Server hat weniger Datensätze (1)''')
+					throw new MeldungException(Meldungen.M1054(t.name))
 				}
 				for (i : 1 .. l) {
 					var mObj = mr.getObject(i)
@@ -116,19 +117,17 @@ class RemoteDb extends RepositoryBase {
 					// System.out.println("Jet " + mObj + "  My " + rObj)
 					// }
 					// } else
-					if (i != mandantspalte &&
-						!vergleicheWerte(
-							mObj,
-							rObj
-						)
-					) {
+					if (i != mandantspalte && !vergleicheWerte(
+						mObj,
+						rObj
+					)) {
 						// System.out.println("Jet " + mObj + "  My " + rObj)
-						throw new MeldungException('''Tabelle «t.name» hat unterschiedliche Werte (2) Satz-Nr. «anzahl» Spalte «i»''')
+						throw new MeldungException(Meldungen.M1055(t.name, anzahl, i))
 					}
 				}
 			}
 			if (rr.next) {
-				throw new MeldungException('''Tabelle «t.name» auf dem Client hat weniger Datensätze (3)''')
+				throw new MeldungException(Meldungen.M1056(t.name))
 			}
 			return anzahl
 		} finally {
@@ -226,8 +225,7 @@ class RemoteDb extends RepositoryBase {
 			while (mr.next) {
 				if (anzahl % 100 == 0) {
 					status.length = 0
-					status.append(anzahl).append(" von ").append(max).append(" Datensätze aus Tabelle ").append(t.name).
-						append(" kopiert")
+					status.append(Meldungen.M1052(anzahl, max, t.name))
 					rstmt.executeBatch
 				}
 				for (i : 1 .. l) {
@@ -313,7 +311,7 @@ class RemoteDb extends RepositoryBase {
 		var pk3 = -1
 		var pk4 = -1
 		if (pka.length > 4) {
-			throw new MeldungException('''Primärschlüssel der Tabelle «t.name» zu lang.''')
+			throw new MeldungException(Meldungen.M1051(t.name))
 		}
 		var del = false
 		var ins = false
@@ -372,7 +370,7 @@ class RemoteDb extends RepositoryBase {
 			while (mr.next) {
 				if (anzahl % 100 == 0) {
 					status.length = 0
-					status.append(anzahl).append(" Datensätze aus Tabelle ").append(t.name).append(" abgeglichen")
+					status.append(Meldungen.M1050(anzahl, t.name))
 				}
 				anzahl++
 				j = 1

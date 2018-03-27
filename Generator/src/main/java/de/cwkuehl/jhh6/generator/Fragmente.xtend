@@ -284,11 +284,11 @@ class Fragmente {
 							«IF d.replicationNr > 0 && d.replicationPrimaryKey»
 								«IF d.uidAbhaengig»
 									if (nes(«d.replicationAttr.attName»)) {
-										throw new «RuntimeException.newTypeReference»("«d.dtoType.simpleName.substring(2)»-Nr. nicht vorhanden.");
+										throw new «RuntimeException.newTypeReference»("«d.dtoType.simpleName.substring(2)»-Uid is missing.");
 									}
 								«ELSE»
 									if (!nes(«d.replicationAttr.attName»)) {
-										throw new «RuntimeException.newTypeReference»("«d.dtoType.simpleName.substring(2)»-Nr. " + «d.replicationAttr.attName» + " nicht vorhanden.");
+										throw new «RuntimeException.newTypeReference»("«d.dtoType.simpleName.substring(2)»-Uid " + «d.replicationAttr.attName» + " is missing.");
 									}
 								«ENDIF»
 							«ENDIF»

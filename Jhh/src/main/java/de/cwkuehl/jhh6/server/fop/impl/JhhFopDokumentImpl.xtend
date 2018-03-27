@@ -10,6 +10,7 @@ import de.cwkuehl.jhh6.api.dto.HpPatient
 import de.cwkuehl.jhh6.api.dto.HpRechnung
 import de.cwkuehl.jhh6.api.dto.MoGottesdienstLang
 import de.cwkuehl.jhh6.api.dto.SbPerson
+import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.server.fop.doc.FoAbrechnung
 import de.cwkuehl.jhh6.server.fop.doc.FoAdressenliste
 import de.cwkuehl.jhh6.server.fop.doc.FoJahresbericht
@@ -48,7 +49,7 @@ class JhhFopDokumentImpl {
 	 */
 	def byte[] erzeugePdf() {
 		if (multiDoc.anzahl <= 0) {
-			throw new JhhFopException("Es ist kein Ausgangsdokument hinzugefügt worden.")
+			throw new JhhFopException(Meldungen.M1046)
 		}
 		var bs = new ByteArrayOutputStream
 		// multiDoc.writeDocument("/home/wolfgang/temp/test.fo");
@@ -62,7 +63,7 @@ class JhhFopDokumentImpl {
 	 */
 	def byte[] erzeugeRtf() {
 		if (multiDoc.anzahl <= 0) {
-			throw new JhhFopException("Es ist kein Ausgangsdokument hinzugefügt worden.")
+			throw new JhhFopException(Meldungen.M1046)
 		}
 		var bs = new ByteArrayOutputStream
 		jhhFop.machRtf(multiDoc.source, null, null, bs)

@@ -8,8 +8,8 @@ import org.eclipse.xtend.lib.macro.file.Path
 public class Global {
 
 	public var static copyGenFiles = false
-	public val static genComment = "Generierte Datei. BITTE NICHT AENDERN!"
-	// val static anwendungPackage = "de.cwkuehl.jhh6.app"
+	public val static genComment = "Generated file. DO NOT CHANGE."
+	// public val static genComment = "Generierte Datei. BITTE NICHT AENDERN!"
 	val static schnittstellePackage = "de.cwkuehl.jhh6.api"
 	val static schnittstelleServicePackage = schnittstellePackage + ".service"
 	val static schnittstelleDtoPackage = schnittstellePackage + ".dto"

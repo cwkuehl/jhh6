@@ -2,6 +2,7 @@ package de.cwkuehl.jhh6.server.base
 
 import de.cwkuehl.jhh6.api.dto.base.DtoBase
 import de.cwkuehl.jhh6.api.global.Global
+import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.api.service.ServiceDaten
 import java.math.BigDecimal
 import java.sql.Blob
@@ -253,7 +254,7 @@ class RepositoryBase {
 			}
 			rs = stmt.executeUpdate
 			if (rs != 1) {
-				throw new RuntimeException("Falsche Anzahl bei Insert.")
+				throw new RuntimeException(Meldungen.M1047)
 			}
 		} finally {
 			if (stmt !== null) {
@@ -281,7 +282,7 @@ class RepositoryBase {
 			}
 			rs = stmt.executeUpdate
 			if (rs != 1) {
-				throw new RuntimeException("Falsche Anzahl bei Update.")
+				throw new RuntimeException(Meldungen.M1048)
 			}
 		} finally {
 			if (stmt !== null) {
@@ -309,7 +310,7 @@ class RepositoryBase {
 			}
 			rs = stmt.executeUpdate
 			if (rs != 1) {
-				throw new RuntimeException("Falsche Anzahl bei Delete.")
+				throw new RuntimeException(Meldungen.M1049)
 			}
 		} finally {
 			if (stmt !== null) {
