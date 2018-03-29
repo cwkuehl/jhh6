@@ -112,6 +112,7 @@ public final class TableModel implements EventHandler<ActionEvent> {
     private ObservableList<ObservableList<CellInhalt>> data                    = null;
 
     protected class Zeile {
+
         int hoehe = 20;
 
         /**
@@ -130,6 +131,7 @@ public final class TableModel implements EventHandler<ActionEvent> {
     }
 
     private class Spalte {
+
         int breite = 75;
 
         /**

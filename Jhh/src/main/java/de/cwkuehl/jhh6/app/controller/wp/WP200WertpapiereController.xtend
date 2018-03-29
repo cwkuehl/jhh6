@@ -3,6 +3,7 @@ package de.cwkuehl.jhh6.app.controller.wp
 import de.cwkuehl.jhh6.api.dto.WpKonfigurationLang
 import de.cwkuehl.jhh6.api.dto.WpWertpapierLang
 import de.cwkuehl.jhh6.api.global.Global
+import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
@@ -354,7 +355,7 @@ class WP200WertpapiereController extends BaseController<String> {
 				status.setLength(0)
 			} catch (Exception ex) {
 				status.setLength(0)
-				status.append('''Fehler: «ex.message»'''.toString)
+				status.append(Meldungen.WP028(ex.message))
 			} finally {
 				abbruch.append("Ende")
 			}

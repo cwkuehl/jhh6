@@ -8,6 +8,7 @@ import de.cwkuehl.jhh6.api.dto.HhBilanzUpdate
 import de.cwkuehl.jhh6.api.global.Constant
 import de.cwkuehl.jhh6.api.global.Global
 import de.cwkuehl.jhh6.api.message.MeldungException
+import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.api.service.ServiceDaten
 import de.cwkuehl.jhh6.generator.Repository
 import de.cwkuehl.jhh6.generator.annotation.Column
@@ -249,7 +250,7 @@ class HhBilanzRep {
 		var hhBilanz2 = get(daten, new HhBilanzKey(daten.mandantNr, pnr, strK, kontoUid))
 		if (hhBilanz2 === null) {
 			if (nurBetrag) {
-				throw new MeldungException("Kein Bilanzsatz vorhanden! (Per. " + pnr + ", Kto. " + kontoUid + ")");
+				throw new MeldungException(Meldungen.HH062(pnr, kontoUid))
 			}
 			var hhBilanz = new HhBilanz()
 			hhBilanz.setMandantNr(daten.mandantNr)

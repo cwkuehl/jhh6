@@ -332,8 +332,8 @@ class AdresseService {
 			}
 			// leerer Sitz wird nicht angelegt.
 			var si = sitzRep.iuAdSitz(daten, sitzEvent, p.uid, p.reihenfolge, p.siUid, p.siTyp, p.name, p.adresseUid,
-				p.telefon, p.fax, p.mobil, p.email, p.homepage, p.postfach, p.bemerkung, p.sitzStatus, null, null,
-				null, null)
+				p.telefon, p.fax, p.mobil, p.email, p.homepage, p.postfach, p.bemerkung, p.sitzStatus, null, null, null, //
+				null)
 			p.siUid = si.uid
 		}
 		return r
@@ -371,15 +371,13 @@ class AdresseService {
 
 	def private List<String> getAdresseSpalten() {
 
-		{
-			var l = newArrayList("Uid", "Typ", "Geschlecht", "Geburt", "Anrede", "Name1", "Name2", "Praedikat",
-				"Vorname", "Titel", "PersonStatus", "AngelegtVon", "AngelegtAm", "GeaendertVon", "GeaendertAm",
-				"PersonUid", "SiUid", "SiTyp", "Name", "AdresseUid", "Telefon", "Fax", "Mobil", "Email", "Homepage",
-				"Postfach", "Bemerkung", "SitzStatus", "SiAngelegtVon", "SiAngelegtAm", "SiGeaendertVon",
-				"SiGeaendertAm", "AdUid", "Staat", "Plz", "Ort", "Strasse", "Hausnr", "AdAngelegtVon", "AdAngelegtAm",
-				"AdGeaendertVon", "AdGeaendertAm", "Reihenfolge")
-			return l
-		}
+		var l = newArrayList("Uid", "Typ", "Geschlecht", "Geburt", "Anrede", "Name1", "Name2", "Praedikat", "Vorname",
+			"Titel", "PersonStatus", "AngelegtVon", "AngelegtAm", "GeaendertVon", "GeaendertAm", "PersonUid", "SiUid",
+			"SiTyp", "Name", "AdresseUid", "Telefon", "Fax", "Mobil", "Email", "Homepage", "Postfach", "Bemerkung",
+			"SitzStatus", "SiAngelegtVon", "SiAngelegtAm", "SiGeaendertVon", "SiGeaendertAm", "AdUid", "Staat", "Plz",
+			"Ort", "Strasse", "Hausnr", "AdAngelegtVon", "AdAngelegtAm", "AdGeaendertVon", "AdGeaendertAm", //
+			"Reihenfolge")
+		return l
 	}
 
 	@Transaction(false)
@@ -647,7 +645,8 @@ class AdresseService {
 								sitz = sitzRep.iuAdSitz(daten, sitzEvent, sitz.personUid, sitz.reihenfolge, null,
 									sitz.typ, sitz.name, sitz.adresseUid, sitz.telefon, sitz.fax, sitz.mobil,
 									sitz.email, sitz.homepage, sitz.postfach, sitz.bemerkung, sitz.sitzStatus,
-									sitz.angelegtVon, sitz.angelegtAm, sitz.geaendertVon, sitz.geaendertAm)
+									sitz.angelegtVon, sitz.angelegtAm, sitz.geaendertVon, //
+									sitz.geaendertAm)
 							} else {
 								sitzRep.iuAdSitz(daten, sitzEvent, sitz.personUid, sitz.reihenfolge, snr, sitz.typ,
 									sitz.name, sitz.adresseUid, sitz.telefon, sitz.fax, sitz.mobil, sitz.email,
@@ -695,5 +694,4 @@ class AdresseService {
 		var r = new ServiceErgebnis<String>(Meldungen::AD010(pAnzahl, pFehler, sAnzahl, sFehler, aAnzahl, aFehler))
 		return r
 	}
-
 }

@@ -6,6 +6,7 @@ import de.cwkuehl.jhh6.api.service.detective.Runde
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
+import de.cwkuehl.jhh6.app.base.Profil
 import de.cwkuehl.jhh6.app.base.Werkzeug
 import de.cwkuehl.jhh6.server.service.detective.DetektivContext
 import de.cwkuehl.jhh6.server.service.detective.DetektivContext.ErgebnisseData
@@ -56,6 +57,8 @@ class SO200DetektivController extends BaseController<String> {
 	@FXML TableColumn<ErgebnisseData, Double> colEwahrscheinlich
 	ObservableList<ErgebnisseData> ergebnisseData = FXCollections.observableArrayList
 	// @FXML Button reset
+	@Profil(defaultValue="Spieler1, Spieler2") String neueSpieler = null
+
 	/** 
 	 * Detektiv-Kontext 
 	 */
@@ -212,10 +215,11 @@ class SO200DetektivController extends BaseController<String> {
 	 */
 	@FXML def void onReset() {
 
-		var spieler = Werkzeug.showInputDialog(Meldungen::SO001, "Wolfgang, Claudia, Deborah, Viktoria, Benjamin")
+		var spieler = Werkzeug.showInputDialog(Meldungen::SO001, neueSpieler)
 		if (!Global.nes(spieler)) {
+			neueSpieler = spieler
 			context.deleteRunde(null)
-			context.setSpieler(spieler)
+			context.spieler = spieler
 			refreshTable(runden, 1)
 		}
 	}

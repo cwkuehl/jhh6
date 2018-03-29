@@ -434,10 +434,10 @@ class VM510BuchungController extends BaseController<String> {
 					if (!valuta.value.equals(belegDatum.value)) {
 						sb.append(Meldungen::HH059(belegDatum.value.atStartOfDay))
 					}
-					buchung.setText(sb.toString)
-					betrag.setText("")
-					summe.setText("")
-					belegNr.setText("")
+					buchung.text = sb.toString
+					betrag.text = null
+					summe.text = null
+					belegNr.text = null
 				} else {
 					close
 				}

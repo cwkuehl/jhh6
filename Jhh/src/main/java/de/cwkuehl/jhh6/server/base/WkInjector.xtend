@@ -1,5 +1,6 @@
 package de.cwkuehl.jhh6.server.base
 
+import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.generator.annotation.Inject
 import java.util.Hashtable
 
@@ -45,9 +46,9 @@ class WkInjector {
 		}
 		var obj = instances.get(clazz)
 		if (obj === null) {
-			throw new RuntimeException('''Binding für Interface «clazz.name» nicht definiert.''')
+			throw new RuntimeException(Meldungen.M1057(clazz.name))
 		}
-		return clazz.cast(obj);
+		return clazz.cast(obj)
 	}
 
 }

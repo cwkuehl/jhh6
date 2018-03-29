@@ -595,9 +595,8 @@ class DetektivContext implements Serializable {
 				throw new MeldungException(e1.message)
 			} catch (ClassNotFoundException e1) {
 				e1.printStackTrace
-				throw new MeldungException(e1.message)
+				// throw new MeldungException(e1.message)
 			}
-
 		}
 		if (context === null) {
 			context = new DetektivContext

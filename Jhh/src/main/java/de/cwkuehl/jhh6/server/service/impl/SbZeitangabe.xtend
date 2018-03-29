@@ -1,8 +1,9 @@
 package de.cwkuehl.jhh6.server.service.impl
 
+import de.cwkuehl.jhh6.api.global.Global
+import de.cwkuehl.jhh6.api.message.Meldungen
 import java.util.regex.Matcher
 import java.util.regex.Pattern
-import de.cwkuehl.jhh6.api.global.Global
 
 /** 
  * Diese Klasse bewerkstelligt die Datumskonvertierungen für Zeitangaben in der Ahnenforschung, die aus bis zu zwei
@@ -96,15 +97,15 @@ final class SbZeitangabe {
 			if (datumTyp.equals("EXAC")) {
 				datum = dat1
 			} else if (datumTyp.equals("ABT")) {
-				datum = '''um «dat1»'''
+				datum = Meldungen.SB031(dat1)
 			} else if (datumTyp.equals("AFT")) {
-				datum = '''nach «dat1»'''
+				datum = Meldungen.SB032(dat1)
 			} else if (datumTyp.equals("BEF")) {
-				datum = '''vor «dat1»'''
+				datum = Meldungen.SB033(dat1)
 			} else if (datumTyp.equals("BET")) {
-				datum = '''«dat1» - «dat2»'''
+				datum = Meldungen.SB034(dat1, dat2)
 			} else if (datumTyp.equals("OR")) {
-				datum = '''«dat1» oder «dat2»'''
+				datum = Meldungen.SB035(dat1, dat2)
 			} else {
 				datum = Global.anhaengen(dat1, ", ", dat2)
 			}

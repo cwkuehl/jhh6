@@ -1039,5 +1039,4 @@ public class DbAnpassung {
         }
         return strTrans;
     }
-
 }

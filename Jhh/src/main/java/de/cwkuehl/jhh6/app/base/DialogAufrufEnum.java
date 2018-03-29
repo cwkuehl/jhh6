@@ -5,7 +5,6 @@ import de.cwkuehl.jhh6.api.global.Global;
 /**
  * Aufzählung DialogAufrufEnum.
  */
-@SuppressWarnings("all")
 public enum DialogAufrufEnum {
 
     /**

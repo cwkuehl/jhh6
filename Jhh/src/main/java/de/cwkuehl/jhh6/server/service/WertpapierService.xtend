@@ -375,8 +375,7 @@ class WertpapierService {
 					}
 				}
 				if (c.saeulen.size > 0 && c.saeulen.get(c.saeulen.size - 1).datum.toLocalDate.equals(kursdatum)) {
-					wp.xo = if (c.saeulen.get(c.saeulen.size - 1).
-						isO) '''xo «Global.dblStr(c.box)»''' else '''ox «Global.dblStr(c.box)»'''
+					wp.xo = Meldungen.WP048(if(c.saeulen.get(c.saeulen.size - 1).isO) "xo" else "ox", c.box)
 				}
 				if (i == 0) {
 					wp.aktuellerkurs = Global.dblStr2l(c.kurs)
@@ -574,7 +573,7 @@ class WertpapierService {
 		// wp, range)
 		var url = Global.format("http://query1.finance.yahoo.com/v7/finance/chart/{0}" +
 			"?period1={1}&period2={2}&interval=1d&indicators=quote&includeTimestamps=true", wp, //
-			von.atStartOfDay(ZoneOffset.UTC).toEpochSecond.toString,
+		von.atStartOfDay(ZoneOffset.UTC).toEpochSecond.toString,
 			bis.atStartOfDay(ZoneOffset.UTC).toEpochSecond.toString)
 		var v = executeHttp(url, null, false, null)
 		var kl = klf

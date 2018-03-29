@@ -48,7 +48,7 @@ class Werkzeug {
 		sb.append("<table>")
 		sb.append("<tr><td>").append(g("AG000.version")).append("</td><td>").append("6.0 (01.01.2018)").append(
 			"</td></tr>")
-		sb.append("<tr><td>").append(g("AG000.creation")).append("</td><td>").append(
+		sb.append("<tr><td>").append(g("AG000.creation")).append(" UTC</td><td>").append(
 			Global.getManifestProperty(typeof(Werkzeug), "/META-INF/MANIFEST.MF", "Built-Time")).append("</td></tr>")
 		sb.append("<tr><td>").append(g("AG000.os")).append("</td><td>").append(System.getProperty("os.name")).
 			append(" (").append(System.getProperty("os.version")).append(")").append("</td></tr>")
