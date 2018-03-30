@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import de.cwkuehl.jhh6.api.global.Constant;
 import de.cwkuehl.jhh6.api.global.Global;
+import de.cwkuehl.jhh6.api.message.Meldungen;
 import de.cwkuehl.jhh6.server.fop.dto.FoHaus;
 import de.cwkuehl.jhh6.server.fop.dto.FoMieter;
 import de.cwkuehl.jhh6.server.fop.dto.FoWohnung;
@@ -53,7 +54,6 @@ public class FoAbrechnung extends FoGeneratorDocument {
             int punkt = 0;
             int jahr = haus.getVon().getYear();
             int mon = 0;
-            StringBuilder sb = new StringBuilder();
             String str = null;
 
             if (Global.compDouble(haus.getQm(), 0) == 0) {
@@ -115,16 +115,10 @@ public class FoAbrechnung extends FoGeneratorDocument {
                     d.startBlock(m.getStrasse(), true);
                     d.startBlock(m.getOrt(), true);
                     d.addNewLine(0, 2);
-                    d.startBlock(
-                            Global.format(
-                                    "Abrechnung der Betriebskosten einschließlich Heizkosten {0,number,0} für das Grundstück {1}:",
-                                    jahr, haus.getHstrasse()), true);
+                    d.startBlock(Meldungen.VM033(jahr, haus.getHstrasse()), true);
                     mon = Global.monatsDifferenz(m.getVon(), m.getBis());
                     if (mon != 12) {
-                        sb.setLength(0);
-                        sb.append("Ihr Abrechnungs-Zeitraum: ");
-                        sb.append(Global.getPeriodeString(m.getVon(), m.getBis(), true));
-                        d.startBlock(sb.toString(), true);
+                        d.startBlock(Meldungen.VM034(Global.getPeriodeString(m.getVon(), m.getBis(), true)), true);
                     } else {
                         d.addNewLine(0);
                     }
@@ -133,21 +127,20 @@ public class FoAbrechnung extends FoGeneratorDocument {
                     d.startTag("fo:table-row", "margin", "1mm 1mm 1mm 1mm");
                     d.startTag("fo:table-cell", "number-columns-spanned", "2", "border-style", "solid", "padding-top",
                             ".5mm");
-                    d.startBlock("Kostenart", true, null, 0, "bold", null);
+                    d.startBlock(Meldungen.VM035(), true, null, 0, "bold", null);
                     d.endTag("fo:table-cell");
                     d.startTag("fo:table-cell", "border-style", "solid");
-                    d.startBlock(Global.format("Kosten in {0}", waehrung), true, null, 0, "bold", null, "padding-top",
-                            ".5mm");
+                    d.startBlock(Meldungen.VM036(waehrung), true, null, 0, "bold", null, "padding-top", ".5mm");
                     d.endTag("fo:table-cell");
                     d.startTag("fo:table-cell", "border-style", "solid");
-                    d.startBlock("Ihr Anteil", true, null, 0, "bold", null, "padding-top", ".5mm");
+                    d.startBlock(Meldungen.VM037(), true, null, 0, "bold", null, "padding-top", ".5mm");
                     d.endTag("fo:table-cell");
                     d.startTag("fo:table-cell", "border-style", "solid");
-                    d.startBlock("Ihr Betrag", true, null, 0, "bold", null, "padding-top", ".5mm");
+                    d.startBlock(Meldungen.VM038(), true, null, 0, "bold", null, "padding-top", ".5mm");
                     d.endTag("fo:table-cell");
                     d.endTag("fo:table-row");
                     // Sonstige Betriebskosten
-                    addUeberschrift(++punkt, "Sonstige Betriebskosten");
+                    addUeberschrift(++punkt, Meldungen.VM039());
                     summeQm += addZeile(haus.getGrundsteuer());
                     summeQm += addZeile(haus.getStrassenreinigung());
                     summeQm += addZeile(haus.getAbfall());
@@ -167,7 +160,7 @@ public class FoAbrechnung extends FoGeneratorDocument {
                     d.addNewLine(0);
                     d.endTag("fo:table-cell");
                     d.startTag("fo:table-cell", "border-style", "solid");
-                    d.startBlock("Summe", true, "text-align", "right");
+                    d.startBlock(Meldungen.VM040(), true, "text-align", "right");
                     d.endTag("fo:table-cell");
                     d.startTag("fo:table-cell", "border-style", "solid", "border-top-width", "1mm");
                     d.startBlock(d.getBetrag(summeQm, null, false), true, "text-align", "right");
@@ -181,20 +174,19 @@ public class FoAbrechnung extends FoGeneratorDocument {
                     d.endTag("fo:table-row");
                     // Umlage qm
                     anteilQm = Global.rundeBetrag(summeQm / haus.getQm()); // + 0.005);
-                    addZeile(Global.format("Umlage nach qm Wohnfläche (gesamt {0,number,0.00} qm)", haus.getQm()),
-                            null, null, null);
-                    addZeile(Global.format("Anteil je qm: {0} : {1,number,0.00} qm =", d.getBetrag(summeQm, waehrung,
-                            false), haus.getQm()), d.getBetrag(anteilQm, null, false), null, null);
+                    addZeile(Meldungen.VM041(haus.getQm()), null, null, null);
+                    addZeile(Meldungen.VM042(d.getBetrag(summeQm, waehrung, false), haus.getQm()), d.getBetrag(anteilQm,
+                            null, false), null, null);
                     db = Global.rundeBetrag(anteilQm * w.getQm() * mon / 12);
                     anteil += db;
                     str = "";
                     if (mon != 12) {
                         str = Global.format(" x {0}/12", mon);
                     }
-                    addZeile(Global.format("Ihr Anteil: {0} x {1,number,0.00} qm{2}", d.getBetrag(anteilQm, waehrung,
-                            false), w.getQm(), str), null, d.getBetrag(db, null, false), null);
+                    addZeile(Meldungen.VM043(d.getBetrag(anteilQm, waehrung, false), w.getQm(), str), null, d.getBetrag(
+                            db, null, false), null);
                     // Wasserversorgung und Entwässerung
-                    addUeberschrift(++punkt, "Wasserversorgung und Entwässerung");
+                    addUeberschrift(++punkt, Meldungen.VM044());
                     summePm += addZeile(haus.getTrinkwasser());
                     summePm += addZeile(haus.getSchmutzwasser());
                     if (!haus.getNiederschlagswasser().getReihenfolge().endsWith("_1")) {
@@ -206,7 +198,7 @@ public class FoAbrechnung extends FoGeneratorDocument {
                     d.addNewLine(0);
                     d.endTag("fo:table-cell");
                     d.startTag("fo:table-cell", "border-style", "solid");
-                    d.startBlock("Summe", true, "text-align", "right");
+                    d.startBlock(Meldungen.VM040(), true, "text-align", "right");
                     d.endTag("fo:table-cell");
                     d.startTag("fo:table-cell", "border-style", "solid", "border-top-width", "1mm");
                     d.startBlock(d.getBetrag(summePm, null, false), true, "text-align", "right");
@@ -221,28 +213,27 @@ public class FoAbrechnung extends FoGeneratorDocument {
                     // Umlage Personenmonate
                     anzahlPm = haus.getPersonenmonate() + m.getPersonenmonat2();
                     anteilPm = Global.rundeBetrag(summePm / anzahlPm);
-                    addZeile(Global.format("Umlage nach Personenmonate (gesamt {0,number,0})", anzahlPm), null, null,
-                            null);
-                    addZeile(Global.format("Anteil je Personenmonat: {0} : {1,number,0} =", d.getBetrag(summePm,
-                            waehrung, false), anzahlPm), d.getBetrag(anteilPm, null, false), null, null);
+                    addZeile(Meldungen.VM045(anzahlPm), null, null, null);
+                    addZeile(Meldungen.VM046(d.getBetrag(summePm, waehrung, false), anzahlPm), d.getBetrag(anteilPm,
+                            null, false), null, null);
                     db = Global.rundeBetrag(anteilPm * m.getPersonenmonate());
                     anteil += db;
-                    addZeile(Global.format("Ihr Anteil: {0} x {1,number,0} Personenmonate", d.getBetrag(anteilPm,
-                            waehrung, false), m.getPersonenmonate()), null, d.getBetrag(db, null, false), null);
+                    addZeile(Meldungen.VM047(d.getBetrag(anteilPm, waehrung, false), m.getPersonenmonate()), null, d
+                            .getBetrag(db, null, false), null);
                     // Kosten der Gemeinschaftsantenne
-                    addUeberschrift(++punkt, "Kosten der Gemeinschaftsantenne");
-                    addZeile("Je Wohnung und Monat", null, null, null);
+                    addUeberschrift(++punkt, Meldungen.VM048());
+                    addZeile(Meldungen.VM049(), null, null, null);
                     db = Global.rundeBetrag(m.getAntenne() * m.getMonate());
                     anteil += db;
-                    addZeile(Global.format("Ihr Anteil: {0} x {1,number,0} Monate", d.getBetrag(m.getAntenne(),
-                            waehrung, false), m.getMonate()), null, d.getBetrag(db, null, false), null);
+                    addZeile(Meldungen.VM050(d.getBetrag(m.getAntenne(), waehrung, false), m.getMonate()), null, d
+                            .getBetrag(db, null, false), null);
                     // Summe Anteil
                     d.startTag("fo:table-row", "margin", "1mm 1mm 1mm 1mm");
                     d.startTag("fo:table-cell", "border-style", "solid");
                     d.addNewLine(0);
                     d.endTag("fo:table-cell");
                     d.startTag("fo:table-cell", "border-style", "solid");
-                    d.startBlock("Summe", true, "text-align", "right");
+                    d.startBlock(Meldungen.VM040(), true, "text-align", "right");
                     d.endTag("fo:table-cell");
                     d.startTag("fo:table-cell", "border-style", "solid");
                     d.addNewLine(0);
@@ -255,15 +246,14 @@ public class FoAbrechnung extends FoGeneratorDocument {
                     d.endTag("fo:table-cell");
                     d.endTag("fo:table-row");
                     anteil -= m.getBkvoraus();
-                    addZeile("Abzüglich geleisteter Vorauszahlungen (soweit sie nicht auf Heizkosten entfallen)", null,
-                            null, d.getBetrag(m.getBkvoraus(), null, false));
+                    addZeile(Meldungen.VM051(), null, null, d.getBetrag(m.getBkvoraus(), null, false));
                     // Guthaben / Nachzahlung 1
                     d.startTag("fo:table-row", "margin", "1mm 1mm 1mm 1mm");
                     d.startTag("fo:table-cell", "border-style", "solid");
                     d.addNewLine(0);
                     d.endTag("fo:table-cell");
                     d.startTag("fo:table-cell", "border-style", "solid");
-                    d.startBlock(Global.iif(Global.compDouble(anteil, 0) <= 0, "Ihr Guthaben", "Ihre Nachzahlung"),
+                    d.startBlock(Global.iif(Global.compDouble(anteil, 0) <= 0, Meldungen.VM052(), Meldungen.VM053()),
                             true);
                     d.endTag("fo:table-cell");
                     d.startTag("fo:table-cell", "border-style", "solid");
@@ -277,23 +267,22 @@ public class FoAbrechnung extends FoGeneratorDocument {
                     d.endTag("fo:table-cell");
                     d.endTag("fo:table-row");
                     // Heizkosten
-                    addUeberschrift(++punkt, "Heizkosten");
+                    addUeberschrift(++punkt, Meldungen.VM054());
                     db = m.getHkabrechnung() - m.getHkvoraus();
                     anteil += db;
-                    addZeile(Global.format(
-                            "Aus der beiliegenden Heizkosten-Abrechnung {0,number,0000} ergibt sich {1}.", jahr, Global
-                                    .iif(Global.compDouble(db, 0) <= 0, "ein Guthaben", "eine Nachzahlung")), null,
-                            null, d.getBetrag(db, null, false));
+                    if (Global.compDouble(db, 0) <= 0)
+                        addZeile(Meldungen.VM055(jahr), null, null, d.getBetrag(db, null, false));
+                    else
+                        addZeile(Meldungen.VM056(jahr), null, null, d.getBetrag(db, null, false));
                     // Guthaben / Nachzahlung 2
                     d.startTag("fo:table-row", "margin", "1mm 1mm 1mm 1mm");
                     d.startTag("fo:table-cell", "border-style", "solid");
                     d.addNewLine(0);
                     d.endTag("fo:table-cell");
                     d.startTag("fo:table-cell", "border-style", "solid");
-                    d.startBlock(Global.format("Gesamtabrechnung der Betriebskosten {0,number,0000} ", jahr), false,
-                            null, 0, "bold", null);
-                    d.startTag("fo:inline", Global.iif(Global.compDouble(anteil, 0) <= 0, "Ihr\u00A0Guthaben",
-                            "Ihre\u00A0Nachzahlung"), true, null, 0, "normal", null);
+                    d.startBlock(Meldungen.VM057(jahr), false, null, 0, "bold", null);
+                    d.startTag("fo:inline", Global.iif(Global.compDouble(anteil, 0) <= 0, Meldungen.VM052(), Meldungen
+                            .VM053()), true, null, 0, "normal", null);
                     d.endBlock();
                     d.endTag("fo:table-cell");
                     d.startTag("fo:table-cell", "border-style", "solid");
