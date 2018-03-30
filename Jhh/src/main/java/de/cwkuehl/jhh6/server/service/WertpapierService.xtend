@@ -480,7 +480,7 @@ class WertpapierService {
 				wp.schnitt200 = Global.compDouble(schnitt200, schnitt214).toString
 			}
 		} catch (Exception ex) {
-			wp.bewertung = '''00 «Meldungen::WP011(ex.message)»'''
+			wp.bewertung = '''00 «Meldungen::M1033(ex.message)»'''
 		// throw new RuntimeException(ex)
 		} finally {
 			if (speichern) {

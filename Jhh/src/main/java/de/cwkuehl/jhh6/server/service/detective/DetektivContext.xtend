@@ -3,6 +3,7 @@ package de.cwkuehl.jhh6.server.service.detective
 import de.cwkuehl.jhh6.api.dto.MaParameter
 import de.cwkuehl.jhh6.api.global.Global
 import de.cwkuehl.jhh6.api.message.MeldungException
+import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.api.service.ServiceDaten
 import de.cwkuehl.jhh6.api.service.detective.Ergebnis
 import de.cwkuehl.jhh6.api.service.detective.Kategorie
@@ -68,16 +69,13 @@ class DetektivContext implements Serializable {
 		if (spieler === null) {
 			// Spieler
 			spieler = new LinkedHashMap<String, Kategorie>
-			k = new Kategorie(Global::UID, "Benjamin", "B")
-			spieler.put(k.id, k)
-			k = new Kategorie(Global::UID, "Claudia", "C")
-			spieler.put(k.id, k)
-			k = new Kategorie(Global::UID, "Deborah", "D")
-			spieler.put(k.id, k)
-			k = new Kategorie(Global::UID, "Viktoria", "V")
-			spieler.put(k.id, k)
-			k = new Kategorie(Global::UID, "Wolfgang", "W")
-			spieler.put(k.id, k)
+			var arr = Global.g0("SO200.players").split(';')
+			var i = 0
+			while (i < arr.length - 1) {
+				k = new Kategorie(Global::UID, arr.get(i), arr.get(i + 1))
+				spieler.put(k.id, k)
+				i += 2
+			}
 		} else {
 			k = getNr(spieler, 1) // if (k != null && "C".equals(k.kurz)) {
 			// spieler.remove(k.id)
@@ -86,56 +84,35 @@ class DetektivContext implements Serializable {
 		if (verdaechtige === null) {
 			// Verdächtige
 			verdaechtige = new LinkedHashMap<String, Kategorie>
-			k = new Kategorie(Global::UID, "Prof. Bloom", "Blo")
-			verdaechtige.put(k.id, k)
-			k = new Kategorie(Global::UID, "Baronin von Porz", "Por")
-			verdaechtige.put(k.id, k)
-			k = new Kategorie(Global::UID, "Frl. Ming", "Min")
-			verdaechtige.put(k.id, k)
-			k = new Kategorie(Global::UID, "Frau Weiß", "Wei")
-			verdaechtige.put(k.id, k)
-			k = new Kategorie(Global::UID, "Oberst von Gatow", "Gat")
-			verdaechtige.put(k.id, k)
-			k = new Kategorie(Global::UID, "Herr Dir. Grün", "Grü")
-			verdaechtige.put(k.id, k)
+			var arr = Global.g0("SO200.suspects").split(';')
+			var i = 0
+			while (i < arr.length - 1) {
+				k = new Kategorie(Global::UID, arr.get(i), arr.get(i + 1))
+				verdaechtige.put(k.id, k)
+				i += 2
+			}
 		}
 		if (werkzeuge === null) {
 			// Werkzeuge
 			werkzeuge = new LinkedHashMap<String, Kategorie>
-			k = new Kategorie(Global::UID, "Heizungsrohr", "H")
-			werkzeuge.put(k.id, k)
-			k = new Kategorie(Global::UID, "Leuchter", "L")
-			werkzeuge.put(k.id, k)
-			k = new Kategorie(Global::UID, "Pistole", "P")
-			werkzeuge.put(k.id, k)
-			k = new Kategorie(Global::UID, "Seil", "S")
-			werkzeuge.put(k.id, k)
-			k = new Kategorie(Global::UID, "Dolch", "D")
-			werkzeuge.put(k.id, k)
-			k = new Kategorie(Global::UID, "Rohrzange", "R")
-			werkzeuge.put(k.id, k)
+			var arr = Global.g0("SO200.weapons").split(';')
+			var i = 0
+			while (i < arr.length - 1) {
+				k = new Kategorie(Global::UID, arr.get(i), arr.get(i + 1))
+				werkzeuge.put(k.id, k)
+				i += 2
+			}
 		}
 		if (raeume === null) {
 			// Räume
 			raeume = new LinkedHashMap<String, Kategorie>
-			k = new Kategorie(Global::UID, "Küche", "Kü")
-			raeume.put(k.id, k)
-			k = new Kategorie(Global::UID, "Bibliothek", "Bi")
-			raeume.put(k.id, k)
-			k = new Kategorie(Global::UID, "Salon", "Sa")
-			raeume.put(k.id, k)
-			k = new Kategorie(Global::UID, "Speisezimmer", "Sp")
-			raeume.put(k.id, k)
-			k = new Kategorie(Global::UID, "Billardzimmer", "Bd")
-			raeume.put(k.id, k)
-			k = new Kategorie(Global::UID, "Eingangshalle", "Ei")
-			raeume.put(k.id, k)
-			k = new Kategorie(Global::UID, "Veranda", "Ve")
-			raeume.put(k.id, k)
-			k = new Kategorie(Global::UID, "Arbeitszimmer", "Ar")
-			raeume.put(k.id, k)
-			k = new Kategorie(Global::UID, "Musikzimmer", "Mu")
-			raeume.put(k.id, k)
+			var arr = Global.g0("SO200.rooms").split(';')
+			var i = 0
+			while (i < arr.length - 1) {
+				k = new Kategorie(Global::UID, arr.get(i), arr.get(i + 1))
+				raeume.put(k.id, k)
+				i += 2
+			}
 		}
 		if (runden === null) {
 			// Runden
@@ -252,7 +229,7 @@ class DetektivContext implements Serializable {
 			super(v)
 			uid = new SimpleStringProperty(v.id)
 			spieler = new SimpleStringProperty(if (c.spieler.get(v.spieler) === null)
-				'''Fehler: «v.spieler»'''
+				Meldungen.M1033(v.spieler)
 			else
 				c.spieler.get(v.spieler).kurz)
 			verdaechtige = new SimpleStringProperty(c.toString(c.verdaechtige, v.verdaechtige))
@@ -403,7 +380,7 @@ class DetektivContext implements Serializable {
 							if (Global.nes(e.spieler)) {
 								e.setSpieler(r.spielerMit)
 							} else if (widerspruch && !e.spieler.equals(s)) {
-								throw new MeldungException("Ein anderer Spieler hat schon den Verdächtigen.")
+								throw new MeldungException(Meldungen.SO016)
 							}
 						}
 					}
@@ -415,7 +392,7 @@ class DetektivContext implements Serializable {
 							if (Global.nes(e.spieler)) {
 								e.setSpieler(r.spielerMit)
 							} else if (widerspruch && !e.spieler.equals(s)) {
-								throw new MeldungException("Ein anderer Spieler hat schon das Tatwerkzeug.")
+								throw new MeldungException(Meldungen.SO017)
 							}
 						}
 					}
@@ -427,7 +404,7 @@ class DetektivContext implements Serializable {
 							if (Global.nes(e.spieler)) {
 								e.setSpieler(r.spielerMit)
 							} else if (widerspruch && !e.spieler.equals(s)) {
-								throw new MeldungException("Ein anderer Spieler hat schon den Raum.")
+								throw new MeldungException(Meldungen.SO018)
 							}
 						}
 					}
@@ -539,7 +516,7 @@ class DetektivContext implements Serializable {
 			return
 		}
 		if (r.spieler === null) {
-			throw new MeldungException("Bitte einen Spieler auswählen.")
+			throw new MeldungException(Meldungen.SO019)
 		}
 		runden.put(r.id, r)
 	}
@@ -550,7 +527,7 @@ class DetektivContext implements Serializable {
 			return;
 		}
 		if (r.spieler === null) {
-			throw new MeldungException("Bitte einen Spieler auswählen.")
+			throw new MeldungException(Meldungen.SO019)
 		}
 		var rU = runden.get(r.id)
 		if (rU !== null) {
@@ -595,7 +572,7 @@ class DetektivContext implements Serializable {
 				throw new MeldungException(e1.message)
 			} catch (ClassNotFoundException e1) {
 				e1.printStackTrace
-				// throw new MeldungException(e1.message)
+			// throw new MeldungException(e1.message)
 			}
 		}
 		if (context === null) {

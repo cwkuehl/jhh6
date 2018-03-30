@@ -305,7 +305,7 @@ class WP250AnlagenController extends BaseController<String> {
 				status.setLength(0)
 			} catch (Exception ex) {
 				status.setLength(0)
-				status.append(Meldungen.WP028(ex.message))
+				status.append(Meldungen.M1033(ex.message))
 			} finally {
 				abbruch.append("Ende")
 			}

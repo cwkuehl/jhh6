@@ -57,7 +57,7 @@ class SO200DetektivController extends BaseController<String> {
 	@FXML TableColumn<ErgebnisseData, Double> colEwahrscheinlich
 	ObservableList<ErgebnisseData> ergebnisseData = FXCollections.observableArrayList
 	// @FXML Button reset
-	@Profil(defaultValue="Spieler1, Spieler2") String neueSpieler = null
+	@Profil(defaultValue="Anna, Bob") String neueSpieler = null
 
 	/** 
 	 * Detektiv-Kontext 
