@@ -7,8 +7,8 @@ import java.util.List;
 import de.cwkuehl.jhh6.api.dto.HpBehandlungDruck;
 import de.cwkuehl.jhh6.api.dto.HpPatient;
 import de.cwkuehl.jhh6.api.global.Global;
+import de.cwkuehl.jhh6.api.message.Meldungen;
 import de.cwkuehl.jhh6.server.fop.impl.FoGeneratorDocument;
-import de.cwkuehl.jhh6.server.fop.impl.FoUtils;
 import de.cwkuehl.jhh6.server.fop.impl.JhhFopException;
 
 /**
@@ -50,10 +50,10 @@ public class FoPatientenakte extends FoGeneratorDocument {
             StringBuffer sb = new StringBuffer();
 
             if (patient.getGeburt() != null) {
-                patientGeburt = Global.format("geb. {0}", FoUtils.getDatum(patient.getGeburt()));
+                patientGeburt = Meldungen.HP020(patient.getGeburt().atStartOfDay());
             }
             if (von != null && bis != null) {
-                zeitraum = Global.anhaengen(FoUtils.getDatum(von), " - ", FoUtils.getDatum(bis));
+                zeitraum = Meldungen.HP021(von.atStartOfDay(), bis.atStartOfDay());
             }
             d.startFo1Master("8mm", "10mm", "15mm", "5mm", "15mm", "5mm", 1, "0mm");
             d.startTag("fo:static-content", "flow-name", d.getMultiName("header"));
@@ -75,13 +75,12 @@ public class FoPatientenakte extends FoGeneratorDocument {
 
             d.startFlow(fontname, size, 0);
 
-            //d.addNewLine(0, 2);
+            // d.addNewLine(0, 2);
             d.startTableBorder(true, "22mm", "166mm");
             for (HpBehandlungDruck b : behandlungen) {
-                // for (int i = 0; i < 30; i++) {
-                d.startTag("fo:table-row", "margin", "1mm 1mm 1mm 1mm"); //, "keep-together.within-page", "always");
+                d.startTag("fo:table-row", "margin", "1mm 1mm 1mm 1mm"); // , "keep-together.within-page", "always");
                 d.startTag("fo:table-cell", "border-style", "solid");
-                d.startBlock(FoUtils.getDatum(b.getDatum()), true);
+                d.startBlock(Meldungen.HP022(b.getDatum().atStartOfDay()), true);
                 d.endTag("fo:table-cell");
                 d.startTag("fo:table-cell", "border-style", "solid");
                 d.startBlock(b.getLeistung(), true, null, 0, "bold", null);
@@ -97,7 +96,6 @@ public class FoPatientenakte extends FoGeneratorDocument {
                 }
                 d.endTag("fo:table-cell");
                 d.endTag("fo:table-row");
-                // }
             }
             d.endTable();
 
