@@ -5,6 +5,7 @@ import java.util.List;
 
 import de.cwkuehl.jhh6.api.dto.AdPersonSitzAdresse;
 import de.cwkuehl.jhh6.api.global.Global;
+import de.cwkuehl.jhh6.api.message.Meldungen;
 import de.cwkuehl.jhh6.server.fop.impl.FoGeneratorDocument;
 import de.cwkuehl.jhh6.server.fop.impl.JhhFopException;
 
@@ -46,7 +47,7 @@ public class FoAdressenliste extends FoGeneratorDocument {
             d.endTag("fo:static-content");
             d.startTag("fo:static-content", "flow-name", d.getMultiName("footer"));
             d.startBlock(null, false, fontname, size, null, null, "text-align", "center");
-            d.startTag("fo:inline", "Seite ", false, null, 0, null, null);
+            d.startTag("fo:inline", Meldungen.M1058(), false, null, 0, null, null);
             d.startTag("fo:page-number", true);
             d.endTag("fo:inline");
             d.endBlock();

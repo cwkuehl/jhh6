@@ -1,5 +1,6 @@
 package de.cwkuehl.jhh6.server.fop.impl
 
+import de.cwkuehl.jhh6.api.message.Meldungen
 import java.io.IOException
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
@@ -246,7 +247,7 @@ class FoGeneratorDocumentBase {
 			startTag("fo:static-content", "flow-name", getMultiName("header")).appendCrLf
 			startBlock(null, false, "text-align-last", "justify")
 			startTag("fo:leader", true, "leader-pattern", "space")
-			startTag("fo:inline", "Seite ", false, null, 0, null, null)
+			startTag("fo:inline", Meldungen::M1058, false, null, 0, null, null)
 			startTag("fo:page-number", true)
 			endTag("fo:inline")
 			endBlock

@@ -10,6 +10,7 @@ import de.cwkuehl.jhh6.api.dto.HhBuchungLang;
 import de.cwkuehl.jhh6.api.dto.HhKonto;
 import de.cwkuehl.jhh6.api.global.Global;
 import de.cwkuehl.jhh6.api.message.MeldungException;
+import de.cwkuehl.jhh6.api.message.Meldungen;
 import de.cwkuehl.jhh6.server.fop.impl.FoGeneratorDocument;
 import de.cwkuehl.jhh6.server.fop.impl.FoUtils;
 import de.cwkuehl.jhh6.server.fop.impl.JhhFopException;
@@ -55,7 +56,7 @@ public class FoKassenbericht extends FoGeneratorDocument {
             d.endTag("fo:static-content");
             d.startTag("fo:static-content", "flow-name", d.getMultiName("footer"));
             d.startBlock(null, false, fontname, size, null, null, "text-align", "center");
-            d.startTag("fo:inline", "Seite ", false, null, 0, null, null);
+            d.startTag("fo:inline", Meldungen.M1058(), false, null, 0, null, null);
             d.startTag("fo:page-number", true);
             d.endTag("fo:inline");
             d.endBlock();
@@ -79,7 +80,7 @@ public class FoKassenbericht extends FoGeneratorDocument {
             d.endTag("fo:table-row");
             d.startTag("fo:table-row");
             d.startTag("fo:table-cell");
-            d.startBlock(Global.format("Einnahmen"), true);
+            d.startBlock(Meldungen.HH065(), true);
             d.endTag("fo:table-cell");
             d.startTag("fo:table-cell", "number-columns-spanned", "2", "text-align", "right");
             d.startBlock(getBetrag(einnahmen, null, false), true);
@@ -87,7 +88,7 @@ public class FoKassenbericht extends FoGeneratorDocument {
             d.endTag("fo:table-row");
             d.startTag("fo:table-row");
             d.startTag("fo:table-cell");
-            d.startBlock(Global.format("Ausgaben"), true);
+            d.startBlock(Meldungen.HH066(), true);
             d.endTag("fo:table-cell");
             d.startTag("fo:table-cell", "number-columns-spanned", "2", "text-align", "right");
             d.startBlock(getBetrag(ausgaben, null, false), true);
@@ -96,7 +97,7 @@ public class FoKassenbericht extends FoGeneratorDocument {
             d.endTag("fo:table-row");
             d.startTag("fo:table-row");
             d.startTag("fo:table-cell");
-            d.startBlock("Saldo", true, null, 0, "bold", null);
+            d.startBlock(Meldungen.HH067(), true, null, 0, "bold", null);
             d.addNewLine(0, 2);
             d.endTag("fo:table-cell");
             d.startTag("fo:table-cell");
@@ -109,7 +110,7 @@ public class FoKassenbericht extends FoGeneratorDocument {
             for (HhKonto k : kListe) {
                 d.startTag("fo:table-row");
                 d.startTag("fo:table-cell", "number-columns-spanned", "2");
-                d.startBlock(Global.format("Bestand {0}", k.getName()), true);
+                d.startBlock(Meldungen.HH072(k.getName()), true);
                 d.endTag("fo:table-cell");
                 d.startTag("fo:table-cell", "text-align", "right");
                 d.startBlock(getBetrag(k.getEbetrag(), null, false), true);
@@ -120,7 +121,7 @@ public class FoKassenbericht extends FoGeneratorDocument {
             d.startTag("fo:table-row");
             d.startTag("fo:table-cell");
             d.addNewLine(0);
-            d.startBlock("Summe", true, null, 0, "bold", null);
+            d.startBlock(Meldungen.HH068(), true, null, 0, "bold", null);
             d.endTag("fo:table-cell");
             d.startTag("fo:table-cell");
             d.addNewLine(0);
@@ -134,9 +135,8 @@ public class FoKassenbericht extends FoGeneratorDocument {
             d.endTable();
             // Vermerk
             d.addNewLine(0, 2);
-            d.startBlock(Global.format("Die Kasse von {0} für {1} wurde geprüft.", titel, Global.intStr(dVon
-                    .getYear())), true);
-            d.startBlock("Es wird die Richtigkeit des Kassenberichts bestätigt.", true);
+            d.startBlock(Meldungen.HH063(titel, Global.intStr(dVon.getYear())), true);
+            d.startBlock(Meldungen.HH064(), true);
             // Unterschriften
             d.addNewLine(0, 3);
             d.startTable(true, "35mm", "60mm");
@@ -151,7 +151,7 @@ public class FoKassenbericht extends FoGeneratorDocument {
                 d.endTag("fo:table-cell");
                 d.startTag("fo:table-cell", "border-before-style", "solid", "border-before-width", "0.7pt",
                         "padding-top", "1mm");
-                d.startBlock("Unterschrift Kassenprüfer(in)", true);
+                d.startBlock(Meldungen.HH069(), true);
                 d.endTag("fo:table-cell");
                 d.endTag("fo:table-row");
             }
@@ -184,9 +184,9 @@ public class FoKassenbericht extends FoGeneratorDocument {
         d.startTable(true, "55mm", "30mm");
         for (int i = 0; i < 2; i++) {
             if (i == 0) {
-                einaus = "Einnahmen";
+                einaus = Meldungen.HH065();
             } else {
-                einaus = "Ausgaben";
+                einaus = Meldungen.HH065();
             }
             d.startTag("fo:table-row");
             d.startTag("fo:table-cell");
@@ -211,7 +211,8 @@ public class FoKassenbericht extends FoGeneratorDocument {
             d.startTag("fo:table-row");
             d.startTag("fo:table-cell");
             d.addNewLine(0);
-            d.startBlock(Global.format("Summe {0} {1}", einaus, FoUtils.getDatum(dBis)), true, null, 0, "bold", null);
+            d.startBlock(Global.format("{0} {1} {2}", Meldungen.HH068(), einaus, FoUtils.getDatum(dBis)), true, null, 0,
+                    "bold", null);
             d.endTag("fo:table-cell");
             d.startTag("fo:table-cell", "text-align", "right");
             d.addNewLine(0);
@@ -240,15 +241,15 @@ public class FoKassenbericht extends FoGeneratorDocument {
         d.startTable(true, "77mm", "77mm", "30mm");
         for (int i = 0; i < 2; i++) {
             if (i == 0) {
-                einaus = "Einnahmen";
+                einaus = Meldungen.HH065();
                 bListe = bListeE;
             } else {
-                einaus = "Ausgaben";
+                einaus = Meldungen.HH066();
                 bListe = bListeA;
             }
             d.startTag("fo:table-row");
             d.startTag("fo:table-cell", "number-columns-spanned", "2");
-            d.startBlock(Global.format("Aufschlüsselung {0}", einaus), true, null, 0, "bold", null);
+            d.startBlock(Meldungen.HH070(einaus), true, null, 0, "bold", null);
             d.addNewLine(0);
             d.endTag("fo:table-cell");
             d.endTag("fo:table-row");
@@ -276,7 +277,7 @@ public class FoKassenbericht extends FoGeneratorDocument {
             d.startTag("fo:table-row");
             d.startTag("fo:table-cell", "number-columns-spanned", "2");
             d.addNewLine(0);
-            d.startBlock(Global.format("Summe {0} {1}", einaus, FoUtils.getDatum(dBis)), true, null, 0, "bold", null);
+            d.startBlock(Meldungen.HH073(einaus, dBis.atStartOfDay()), true, null, 0, "bold", null);
             d.endTag("fo:table-cell");
             d.startTag("fo:table-cell", "text-align", "right");
             d.addNewLine(0);
@@ -327,8 +328,7 @@ public class FoKassenbericht extends FoGeneratorDocument {
             }
             d.startTag("fo:table-row");
             d.startTag("fo:table-cell", "number-columns-spanned", "4");
-            d.startBlock(Global.format("Bestand {0} {1}", k.getName(), FoUtils.getDatum(dVon)), true, null, 0, "bold",
-                    null);
+            d.startBlock(Meldungen.HH071(k.getName(), dVon.atStartOfDay()), true, null, 0, "bold", null);
             d.endTag("fo:table-cell");
             d.startTag("fo:table-cell", "text-align", "right");
             d.startBlock(getBetrag(summe, null, false), true, null, 0, "bold", null);
@@ -403,13 +403,12 @@ public class FoKassenbericht extends FoGeneratorDocument {
             d.endTag("fo:table-row");
             d.startTag("fo:table-row");
             d.startTag("fo:table-cell", "number-columns-spanned", "4");
-            d.startBlock(Global.format("Bestand {0} {1}", k.getName(), FoUtils.getDatum(dBis)), true, null, 0, "bold",
-                    null);
+            d.startBlock(Meldungen.HH071(k.getName(), dBis.atStartOfDay()), true, null, 0, "bold", null);
             d.endTag("fo:table-cell");
             d.startTag("fo:table-cell", "text-align", "right");
             d.startBlock(getBetrag(summe, null, false), true, null, 0, "bold", null);
             if (Global.compDouble(summe, k.getEbetrag()) != 0) {
-                throw new MeldungException("Die Summe stimmt nicht.");
+                throw new MeldungException(Meldungen.HH074());
             }
             d.endTag("fo:table-cell");
             d.endTag("fo:table-row");

@@ -11,6 +11,7 @@ import de.cwkuehl.jhh6.api.dto.HpRechnung;
 import de.cwkuehl.jhh6.api.enums.GeschlechtEnum;
 import de.cwkuehl.jhh6.api.global.Global;
 import de.cwkuehl.jhh6.api.global.Parameter;
+import de.cwkuehl.jhh6.api.message.Meldungen;
 import de.cwkuehl.jhh6.server.fop.impl.FoGeneratorDocument;
 import de.cwkuehl.jhh6.server.fop.impl.FoUtils;
 import de.cwkuehl.jhh6.server.fop.impl.JhhFopException;
@@ -130,7 +131,7 @@ public class FoRechnung extends FoGeneratorDocument {
             d.startTag("fo:static-content", "flow-name", d.getMultiName("footer-rest"));
             d.addNewLine(0, 2);
             d.startBlock("Bankverbindung: " + hpBankverbindung, false, fontname, size, null, null);
-            d.startTag("fo:inline", "Seite ", false, null, 0, null, null, "padding-left", "10mm");
+            d.startTag("fo:inline", Meldungen.M1058(), false, null, 0, null, null, "padding-left", "10mm");
             d.startTag("fo:page-number", true);
             d.endTag("fo:inline");
             d.endBlock();
