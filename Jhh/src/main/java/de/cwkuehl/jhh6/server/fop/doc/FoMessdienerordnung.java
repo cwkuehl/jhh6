@@ -53,7 +53,7 @@ public class FoMessdienerordnung extends FoGeneratorDocument {
 
             d.startFo1Master("8mm", "10mm", "15mm", "5mm", "15mm", "5mm", 1, "0mm");
             d.startTag("fo:static-content", "flow-name", d.getMultiName("header"));
-            d.startBlock(Meldungen.MO038(Global.getPeriodeString(von, bis, false)), true, "text-align", "center");
+            d.startBlock(Meldungen.MO037(Global.getPeriodeString(von, bis, false)), true, "text-align", "center");
             d.horizontalLine();
             d.endTag("fo:static-content");
 
@@ -80,7 +80,7 @@ public class FoMessdienerordnung extends FoGeneratorDocument {
                 if (terminNeu) {
                     d.addNewLine(0, 1);
                     sb.setLength(0);
-                    sb.append(Meldungen.MO039(e.getTermin()));
+                    sb.append(Meldungen.MO038(e.getTermin()));
                     Global.anhaengen(sb, ", ", e.getOrt());
                     Global.anhaengen(sb, ", ", e.getName());
                     d.startBlock(sb.toString(), true, fontname, size + 1, "bold", null, "text-decoration", "underline");
@@ -94,7 +94,7 @@ public class FoMessdienerordnung extends FoGeneratorDocument {
                     }
                 }
                 if (!Global.nes(e.getMessdienerName())) {
-                    if (sb.length() <= 0 && !Global.nes(dienst) && !dienst.equals(Meldungen.MO037())) {
+                    if (sb.length() <= 0 && !Global.nes(dienst) && !dienst.equals(Meldungen.MO005())) {
                         dienstFett = dienst + ": ";
                     } else if (sb.length() > 0) {
                         sb.append(" - ");

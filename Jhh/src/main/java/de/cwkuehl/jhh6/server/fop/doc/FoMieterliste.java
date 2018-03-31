@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import de.cwkuehl.jhh6.api.global.Global;
+import de.cwkuehl.jhh6.api.message.Meldungen;
 import de.cwkuehl.jhh6.server.fop.dto.FoHaus;
 import de.cwkuehl.jhh6.server.fop.dto.FoMieter;
 import de.cwkuehl.jhh6.server.fop.dto.FoWohnung;
@@ -48,6 +49,7 @@ public class FoMieterliste extends FoGeneratorDocument {
             String waehrung = "€";
             int anzahl = 0;
             String pt = ".5mm";
+            String[] arr = Meldungen.VM058().split(";");
 
             d.startFo1Master("8mm", "8mm", "5mm", "5mm", "10mm", "5mm", 0, null);
             d.startTag("fo:static-content", "flow-name", d.getMultiName("header"));
@@ -64,28 +66,28 @@ public class FoMieterliste extends FoGeneratorDocument {
                 d.startTableBorder(true, "25mm", "62mm", "22mm", "22mm", "14mm", "19mm", "21mm", "16mm");
                 d.startTag("fo:table-row", "margin", "1mm 1mm 1mm 1mm");
                 d.startTag("fo:table-cell", "border-style", "solid", "padding-top", pt);
-                d.startBlock("Wohnung", true, null, 0, "bold", null);
+                d.startBlock(arr[0], true, null, 0, "bold", null);
                 d.endTag("fo:table-cell");
                 d.startTag("fo:table-cell", "border-style", "solid");
-                d.startBlock("Mieter", true, null, 0, "bold", null, "padding-top", pt);
+                d.startBlock(arr[1], true, null, 0, "bold", null, "padding-top", pt);
                 d.endTag("fo:table-cell");
                 d.startTag("fo:table-cell", "border-style", "solid");
-                d.startBlock("Einzug", true, null, 0, "bold", null, "padding-top", pt);
+                d.startBlock(arr[2], true, null, 0, "bold", null, "padding-top", pt);
                 d.endTag("fo:table-cell");
                 d.startTag("fo:table-cell", "border-style", "solid");
-                d.startBlock("Auszug", true, null, 0, "bold", null, "padding-top", pt);
+                d.startBlock(arr[3], true, null, 0, "bold", null, "padding-top", pt);
                 d.endTag("fo:table-cell");
                 d.startTag("fo:table-cell", "border-style", "solid");
-                d.startBlock("W.gr.", true, null, 0, "bold", null, "padding-top", pt, "text-align", "right");
+                d.startBlock(arr[4], true, null, 0, "bold", null, "padding-top", pt, "text-align", "right");
                 d.endTag("fo:table-cell");
                 d.startTag("fo:table-cell", "border-style", "solid");
-                d.startBlock("Grundm.", true, null, 0, "bold", null, "padding-top", pt, "text-align", "right");
+                d.startBlock(arr[5], true, null, 0, "bold", null, "padding-top", pt, "text-align", "right");
                 d.endTag("fo:table-cell");
                 d.startTag("fo:table-cell", "border-style", "solid");
-                d.startBlock("Kaution", true, null, 0, "bold", null, "padding-top", pt, "text-align", "right");
+                d.startBlock(arr[6], true, null, 0, "bold", null, "padding-top", pt, "text-align", "right");
                 d.endTag("fo:table-cell");
                 d.startTag("fo:table-cell", "border-style", "solid");
-                d.startBlock("Ant.", true, null, 0, "bold", null, "padding-top", pt, "text-align", "right");
+                d.startBlock(arr[7], true, null, 0, "bold", null, "padding-top", pt, "text-align", "right");
                 d.endTag("fo:table-cell");
                 d.endTag("fo:table-row");
                 for (FoWohnung w : h.getWohnungen()) {
