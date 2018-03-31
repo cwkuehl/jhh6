@@ -13,7 +13,6 @@ import de.cwkuehl.jhh6.api.global.Global;
 import de.cwkuehl.jhh6.api.global.Parameter;
 import de.cwkuehl.jhh6.api.message.Meldungen;
 import de.cwkuehl.jhh6.server.fop.impl.FoGeneratorDocument;
-import de.cwkuehl.jhh6.server.fop.impl.FoUtils;
 import de.cwkuehl.jhh6.server.fop.impl.JhhFopException;
 
 /**
@@ -70,16 +69,14 @@ public class FoRechnung extends FoGeneratorDocument {
             String patientName = Global.anhaengen(patient.getVorname(), " ", patient.getName1());
             StringBuffer sb = new StringBuffer();
             double summe = 0;
+            String[] arr = Meldungen.HP032().split(";");
 
             text = einstellungen.get(Parameter.HP_BRIEFENDE);
-            sb.setLength(0);
             if (GeschlechtEnum.fromValue(patientAdresse.getGeschlecht()).equals(GeschlechtEnum.FRAU)) {
-                sb.append("Sehr geehrte Frau ");
+                anrede = Meldungen.HP023(patientAdresse.getName1());
             } else {
-                sb.append("Sehr geehrter Herr ");
+                anrede = Meldungen.HP024(patientAdresse.getName1());
             }
-            sb.append(patientAdresse.getName1()).append(",");
-            anrede = sb.toString();
 
             d.startFo2Master("8mm", "10mm", "15mm", "5mm", "25mm", "5mm", "15mm", "15mm");
             d.startTag("fo:static-content", "flow-name", d.getMultiName("header-first"));
@@ -99,8 +96,8 @@ public class FoRechnung extends FoGeneratorDocument {
             // d.addNewLine(0);
             // d.endTag("fo:table-cell");
             d.startTag("fo:table-cell");
-            d.startBlock(hpStrasse + ", " + hpOrt, true, fontname, 10, null, null, "text-align", "center",
-                    "margin-top", "2mm");
+            d.startBlock(hpStrasse + ", " + hpOrt, true, fontname, 10, null, null, "text-align", "center", "margin-top",
+                    "2mm");
             d.endTag("fo:table-cell");
             d.endTag("fo:table-row");
             d.startTag("fo:table-row");
@@ -108,8 +105,8 @@ public class FoRechnung extends FoGeneratorDocument {
             d.addNewLine(0);
             d.endTag("fo:table-cell");
             d.startTag("fo:table-cell");
-            d.startBlock("Tel. " + hpTelefon, true, fontname, 10, null, null, "text-align", "center", "margin-top",
-                    "1mm");
+            d.startBlock(Meldungen.HP025(hpTelefon), true, fontname, 10, null, null, "text-align", "center",
+                    "margin-top", "1mm");
             d.endTag("fo:table-cell");
             d.endTag("fo:table-row");
             d.startTag("fo:table-row");
@@ -117,7 +114,7 @@ public class FoRechnung extends FoGeneratorDocument {
             d.addNewLine(0);
             d.endTag("fo:table-cell");
             d.startTag("fo:table-cell");
-            d.startBlock("Steuernummer: " + hpSteuernummer, true, fontname, 10, null, null, "text-align", "center");
+            d.startBlock(Meldungen.HP026(hpSteuernummer), true, fontname, 10, null, null, "text-align", "center");
             d.endTag("fo:table-cell");
             d.endTag("fo:table-row");
             d.endTable();
@@ -125,12 +122,12 @@ public class FoRechnung extends FoGeneratorDocument {
 
             d.startTag("fo:static-content", "flow-name", d.getMultiName("footer-first"));
             d.addNewLine(0, 2);
-            d.startBlock("Bankverbindung: " + hpBankverbindung, true, fontname, size, null, null);
+            d.startBlock(Meldungen.HP027(hpBankverbindung), true, fontname, size, null, null);
             d.endTag("fo:static-content");
 
             d.startTag("fo:static-content", "flow-name", d.getMultiName("footer-rest"));
             d.addNewLine(0, 2);
-            d.startBlock("Bankverbindung: " + hpBankverbindung, false, fontname, size, null, null);
+            d.startBlock(Meldungen.HP027(hpBankverbindung), false, fontname, size, null, null);
             d.startTag("fo:inline", Meldungen.M1058(), false, null, 0, null, null, "padding-left", "10mm");
             d.startTag("fo:page-number", true);
             d.endTag("fo:inline");
@@ -147,7 +144,7 @@ public class FoRechnung extends FoGeneratorDocument {
             d.startBlock(name, true);
             d.endTag("fo:table-cell");
             d.startTag("fo:table-cell");
-            d.startBlock("Rechnung:", true, "margin-top", "1.5mm");
+            d.startBlock(Meldungen.HP028(), true, "margin-top", "1.5mm");
             d.endTag("fo:table-cell");
             d.startTag("fo:table-cell");
             d.startBlock(rechnung.getRechnungsnummer(), true, "margin-top", "1.5mm");
@@ -158,10 +155,10 @@ public class FoRechnung extends FoGeneratorDocument {
             d.startBlock(patientAdresse.getAdresse1(), true);
             d.endTag("fo:table-cell");
             d.startTag("fo:table-cell");
-            d.startBlock("Datum:", true, "margin-top", "1.5mm");
+            d.startBlock(Meldungen.HP029(), true, "margin-top", "1.5mm");
             d.endTag("fo:table-cell");
             d.startTag("fo:table-cell");
-            d.startBlock(FoUtils.getDatum(rechnung.getDatum()), true, "margin-top", "1.5mm");
+            d.startBlock(Meldungen.HP022(rechnung.getDatum().atStartOfDay()), true, "margin-top", "1.5mm");
             d.endTag("fo:table-cell");
             d.endTag("fo:table-row");
             d.startTag("fo:table-row");
@@ -169,7 +166,7 @@ public class FoRechnung extends FoGeneratorDocument {
             d.startBlock(patientAdresse.getAdresse2(), true);
             d.endTag("fo:table-cell");
             d.startTag("fo:table-cell");
-            d.startBlock("Patient:", true, null, 0, "bold", null, "margin-top", "1.5mm");
+            d.startBlock(Meldungen.HP030(), true, null, 0, "bold", null, "margin-top", "1.5mm");
             d.endTag("fo:table-cell");
             d.startTag("fo:table-cell");
             d.startBlock(patientName, true, null, 0, "bold", null, "margin-top", "1.5mm");
@@ -183,7 +180,8 @@ public class FoRechnung extends FoGeneratorDocument {
             d.startBlock("geb.", true, null, 0, "bold", null, "margin-top", "1.5mm");
             d.endTag("fo:table-cell");
             d.startTag("fo:table-cell");
-            d.startBlock(FoUtils.getDatum(patient.getGeburt()), true, null, 0, "bold", null, "margin-top", "1.5mm");
+            d.startBlock(Meldungen.HP022(patient.getGeburt().atStartOfDay()), true, null, 0, "bold", null, "margin-top",
+                    "1.5mm");
             d.endTag("fo:table-cell");
             d.endTag("fo:table-row");
             d.startTag("fo:table-row");
@@ -191,7 +189,7 @@ public class FoRechnung extends FoGeneratorDocument {
             d.addNewLine(0);
             d.endTag("fo:table-cell");
             d.startTag("fo:table-cell");
-            d.startBlock("Diagnose:", true, null, 0, "bold", null, "margin-top", "1.5mm");
+            d.startBlock(Meldungen.HP031(), true, null, 0, "bold", null, "margin-top", "1.5mm");
             d.endTag("fo:table-cell");
             d.startTag("fo:table-cell");
             d.startBlock(rechnung.getDiagnose(), true, null, 0, "bold", null, "margin-top", "1.5mm");
@@ -206,26 +204,26 @@ public class FoRechnung extends FoGeneratorDocument {
             d.startTableBorder(true, "22mm", "14mm", "14mm", "114mm", "24mm");
             d.startTag("fo:table-row", "margin", "1mm 1mm 1mm 1mm");
             d.startTag("fo:table-cell", "border-style", "solid");
-            d.startBlock("Datum", true, null, 0, "bold", "italic");
+            d.startBlock(arr[0], true, null, 0, "bold", "italic");
             d.endTag("fo:table-cell");
             d.startTag("fo:table-cell", "border-style", "solid");
-            d.startBlock("LVKH-Ziffer", true, null, 0, "bold", "italic");
+            d.startBlock(arr[1], true, null, 0, "bold", "italic");
             d.endTag("fo:table-cell");
             d.startTag("fo:table-cell", "border-style", "solid");
-            d.startBlock("vgl. GebüH", true, null, 0, "bold", "italic");
+            d.startBlock(arr[2], true, null, 0, "bold", "italic");
             d.endTag("fo:table-cell");
             d.startTag("fo:table-cell", "border-style", "solid");
-            d.startBlock("Ziff. GebüH: (GOÄ) Leistung: ggf. Zeitaufwand", true, null, 0, "bold", "italic");
+            d.startBlock(arr[3], true, null, 0, "bold", "italic");
             d.endTag("fo:table-cell");
             d.startTag("fo:table-cell", "border-style", "solid");
-            d.startBlock("Betrag", true, null, 0, "bold", "italic", "text-align", "right");
+            d.startBlock(arr[4], true, null, 0, "bold", "italic", "text-align", "right");
             d.endTag("fo:table-cell");
             d.endTag("fo:table-row");
             for (HpBehandlungDruck b : behandlungen) {
                 // for (int i = 0; i < 30; i++) {
                 d.startTag("fo:table-row", "margin", "1mm 1mm 1mm 1mm", "keep-together.within-page", "always");
                 d.startTag("fo:table-cell", "border-style", "solid");
-                d.startBlock(FoUtils.getDatum(b.getDatum()), true);
+                d.startBlock(Meldungen.HP022(b.getDatum().atStartOfDay()), true);
                 d.endTag("fo:table-cell");
                 d.startTag("fo:table-cell", "border-style", "solid");
                 d.startBlock(b.getZiffer(), true);
@@ -262,9 +260,8 @@ public class FoRechnung extends FoGeneratorDocument {
             d.addNewLine(0);
             d.endTag("fo:table-cell");
             d.startTag("fo:table-cell", "border-style", "solid");
-            d.startBlock("Gesamtbetrag", true, null, 0, "bold", null);
-            d.startBlock("bitte überweisen bis " + FoUtils.getDatum(zahldatum), true, null, 0, "bold", null,
-                    "margin-top", "0.8mm");
+            d.startBlock(Meldungen.HP034(), true, null, 0, "bold", null);
+            d.startBlock(Meldungen.HP033(zahldatum.atStartOfDay()), true, null, 0, "bold", null, "margin-top", "0.8mm");
             d.endTag("fo:table-cell");
             d.startTag("fo:table-cell", "border-style", "solid");
             d.startBlock(d.getBetrag(summe, waehrung, false), true, null, 0, "bold", null, "text-align", "right");
@@ -306,7 +303,7 @@ public class FoRechnung extends FoGeneratorDocument {
             d.startBlock(null, false);
             d.externalGraphic(Global.leseBytes(array[0]), array[1]);
         } catch (Exception e) {
-            d.startBlock("Grafik " + array[0] + " konnte nicht geladen werden.", true);
+            d.startBlock(Meldungen.HP035(array[0]), true);
         } finally {
             d.endBlock();
         }
