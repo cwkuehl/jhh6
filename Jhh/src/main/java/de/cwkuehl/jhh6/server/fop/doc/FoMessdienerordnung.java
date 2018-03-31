@@ -3,12 +3,12 @@ package de.cwkuehl.jhh6.server.fop.doc;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import de.cwkuehl.jhh6.api.dto.MoGottesdienstLang;
 import de.cwkuehl.jhh6.api.dto.base.DtoBase;
 import de.cwkuehl.jhh6.api.global.Global;
+import de.cwkuehl.jhh6.api.message.Meldungen;
 import de.cwkuehl.jhh6.server.fop.impl.FoGeneratorDocument;
 import de.cwkuehl.jhh6.server.fop.impl.JhhFopException;
 
@@ -44,7 +44,6 @@ public class FoMessdienerordnung extends FoGeneratorDocument {
         try {
             String fontname = d.getFontname();
             int size = 10;
-            String zeitraum = "Messdienerordnung vom " + Global.getPeriodeString(von, bis, false);
             LocalDateTime termin = null;
             String dienst = "###";
             StringBuffer sb = new StringBuffer();
@@ -54,7 +53,7 @@ public class FoMessdienerordnung extends FoGeneratorDocument {
 
             d.startFo1Master("8mm", "10mm", "15mm", "5mm", "15mm", "5mm", 1, "0mm");
             d.startTag("fo:static-content", "flow-name", d.getMultiName("header"));
-            d.startBlock(zeitraum, true, "text-align", "center");
+            d.startBlock(Meldungen.MO038(Global.getPeriodeString(von, bis, false)), true, "text-align", "center");
             d.horizontalLine();
             d.endTag("fo:static-content");
 
@@ -81,7 +80,7 @@ public class FoMessdienerordnung extends FoGeneratorDocument {
                 if (terminNeu) {
                     d.addNewLine(0, 1);
                     sb.setLength(0);
-                    sb.append(e.getTermin().format(DateTimeFormatter.ofPattern("EEEE dd.MM.yyyy, HH:mm")));
+                    sb.append(Meldungen.MO039(e.getTermin()));
                     Global.anhaengen(sb, ", ", e.getOrt());
                     Global.anhaengen(sb, ", ", e.getName());
                     d.startBlock(sb.toString(), true, fontname, size + 1, "bold", null, "text-decoration", "underline");
@@ -95,7 +94,7 @@ public class FoMessdienerordnung extends FoGeneratorDocument {
                     }
                 }
                 if (!Global.nes(e.getMessdienerName())) {
-                    if (sb.length() <= 0 && !Global.nes(dienst) && !dienst.equals("Dienst")) {
+                    if (sb.length() <= 0 && !Global.nes(dienst) && !dienst.equals(Meldungen.MO037())) {
                         dienstFett = dienst + ": ";
                     } else if (sb.length() > 0) {
                         sb.append(" - ");
