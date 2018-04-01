@@ -11,6 +11,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -36,8 +37,10 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.helpers.XMLReaderFactory;
 
+import com.sun.javafx.scene.control.ControlAcceleratorSupport;
 import com.sun.javafx.scene.control.skin.TableColumnHeader;
 
+import de.cwkuehl.jhh6.api.global.Constant;
 import de.cwkuehl.jhh6.api.global.Global;
 import de.cwkuehl.jhh6.api.message.Meldungen;
 import de.cwkuehl.jhh6.app.base.Werkzeug;
@@ -60,6 +63,9 @@ import javafx.scene.control.TableColumnBase;
 import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Window;
@@ -108,6 +114,7 @@ public final class TableModel implements EventHandler<ActionEvent> {
     private MenuItem                                   linksMenuItem           = null;
     private MenuItem                                   mitteMenuItem           = null;
     private MenuItem                                   rechtsMenuItem          = null;
+    private MenuItem                                   copyMenuItem            = null;
 
     private ObservableList<ObservableList<CellInhalt>> data                    = null;
 
@@ -223,8 +230,8 @@ public final class TableModel implements EventHandler<ActionEvent> {
 
     public CellInhalt getCellInhalt(int rowIndex, int columnIndex, boolean notNull) {
 
-        if (data != null && z(rowIndex) >= 0 && z(rowIndex) < anzahlZeilen && s(columnIndex) > 0
-                && s(columnIndex) <= anzahlSpalten) {
+        if (data != null && z(rowIndex) >= 0 && z(rowIndex) < anzahlZeilen && s(columnIndex) > 0 && s(
+                columnIndex) <= anzahlSpalten) {
             CellInhalt ci = data.get(z(rowIndex)).get(s(columnIndex));
             // if (ci == null && notNull) {
             // ci = new CellInhalt();
@@ -278,9 +285,14 @@ public final class TableModel implements EventHandler<ActionEvent> {
                     printerJob.endJob();
             }
         });
-        tv.setContextMenu(new ContextMenu(zeilenMenuItem, zeilenEndeMenuItem, zeilenLoeschenMenuItem,
+        copyMenuItem = new MenuItem(b.getString("menu.table.copy"));
+        copyMenuItem.setOnAction(this);
+        copyMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.getKeyCode("C"), KeyCombination.CONTROL_DOWN));
+        ContextMenu menu = new ContextMenu(zeilenMenuItem, zeilenEndeMenuItem, zeilenLoeschenMenuItem,
                 new SeparatorMenuItem(), spaltenMenuItem, spaltenEndeMenuItem, spaltenLoeschenMenuItem,
-                new SeparatorMenuItem(), layoutMenu, druckenMenuItem));
+                new SeparatorMenuItem(), layoutMenu, druckenMenuItem, copyMenuItem);
+        tv.setContextMenu(menu);
+        ControlAcceleratorSupport.addAcceleratorsIntoScene(menu.getItems(), tv);
     }
 
     /**
@@ -296,11 +308,13 @@ public final class TableModel implements EventHandler<ActionEvent> {
         tv.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         tv.getColumns().clear();
         TableColumn<ObservableList<CellInhalt>, CellInhalt> c0 = new TableColumn<>(" ");
-        c0.setCellValueFactory(new Callback<CellDataFeatures<ObservableList<CellInhalt>, CellInhalt>, ObservableValue<CellInhalt>>() {
-            public ObservableValue<CellInhalt> call(CellDataFeatures<ObservableList<CellInhalt>, CellInhalt> param) {
-                return new SimpleObjectProperty<CellInhalt>(param.getValue().get(0));
-            }
-        });
+        c0.setCellValueFactory(
+                new Callback<CellDataFeatures<ObservableList<CellInhalt>, CellInhalt>, ObservableValue<CellInhalt>>() {
+                    public ObservableValue<CellInhalt> call(
+                            CellDataFeatures<ObservableList<CellInhalt>, CellInhalt> param) {
+                        return new SimpleObjectProperty<CellInhalt>(param.getValue().get(0));
+                    }
+                });
         Comparator<CellInhalt> comp = new Comparator<CellInhalt>() {
 
             @Override
@@ -309,33 +323,34 @@ public final class TableModel implements EventHandler<ActionEvent> {
             }
         };
         c0.setComparator(comp);
-        c0.setCellFactory(new Callback<TableColumn<ObservableList<CellInhalt>, CellInhalt>, TableCell<ObservableList<CellInhalt>, CellInhalt>>() {
+        c0.setCellFactory(
+                new Callback<TableColumn<ObservableList<CellInhalt>, CellInhalt>, TableCell<ObservableList<CellInhalt>, CellInhalt>>() {
 
-            @Override
-            public TableCell<ObservableList<CellInhalt>, CellInhalt> call(
-                    TableColumn<ObservableList<CellInhalt>, CellInhalt> param) {
-                return new TableCell<ObservableList<CellInhalt>, CellInhalt>() {
                     @Override
-                    protected void updateItem(CellInhalt item, boolean empty) {
-                        super.updateItem(item, empty);
+                    public TableCell<ObservableList<CellInhalt>, CellInhalt> call(
+                            TableColumn<ObservableList<CellInhalt>, CellInhalt> param) {
+                        return new TableCell<ObservableList<CellInhalt>, CellInhalt>() {
+                            @Override
+                            protected void updateItem(CellInhalt item, boolean empty) {
+                                super.updateItem(item, empty);
 
-                        if (item == null || empty) {
-                            setText(null);
-                            setStyle("");
-                        } else {
-                            setText(item.getWert());
-                            // if (item.equals("0")) {
-                            // setTextFill(Color.CHOCOLATE);
-                            // setStyle("-fx-background-color: yellow");
-                            // } else {
-                            // setTextFill(Color.BLACK);
-                            // setStyle("");
-                            // }
-                        }
+                                if (item == null || empty) {
+                                    setText(null);
+                                    setStyle("");
+                                } else {
+                                    setText(item.getWert());
+                                    // if (item.equals("0")) {
+                                    // setTextFill(Color.CHOCOLATE);
+                                    // setStyle("-fx-background-color: yellow");
+                                    // } else {
+                                    // setTextFill(Color.BLACK);
+                                    // setStyle("");
+                                    // }
+                                }
+                            }
+                        };
                     }
-                };
-            }
-        });
+                });
         c0.setPrefWidth(breite0);
         c0.setEditable(false);
         tv.getColumns().add(c0);
@@ -471,11 +486,13 @@ public final class TableModel implements EventHandler<ActionEvent> {
             c.setPrefWidth(s.getBreite());
             c.setEditable(true);
             final int j = i;
-            c.setCellValueFactory(new Callback<CellDataFeatures<ObservableList<CellInhalt>, CellInhalt>, ObservableValue<CellInhalt>>() {
-                public ObservableValue<CellInhalt> call(CellDataFeatures<ObservableList<CellInhalt>, CellInhalt> param) {
-                    return new SimpleObjectProperty<CellInhalt>(param.getValue().get(j + 1));
-                }
-            });
+            c.setCellValueFactory(
+                    new Callback<CellDataFeatures<ObservableList<CellInhalt>, CellInhalt>, ObservableValue<CellInhalt>>() {
+                        public ObservableValue<CellInhalt> call(
+                                CellDataFeatures<ObservableList<CellInhalt>, CellInhalt> param) {
+                            return new SimpleObjectProperty<CellInhalt>(param.getValue().get(j + 1));
+                        }
+                    });
             c.setCellFactory(cellFctory);
             c.setComparator(comp);
             tv.getColumns().add(c);
@@ -787,8 +804,8 @@ public final class TableModel implements EventHandler<ActionEvent> {
                     if (j >= column) {
                         jdiff = ccount;
                     }
-                    if (isIn(column, ccount, j) && i + idiff >= 0 && i + idiff < anzahlZeilen && j + jdiff >= 0
-                            && j + jdiff < anzahlSpalten) {
+                    if (isIn(column, ccount, j) && i + idiff >= 0 && i + idiff < anzahlZeilen && j + jdiff >= 0 && j
+                            + jdiff < anzahlSpalten) {
                         // inhalt[i + idiff][j + jdiff] = inhalt2[i][j];
                         data.get(i + idiff).set(j + jdiff + 1, data2.get(i).get(j + 1));
                     }
@@ -919,12 +936,22 @@ public final class TableModel implements EventHandler<ActionEvent> {
         }
         String wert = null;
         if (cf.getFunktion().equals("TODAY")) {
-            wert = Global.dateTimeStringForm(LocalDate.now().atStartOfDay());
+            wert = Global.dateString0(LocalDate.now());
             ci.setWert(wert);
             return;
         } else if (cf.getFunktion().equals("NOW")) {
             wert = Global.dateTimeStringForm(LocalDateTime.now());
             ci.setWert(wert);
+            return;
+        } else if (cf.getFunktion().equals("DAYS")) {
+            CellInhalt ci0 = getCellInhalt(cf.getZeile1(), cf.getSpalte1(), false);
+            if (ci0 == null)
+                ci.setWert(null);
+            else {
+                LocalDateTime d = Global.strdat(ci0.getWert());
+                ci.setWert(d == null ? null
+                        : Global.lngStr(d.atZone(ZoneId.systemDefault()).toInstant().getEpochSecond() / 86400l));
+            }
             return;
         }
         double d1 = 0;
@@ -1021,17 +1048,17 @@ public final class TableModel implements EventHandler<ActionEvent> {
 
         Object s = t.getSource();
         @SuppressWarnings({ "rawtypes", "unchecked" })
-        int row1 = ((ObservableList<TablePosition>) tv.getSelectionModel().getSelectedCells()).stream().map(
-                a -> a.getRow()).min(Integer::compare).orElse(-1);
+        int row1 = ((ObservableList<TablePosition>) tv.getSelectionModel().getSelectedCells()).stream().map(a -> a
+                .getRow()).min(Integer::compare).orElse(-1);
         @SuppressWarnings({ "rawtypes", "unchecked" })
-        int row2 = ((ObservableList<TablePosition>) tv.getSelectionModel().getSelectedCells()).stream().map(
-                a -> a.getRow()).max(Integer::compare).orElse(-1);
+        int row2 = ((ObservableList<TablePosition>) tv.getSelectionModel().getSelectedCells()).stream().map(a -> a
+                .getRow()).max(Integer::compare).orElse(-1);
         @SuppressWarnings({ "rawtypes", "unchecked" })
-        int col1 = ((ObservableList<TablePosition>) tv.getSelectionModel().getSelectedCells()).stream().map(
-                a -> a.getColumn()).min(Integer::compare).orElse(-1) - 1;
+        int col1 = ((ObservableList<TablePosition>) tv.getSelectionModel().getSelectedCells()).stream().map(a -> a
+                .getColumn()).min(Integer::compare).orElse(-1) - 1;
         @SuppressWarnings({ "rawtypes", "unchecked" })
-        int col2 = ((ObservableList<TablePosition>) tv.getSelectionModel().getSelectedCells()).stream().map(
-                a -> a.getColumn()).max(Integer::compare).orElse(-1) - 1;
+        int col2 = ((ObservableList<TablePosition>) tv.getSelectionModel().getSelectedCells()).stream().map(a -> a
+                .getColumn()).max(Integer::compare).orElse(-1) - 1;
         // nicht die 1. Spalte
         if (col1 < 0) {
             col1 = 0;
@@ -1063,8 +1090,8 @@ public final class TableModel implements EventHandler<ActionEvent> {
             insertColumns(anzahlSpalten + 1, ccount);
         } else if (s.equals(spaltenLoeschenMenuItem) && anzahlSpalten - ccount > 0) {
             insertColumns(col, -ccount);
-        } else if (s.equals(normalMenuItem) || s.equals(fettMenuItem) || s.equals(linksMenuItem)
-                || s.equals(mitteMenuItem) || s.equals(rechtsMenuItem)) {
+        } else if (s.equals(normalMenuItem) || s.equals(fettMenuItem) || s.equals(linksMenuItem) || s.equals(
+                mitteMenuItem) || s.equals(rechtsMenuItem)) {
             CellInhalt ci = null;
             int j = 0;
             for (int i = row; i < row + rcount; i++) {
@@ -1086,6 +1113,21 @@ public final class TableModel implements EventHandler<ActionEvent> {
                 }
             }
             tv.refresh();
+        } else if (s.equals(copyMenuItem)) {
+            // System.out.println("Copy");
+            StringBuilder sb = new StringBuilder();
+            CellInhalt ci = null;
+            int j = 0;
+            for (int i = row; i < row + rcount; i++) {
+                for (j = col; j < col + ccount; j++) {
+                    ci = getCellInhalt(i, j, true);
+                    if (j > col)
+                        sb.append("\t");
+                    sb.append(Global.nn(ci.getWert())); // kein null
+                }
+                sb.append(Constant.CRLF);
+            }
+            Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(sb.toString()), null);
         }
     }
 

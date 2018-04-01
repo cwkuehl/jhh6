@@ -106,8 +106,12 @@ class Global {
 	 * @return Konvertierter int-Wert.
 	 */
 	def public static double objDbl(Object str) {
-		return if(str === null) 0.0 else if(str instanceof BigDecimal) strDbl(str.toString, Locale.ENGLISH) else strDbl(
-			str.toString)
+		return if (str === null)
+			0.0
+		else if (str instanceof BigDecimal)
+			strDbl(str.toString, Locale.ENGLISH)
+		else
+			strDbl(str.toString)
 	}
 
 	/**
@@ -1129,12 +1133,15 @@ class Global {
 			}
 			if (d === null) {
 				try {
-					// parst auch 1.2.2004
+					// parst auch 2004-2-1
 					var d2 = LocalDate.parse(str, DateTimeFormatter.ofPattern("y-M-d"))
 					d = d2.atStartOfDay
 				} catch (Exception exc) {
 					machNichts
 				}
+			}
+			if (d === null) {
+				d = objDat(str)
 			}
 		}
 		return d

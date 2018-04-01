@@ -13,18 +13,13 @@ import de.cwkuehl.jhh6.api.global.Global;
 public class FormelParser {
 
     /** Interne vorkompilierte Pattern für Formel-Erkennung. */
-    private static Pattern mpSum   = Pattern
-                                           .compile(
-                                                   "^=(sum)\\(([a-z]+)(\\d+):([a-z]+)(\\d+)\\)$",
-                                                   Pattern.CASE_INSENSITIVE);
-    private static Pattern mpCount = Pattern
-                                           .compile(
-                                                   "^=(count)\\(([a-z]+)(\\d+):([a-z]+)(\\d+)\\)$",
-                                                   Pattern.CASE_INSENSITIVE);
-    private static Pattern mpToday = Pattern.compile("^=(today)$",
-                                           Pattern.CASE_INSENSITIVE);
-    private static Pattern mpNow   = Pattern.compile("^=(now)$",
-                                           Pattern.CASE_INSENSITIVE);
+    private static Pattern sum   = Pattern.compile("^=(sum)\\(([a-z]+)(\\d+):([a-z]+)(\\d+)\\)$",
+            Pattern.CASE_INSENSITIVE);
+    private static Pattern count = Pattern.compile("^=(count)\\(([a-z]+)(\\d+):([a-z]+)(\\d+)\\)$",
+            Pattern.CASE_INSENSITIVE);
+    private static Pattern today = Pattern.compile("^=(today)$", Pattern.CASE_INSENSITIVE);
+    private static Pattern now   = Pattern.compile("^=(now)$", Pattern.CASE_INSENSITIVE);
+    private static Pattern days   = Pattern.compile("^=(days)\\(([a-z]+)(\\d+)\\)$", Pattern.CASE_INSENSITIVE);
 
     public static void parse(CellInhalt ci) {
 
@@ -34,7 +29,7 @@ public class FormelParser {
         }
         Matcher m = null;
 
-        m = mpSum.matcher(f);
+        m = sum.matcher(f);
         if (m.matches()) {
             CellFormel cf = ci.getZellFormel();
             if (cf == null) {
@@ -48,7 +43,7 @@ public class FormelParser {
             cf.setZeile2(Integer.parseInt(m.group(5)) - 1);
             return;
         }
-        m = mpCount.matcher(f);
+        m = count.matcher(f);
         if (m.matches()) {
             CellFormel cf = ci.getZellFormel();
             if (cf == null) {
@@ -62,7 +57,7 @@ public class FormelParser {
             cf.setZeile2(Integer.parseInt(m.group(5)) - 1);
             return;
         }
-        m = mpToday.matcher(f);
+        m = today.matcher(f);
         if (m.matches()) {
             CellFormel cf = ci.getZellFormel();
             if (cf == null) {
@@ -72,7 +67,7 @@ public class FormelParser {
             cf.setFunktion("TODAY");
             return;
         }
-        m = mpNow.matcher(f);
+        m = now.matcher(f);
         if (m.matches()) {
             CellFormel cf = ci.getZellFormel();
             if (cf == null) {
@@ -80,6 +75,18 @@ public class FormelParser {
                 ci.setZellFormel(cf);
             }
             cf.setFunktion("NOW");
+            return;
+        }
+        m = days.matcher(f);
+        if (m.matches()) {
+            CellFormel cf = ci.getZellFormel();
+            if (cf == null) {
+                cf = new CellFormel();
+                ci.setZellFormel(cf);
+            }
+            cf.setFunktion("DAYS");
+            cf.setSpalte1(TableModel.getColumnIndex(m.group(2)));
+            cf.setZeile1(Integer.parseInt(m.group(3)) - 1);
             return;
         }
         ci.setZellFormel(null);
