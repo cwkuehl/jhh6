@@ -49,6 +49,7 @@ class HH400BuchungenController extends BaseController<String> {
 	@FXML TableColumn<BuchungenData, String> colText
 	@FXML TableColumn<BuchungenData, String> colSoll
 	@FXML TableColumn<BuchungenData, String> colHaben
+	@FXML TableColumn<BuchungenData, String> colBeleg
 	@FXML TableColumn<BuchungenData, LocalDateTime> colGa
 	@FXML TableColumn<BuchungenData, String> colGv
 	@FXML TableColumn<BuchungenData, LocalDateTime> colAa
@@ -83,6 +84,7 @@ class HH400BuchungenController extends BaseController<String> {
 		SimpleStringProperty text
 		SimpleStringProperty soll
 		SimpleStringProperty haben
+		SimpleStringProperty beleg
 		SimpleObjectProperty<LocalDateTime> geaendertAm
 		SimpleStringProperty geaendertVon
 		SimpleObjectProperty<LocalDateTime> angelegtAm
@@ -98,6 +100,7 @@ class HH400BuchungenController extends BaseController<String> {
 			text = new SimpleStringProperty(v.btext)
 			soll = new SimpleStringProperty(v.sollName)
 			haben = new SimpleStringProperty(v.habenName)
+			beleg = new SimpleStringProperty(v.belegNr)
 			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
 			geaendertVon = new SimpleStringProperty(v.geaendertVon)
 			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
@@ -239,6 +242,7 @@ class HH400BuchungenController extends BaseController<String> {
 		initColumnBetrag(colBetrag)
 		colSoll.setCellValueFactory([c|c.value.soll])
 		colHaben.setCellValueFactory([c|c.value.haben])
+		colBeleg.setCellValueFactory([c|c.value.beleg])
 		colGv.setCellValueFactory([c|c.value.geaendertVon])
 		colGa.setCellValueFactory([c|c.value.geaendertAm])
 		colAv.setCellValueFactory([c|c.value.angelegtVon])

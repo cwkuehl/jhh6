@@ -309,10 +309,12 @@ class HH410BuchungController extends BaseController<String> {
 					if (!valuta.value.equals(belegDatum.value)) {
 						sb.append(Meldungen::HH059(belegDatum.value.atStartOfDay))
 					}
-					buchung.setText(sb.toString)
-					betrag.setText("")
-					summe.setText("")
-					belegNr.setText("")
+					buchung.text = sb.toString
+					betrag.text = ""
+					summe.text = ""
+					// belegNr.text = ""
+					if (!Global.nes(belegNr.text))
+						belegNr.text = Global.lngStr(Global.strLng(belegNr.text) + 1)
 					betrag.requestFocus
 				} else {
 					close

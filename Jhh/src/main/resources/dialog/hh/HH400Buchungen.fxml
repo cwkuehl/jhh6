@@ -145,6 +145,7 @@
 			<TableColumn fx:id="colText" prefWidth="200.0" text="%HH400.colText" />
 			<TableColumn fx:id="colSoll" prefWidth="150.0" text="%HH400.colSoll" />
 			<TableColumn fx:id="colHaben" prefWidth="150.0" text="%HH400.colHaben" />
+			<TableColumn fx:id="colBeleg" prefWidth="80.0" text="%HH400.colBeleg" />
 			<TableColumn fx:id="colGa" prefWidth="170.0" text="%HH400.colGa" />
 			<TableColumn fx:id="colGv" prefWidth="120.0" text="%HH400.colGv" />
 			<TableColumn fx:id="colAa" prefWidth="170.0" text="%HH400.colAa" />
