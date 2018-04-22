@@ -130,7 +130,7 @@ class ServiceBase {
 	def private DataSource getDataSource(boolean replikation) {
 
 		val props = new Properties()
-		val input = typeof(RepositoryBase).classLoader.getResourceAsStream("ServerConfig.properties")
+		val input = typeof(RepositoryBase).classLoader.getResourceAsStream(Global.serverConfigProperties)
 		props.load(input)
 		val config = new HikariConfig
 		if (replikation) {

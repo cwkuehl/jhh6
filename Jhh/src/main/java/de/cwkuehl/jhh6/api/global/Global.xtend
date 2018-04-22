@@ -55,6 +55,20 @@ class Global {
 	 * @param array Zu behandelndes Array.
 	 * @return Array-Größe.
 	 */
+	def public static String serverConfigProperties() {
+
+        var prop = System.getProperty("ServerConfig.properties")
+        if (prop === null) {
+            prop = "ServerConfig.properties"
+        }
+		return prop
+	}
+
+	/**
+	 * Liefert die Array-Größe.
+	 * @param array Zu behandelndes Array.
+	 * @return Array-Größe.
+	 */
 	def public static int arrayLaenge(Object[] array) {
 
 		if (array === null) {

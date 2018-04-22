@@ -59,7 +59,7 @@ class Werkzeug {
 		sb.append("<tr><td>").append(g("AG000.userhome")).append("</td><td>").append(System.getProperty("user.dir")).
 			append("</td></tr>")
 		val props = new Properties
-		val input = typeof(Werkzeug).classLoader.getResourceAsStream("ServerConfig.properties")
+		val input = typeof(Werkzeug).classLoader.getResourceAsStream(Global.serverConfigProperties)
 		props.load(input)
 		var jdbcUrl = props.getProperty("DB_DRIVER_CONNECT")
 		if (!Global.nes(jdbcUrl)) {
