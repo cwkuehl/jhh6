@@ -96,6 +96,9 @@ class Parameter {
 	/** Vermietung-Abrechnungs-Haus-Schlüssel: Anlage für Abrechnung. */
 	public static final String VM_H_ANLAGE = "VM_H_ANLAGE"
 
+	/** Wertpapier-Parameter: Access Key für Währungskurse von Fixer.io. */
+	public static final String WP_FIXER_IO_ACCESS_KEY = "WP_FIXER_IO_ACCESS_KEY"
+
 	static HashMap<String, Parameter> params = null
 
 	def static HashMap<String, Parameter> getParameter() {
@@ -138,7 +141,8 @@ class Parameter {
 				new Parameter(VM_H_GUTHABEN, true, true, true, false),
 				new Parameter(VM_H_NACHZAHLUNG, true, true, true, false),
 				new Parameter(VM_H_GRUESSE, true, true, true, false),
-				new Parameter(VM_H_ANLAGE, true, true, true, false)
+				new Parameter(VM_H_ANLAGE, true, true, true, false),
+				new Parameter(WP_FIXER_IO_ACCESS_KEY, true, true, true, false)
 			]
 			for (Parameter p : liste) {
 				params.put(p.schluessel, p)

@@ -1,6 +1,7 @@
 package de.cwkuehl.jhh6.server.service
 
 import de.cwkuehl.jhh6.api.dto.MaEinstellung
+import de.cwkuehl.jhh6.api.dto.MaParameterKey
 import de.cwkuehl.jhh6.api.dto.SoKurse
 import de.cwkuehl.jhh6.api.dto.WpAnlage
 import de.cwkuehl.jhh6.api.dto.WpAnlageKey
@@ -19,6 +20,7 @@ import de.cwkuehl.jhh6.api.dto.WpWertpapierKey
 import de.cwkuehl.jhh6.api.dto.WpWertpapierLang
 import de.cwkuehl.jhh6.api.enums.WpStatusEnum
 import de.cwkuehl.jhh6.api.global.Global
+import de.cwkuehl.jhh6.api.global.Parameter
 import de.cwkuehl.jhh6.api.message.MeldungException
 import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.api.service.ServiceDaten
@@ -705,6 +707,18 @@ class WertpapierService {
 		return null
 	}
 
+
+	def private String getFixerIoAccessKey(ServiceDaten daten) {
+
+		var p = parameterRep.get(daten, new MaParameterKey(daten.mandantNr, Parameter.WP_FIXER_IO_ACCESS_KEY))
+		if (p !== null) {
+			return p.wert
+		}
+		return null
+	}
+
+	protected static HashMap<String, SoKurse> wkurse = new HashMap
+
 	def private SoKurse getAktWaehrungKurs(ServiceDaten daten, String kuerzel, LocalDate heute) {
 
 		if (Global.nes(kuerzel)) {
@@ -716,12 +730,29 @@ class WertpapierService {
 			k.bewertung = "EUR"
 			return k
 		}
-		var url = '''https://api.fixer.io/«heute»?symbols=«kuerzel»'''
-		var v = executeHttps(url, null, false, null)
+		if (heute === null) {
+			return null
+		}
+		var key = '''«heute» «kuerzel»'''
+		var wert = WertpapierService::wkurse.get(key)
+		if (wert !== null) {
+			return wert
+		}
+		var accesskey = getFixerIoAccessKey(daten)
+		if (Global.nes(accesskey)) {
+			throw new MeldungException(Meldungen.WP049)
+		}
+		var url = '''http://data.fixer.io/api/«heute»?symbols=«kuerzel»&access_key=«accesskey»'''
+		var v = executeHttp(url, null, false, null)
 		if (v !== null && v.size > 0) {
 			try {
 				var jr = new JSONObject(v.get(0))
-				// var base = jr.getString("base")
+				var success = jr.getBoolean("success")
+				if (!success) {
+					var error = jr.getJSONObject("error")
+					var info = error.getString("info")
+					throw new Exception(info)
+				}
 				var jresult = jr.getJSONObject("rates")
 				if (jresult.has(kuerzel)) {
 					var k = new SoKurse
@@ -733,6 +764,7 @@ class WertpapierService {
 					k.high = k.close
 					k.low = k.close
 					k.bewertung = kuerzel
+					WertpapierService::wkurse.put(key, k)
 					return k
 				}
 			} catch (Exception ex) {
