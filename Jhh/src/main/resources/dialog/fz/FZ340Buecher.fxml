@@ -15,7 +15,7 @@
 		<Insets bottom="10" left="10" right="10" top="10" />
 	</padding>
 
-	<ToolBar prefHeight="40.0" prefWidth="200.0" GridPane.columnSpan="4">
+	<ToolBar prefHeight="40.0" prefWidth="200.0" GridPane.columnSpan="6">
 		<items>
 			<Button fx:id="aktuell" mnemonicParsing="false" onAction="#onAktuell">
 				<tooltip>
@@ -116,7 +116,7 @@
 		</items>
 	</ToolBar>
 	<Label fx:id="buecher0" mnemonicParsing="true" text="%FZ340.buecher" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="1" />
-	<TableView fx:id="buecher" accessibleText="%FZ340.buecher.tt" onMouseClicked="#onBuecherMouseClick" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+	<TableView fx:id="buecher" accessibleText="%FZ340.buecher.tt" onMouseClicked="#onBuecherMouseClick" GridPane.columnIndex="0" GridPane.columnSpan="6" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
 		<tooltip>
 			<Tooltip text="%FZ340.buecher.tt" />
 		</tooltip>
@@ -137,18 +137,25 @@
 			<TableColumn fx:id="colAv" prefWidth="120.0" text="%FZ340.colAv" />
 		</columns>
 	</TableView>
-	<Label fx:id="autor0" mnemonicParsing="true" text="%FZ340.autor" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-	<ComboBox fx:id="autor" accessibleText="%FZ340.autor.tt" onAction="#onAutor" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
-		<tooltip>
-			<Tooltip text="%FZ340.autor.tt" />
-		</tooltip>
-	</ComboBox>
-	<Label fx:id="titel0" text="%FZ340.titel" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-	<TextField fx:id="titel" accessibleText="%FZ340.titel.tt" promptText="%FZ340.titel.tt" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
+	<Label fx:id="titel0" text="%FZ340.titel" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+	<TextField fx:id="titel" accessibleText="%FZ340.titel.tt" promptText="%FZ340.titel.tt" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
 		<tooltip>
 			<Tooltip text="%FZ340.titel.tt" />
 		</tooltip>
 	</TextField>
+	<Label fx:id="autor0" mnemonicParsing="true" text="%FZ340.autor" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+	<ComboBox fx:id="autor" accessibleText="%FZ340.autor.tt" onAction="#onAutor" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
+		<tooltip>
+			<Tooltip text="%FZ340.autor.tt" />
+		</tooltip>
+	</ComboBox>
+	<Label fx:id="serie0" mnemonicParsing="true" text="%FZ340.serie" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+	<ComboBox fx:id="serie" accessibleText="%FZ340.serie.tt" onAction="#onAutor" GridPane.columnIndex="5" GridPane.columnSpan="1"
+		GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
+		<tooltip>
+			<Tooltip text="%FZ340.serie.tt" />
+		</tooltip>
+	</ComboBox>
 	<HBox spacing="10.0" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="4">
 		<Button fx:id="alle" mnemonicParsing="true" onAction="#onAlle" text="%FZ340.alle">
 			<tooltip>

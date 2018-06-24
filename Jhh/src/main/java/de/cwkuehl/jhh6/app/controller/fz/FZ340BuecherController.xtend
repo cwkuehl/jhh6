@@ -2,6 +2,7 @@ package de.cwkuehl.jhh6.app.controller.fz
 
 import de.cwkuehl.jhh6.api.dto.FzBuchLang
 import de.cwkuehl.jhh6.api.dto.FzBuchautor
+import de.cwkuehl.jhh6.api.dto.FzBuchserie
 import de.cwkuehl.jhh6.api.global.Global
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
@@ -56,6 +57,8 @@ class FZ340BuecherController extends BaseController<String> {
 	@FXML ComboBox<AutorData> autor
 	@FXML Label titel0
 	@FXML TextField titel
+	@FXML Label serie0
+	@FXML ComboBox<SerieData> serie
 
 	// @FXML Button alle
 	/** 
@@ -121,6 +124,24 @@ class FZ340BuecherController extends BaseController<String> {
 	}
 
 	/** 
+	 * Daten für ComboBox Serie.
+	 */
+	static class SerieData extends ComboBoxData<FzBuchserie> {
+
+		new(FzBuchserie v) {
+			super(v)
+		}
+
+		override String getId() {
+			return getData.uid
+		}
+
+		override String toString() {
+			return getData.name
+		}
+	}
+
+	/** 
 	 * Initialisierung des Dialogs.
 	 */
 	override protected void initialize() {
@@ -130,6 +151,7 @@ class FZ340BuecherController extends BaseController<String> {
 		buecher0.setLabelFor(buecher)
 		autor0.setLabelFor(autor, false)
 		titel0.setLabelFor(titel)
+		serie0.setLabelFor(serie, false)
 		initAccelerator("A", aktuell)
 		initAccelerator("U", rueckgaengig)
 		initAccelerator("W", wiederherstellen)
@@ -150,12 +172,16 @@ class FZ340BuecherController extends BaseController<String> {
 		if (stufe <= 0) {
 			var al = get(FactoryService::freizeitService.getAutorListe(serviceDaten, true, null))
 			autor.setItems(getItems(al, new FzBuchautor, [a|new AutorData(a)], null))
+			var sl = get(FactoryService::freizeitService.getSerieListe(serviceDaten, null))
+			serie.setItems(getItems(sl, new FzBuchserie, [a|new SerieData(a)], null))
 			setText(autor, null)
+			setText(serie, null)
 			titel.setText("%%")
 		}
 		if (stufe <= 1) {
-			var l = get(FactoryService::freizeitService.getBuchListe(serviceDaten, true, getText(autor), null, null, //
-			titel.text))
+			var l = get(
+				FactoryService::freizeitService.getBuchListe(serviceDaten, true, getText(autor), getText(serie), null,
+					titel.text))
 			getItems(l, null, [a|new BuecherData(a)], buecherData)
 			// Absteigend nach Lesedatum
 			Collections.sort(buecherData, [ a, b |
