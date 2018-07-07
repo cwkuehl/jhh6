@@ -148,6 +148,7 @@ class Meldungen {
 	val HH072 = "Inventory {0}"
 	val HH073 = "Sum {0} {1,date,yyyy-MM-dd}"
 	val HH074 = "The sum is incorrect. Calculate the period."
+	val HH075 = "{0,date,yyyy-MM}"
 	val HP001 = "No default"
 	val HP002 = "Default for treatment"
 	val HP003 = "Default for invoice"

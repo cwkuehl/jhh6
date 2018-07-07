@@ -1709,15 +1709,24 @@ class HaushaltService {
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var v = new Vector<HhBilanz>
 		var r = new ServiceErgebnis<List<HhBilanz>>(v)
-		var anzahl = 10
-
 		var p = holePassendePeriode(daten, datum, false)
 		if (p === null) {
 			return r
 		}
 		var pnr = p.nr
+		var diff = 1
+		var p2 = periodeRep.get(daten, new HhPeriodeKey(daten.mandantNr, pnr - 1))
+		if (p2 !== null && p.datumVon.year * 12 + (p.datumVon.monthValue - 1) == //
+		p2.datumVon.year * 12 + (p2.datumVon.monthValue - 1) + 1) {
+			diff = 12
+		}
+		var pnr2 = Constant.PN_BERECHNET
+		p2 = holePassendePeriode(daten, datum.minusYears(10), false)
+		if (p2 !== null) {
+			pnr2 = p2.nr - 1
+		}
 		var kontoUid = holeEkKonto(daten, true)
-		while (anzahl > 0 && pnr > Constant.PN_BERECHNET) {
+		while (pnr > pnr2) {
 			var hhBilanz = bilanzRep.get(daten, new HhBilanzKey(daten.mandantNr, pnr, Constant.KZBI_SCHLUSS, kontoUid))
 			if (hhBilanz !== null) {
 				var hhPeriode = periodeRep.get(daten, new HhPeriodeKey(daten.mandantNr, pnr))
@@ -1726,8 +1735,43 @@ class HaushaltService {
 				}
 				v.add(hhBilanz)
 			}
-			anzahl--
-			pnr = pnr - 12
+			pnr = pnr - diff
+		}
+		return r
+	}
+
+	@Transaction(false)
+	override ServiceErgebnis<List<HhBilanz>> holeEkGvStaende(ServiceDaten daten, LocalDate datum) {
+
+		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
+		var v = new Vector<HhBilanz>
+		var r = new ServiceErgebnis<List<HhBilanz>>(v)
+		var p = holePassendePeriode(daten, datum, false)
+		if (p === null) {
+			return r
+		}
+		var pnr = p.nr
+		var pnr2 = Constant.PN_BERECHNET
+		var p2 = holePassendePeriode(daten, datum.minusYears(10), false)
+		if (p2 !== null) {
+			pnr2 = p2.nr - 1
+		}
+		val ek = holeEkKonto(daten, true)
+		val gv = holeGvKonto(daten, true)
+		while (pnr > pnr2) {
+			var hhBilanz = bilanzRep.get(daten, new HhBilanzKey(daten.mandantNr, pnr, Constant.KZBI_SCHLUSS, ek))
+			if (hhBilanz !== null) {
+				var bi = bilanzRep.get(daten, new HhBilanzKey(daten.mandantNr, pnr, Constant.KZBI_GV, gv))
+				if (bi !== null) {
+					hhBilanz.betrag = -bi.ebetrag
+				}
+				var hhPeriode = periodeRep.get(daten, new HhPeriodeKey(daten.mandantNr, pnr))
+				if (hhPeriode !== null) {
+					hhBilanz.geaendertAm = hhPeriode.datumBis.atStartOfDay
+				}
+				v.add(hhBilanz)
+			}
+			pnr--
 		}
 		return r
 	}

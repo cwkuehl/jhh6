@@ -5,6 +5,7 @@
 <?import java.lang.*?>
 <?import java.net.*?>
 <?import javafx.geometry.*?>
+<?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
@@ -17,7 +18,7 @@
 		<Insets bottom="10" left="10" right="10" top="10" />
 	</padding>
 
-	<ToolBar prefHeight="40.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS">
+	<ToolBar prefHeight="40.0" prefWidth="200.0" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS">
 		<items>
 			<Button fx:id="aktuell" mnemonicParsing="false" onAction="#onAktuell">
 				<tooltip>
@@ -51,6 +52,8 @@
 			<Tooltip text="%FZ100.datum.tt" />
 		</tooltip>
 	</Datum>
+	<VBox fx:id="charts" spacing="10.0" GridPane.vgrow="ALWAYS" GridPane.hgrow="ALWAYS" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.rowSpan="4">
+	</VBox>
 	<Label fx:id="bilanz0" mnemonicParsing="true" text="%FZ100.bilanz" GridPane.columnIndex="0" GridPane.rowIndex="2" />
 	<TextArea fx:id="bilanz" accessibleText="%FZ100.bilanz.tt" promptText="%FZ100.bilanz.tt" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
 		<tooltip>
