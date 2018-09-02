@@ -81,10 +81,10 @@ class MoMessdienerRep {
 		@Column(name="Telefon2", length=40, nullable=true)
 		public String telefon2
 
-		@Column(name="Verfuegbarkeit", nullable=true)
+		@Column(name="Verfuegbarkeit", length=-1, nullable=true)
 		public String verfuegbarkeit
 
-		@Column(name="Dienste", nullable=true)
+		@Column(name="Dienste", length=-1, nullable=true)
 		public String dienste
 
 		@Column(name="Messdiener_Uid", length=35, nullable=true)
@@ -93,7 +93,7 @@ class MoMessdienerRep {
 		@Column(name="Status", length=10, nullable=false) // null in Datenbank
 		public String status
 
-		@Column(name="Notiz", nullable=true)
+		@Column(name="Notiz", length=-1, nullable=true)
 		public String notiz
 
 		@Column(name="Angelegt_Von", length=20, nullable=true)

@@ -44,7 +44,7 @@ class HpBehandlungLeistungRep {
 		@Column(name="Dauer", nullable=false)
 		public double dauer
 
-		@Column(name="Parameter", nullable=true)
+		@Column(name="Parameter", length=-1, nullable=true)
 		public String parameter
 
 		@Column(name="Angelegt_Von", length=20, nullable=true)

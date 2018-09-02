@@ -63,7 +63,7 @@ class WpBuchungRep {
 		@Column(name="BText", length=100, nullable=false)
 		public String btext
 
-		@Column(name="Notiz", nullable=true)
+		@Column(name="Notiz", length=-1, nullable=true)
 		public String notiz
 
 		@Column(name="Angelegt_Von", length=20, nullable=true)

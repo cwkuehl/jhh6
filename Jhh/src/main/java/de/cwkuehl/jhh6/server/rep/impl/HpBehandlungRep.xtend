@@ -81,7 +81,7 @@ class HpBehandlungRep {
 		@Column(name="Verordnung", length=255, nullable=true)
 		public String verordnung
 
-		@Column(name="Notiz", nullable=true)
+		@Column(name="Notiz", length=-1, nullable=true)
 		public String notiz
 
 		@Column(name="Angelegt_Von", length=20, nullable=true)

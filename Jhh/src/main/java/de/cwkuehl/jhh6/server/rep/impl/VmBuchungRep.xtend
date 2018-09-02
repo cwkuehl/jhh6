@@ -45,7 +45,7 @@ class VmBuchungRep {
 		@Column(name="Mieter_Uid", length=35, nullable=true)
 		public String mieterUid
 
-		@Column(name="Notiz", nullable=true)
+		@Column(name="Notiz", length=-1, nullable=true)
 		public String notiz
 
 		@Column(name="Angelegt_Von", length=20, nullable=true)

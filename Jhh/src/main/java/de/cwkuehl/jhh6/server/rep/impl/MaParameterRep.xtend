@@ -35,7 +35,7 @@ class MaParameterRep {
 		@Column(name="Schluessel", length=50, nullable=false)
 		public String schluessel
 
-		@Column(name="Wert", nullable=true)
+		@Column(name="Wert", length=-1, nullable=true)
 		public String wert
 
 		@Column(name="Angelegt_Von", length=20, nullable=true)

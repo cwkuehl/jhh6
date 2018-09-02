@@ -58,7 +58,7 @@ class HpRechnungRep {
 		@Column(name="Status_Uid", length=35, nullable=false)
 		public String statusUid
 
-		@Column(name="Notiz", nullable=true)
+		@Column(name="Notiz", length=-1, nullable=true)
 		public String notiz
 
 		@Column(name="Angelegt_Von", length=20, nullable=true)

@@ -71,7 +71,7 @@ class SbEreignisRep {
 		@Column(name="Ort", length=120, nullable=true)
 		public String ort
 
-		@Column(name="Bemerkung", nullable=true)
+		@Column(name="Bemerkung", length=-1, nullable=true)
 		public String bemerkung
 
 		@Column(name="Quelle_Uid", length=12, nullable=true)

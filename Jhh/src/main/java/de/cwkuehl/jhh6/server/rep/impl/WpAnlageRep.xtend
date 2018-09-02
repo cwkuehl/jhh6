@@ -70,10 +70,10 @@ ALTER TABLE HH_Anlageteil
 		@Column(name="Bezeichnung", length=50, nullable=false)
 		public String bezeichnung
 
-		@Column(name="Parameter", nullable=true)
+		@Column(name="Parameter", length=-1, nullable=true)
 		public String parameter
 
-		@Column(name="Notiz", nullable=true)
+		@Column(name="Notiz", length=-1, nullable=true)
 		public String notiz
 
 		@Column(name="Angelegt_Von", length=20, nullable=true)

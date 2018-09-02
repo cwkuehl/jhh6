@@ -42,10 +42,10 @@ class SbQuelleRep {
 		@Column(name="Beschreibung", length=255, nullable=false)
 		public String beschreibung
 
-		@Column(name="Zitat", nullable=true)
+		@Column(name="Zitat", length=-1, nullable=true)
 		public String zitat
 
-		@Column(name="Bemerkung", nullable=true)
+		@Column(name="Bemerkung", length=-1, nullable=true)
 		public String bemerkung
 
 		@Column(name="Autor", length=255, nullable=false)

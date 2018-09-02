@@ -46,7 +46,7 @@ class WpWertpapierRep {
 		@Column(name="Kuerzel", length=10, nullable=false)
 		public String kuerzel
 
-		@Column(name="Parameter", nullable=true)
+		@Column(name="Parameter", length=-1, nullable=true)
 		public String parameter
 
 		@Column(name="Datenquelle", length=35, nullable=false)
@@ -58,7 +58,7 @@ class WpWertpapierRep {
 		@Column(name="Relation_Uid", length=35, nullable=true)
 		public String relationUid
 
-		@Column(name="Notiz", nullable=true)
+		@Column(name="Notiz", length=-1, nullable=true)
 		public String notiz
 
 		@Column(name="Angelegt_Von", length=20, nullable=true)

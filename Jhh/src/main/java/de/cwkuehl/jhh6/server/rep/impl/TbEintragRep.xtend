@@ -34,7 +34,7 @@ class TbEintragRep {
 		@Column(name="Datum", nullable=false)
 		public LocalDate datum
 
-		@Column(name="Eintrag", nullable=false)
+		@Column(name="Eintrag", length=-1, nullable=false)
 		public String eintrag
 
 		@Column(name="Angelegt_Von", length=20, nullable=true)

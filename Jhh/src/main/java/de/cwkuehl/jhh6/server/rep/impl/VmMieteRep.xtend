@@ -59,7 +59,7 @@ class VmMieteRep {
 		@Column(name="Personen", nullable=false)
 		public int personen
 
-		@Column(name="Notiz", nullable=true)
+		@Column(name="Notiz", length=-1, nullable=true)
 		public String notiz
 
 		@Column(name="Angelegt_Von", length=20, nullable=true)

@@ -39,7 +39,7 @@ class HpLeistungRep {
 		@Column(name="Beschreibung_Fett", length=100, nullable=false)
 		public String beschreibungFett
 
-		@Column(name="Beschreibung", nullable=false)
+		@Column(name="Beschreibung", length=-1, nullable=false)
 		public String beschreibung
 
 		@Column(name="Faktor", nullable=false)
@@ -48,10 +48,10 @@ class HpLeistungRep {
 		@Column(name="Festbetrag", nullable=false)
 		public double festbetrag
 
-		@Column(name="Fragen", nullable=true)
+		@Column(name="Fragen", length=-1, nullable=true)
 		public String fragen // Spalte entfällt
 
-		@Column(name="Notiz", nullable=true)
+		@Column(name="Notiz", length=-1, nullable=true)
 		public String notiz
 
 		@Column(name="Angelegt_Von", length=20, nullable=true)

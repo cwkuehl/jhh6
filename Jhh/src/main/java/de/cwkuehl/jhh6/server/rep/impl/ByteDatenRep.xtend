@@ -41,7 +41,7 @@ class ByteDatenRep {
 		@Column(name="Lfd_Nr", nullable=false)
 		public int lfdNr
 
-		@Column(name="Metadaten", nullable=true)
+		@Column(name="Metadaten", length=-1, nullable=true)
 		public String metadaten
 
 		@Column(name="Bytes", nullable=true)

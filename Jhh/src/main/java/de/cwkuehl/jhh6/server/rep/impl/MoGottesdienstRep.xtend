@@ -54,7 +54,7 @@ class MoGottesdienstRep {
 		@Column(name="Status", length=10, nullable=false) // null in Datenbank
 		public String status
 
-		@Column(name="Notiz", nullable=true)
+		@Column(name="Notiz", length=-1, nullable=true)
 		public String notiz
 
 		@Column(name="Angelegt_Von", length=20, nullable=true)

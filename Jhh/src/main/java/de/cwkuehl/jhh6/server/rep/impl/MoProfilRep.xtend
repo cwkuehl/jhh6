@@ -41,10 +41,10 @@ class MoProfilRep {
 		@Column(name="Alle", nullable=false)
 		public int alle
 
-		@Column(name="Dienste", nullable=true)
+		@Column(name="Dienste", length=-1, nullable=true)
 		public String dienste
 
-		@Column(name="Notiz", nullable=true)
+		@Column(name="Notiz", length=-1, nullable=true)
 		public String notiz
 
 		@Column(name="Angelegt_Von", length=20, nullable=true)
