@@ -27,7 +27,7 @@ class FzBuchautorRep {
 
 		@PrimaryKeyJoinColumn(name="Mandant_Nr", referencedColumnName="Nr")
 		@ManyToOne(targetEntity=typeof(MaMandantRep))
-		@Column(name="Mandant_Nr", nullable=true)
+		@Column(name="Mandant_Nr", nullable=false)
 		public int mandantNr
 
 		@PrimaryKeyJoinColumn(name="Uid")

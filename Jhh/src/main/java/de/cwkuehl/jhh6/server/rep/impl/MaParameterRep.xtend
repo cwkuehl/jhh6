@@ -28,11 +28,11 @@ class MaParameterRep {
 
 		@PrimaryKeyJoinColumn(name="Mandant_Nr", referencedColumnName="Nr")
 		@ManyToOne(targetEntity=typeof(MaMandantRep))
-		@Column(name="Mandant_Nr", nullable=true)
+		@Column(name="Mandant_Nr", nullable=false)
 		public int mandantNr
 
 		@PrimaryKeyJoinColumn(name="Schluessel")
-		@Column(name="Schluessel", length=50, nullable=true)
+		@Column(name="Schluessel", length=50, nullable=false)
 		public String schluessel
 
 		@Column(name="Wert", nullable=true)

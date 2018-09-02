@@ -30,11 +30,11 @@ class HhPeriodeRep {
 
 		@PrimaryKeyJoinColumn(name="Mandant_Nr", referencedColumnName="Nr")
 		@ManyToOne(targetEntity=typeof(MaMandantRep))
-		@Column(name="Mandant_Nr", nullable=true)
+		@Column(name="Mandant_Nr", nullable=false)
 		public int mandantNr
 
 		@PrimaryKeyJoinColumn(name="Nr")
-		@Column(name="Nr", nullable=true)
+		@Column(name="Nr", nullable=false)
 		public int nr
 
 		@Column(name="Datum_Von", nullable=false)

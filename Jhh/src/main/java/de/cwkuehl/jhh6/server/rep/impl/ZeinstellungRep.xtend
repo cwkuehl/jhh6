@@ -19,7 +19,7 @@ class ZeinstellungRep {
 	static class Vo {
 
 		@PrimaryKeyJoinColumn(name="Schluessel")
-		@Column(name="Schluessel", length=50, nullable=true)
+		@Column(name="Schluessel", length=50, nullable=false)
 		public String schluessel
 
 		@Column(name="Wert", length=255, nullable=true)

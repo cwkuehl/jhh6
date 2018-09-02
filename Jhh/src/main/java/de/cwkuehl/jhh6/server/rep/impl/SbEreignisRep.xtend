@@ -30,21 +30,21 @@ class SbEreignisRep {
 
 		@PrimaryKeyJoinColumn(name="Mandant_Nr", referencedColumnName="Nr")
 		@ManyToOne(targetEntity=typeof(MaMandantRep))
-		@Column(name="Mandant_Nr", nullable=true)
+		@Column(name="Mandant_Nr", nullable=false)
 		public int mandantNr
 
 		@PrimaryKeyJoinColumn(name="Person_Uid", referencedColumnName="Uid")
 		@ManyToOne(targetEntity=typeof(SbPersonRep))
-		@Column(name="Person_Uid", length=35, nullable=true)
+		@Column(name="Person_Uid", length=35, nullable=false)
 		public String personUid
 
 		@PrimaryKeyJoinColumn(name="Familie_Uid", referencedColumnName="Uid")
 		@ManyToOne(targetEntity=typeof(SbFamilieRep))
-		@Column(name="Familie_Uid", length=35, nullable=true)
+		@Column(name="Familie_Uid", length=35, nullable=false)
 		public String familieUid
 
 		@PrimaryKeyJoinColumn(name="Typ")
-		@Column(name="Typ", length=4, nullable=true)
+		@Column(name="Typ", length=4, nullable=false)
 		public String typ
 
 		@Column(name="Tag1", nullable=false)

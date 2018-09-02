@@ -40,12 +40,12 @@ class MoMessdienerRep {
 
 		@PrimaryKeyJoinColumn(name="Mandant_Nr", referencedColumnName="Nr")
 		@ManyToOne(targetEntity=typeof(MaMandantRep))
-		@Column(name="Mandant_Nr", nullable=true)
+		@Column(name="Mandant_Nr", nullable=false)
 		public int mandantNr
 
 		@PrimaryKeyJoinColumn(name="Uid")
 		@Id
-		@Column(name="Uid", length=35, nullable=true)
+		@Column(name="Uid", length=35, nullable=false)
 		public String uid
 
 		@Column(name="Name", length=50, nullable=false)
@@ -90,7 +90,7 @@ class MoMessdienerRep {
 		@Column(name="Messdiener_Uid", length=35, nullable=true)
 		public String messdienerUid
 
-		@Column(name="Status", length=10, nullable=false)
+		@Column(name="Status", length=10, nullable=false) // null in Datenbank
 		public String status
 
 		@Column(name="Notiz", nullable=true)

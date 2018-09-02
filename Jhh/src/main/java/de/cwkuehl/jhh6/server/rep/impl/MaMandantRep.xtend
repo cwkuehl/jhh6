@@ -20,7 +20,7 @@ class MaMandantRep {
 	static class Vo {
 
 		@PrimaryKeyJoinColumn(name="Nr")
-		@Column(name="Nr", nullable=true)
+		@Column(name="Nr", nullable=false)
 		public int nr
 
 		@Column(name="Beschreibung", length=100, nullable=false)

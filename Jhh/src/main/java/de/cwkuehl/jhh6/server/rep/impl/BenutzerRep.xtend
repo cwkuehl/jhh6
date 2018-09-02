@@ -29,11 +29,11 @@ class BenutzerRep {
 
 		@PrimaryKeyJoinColumn(name="Mandant_Nr", referencedColumnName="Nr")
 		@ManyToOne(targetEntity=typeof(MaMandantRep))
-		@Column(name="Mandant_Nr", nullable=true)
+		@Column(name="Mandant_Nr", nullable=false)
 		public int mandantNr
 
 		@PrimaryKeyJoinColumn(name="Benutzer_ID")
-		@Column(name="Benutzer_ID", length=20, nullable=true)
+		@Column(name="Benutzer_ID", length=20, nullable=false)
 		public String benutzerId
 
 		@Column(name="Passwort", length=50, nullable=true)

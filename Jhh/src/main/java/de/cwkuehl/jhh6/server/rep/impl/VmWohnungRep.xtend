@@ -28,12 +28,12 @@ class VmWohnungRep {
 
 		@PrimaryKeyJoinColumn(name="Mandant_Nr", referencedColumnName="Nr")
 		@ManyToOne(targetEntity=typeof(MaMandantRep))
-		@Column(name="Mandant_Nr", nullable=true)
+		@Column(name="Mandant_Nr", nullable=false)
 		public int mandantNr
 
 		@PrimaryKeyJoinColumn(name="Uid")
 		@Id
-		@Column(name="Uid", length=35, nullable=true)
+		@Column(name="Uid", length=35, nullable=false)
 		public String uid
 
 		@Column(name="Haus_Uid", length=35, nullable=false)

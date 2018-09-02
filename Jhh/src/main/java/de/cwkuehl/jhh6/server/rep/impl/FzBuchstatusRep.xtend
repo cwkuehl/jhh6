@@ -23,12 +23,12 @@ class FzBuchstatusRep {
 
 		@PrimaryKeyJoinColumn(name="Mandant_Nr", referencedColumnName="Nr")
 		@ManyToOne(targetEntity=typeof(MaMandantRep))
-		@Column(name="Mandant_Nr", nullable=true)
+		@Column(name="Mandant_Nr", nullable=false)
 		public int mandantNr
 
 		@PrimaryKeyJoinColumn(name="Buch_Uid", referencedColumnName="Uid")
 		@ManyToOne(targetEntity=typeof(FzBuchRep))
-		@Column(name="Buch_Uid", length=35, nullable=true)
+		@Column(name="Buch_Uid", length=35, nullable=false)
 		public String buchUid
 
 		@Column(name="Ist_Besitz", nullable=false)

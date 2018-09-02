@@ -34,21 +34,21 @@ class HhBilanzRep {
 
 		@PrimaryKeyJoinColumn(name="Mandant_Nr", referencedColumnName="Nr")
 		@ManyToOne(targetEntity=typeof(MaMandantRep))
-		@Column(name="Mandant_Nr", nullable=true)
+		@Column(name="Mandant_Nr", nullable=false)
 		public int mandantNr
 
 		@PrimaryKeyJoinColumn(name="Periode", referencedColumnName="Nr")
 		@ManyToOne(targetEntity=typeof(HhPeriodeRep))
-		@Column(name="Periode", nullable=true)
+		@Column(name="Periode", nullable=false)
 		public int periode
 
 		@PrimaryKeyJoinColumn(name="Kz")
-		@Column(name="Kz", length=2, nullable=true)
+		@Column(name="Kz", length=2, nullable=false)
 		public String kz
 
 		@PrimaryKeyJoinColumn(name="Konto_Uid", referencedColumnName="Uid")
 		@ManyToOne(targetEntity=typeof(HhKontoRep))
-		@Column(name="Konto_Uid", length=35, nullable=true)
+		@Column(name="Konto_Uid", length=35, nullable=false)
 		public String kontoUid
 
 		@Column(name="SH", length=1, nullable=false)

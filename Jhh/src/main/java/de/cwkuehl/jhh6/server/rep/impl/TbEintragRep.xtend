@@ -27,11 +27,11 @@ class TbEintragRep {
 
 		@PrimaryKeyJoinColumn(name="Mandant_Nr", referencedColumnName="Nr")
 		@ManyToOne(targetEntity=typeof(MaMandantRep))
-		@Column(name="Mandant_Nr", nullable=true)
+		@Column(name="Mandant_Nr", nullable=false)
 		public int mandantNr
 
 		@PrimaryKeyJoinColumn(name="Datum")
-		@Column(name="Datum", nullable=true)
+		@Column(name="Datum", nullable=false)
 		public LocalDate datum
 
 		@Column(name="Eintrag", nullable=false)

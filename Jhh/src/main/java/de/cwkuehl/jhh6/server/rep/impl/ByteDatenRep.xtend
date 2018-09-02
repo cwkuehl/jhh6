@@ -26,19 +26,19 @@ class ByteDatenRep {
 
 		@PrimaryKeyJoinColumn(name="Mandant_Nr", referencedColumnName="Nr")
 		@ManyToOne(targetEntity=typeof(MaMandantRep))
-		@Column(name="Mandant_Nr", nullable=true)
+		@Column(name="Mandant_Nr", nullable=false)
 		public int mandantNr
 
 		@PrimaryKeyJoinColumn(name="Typ")
-		@Column(name="Typ", length=20, nullable=true)
+		@Column(name="Typ", length=20, nullable=false)
 		public String typ
 
 		@PrimaryKeyJoinColumn(name="Uid")
-		@Column(name="Uid", length=35, nullable=true)
+		@Column(name="Uid", length=35, nullable=false)
 		public String uid
 
 		@PrimaryKeyJoinColumn(name="Lfd_Nr")
-		@Column(name="Lfd_Nr", nullable=true)
+		@Column(name="Lfd_Nr", nullable=false)
 		public int lfdNr
 
 		@Column(name="Metadaten", nullable=true)
