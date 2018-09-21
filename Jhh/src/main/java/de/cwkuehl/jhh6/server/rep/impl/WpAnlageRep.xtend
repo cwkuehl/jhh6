@@ -179,7 +179,7 @@ ALTER TABLE HH_Anlageteil
 		if (!Global.nes(wpuid)) {
 			sql.append(null, WpAnlage.WERTPAPIER_UID_NAME, "=", wpuid, null)
 		}
-		var order = new SqlBuilder("a.Mandant_Nr, b.Bezeichnung, a.Bezeichnung, a.Uid")
+		var order = new SqlBuilder("a.Mandant_Nr, a.Bezeichnung, b.Bezeichnung, a.Uid")
 		var l = getListeLang(daten, daten.mandantNr, sql, order)
 		return l
 	}

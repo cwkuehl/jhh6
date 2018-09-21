@@ -1122,6 +1122,29 @@ public class DbInit {
                 dba.createTab3(mout, tabelle, "XRKSB_Ereignis", false, "Replikation_Uid, Mandant_Nr");
                 execute(daten, zeinstellungDao, mout);
                 version = 53;
+            } else if (version <= 53) {
+                DbAnpassung dba = new DbAnpassung(dbart);
+                Vector<String> mout = new Vector<String>();
+                String tabelle = null;
+
+                tabelle = "WP_Wertpapier";
+                dba.addTab0();
+                dba.addTab1("Mandant_Nr", "D_INTEGER", false);
+                dba.addTab1("Uid", "D_REPL_ID", false);
+                dba.addTab1("Bezeichnung", "D_STRING_50", false);
+                dba.addTab1("Kuerzel", "D_STRING_20", false);
+                dba.addTab1("Parameter", "D_MEMO", true);
+                dba.addTab1("Datenquelle", "D_STRING_35", false);
+                dba.addTab1("Status", "D_STRING_10", false);
+                dba.addTab1("Relation_Uid", "D_REPL_ID", true);
+                dba.addTab1("Notiz", "D_MEMO", true);
+                dba.addTab1("Angelegt_Von", "D_STRING_20", true);
+                dba.addTab1("Angelegt_Am", "D_DATETIME", true);
+                dba.addTab1("Geaendert_Von", "D_STRING_20", true);
+                dba.addTab1("Geaendert_Am", "D_DATETIME", true);
+                dba.addTab2(mout, tabelle, "Mandant_Nr, Uid", "Mandant_Nr, Uid");
+                execute(daten, zeinstellungDao, mout);
+                version = 54;
             }
             if (version > versionAlt) {
                 // log.error("Version " + version);

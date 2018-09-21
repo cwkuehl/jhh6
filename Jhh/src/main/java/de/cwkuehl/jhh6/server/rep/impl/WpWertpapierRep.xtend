@@ -43,7 +43,7 @@ class WpWertpapierRep {
 		@Column(name="Bezeichnung", length=50, nullable=false)
 		public String bezeichnung
 
-		@Column(name="Kuerzel", length=10, nullable=false)
+		@Column(name="Kuerzel", length=20, nullable=false)
 		public String kuerzel
 
 		@Column(name="Parameter", length=-1, nullable=true)

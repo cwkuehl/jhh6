@@ -592,34 +592,50 @@ class WertpapierService {
 				var jmeta = jresult.getJSONObject("meta")
 				var jts = if(jresult.has("timestamp")) jresult.getJSONArray("timestamp") else null
 				var jquote = jresult.getJSONObject("indicators").getJSONArray("quote").getJSONObject(0)
-				var jopen = jquote.getJSONArray("open")
-				var jclose = jquote.getJSONArray("close")
-				var jlow = jquote.getJSONArray("low")
-				var jhigh = jquote.getJSONArray("high")
-				for (var i = 0; jts !== null && i < jts.size; i++) {
+				if (jquote.length > 0) {
+					var jopen = jquote.getJSONArray("open")
+					var jclose = jquote.getJSONArray("close")
+					var jlow = jquote.getJSONArray("low")
+					var jhigh = jquote.getJSONArray("high")
+					for (var i = 0; jts !== null && i < jts.size; i++) {
+						var k = new SoKurse
+						k.datum = Instant.ofEpochSecond(jts.getLong(i)).atZone(ZoneId.systemDefault).toLocalDate.
+							atStartOfDay
+						k.open = jopen.optDouble(i, 0)
+						k.high = jhigh.optDouble(i, 0)
+						k.low = jlow.optDouble(i, 0)
+						k.close = jclose.optDouble(i, 0)
+						k.bewertung = jmeta.getString("currency")
+						if (Global.compDouble4(k.close, 0) != 0) {
+							k.open = if(Global.compDouble4(k.open, 0) == 0) k.close else k.open
+							k.high = if(Global.compDouble4(k.open, 0) == 0) k.close else k.high
+							k.low = if(Global.compDouble4(k.open, 0) == 0) k.close else k.low
+							liste.add(k)
+						}
+					}
+				} else {
 					var k = new SoKurse
-					k.datum = Instant.ofEpochSecond(jts.getLong(i)).atZone(ZoneId.systemDefault).toLocalDate.
-						atStartOfDay
-					k.open = jopen.optDouble(i, 0)
-					k.high = jhigh.optDouble(i, 0)
-					k.low = jlow.optDouble(i, 0)
-					k.close = jclose.optDouble(i, 0)
+					var tl = jmeta.getJSONObject("currentTradingPeriod").getJSONObject("pre").getLong("end")
+					k.datum = Instant.ofEpochSecond(tl).atZone(ZoneId.systemDefault).toLocalDate.atStartOfDay
+					k.close = jmeta.getDouble("chartPreviousClose")
 					k.bewertung = jmeta.getString("currency")
+					if (Global.compDouble4(k.close, 0) != 0) {
+						k.open = k.close
+						k.high = k.close
+						k.low = k.close
+						liste.add(k)
+					}
+				}
+				for (k : liste) {
 					if (Global.compDouble4(kl, 0) == 0) {
 						kl = k.close
 					}
-					if (Global.compDouble4(k.close, 0) != 0) {
-						k.open = if(Global.compDouble4(k.open, 0) == 0) k.close else k.open
-						k.high = if(Global.compDouble4(k.open, 0) == 0) k.close else k.high
-						k.low = if(Global.compDouble4(k.open, 0) == 0) k.close else k.low
-						while (Global.compDouble4(kl, 0) != 0 && Global.compDouble4(k.close / kl, 5) > 0) {
-							// richtig skalieren: bei WATL.L Faktor 100. 
-							k.open = k.open / 10
-							k.high = k.high / 10
-							k.low = k.low / 10
-							k.close = k.close / 10
-						}
-						liste.add(k)
+					while (Global.compDouble4(kl, 0) != 0 && Global.compDouble4(k.close / kl, 5) > 0) {
+						// richtig skalieren: bei WATL.L Faktor 100. 
+						k.open = k.open / 10
+						k.high = k.high / 10
+						k.low = k.low / 10
+						k.close = k.close / 10
 					}
 				}
 			} catch (Exception ex) {
@@ -1433,7 +1449,7 @@ class WertpapierService {
 					waehrung = waehrung.toUpperCase
 					var SoKurse wk
 					// try {
-					wk = getAktWaehrungKurs(daten, waehrung, bis)
+					wk = getAktWaehrungKurs(daten, waehrung, if (k === null) bis else k.datum.toLocalDate)
 					// } catch(Exception ex) {
 					// // ignorieren
 					// }
