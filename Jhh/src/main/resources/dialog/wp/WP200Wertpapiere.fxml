@@ -194,14 +194,14 @@
 	</HBox>
 	<Label fx:id="bezeichnung0" mnemonicParsing="true" text="%WP200.bezeichnung" GridPane.columnIndex="0"
 		GridPane.rowIndex="4" />
-	<TextField fx:id="bezeichnung" accessibleText="%WP200.bezeichnung.tt" promptText="%WP200.bezeichnung.tt"
+	<TextField fx:id="bezeichnung" onKeyReleased="#onAktuell" accessibleText="%WP200.bezeichnung.tt" promptText="%WP200.bezeichnung.tt"
 		GridPane.columnIndex="1" GridPane.rowIndex="4">
 		<tooltip>
 			<Tooltip text="%WP200.bezeichnung.tt" />
 		</tooltip>
 	</TextField>
 	<Label fx:id="muster0" mnemonicParsing="true" text="%WP200.muster" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-	<TextField fx:id="muster" accessibleText="%WP200.muster.tt" promptText="%WP200.muster.tt"
+	<TextField fx:id="muster" onKeyReleased="#onAktuell" accessibleText="%WP200.muster.tt" promptText="%WP200.muster.tt"
 		GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
 		<tooltip>
 			<Tooltip text="%WP200.muster.tt" />
@@ -209,7 +209,7 @@
 	</TextField>
 	<Label fx:id="konfiguration0" mnemonicParsing="true" text="%WP200.konfiguration" GridPane.columnIndex="0"
 		GridPane.rowIndex="5" />
-	<ComboBox fx:id="konfiguration" accessibleText="%WP200.konfiguration.tt" GridPane.columnIndex="1"
+	<ComboBox fx:id="konfiguration" onAction="#onAktuell" accessibleText="%WP200.konfiguration.tt" GridPane.columnIndex="1"
 		GridPane.columnSpan="3" GridPane.rowIndex="5" GridPane.vgrow="ALWAYS">
 		<tooltip>
 			<Tooltip text="%WP200.konfiguration.tt" />

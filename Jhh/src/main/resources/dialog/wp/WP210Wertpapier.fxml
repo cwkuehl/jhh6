@@ -27,8 +27,14 @@
 			<Tooltip text="%WP210.bezeichnung.tt" />
 		</tooltip>
 	</TextField>
-	<Label fx:id="kuerzel0" mnemonicParsing="true" text="%WP210.kuerzel" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-	<TextField fx:id="kuerzel" accessibleText="%WP210.kuerzel.tt" promptText="%WP210.kuerzel.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2">
+	<Label fx:id="provider0" mnemonicParsing="true" text="%WP210.provider" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+	<ComboBox fx:id="provider" accessibleText="%WP210.provider.tt" GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+		<tooltip>
+			<Tooltip text="%WP210.provider.tt" />
+		</tooltip>
+	</ComboBox>
+	<Label fx:id="kuerzel0" mnemonicParsing="true" text="%WP210.kuerzel" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+	<TextField fx:id="kuerzel" accessibleText="%WP210.kuerzel.tt" promptText="%WP210.kuerzel.tt" GridPane.columnIndex="3" GridPane.columnSpan="1" GridPane.rowIndex="2">
 		<tooltip>
 			<Tooltip text="%WP210.kuerzel.tt" />
 		</tooltip>
