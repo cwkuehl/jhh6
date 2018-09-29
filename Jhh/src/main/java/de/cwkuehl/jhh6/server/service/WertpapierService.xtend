@@ -177,6 +177,29 @@ class WertpapierService {
 	}
 
 	@Transaction(false)
+	override ServiceErgebnis<List<MaEinstellung>> getWertpapierProviderListe(ServiceDaten daten) {
+
+		var liste = new ArrayList<MaEinstellung>
+		var e = new MaEinstellung
+		e.mandantNr = daten.mandantNr
+		e.schluessel = "yahoo"
+		e.wert = "Yahoo, finance.yahoo.com"
+		liste.add(e)
+		e = new MaEinstellung
+		e.mandantNr = daten.mandantNr
+		e.schluessel = "onvista"
+		e.wert = "Onvista Fonds, www.onvista.de"
+		liste.add(e)
+		e = new MaEinstellung
+		e.mandantNr = daten.mandantNr
+		e.schluessel = "ariva"
+		e.wert = "Ariva, www.ariva.de"
+		liste.add(e)
+		var r = new ServiceErgebnis<List<MaEinstellung>>(liste)
+		return r
+	}
+
+	@Transaction(false)
 	override ServiceErgebnis<List<MaEinstellung>> getWertpapierStatusListe(ServiceDaten daten) {
 
 		var liste = new ArrayList<MaEinstellung>
@@ -300,6 +323,9 @@ class WertpapierService {
 	def private void berechneBewertung(ServiceDaten daten, LocalDate dvon, LocalDate dbis, WpWertpapierLang wp,
 		WpKonfigurationLang k, boolean speichern) {
 
+		if (wp === null) {
+			return
+		}
 		wp.bewertung = '''00 «Meldungen::WP010»'''
 		wp.bewertung1 = ""
 		wp.bewertung2 = ""
@@ -327,11 +353,12 @@ class WertpapierService {
 		wp.index3 = ""
 		wp.index4 = ""
 		wp.schnitt200 = ""
-		if (wp === null || !"1".equals(wp.status)) {
+		if (Global.nes(wp.datenquelle) || Global.nes(wp.kuerzel) || !"1".equals(wp.status)) {
 			return
 		}
 		try {
-			var liste = holeKurseIntern(daten, dvon, dbis, wp.kuerzel,
+			var liste = holeKurseIntern(daten, dvon, dbis, wp.datenquelle, wp.kuerzel,
+				if(k !== null && k.relativ) wp.relationDatenquelle else null,
 				if(k !== null && k.relativ) wp.relationKuerzel else null)
 			var kursdatum = if(liste.size > 0) liste.get(liste.size - 1).datum.toLocalDate else dbis
 			var signalbew = 0
@@ -509,13 +536,13 @@ class WertpapierService {
 		}
 	}
 
-	def private List<SoKurse> holeKurseIntern(ServiceDaten daten, LocalDate dvon, LocalDate dbis, String kursname,
-		String kursnameRelation) {
+	def private List<SoKurse> holeKurseIntern(ServiceDaten daten, LocalDate dvon, LocalDate dbis, String quelle,
+		String kursname, String quelleRelation, String kursnameRelation) {
 
-		var liste = holeKursListe(daten, dvon, dbis, kursname, true, 0)
-		if (!Global.nes(kursnameRelation)) {
+		var liste = holeKursListe(daten, dvon, dbis, quelle, kursname, true, 0)
+		if (liste !== null && !Global.nes(kursnameRelation)) {
 			var rliste = new ArrayList<SoKurse>
-			var liste2 = holeKursListe(daten, dvon, dbis, kursnameRelation, true, 0)
+			var liste2 = holeKursListe(daten, dvon, dbis, quelleRelation, kursnameRelation, true, 0)
 			var h = new HashMap<Long, SoKurse>
 			for (SoKurse k : liste2) {
 				h.put(k.datum.toEpochSecond(ZoneOffset.UTC), k)
@@ -553,93 +580,126 @@ class WertpapierService {
 		return liste
 	}
 
-	def private List<SoKurse> holeKursListe(ServiceDaten daten, LocalDate dvon, LocalDate dbis, String kursname,
-		boolean letzter, double klf) {
+	def private List<SoKurse> holeKursListe(ServiceDaten daten, LocalDate dvon, LocalDate dbis, String quelle,
+		String kursname, boolean letzter, double klf) {
 
+		var liste = new ArrayList<SoKurse>
+		if (Global.nes(quelle) || Global.nes(kursname)) {
+			return liste
+		}
 		var bis = if(dbis === null) daten.heute else dbis
 		var von = if(dvon === null || !dvon.isBefore(bis)) bis.minusDays(182) else dvon
-		var wp = if(Global.nes(kursname)) "^GDAXI" else kursname
-		// http://real-chart.finance.yahoo.com/table.csv?s=%5EGDAXI&d=1&e=10&f=2015&g=d&a=10&b=26&c=2010&ignore=.csv
-		// try {
-		// wp = URLEncoder.encode(wp, "UTF-8")
-		// } catch (UnsupportedEncodingException ex) {
-		// throw new RuntimeException(ex)
-		// }
-		// var url = Global.format(
-		// "http://real-chart.finance.yahoo.com/table.csv?s={0}&d={1}&e={2}&f={3,number,0}&g=d&a={4}&b={5}&c={6,number,0}&ignore=.csv",
-		// wp, bis.monthValue - 1, bis.dayOfMonth, bis.year, von.monthValue - 1, von.dayOfMonth, von.year)
-		// Ranges 1d 5d 1mo 3mo 6mo 1y 2y 5y 10y ytd max
-		// var range = "5d"
-		// var url = Global.format(
-		// "http://query1.finance.yahoo.com/v7/finance/chart/{0}?range={1}&interval=1d&indicators=quote&includeTimestamps=true",
-		// wp, range)
-		var url = Global.format("http://query1.finance.yahoo.com/v7/finance/chart/{0}" +
-			"?period1={1}&period2={2}&interval=1d&indicators=quote&includeTimestamps=true", wp, //
-		von.atStartOfDay(ZoneOffset.UTC).toEpochSecond.toString,
-			bis.atStartOfDay(ZoneOffset.UTC).toEpochSecond.toString)
-		var v = executeHttp(url, null, false, null)
-		var kl = klf
-		var liste = new ArrayList<SoKurse>
-		if (v !== null && v.size > 0) {
-			try {
-				var jr = new JSONObject(v.get(0))
-				var jc = jr.getJSONObject("chart")
-				var error = jc.get("error")
-				if (error !== null && error.toString !== "null") {
-					throw new Exception(error.toString)
-				}
-				var jresult = jc.getJSONArray("result").getJSONObject(0)
-				var jmeta = jresult.getJSONObject("meta")
-				var jts = if(jresult.has("timestamp")) jresult.getJSONArray("timestamp") else null
-				var jquote = jresult.getJSONObject("indicators").getJSONArray("quote").getJSONObject(0)
-				if (jquote.length > 0) {
-					var jopen = jquote.getJSONArray("open")
-					var jclose = jquote.getJSONArray("close")
-					var jlow = jquote.getJSONArray("low")
-					var jhigh = jquote.getJSONArray("high")
-					for (var i = 0; jts !== null && i < jts.size; i++) {
+		var wp = kursname
+		if (quelle == "yahoo") {
+			var url = Global.format("http://query1.finance.yahoo.com/v7/finance/chart/{0}" +
+				"?period1={1}&period2={2}&interval=1d&indicators=quote&includeTimestamps=true", wp, //
+			von.atStartOfDay(ZoneOffset.UTC).toEpochSecond.toString,
+				bis.atStartOfDay(ZoneOffset.UTC).toEpochSecond.toString)
+			var v = executeHttp(url, null, false, null)
+			if (v !== null && v.size > 0) {
+				try {
+					var jr = new JSONObject(v.get(0))
+					var jc = jr.getJSONObject("chart")
+					var error = jc.get("error")
+					if (error !== null && error.toString !== "null") {
+						throw new Exception(error.toString)
+					}
+					var jresult = jc.getJSONArray("result").getJSONObject(0)
+					var jmeta = jresult.getJSONObject("meta")
+					var jts = if(jresult.has("timestamp")) jresult.getJSONArray("timestamp") else null
+					var jquote = jresult.getJSONObject("indicators").getJSONArray("quote").getJSONObject(0)
+					if (jquote.length > 0) {
+						var jopen = jquote.getJSONArray("open")
+						var jclose = jquote.getJSONArray("close")
+						var jlow = jquote.getJSONArray("low")
+						var jhigh = jquote.getJSONArray("high")
+						for (var i = 0; jts !== null && i < jts.size; i++) {
+							var k = new SoKurse
+							k.datum = Instant.ofEpochSecond(jts.getLong(i)).atZone(ZoneId.systemDefault).toLocalDate.
+								atStartOfDay
+							k.open = jopen.optDouble(i, 0)
+							k.high = jhigh.optDouble(i, 0)
+							k.low = jlow.optDouble(i, 0)
+							k.close = jclose.optDouble(i, 0)
+							k.bewertung = jmeta.getString("currency")
+							if (Global.compDouble4(k.close, 0) != 0) {
+								k.open = if(Global.compDouble4(k.open, 0) == 0) k.close else k.open
+								k.high = if(Global.compDouble4(k.open, 0) == 0) k.close else k.high
+								k.low = if(Global.compDouble4(k.open, 0) == 0) k.close else k.low
+								liste.add(k)
+							}
+						}
+					} else {
 						var k = new SoKurse
-						k.datum = Instant.ofEpochSecond(jts.getLong(i)).atZone(ZoneId.systemDefault).toLocalDate.
-							atStartOfDay
-						k.open = jopen.optDouble(i, 0)
-						k.high = jhigh.optDouble(i, 0)
-						k.low = jlow.optDouble(i, 0)
-						k.close = jclose.optDouble(i, 0)
+						var tl = jmeta.getJSONObject("currentTradingPeriod").getJSONObject("pre").getLong("end")
+						k.datum = Instant.ofEpochSecond(tl).atZone(ZoneId.systemDefault).toLocalDate.atStartOfDay
+						k.close = jmeta.getDouble("chartPreviousClose")
 						k.bewertung = jmeta.getString("currency")
 						if (Global.compDouble4(k.close, 0) != 0) {
-							k.open = if(Global.compDouble4(k.open, 0) == 0) k.close else k.open
-							k.high = if(Global.compDouble4(k.open, 0) == 0) k.close else k.high
-							k.low = if(Global.compDouble4(k.open, 0) == 0) k.close else k.low
+							k.open = k.close
+							k.high = k.close
+							k.low = k.close
 							liste.add(k)
 						}
 					}
-				} else {
-					var k = new SoKurse
-					var tl = jmeta.getJSONObject("currentTradingPeriod").getJSONObject("pre").getLong("end")
-					k.datum = Instant.ofEpochSecond(tl).atZone(ZoneId.systemDefault).toLocalDate.atStartOfDay
-					k.close = jmeta.getDouble("chartPreviousClose")
-					k.bewertung = jmeta.getString("currency")
-					if (Global.compDouble4(k.close, 0) != 0) {
-						k.open = k.close
-						k.high = k.close
-						k.low = k.close
+				} catch (Exception ex) {
+					throw new RuntimeException(ex)
+				}
+			}
+		} else if (quelle == "ariva") {
+			var url = Global.format("https://www.ariva.de/quote/historic/historic.csv?secu={0}&boerse_id=6" +
+				"&clean_split=1&clean_payout=0&clean_bezug=1&min_time={1}&max_time={2}&trenner=%3B&go=Download", wp,
+				Global.dateString(von), Global.dateString(bis))
+			var v = executeHttps(url, null, true, null)
+			if (v !== null && v.size > 1) {
+				if (v.get(0) != "Datum;Erster;Hoch;Tief;Schlusskurs;Stuecke;Volumen")
+					throw new RuntimeException('''Falsches Format: "«v.get(0)»" statt "Datum;Erster;Hoch;Tief;Schlusskurs;Stuecke;Volumen"''')
+				for (var i = 1; i < v.size; i++) {
+					var c = Global.decodeCSV(v.get(i), ';', ';')
+					if (c !== null && c.size >= 5) {
+						var k = new SoKurse
+						k.datum = LocalDate.parse(c.get(0)).atStartOfDay
+						k.open = Global.strDbl(c.get(1), Locale.GERMAN)
+						k.high = Global.strDbl(c.get(2), Locale.GERMAN)
+						k.low = Global.strDbl(c.get(3), Locale.GERMAN)
+						k.close = Global.strDbl(c.get(4), Locale.GERMAN)
 						liste.add(k)
 					}
 				}
-				for (k : liste) {
-					if (Global.compDouble4(kl, 0) == 0) {
-						kl = k.close
-					}
-					while (Global.compDouble4(kl, 0) != 0 && Global.compDouble4(k.close / kl, 5) > 0) {
-						// richtig skalieren: bei WATL.L Faktor 100. 
-						k.open = k.open / 10
-						k.high = k.high / 10
-						k.low = k.low / 10
-						k.close = k.close / 10
+			}
+		} else if (quelle == "onvista") {
+			val d = bis.year * 365 + bis.dayOfYear - (von.year * 365 - von.dayOfYear)
+			var url = Global.format("https://www.onvista.de/fonds/snapshotHistoryCSV?idNotation={0}"
+				+"&datetimeTzStartRange={1}&timeSpan={2}D&codeResolution=1D", wp, Global.dateString(von), d)
+			var v = executeHttps(url, null, true, null)
+			if (v !== null && v.size > 1) {
+				if (v.get(0) != "Datum;Eröffnung;Hoch;Tief;Schluss;Volumen")
+					throw new RuntimeException('''Falsches Format: "«v.get(0)»" statt "Datum;Eröffnung;Hoch;Tief;Schluss;Volumen"''')
+				for (var i = 1; i < v.size; i++) {
+					var c = Global.decodeCSV(v.get(i), ';', ';')
+					if (c !== null && c.size >= 5) {
+						var k = new SoKurse
+						k.datum = Global.objDat2(c.get(0))?.atStartOfDay
+						k.open = Global.strDbl(c.get(1), Locale.GERMAN)
+						k.high = Global.strDbl(c.get(2), Locale.GERMAN)
+						k.low = Global.strDbl(c.get(3), Locale.GERMAN)
+						k.close = Global.strDbl(c.get(4), Locale.GERMAN)
+						liste.add(k)
 					}
 				}
-			} catch (Exception ex) {
-				throw new RuntimeException(ex)
+			}
+		}
+		var kl = klf
+		for (k : liste) {
+			if (Global.compDouble4(kl, 0) == 0) {
+				kl = k.close
+			}
+			while (Global.compDouble4(kl, 0) != 0 && Global.compDouble4(k.close / kl, 5) > 0) {
+				// richtig skalieren: bei WATL.L Faktor 100. 
+				k.open = k.open / 10
+				k.high = k.high / 10
+				k.low = k.low / 10
+				k.close = k.close / 10
 			}
 		}
 
@@ -670,59 +730,15 @@ class WertpapierService {
 	var df0 = DateTimeFormatter.ofPattern("M/d/yyyy", Locale.ENGLISH)
 	var df = DateTimeFormatter.ofPattern("h:mma", Locale.ENGLISH)
 
-	def private SoKurse getAktKurs(ServiceDaten daten, String kuerzel, LocalDate heute, double kl) {
+	def private SoKurse getAktKurs(ServiceDaten daten, String quelle, String kuerzel, LocalDate heute, double kl) {
 
-		if (Global.nes(kuerzel)) {
-			return null
-		}
-		// var kurz = kuerzel
-		// var url = Global.format("http://download.finance.yahoo.com/d/quotes.csv?s={0}&f=snad1t1c4", kurz) // geht nach 01.11.2017 nicht mehr
-		// var v = executeHttp(url, null, true, null)
-		// var url = Global.format("https://uk.finance.yahoo.com/quote/AAPL/history")
-		// var cookie = new StringBuffer
-		// var v = executeHttp(url, null, true, cookie)
-		// if (cookie.length > 0) {
-		// url = Global.format("https://download.finance.yahoo.com/d/quotes.csv?s={0}&f=snad1t1c4", kurz)
-		// v = executeHttp(url, null, true, cookie)
-		// }
-		// if(v !== null && v.size > 0) {
-		// for (String s : v) {
-		// if(!Global.nes(s)) {
-		// try {
-		// var zeile = Global.decodeCSV(s)
-		// if(zeile.size >= 6) {
-		// var k = new SoKurse
-		// var d = LocalDate.parse(zeile.get(3).toUpperCase, df0)
-		// var t = LocalTime.parse(zeile.get(4).toUpperCase, df)
-		// k.datum = d.atTime(t.hour, t.minute)
-		// k.open = Global.strDbl(zeile.get(2))
-		// while(Global.compDouble4(kl, 0) != 0 && Global.compDouble4(k.open / kl, 5) > 0) {
-		// // richtig skalieren: bei WATL.L Faktor 100. 
-		// k.open = k.open / 10
-		// }
-		// k.high = k.open
-		// k.low = k.open
-		// k.close = k.open
-		// k.bemerkung = Global.anhaengen(zeile.get(0), " ", zeile.get(1))
-		// k.bewertung = zeile.get(5) // Währung
-		// if(Global.compDouble4(k.close, 0) != 0) {
-		// return k
-		// }
-		// }
-		// } catch(Exception ex) {
-		// // throw ex
-		// }
-		// }
-		// }
-		// }
 		var von = heute.minusDays(7)
-		var l = holeKursListe(daten, von, heute, kuerzel, false, kl)
+		var l = holeKursListe(daten, von, heute, quelle, kuerzel, false, kl)
 		if (l !== null && l.size > 0) {
 			return l.get(l.size - 1)
 		}
 		return null
 	}
-
 
 	def private String getFixerIoAccessKey(ServiceDaten daten) {
 
@@ -926,6 +942,7 @@ class WertpapierService {
 
 		var strB = bez
 		var strQ = quelle
+		var strK = kuerzel
 		var strStatus = status
 		var aktkurs = aktkurs0
 		var signal2 = signal20
@@ -935,24 +952,23 @@ class WertpapierService {
 
 		if (Global.nes(uid)) {
 			if (Global.nes(strB)) {
-				strB = Meldungen::WP013(kuerzel)
+				strB = Meldungen::WP013(strK)
 			}
 			if (Global.nes(strStatus)) {
 				strStatus = "0"
 			}
-		} else {
-			if (Global.nes(strB)) {
-				throw new MeldungException(Meldungen::WP001)
-			}
-			if (Global.nes(status)) {
-				throw new MeldungException(Meldungen::WP002)
-			}
 		}
-		if (Global.nes(kuerzel)) {
-			throw new MeldungException(Meldungen::WP014)
+		if (Global.nes(strB)) {
+			throw new MeldungException(Meldungen::WP001)
+		}
+		if (Global.nes(status)) {
+			throw new MeldungException(Meldungen::WP002)
 		}
 		if (Global.nes(strQ)) {
-			strQ = "yahoo"
+			strQ = ""
+			strK = ""
+		} else if (Global.nes(strK)) {
+			throw new MeldungException(Meldungen::WP014)
 		}
 		if (!Global.nes(uid) && bew === null) {
 			// Update aus Formular
@@ -978,7 +994,7 @@ class WertpapierService {
 				sb.append(bew.get(i))
 			}
 		}
-		return wertpapierRep.iuWpWertpapier(daten, null, uid, strB, kuerzel, sb.toString, strQ, strStatus, ruid, notiz,
+		return wertpapierRep.iuWpWertpapier(daten, null, uid, strB, strK, sb.toString, strQ, strStatus, ruid, notiz,
 			null, null, null, null)
 	}
 
@@ -1027,11 +1043,12 @@ class WertpapierService {
 	}
 
 	@Transaction(false)
-	override ServiceErgebnis<List<SoKurse>> holeKurse(ServiceDaten daten, LocalDate dvon, LocalDate dbis,
-		String kursname, String kursnameRelation) {
+	override ServiceErgebnis<List<SoKurse>> holeKurse(ServiceDaten daten, LocalDate dvon, LocalDate dbis, String quelle,
+		String kursname, String quelleRelation, String kursnameRelation) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
-		var r = new ServiceErgebnis<List<SoKurse>>(holeKurseIntern(daten, dvon, dbis, kursname, kursnameRelation))
+		var r = new ServiceErgebnis<List<SoKurse>>(
+			holeKurseIntern(daten, dvon, dbis, quelle, kursname, quelleRelation, kursnameRelation))
 		return r
 	}
 
@@ -1430,7 +1447,7 @@ class WertpapierService {
 				zinsen = if(zinsen === null) 0.0 else zinsen
 				var SoKurse k
 				try {
-					k = getAktKurs(daten, wp.kuerzel, bis, preis)
+					k = getAktKurs(daten, wp.datenquelle, wp.kuerzel, bis, preis)
 				} catch (Exception ex) {
 					// ignorieren
 					Global.machNichts
@@ -1449,7 +1466,7 @@ class WertpapierService {
 					waehrung = waehrung.toUpperCase
 					var SoKurse wk
 					// try {
-					wk = getAktWaehrungKurs(daten, waehrung, if (k === null) bis else k.datum.toLocalDate)
+					wk = getAktWaehrungKurs(daten, waehrung, if(k === null) bis else k.datum.toLocalDate)
 					// } catch(Exception ex) {
 					// // ignorieren
 					// }
@@ -1461,7 +1478,7 @@ class WertpapierService {
 				var datum = if(k === null) null else k.datum
 				var wert = anteile * aktpreis
 				var gewinn = wert + zinsen - betrag
-				var pw = if(wert == 0) 0 else gewinn / betrag * 100
+				var pw = if(wert == 0 || betrag == 0) 0 else if (gewinn < 0) gewinn / wert * 100 else gewinn / betrag * 100
 				var sb = new StringBuilder
 				sb.append(Global.dblStr2l(betrag))
 				sb.append(";").append(Global.dblStr5l(anteile))
@@ -1497,12 +1514,15 @@ class WertpapierService {
 			}
 			if (zusammengesetzt) {
 				var p0 = if(a.aktdatum === null) null else Meldungen::WP026(a.aktdatum)
-				var p1 = if(Global.nes(a.waehrung)) null else Meldungen::WP025(a.waehrung, a.kurs, p0)
+				var p1 = if(Global.nes(a.waehrung)) p0 else Meldungen::WP025(a.waehrung, a.kurs, p0)
 				var p2 = if (a.anteile == 0 || a.aktpreis == 0)
 						null
 					else
 						Meldungen::WP024(a.aktpreis, p1, a.wert, a.gewinn, a.pgewinn)
-				a.daten = if(a.anteile == 0) null else Meldungen::WP023(a.betrag, a.anteile, a.preis, a.zinsen, p2)
+				a.daten = if (a.anteile == 0)
+					null
+				else
+					Meldungen::WP023(a.betrag, a.anteile, a.preis, a.zinsen, p2)
 			}
 		}
 		return liste

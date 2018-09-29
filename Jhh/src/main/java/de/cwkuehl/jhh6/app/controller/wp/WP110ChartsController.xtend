@@ -132,8 +132,8 @@ class WP110ChartsController extends BaseController<String> {
 			var bis = LocalDate::now
 			var von = bis.minusDays(k1.dauer)
 			var liste = get(
-				FactoryService::wertpapierService.holeKurse(serviceDaten, von, bis, wp1.kuerzel,
-					if(k1.relativ) wp1.relationKuerzel else null))
+				FactoryService::wertpapierService.holeKurse(serviceDaten, von, bis, wp1.datenquelle, wp1.kuerzel,
+					if(k1.relativ) wp1.relationDatenquelle else null, if(k1.relativ) wp1.relationKuerzel else null))
 			if (liste !== null && liste.size > 0) {
 				chart1 = new PnfChart
 				chart1.setBox(k1.box)
@@ -149,8 +149,8 @@ class WP110ChartsController extends BaseController<String> {
 			if (k2.dauer !== k1.dauer || !wp2.kuerzel.equals(wp1.kuerzel)) {
 				von = bis.minusDays(k2.dauer)
 				liste = get(
-					FactoryService::wertpapierService.holeKurse(serviceDaten, von, bis, wp2.kuerzel,
-						if(k2.relativ) wp2.relationKuerzel else null))
+					FactoryService::wertpapierService.holeKurse(serviceDaten, von, bis, wp2.datenquelle, wp2.kuerzel,
+						if(k2.relativ) wp2.relationDatenquelle else null, if(k2.relativ) wp2.relationKuerzel else null))
 			}
 			if (liste !== null && liste.size > 0) {
 				chart2 = new PnfChart
@@ -167,8 +167,8 @@ class WP110ChartsController extends BaseController<String> {
 			if (k3.dauer !== k2.dauer || !wp3.kuerzel.equals(wp2.kuerzel)) {
 				von = bis.minusDays(k3.dauer)
 				liste = get(
-					FactoryService::wertpapierService.holeKurse(serviceDaten, von, bis, wp3.kuerzel,
-						if(k3.relativ) wp3.relationKuerzel else null))
+					FactoryService::wertpapierService.holeKurse(serviceDaten, von, bis, wp3.datenquelle, wp3.kuerzel,
+						if(k3.relativ) wp3.relationDatenquelle else null, if(k3.relativ) wp3.relationKuerzel else null))
 			}
 			if (liste !== null && liste.size > 0) {
 				chart3 = new PnfChart

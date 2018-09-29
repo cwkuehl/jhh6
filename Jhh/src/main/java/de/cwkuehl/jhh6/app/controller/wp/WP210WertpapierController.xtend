@@ -24,6 +24,8 @@ class WP210WertpapierController extends BaseController<String> {
 	@FXML TextField nr
 	@FXML Label bezeichnung0
 	@FXML TextField bezeichnung
+	@FXML Label provider0
+	@FXML ComboBox<ProviderData> provider
 	@FXML Label kuerzel0
 	@FXML TextField kuerzel
 	@FXML Label status0
@@ -49,6 +51,24 @@ class WP210WertpapierController extends BaseController<String> {
 	@FXML Button ok
 
 	// @FXML Button abbrechen
+	/** 
+	 * Daten für ComboBox Provider.
+	 */
+	static class ProviderData extends ComboBoxData<MaEinstellung> {
+
+		new(MaEinstellung v) {
+			super(v)
+		}
+
+		override String getId() {
+			return getData.schluessel
+		}
+
+		override String toString() {
+			return getData.wert
+		}
+	}
+
 	/** 
 	 * Daten für ComboBox Status.
 	 */
@@ -93,6 +113,7 @@ class WP210WertpapierController extends BaseController<String> {
 		tabbar = 0
 		nr0.setLabelFor(nr)
 		bezeichnung0.setLabelFor(bezeichnung, true)
+		provider0.setLabelFor(provider, true)
 		kuerzel0.setLabelFor(kuerzel, true)
 		status0.setLabelFor(status, true)
 		aktKurs0.setLabelFor(aktKurs)
@@ -115,6 +136,9 @@ class WP210WertpapierController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
+			var pliste = get(FactoryService::wertpapierService.getWertpapierProviderListe(serviceDaten))
+			provider.setItems(getItems(pliste, null, [a|new ProviderData(a)], null))
+			provider.selectionModel.select(0)
 			var sliste = get(FactoryService::wertpapierService.getWertpapierStatusListe(serviceDaten))
 			status.setItems(getItems(sliste, null, [a|new StatusData(a)], null))
 			status.selectionModel.select(0)
@@ -126,13 +150,14 @@ class WP210WertpapierController extends BaseController<String> {
 				k = get(FactoryService::wertpapierService.getWertpapierLang(serviceDaten, k.uid))
 				nr.setText(k.uid)
 				bezeichnung.setText(k.bezeichnung)
+				setText(provider, k.datenquelle)
 				kuerzel.setText(k.kuerzel)
+				setText(status, k.status)
 				aktKurs.setText(k.aktuellerkurs)
 				stopKurs.setText(k.stopkurs)
 				signalKurs1.setText(Global::dblStr2l(k.signalkurs1))
 				muster.setText(k.muster)
 				sortierung.setText(k.sortierung)
-				setText(status, k.status)
 				setText(relation, k.relationUid)
 				notiz.setText(k.notiz)
 				angelegt.setText(k.formatDatumVon(k.angelegtAm, k.angelegtVon))
@@ -140,14 +165,15 @@ class WP210WertpapierController extends BaseController<String> {
 			}
 			nr.setEditable(false)
 			bezeichnung.setEditable(!loeschen)
+			setEditable(provider, !loeschen)
 			kuerzel.setEditable(!loeschen)
+			setEditable(status, !loeschen)
 			aktKurs.setEditable(false)
 			stopKurs.setEditable(false)
 			signalKurs1.setEditable(!loeschen)
 			muster.setEditable(false)
 			sortierung.setEditable(!loeschen)
 			setEditable(relation, !loeschen)
-			setEditable(status, !loeschen)
 			notiz.setEditable(!loeschen)
 			angelegt.setEditable(false)
 			geaendert.setEditable(false)
@@ -182,10 +208,12 @@ class WP210WertpapierController extends BaseController<String> {
 		var ServiceErgebnis<?> r
 		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
 			r = FactoryService::wertpapierService.insertUpdateWertpapier(serviceDaten, null, bezeichnung.text,
-				kuerzel.text, signalKurs1.text, sortierung.text, null, getText(status), getText(relation), notiz.text)
+				kuerzel.text, signalKurs1.text, sortierung.text, getText(provider), getText(status), getText(relation),
+				notiz.text)
 		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
 			r = FactoryService::wertpapierService.insertUpdateWertpapier(serviceDaten, nr.text, bezeichnung.text,
-				kuerzel.text, signalKurs1.text, sortierung.text, null, getText(status), getText(relation), notiz.text)
+				kuerzel.text, signalKurs1.text, sortierung.text, getText(provider), getText(status), getText(relation),
+				notiz.text)
 		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
 			r = FactoryService::wertpapierService.deleteWertpapier(serviceDaten, nr.text)
 		}

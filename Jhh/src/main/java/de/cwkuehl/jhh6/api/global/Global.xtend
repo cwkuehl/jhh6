@@ -1173,7 +1173,7 @@ class Global {
 			var str = objStr(obj)
 			try {
 				// parst auch 1.2.2004
-				d = LocalDate.parse(str, DateTimeFormatter.ofPattern("d.M.yy"))
+				d = LocalDate.parse(str, DateTimeFormatter.ofPattern("d.M.y"))
 			} catch (Exception exc) {
 				machNichts
 			}
@@ -1414,6 +1414,18 @@ class Global {
 	 * @throws Exception bei einem Parse-Fehler.
 	 */
 	def public static List<String> decodeCSV(String csv) throws Exception {
+		return decodeCSV(csv, ';', ',')
+	}
+
+	/**
+	 * Dekodierung einer CSV-Datei-Zeile als String in einen Vektor von Strings.
+	 * @param csv CSV-Datei-Zeile als String.
+	 * @param trenner1 1. Feldtrenner, z.B. ;.
+	 * @param trenner2 2. Feldtrenner, z.B. ,.
+	 * @return Vektor von Strings.
+	 * @throws Exception bei einem Parse-Fehler.
+	 */
+	def public static List<String> decodeCSV(String csv, char trenner1, char trenner2) throws Exception {
 
 		if (csv === null || csv.length <= 0) {
 			return null
@@ -1424,8 +1436,6 @@ class Global {
 		var i = 0
 		var char zeichen
 		val char anf = '"'
-		val char semi = ';'
-		val char komma = ','
 		val char cr = '\r'
 		val char lf = '\n'
 		var ende = false
@@ -1439,7 +1449,7 @@ class Global {
 						zustand = Z_ENDE_ENDE // Zeilenende-Ende
 					} else if (zeichen == anf) {
 						zustand = Z_ZK_ANFANG
-					} else if (zeichen == semi || zeichen == komma) {
+					} else if (zeichen == trenner1 || zeichen == trenner2) {
 						felder.add(feld.toString)
 						feld.setLength(0)
 					} else if (zeichen == cr || zeichen == lf) {
@@ -1465,7 +1475,7 @@ class Global {
 					} else if (zeichen == anf) {
 						feld.append(zeichen)
 						zustand = Z_ZK_ANFANG
-					} else if (zeichen == semi || zeichen == komma) {
+					} else if (zeichen == trenner1 || zeichen == trenner2) {
 						zustand = Z_ANFANG
 						felder.add(feld.toString)
 						feld.setLength(0)
@@ -1485,7 +1495,7 @@ class Global {
 					if (zeichen == 0) {
 						i--
 						zustand = Z_ENDE_ENDE // Zeilenende-Ende
-					} else if (zeichen == semi || zeichen == komma) {
+					} else if (zeichen == trenner1 || zeichen == trenner2) {
 						zustand = Z_ANFANG
 						felder.add(feld.toString)
 						feld.setLength(0)

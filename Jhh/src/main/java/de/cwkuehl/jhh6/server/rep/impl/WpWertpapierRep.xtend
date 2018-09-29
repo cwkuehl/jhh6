@@ -121,6 +121,9 @@ class WpWertpapierRep {
 		@Column(name="b.Bezeichnung", nullable=true)
 		public String relationBezeichnung
 
+		@Column(name="b.Datenquelle", nullable=true)
+		public String relationDatenquelle
+
 		@Column(name="b.Kuerzel", nullable=true)
 		public String relationKuerzel
 

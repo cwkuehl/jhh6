@@ -1,5 +1,6 @@
 package de.cwkuehl.jhh6.api.global
 
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.Locale
 import org.junit.Test
@@ -16,6 +17,16 @@ class GlobalTest {
 		d = Global.strdat("2017-12-31")
 		assertNotNull(d)
 		assertEquals(LocalDateTime.of(2017, 12, 31, 0, 0, 0).toString, d.toString)
+	}
+
+	@Test def void objDat2() {
+
+		var d = Global.objDat2("31.12.17")
+		assertNotNull(d)
+		assertEquals(LocalDate.of(17, 12, 31).toString, d.toString)
+		d = Global.objDat2("31.12.2017")
+		assertNotNull(d)
+		assertEquals(LocalDate.of(2017, 12, 31).toString, d.toString)
 	}
 
 	@Test def void strint() {
