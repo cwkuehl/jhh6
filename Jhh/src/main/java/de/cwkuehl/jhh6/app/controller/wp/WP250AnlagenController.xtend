@@ -46,6 +46,7 @@ class WP250AnlagenController extends BaseController<String> {
 	@FXML TableColumn<AnlagenData, Double> colBetrag
 	@FXML TableColumn<AnlagenData, Double> colWert
 	@FXML TableColumn<AnlagenData, Double> colGewinn
+	@FXML TableColumn<AnlagenData, LocalDateTime> colDatum
 	@FXML TableColumn<AnlagenData, String> colWaehrung
 	@FXML TableColumn<AnlagenData, LocalDateTime> colGa
 	@FXML TableColumn<AnlagenData, String> colGv
@@ -80,6 +81,7 @@ class WP250AnlagenController extends BaseController<String> {
 		SimpleObjectProperty<Double> betrag
 		SimpleObjectProperty<Double> wert
 		SimpleObjectProperty<Double> gewinn
+		SimpleObjectProperty<LocalDateTime> aktdatum
 		SimpleStringProperty waehrung
 		SimpleObjectProperty<LocalDateTime> geaendertAm
 		SimpleStringProperty geaendertVon
@@ -95,6 +97,7 @@ class WP250AnlagenController extends BaseController<String> {
 			wert = new SimpleObjectProperty<Double>(v.wert)
 			gewinn = new SimpleObjectProperty<Double>(v.gewinn)
 			waehrung = new SimpleStringProperty(v.waehrung)
+			aktdatum = new SimpleObjectProperty<LocalDateTime>(v.aktdatum)
 			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
 			geaendertVon = new SimpleStringProperty(v.geaendertVon)
 			angelegtAm = new SimpleObjectProperty<LocalDateTime>(v.angelegtAm)
@@ -195,6 +198,7 @@ class WP250AnlagenController extends BaseController<String> {
 		initColumnBetrag(colWert)
 		colGewinn.setCellValueFactory([c|c.value.gewinn])
 		initColumnBetrag(colGewinn)
+		colDatum.setCellValueFactory([c|c.value.aktdatum])
 		colWaehrung.setCellValueFactory([c|c.value.waehrung])
 		colGv.setCellValueFactory([c|c.value.geaendertVon])
 		colGa.setCellValueFactory([c|c.value.geaendertAm])

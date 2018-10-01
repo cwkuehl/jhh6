@@ -668,7 +668,7 @@ class WertpapierService {
 				}
 			}
 		} else if (quelle == "onvista") {
-			val d = bis.year * 365 + bis.dayOfYear - (von.year * 365 - von.dayOfYear)
+			val d = bis.year * 365 + bis.dayOfYear - (von.year * 365 + von.dayOfYear)
 			var url = Global.format("https://www.onvista.de/fonds/snapshotHistoryCSV?idNotation={0}"
 				+"&datetimeTzStartRange={1}&timeSpan={2}D&codeResolution=1D", wp, Global.dateString(von), d)
 			var v = executeHttps(url, null, true, null)
