@@ -159,14 +159,14 @@
 		</columns>
 	</TableView>
 	<Label fx:id="name0" mnemonicParsing="true" text="%AD100.name" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-	<TextField fx:id="name" accessibleText="%AD100.name.tt" promptText="%AD100.name.tt" GridPane.columnIndex="1"
+	<TextField fx:id="name" onKeyReleased="#onAktuell" accessibleText="%AD100.name.tt" promptText="%AD100.name.tt" GridPane.columnIndex="1"
 		GridPane.rowIndex="3">
 		<tooltip>
 			<Tooltip text="%AD100.name.tt" />
 		</tooltip>
 	</TextField>
 	<Label fx:id="vorname0" mnemonicParsing="true" text="%AD100.vorname" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-	<TextField fx:id="vorname" accessibleText="%AD100.vorname.tt" promptText="%AD100.vorname.tt"
+	<TextField fx:id="vorname" onKeyReleased="#onAktuell" accessibleText="%AD100.vorname.tt" promptText="%AD100.vorname.tt"
 		GridPane.columnIndex="3" GridPane.rowIndex="3">
 		<tooltip>
 			<Tooltip text="%AD100.vorname.tt" />
