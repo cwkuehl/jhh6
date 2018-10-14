@@ -480,9 +480,9 @@ class ReplikationService {
 		if (wl.size <= 1) {
 			wpService.insertUpdateKonfiguration(daten, null, Meldungen::M9000, 0.5, false, 3, 1, 182, false, 2, "1",
 				null)
-			var w0 = wpService.insertUpdateWertpapier(daten, null, "DAX", "^GDAXI", null, "A", null, "1", null, null).
+			var w0 = wpService.insertUpdateWertpapier(daten, null, "DAX", "^GDAXI", null, "A", "yahoo", "1", null, null).
 				ergebnis
-			var w = wpService.insertUpdateWertpapier(daten, null, "Deutsche Bank", "DBK.DE", null, "A", null, "1",
+			var w = wpService.insertUpdateWertpapier(daten, null, "Deutsche Bank", "DBK.DE", null, "A", "yahoo", "1",
 				w0.uid, null).ergebnis
 			var a = wpService.insertUpdateAnlage(daten, null, w.uid, w.kuerzel, null).ergebnis
 			wpService.insertUpdateBuchung(daten, null, a.uid, daten.heute, 100, -5, 7, 0, Meldungen::M9000, null, 14.28)
