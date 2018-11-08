@@ -1,8 +1,5 @@
 package de.cwkuehl.jhh6.app.controller.ag
 
-import java.time.LocalDateTime
-import java.util.ArrayList
-import java.util.List
 import de.cwkuehl.jhh6.api.dto.MaEinstellung
 import de.cwkuehl.jhh6.api.global.Global
 import de.cwkuehl.jhh6.api.message.Meldungen
@@ -10,7 +7,12 @@ import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.app.base.Werkzeug
+import de.cwkuehl.jhh6.server.FactoryService
 import de.cwkuehl.jhh6.server.service.backup.Sicherung
+import java.nio.file.Paths
+import java.time.LocalDateTime
+import java.util.ArrayList
+import java.util.List
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -270,6 +272,42 @@ class AG400SicherungenController extends BaseController<String> {
 	 */
 	@FXML def void onAbbrechen() {
 		abbruch.append("Abbruch")
+	}
+
+	/** 
+	 * Event für SQL-Sicherung.
+	 */
+	@FXML def void onSqlSicherung() {
+		onSqlSicherungTimer
+	}
+
+	def private void onSqlSicherungTimer() {
+
+		if (Werkzeug::showYesNoQuestion(Meldungen::M1010) === 0) {
+			return;
+		}
+		var Task<Void> task = ([|
+			status.setLength(0)
+			abbruch.setLength(0)
+			kopierFehler.clear
+			onSicherungStatus
+			onSicherungStatusTimer
+			try {
+				var d = Global.getDateiname("JHH6", true, true, "sql")
+				var datei = Paths.get(Jhh6::einstellungen.tempVerzeichnis, d)
+				var r = FactoryService::replikationService.sqlSicherung(serviceDaten, datei, status, abbruch)
+				r.throwErstenFehler
+			} catch (Exception ex) {
+				status.setLength(0)
+				status.append(Meldungen::M1033(ex.message))
+			} finally {
+				abbruch.append("Ende")
+			}
+			return null as Void
+		] as Task<Void>)
+		var th = new Thread(task)
+		th.setDaemon(true)
+		th.start
 	}
 
 	def private List<MaEinstellung> getSicherungen() {

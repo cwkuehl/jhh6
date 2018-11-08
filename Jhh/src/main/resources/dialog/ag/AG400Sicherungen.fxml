@@ -130,6 +130,11 @@
 				<Tooltip text="%Cancel.tt" />
 			</tooltip>
 		</Button>
+		<Button fx:id="sqlSicherung" mnemonicParsing="true" onAction="#onSqlSicherung" text="%AG400.sqlSicherung">
+			<tooltip>
+				<Tooltip text="%AG400.sqlSicherung.tt" />
+			</tooltip>
+		</Button>
 	</HBox>
 	<Label fx:id="status0" text="%AG400.status" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" />
 	<TextArea fx:id="statusText" accessibleText="%AG400.statusText.tt" editable="false" promptText="%AG400.statusText.tt"

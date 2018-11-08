@@ -279,6 +279,9 @@ import de.cwkuehl.jhh6.server.rep.impl.WpStandRep
 import de.cwkuehl.jhh6.server.rep.impl.WpWertpapierRep
 import de.cwkuehl.jhh6.server.rep.impl.ZeinstellungRep
 import de.cwkuehl.jhh6.server.service.impl.ReplTabelle
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.StandardOpenOption
 import java.util.List
 
 @Service
@@ -1036,6 +1039,58 @@ class ReplikationService {
 			}
 			if (nach !== null) {
 				nach.con.close
+			}
+			if (e !== null) {
+				maeinstellungRep.iuMaEinstellung(daten, null, Constant.EINST_MA_REPLIKATION_BEGINN, "", null, null,
+					null, null)
+			}
+		}
+		var r = new ServiceErgebnis<Void>(null)
+		return r
+	}
+
+	@Transaction(false)
+	override public ServiceErgebnis<Void> sqlSicherung(ServiceDaten daten, Path datei, StringBuffer status, StringBuffer abbruch) {
+
+		var RemoteDb von
+		var MaEinstellung e
+		try {
+			von = getRemoteDb(daten.mandantNr, false)
+			e = maeinstellungRep.iuMaEinstellung(daten, null, Constant.EINST_MA_REPLIKATION_BEGINN,
+				Global.dateTimeStringForm(daten.jetzt), null, null, null, null)
+			Files.write(datei, "--SQL-Sicherung«Constant.CRLF»".bytes, StandardOpenOption.CREATE_NEW)
+			var anzahl = 0
+			var liste = alleTabellen
+			for (t : liste) {
+				log.debug(Meldungen::M1006(t.name))
+				status.length = 0
+				status.append(Meldungen::M1006(t.name)).append(Constant.CRLF)
+				status.append(Meldungen::M1007(anzahl))
+				if (abbruch.length > 0) {
+					throw new MeldungException(Meldungen::M1008)
+				}
+				Files.write(datei, '''--«t.name»«Constant.CRLF»'''.toString.bytes, StandardOpenOption.APPEND)
+//				if (t.loeschen || t.kopieren) {
+//					if (abgleich) {
+//						von.abgleichenMandantTabelle(nach, t, status)
+//					} else {
+//						try {
+//							von.vergleicheMandantTabelle(nach, t, status)
+//						} catch (Exception ex) {
+//							var a = von.kopiereMandantTabelle(nach, t, status)
+//							if (a > 0) {
+//								Global.machNichts
+//							}
+//							anzahl += a
+//						}
+//					}
+//				}
+			// Thread.sleep(100)
+			}
+		} finally {
+			log.debug(Meldungen::M1009)
+			if (von !== null) {
+				von.con.close
 			}
 			if (e !== null) {
 				maeinstellungRep.iuMaEinstellung(daten, null, Constant.EINST_MA_REPLIKATION_BEGINN, "", null, null,
