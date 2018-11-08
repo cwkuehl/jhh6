@@ -4,6 +4,8 @@ import de.cwkuehl.jhh6.generator.annotation.Column
 import de.cwkuehl.jhh6.generator.annotation.Id
 import de.cwkuehl.jhh6.generator.annotation.PrimaryKeyJoinColumn
 import java.io.Serializable
+import java.nio.file.Files
+import java.nio.file.Paths
 import java.util.ArrayList
 import java.util.List
 import java.util.regex.Pattern
@@ -54,6 +56,8 @@ class MachDto {
 		public boolean nullable
 		public TypeReference javaTyp
 		public String jdbcJavaTyp
+		public String csTyp
+		public String hsqldbTyp
 		public String conv1
 		public String conv2
 		public String convget
@@ -88,36 +92,56 @@ class MachDto {
 			}
 			if (javaTyp.simpleName == 'LocalDate') {
 				jdbcJavaTyp = 'java.sql.Date'
+				csTyp = '''DateTime«IF nullable»?«ENDIF»'''
+				hsqldbTyp = 'DATE'
 				conv1 = 'conv('
 				conv2 = ')'
 				convget = 'getDate'
 			} else if (javaTyp.simpleName == 'LocalDateTime') {
 				jdbcJavaTyp = 'java.sql.Timestamp'
+				csTyp = '''DateTime«IF nullable»?«ENDIF»'''
+				hsqldbTyp = 'TIMESTAMP'
 				conv1 = 'conv('
 				conv2 = ')'
 				convget = 'getTimestamp'
 			} else if (javaTyp.simpleName == 'String') {
 				jdbcJavaTyp = 'String'
+				csTyp = 'string'
+				hsqldbTyp = 'VARCHAR'
 				conv1 = ''
 				conv2 = ''
 				convget = 'getString'
 			} else if (javaTyp.simpleName == 'int') {
 				jdbcJavaTyp = 'int'
+				csTyp = '''int«IF nullable»?«ENDIF»'''
+				hsqldbTyp = 'INTEGER'
 				conv1 = ''
 				conv2 = ''
 				convget = 'getInt'
 			} else if (javaTyp.simpleName == 'double') {
 				jdbcJavaTyp = 'java.math.BigDecimal'
+				csTyp = '''decimal«IF nullable»?«ENDIF»'''
+				hsqldbTyp = 'DECIMAL(21,4)'
 				conv1 = 'conv('
 				conv2 = ')'
 				convget = 'getBigDecimal'
+			} else if (javaTyp.simpleName == 'boolean') {
+				jdbcJavaTyp = 'boolean'
+				csTyp = '''bool«IF nullable»?«ENDIF»'''
+				hsqldbTyp = 'BOOLEAN'
+				conv1 = ''
+				conv2 = ''
+				convget = null
 			} else if (javaTyp.simpleName == 'byte[]') {
 				jdbcJavaTyp = 'byte[]'
+				csTyp = 'byte[]'
+				hsqldbTyp = 'BLOB'
 				conv1 = 'conv('
 				conv2 = ')'
 				convget = 'getBlob'
 			} else {
 				jdbcJavaTyp = null
+				csTyp = null
 				conv1 = ''
 				conv2 = ''
 				convget = null
@@ -313,7 +337,12 @@ class MachDto {
 		c.dto(context, d)
 		c.dtoUpdate(context, d)
 		c.dtoVo(context, d)
-
+		
+		//var sb = new StringBuffer
+		//sb.append('DROP TABLE IF EXISTS ').append(d.tablename).append(';\r\n')
+		//sb.append('CREATE TABLE IF NOT EXISTS ').append(d.tablename).append('(')
+		//sb.append(');\r\n')
+		//Files.write(Paths.get('''/daten/wolfgang/Entwicklung/mono/«d.tablename».sql'''), sb.toString.bytes)
 		return d
 	}
 
@@ -388,6 +417,8 @@ class MachDto {
 		d.dtoType.fragmentGetPk(context, d)
 		d.dtoType.fragmentGetClone(context, d)
 		d.dtoType.fragmentAttributeBeanList(context, d.notKeyAttribute)
+		//d.generateDtoCs
+		//d.generateDtoXml
 	}
 
 	def static void dtoUpdate(MutableClassDeclaration c, extension TransformationContext context, Dtos d) {
@@ -445,5 +476,58 @@ class MachDto {
 			return "" // c.simpleName
 		}
 		return name
+	}
+
+	def static void generateDtoCs(Dtos d) {
+
+		var c = d.dtoType
+		var sb = '''
+		// <copyright file="«c.dtoSimpleName».cs" company="cwkuehl.de">
+		// Copyright (c) cwkuehl.de. All rights reserved.
+		// </copyright>
+
+		namespace MBP.Api.Model
+		{
+			using System;
+
+			/// <summary>
+			/// Entity-Klasse für Tabelle «d.tablename».
+			/// </summary>
+			public class «c.dtoSimpleName»
+			{
+				«FOR a : d.attribute.indexed»
+					/// <summary>Holt oder setzt den Wert der Spalte «a.v.name.toUpperCase».</summary>
+					public «a.v.csTyp» «a.v.name» { get; set; }
+					«IF !a.last»
+
+					«ENDIF»
+				«ENDFOR»
+			}
+		}
+		'''
+		if (c === null)
+			Files.write(Paths.get('''/daten/wolfgang/Entwicklung/mono/«c.dtoSimpleName».cs'''), sb.bytes)
+	}
+
+	def static void generateDtoXml(Dtos d) {
+
+		var c = d.dtoType
+		var sb = '''
+		<?xml version="1.0" encoding="utf-8"?>
+		<tables>
+		  <table name="«d.tablename»">
+		    «FOR a : d.attribute.indexed»
+		      <column name="«a.v.name»" type="«a.v.hsqldbTyp»"«IF a.v.hsqldbTyp=='VARCHAR'» length="«a.v.length»"«ENDIF» nullable="«a.v.nullable»"/>
+		    «ENDFOR»
+		    <primarykey>
+		      «FOR a : d.keyAttribute.indexed»
+		        <keycolumn name="«a.v.name»"/>
+		      «ENDFOR»
+		    </primarykey>
+		  </table>
+		</tables>
+		'''
+		if (c === null)
+			Files.write(Paths.get('''/daten/wolfgang/Entwicklung/mono/«c.dtoSimpleName».xml'''), sb.bytes)
 	}
 }
