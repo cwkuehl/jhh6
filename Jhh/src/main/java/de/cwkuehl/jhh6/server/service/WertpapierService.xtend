@@ -669,8 +669,14 @@ class WertpapierService {
 			}
 		} else if (quelle == "onvista") {
 			val d = bis.year * 365 + bis.dayOfYear - (von.year * 365 + von.dayOfYear)
+			var span = '''«d»D'''
+			//if (d > 365) {
+			//	val y = d / 365 + 1
+			//	span = '''«y»Y'''
+			//	von = bis.minusYears(y)
+			//}
 			var url = Global.format("https://www.onvista.de/fonds/snapshotHistoryCSV?idNotation={0}"
-				+"&datetimeTzStartRange={1}&timeSpan={2}D&codeResolution=1D", wp, Global.dateString(von), d)
+				+"&datetimeTzStartRange={1}&timeSpan={2}&codeResolution=1D", wp, Global.dateString(von), span)
 			var v = executeHttps(url, null, true, null)
 			if (v !== null && v.size > 1) {
 				if (v.get(0) != "Datum;Eröffnung;Hoch;Tief;Schluss;Volumen")
