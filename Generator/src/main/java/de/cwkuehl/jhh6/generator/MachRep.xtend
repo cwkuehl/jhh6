@@ -381,6 +381,9 @@ class MachRep {
 						sql.append(" WHERE a.Mandant_Nr=?", int.class, mandantNr.intValue());
 				«ENDIF»
 				}
+				if (where != null && where.getMax() > 0) {
+					sql.setMax(where.getMax());
+				}
 				if (where != null && where.length() > 0) {
 					if (w) {
 						sql.append(" AND ");
