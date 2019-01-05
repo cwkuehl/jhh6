@@ -420,7 +420,7 @@ class Meldungen {
 	val M1031 = "Preparing ..."
 	val M1032 = "Copying ..."
 	val M1033 = "Error: {0}"
-	val M1034 = "The target folder be separated by '<'."
+	val M1034 = "The target folder must be separated by '<'."
 	val M1035 = "The target folder must not be empty."
 	val M1036 = "The source folders are missing."
 	var M1037 = "The source folder must not be empty."
