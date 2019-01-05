@@ -44,6 +44,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
 import java.util.List
+import java.util.Vector
 
 @Service
 class FreizeitService {
@@ -260,6 +261,31 @@ class FreizeitService {
 						summe / anzahlTageMax, summe / anzahlTageMax * jahresTage))
 			}
 			r.ergebnis = sb.toString
+		}
+		return r
+	}
+
+	@Transaction(false)
+	override ServiceErgebnis<List<FzFahrradstand>> holeFahrradStaende(ServiceDaten daten, LocalDate datum) {
+
+		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
+		var v = new Vector<FzFahrradstand>
+		var r = new ServiceErgebnis<List<FzFahrradstand>>(v)
+		val bis = datum
+		var von = bis.minusYears(10).withDayOfYear(1)
+		var liste = standRep.getFahrradstandListe(daten, null, null, null, false, 1)
+		var min = liste?.get(0)
+		if (min !== null)
+			von = min.datum.toLocalDate
+		var d = von
+		while (d.year <= bis.year) {
+			var dbis = if (d.year < bis.year) d.withMonth(12).withDayOfMonth(31) else bis
+			var kmJahr = standRep.getFahrradstandPeriodeKmSumme(daten, null, d, dbis)
+			var s = new FzFahrradstand
+			s.datum = d.atStartOfDay
+			s.periodeKm = kmJahr
+			v.add(s)
+			d = d.plusYears(1).withDayOfYear(1)
 		}
 		return r
 	}

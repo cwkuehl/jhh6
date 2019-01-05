@@ -74,6 +74,7 @@ class Meldungen {
 	val FZ041 = "Type in a title."
 	val FZ042 = "Select an author."
 	val FZ043 = "Select a series."
+	val FZ044 = "Mileages per year"
 	val HH001 = "Equity capital"
 	val HH002 = "Profit and loss"
 	val HH003 = "No periods found."

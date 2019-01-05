@@ -1060,7 +1060,6 @@ class ReplikationService {
 				Global.dateTimeStringForm(daten.jetzt), null, null, null, null)
 			Files.write(datei, '''--SQL-Sicherung«Constant.CRLF»'''.toString.bytes, StandardOpenOption.CREATE_NEW)
 			var anzahl = 0
-			var nr = 0
 			var liste = alleTabellen
 			for (t : liste) {
 				log.debug(Meldungen::M1006(t.name))
