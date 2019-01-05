@@ -1058,8 +1058,9 @@ class ReplikationService {
 			von = getRemoteDb(daten.mandantNr, false)
 			e = maeinstellungRep.iuMaEinstellung(daten, null, Constant.EINST_MA_REPLIKATION_BEGINN,
 				Global.dateTimeStringForm(daten.jetzt), null, null, null, null)
-			Files.write(datei, "--SQL-Sicherung«Constant.CRLF»".bytes, StandardOpenOption.CREATE_NEW)
+			Files.write(datei, '''--SQL-Sicherung«Constant.CRLF»'''.toString.bytes, StandardOpenOption.CREATE_NEW)
 			var anzahl = 0
+			var nr = 0
 			var liste = alleTabellen
 			for (t : liste) {
 				log.debug(Meldungen::M1006(t.name))
@@ -1070,21 +1071,10 @@ class ReplikationService {
 					throw new MeldungException(Meldungen::M1008)
 				}
 				Files.write(datei, '''--«t.name»«Constant.CRLF»'''.toString.bytes, StandardOpenOption.APPEND)
-//				if (t.loeschen || t.kopieren) {
-//					if (abgleich) {
-//						von.abgleichenMandantTabelle(nach, t, status)
-//					} else {
-//						try {
-//							von.vergleicheMandantTabelle(nach, t, status)
-//						} catch (Exception ex) {
-//							var a = von.kopiereMandantTabelle(nach, t, status)
-//							if (a > 0) {
-//								Global.machNichts
-//							}
-//							anzahl += a
-//						}
-//					}
-//				}
+				//if (t.name == 'TB_Eintrag') {
+				if (t.name != 'MA_Einstellung' && t.name != 'zEinstellung') {
+					anzahl += von.insertTabelleFile(t, datei, status)
+				}
 			// Thread.sleep(100)
 			}
 		} finally {

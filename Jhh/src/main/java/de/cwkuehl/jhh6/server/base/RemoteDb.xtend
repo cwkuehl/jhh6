@@ -1,17 +1,24 @@
 package de.cwkuehl.jhh6.server.base
 
+import de.cwkuehl.jhh6.api.global.Constant
 import de.cwkuehl.jhh6.api.global.Global
 import de.cwkuehl.jhh6.api.message.MeldungException
 import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.server.service.impl.ReplTabelle
 import java.math.BigDecimal
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.StandardOpenOption
 import java.sql.Blob
 import java.sql.Connection
 import java.sql.PreparedStatement
 import java.sql.ResultSet
+import java.sql.Timestamp
 import java.util.Arrays
 import java.util.Date
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.hsqldb.jdbc.JDBCBlobClient
+import javax.xml.bind.DatatypeConverter
 
 @Accessors
 class RemoteDb extends RepositoryBase {
@@ -245,6 +252,111 @@ class RemoteDb extends RepositoryBase {
 			}
 			if (rstmt !== null) {
 				rstmt.close
+			}
+		}
+	}
+
+	// Insert-Befehle für Sqlite in Datei speichern
+	def public int insertTabelleFile(ReplTabelle t, Path datei, StringBuffer status) {
+
+		var PreparedStatement mstmt
+		var ResultSet mr
+		try {
+			var max = 0
+			var msql = new SqlBuilder("SELECT COUNT(*) FROM ")
+			msql.append(t.name)
+			mstmt = con.prepareStatement(msql.toString)
+			var j = 1
+			for (p : msql.params) {
+				mstmt.setObject(j, p.value)
+				j++
+			}
+			mr = mstmt.executeQuery
+			if (mr.next) {
+				max = mr.getInt(1)
+			}
+			mr.close
+			mstmt.close
+
+			msql = new SqlBuilder("SELECT * FROM ")
+			msql.append(t.name)
+			if (!Global.nes(t.pk)) {
+				msql.append(" ORDER BY ").append(t.pk)
+			}
+			mstmt = con.prepareStatement(msql.toString)
+			j = 1
+			for (p : msql.params) {
+				mstmt.setObject(j, p.value)
+				j++
+			}
+			mr = mstmt.executeQuery
+			val l = mr.metaData.columnCount
+			var mandantspalte = -1
+			var sb = new StringBuilder("INSERT INTO ")
+			sb.append(t.name).append(" (")
+			for (i : 1 .. l) {
+				if (i > 1) {
+					sb.append(", ")
+				}
+				if (!Global.nes(t.mandantnr) && mr.metaData.getColumnName(i).toLowerCase.equals(t.mandantnr.toLowerCase)) {
+					mandantspalte = i
+				}
+				sb.append(mr.metaData.getColumnName(i))
+			}
+			sb.append(") VALUES").append(Constant.CRLF)
+			var ins = new StringBuilder
+			ins.append("DELETE FROM ").append(t.name).append(";").append(Constant.CRLF)
+			var anzahl = 0
+			while (mr.next) {
+				if (anzahl % 100 == 0) {
+					status.length = 0
+					status.append(Meldungen.M1052(anzahl, max, t.name))
+					if (anzahl > 0) {
+						ins.append(';').append(Constant.CRLF)
+					}
+					Files.write(datei, ins.toString.bytes, StandardOpenOption.APPEND)
+					ins.length = 0
+					ins.append(sb)
+				}
+				if (anzahl % 100 != 0) {
+					ins.append(Constant.CRLF).append(',')
+				}
+				ins.append('(')
+				for (i : 1 .. l) {
+					if (i > 1) {
+						ins.append(",")
+					}
+					var obj = mr.getObject(i)
+					if (obj === null) {
+						ins.append('NULL')
+					} else {
+						if (obj instanceof String || obj instanceof Timestamp) {
+							ins.append("'").append(obj.toString.replace("'", "''")).append("'")
+						} else if (obj instanceof Date) {
+							ins.append("'").append(obj).append(" 00:00:00'")
+						} else if (obj instanceof Boolean) {
+							ins.append(if (obj) '1' else '0')
+						} else if (obj instanceof JDBCBlobClient) {
+							ins.append("X'").append(DatatypeConverter.printHexBinary(obj.conv)).append("'")
+						} else {
+							ins.append(obj)
+						}
+					}
+				}
+				ins.append(")")
+				anzahl++
+			}
+			if (anzahl > 0) {
+				ins.append(';').append(Constant.CRLF)
+			}
+			Files.write(datei, ins.toString.bytes, StandardOpenOption.APPEND)
+			return anzahl
+		} finally {
+			if (mstmt !== null) {
+				mstmt.close
+			}
+			if (mr !== null) {
+				mr.close
 			}
 		}
 	}
