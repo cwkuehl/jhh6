@@ -591,11 +591,11 @@ class WertpapierService {
 		var von = if(dvon === null || !dvon.isBefore(bis)) bis.minusDays(182) else dvon
 		var wp = kursname
 		if (quelle == "yahoo") {
-			var url = Global.format("http://query1.finance.yahoo.com/v7/finance/chart/{0}" +
+			var url = Global.format("https://query1.finance.yahoo.com/v7/finance/chart/{0}" +
 				"?period1={1}&period2={2}&interval=1d&indicators=quote&includeTimestamps=true", wp, //
 			von.atStartOfDay(ZoneOffset.UTC).toEpochSecond.toString,
 				bis.atStartOfDay(ZoneOffset.UTC).toEpochSecond.toString)
-			var v = executeHttp(url, null, false, null)
+			var v = executeHttps(url, null, false, null)
 			if (v !== null && v.size > 0) {
 				try {
 					var jr = new JSONObject(v.get(0))
