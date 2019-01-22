@@ -75,6 +75,7 @@ class Meldungen {
 	val FZ042 = "Select an author."
 	val FZ043 = "Select a series."
 	val FZ044 = "Mileages per year"
+	val FZ045 = "Average per year"
 	val HH001 = "Equity capital"
 	val HH002 = "Profit and loss"
 	val HH003 = "No periods found."

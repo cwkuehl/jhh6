@@ -98,11 +98,14 @@ class FZ100StatistikController extends BaseController<String> {
 			var l2 = get(FactoryService::freizeitService.holeFahrradStaende(serviceDaten, datum.value))
 			val sfs = new XYChart.Series
 			sfs.name = Meldungen.FZ044 // km pro Jahr
+			val sfs2 = new XYChart.Series
+			sfs2.name = Meldungen.FZ045 // Jahresdurchschnitt
 			for (b : l2) {
 				sfs.data.add(new XYChart.Data<String, Number>(axisDatum(b.datum), b.periodeKm))
+				sfs2.data.add(new XYChart.Data<String, Number>(axisDatum(b.datum), b.zaehlerKm))
 			}
 			chart2.data.clear
-			chart2.data.addAll(sfs)
+			chart2.data.addAll(sfs, sfs2)
 
 		// var categorien = l.map[b|axisDatum(b.geaendertAm)]
 		// var x = chart.XAxis as CategoryAxis

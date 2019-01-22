@@ -277,13 +277,20 @@ class FreizeitService {
 		var min = liste?.get(0)
 		if (min !== null)
 			von = min.datum.toLocalDate
+		var schnitt = 0.0
+		var summe = 0.0
+		var tage = 0
 		var d = von
 		while (d.year <= bis.year) {
 			var dbis = if (d.year < bis.year) d.withMonth(12).withDayOfMonth(31) else bis
 			var kmJahr = standRep.getFahrradstandPeriodeKmSumme(daten, null, d, dbis)
+			summe += kmJahr
+			tage = (dbis.year - von.year) * 365 + dbis.dayOfYear - von.dayOfYear
+			schnitt = summe * 365 / tage
 			var s = new FzFahrradstand
 			s.datum = d.atStartOfDay
 			s.periodeKm = kmJahr
+			s.zaehlerKm = schnitt
 			v.add(s)
 			d = d.plusYears(1).withDayOfYear(1)
 		}

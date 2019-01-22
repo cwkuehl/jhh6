@@ -290,7 +290,7 @@ class WertpapierService {
 			else
 				Global.strDbl(array.get(1))
 			e.signalkurs2 = if(l <= 2) "" else array.get(2)
-			e.setStopkurs = if(l <= 3) "" else array.get(3)
+			e.stopkurs = if(l <= 3) "" else array.get(3)
 			e.muster = if(l <= 4) "" else array.get(4)
 			e.sortierung = if(l <= 5) "" else array.get(5)
 			e.bewertung = if(l <= 6) "" else array.get(6)
