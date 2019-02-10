@@ -216,7 +216,7 @@ class WP100ChartController extends BaseController<String> {
 			chart = new PnfChart
 			if (wp !== null) {
 				var kliste = get(
-					FactoryService::wertpapierService.holeKurse(serviceDaten, von.value, bis.value, wp.datenquelle,
+					FactoryService::wertpapierService.holeKurse(serviceDaten, wp.uid, von.value, bis.value, wp.datenquelle,
 						wp.kuerzel, if(relativ.isSelected) wp.relationDatenquelle else null,
 						if(relativ.isSelected) wp.relationKuerzel else null))
 				if (Global::listLaenge(kliste) > 0) {

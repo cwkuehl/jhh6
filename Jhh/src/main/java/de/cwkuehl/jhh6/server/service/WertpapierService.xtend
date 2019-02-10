@@ -150,11 +150,11 @@ class WertpapierService {
 		if (dauer <= 10) {
 			throw new MeldungException(Meldungen::WP006)
 		}
-		if (!Global.in(methode, 0, 2)) {
+		if (!Global.in(skala, 0, 2)) {
 			throw new MeldungException(Meldungen::WP007)
 		}
 		var sb = new StringBuilder
-		sb.append(box)
+		sb.append(Global.dblStr2l(box))
 		sb.append(";").append(proz)
 		sb.append(";").append(umkehr)
 		sb.append(";").append(methode)
@@ -357,7 +357,7 @@ class WertpapierService {
 			return
 		}
 		try {
-			var liste = holeKurseIntern(daten, dvon, dbis, wp.datenquelle, wp.kuerzel,
+			var liste = holeKurseIntern(daten, wp.uid, dvon, dbis, wp.datenquelle, wp.kuerzel,
 				if(k !== null && k.relativ) wp.relationDatenquelle else null,
 				if(k !== null && k.relativ) wp.relationKuerzel else null)
 			var kursdatum = if(liste.size > 0) liste.get(liste.size - 1).datum.toLocalDate else dbis
@@ -536,13 +536,13 @@ class WertpapierService {
 		}
 	}
 
-	def private List<SoKurse> holeKurseIntern(ServiceDaten daten, LocalDate dvon, LocalDate dbis, String quelle,
+	def private List<SoKurse> holeKurseIntern(ServiceDaten daten, String wpuid, LocalDate dvon, LocalDate dbis, String quelle,
 		String kursname, String quelleRelation, String kursnameRelation) {
 
-		var liste = holeKursListe(daten, dvon, dbis, quelle, kursname, true, 0)
+		var liste = holeKursListe(daten, wpuid, dvon, dbis, quelle, kursname, true, 0)
 		if (liste !== null && !Global.nes(kursnameRelation)) {
 			var rliste = new ArrayList<SoKurse>
-			var liste2 = holeKursListe(daten, dvon, dbis, quelleRelation, kursnameRelation, true, 0)
+			var liste2 = holeKursListe(daten, wpuid, dvon, dbis, quelleRelation, kursnameRelation, true, 0)
 			var h = new HashMap<Long, SoKurse>
 			for (SoKurse k : liste2) {
 				h.put(k.datum.toEpochSecond(ZoneOffset.UTC), k)
@@ -580,7 +580,7 @@ class WertpapierService {
 		return liste
 	}
 
-	def private List<SoKurse> holeKursListe(ServiceDaten daten, LocalDate dvon, LocalDate dbis, String quelle,
+	def private List<SoKurse> holeKursListe(ServiceDaten daten, String wpuid, LocalDate dvon, LocalDate dbis, String quelle,
 		String kursname, boolean letzter, double klf) {
 
 		var liste = new ArrayList<SoKurse>
@@ -679,6 +679,8 @@ class WertpapierService {
 				+"&datetimeTzStartRange={1}&timeSpan={2}&codeResolution=1D", wp, Global.dateString(von), span)
 			var v = executeHttps(url, null, true, null)
 			if (v !== null && v.size > 1) {
+				val vt = von.atStartOfDay
+				val bt = bis.plusDays(1).atStartOfDay
 				if (v.get(0) != "Datum;Eröffnung;Hoch;Tief;Schluss;Volumen")
 					throw new RuntimeException('''Falsches Format: "«v.get(0)»" statt "Datum;Eröffnung;Hoch;Tief;Schluss;Volumen"''')
 				for (var i = 1; i < v.size; i++) {
@@ -690,8 +692,24 @@ class WertpapierService {
 						k.high = Global.strDbl(c.get(2), Locale.GERMAN)
 						k.low = Global.strDbl(c.get(3), Locale.GERMAN)
 						k.close = Global.strDbl(c.get(4), Locale.GERMAN)
-						liste.add(k)
+						if (k.datum.compareTo(vt) >= 0 && k.datum.compareTo(bt) < 0)
+							liste.add(k)
 					}
+				}
+			}
+		}
+		if (liste.size <= 1 && !Global.nes(wpuid)) {
+			var datum = if (liste.size <= 0) null else liste.get(0).datum 
+			var liste2 = standRep.getStandLangListe(daten, wpuid, von, bis, true)
+			for (st : liste2) {
+				if (datum === null || datum.compareTo(st.datum.atStartOfDay) != 0) {
+					var k = new SoKurse
+					k.datum = st.datum.atStartOfDay
+					k.open = st.stueckpreis
+					k.high = st.stueckpreis
+					k.low = st.stueckpreis
+					k.close = st.stueckpreis
+					liste.add(k)
 				}
 			}
 		}
@@ -736,10 +754,10 @@ class WertpapierService {
 	var df0 = DateTimeFormatter.ofPattern("M/d/yyyy", Locale.ENGLISH)
 	var df = DateTimeFormatter.ofPattern("h:mma", Locale.ENGLISH)
 
-	def private SoKurse getAktKurs(ServiceDaten daten, String quelle, String kuerzel, LocalDate heute, double kl) {
+	def private SoKurse getAktKurs(ServiceDaten daten, String wpuid, String quelle, String kuerzel, LocalDate heute, double kl) {
 
 		var von = heute.minusDays(7)
-		var l = holeKursListe(daten, von, heute, quelle, kuerzel, false, kl)
+		var l = holeKursListe(daten, wpuid, von, heute, quelle, kuerzel, false, kl)
 		if (l !== null && l.size > 0) {
 			return l.get(l.size - 1)
 		}
@@ -1049,12 +1067,12 @@ class WertpapierService {
 	}
 
 	@Transaction(false)
-	override ServiceErgebnis<List<SoKurse>> holeKurse(ServiceDaten daten, LocalDate dvon, LocalDate dbis, String quelle,
+	override ServiceErgebnis<List<SoKurse>> holeKurse(ServiceDaten daten, String wpuid, LocalDate dvon, LocalDate dbis, String quelle,
 		String kursname, String quelleRelation, String kursnameRelation) {
 
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var r = new ServiceErgebnis<List<SoKurse>>(
-			holeKurseIntern(daten, dvon, dbis, quelle, kursname, quelleRelation, kursnameRelation))
+			holeKurseIntern(daten, wpuid, dvon, dbis, quelle, kursname, quelleRelation, kursnameRelation))
 		return r
 	}
 
@@ -1453,7 +1471,7 @@ class WertpapierService {
 				zinsen = if(zinsen === null) 0.0 else zinsen
 				var SoKurse k
 				try {
-					k = getAktKurs(daten, wp.datenquelle, wp.kuerzel, bis, preis)
+					k = getAktKurs(daten, null, wp.datenquelle, wp.kuerzel, bis, preis)
 				} catch (Exception ex) {
 					// ignorieren
 					Global.machNichts
@@ -1500,6 +1518,11 @@ class WertpapierService {
 				a.parameter = sb.toString
 				anlageRep.iuWpAnlage(daten, null, a.uid, a.wertpapierUid, a.bezeichnung, a.parameter, a.notiz, null,
 					null, null, null)
+				if (datum !== null && Global.compDouble4(aktpreis, 0) > 0) {
+					var st = standRep.get(daten, new WpStandKey(daten.mandantNr, a.wertpapierUid, datum.toLocalDate))
+					if (st === null || Global.compDouble4(st.stueckpreis, aktpreis) != 0)
+						standRep.iuWpStand(daten, null, a.wertpapierUid, datum.toLocalDate, aktpreis, null, null, null, null)
+				}
 			}
 		}
 		for (a : liste) {
