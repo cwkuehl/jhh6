@@ -621,7 +621,7 @@ class WertpapierService {
 							k.high = jhigh.optDouble(i, 0)
 							k.low = jlow.optDouble(i, 0)
 							k.close = jclose.optDouble(i, 0)
-							k.bewertung = jmeta.getString("currency")
+							k.bewertung = jmeta.getString("currency").toUpperCase
 							if (Global.compDouble4(k.close, 0) != 0) {
 								k.open = if(Global.compDouble4(k.open, 0) == 0) k.close else k.open
 								k.high = if(Global.compDouble4(k.open, 0) == 0) k.close else k.high
@@ -634,7 +634,7 @@ class WertpapierService {
 						var tl = jmeta.getJSONObject("currentTradingPeriod").getJSONObject("pre").getLong("end")
 						k.datum = Instant.ofEpochSecond(tl).atZone(ZoneId.systemDefault).toLocalDate.atStartOfDay
 						k.close = jmeta.getDouble("chartPreviousClose")
-						k.bewertung = jmeta.getString("currency")
+						k.bewertung = jmeta.getString("currency").toUpperCase
 						if (Global.compDouble4(k.close, 0) != 0) {
 							k.open = k.close
 							k.high = k.close
@@ -663,6 +663,7 @@ class WertpapierService {
 						k.high = Global.strDbl(c.get(2), Locale.GERMAN)
 						k.low = Global.strDbl(c.get(3), Locale.GERMAN)
 						k.close = Global.strDbl(c.get(4), Locale.GERMAN)
+						k.bewertung = 'EUR'
 						liste.add(k)
 					}
 				}
@@ -692,6 +693,7 @@ class WertpapierService {
 						k.high = Global.strDbl(c.get(2), Locale.GERMAN)
 						k.low = Global.strDbl(c.get(3), Locale.GERMAN)
 						k.close = Global.strDbl(c.get(4), Locale.GERMAN)
+						k.bewertung = 'EUR'
 						if (k.datum.compareTo(vt) >= 0 && k.datum.compareTo(bt) < 0)
 							liste.add(k)
 					}
@@ -709,14 +711,23 @@ class WertpapierService {
 					k.high = st.stueckpreis
 					k.low = st.stueckpreis
 					k.close = st.stueckpreis
+					k.bewertung = 'EUR'
 					liste.add(k)
 				}
 			}
 		}
+		var cur = if (liste.size > 0) liste.get(0).bewertung else null
+		var curprice = if (liste.size > 0) getAktWaehrungKurs(daten, cur, liste.get(liste.size - 1).datum.toLocalDate) else null
 		var kl = klf
 		for (k : liste) {
 			if (Global.compDouble4(kl, 0) == 0) {
 				kl = k.close
+			}
+			if (curprice !== null) {
+				k.open = k.open * curprice.close
+				k.high = k.high * curprice.close
+				k.low = k.low * curprice.close
+				k.close = k.close * curprice.close
 			}
 			while (Global.compDouble4(kl, 0) != 0 && Global.compDouble4(k.close / kl, 5) > 0) {
 				// richtig skalieren: bei WATL.L Faktor 100. 
@@ -1482,6 +1493,7 @@ class WertpapierService {
 						k = new SoKurse
 						k.close = s.stueckpreis
 						k.datum = s.datum.atStartOfDay
+						k.bewertung = 'EUR'
 					}
 				} else {
 					waehrung = k.bewertung
@@ -1489,16 +1501,12 @@ class WertpapierService {
 				if (!Global.nes(waehrung)) {
 					waehrung = waehrung.toUpperCase
 					var SoKurse wk
-					// try {
 					wk = getAktWaehrungKurs(daten, waehrung, if(k === null) bis else k.datum.toLocalDate)
-					// } catch(Exception ex) {
-					// // ignorieren
-					// }
 					if (wk !== null) {
 						kurs = wk.close
 					}
 				}
-				var aktpreis = if(k === null) 0 else k.close * kurs
+				var aktpreis = if(k === null) 0 else k.close // * kurs
 				var datum = if(k === null) null else k.datum
 				var wert = anteile * aktpreis
 				var gewinn = wert + zinsen - betrag
