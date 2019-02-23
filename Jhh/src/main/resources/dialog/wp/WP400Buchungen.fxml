@@ -141,7 +141,7 @@
 	</TableView>
 	<Label fx:id="bezeichnung0" mnemonicParsing="true" text="%WP400.bezeichnung" GridPane.columnIndex="0"
 		GridPane.rowIndex="3" />
-	<TextField fx:id="bezeichnung" accessibleText="%WP400.bezeichnung.tt" promptText="%WP400.bezeichnung.tt"
+	<TextField fx:id="bezeichnung" onKeyReleased="#onAktuell" accessibleText="%WP400.bezeichnung.tt" promptText="%WP400.bezeichnung.tt"
 		GridPane.columnIndex="1" GridPane.rowIndex="3">
 		<tooltip>
 			<Tooltip text="%WP400.bezeichnung.tt" />

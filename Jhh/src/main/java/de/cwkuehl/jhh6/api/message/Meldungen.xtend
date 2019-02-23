@@ -388,6 +388,7 @@ class Meldungen {
 	val WP047 = "{0,date,yyyy-MM-dd} - {1,date,yyyy-MM-dd}"
 	val WP048 = "{0} {1,number,#,##0.00}"
 	val WP049 = "Get a free access key from https://fixer.io and type in to option WP_FIXER_IO_ACCESS_KEY."
+	val WP050 = "The description is too long."
 	val M1000 = "The class {0} cannot be instantiated."
 	val M1001 = "RbRepository for class {0} is missing."
 	val M1002 = "Replication UID is missing."

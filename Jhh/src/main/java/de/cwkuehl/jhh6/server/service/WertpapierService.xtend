@@ -135,6 +135,9 @@ class WertpapierService {
 		if (!Global.nes(uid) && Global.nes(bez)) {
 			throw new MeldungException(Meldungen::WP001)
 		}
+		if (!Global.nes(bez) && bez.length > WpKonfiguration.BEZEICHNUNG_LAENGE) {
+			throw new MeldungException(Meldungen::WP050)
+		}
 		if (!Global.nes(uid) && Global.nes(status)) {
 			throw new MeldungException(Meldungen::WP002)
 		}
@@ -996,6 +999,9 @@ class WertpapierService {
 		if (Global.nes(strB)) {
 			throw new MeldungException(Meldungen::WP001)
 		}
+		if (!Global.nes(strB) && strB.length > WpWertpapier.BEZEICHNUNG_LAENGE) {
+			throw new MeldungException(Meldungen::WP050)
+		}
 		if (Global.nes(status)) {
 			throw new MeldungException(Meldungen::WP002)
 		}
@@ -1579,6 +1585,9 @@ class WertpapierService {
 
 		if (Global.nes(bez)) {
 			throw new MeldungException(Meldungen::WP001)
+		}
+		if (!Global.nes(bez) && bez.length > WpAnlage.BEZEICHNUNG_LAENGE) {
+			throw new MeldungException(Meldungen::WP050)
 		}
 		if (Global.nes(wpuid) || wertpapierRep.get(daten, new WpWertpapierKey(daten.mandantNr, wpuid)) === null) {
 			throw new MeldungException(Meldungen::WP017)

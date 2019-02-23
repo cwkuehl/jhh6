@@ -270,27 +270,29 @@ public class ChartPane {
         stroke = 0.5;
         color = Color.LIGHTGRAY;
         x = xoffset + (xanzahl + 2) * xgroesse;
-        y = yoffset + c.getWerte().size() * ygroesse;
+        y = yoffset + yanzahl * ygroesse;
         double aktkurs = c.getKurs();
-        int yakt = -1;
+        int iakt = -1;
+        double yakt = -1;
         if (Global.compDouble4(aktkurs, 0) > 0) {
             double d = c.getMax() + 1;
             for (int i = 0; i < yanzahl; i++) {
                 if (Global.compDouble4(c.getWerte().get(i), d) < 0
                         && Global.compDouble4(c.getWerte().get(i), aktkurs) > 0) {
                     d = c.getWerte().get(i);
-                    yakt = i;
+                    iakt = i;
                 }
             }
         }
         for (int i = 0; i < yanzahl + 1; i++) {
             if (i < yanzahl) {
-                if (i == yakt) {
+                if (i == iakt) {
                     font = fontbold;
                     color = Color.BLACK;
                     drawString(p, x + 5, y, Global.dblStr(Global.round(aktkurs)), font, color);
                     font = fontplain;
                     color = Color.LIGHTGRAY;
+                    yakt = y;
                 } else {
                     drawString(p, x + 5, y, Global.dblStr(Global.round(c.getWerte().get(i))), font, color);
                 }
@@ -338,6 +340,13 @@ public class ChartPane {
         for (PnfPattern pa : c.getPattern()) {
             x = (pa.getXpos() + 1) * xgroesse + xoffset;
             y = (max - pa.getYpos()) * ygroesse + yoffset;
+            if (yakt >= 0) {
+                if (Math.abs(y - yakt) < ygroesse) {
+                    y -= ygroesse; // nach oben verschieben
+                    if (y < 0)
+                        y += ygroesse * 2; // nach unten verschieben
+                }
+            }
             drawString(p, x, y, pa.getBezeichnung(), font, color);
         }
 
