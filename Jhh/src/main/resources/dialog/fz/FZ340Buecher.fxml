@@ -138,7 +138,7 @@
 		</columns>
 	</TableView>
 	<Label fx:id="titel0" text="%FZ340.titel" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-	<TextField fx:id="titel" accessibleText="%FZ340.titel.tt" promptText="%FZ340.titel.tt" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
+	<TextField fx:id="titel" onKeyReleased="#onAktuell" accessibleText="%FZ340.titel.tt" promptText="%FZ340.titel.tt" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
 		<tooltip>
 			<Tooltip text="%FZ340.titel.tt" />
 		</tooltip>
