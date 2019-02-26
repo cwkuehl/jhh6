@@ -45,6 +45,8 @@ class WP200WertpapiereController extends BaseController<String> {
 	@FXML TableView<WertpapiereData> wertpapiere
 	@FXML TableColumn<WertpapiereData, String> colSort
 	@FXML TableColumn<WertpapiereData, String> colBezeichnung
+	@FXML TableColumn<WertpapiereData, String> colQuelle
+	@FXML TableColumn<WertpapiereData, String> colKuerzel
 	@FXML TableColumn<WertpapiereData, String> colRelation
 	@FXML TableColumn<WertpapiereData, String> colBewertung
 	@FXML TableColumn<WertpapiereData, Integer> colTrend
@@ -96,6 +98,8 @@ class WP200WertpapiereController extends BaseController<String> {
 
 		SimpleStringProperty sort
 		SimpleStringProperty bezeichnung
+		SimpleStringProperty quelle
+		SimpleStringProperty kuerzel
 		SimpleStringProperty relation
 		SimpleStringProperty bewertung
 		SimpleObjectProperty<Integer> trend
@@ -124,6 +128,8 @@ class WP200WertpapiereController extends BaseController<String> {
 			super(v)
 			sort = new SimpleStringProperty(v.sortierung)
 			bezeichnung = new SimpleStringProperty(v.bezeichnung)
+			quelle = new SimpleStringProperty(v.datenquelle)
+			kuerzel = new SimpleStringProperty(v.kuerzel)
 			relation = new SimpleStringProperty(v.relationBezeichnung)
 			bewertung = new SimpleStringProperty(v.bewertung)
 			trend = new SimpleObjectProperty<Integer>(if(Global::nes(v.trend)) null else Global::strInt(v.trend))
@@ -231,6 +237,8 @@ class WP200WertpapiereController extends BaseController<String> {
 		wertpapiere.setItems(wertpapiereData)
 		colSort.setCellValueFactory([c|c.value.sort])
 		colBezeichnung.setCellValueFactory([c|c.value.bezeichnung])
+		colQuelle.setCellValueFactory([c|c.value.quelle])
+		colKuerzel.setCellValueFactory([c|c.value.kuerzel])
 		colRelation.setCellValueFactory([c|c.value.relation])
 		colBewertung.setCellValueFactory([c|c.value.bewertung])
 		colTrend.setCellValueFactory([c|c.value.trend])

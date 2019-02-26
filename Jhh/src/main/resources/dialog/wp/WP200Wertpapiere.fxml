@@ -140,6 +140,8 @@
 		<columns>
 			<TableColumn fx:id="colSort" prefWidth="50.0" text="%WP200.colSort" />
 			<TableColumn fx:id="colBezeichnung" prefWidth="150.0" text="%WP200.colBezeichnung" />
+			<TableColumn fx:id="colQuelle" prefWidth="80.0" text="%WP200.colQuelle" />
+			<TableColumn fx:id="colKuerzel" prefWidth="80.0" text="%WP200.colKuerzel" />
 			<TableColumn fx:id="colRelation" prefWidth="150.0" text="%WP200.colRelation" />
 			<TableColumn fx:id="colBewertung" prefWidth="100.0" text="%WP200.colBewertung" />
 			<TableColumn fx:id="colTrend" prefWidth="60.0" text="%WP200.colTrend" />
