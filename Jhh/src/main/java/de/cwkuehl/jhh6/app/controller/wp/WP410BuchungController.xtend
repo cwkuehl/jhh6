@@ -207,7 +207,7 @@ class WP410BuchungController extends BaseController<String> {
 
 		var WpAnlageLang a = getValue(anlage, true)
 		var s = get(FactoryService::wertpapierService.getStand(serviceDaten, a.wertpapierUid, valuta.value))
-		preis.text = if(s === null) null else Global.dblStr2l(s.stueckpreis)
+		preis.text = if(s === null) null else Global.dblStr4l(s.stueckpreis)
 	}
 
 	/** 
