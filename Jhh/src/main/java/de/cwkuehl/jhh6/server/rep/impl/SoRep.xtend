@@ -33,6 +33,9 @@ class SoRep {
 		@Column(name="0", nullable=true)
 		public double close
 
+		@Column(name="0", nullable=true)
+		public double preis
+
 		@Column(name="Bewertung", nullable=true)
 		public String bewertung
 

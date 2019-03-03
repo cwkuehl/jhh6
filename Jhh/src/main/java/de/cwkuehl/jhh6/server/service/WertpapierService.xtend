@@ -667,6 +667,7 @@ class WertpapierService {
 						k.low = Global.strDbl(c.get(3), Locale.GERMAN)
 						k.close = Global.strDbl(c.get(4), Locale.GERMAN)
 						k.bewertung = 'EUR'
+						k.preis = 1
 						liste.add(k)
 					}
 				}
@@ -697,6 +698,7 @@ class WertpapierService {
 						k.low = Global.strDbl(c.get(3), Locale.GERMAN)
 						k.close = Global.strDbl(c.get(4), Locale.GERMAN)
 						k.bewertung = 'EUR'
+						k.preis = 1
 						if (k.datum.compareTo(vt) >= 0 && k.datum.compareTo(bt) < 0)
 							liste.add(k)
 					}
@@ -731,6 +733,7 @@ class WertpapierService {
 				k.high = k.high * curprice.close
 				k.low = k.low * curprice.close
 				k.close = k.close * curprice.close
+				k.preis = curprice.close
 			}
 			while (Global.compDouble4(kl, 0) != 0 && Global.compDouble4(k.close / kl, 5) > 0) {
 				// richtig skalieren: bei WATL.L Faktor 100. 
@@ -1469,13 +1472,12 @@ class WertpapierService {
 				status.length = 0
 				status.append(Meldungen::WP008(i + 1, l, a.bezeichnung, bis.atStartOfDay, null))
 				var array = if(Global.nes(a.parameter)) newArrayOfSize(0) else a.parameter.split(";")
-				var waehrung = if(array.size >= 10 && !Global.excelNes(array.get(9))) array.get(9) else ''
 				var kurs = if (array.size >= 11 && !Global.excelNes(array.get(10)))
 						Global.strDbl(array.get(10))
 					else
 						1
 				var wp = getWertpapierLangIntern(daten, a.wertpapierUid)
-				var bliste = buchungRep.getBuchungLangListe(daten, null, null, null, a.uid, false)
+				var bliste = buchungRep.getBuchungLangListe(daten, null, null, null, a.uid, null, bis, false)
 				var betrag = bliste.map[b|b.zahlungsbetrag].reduce[sum, x|sum + x]
 				betrag = if(betrag === null) 0.0 else betrag
 				var rabatt = bliste.map[b|b.rabattbetrag].reduce[sum, x|sum + x]
@@ -1494,22 +1496,13 @@ class WertpapierService {
 					Global.machNichts
 				}
 				if (k === null) {
-					var s = standRep.getAktStand(daten, wp.uid, null)
+					var s = standRep.getAktStand(daten, wp.uid, bis)
 					if (s !== null) {
 						k = new SoKurse
 						k.close = s.stueckpreis
 						k.datum = s.datum.atStartOfDay
 						k.bewertung = 'EUR'
-					}
-				} else {
-					waehrung = k.bewertung
-				}
-				if (!Global.nes(waehrung)) {
-					waehrung = waehrung.toUpperCase
-					var SoKurse wk
-					wk = getAktWaehrungKurs(daten, waehrung, if(k === null) bis else k.datum.toLocalDate)
-					if (wk !== null) {
-						kurs = wk.close
+						k.preis = 1
 					}
 				}
 				var aktpreis = if(k === null) 0 else k.close // * kurs
@@ -1527,7 +1520,7 @@ class WertpapierService {
 				sb.append(";").append(Global.dblStr2l(wert))
 				sb.append(";").append(Global.dblStr2l(gewinn))
 				sb.append(";").append(Global.dblStr2l(pw))
-				sb.append(";").append(Global.nn(waehrung))
+				sb.append(";").append(Global.nn(if (k === null) '' else k.bewertung))
 				sb.append(";").append(Global.dblStr4l(kurs))
 				a.parameter = sb.toString
 				anlageRep.iuWpAnlage(daten, null, a.uid, a.wertpapierUid, a.bezeichnung, a.parameter, a.notiz, null,
@@ -1607,7 +1600,7 @@ class WertpapierService {
 	@Transaction
 	override ServiceErgebnis<Void> deleteAnlage(ServiceDaten daten, String uid) {
 
-		var bliste = buchungRep.getBuchungLangListe(daten, null, null, null, uid, false)
+		var bliste = buchungRep.getBuchungLangListe(daten, null, null, null, uid, null, null, false)
 		if (bliste.size > 0) {
 			throw new MeldungException(Meldungen::WP018)
 		}
@@ -1621,7 +1614,7 @@ class WertpapierService {
 		String bez, String uid, String wpuid, String auid) {
 
 		var r = new ServiceErgebnis<List<WpBuchungLang>>(null)
-		var liste = buchungRep.getBuchungLangListe(daten, bez, uid, wpuid, auid, true)
+		var liste = buchungRep.getBuchungLangListe(daten, bez, uid, wpuid, auid, null, null, true)
 //		for (WpBuchungLang e : liste) {
 //			if (zusammengesetzt) {
 //				e.bezeichnung = Global.anhaengen(new StringBuffer(e.wertpapierBezeichnung), ", ", e.bezeichnung).
@@ -1634,7 +1627,7 @@ class WertpapierService {
 
 	def private WpBuchungLang getBuchungLangIntern(ServiceDaten daten, String uid) {
 
-		var l = buchungRep.getBuchungLangListe(daten, null, uid, null, null, false)
+		var l = buchungRep.getBuchungLangListe(daten, null, uid, null, null, null, null, false)
 		if (l.size > 0) {
 			var b = l.get(0)
 			return b

@@ -143,7 +143,7 @@ class WpBuchungRep {
 
 	/** Buchung-Lang-Liste lesen. */
 	override List<WpBuchungLang> getBuchungLangListe(ServiceDaten daten, String btext, String uid,
-		String wpuid, String auid, boolean desc) {
+		String wpuid, String auid, LocalDate von, LocalDate bis, boolean desc) {
 
 		var sql = new SqlBuilder
 		sql.praefix(null, " AND ")
@@ -158,6 +158,12 @@ class WpBuchungRep {
 		}
 		if (!Global.nes(auid)) {
 			sql.append(null, WpBuchung.ANLAGE_UID_NAME, "=", auid, null)
+		}
+		if (von !== null) {
+			sql.append(null, WpBuchung.DATUM_NAME, ">=", von, null)
+		}
+		if (bis !== null) {
+			sql.append(null, WpBuchung.DATUM_NAME, "<=", bis, null)
 		}
 		var order = new SqlBuilder(if (desc) "a.Mandant_Nr, a.Datum DESC, a.Uid" else "a.Mandant_Nr, a.Datum, a.Uid")
 		var l = getListeLang(daten, daten.mandantNr, sql, order)
