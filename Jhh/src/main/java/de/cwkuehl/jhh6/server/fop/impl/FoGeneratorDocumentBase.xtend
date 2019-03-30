@@ -8,6 +8,7 @@ import java.util.ArrayList
 import java.util.Base64
 import java.util.Locale
 import javax.xml.transform.Source
+import de.cwkuehl.jhh6.api.global.Global
 
 /** 
  * Mit dieser Klasse wird ein FO-Dokument im XML-Format erzeugt.
@@ -705,7 +706,7 @@ class FoGeneratorDocumentBase {
 
 		var betrag = fbetrag
 		var df = new DecimalFormat("#,##0.00", new DecimalFormatSymbols(Locale.GERMAN))
-		if (ohneVorzeichen) {
+		if (ohneVorzeichen || Global.compDouble4(betrag, 0) == 0) {
 			betrag = Math.abs(betrag)
 		}
 		var str = df.format(betrag)

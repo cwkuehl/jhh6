@@ -186,7 +186,7 @@ public class FoKassenbericht extends FoGeneratorDocument {
             if (i == 0) {
                 einaus = Meldungen.HH065();
             } else {
-                einaus = Meldungen.HH065();
+                einaus = Meldungen.HH066();
             }
             d.startTag("fo:table-row");
             d.startTag("fo:table-cell");
