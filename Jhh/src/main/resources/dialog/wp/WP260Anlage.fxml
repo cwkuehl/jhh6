@@ -38,14 +38,14 @@
 			<Tooltip text="%WP260.bezeichnung.tt" />
 		</tooltip>
 	</TextField>
-	<Label fx:id="notiz0" text="%WP260.notiz" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+	<Label fx:id="notiz0" mnemonicParsing="true" text="%WP260.notiz" GridPane.columnIndex="0" GridPane.rowIndex="3" />
 	<TextArea fx:id="notiz" accessibleText="%WP260.notiz.tt" promptText="%WP260.notiz.tt" wrapText="true" GridPane.columnIndex="1"
 		GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS">
 		<tooltip>
 			<Tooltip text="%WP260.notiz.tt" />
 		</tooltip>
 	</TextArea>
-	<Label fx:id="daten0" text="%WP260.daten" GridPane.rowIndex="4" />
+	<Label fx:id="daten0" mnemonicParsing="true" text="%WP260.daten" GridPane.rowIndex="4" />
 	<TextArea fx:id="daten" accessibleText="%WP260.daten.tt" promptText="%WP260.daten.tt" wrapText="true" GridPane.columnIndex="1"
 		GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.vgrow="ALWAYS">
 		<tooltip>
