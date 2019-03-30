@@ -109,7 +109,7 @@ class FZ260FahrradstandController extends BaseController<String> {
 				geaendert.setText(k.formatDatumVon(k.geaendertAm, k.geaendertVon))
 			}
 			nr.setEditable(false)
-			setEditable(fahrrad, !loeschen)
+			setEditable(fahrrad, neu)
 			datum.setEditable(neu || kopieren)
 			zaehler.setEditable(!loeschen)
 			km.setEditable(!loeschen)
