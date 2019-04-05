@@ -58,7 +58,7 @@ class Meldungen {
 	val FZ025 = "The odometer reading must be greater or equal to {0,number}."
 	val FZ026 = "Mileages could only be added at the end."
 	val FZ027 = "The odometer reading could only be set to 0 at the end."
-	val FZ028 = "No tour."
+	val FZ028 = "No tour"
 	val FZ029 = "Mileage {0,number} is missing."
 	val FZ030 = "The following km would be negative."
 	val FZ031 = "Only the last mileage can be deleted."

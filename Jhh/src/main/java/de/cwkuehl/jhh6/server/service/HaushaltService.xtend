@@ -1602,6 +1602,12 @@ class HaushaltService {
 		}
 		dbS = dbV + dbE - dbA
 		var kListe = kontoRep.getKontoListe(daten, -1, -1, Constant.ARTK_AKTIVKONTO, null, dBis, dVon)
+		var kpListe = kontoRep.getKontoListe(daten, -1, -1, Constant.ARTK_PASSIVKONTO, null, dBis, dVon)
+		for (HhKonto k : kpListe) {
+			if (k.uid != ek) {
+				kListe.add(k)
+			}
+		}
 		for (HhKonto k : kListe) {
 			k.setBetrag(-getKontoStandIntern(daten, k.uid, dVon))
 			k.setEbetrag(-getKontoStandIntern(daten, k.uid, dBis))
