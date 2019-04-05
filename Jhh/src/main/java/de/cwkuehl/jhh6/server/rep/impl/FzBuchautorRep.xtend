@@ -61,7 +61,7 @@ class FzBuchautorRep {
 		sql.praefix(null, " AND ")
 		if (!Global.nesLike(name)) {
 			sql.append("(", FzBuchautor.NAME_NAME, "like", name, null)
-			sql.append(" OR ", FzBuchautor.NAME_NAME, "like", name, ")", true)
+			sql.append(" OR ", FzBuchautor.VORNAME_NAME, "like", name, ")", true)
 		}
 		var order = new SqlBuilder("a.Mandant_Nr, a.Name, a.Vorname, a.Uid")
 		var l = getListe(daten, daten.mandantNr, sql, order)
