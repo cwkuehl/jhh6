@@ -1488,6 +1488,7 @@ class WertpapierService {
 				var preis = if(anteile == 0) 0 else betrag / anteile
 				var zinsen = bliste.map[b|b.zinsen].reduce[sum, x|sum + x]
 				zinsen = if(zinsen === null) 0.0 else zinsen
+				var mindatum = bliste.map[b|b.datum].reduce[x,y|if (x.isBefore(y)) x else y]
 				var SoKurse k
 				try {
 					k = getAktKurs(daten, null, wp.datenquelle, wp.kuerzel, bis, preis)
@@ -1522,6 +1523,7 @@ class WertpapierService {
 				sb.append(";").append(Global.dblStr2l(pw))
 				sb.append(";").append(Global.nn(if (k === null) '' else k.bewertung))
 				sb.append(";").append(Global.dblStr4l(kurs))
+				sb.append(";").append(if(mindatum === null) '' else mindatum.atStartOfDay.toString)
 				a.parameter = sb.toString
 				anlageRep.iuWpAnlage(daten, null, a.uid, a.wertpapierUid, a.bezeichnung, a.parameter, a.notiz, null,
 					null, null, null)
@@ -1548,8 +1550,12 @@ class WertpapierService {
 				a.waehrung = array.get(9)
 				a.kurs = Global.strDbl(array.get(10))
 			}
+			if (l >= 12) {
+				a.mindatum = if(Global.nes(array.get(11))) null else LocalDateTime.parse(array.get(11))
+			}
 			if (zusammengesetzt) {
 				var p0 = if(a.aktdatum === null) null else Meldungen::WP026(a.aktdatum)
+				var pm = if(a.mindatum === null) null else Meldungen::WP051(a.mindatum)
 				var p1 = if(Global.nes(a.waehrung)) p0 else Meldungen::WP025(a.waehrung, a.kurs, p0)
 				var p2 = if (a.anteile == 0 || a.aktpreis == 0)
 						null
@@ -1558,7 +1564,7 @@ class WertpapierService {
 				a.daten = if (a.anteile == 0)
 					null
 				else
-					Meldungen::WP023(a.betrag, a.anteile, a.preis, a.zinsen, p2)
+					Meldungen::WP023(a.betrag, pm, a.anteile, a.preis, a.zinsen, p2)
 			}
 		}
 		return liste

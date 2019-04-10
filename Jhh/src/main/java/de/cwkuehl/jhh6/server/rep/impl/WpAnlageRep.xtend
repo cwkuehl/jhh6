@@ -145,6 +145,9 @@ ALTER TABLE HH_Anlageteil
 		@Column(name="0.0", nullable=true)
 		public double kurs
 
+		@Column(name="null", nullable=true)
+		public LocalDateTime mindatum
+
 		@Column(name="a.Notiz", nullable=true)
 		public String notiz
 
