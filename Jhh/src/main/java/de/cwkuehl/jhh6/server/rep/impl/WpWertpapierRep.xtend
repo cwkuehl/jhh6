@@ -213,6 +213,12 @@ class WpWertpapierRep {
 
 		@Column(name="''", nullable=true)
 		public String schnitt200
+
+		@Column(name="''", nullable=true)
+		public String typ // Aktie oder Anleihe
+
+		@Column(name="''", nullable=true)
+		public String waehrung
 	}
 
 	/** Wertpapier-Lang-Liste lesen. */

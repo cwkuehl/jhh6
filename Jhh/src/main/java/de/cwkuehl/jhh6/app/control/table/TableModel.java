@@ -949,6 +949,7 @@ public final class TableModel implements EventHandler<ActionEvent> {
                 ci.setWert(null);
             else {
                 LocalDateTime d = Global.strdat(ci0.getWert());
+                // TODO toEpochDay verwenden
                 ci.setWert(d == null ? null
                         : Global.lngStr(d.atZone(ZoneId.systemDefault()).toInstant().getEpochSecond() / 86400l));
             }

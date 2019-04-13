@@ -69,37 +69,49 @@
 			<Tooltip text="%WP210.muster.tt" />
 		</tooltip>
 	</TextField>
-	<Label fx:id="sortierung0" mnemonicParsing="true" text="%WP210.sortierung" GridPane.columnIndex="0" GridPane.rowIndex="6" />
-	<TextField fx:id="sortierung" accessibleText="%WP210.sortierung.tt" promptText="%WP210.sortierung.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="6">
+	<Label fx:id="typ0" mnemonicParsing="true" text="%WP210.typ" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+	<TextField fx:id="typ" accessibleText="%WP210.typ.tt" promptText="%WP210.typ.tt" GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6">
+		<tooltip>
+			<Tooltip text="%WP210.typ.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="waehrung0" mnemonicParsing="true" text="%WP210.waehrung" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+	<TextField fx:id="waehrung" accessibleText="%WP210.waehrung.tt" promptText="%WP210.waehrung.tt" GridPane.columnIndex="3" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6">
+		<tooltip>
+			<Tooltip text="%WP210.waehrung.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="sortierung0" mnemonicParsing="true" text="%WP210.sortierung" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+	<TextField fx:id="sortierung" accessibleText="%WP210.sortierung.tt" promptText="%WP210.sortierung.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="7">
 		<tooltip>
 			<Tooltip text="%WP210.sortierung.tt" />
 		</tooltip>
 	</TextField>
-	<Label fx:id="relation0" mnemonicParsing="true" text="%WP210.relation" GridPane.columnIndex="0" GridPane.rowIndex="7" />
-	<ComboBox fx:id="relation" accessibleText="%WP210.relation.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="7" GridPane.vgrow="ALWAYS">
+	<Label fx:id="relation0" mnemonicParsing="true" text="%WP210.relation" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+	<ComboBox fx:id="relation" accessibleText="%WP210.relation.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="8" GridPane.vgrow="ALWAYS">
 		<tooltip>
 			<Tooltip text="%WP210.relation.tt" />
 		</tooltip>
 	</ComboBox>
-	<Label fx:id="notiz0" text="%WP210.notiz" GridPane.columnIndex="0" GridPane.rowIndex="8" />
-	<TextArea fx:id="notiz" accessibleText="%WP210.notiz.tt" promptText="%WP210.notiz.tt" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="8" GridPane.vgrow="ALWAYS">
+	<Label fx:id="notiz0" text="%WP210.notiz" GridPane.columnIndex="0" GridPane.rowIndex="9" />
+	<TextArea fx:id="notiz" accessibleText="%WP210.notiz.tt" promptText="%WP210.notiz.tt" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="9" GridPane.vgrow="ALWAYS">
 		<tooltip>
 			<Tooltip text="%WP210.notiz.tt" />
 		</tooltip>
 	</TextArea>
-	<Label fx:id="angelegt0" text="%Creation" GridPane.columnIndex="0" GridPane.rowIndex="9" />
-	<TextField fx:id="angelegt" accessibleText="%Creation.tt" promptText="%Creation.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="9">
+	<Label fx:id="angelegt0" text="%Creation" GridPane.columnIndex="0" GridPane.rowIndex="10" />
+	<TextField fx:id="angelegt" accessibleText="%Creation.tt" promptText="%Creation.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="10">
 		<tooltip>
 			<Tooltip text="%Creation.tt" />
 		</tooltip>
 	</TextField>
-	<Label fx:id="geaendert0" text="%Change" GridPane.columnIndex="0" GridPane.rowIndex="10" />
-	<TextField fx:id="geaendert" accessibleText="%Change.tt" promptText="%Change.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="10">
+	<Label fx:id="geaendert0" text="%Change" GridPane.columnIndex="0" GridPane.rowIndex="11" />
+	<TextField fx:id="geaendert" accessibleText="%Change.tt" promptText="%Change.tt" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="11">
 		<tooltip>
 			<Tooltip text="%Change.tt" />
 		</tooltip>
 	</TextField>
-	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="11">
+	<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="12">
 		<Button fx:id="ok" defaultButton="true" mnemonicParsing="true" onAction="#onOk" text="%Ok">
 			<tooltip>
 				<Tooltip text="%Ok.tt" />

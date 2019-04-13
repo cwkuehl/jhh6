@@ -112,6 +112,10 @@ public class PnfChart {
         // Werte in Kästchen umrechnen
         min = saeulen.stream().map(a -> a.getMin()).min(Double::compare).orElse(0d);
         max = saeulen.stream().map(a -> a.getMax()).max(Double::compare).orElse(0d);
+        if (min == 0 || max == 0) {
+            min = kurse.stream().map(a -> a.getClose()).min(Double::compare).orElse(0d);
+            max = kurse.stream().map(a -> a.getClose()).max(Double::compare).orElse(0d);
+        }
         int anzahl = 0;
         double m = min;
 

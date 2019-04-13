@@ -38,6 +38,10 @@ class WP210WertpapierController extends BaseController<String> {
 	@FXML TextField signalKurs1
 	@FXML Label muster0
 	@FXML TextField muster
+	@FXML Label typ0
+	@FXML TextField typ
+	@FXML Label waehrung0
+	@FXML TextField waehrung
 	@FXML Label sortierung0
 	@FXML TextField sortierung
 	@FXML Label relation0
@@ -119,6 +123,8 @@ class WP210WertpapierController extends BaseController<String> {
 		aktKurs0.setLabelFor(aktKurs)
 		stopKurs0.setLabelFor(stopKurs)
 		signalKurs10.setLabelFor(signalKurs1)
+		typ0.setLabelFor(typ)
+		waehrung0.setLabelFor(waehrung)
 		muster0.setLabelFor(muster)
 		sortierung0.setLabelFor(sortierung)
 		relation0.setLabelFor(relation, false)
@@ -156,6 +162,8 @@ class WP210WertpapierController extends BaseController<String> {
 				aktKurs.setText(k.aktuellerkurs)
 				stopKurs.setText(k.stopkurs)
 				signalKurs1.setText(Global::dblStr2l(k.signalkurs1))
+				typ.setText(k.typ)
+				waehrung.setText(k.waehrung)
 				muster.setText(k.muster)
 				sortierung.setText(k.sortierung)
 				setText(relation, k.relationUid)
@@ -171,6 +179,8 @@ class WP210WertpapierController extends BaseController<String> {
 			aktKurs.setEditable(false)
 			stopKurs.setEditable(false)
 			signalKurs1.setEditable(!loeschen)
+			typ.setEditable(!loeschen)
+			waehrung.setEditable(!loeschen)
 			muster.setEditable(false)
 			sortierung.setEditable(!loeschen)
 			setEditable(relation, !loeschen)
@@ -209,11 +219,11 @@ class WP210WertpapierController extends BaseController<String> {
 		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
 			r = FactoryService::wertpapierService.insertUpdateWertpapier(serviceDaten, null, bezeichnung.text,
 				kuerzel.text, signalKurs1.text, sortierung.text, getText(provider), getText(status), getText(relation),
-				notiz.text)
+				notiz.text, typ.text, waehrung.text)
 		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
 			r = FactoryService::wertpapierService.insertUpdateWertpapier(serviceDaten, nr.text, bezeichnung.text,
 				kuerzel.text, signalKurs1.text, sortierung.text, getText(provider), getText(status), getText(relation),
-				notiz.text)
+				notiz.text, typ.text, waehrung.text)
 		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
 			r = FactoryService::wertpapierService.deleteWertpapier(serviceDaten, nr.text)
 		}
