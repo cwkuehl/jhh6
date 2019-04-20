@@ -725,10 +725,11 @@ class WertpapierService {
 							throw new RuntimeException('''Falsches Format: "«v.get(0)»" statt "Zeit;Kurs;Stück;Kumuliert"''')
 						var k = new SoKurse
 						for (var i = 1; i < v.size; i++) {
+							// absteigende Uhrzeit
 							var c = Global.decodeCSV(v.get(i), ';', ';')
 							if (c !== null && c.size >= 4) {
-								// absteigende Uhrzeit
-								k.open = Global.strDbl(c.get(1), Locale.ENGLISH)
+								// Prozent
+								k.open = Global.strDbl(c.get(1), Locale.ENGLISH) / 100 // Prozent
 								if (i == 1) {
 									k.high = k.open
 									k.low = k.open
@@ -1500,9 +1501,9 @@ class WertpapierService {
 
 	@Transaction(false)
 	override ServiceErgebnis<List<WpAnlageLang>> getAnlageListe(ServiceDaten daten, boolean zusammengesetzt, String bez,
-		String uid, String wpuid) {
+		String uid, String wpuid, boolean auchinaktive) {
 
-		var liste = getAnlageLangListeIntern(daten, zusammengesetzt, bez, uid, wpuid, null, null, null)
+		var liste = getAnlageLangListeIntern(daten, zusammengesetzt, bez, uid, wpuid, null, auchinaktive, null, null)
 		var r = new ServiceErgebnis<List<WpAnlageLang>>(liste)
 		return r
 	}
@@ -1512,13 +1513,68 @@ class WertpapierService {
 		String bez, String uid, String wpuid, LocalDate bewertungsdatum, StringBuffer status, StringBuffer abbruch) {
 
 		var r = new ServiceErgebnis<List<WpAnlageLang>>(null)
-		var liste = getAnlageLangListeIntern(daten, zusammengesetzt, bez, uid, wpuid, bewertungsdatum, status, abbruch)
+		var liste = getAnlageLangListeIntern(daten, zusammengesetzt, bez, uid, wpuid, bewertungsdatum, false, status, abbruch)
 		r.ergebnis = liste
 		return r
 	}
 
+	def private WpAnlageLang fillAnlageLang(WpAnlageLang a, boolean zusammengesetzt) {
+
+		var array = if(Global.nes(a.parameter)) null else a.parameter.split(";")
+		var l = Global.arrayLaenge(array)
+		if (l >= 11) {
+			a.betrag = Global.strDbl(array.get(0))
+			a.anteile = Global.strDbl(array.get(1))
+			a.preis = Global.strDbl(array.get(2))
+			a.zinsen = Global.strDbl(array.get(3))
+			a.aktpreis = Global.strDbl(array.get(4))
+			a.aktdatum = if(Global.nes(array.get(5))) null else LocalDateTime.parse(array.get(5))
+			a.wert = Global.strDbl(array.get(6))
+			a.gewinn = Global.strDbl(array.get(7))
+			a.pgewinn = Global.strDbl(array.get(8))
+			a.waehrung = array.get(9)
+			a.kurs = Global.strDbl(array.get(10))
+		}
+		a.mindatum = if(l >= 12 && !Global.excelNes(array.get(11))) LocalDateTime.parse(array.get(11)) else null
+		a.status = if(l >= 13 && !Global.excelNes(array.get(12))) Global.strInt(array.get(12)) else 1
+		if (zusammengesetzt) {
+			var p0 = if(a.aktdatum === null) null else Meldungen::WP026(a.aktdatum)
+			var pm = if(a.mindatum === null) null else Meldungen::WP051(a.mindatum)
+			var p1 = if(Global.nes(a.waehrung)) p0 else Meldungen::WP025(a.waehrung, a.kurs, p0)
+			var p2 = if (a.anteile == 0 || a.aktpreis == 0)
+					null
+				else
+					Meldungen::WP024(a.aktpreis, p1, a.wert, a.gewinn, a.pgewinn)
+			a.daten = if (a.anteile == 0)
+				null
+			else
+				Meldungen::WP023(a.betrag, pm, a.anteile, a.preis, a.zinsen, p2)
+		}
+		return a
+	}
+
+	def private WpAnlageLang fillAnlageLangParameter(WpAnlageLang a) {
+
+		var sb = new StringBuilder
+		sb.append(Global.dblStr2l(a.betrag))
+		sb.append(";").append(Global.dblStr5l(a.anteile))
+		sb.append(";").append(Global.dblStr4l(a.preis))
+		sb.append(";").append(Global.dblStr2(a.zinsen))
+		sb.append(";").append(Global.dblStr4l(a.aktpreis))
+		sb.append(";").append(if(a.aktdatum === null) '' else a.aktdatum.toString)
+		sb.append(";").append(Global.dblStr2l(a.wert))
+		sb.append(";").append(Global.dblStr2l(a.gewinn))
+		sb.append(";").append(Global.dblStr2l(a.pgewinn))
+		sb.append(";").append(Global.nn(a.waehrung))
+		sb.append(";").append(Global.dblStr4l(a.kurs))
+		sb.append(";").append(if(a.mindatum === null) '' else a.mindatum.toString)
+		sb.append(";").append(Global.intStr(a.status))
+		a.parameter = sb.toString
+		return a
+	}
+
 	def private List<WpAnlageLang> getAnlageLangListeIntern(ServiceDaten daten, boolean zusammengesetzt, String bez,
-		String uid, String wpuid, LocalDate bewertungsdatum, StringBuffer status, StringBuffer abbruch) {
+		String uid, String wpuid, LocalDate bewertungsdatum, boolean auchinaktive, StringBuffer status, StringBuffer abbruch) {
 
 		var liste = anlageRep.getAnlageLangListe(daten, bez, uid, wpuid)
 		if (bewertungsdatum !== null) {
@@ -1528,117 +1584,77 @@ class WertpapierService {
 				val a = liste.get(i)
 				status.length = 0
 				status.append(Meldungen::WP008(i + 1, l, a.bezeichnung, bis.atStartOfDay, null))
-				var array = if(Global.nes(a.parameter)) newArrayOfSize(0) else a.parameter.split(";")
-				var kurs = if (array.size >= 11 && !Global.excelNes(array.get(10)))
-						Global.strDbl(array.get(10))
-					else
-						1
-				var wp = getWertpapierLangIntern(daten, a.wertpapierUid)
-				var bliste = buchungRep.getBuchungLangListe(daten, null, null, null, a.uid, null, bis, false)
-				var betrag = bliste.map[b|b.zahlungsbetrag].reduce[sum, x|sum + x]
-				betrag = if(betrag === null) 0.0 else betrag
-				var rabatt = bliste.map[b|b.rabattbetrag].reduce[sum, x|sum + x]
-				rabatt = if(rabatt === null) 0.0 else rabatt
-				betrag = betrag - rabatt
-				var anteile = bliste.map[b|b.anteile].reduce[sum, x|sum + x]
-				anteile = if(anteile === null) 0.0 else anteile
-				var preis = if(anteile == 0) 0 else betrag / anteile
-				var zinsen = bliste.map[b|b.zinsen].reduce[sum, x|sum + x]
-				zinsen = if(zinsen === null) 0.0 else zinsen
-				var mindatum = bliste.map[b|b.datum].reduce[x,y|if (x.isBefore(y)) x else y]
-				var SoKurse k
-				try {
-					k = getAktKurs(daten, null, wp.datenquelle, wp.kuerzel, wp.typ, wp.waehrung, bis, preis)
-				} catch (Exception ex) {
-					// ignorieren
-					Global.machNichts
-				}
-				if (k === null) {
-					var s = standRep.getAktStand(daten, wp.uid, bis)
-					if (s !== null) {
-						k = new SoKurse
-						k.close = s.stueckpreis
-						k.datum = s.datum.atStartOfDay
-						k.bewertung = 'EUR'
-						k.preis = 1
+				fillAnlageLang(a, false)
+				if (a.status == 1) {
+					// nur aktive Anlagen berechnen
+					var wp = getWertpapierLangIntern(daten, a.wertpapierUid)
+					var bliste = buchungRep.getBuchungLangListe(daten, null, null, null, a.uid, null, bis, false)
+					var betrag0 = bliste.map[b|b.zahlungsbetrag].reduce[sum, x|sum + x]
+					a.betrag = if(betrag0 === null) 0.0 else betrag0
+					var rabatt = bliste.map[b|b.rabattbetrag].reduce[sum, x|sum + x]
+					rabatt = if(rabatt === null) 0.0 else rabatt
+					a.betrag = a.betrag - rabatt
+					var anteile0 = bliste.map[b|b.anteile].reduce[sum, x|sum + x]
+					a.anteile = if(anteile0 === null) 0.0 else anteile0
+					a.preis = if(a.anteile == 0) 0 else a.betrag / a.anteile
+					var zinsen0 = bliste.map[b|b.zinsen].reduce[sum, x|sum + x]
+					a.zinsen = if(zinsen0 === null) 0.0 else zinsen0
+					a.mindatum = bliste.map[b|b.datum.atStartOfDay].reduce[x,y|if (x.isBefore(y)) x else y]
+					var SoKurse k
+					try {
+						k = getAktKurs(daten, null, wp.datenquelle, wp.kuerzel, wp.typ, wp.waehrung, bis, a.preis)
+					} catch (Exception ex) {
+						// ignorieren
+						Global.machNichts
+					}
+					if (k === null) {
+						var s = standRep.getAktStand(daten, wp.uid, bis)
+						if (s !== null) {
+							k = new SoKurse
+							k.close = s.stueckpreis
+							k.datum = s.datum.atStartOfDay
+							k.bewertung = 'EUR'
+							k.preis = 1
+						}
+					}
+					a.aktpreis = if(k === null) 0 else k.close // * kurs
+					a.aktdatum = if(k === null) null else k.datum
+					a.waehrung = if (k === null) '' else k.bewertung
+					a.wert = a.anteile * a.aktpreis
+					a.gewinn = a.wert + a.zinsen - a.betrag
+					a.pgewinn = if(a.wert == 0 || a.betrag == 0) 0 else if (a.gewinn < 0) a.gewinn / a.wert * 100 else a.gewinn / a.betrag * 100
+					a.kurs = k.preis
+					fillAnlageLangParameter(a)
+					anlageRep.iuWpAnlage(daten, null, a.uid, a.wertpapierUid, a.bezeichnung, a.parameter, a.notiz, null,
+						null, null, null)
+					if (a.aktdatum !== null && Global.compDouble4(a.aktpreis, 0) > 0) {
+						var st = standRep.get(daten, new WpStandKey(daten.mandantNr, a.wertpapierUid, a.aktdatum.toLocalDate))
+						if (st === null || Global.compDouble4(st.stueckpreis, a.aktpreis) != 0)
+							standRep.iuWpStand(daten, null, a.wertpapierUid, a.aktdatum.toLocalDate, a.aktpreis, null, null, null, null)
 					}
 				}
-				var aktpreis = if(k === null) 0 else k.close // * kurs
-				var datum = if(k === null) null else k.datum
-				var wert = anteile * aktpreis
-				var gewinn = wert + zinsen - betrag
-				var pw = if(wert == 0 || betrag == 0) 0 else if (gewinn < 0) gewinn / wert * 100 else gewinn / betrag * 100
-				kurs = k.preis
-				var sb = new StringBuilder
-				sb.append(Global.dblStr2l(betrag))
-				sb.append(";").append(Global.dblStr5l(anteile))
-				sb.append(";").append(Global.dblStr4l(preis))
-				sb.append(";").append(Global.dblStr2(zinsen))
-				sb.append(";").append(Global.dblStr4l(aktpreis))
-				sb.append(";").append(if(datum === null) '' else datum.toString)
-				sb.append(";").append(Global.dblStr2l(wert))
-				sb.append(";").append(Global.dblStr2l(gewinn))
-				sb.append(";").append(Global.dblStr2l(pw))
-				sb.append(";").append(Global.nn(if (k === null) '' else k.bewertung))
-				sb.append(";").append(Global.dblStr4l(kurs))
-				sb.append(";").append(if(mindatum === null) '' else mindatum.atStartOfDay.toString)
-				a.parameter = sb.toString
-				anlageRep.iuWpAnlage(daten, null, a.uid, a.wertpapierUid, a.bezeichnung, a.parameter, a.notiz, null,
-					null, null, null)
-				if (datum !== null && Global.compDouble4(aktpreis, 0) > 0) {
-					var st = standRep.get(daten, new WpStandKey(daten.mandantNr, a.wertpapierUid, datum.toLocalDate))
-					if (st === null || Global.compDouble4(st.stueckpreis, aktpreis) != 0)
-						standRep.iuWpStand(daten, null, a.wertpapierUid, datum.toLocalDate, aktpreis, null, null, null, null)
-				}
 			}
 		}
+		var l2 = new ArrayList<WpAnlageLang>
 		for (a : liste) {
-			var array = if(Global.nes(a.parameter)) null else a.parameter.split(";")
-			var l = Global.arrayLaenge(array)
-			if (l >= 11) {
-				a.betrag = Global.strDbl(array.get(0))
-				a.anteile = Global.strDbl(array.get(1))
-				a.preis = Global.strDbl(array.get(2))
-				a.zinsen = Global.strDbl(array.get(3))
-				a.aktpreis = Global.strDbl(array.get(4))
-				a.aktdatum = if(Global.nes(array.get(5))) null else LocalDateTime.parse(array.get(5))
-				a.wert = Global.strDbl(array.get(6))
-				a.gewinn = Global.strDbl(array.get(7))
-				a.pgewinn = Global.strDbl(array.get(8))
-				a.waehrung = array.get(9)
-				a.kurs = Global.strDbl(array.get(10))
-			}
-			if (l >= 12) {
-				a.mindatum = if(Global.nes(array.get(11))) null else LocalDateTime.parse(array.get(11))
-			}
-			if (zusammengesetzt) {
-				var p0 = if(a.aktdatum === null) null else Meldungen::WP026(a.aktdatum)
-				var pm = if(a.mindatum === null) null else Meldungen::WP051(a.mindatum)
-				var p1 = if(Global.nes(a.waehrung)) p0 else Meldungen::WP025(a.waehrung, a.kurs, p0)
-				var p2 = if (a.anteile == 0 || a.aktpreis == 0)
-						null
-					else
-						Meldungen::WP024(a.aktpreis, p1, a.wert, a.gewinn, a.pgewinn)
-				a.daten = if (a.anteile == 0)
-					null
-				else
-					Meldungen::WP023(a.betrag, pm, a.anteile, a.preis, a.zinsen, p2)
-			}
+			fillAnlageLang(a, zusammengesetzt)
+			if (auchinaktive || a.status != 0)
+				l2.add(a)
 		}
-		return liste
+		return l2
 	}
 
 	@Transaction(false)
 	override ServiceErgebnis<WpAnlageLang> getAnlageLang(ServiceDaten daten, String uid) {
 
-		var l = getAnlageLangListeIntern(daten, true, null, uid, null, null, null, null)
+		var l = getAnlageLangListeIntern(daten, true, null, uid, null, null, true, null, null)
 		var r = new ServiceErgebnis<WpAnlageLang>(if(l.size > 0) l.get(0) else null)
 		return r
 	}
 
 	@Transaction
 	override ServiceErgebnis<WpAnlage> insertUpdateAnlage(ServiceDaten daten, String uid, String wpuid, String bez,
-		String notiz) {
+		String notiz, int status) {
 
 		if (Global.nes(bez)) {
 			throw new MeldungException(Meldungen::WP001)
@@ -1651,8 +1667,12 @@ class WertpapierService {
 		}
 		var String parameter
 		if (!Global.nes(uid)) {
-			var a = anlageRep.get(daten, new WpAnlageKey(daten.mandantNr, uid))
+			var liste = anlageRep.getAnlageLangListe(daten, null, uid, null)
+			var a = if (liste === null || liste.size <= 0) null else liste.get(0)
 			if (a !== null) {
+				fillAnlageLang(a, false)
+				a.status = status
+				fillAnlageLangParameter(a)
 				parameter = a.parameter
 			}
 		}

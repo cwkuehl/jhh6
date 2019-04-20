@@ -13,6 +13,11 @@ public enum WpStatusEnum {
     AKTIV,
 
     /**
+     * Wertpapier-Status: keine Berechnung.
+     */
+    KEINE_BERECHNUNG,
+
+    /**
      * Wertpapier-Status: inaktiv.
      */
     INAKTIV;
@@ -21,6 +26,8 @@ public enum WpStatusEnum {
 
         if (equals(AKTIV)) {
             return "1";
+        } else if (equals(KEINE_BERECHNUNG)) {
+            return "2";
         }
         return "0"; // INAKTIV
 
@@ -30,6 +37,9 @@ public enum WpStatusEnum {
 
         if (equals(AKTIV)) {
             return Global.g0("enum.state.active");
+        }
+        if (equals(KEINE_BERECHNUNG)) {
+            return Global.g0("enum.state.nocalc");
         }
         return Global.g0("enum.state.inactive"); // INAKTIV
     }

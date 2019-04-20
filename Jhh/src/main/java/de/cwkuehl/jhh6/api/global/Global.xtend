@@ -960,7 +960,7 @@ class Global {
 	/**
 	 * Liefert letzten Werktag (nicht Samstag und Sonntag), der am Datum oder davor liegt.
 	 * @param d Betroffenes Datum.
-	 * @return Datums-String.
+	 * @return Werktag als Datum.
 	 */
 	def public static LocalDate werktag(LocalDate d) {
 

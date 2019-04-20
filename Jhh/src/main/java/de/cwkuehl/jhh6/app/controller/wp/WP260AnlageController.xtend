@@ -3,6 +3,7 @@ package de.cwkuehl.jhh6.app.controller.wp
 import de.cwkuehl.jhh6.api.dto.MaEinstellung
 import de.cwkuehl.jhh6.api.dto.WpAnlageLang
 import de.cwkuehl.jhh6.api.dto.WpWertpapierLang
+import de.cwkuehl.jhh6.api.global.Global
 import de.cwkuehl.jhh6.api.message.Meldungen
 import de.cwkuehl.jhh6.api.service.ServiceErgebnis
 import de.cwkuehl.jhh6.app.base.BaseController
@@ -26,6 +27,8 @@ class WP260AnlageController extends BaseController<String> {
 	@FXML ComboBox<RelationData> wertpapier
 	@FXML Label bezeichnung0
 	@FXML TextField bezeichnung
+	@FXML Label status0
+	@FXML ComboBox<StatusData> status
 	@FXML Label notiz0
 	@FXML TextArea notiz
 	@FXML Label daten0
@@ -37,24 +40,6 @@ class WP260AnlageController extends BaseController<String> {
 	@FXML Button ok
 
 	// @FXML Button abbrechen
-	/** 
-	 * Daten für ComboBox Status.
-	 */
-	static class StatusData extends ComboBoxData<MaEinstellung> {
-
-		new(MaEinstellung v) {
-			super(v)
-		}
-
-		override String getId() {
-			return getData.schluessel
-		}
-
-		override String toString() {
-			return getData.wert
-		}
-	}
-
 	/** 
 	 * Daten für ComboBox Relation.
 	 */
@@ -74,6 +59,24 @@ class WP260AnlageController extends BaseController<String> {
 	}
 
 	/** 
+	 * Daten für ComboBox Status.
+	 */
+	static class StatusData extends ComboBoxData<MaEinstellung> {
+
+		new(MaEinstellung v) {
+			super(v)
+		}
+
+		override String getId() {
+			return getData.schluessel
+		}
+
+		override String toString() {
+			return getData.wert
+		}
+	}
+
+	/** 
 	 * Initialisierung des Dialogs.
 	 */
 	override protected void initialize() {
@@ -82,6 +85,7 @@ class WP260AnlageController extends BaseController<String> {
 		nr0.setLabelFor(nr)
 		wertpapier0.setLabelFor(wertpapier, true)
 		bezeichnung0.setLabelFor(bezeichnung, true)
+		status0.setLabelFor(status, true)
 		notiz0.setLabelFor(notiz)
 		daten0.setLabelFor(daten)
 		angelegt0.setLabelFor(angelegt)
@@ -99,6 +103,9 @@ class WP260AnlageController extends BaseController<String> {
 		if (stufe <= 0) {
 			var wliste = get(FactoryService::wertpapierService.getWertpapierListe(serviceDaten, true, null, null, null))
 			wertpapier.setItems(getItems(wliste, new WpWertpapierLang, [a|new RelationData(a)], null))
+			var sliste = get(FactoryService::wertpapierService.getWertpapierStatusListe(serviceDaten))
+			status.setItems(getItems(sliste, null, [a|new StatusData(a)], null))
+			status.selectionModel.select(0)
 			var neu = DialogAufrufEnum::NEU.equals(aufruf)
 			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf)
 			var WpAnlageLang k = parameter1
@@ -109,6 +116,7 @@ class WP260AnlageController extends BaseController<String> {
 				nr.setText(k.uid)
 				setText(wertpapier, k.wertpapierUid)
 				bezeichnung.setText(k.bezeichnung)
+				setText(status, Global.intStr(k.status))
 				notiz.setText(k.notiz)
 				daten.setText(k.daten)
 				angelegt.setText(k.formatDatumVon(k.angelegtAm, k.angelegtVon))
@@ -117,6 +125,7 @@ class WP260AnlageController extends BaseController<String> {
 			nr.setEditable(false)
 			setEditable(wertpapier, !loeschen)
 			bezeichnung.setEditable(!loeschen)
+			setEditable(status, !loeschen)
 			notiz.setEditable(!loeschen)
 			daten.setEditable(false)
 			angelegt.setEditable(false)
@@ -145,10 +154,10 @@ class WP260AnlageController extends BaseController<String> {
 		var ServiceErgebnis<?> r
 		if (DialogAufrufEnum::NEU.equals(aufruf) || DialogAufrufEnum::KOPIEREN.equals(aufruf)) {
 			r = FactoryService::wertpapierService.insertUpdateAnlage(serviceDaten, null, getText(wertpapier),
-				bezeichnung.text, notiz.text)
+				bezeichnung.text, notiz.text, Global.strInt(getText(status)))
 		} else if (DialogAufrufEnum::AENDERN.equals(aufruf)) {
 			r = FactoryService::wertpapierService.insertUpdateAnlage(serviceDaten, nr.text, getText(wertpapier),
-				bezeichnung.text, notiz.text)
+				bezeichnung.text, notiz.text, Global.strInt(getText(status)))
 		} else if (DialogAufrufEnum::LOESCHEN.equals(aufruf)) {
 			r = FactoryService::wertpapierService.deleteAnlage(serviceDaten, nr.text)
 		}

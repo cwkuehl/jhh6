@@ -154,7 +154,7 @@
 			<Tooltip text="%WP250.wertpapier.tt" />
 		</tooltip>
 	</ComboBox>
-	<HBox spacing="10.0" GridPane.columnSpan="4" GridPane.rowIndex="5">
+	<HBox spacing="10.0" GridPane.columnSpan="3" GridPane.rowIndex="5">
 		<children>
 			<Button fx:id="alle" mnemonicParsing="true" onAction="#onAlle" text="%WP250.alle">
 				<tooltip>
@@ -173,6 +173,15 @@
 			</Button>
 		</children>
 	</HBox>
+	<CheckBox fx:id="auchinaktiv" mnemonicParsing="false" text="%WP250.auchinaktiv" onAction="#onAktuell"
+	    GridPane.columnIndex="3" GridPane.columnSpan="1" GridPane.rowIndex="5">
+		<padding>
+			<Insets right="5.0" />
+		</padding>
+		<tooltip>
+			<Tooltip text="%WP250.auchinaktiv.tt" />
+		</tooltip>
+	</CheckBox>
 
 	<stylesheets>
 		<URL value="@../Jhh6.css" />

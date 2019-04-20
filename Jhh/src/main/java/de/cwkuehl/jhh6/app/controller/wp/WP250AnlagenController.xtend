@@ -19,6 +19,7 @@ import javafx.collections.ObservableList
 import javafx.concurrent.Task
 import javafx.fxml.FXML
 import javafx.scene.control.Button
+import javafx.scene.control.CheckBox
 import javafx.scene.control.ComboBox
 import javafx.scene.control.Label
 import javafx.scene.control.TableColumn
@@ -62,6 +63,7 @@ class WP250AnlagenController extends BaseController<String> {
 	@FXML Label wertpapier0
 	@FXML ComboBox<WertpapierData> wertpapier
 	@Profil String wertpapierUid = null
+	@FXML CheckBox auchinaktiv
 	/** 
 	 * Abbruch-Objekt. 
 	 */
@@ -160,11 +162,12 @@ class WP250AnlagenController extends BaseController<String> {
 			var kliste = get(FactoryService::wertpapierService.getWertpapierListe(serviceDaten, true, null, null, null))
 			wertpapier.setItems(getItems(kliste, new WpWertpapierLang, [a|new WertpapierData(a)], null))
 			setText(wertpapier, wertpapierUid)
+			auchinaktiv.selected = false
 		}
 		if (stufe <= 1) {
 			var l = get(
 				FactoryService::wertpapierService.getAnlageListe(serviceDaten, false, bezeichnung.text, null,
-					getText(wertpapier)))
+					getText(wertpapier), auchinaktiv.isSelected))
 			getItems(l, null, [a|new AnlagenData(a)], anlagenData)
 			var anz = Global::listLaenge(l)
 			var summe = 0.0

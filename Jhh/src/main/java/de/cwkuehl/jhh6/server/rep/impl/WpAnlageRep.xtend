@@ -148,6 +148,9 @@ ALTER TABLE HH_Anlageteil
 		@Column(name="null", nullable=true)
 		public LocalDateTime mindatum
 
+		@Column(name="0", nullable=true)
+		public int status
+
 		@Column(name="a.Notiz", nullable=true)
 		public String notiz
 

@@ -145,7 +145,7 @@ class WP400BuchungenController extends BaseController<String> {
 
 		if (stufe <= 0) {
 			bezeichnung.setText("%%")
-			var kliste = get(FactoryService::wertpapierService.getAnlageListe(serviceDaten, true, null, null, null))
+			var kliste = get(FactoryService::wertpapierService.getAnlageListe(serviceDaten, true, null, null, null, true))
 			anlage.setItems(getItems(kliste, new WpAnlageLang, [a|new AnlageData(a)], null))
 			setText(anlage, anlageUid)
 		}

@@ -487,7 +487,7 @@ class ReplikationService {
 				null, null).ergebnis
 			var w = wpService.insertUpdateWertpapier(daten, null, "Deutsche Bank", "DBK.DE", null, "A", "yahoo", "1",
 				w0.uid, null, null, null).ergebnis
-			var a = wpService.insertUpdateAnlage(daten, null, w.uid, w.kuerzel, null).ergebnis
+			var a = wpService.insertUpdateAnlage(daten, null, w.uid, w.kuerzel, null, 1).ergebnis
 			wpService.insertUpdateBuchung(daten, null, a.uid, daten.heute, 100, -5, 7, 0, Meldungen::M9000, null, 14.28)
 		}
 		maeinstellungRep.iuMaEinstellung(daten, null, Constant.EINST_MA_EXAMPLES, "1", null, null, null, null)

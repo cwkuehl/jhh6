@@ -102,7 +102,7 @@ class WP410BuchungController extends BaseController<String> {
 		if (stufe <= 0) {
 			// letztes Datum einstellen
 			valuta.setValue(valutaZuletzt)
-			var l = get(FactoryService::wertpapierService.getAnlageListe(serviceDaten, true, null, null, null))
+			var l = get(FactoryService::wertpapierService.getAnlageListe(serviceDaten, true, null, null, null, true))
 			anlage.setItems(getItems(l, null, [a|new AnlageData(a)], null))
 			var neu = DialogAufrufEnum::NEU.equals(aufruf)
 			var loeschen = DialogAufrufEnum::LOESCHEN.equals(aufruf) || DialogAufrufEnum::STORNO.equals(aufruf)
