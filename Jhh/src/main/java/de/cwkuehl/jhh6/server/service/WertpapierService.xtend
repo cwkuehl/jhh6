@@ -705,7 +705,7 @@ class WertpapierService {
 							k.high = Global.strDbl(c.get(2), Locale.GERMAN)
 							k.low = Global.strDbl(c.get(3), Locale.GERMAN)
 							k.close = Global.strDbl(c.get(4), Locale.GERMAN)
-							k.bewertung = 'EUR'
+							k.bewertung = if (Global.nes(waehrung)) 'EUR' else waehrung
 							k.preis = 1
 							if (k.datum.compareTo(vt) >= 0 && k.datum.compareTo(bt) < 0)
 								liste.add(k)
@@ -747,8 +747,10 @@ class WertpapierService {
 							liste.add(k)
 						}
 					}
-					// date = Global.werktag(date.minusDays(1))
-					date = von.minusDays(1) // Schleife beenden
+					if (liste.size > 0)
+						date = Global.werktag(date.minusDays(1))
+					else
+						date = von.minusDays(1) // Schleife beenden
 				}
 			}
 		}
