@@ -180,7 +180,8 @@ class WP250AnlagenController extends BaseController<String> {
 					gewinn += b.gewinn
 				}
 			}
-			anlagenStatus.setText(Meldungen::WP029(anz, summe, wert, gewinn))
+			var pgewinn = if(wert == 0 || summe == 0) 0 else if (gewinn < 0) gewinn / wert * 100 else gewinn / summe * 100
+			anlagenStatus.setText(Meldungen::WP029(anz, summe, wert, gewinn, pgewinn))
 		}
 		if (stufe <= 2) {
 			initDatenTable
