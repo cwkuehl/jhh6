@@ -64,11 +64,11 @@ class AnmeldungService {
 	override ServiceErgebnis<Void> aendern(ServiceDaten daten, int mandantNr, String benutzerId, String passwortAlt,
 		String passwortNeu, boolean speichern) {
 
-		if (daten.mandantNr < 0) {
+		if (mandantNr < 0) {
 			// Die Anmeldedaten sind ungültig. Mandant ungültig.
 			throw new MeldungException(Meldungen::AM001)
 		}
-		if (Global.nes(daten.benutzerId)) {
+		if (Global.nes(benutzerId)) {
 			// Die Anmeldedaten sind ungültig. Benutzer ungültig.
 			throw new MeldungException(Meldungen::AM001)
 		}
