@@ -676,9 +676,6 @@ class AdresseService {
 						if (j >= spalten - 1) {
 							geprueft = true
 						}
-						if (j >= spalten - 1) {
-							geprueft = true
-						}
 					}
 					if (!geprueft) {
 						throw new MeldungException(Meldungen::AD005)
