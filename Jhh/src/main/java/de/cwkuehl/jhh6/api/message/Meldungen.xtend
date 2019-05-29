@@ -15,7 +15,7 @@ class Meldungen {
 	val AD007 = "Person import error."
 	val AD008 = "Site import error."
 	val AD009 = "Address import error."
-	val AD010 = "{0,number} person(s), {2,number} site(s) and {4,number} address(es) imported.\nThere are with {1,number} person(s), {3,number} site(s) and {5,number} address(es)."
+	val AD010 = "{0,number} person(s), {2,number} site(s) and {4,number} address(es) imported.\nThere are errors with {1,number} person(s), {3,number} site(s) and {5,number} address(es)."
 	val AD011 = "Are You sure to import addresses?"
 	val AD012 = "Address list"
 	val AD013 = "Person {0}"
