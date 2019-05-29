@@ -1620,13 +1620,20 @@ class WertpapierService {
 							k.preis = 1
 						}
 					}
+					if (k === null) {
+						k = new SoKurse
+						k.close = a.preis
+						k.datum = a.mindatum
+						k.bewertung = 'EUR'
+						k.preis = 1
+					}
 					a.aktpreis = if(k === null) 0 else k.close // * kurs
 					a.aktdatum = if(k === null) null else k.datum
 					a.waehrung = if (k === null) '' else k.bewertung
+					a.kurs = if(k === null) 1 else k.preis
 					a.wert = a.anteile * a.aktpreis
 					a.gewinn = a.wert + a.zinsen - a.betrag
 					a.pgewinn = if(a.wert == 0 || a.betrag == 0) 0 else if (a.gewinn < 0) a.gewinn / a.wert * 100 else a.gewinn / a.betrag * 100
-					a.kurs = k.preis
 					fillAnlageLangParameter(a)
 					anlageRep.iuWpAnlage(daten, null, a.uid, a.wertpapierUid, a.bezeichnung, a.parameter, a.notiz, null,
 						null, null, null)
