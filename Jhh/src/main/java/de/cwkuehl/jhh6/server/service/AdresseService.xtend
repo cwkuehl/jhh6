@@ -386,6 +386,11 @@ class AdresseService {
 		// getBerechService.pruefeBerechtigungAktuellerMandant(daten, mandantNr)
 		var felder = getAdresseSpalten
 		var liste = personRep.getListeSitzAdresse(daten, daten.mandantNr, null, null)
+		for (p : liste) {
+			if (p.bemerkung !== null) {
+				p.bemerkung = p.bemerkung.replace("\r\n", "<br>").replace("\r", "<br>").replace("\n", "<br>")
+			}
+		}
 		var l = new ArrayList<String>
 		l.add(Global.encodeCSV(felder))
 		exportListeFuellen(felder, liste, new AdPersonSitzAdresse, l)
