@@ -1544,14 +1544,8 @@ class WertpapierService {
 			var p0 = if(a.aktdatum === null) null else Meldungen::WP026(a.aktdatum)
 			var pm = if(a.mindatum === null) null else Meldungen::WP051(a.mindatum)
 			var p1 = if(Global.nes(a.waehrung)) p0 else Meldungen::WP025(a.waehrung, a.kurs, p0)
-			var p2 = if (a.anteile == 0 || a.aktpreis == 0)
-					null
-				else
-					Meldungen::WP024(a.aktpreis, p1, a.wert, a.gewinn, a.pgewinn)
-			a.daten = if (a.anteile == 0)
-				null
-			else
-				Meldungen::WP023(a.betrag, pm, a.anteile, a.preis, a.zinsen, p2)
+			var p2 = Meldungen::WP024(a.aktpreis, p1, a.wert, a.gewinn, a.pgewinn)
+			a.daten = Meldungen::WP023(a.betrag, pm, a.anteile, a.preis, a.zinsen, p2)
 		}
 		return a
 	}
