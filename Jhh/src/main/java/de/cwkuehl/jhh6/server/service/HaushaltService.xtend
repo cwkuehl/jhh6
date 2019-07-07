@@ -217,7 +217,6 @@ class HaushaltService {
 	/**
 	 * Liefert die nächste zu berechnende Perioden-Nummer.
 	 * @param daten Service-Daten für Datenbankzugriff.
-	 * @param mandantNr Mandantennummer.
 	 * @return Nächste zu berechnende Perioden-Nummer.
 	 */
 	def private int holeBerPeriodeIntern(ServiceDaten daten) {
@@ -241,7 +240,6 @@ class HaushaltService {
 	 * @param dbBetrag DM-Betrag.
 	 * @param dbEBetrag Euro-Betrag.
 	 * @param pdiff Differenz zwischen Quell- und Ziel-Perioden-Nummer, üblicherweise 1 oder -1.
-	 * @param dJetzt Zeitstempel für Datenbank-Eintrag.
 	 */
 	def private void insertBilanz2(ServiceDaten daten, int pnr, String knr, double dbBetrag, double dbEBetrag,
 		int pdiff) {

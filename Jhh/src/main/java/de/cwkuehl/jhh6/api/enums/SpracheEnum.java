@@ -18,7 +18,12 @@ public enum SpracheEnum {
     /**
      * Sprache: englisch.
      */
-    ENGLISCH;
+    ENGLISCH,
+
+    /**
+     * Sprache: französisch.
+     */
+    FRANZOESISCH;
 
     public String toString() {
 
@@ -26,21 +31,12 @@ public enum SpracheEnum {
             return "0";
         } else if (equals(DEUTSCH)) {
             return "1";
+        } else if (equals(ENGLISCH)) {
+            return "2";
         }
-        return "2"; // ENGLISCH
+        return "3"; // FRANZOESISCH
 
     }
-
-    // public String toString2() {
-    //
-    // if (equals(OHNE)) {
-    // return "ohne";
-    // } else if (equals(DEUTSCH)) {
-    // return "deutsch";
-    // }
-    // return "englisch"; // ENGLISCH
-    //
-    // }
 
     public static SpracheEnum fromValue(final String v) {
 
@@ -55,28 +51,15 @@ public enum SpracheEnum {
         // throw new IllegalArgumentException("ungültige SpracheEnum: " + v);
     }
 
-    // public String getItemValue() {
-    // return toString();
-    // }
-
     public int intValue() {
 
         if (equals(OHNE)) {
             return 0;
         } else if (equals(DEUTSCH)) {
             return 1;
+        } else if (equals(ENGLISCH)) {
+            return 2;
         }
-        return 2; // ENGLISCH
+        return 3; // FRANZOESISCH
     }
-
-    // public static SpracheEnum fromIntValue(final int v) {
-    //
-    // for (SpracheEnum e : values()) {
-    // if (v == e.intValue()) {
-    // return e;
-    // }
-    // }
-    // return OHNE;
-    // // throw new IllegalArgumentException("ungültige SpracheEnum: " + v);
-    // }
 }

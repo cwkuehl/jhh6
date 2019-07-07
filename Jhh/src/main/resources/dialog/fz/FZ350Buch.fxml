@@ -91,9 +91,14 @@
 					<Tooltip text="%FZ350.sprache2.tt" />
 				</tooltip>
 			</RadioButton>
-			<RadioButton accessibleText="%FZ350.sprache3.tt" text="%FZ350.sprache3" toggleGroup="$sprache" userData="0">
+			<RadioButton accessibleText="%FZ350.sprache3.tt" text="%FZ350.sprache3" toggleGroup="$sprache" userData="3">
 				<tooltip>
 					<Tooltip text="%FZ350.sprache3.tt" />
+				</tooltip>
+			</RadioButton>
+			<RadioButton accessibleText="%FZ350.sprache4.tt" text="%FZ350.sprache4" toggleGroup="$sprache" userData="0">
+				<tooltip>
+					<Tooltip text="%FZ350.sprache4.tt" />
 				</tooltip>
 			</RadioButton>
 		</children>

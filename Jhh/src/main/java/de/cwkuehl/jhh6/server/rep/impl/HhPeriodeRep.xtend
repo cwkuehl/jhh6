@@ -148,7 +148,7 @@ class HhPeriodeRep {
 	}
 
 	/**
-	 * Liefert die Nummer der ersten oder letzen Periode.
+	 * Liefert die Nummer der ersten oder letzten Periode.
 	 * @param daten Service-Daten für Datenbankzugriff.
 	 * @param min Erste Periodennummer?
 	 * @return Nummer der ersten oder letzen Periode.
