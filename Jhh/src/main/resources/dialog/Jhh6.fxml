@@ -138,7 +138,7 @@
 							visible="false" />
 					</items>
 				</Menu>
-				<Menu fx:id="menueHp" mnemonicParsing="true" text="%menu.pedigree">
+				<Menu fx:id="menueSp" mnemonicParsing="true" text="%menu.pedigree">
 					<items>
 						<MenuItem fx:id="menueSB200" mnemonicParsing="true" onAction="#handleSB200" text="%menu.ancestors"
 							visible="false" />
