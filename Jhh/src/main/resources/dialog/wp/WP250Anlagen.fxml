@@ -130,6 +130,7 @@
 			<TableColumn fx:id="colBetrag" prefWidth="100.0" text="%WP250.colBetrag" />
 			<TableColumn fx:id="colWert" prefWidth="100.0" text="%WP250.colWert" />
 			<TableColumn fx:id="colGewinn" prefWidth="100.0" text="%WP250.colGewinn" />
+			<TableColumn fx:id="colDiff" prefWidth="80.0" text="%WP250.colDiff" />
 			<TableColumn fx:id="colDatum" prefWidth="80.0" text="%WP250.colDatum" />
 			<TableColumn fx:id="colWaehrung" prefWidth="80.0" text="%WP250.colWaehrung" />
 			<TableColumn fx:id="colGa" prefWidth="170.0" text="%WP250.colGa" />

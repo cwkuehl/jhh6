@@ -807,26 +807,21 @@ class WertpapierService {
 			return k1.datum.compareTo(k2.datum)
 		]
 
-		// if(letzter && !bis.isBefore(daten.heute)) {
-		// var k = getAktKurs(daten, wp, daten.heute, kl, false)
-		// if(k !== null) {
-		// var ll = if(liste.size <= 0) null else liste.get(liste.size - 1)
-		// if(ll === null || k.datum.isAfter(ll.datum))
-		// liste.add(k)
-		// }
-		// }
 		return liste
 	}
 
 	var df0 = DateTimeFormatter.ofPattern("M/d/yyyy", Locale.ENGLISH)
 	var df = DateTimeFormatter.ofPattern("h:mma", Locale.ENGLISH)
 
-	def private SoKurse getAktKurs(ServiceDaten daten, String wpuid, String quelle, String kuerzel, String typ, String waehrung, LocalDate heute, double kl) {
+	// Liefert die beiden letzten Kurse
+	def private SoKurse[] getAktKurs(ServiceDaten daten, String wpuid, String quelle, String kuerzel, String typ, String waehrung, LocalDate heute, double kl) {
 
 		var von = heute.minusDays(7)
 		var l = holeKursListe(daten, wpuid, von, heute, quelle, kuerzel, typ, waehrung, false, kl)
-		if (l !== null && l.size > 0) {
-			return l.get(l.size - 1)
+		if (l !== null && l.size >= 1) {
+			if (l.size >= 2)
+				return #[l.get(l.size - 1), l.get(l.size - 2)]
+			return #[l.get(l.size - 1)]
 		}
 		return null
 	}
@@ -1540,12 +1535,15 @@ class WertpapierService {
 		}
 		a.mindatum = if(l >= 12 && !Global.excelNes(array.get(11))) LocalDateTime.parse(array.get(11)) else null
 		a.status = if(l >= 13 && !Global.excelNes(array.get(12))) Global.strInt(array.get(12)) else 1
+		a.aktdatum2 = if(l >= 14 && !Global.excelNes(array.get(13))) LocalDateTime.parse(array.get(13)) else null
+		a.wert2 = if(l >= 15) Global.strDbl(array.get(14)) else 0
 		if (zusammengesetzt) {
 			var p0 = if(a.aktdatum === null) null else Meldungen::WP026(a.aktdatum)
 			var pm = if(a.mindatum === null) null else Meldungen::WP051(a.mindatum)
 			var p1 = if(Global.nes(a.waehrung)) p0 else Meldungen::WP025(a.waehrung, a.kurs, p0)
 			var p2 = Meldungen::WP024(a.aktpreis, p1, a.wert, a.gewinn, a.pgewinn)
-			a.daten = Meldungen::WP023(a.betrag, pm, a.anteile, a.preis, a.zinsen, p2)
+			var p3 = if(a.aktdatum2 === null) null else Meldungen::WP028(a.wert2, a.wert - a.wert2, a.aktdatum2)
+			a.daten = Meldungen::WP023(a.betrag, pm, a.anteile, a.preis, a.zinsen, p2, p3)
 		}
 		return a
 	}
@@ -1566,8 +1564,35 @@ class WertpapierService {
 		sb.append(";").append(Global.dblStr4l(a.kurs))
 		sb.append(";").append(if(a.mindatum === null) '' else a.mindatum.toString)
 		sb.append(";").append(Global.intStr(a.status))
+		sb.append(";").append(if(a.aktdatum2 === null) '' else a.aktdatum2.toString)
+		sb.append(";").append(Global.dblStr2l(a.wert2))
 		a.parameter = sb.toString
 		return a
+	}
+	
+	def private void berechneAnlage(ServiceDaten daten, WpWertpapierLang wp, WpAnlageLang a, SoKurse k, LocalDate bis) {
+		
+		var bliste = buchungRep.getBuchungLangListe(daten, null, null, null, a.uid, null, bis, false)
+		var betrag0 = bliste.map[b|b.zahlungsbetrag].reduce[sum, x|sum + x]
+		a.betrag = if(betrag0 === null) 0.0 else betrag0
+		var rabatt = bliste.map[b|b.rabattbetrag].reduce[sum, x|sum + x]
+		rabatt = if(rabatt === null) 0.0 else rabatt
+		a.betrag = a.betrag - rabatt
+		var anteile0 = bliste.map[b|b.anteile].reduce[sum, x|sum + x]
+		a.anteile = if(anteile0 === null) 0.0 else anteile0
+		a.preis = if(a.anteile == 0) 0 else a.betrag / a.anteile
+		var zinsen0 = bliste.map[b|b.zinsen].reduce[sum, x|sum + x]
+		a.zinsen = if(zinsen0 === null) 0.0 else zinsen0
+		a.mindatum = bliste.map[b|b.datum.atStartOfDay].reduce[x,y|if (x.isBefore(y)) x else y]
+		a.aktpreis = if(k === null) 0 else k.close // * kurs
+		a.aktdatum = if(k === null) null else k.datum
+		a.waehrung = if (k === null) '' else k.bewertung
+		a.kurs = if(k === null) 1 else k.preis
+		a.wert = a.anteile * a.aktpreis
+		a.gewinn = a.wert + a.zinsen - a.betrag
+		a.pgewinn = if(a.wert == 0 || a.betrag == 0) 0 else if (a.gewinn < 0) a.gewinn / a.wert * 100 else a.gewinn / a.betrag * 100
+		a.aktdatum2 = null
+		a.wert2 = 0
 	}
 
 	def private List<WpAnlageLang> getAnlageLangListeIntern(ServiceDaten daten, boolean zusammengesetzt, String bez,
@@ -1585,24 +1610,20 @@ class WertpapierService {
 				if (a.status == 1) {
 					// nur aktive Anlagen berechnen
 					var wp = getWertpapierLangIntern(daten, a.wertpapierUid)
-					var bliste = buchungRep.getBuchungLangListe(daten, null, null, null, a.uid, null, bis, false)
-					var betrag0 = bliste.map[b|b.zahlungsbetrag].reduce[sum, x|sum + x]
-					a.betrag = if(betrag0 === null) 0.0 else betrag0
-					var rabatt = bliste.map[b|b.rabattbetrag].reduce[sum, x|sum + x]
-					rabatt = if(rabatt === null) 0.0 else rabatt
-					a.betrag = a.betrag - rabatt
-					var anteile0 = bliste.map[b|b.anteile].reduce[sum, x|sum + x]
-					a.anteile = if(anteile0 === null) 0.0 else anteile0
-					a.preis = if(a.anteile == 0) 0 else a.betrag / a.anteile
-					var zinsen0 = bliste.map[b|b.zinsen].reduce[sum, x|sum + x]
-					a.zinsen = if(zinsen0 === null) 0.0 else zinsen0
-					a.mindatum = bliste.map[b|b.datum.atStartOfDay].reduce[x,y|if (x.isBefore(y)) x else y]
+					var SoKurse[] kurse
 					var SoKurse k
+					var SoKurse k1
 					try {
-						k = getAktKurs(daten, null, wp.datenquelle, wp.kuerzel, wp.typ, wp.waehrung, bis, a.preis)
+						kurse = getAktKurs(daten, null, wp.datenquelle, wp.kuerzel, wp.typ, wp.waehrung, bis, a.preis)
 					} catch (Exception ex) {
 						// ignorieren
 						Global.machNichts
+					}
+					if (kurse !== null) {
+						if (kurse.size >= 1)
+							k = kurse.get(0)
+						if (kurse.size >= 2)
+							k1 = kurse.get(1)
 					}
 					if (k === null) {
 						var s = standRep.getAktStand(daten, wp.uid, bis)
@@ -1621,13 +1642,13 @@ class WertpapierService {
 						k.bewertung = 'EUR'
 						k.preis = 1
 					}
-					a.aktpreis = if(k === null) 0 else k.close // * kurs
-					a.aktdatum = if(k === null) null else k.datum
-					a.waehrung = if (k === null) '' else k.bewertung
-					a.kurs = if(k === null) 1 else k.preis
-					a.wert = a.anteile * a.aktpreis
-					a.gewinn = a.wert + a.zinsen - a.betrag
-					a.pgewinn = if(a.wert == 0 || a.betrag == 0) 0 else if (a.gewinn < 0) a.gewinn / a.wert * 100 else a.gewinn / a.betrag * 100
+					berechneAnlage(daten, wp, a, k, bis)
+					if (k1 !== null) {
+						var a2 = a.clone
+						berechneAnlage(daten, wp, a2, k1, k1.datum.toLocalDate)
+						a.aktdatum2 = a2.aktdatum
+						a.wert2 = a2.wert
+					}
 					fillAnlageLangParameter(a)
 					anlageRep.iuWpAnlage(daten, null, a.uid, a.wertpapierUid, a.bezeichnung, a.parameter, a.notiz, null,
 						null, null, null)

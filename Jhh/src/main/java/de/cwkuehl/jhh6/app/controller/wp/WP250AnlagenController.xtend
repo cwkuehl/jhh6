@@ -47,6 +47,7 @@ class WP250AnlagenController extends BaseController<String> {
 	@FXML TableColumn<AnlagenData, Double> colBetrag
 	@FXML TableColumn<AnlagenData, Double> colWert
 	@FXML TableColumn<AnlagenData, Double> colGewinn
+	@FXML TableColumn<AnlagenData, Double> colDiff
 	@FXML TableColumn<AnlagenData, LocalDateTime> colDatum
 	@FXML TableColumn<AnlagenData, String> colWaehrung
 	@FXML TableColumn<AnlagenData, LocalDateTime> colGa
@@ -83,6 +84,7 @@ class WP250AnlagenController extends BaseController<String> {
 		SimpleObjectProperty<Double> betrag
 		SimpleObjectProperty<Double> wert
 		SimpleObjectProperty<Double> gewinn
+		SimpleObjectProperty<Double> diff
 		SimpleObjectProperty<LocalDateTime> aktdatum
 		SimpleStringProperty waehrung
 		SimpleObjectProperty<LocalDateTime> geaendertAm
@@ -98,6 +100,7 @@ class WP250AnlagenController extends BaseController<String> {
 			betrag = new SimpleObjectProperty<Double>(v.betrag)
 			wert = new SimpleObjectProperty<Double>(v.wert)
 			gewinn = new SimpleObjectProperty<Double>(v.gewinn)
+			diff = new SimpleObjectProperty<Double>(if (v.aktdatum2 === null) 0.0 else v.wert - v.wert2)
 			waehrung = new SimpleStringProperty(v.waehrung)
 			aktdatum = new SimpleObjectProperty<LocalDateTime>(v.aktdatum)
 			geaendertAm = new SimpleObjectProperty<LocalDateTime>(v.geaendertAm)
@@ -173,15 +176,17 @@ class WP250AnlagenController extends BaseController<String> {
 			var summe = 0.0
 			var wert = 0.0
 			var gewinn = 0.0
+			var diff = 0.0
 			if (l !== null) {
 				for (WpAnlageLang b : l) {
 					summe += b.betrag
 					wert += b.wert
 					gewinn += b.gewinn
+					diff += if (b.wert2 == 0) 0 else b.wert - b.wert2
 				}
 			}
 			var pgewinn = if(wert == 0 || summe == 0) 0 else if (gewinn < 0) gewinn / wert * 100 else gewinn / summe * 100
-			anlagenStatus.setText(Meldungen::WP029(anz, summe, wert, gewinn, pgewinn))
+			anlagenStatus.setText(Meldungen::WP029(anz, summe, wert, gewinn, pgewinn, diff))
 		}
 		if (stufe <= 2) {
 			initDatenTable
@@ -202,6 +207,8 @@ class WP250AnlagenController extends BaseController<String> {
 		initColumnBetrag(colWert)
 		colGewinn.setCellValueFactory([c|c.value.gewinn])
 		initColumnBetrag(colGewinn)
+		colDiff.setCellValueFactory([c|c.value.diff])
+		initColumnBetrag(colDiff)
 		colDatum.setCellValueFactory([c|c.value.aktdatum])
 		colWaehrung.setCellValueFactory([c|c.value.waehrung])
 		colGv.setCellValueFactory([c|c.value.geaendertVon])
@@ -334,7 +341,7 @@ class WP250AnlagenController extends BaseController<String> {
 			try {
 				while (true) {
 					onStatus
-					Thread::sleep(1000)
+					Thread::sleep(250)
 				}
 			} catch (Exception ex) {
 				Global::machNichts

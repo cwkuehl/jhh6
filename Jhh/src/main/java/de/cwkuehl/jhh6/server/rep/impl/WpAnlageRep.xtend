@@ -151,6 +151,12 @@ ALTER TABLE HH_Anlageteil
 		@Column(name="0", nullable=true)
 		public int status
 
+		@Column(name="null", nullable=true)
+		public LocalDateTime aktdatum2
+
+		@Column(name="0.0", nullable=true)
+		public double wert2
+
 		@Column(name="a.Notiz", nullable=true)
 		public String notiz
 
