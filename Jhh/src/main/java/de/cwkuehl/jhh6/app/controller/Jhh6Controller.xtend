@@ -137,6 +137,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 	@FXML MenuItem menueMO100
 	@FXML MenuItem menueMO200
 	@FXML MenuItem menueMO300
+	@FXML Menu menueSp
 	@FXML MenuItem menueSB200
 	@FXML MenuItem menueSB300
 	@FXML MenuItem menueSB400
@@ -289,6 +290,7 @@ class Jhh6Controller extends BaseController<String> implements Initializable {
 		menueMO100.setVisible(ok)
 		menueMO200.setVisible(ok)
 		menueMO300.setVisible(ok)
+		menueSp.setVisible(ok)
 		menueSB200.setVisible(ok)
 		menueSB300.setVisible(ok)
 		menueSB400.setVisible(ok)
