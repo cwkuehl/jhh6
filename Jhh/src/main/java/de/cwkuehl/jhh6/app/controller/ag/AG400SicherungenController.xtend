@@ -26,6 +26,64 @@ import javafx.scene.control.TableView
 import javafx.scene.control.TextArea
 import javafx.scene.control.TextField
 import javafx.scene.input.MouseEvent
+import java.net.InetSocketAddress
+import java.io.OutputStream
+import java.io.IOException
+import javafx.application.Platform
+import java.util.Date
+import java.nio.charset.Charset
+
+public class RootHandler implements com.sun.net.httpserver.HttpHandler {
+
+	static int port = 4200
+	static com.sun.net.httpserver.HttpServer server
+	
+	def static public void start() {
+		if (server !== null) {
+			return
+		}
+	    server = com.sun.net.httpserver.HttpServer.create(new InetSocketAddress(port), 0)
+        var context = server.createContext("/")
+        context.setHandler(new RootHandler)
+        server.start	
+	}
+	
+	def static public void stop() {
+        Platform.runLater([| {
+        	if (server !== null) {
+                server.stop(1)
+                server = null
+            }
+        }])
+	}
+	
+    override public void handle(com.sun.net.httpserver.HttpExchange he) throws IOException {
+        var request = he.requestURI
+        //var query = request.query
+        var path = request.path
+        var response = ''
+        if (path == '/stop') {
+        	response = "Stop!"
+        	RootHandler::stop
+        } else if (path == '/favicon.ico') {
+        	// nix
+        } else if (path == '/') {
+        	he.getResponseHeaders().add( "Content-type", "text/html; charset=utf-8" )
+            response = '''<h1>Hallo!</h1><h2>Anfrage: «path»</h2><h3>ä «new Date»</h3>'''
+        } else {
+        	he.getResponseHeaders().add( "Content-type", "application/json; charset=utf-8" )
+        	var r = FactoryService::replikationService.getJsonDaten(Jhh6::serviceDaten, '', '')
+        	if (r.ok)
+        		response = r.ergebnis
+        	//response = '''[{"a":"abc äöüÄÖÜß xyz"}]'''
+        }
+        var bytes = response.getBytes(Charset.forName("UTF-8"))
+        he.sendResponseHeaders(200, bytes.length)
+        var OutputStream os = he.getResponseBody
+        os.write(bytes)
+        os.close
+    }
+}
 
 /** 
  * Controller für Dialog AG400Sicherungen.
@@ -128,6 +186,11 @@ class AG400SicherungenController extends BaseController<String> {
 		verzeichnisse.requestFocus
 	}
 
+    override void onHidden() {
+      	RootHandler::stop
+    	super.onHidden
+    }
+
 	/** 
 	 * Model-Daten initialisieren.
 	 * @param stufe 0 erstmalig, 1 aktualisieren, 2 Tabellen aktualisieren.
@@ -136,7 +199,8 @@ class AG400SicherungenController extends BaseController<String> {
 
 		if (stufe <= 0) {
 			mandant.setText(Global::intStr(serviceDaten.mandantNr))
-		// mandant.setText("3")
+		    // mandant.setText("3")
+		    RootHandler::start
 		}
 		if (stufe <= 1) {
 			var l = sicherungen
