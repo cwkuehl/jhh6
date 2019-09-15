@@ -283,6 +283,8 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardOpenOption
 import java.util.List
+import org.json.JSONObject
+import org.json.JSONArray
 
 @Service
 class ReplikationService {
@@ -1095,6 +1097,20 @@ class ReplikationService {
 
 		var l = alleTabellen.map[t|t.name].toList
 		var r = new ServiceErgebnis<List<String>>(l)
+		return r
+	}
+
+	@Transaction(false)
+	override public ServiceErgebnis<String> getJsonDaten(ServiceDaten daten, String tab, String modus) {
+
+		var l = notizRep.getListe(daten, daten.mandantNr, null, null)
+		var ja = new JSONArray
+		for (e : l) {
+			var j = new JSONObject
+			j.append('thema', e.thema)
+			ja.put(j)
+		}
+		var r = new ServiceErgebnis<String>(ja.toString)
 		return r
 	}
 }

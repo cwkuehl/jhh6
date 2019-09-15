@@ -26,6 +26,7 @@ import javafx.scene.control.TableColumn
 import javafx.scene.control.TableView
 import javafx.scene.control.TextField
 import javafx.scene.input.MouseEvent
+import de.cwkuehl.jhh6.app.control.Datum
 
 /** 
  * Controller für Dialog WP250Anlagen.
@@ -56,6 +57,8 @@ class WP250AnlagenController extends BaseController<String> {
 	@FXML TableColumn<AnlagenData, String> colAv
 	ObservableList<AnlagenData> anlagenData = FXCollections::observableArrayList
 	@FXML Label anlagenStatus
+	@FXML Label bis0
+	@FXML Datum bis
 	// @FXML Button alle
 	// @FXML Button berechnen
 	// @FXML Button abbrechen
@@ -140,6 +143,7 @@ class WP250AnlagenController extends BaseController<String> {
 		tabbar = 1
 		super.initialize
 		anlagen0.setLabelFor(anlagen)
+		bis0.setLabelFor(bis)
 		bezeichnung0.setLabelFor(bezeichnung)
 		wertpapier0.setLabelFor(wertpapier, false)
 		initAccelerator("A", aktuell)
@@ -161,6 +165,7 @@ class WP250AnlagenController extends BaseController<String> {
 	override protected void initDaten(int stufe) {
 
 		if (stufe <= 0) {
+			bis.setValue(LocalDate::now)
 			bezeichnung.setText("%%")
 			var kliste = get(FactoryService::wertpapierService.getWertpapierListe(serviceDaten, true, null, null, null))
 			wertpapier.setItems(getItems(kliste, new WpWertpapierLang, [a|new WertpapierData(a)], null))
@@ -315,7 +320,7 @@ class WP250AnlagenController extends BaseController<String> {
 			onStatusTimer
 			try {
 				var r = FactoryService::wertpapierService.bewerteteAnlageListe(serviceDaten, false, bezeichnung.text,
-					null, getText(wertpapier), LocalDate::now, status, abbruch)
+					null, getText(wertpapier), bis.value, status, abbruch)
 				r.throwErstenFehler
 				status.setLength(0)
 			} catch (Exception ex) {

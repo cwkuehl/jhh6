@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?language javascript?>
-<?import de.cwkuehl.jhh5.anwendung.control.*?>
 <?import java.lang.*?>
 <?import java.net.*?>
 <?import javafx.geometry.*?>
@@ -9,6 +8,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+<?import de.cwkuehl.jhh6.app.control.Datum?>
 
 <GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="de.cwkuehl.jhh6.app.controller.wp.WP250AnlagenController">
@@ -140,22 +140,15 @@
 		</columns>
 	</TableView>
 	<Label fx:id="anlagenStatus" text="%WP250.anlagenStatus" GridPane.columnIndex="0" GridPane.columnSpan="6" GridPane.rowIndex="3" />
-	<Label fx:id="bezeichnung0" mnemonicParsing="true" text="%WP250.bezeichnung" GridPane.columnIndex="0"
-		GridPane.rowIndex="4" />
-	<TextField fx:id="bezeichnung" onKeyReleased="#onAktuell" accessibleText="%WP250.bezeichnung.tt" promptText="%WP250.bezeichnung.tt"
+	<Label fx:id="bis0" mnemonicParsing="true" text="%WP250.bis" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+	<Datum fx:id="bis" accessibleText="%WP250.bis.tt" nullText=""
+		promptText="%WP250.bis.tt" schalterText="mhp" uhrzeitGroesse="0" wochentagGroesse="100"
 		GridPane.columnIndex="1" GridPane.rowIndex="4">
 		<tooltip>
-			<Tooltip text="%WP250.bezeichnung.tt" />
+			<Tooltip text="%WP250.bis.tt" />
 		</tooltip>
-	</TextField>
-	<Label fx:id="wertpapier0" mnemonicParsing="true" text="%WP250.wertpapier" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-	<ComboBox fx:id="wertpapier" accessibleText="%WP250.wertpapier.tt" onAction="#onWertpapier"
-		GridPane.columnIndex="3" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
-		<tooltip>
-			<Tooltip text="%WP250.wertpapier.tt" />
-		</tooltip>
-	</ComboBox>
-	<HBox spacing="10.0" GridPane.columnSpan="3" GridPane.rowIndex="5">
+	</Datum>
+	<HBox spacing="10.0" GridPane.columnSpan="1" GridPane.columnIndex="2" GridPane.rowIndex="4">
 		<children>
 			<Button fx:id="alle" mnemonicParsing="true" onAction="#onAlle" text="%WP250.alle">
 				<tooltip>
@@ -175,7 +168,7 @@
 		</children>
 	</HBox>
 	<CheckBox fx:id="auchinaktiv" mnemonicParsing="false" text="%WP250.auchinaktiv" onAction="#onAktuell"
-	    GridPane.columnIndex="3" GridPane.columnSpan="1" GridPane.rowIndex="5">
+	    GridPane.columnIndex="3" GridPane.columnSpan="1" GridPane.rowIndex="4">
 		<padding>
 			<Insets right="5.0" />
 		</padding>
@@ -183,6 +176,21 @@
 			<Tooltip text="%WP250.auchinaktiv.tt" />
 		</tooltip>
 	</CheckBox>
+	<Label fx:id="bezeichnung0" mnemonicParsing="true" text="%WP250.bezeichnung" GridPane.columnIndex="0"
+		GridPane.rowIndex="5" />
+	<TextField fx:id="bezeichnung" onKeyReleased="#onAktuell" accessibleText="%WP250.bezeichnung.tt" promptText="%WP250.bezeichnung.tt"
+		GridPane.columnIndex="1" GridPane.rowIndex="5">
+		<tooltip>
+			<Tooltip text="%WP250.bezeichnung.tt" />
+		</tooltip>
+	</TextField>
+	<Label fx:id="wertpapier0" mnemonicParsing="true" text="%WP250.wertpapier" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+	<ComboBox fx:id="wertpapier" accessibleText="%WP250.wertpapier.tt" onAction="#onWertpapier"
+		GridPane.columnIndex="3" GridPane.columnSpan="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5">
+		<tooltip>
+			<Tooltip text="%WP250.wertpapier.tt" />
+		</tooltip>
+	</ComboBox>
 
 	<stylesheets>
 		<URL value="@../Jhh6.css" />
