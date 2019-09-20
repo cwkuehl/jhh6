@@ -1579,7 +1579,7 @@ class WertpapierService {
 		rabatt = if(rabatt === null) 0.0 else rabatt
 		a.betrag = a.betrag - rabatt
 		var anteile0 = bliste.map[b|b.anteile].reduce[sum, x|sum + x]
-		a.anteile = if(anteile0 === null) 0.0 else anteile0
+		a.anteile = if(anteile0 === null) 0.0 else Global.round5(anteile0)
 		a.preis = if(a.anteile == 0) 0 else a.betrag / a.anteile
 		var zinsen0 = bliste.map[b|b.zinsen].reduce[sum, x|sum + x]
 		a.zinsen = if(zinsen0 === null) 0.0 else zinsen0

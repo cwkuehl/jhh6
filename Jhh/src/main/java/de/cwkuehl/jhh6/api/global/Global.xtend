@@ -409,6 +409,18 @@ class Global {
 	}
 
 	/**
+	 * Ein double-Wert wird in BigDecimal umgewandelt, auf 5 Stellen gerundet. <br>
+	 * @param db double-Wert.
+	 * @return gerundeter Double-Wert.
+	 */
+	def public static double round5(double db) {
+
+		var bd = new BigDecimal(db)
+		var bdr = bd.setScale(5, RoundingMode.HALF_UP)
+		return bdr.doubleValue
+	}
+
+	/**
 	 * Prüft, ob der Wert 3 oder 4 Nachkommastellen hat.
 	 * <p>
 	 * Erstellungsdatum: 13.07.2004
