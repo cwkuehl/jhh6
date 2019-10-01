@@ -32,16 +32,21 @@ import java.io.IOException
 import javafx.application.Platform
 import java.util.Date
 import java.nio.charset.Charset
+import de.cwkuehl.jhh6.api.service.ServiceErgebnis
+import de.cwkuehl.jhh6.api.message.Meldung
+import java.io.ByteArrayOutputStream
 
 public class RootHandler implements com.sun.net.httpserver.HttpHandler {
 
 	static int port = 4201
 	static com.sun.net.httpserver.HttpServer server
+	static String token = ''
 	
-	def static public void start() {
+	def static public void start(String token) {
 		if (server !== null) {
 			return
 		}
+		RootHandler::token = token
 	    server = com.sun.net.httpserver.HttpServer.create(new InetSocketAddress(port), 0)
         var context = server.createContext("/")
         context.setHandler(new RootHandler)
@@ -58,27 +63,64 @@ public class RootHandler implements com.sun.net.httpserver.HttpHandler {
 	}
 	
     override public void handle(com.sun.net.httpserver.HttpExchange he) throws IOException {
+    	
         var request = he.requestURI
-        //var query = request.query
+        var r = new ServiceErgebnis
         var path = request.path
         var response = ''
+        var contentType = "text/html; charset=utf-8"
         if (path == '/stop') {
         	response = "Stop!"
         	RootHandler::stop
         } else if (path == '/favicon.ico') {
         	// nix
         } else if (path == '/') {
-        	he.getResponseHeaders().add( "Content-type", "text/html; charset=utf-8" )
-            response = '''<h1>Hallo!</h1><h2>Anfrage: «path»</h2><h3>ä «new Date»</h3>'''
+        	//he.getResponseHeaders().add("Content-type", "text/html; charset=utf-8")
+            response = '''<h1>Hällo!</h1><h2>Anfrage: «path»</h2><h3>«new Date»</h3>'''
+        } else if (he.requestMethod == 'POST') {
+        	var is = he.requestBody
+        	var result = new ByteArrayOutputStream
+        	var buffer = newByteArrayOfSize(1024)
+        	var int length
+        	while ((length = is.read(buffer)) != -1) {
+        		result.write(buffer, 0, length)
+        	}
+			var body = result.toString("UTF-8")
+			if (body != RootHandler::token)
+	        	r.fehler.add(Meldung.Neu('''Unberechtigt: «body».'''))
+	        else {	
+	        	contentType = "application/json; charset=utf-8"
+	        	var r1 = FactoryService::replikationService.getJsonDaten(Jhh6::serviceDaten, '', '')
+	        	if (r.get(r1))
+	        		response = r1.ergebnis
+	        	//response = '''[{"a":"abc äöüÄÖÜß xyz", "body":"«body»"}]'''
+        	}
         } else {
-        	he.getResponseHeaders().add( "Content-type", "application/json; charset=utf-8" )
-        	var r = FactoryService::replikationService.getJsonDaten(Jhh6::serviceDaten, '', '')
-        	if (r.ok)
-        		response = r.ergebnis
-        	//response = '''[{"a":"abc äöüÄÖÜß xyz"}]'''
+        	r.fehler.add(Meldung.Neu('''Unbekannte Resource: «path».'''))
         }
-        var bytes = response.getBytes(Charset.forName("UTF-8"))
-        he.sendResponseHeaders(200, bytes.length)
+        var byte[] bytes
+        var statuscode = 200 // OK
+        if (!r.ok) {
+        	contentType = "text/html; charset=utf-8"
+        	response = r.fehler.get(0).meldung
+        	//statuscode = 404 // Not Found
+        	statuscode = 401 // Unauthorized
+        }
+      	he.getResponseHeaders().add("Content-type", contentType)
+    	he.getResponseHeaders().add("Expires", "-1")
+    	he.getResponseHeaders().add("Cache-Control", "no-cache")
+    	he.getResponseHeaders().add("Pragma", "no-cache")
+    	//he.getResponseHeaders().add("Server", "Microsoft-IIS/10.0")
+    	//he.getResponseHeaders().add("Vary", "Accept-Encoding")
+    	//he.getResponseHeaders().add("Content-Encoding", "identity")
+    	//he.getResponseHeaders().add("Access-Control-Allow-Origin", "http://localhost:4200")
+    	var origin = he.requestHeaders.get("Origin")
+    	if (origin !== null && origin.length > 0) {
+    	    he.getResponseHeaders().add("Access-Control-Allow-Origin", origin.get(0))
+    	    he.getResponseHeaders().add("Vary", "Origin")
+    	}
+        bytes = response.getBytes(Charset.forName("UTF-8"))
+        he.sendResponseHeaders(statuscode, bytes.length)
         var OutputStream os = he.getResponseBody
         os.write(bytes)
         os.close
@@ -200,7 +242,7 @@ class AG400SicherungenController extends BaseController<String> {
 		if (stufe <= 0) {
 			mandant.setText(Global::intStr(serviceDaten.mandantNr))
 		    // mandant.setText("3")
-		    RootHandler::start
+		    RootHandler::start(serviceDaten.benutzerId)
 		}
 		if (stufe <= 1) {
 			var l = sicherungen

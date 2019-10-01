@@ -22,12 +22,13 @@ class ServiceErgebnis<T> {
 
 	def boolean ok() { fehler.length <= 0 }
 
-	def public <S> void get(ServiceErgebnis<S> r) {
+	def public <S> boolean get(ServiceErgebnis<S> r) {
 
 		if (r === null) {
-			return
+			return false
 		}
 		fehler.addAll(r.fehler)
+		return ok
 	}
 	
 	def void throwErstenFehler() {
