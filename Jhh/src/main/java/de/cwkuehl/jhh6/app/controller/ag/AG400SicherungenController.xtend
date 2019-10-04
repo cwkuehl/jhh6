@@ -35,34 +35,78 @@ import java.nio.charset.Charset
 import de.cwkuehl.jhh6.api.service.ServiceErgebnis
 import de.cwkuehl.jhh6.api.message.Meldung
 import java.io.ByteArrayOutputStream
+import java.io.FileInputStream
+import java.io.File
+import java.security.MessageDigest
+import java.util.Base64
+import java.nio.charset.StandardCharsets
 
-public class RootHandler implements com.sun.net.httpserver.HttpHandler {
+// HTTPS-Server
+public class WkHttpsHandler implements com.sun.net.httpserver.HttpHandler {
 
-	static int port = 4201
-	static com.sun.net.httpserver.HttpServer server
+	static int port0 = 4201
+	static com.sun.net.httpserver.HttpServer server0
+	static int port = 4202
+	static com.sun.net.httpserver.HttpsServer server
 	static String token = ''
 	
-	def static public void start(String token) {
-		if (server !== null) {
-			return
-		}
-		RootHandler::token = token
-	    server = com.sun.net.httpserver.HttpServer.create(new InetSocketAddress(port), 0)
-        var context = server.createContext("/")
-        context.setHandler(new RootHandler)
-        server.start	
-	}
+    def static public void start(String token) throws Exception {
+
+    	var f = new File('/opt/Haushalt/JHH6/cert/cert_key.pfx')
+		if (f.exists) {
+			if (server !== null) {
+				return
+			}
+	        var keyStore = java.security.KeyStore.getInstance("JKS");
+	        keyStore.load(new FileInputStream(f), newCharArrayOfSize(0));
+	         
+	        // Create key manager
+	        var keyManagerFactory = javax.net.ssl.KeyManagerFactory.getInstance("SunX509");
+	        keyManagerFactory.init(keyStore, newCharArrayOfSize(0));
+	        var km = keyManagerFactory.getKeyManagers();
+	         
+	        // Create trust manager
+	        var trustManagerFactory = javax.net.ssl.TrustManagerFactory.getInstance("SunX509");
+	        trustManagerFactory.init(keyStore);
+	        var tm = trustManagerFactory.getTrustManagers();
+	         
+	        // Initialize SSLContext
+	        var sslContext = javax.net.ssl.SSLContext.getInstance("TLSv1.2");
+	        sslContext.init(km,  tm, null);
 	
+			WkHttpsHandler::token = token
+	        //var localhost = new InetSocketAddress("127.0.0.1", port);
+	        var localhost = new InetSocketAddress(port);
+	        server = com.sun.net.httpserver.HttpsServer.create(localhost,  0);
+	        server.setHttpsConfigurator(new com.sun.net.httpserver.HttpsConfigurator(sslContext));
+	        server.createContext("/", new WkHttpsHandler());
+	        server.setExecutor(null);
+	        server.start();
+        } else {
+			if (server0 !== null) {
+				return
+			}
+		    server0 = com.sun.net.httpserver.HttpServer.create(new InetSocketAddress(port0), 0)
+	        var context = server0.createContext("/")
+	        context.setHandler(new WkHttpsHandler)
+	        server0.start	
+        }
+    }
+
 	def static public void stop() {
         Platform.runLater([| {
         	if (server !== null) {
                 server.stop(1)
                 server = null
             }
+        	if (server0 !== null) {
+                server0.stop(1)
+                server0 = null
+            }
         }])
 	}
 	
-    override public void handle(com.sun.net.httpserver.HttpExchange he) throws IOException {
+	    override public void handle(com.sun.net.httpserver.HttpExchange he) throws IOException {
     	
         var request = he.requestURI
         var r = new ServiceErgebnis
@@ -71,7 +115,7 @@ public class RootHandler implements com.sun.net.httpserver.HttpHandler {
         var contentType = "text/html; charset=utf-8"
         if (path == '/stop') {
         	response = "Stop!"
-        	RootHandler::stop
+        	WkHttpsHandler::stop
         } else if (path == '/favicon.ico') {
         	// nix
         } else if (path == '/') {
@@ -86,7 +130,7 @@ public class RootHandler implements com.sun.net.httpserver.HttpHandler {
         		result.write(buffer, 0, length)
         	}
 			var body = result.toString("UTF-8")
-			if (body != RootHandler::token)
+			if (body != WkHttpsHandler::token)
 	        	r.fehler.add(Meldung.Neu('''Unberechtigt: «body».'''))
 	        else {	
 	        	contentType = "application/json; charset=utf-8"
@@ -125,6 +169,7 @@ public class RootHandler implements com.sun.net.httpserver.HttpHandler {
         os.write(bytes)
         os.close
     }
+	
 }
 
 /** 
@@ -229,7 +274,7 @@ class AG400SicherungenController extends BaseController<String> {
 	}
 
     override void onHidden() {
-      	RootHandler::stop
+      	WkHttpsHandler::stop
     	super.onHidden
     }
 
@@ -242,7 +287,10 @@ class AG400SicherungenController extends BaseController<String> {
 		if (stufe <= 0) {
 			mandant.setText(Global::intStr(serviceDaten.mandantNr))
 		    // mandant.setText("3")
-		    RootHandler::start(serviceDaten.benutzerId)
+		    var digest = MessageDigest.getInstance("SHA-256")
+			var hash = digest.digest(serviceDaten.benutzerId.getBytes(StandardCharsets.UTF_8))
+			var encoded = Base64.getEncoder().encodeToString(hash)
+		    WkHttpsHandler::start(encoded)
 		}
 		if (stufe <= 1) {
 			var l = sicherungen
