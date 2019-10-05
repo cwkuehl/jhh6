@@ -1,18 +1,40 @@
 package de.cwkuehl.jhh6.app.controller.ag
 
+import com.sun.net.httpserver.HttpExchange
+import com.sun.net.httpserver.HttpHandler
+import com.sun.net.httpserver.HttpServer
+import com.sun.net.httpserver.HttpsConfigurator
+import com.sun.net.httpserver.HttpsServer
 import de.cwkuehl.jhh6.api.dto.MaEinstellung
 import de.cwkuehl.jhh6.api.global.Global
+import de.cwkuehl.jhh6.api.message.Meldung
 import de.cwkuehl.jhh6.api.message.Meldungen
+import de.cwkuehl.jhh6.api.service.ServiceErgebnis
 import de.cwkuehl.jhh6.app.Jhh6
 import de.cwkuehl.jhh6.app.base.BaseController
 import de.cwkuehl.jhh6.app.base.DialogAufrufEnum
 import de.cwkuehl.jhh6.app.base.Werkzeug
 import de.cwkuehl.jhh6.server.FactoryService
 import de.cwkuehl.jhh6.server.service.backup.Sicherung
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileInputStream
+import java.io.IOException
+import java.io.OutputStream
+import java.net.InetSocketAddress
+import java.net.URI
+import java.net.URLDecoder
+import java.nio.charset.Charset
 import java.nio.file.Paths
+import java.security.KeyStore
 import java.time.LocalDateTime
 import java.util.ArrayList
+import java.util.Date
+import java.util.HashMap
 import java.util.List
+import java.util.Map
+import java.util.Scanner
+import javafx.application.Platform
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
@@ -26,67 +48,51 @@ import javafx.scene.control.TableView
 import javafx.scene.control.TextArea
 import javafx.scene.control.TextField
 import javafx.scene.input.MouseEvent
-import java.net.InetSocketAddress
-import java.io.OutputStream
-import java.io.IOException
-import javafx.application.Platform
-import java.util.Date
-import java.nio.charset.Charset
-import de.cwkuehl.jhh6.api.service.ServiceErgebnis
-import de.cwkuehl.jhh6.api.message.Meldung
-import java.io.ByteArrayOutputStream
-import java.io.FileInputStream
-import java.io.File
-import java.security.MessageDigest
-import java.util.Base64
-import java.nio.charset.StandardCharsets
-import java.net.URI
-import java.util.Map
-import java.util.Scanner
-import java.net.URLDecoder
-import java.util.HashMap
+import javax.net.ssl.KeyManagerFactory
+import javax.net.ssl.SSLContext
+import javax.net.ssl.TrustManagerFactory
 
 // HTTPS-Server
-public class WkHttpsHandler implements com.sun.net.httpserver.HttpHandler {
+public class WkHttpsHandler implements HttpHandler {
 
 	static int port0 = 4201
-	static com.sun.net.httpserver.HttpServer server0
+	static HttpServer server0
 	static int port = 4202
-	static com.sun.net.httpserver.HttpsServer server
+	static HttpsServer server
 	static String token = ''
 	
     def static public void start(String token) throws Exception {
 
     	var f = new File('/opt/Haushalt/JHH6/cert/cert_key.pfx')
 		if (f.exists && server === null) {
-	        var keyStore = java.security.KeyStore.getInstance("JKS");
+	        var keyStore = KeyStore.getInstance("JKS");
 	        keyStore.load(new FileInputStream(f), newCharArrayOfSize(0));
 	         
 	        // Create key manager
-	        var keyManagerFactory = javax.net.ssl.KeyManagerFactory.getInstance("SunX509");
+	        var keyManagerFactory = KeyManagerFactory.getInstance("SunX509");
 	        keyManagerFactory.init(keyStore, newCharArrayOfSize(0));
 	        var km = keyManagerFactory.getKeyManagers();
 	         
 	        // Create trust manager
-	        var trustManagerFactory = javax.net.ssl.TrustManagerFactory.getInstance("SunX509");
+	        var trustManagerFactory = TrustManagerFactory.getInstance("SunX509");
 	        trustManagerFactory.init(keyStore);
 	        var tm = trustManagerFactory.getTrustManagers();
 	         
 	        // Initialize SSLContext
-	        var sslContext = javax.net.ssl.SSLContext.getInstance("TLSv1.2");
+	        var sslContext = SSLContext.getInstance("TLSv1.2");
 	        sslContext.init(km,  tm, null);
 	
 			WkHttpsHandler::token = token
 	        //var localhost = new InetSocketAddress("127.0.0.1", port);
 	        var localhost = new InetSocketAddress(port);
-	        server = com.sun.net.httpserver.HttpsServer.create(localhost,  0);
-	        server.setHttpsConfigurator(new com.sun.net.httpserver.HttpsConfigurator(sslContext));
+	        server = HttpsServer.create(localhost,  0);
+	        server.setHttpsConfigurator(new HttpsConfigurator(sslContext));
 	        server.createContext("/", new WkHttpsHandler());
 	        server.setExecutor(null);
 	        server.start();
         }
 		if (server0 === null) {
-		    server0 = com.sun.net.httpserver.HttpServer.create(new InetSocketAddress(port0), 0)
+		    server0 = HttpServer.create(new InetSocketAddress(port0), 0)
 	        var context = server0.createContext("/")
 	        context.setHandler(new WkHttpsHandler)
 	        server0.start	
@@ -106,7 +112,7 @@ public class WkHttpsHandler implements com.sun.net.httpserver.HttpHandler {
         }])
 	}
 	
-	override public void handle(com.sun.net.httpserver.HttpExchange he) throws IOException {
+	override public void handle(HttpExchange he) throws IOException {
     	
         var request = he.requestURI
         var r = new ServiceErgebnis

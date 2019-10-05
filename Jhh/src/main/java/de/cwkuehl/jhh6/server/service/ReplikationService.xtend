@@ -1105,6 +1105,21 @@ class ReplikationService {
 
 		var ja = new JSONArray
 		if (tab == 'TB_Eintrag') {
+			var where = new SqlBuilder
+			where.praefix(null, " AND ")
+			where.append(null, TbEintrag.DATUM_NAME, ">=", daten.heute.minusMonths(1), null)
+			where.append(null, TbEintrag.DATUM_NAME, "<=", daten.heute.plusMonths(1), null)
+			var l = tagebuchRep.getListe(daten, daten.mandantNr, where, null)
+			for (e : l) {
+				var j = new JSONObject
+				j.put('datum', e.datum)
+				j.put('eintrag', e.eintrag)
+				j.put('angelegtAm', e.angelegtAm)
+				j.put('angelegtVon', e.angelegtVon)
+				j.put('geaendertAm', e.geaendertAm)
+				j.put('geaendertVon', e.geaendertVon)
+				ja.put(j)
+			}
 			
 		} else if (tab == 'FZ_Notiz') {
 			var l = notizRep.getListe(daten, daten.mandantNr, null, null)
