@@ -53,10 +53,7 @@ public class WkHttpsHandler implements com.sun.net.httpserver.HttpHandler {
     def static public void start(String token) throws Exception {
 
     	var f = new File('/opt/Haushalt/JHH6/cert/cert_key.pfx')
-		if (f.exists) {
-			if (server !== null) {
-				return
-			}
+		if (f.exists && server === null) {
 	        var keyStore = java.security.KeyStore.getInstance("JKS");
 	        keyStore.load(new FileInputStream(f), newCharArrayOfSize(0));
 	         
@@ -82,15 +79,13 @@ public class WkHttpsHandler implements com.sun.net.httpserver.HttpHandler {
 	        server.createContext("/", new WkHttpsHandler());
 	        server.setExecutor(null);
 	        server.start();
-        } else {
-			if (server0 !== null) {
-				return
-			}
+        }
+		if (server0 === null) {
 		    server0 = com.sun.net.httpserver.HttpServer.create(new InetSocketAddress(port0), 0)
 	        var context = server0.createContext("/")
 	        context.setHandler(new WkHttpsHandler)
 	        server0.start	
-        }
+		}
     }
 
 	def static public void stop() {
@@ -111,6 +106,7 @@ public class WkHttpsHandler implements com.sun.net.httpserver.HttpHandler {
         var request = he.requestURI
         var r = new ServiceErgebnis
         var path = request.path
+        var options = false
         var response = ''
         var contentType = "text/html; charset=utf-8"
         if (path == '/stop') {
@@ -118,9 +114,16 @@ public class WkHttpsHandler implements com.sun.net.httpserver.HttpHandler {
         	WkHttpsHandler::stop
         } else if (path == '/favicon.ico') {
         	// nix
-        } else if (path == '/') {
-        	//he.getResponseHeaders().add("Content-type", "text/html; charset=utf-8")
-            response = '''<h1>Hällo!</h1><h2>Anfrage: «path»</h2><h3>«new Date»</h3>'''
+        } else if (he.requestMethod == 'OPTIONS') {
+        	options = true // CORS
+	      	he.getResponseHeaders().add("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+	    	he.getResponseHeaders().add("Access-Control-Allow-Headers", "X-PINGOTHER, Content-Type")
+	    	he.getResponseHeaders().add("Access-Control-Max-Age", "86400")
+	    	var origin = he.requestHeaders.get("Origin")
+	    	if (origin !== null && origin.length > 0) {
+	    	    he.getResponseHeaders().add("Access-Control-Allow-Origin", origin.get(0))
+	    	    he.getResponseHeaders().add("Vary", "Origin")
+	    	}
         } else if (he.requestMethod == 'POST') {
         	var is = he.requestBody
         	var result = new ByteArrayOutputStream
@@ -139,6 +142,9 @@ public class WkHttpsHandler implements com.sun.net.httpserver.HttpHandler {
 	        		response = r1.ergebnis
 	        	//response = '''[{"a":"abc äöüÄÖÜß xyz", "body":"«body»"}]'''
         	}
+        } else if (path == '/') {
+        	//he.getResponseHeaders().add("Content-type", "text/html; charset=utf-8")
+            response = '''<h1>Hällo!</h1><h2>Anfrage: «path»</h2><h3>«new Date»</h3>'''
         } else {
         	r.fehler.add(Meldung.Neu('''Unbekannte Resource: «path».'''))
         }
@@ -150,18 +156,20 @@ public class WkHttpsHandler implements com.sun.net.httpserver.HttpHandler {
         	//statuscode = 404 // Not Found
         	statuscode = 401 // Unauthorized
         }
-      	he.getResponseHeaders().add("Content-type", contentType)
-    	he.getResponseHeaders().add("Expires", "-1")
-    	he.getResponseHeaders().add("Cache-Control", "no-cache")
-    	he.getResponseHeaders().add("Pragma", "no-cache")
-    	//he.getResponseHeaders().add("Server", "Microsoft-IIS/10.0")
-    	//he.getResponseHeaders().add("Vary", "Accept-Encoding")
-    	//he.getResponseHeaders().add("Content-Encoding", "identity")
-    	//he.getResponseHeaders().add("Access-Control-Allow-Origin", "http://localhost:4200")
-    	var origin = he.requestHeaders.get("Origin")
-    	if (origin !== null && origin.length > 0) {
-    	    he.getResponseHeaders().add("Access-Control-Allow-Origin", origin.get(0))
-    	    he.getResponseHeaders().add("Vary", "Origin")
+        if (!options) {
+	      	he.getResponseHeaders().add("Content-type", contentType)
+	    	he.getResponseHeaders().add("Expires", "-1")
+	    	he.getResponseHeaders().add("Cache-Control", "no-cache")
+	    	he.getResponseHeaders().add("Pragma", "no-cache")
+	    	//he.getResponseHeaders().add("Server", "Microsoft-IIS/10.0")
+	    	//he.getResponseHeaders().add("Vary", "Accept-Encoding")
+	    	//he.getResponseHeaders().add("Content-Encoding", "identity")
+	    	//he.getResponseHeaders().add("Access-Control-Allow-Origin", "http://localhost:4200")
+	    	var origin = he.requestHeaders.get("Origin")
+	    	if (origin !== null && origin.length > 0) {
+	    	    he.getResponseHeaders().add("Access-Control-Allow-Origin", origin.get(0))
+	    	    he.getResponseHeaders().add("Vary", "Origin")
+	    	}
     	}
         bytes = response.getBytes(Charset.forName("UTF-8"))
         he.sendResponseHeaders(statuscode, bytes.length)
@@ -287,10 +295,11 @@ class AG400SicherungenController extends BaseController<String> {
 		if (stufe <= 0) {
 			mandant.setText(Global::intStr(serviceDaten.mandantNr))
 		    // mandant.setText("3")
-		    var digest = MessageDigest.getInstance("SHA-256")
-			var hash = digest.digest(serviceDaten.benutzerId.getBytes(StandardCharsets.UTF_8))
-			var encoded = Base64.getEncoder().encodeToString(hash)
-		    WkHttpsHandler::start(encoded)
+//		    var digest = MessageDigest.getInstance("SHA-256")
+//			var hash = digest.digest(serviceDaten.benutzerId.getBytes(StandardCharsets.UTF_8))
+//			var encoded = Base64.getEncoder().encodeToString(hash)
+//		    WkHttpsHandler::start(encoded)
+		    WkHttpsHandler::start(serviceDaten.benutzerId)
 		}
 		if (stufe <= 1) {
 			var l = sicherungen
