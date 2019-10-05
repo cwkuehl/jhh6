@@ -1103,12 +1103,22 @@ class ReplikationService {
 	@Transaction(false)
 	override public ServiceErgebnis<String> getJsonDaten(ServiceDaten daten, String tab, String modus) {
 
-		var l = notizRep.getListe(daten, daten.mandantNr, null, null)
 		var ja = new JSONArray
-		for (e : l) {
-			var j = new JSONObject
-			j.append('thema', e.thema)
-			ja.put(j)
+		if (tab == 'TB_Eintrag') {
+			
+		} else if (tab == 'FZ_Notiz') {
+			var l = notizRep.getListe(daten, daten.mandantNr, null, null)
+			for (e : l) {
+				var j = new JSONObject
+				j.put('uid', e.uid)
+				j.put('thema', e.thema)
+				j.put('notiz', e.notiz)
+				j.put('angelegtAm', e.angelegtAm)
+				j.put('angelegtVon', e.angelegtVon)
+				j.put('geaendertAm', e.geaendertAm)
+				j.put('geaendertVon', e.geaendertVon)
+				ja.put(j)
+			}
 		}
 		var r = new ServiceErgebnis<String>(ja.toString)
 		return r

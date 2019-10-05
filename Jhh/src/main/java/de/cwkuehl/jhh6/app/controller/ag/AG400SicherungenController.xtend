@@ -40,6 +40,11 @@ import java.io.File
 import java.security.MessageDigest
 import java.util.Base64
 import java.nio.charset.StandardCharsets
+import java.net.URI
+import java.util.Map
+import java.util.Scanner
+import java.net.URLDecoder
+import java.util.HashMap
 
 // HTTPS-Server
 public class WkHttpsHandler implements com.sun.net.httpserver.HttpHandler {
@@ -101,7 +106,7 @@ public class WkHttpsHandler implements com.sun.net.httpserver.HttpHandler {
         }])
 	}
 	
-	    override public void handle(com.sun.net.httpserver.HttpExchange he) throws IOException {
+	override public void handle(com.sun.net.httpserver.HttpExchange he) throws IOException {
     	
         var request = he.requestURI
         var r = new ServiceErgebnis
@@ -137,7 +142,10 @@ public class WkHttpsHandler implements com.sun.net.httpserver.HttpHandler {
 	        	r.fehler.add(Meldung.Neu('''Unberechtigt: «body».'''))
 	        else {	
 	        	contentType = "application/json; charset=utf-8"
-	        	var r1 = FactoryService::replikationService.getJsonDaten(Jhh6::serviceDaten, '', '')
+	        	var qmap = parse(request)
+	        	var table = if (qmap !== null && qmap.containsKey('table')) qmap.get('table') else ''
+	        	var mode = if (qmap !== null && qmap.containsKey('mode')) qmap.get('mode') else 'read'
+	        	var r1 = FactoryService::replikationService.getJsonDaten(Jhh6::serviceDaten, table, mode)
 	        	if (r.get(r1))
 	        		response = r1.ergebnis
 	        	//response = '''[{"a":"abc äöüÄÖÜß xyz", "body":"«body»"}]'''
@@ -177,6 +185,23 @@ public class WkHttpsHandler implements com.sun.net.httpserver.HttpHandler {
         os.write(bytes)
         os.close
     }
+
+	def private static Map<String, String> parse(URI uri) {
+		var results = new HashMap<String, String>
+    	var scanner = new Scanner(uri.rawQuery)
+	    scanner.useDelimiter("&")
+        while (scanner.hasNext) {
+            val param = scanner.next
+            val valuePair = param.split("=")
+            var String value = null
+            if (valuePair.length > 1) {
+                value = URLDecoder.decode(valuePair.get(1), "UTF-8")
+            }
+            val name = URLDecoder.decode(valuePair.get(0), "UTF-8")
+            results.put(name, value)
+        }
+        return results
+	}
 	
 }
 
