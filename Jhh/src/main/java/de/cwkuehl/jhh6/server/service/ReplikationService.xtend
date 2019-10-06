@@ -285,6 +285,7 @@ import java.nio.file.StandardOpenOption
 import java.util.List
 import org.json.JSONObject
 import org.json.JSONArray
+import java.time.format.DateTimeFormatter
 
 @Service
 class ReplikationService {
@@ -1104,6 +1105,7 @@ class ReplikationService {
 	override public ServiceErgebnis<String> getJsonDaten(ServiceDaten daten, String tab, String modus) {
 
 		var ja = new JSONArray
+		var formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 		if (tab == 'TB_Eintrag') {
 			var where = new SqlBuilder
 			where.praefix(null, " AND ")
@@ -1114,9 +1116,10 @@ class ReplikationService {
 				var j = new JSONObject
 				j.put('datum', e.datum)
 				j.put('eintrag', e.eintrag)
-				j.put('angelegtAm', e.angelegtAm)
+				j.put('replid', 'server')
+				j.put('angelegtAm', if (e.angelegtAm === null) null else e.angelegtAm.format(formatter))
 				j.put('angelegtVon', e.angelegtVon)
-				j.put('geaendertAm', e.geaendertAm)
+				j.put('geaendertAm', if (e.geaendertAm === null) null else e.geaendertAm.format(formatter))
 				j.put('geaendertVon', e.geaendertVon)
 				ja.put(j)
 			}
@@ -1128,9 +1131,10 @@ class ReplikationService {
 				j.put('uid', e.uid)
 				j.put('thema', e.thema)
 				j.put('notiz', e.notiz)
-				j.put('angelegtAm', e.angelegtAm)
+				j.put('replid', 'server')
+				j.put('angelegtAm', if (e.angelegtAm === null) null else e.angelegtAm.format(formatter))
 				j.put('angelegtVon', e.angelegtVon)
-				j.put('geaendertAm', e.geaendertAm)
+				j.put('geaendertAm', if (e.geaendertAm === null) null else e.geaendertAm.format(formatter))
 				j.put('geaendertVon', e.geaendertVon)
 				ja.put(j)
 			}
