@@ -51,6 +51,7 @@ import javafx.scene.input.MouseEvent
 import javax.net.ssl.KeyManagerFactory
 import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManagerFactory
+import org.json.JSONObject
 
 // HTTPS-Server
 public class WkHttpsHandler implements HttpHandler {
@@ -144,13 +145,24 @@ public class WkHttpsHandler implements HttpHandler {
         		result.write(buffer, 0, length)
         	}
 			var body = result.toString("UTF-8")
-			if (body != WkHttpsHandler::token)
-	        	r.fehler.add(Meldung.Neu('''Unberechtigt: «body».'''))
+			var String token
+			var String table
+			var String mode
+			try {
+				var jb = new JSONObject(body)
+				token = if(jb.has("token")) jb.getString("token") else null
+				table = if(jb.has("table")) jb.getString("table") else null
+				mode = if(jb.has("mode")) jb.getString("mode") else null
+			} catch (Exception ex) {
+				Global.machNichts
+			}
+			if (token != WkHttpsHandler::token)
+	        	r.fehler.add(Meldung.Neu('''Unberechtigt: «token».'''))
 	        else {	
 	        	contentType = "application/json; charset=utf-8"
-	        	var qmap = parse(request)
-	        	var table = if (qmap !== null && qmap.containsKey('table')) qmap.get('table') else ''
-	        	var mode = if (qmap !== null && qmap.containsKey('mode')) qmap.get('mode') else 'read'
+	        	//var qmap = parse(request)
+	        	//var table = if (qmap !== null && qmap.containsKey('table')) qmap.get('table') else ''
+	        	//var mode = if (qmap !== null && qmap.containsKey('mode')) qmap.get('mode') else 'read'
 	        	var r1 = FactoryService::replikationService.getJsonDaten(Jhh6::serviceDaten, table, mode)
 	        	if (r.get(r1))
 	        		response = r1.ergebnis

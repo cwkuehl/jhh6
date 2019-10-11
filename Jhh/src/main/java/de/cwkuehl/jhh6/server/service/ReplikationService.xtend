@@ -286,6 +286,7 @@ import java.util.List
 import org.json.JSONObject
 import org.json.JSONArray
 import java.time.format.DateTimeFormatter
+import java.util.regex.Pattern
 
 @Service
 class ReplikationService {
@@ -1101,16 +1102,20 @@ class ReplikationService {
 		return r
 	}
 
+    private Pattern pread = Pattern.compile("^([a-z]+)(_([0-9]+m?))?$");
+
 	@Transaction(false)
 	override public ServiceErgebnis<String> getJsonDaten(ServiceDaten daten, String tab, String modus) {
 
 		var ja = new JSONArray
 		var formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-		if (tab == 'TB_Eintrag') {
+		if (tab == 'TB_Eintrag' && modus !== null) {
+            var m = pread.matcher(modus)
+			var monate = Math.max(if (m.find) Global.strInt(m.group(3)) else 1, 1)
 			var where = new SqlBuilder
 			where.praefix(null, " AND ")
-			where.append(null, TbEintrag.DATUM_NAME, ">=", daten.heute.minusMonths(1), null)
-			where.append(null, TbEintrag.DATUM_NAME, "<=", daten.heute.plusMonths(1), null)
+			where.append(null, TbEintrag.DATUM_NAME, ">=", daten.heute.minusMonths(monate), null)
+			where.append(null, TbEintrag.DATUM_NAME, "<=", daten.heute, null)
 			var l = tagebuchRep.getListe(daten, daten.mandantNr, where, null)
 			for (e : l) {
 				var j = new JSONObject
