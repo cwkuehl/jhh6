@@ -287,6 +287,7 @@ import org.json.JSONObject
 import org.json.JSONArray
 import java.time.format.DateTimeFormatter
 import java.util.regex.Pattern
+import java.time.ZoneId
 
 @Service
 class ReplikationService {
@@ -1108,7 +1109,6 @@ class ReplikationService {
 	override public ServiceErgebnis<String> getJsonDaten(ServiceDaten daten, String tab, String modus) {
 
 		var ja = new JSONArray
-		var formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 		if (tab == 'TB_Eintrag' && modus !== null) {
             var m = pread.matcher(modus)
 			var monate = Math.max(if (m.find) Global.strInt(m.group(3)) else 1, 1)
@@ -1122,9 +1122,9 @@ class ReplikationService {
 				j.put('datum', e.datum)
 				j.put('eintrag', e.eintrag)
 				j.put('replid', 'server')
-				j.put('angelegtAm', if (e.angelegtAm === null) null else e.angelegtAm.format(formatter))
+				j.put('angelegtAm', Global.dateTimeIso(e.angelegtAm))
 				j.put('angelegtVon', e.angelegtVon)
-				j.put('geaendertAm', if (e.geaendertAm === null) null else e.geaendertAm.format(formatter))
+				j.put('geaendertAm', Global.dateTimeIso(e.geaendertAm))
 				j.put('geaendertVon', e.geaendertVon)
 				ja.put(j)
 			}
@@ -1137,9 +1137,9 @@ class ReplikationService {
 				j.put('thema', e.thema)
 				j.put('notiz', e.notiz)
 				j.put('replid', 'server')
-				j.put('angelegtAm', if (e.angelegtAm === null) null else e.angelegtAm.format(formatter))
+				j.put('angelegtAm', Global.dateTimeIso(e.angelegtAm))
 				j.put('angelegtVon', e.angelegtVon)
-				j.put('geaendertAm', if (e.geaendertAm === null) null else e.geaendertAm.format(formatter))
+				j.put('geaendertAm', Global.dateTimeIso(e.geaendertAm))
 				j.put('geaendertVon', e.geaendertVon)
 				ja.put(j)
 			}

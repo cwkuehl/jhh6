@@ -25,6 +25,7 @@ import java.util.ResourceBundle
 import java.util.jar.Attributes
 import java.util.jar.JarFile
 import java.util.regex.Pattern
+import java.time.ZoneId
 
 /**
  * Globale Klasse mit allgemeinen Funktionen.<br>
@@ -1042,6 +1043,20 @@ class Global {
 			return ""
 		}
 		var str = d.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"))
+		return str
+	}
+
+	/**
+	 * Liefert Datum im ISO 8601-Format yyyy-MM-ddTHH:mm:ss+hh:mm.
+	 * @param d Zu konvertierendes Datum mit Uhrzeit.
+	 * @return Datums-String.
+	 */
+	def public static String dateTimeIso(LocalDateTime d) {
+
+		if (d === null) {
+			return null
+		}
+		var str = d.atZone(ZoneId.systemDefault).format(DateTimeFormatter.ISO_OFFSET_DATE_TIME)
 		return str
 	}
 
