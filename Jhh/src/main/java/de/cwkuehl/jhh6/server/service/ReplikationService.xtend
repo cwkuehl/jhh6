@@ -282,12 +282,11 @@ import de.cwkuehl.jhh6.server.service.impl.ReplTabelle
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardOpenOption
+import java.util.ArrayList
 import java.util.List
-import org.json.JSONObject
-import org.json.JSONArray
-import java.time.format.DateTimeFormatter
 import java.util.regex.Pattern
-import java.time.ZoneId
+import org.json.JSONArray
+import org.json.JSONObject
 
 @Service
 class ReplikationService {
@@ -1106,10 +1105,24 @@ class ReplikationService {
     private Pattern pread = Pattern.compile("^([a-z]+)(_([0-9]+m?))?$");
 
 	@Transaction(false)
-	override public ServiceErgebnis<String> getJsonDaten(ServiceDaten daten, String tab, String modus) {
+	override public ServiceErgebnis<String> getJsonDaten(ServiceDaten daten, String tab, String modus, String json) {
 
 		var ja = new JSONArray
 		if (tab == 'TB_Eintrag' && modus !== null) {
+			var jr = new JSONObject(if (Global.nes(json)) '' else json)
+			var jarr = jr.getJSONArray(tab)
+			var lc = new ArrayList<TbEintrag>
+			for (a : jarr) {
+				var obj = a as JSONObject
+				var e = new TbEintrag
+				e.datum = Global.stringDateIso(obj.getString('datum'))
+				e.eintrag = obj.getString('eintrag')
+				e.angelegtAm = Global.stringDateTimeIso(obj.optString('angelegtAm', null))
+				e.angelegtVon = obj.optString('angelegtVon', null)
+				e.geaendertAm = Global.stringDateTimeIso(obj.optString('geaendertAm', null))
+				e.geaendertVon = obj.optString('geaendertVon', null)
+				lc.add(e)
+			}
             var m = pread.matcher(modus)
 			var monate = Math.max(if (m.find) Global.strInt(m.group(3)) else 1, 1)
 			var where = new SqlBuilder

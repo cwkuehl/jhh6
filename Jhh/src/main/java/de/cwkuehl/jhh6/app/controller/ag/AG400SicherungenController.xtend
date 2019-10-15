@@ -148,11 +148,13 @@ public class WkHttpsHandler implements HttpHandler {
 			var String token
 			var String table
 			var String mode
+			var String data
 			try {
 				var jb = new JSONObject(body)
 				token = if(jb.has("token")) jb.getString("token") else null
 				table = if(jb.has("table")) jb.getString("table") else null
 				mode = if(jb.has("mode")) jb.getString("mode") else null
+				data = if(jb.has("data")) jb.getString("data") else null
 			} catch (Exception ex) {
 				Global.machNichts
 			}
@@ -163,7 +165,7 @@ public class WkHttpsHandler implements HttpHandler {
 	        	//var qmap = parse(request)
 	        	//var table = if (qmap !== null && qmap.containsKey('table')) qmap.get('table') else ''
 	        	//var mode = if (qmap !== null && qmap.containsKey('mode')) qmap.get('mode') else 'read'
-	        	var r1 = FactoryService::replikationService.getJsonDaten(Jhh6::serviceDaten, table, mode)
+	        	var r1 = FactoryService::replikationService.getJsonDaten(Jhh6::serviceDaten, table, mode, data)
 	        	if (r.get(r1))
 	        		response = r1.ergebnis
 	        	//response = '''[{"a":"abc äöüÄÖÜß xyz", "body":"«body»"}]'''

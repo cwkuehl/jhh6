@@ -26,6 +26,7 @@ import java.util.jar.Attributes
 import java.util.jar.JarFile
 import java.util.regex.Pattern
 import java.time.ZoneId
+import java.time.Instant
 
 /**
  * Globale Klasse mit allgemeinen Funktionen.<br>
@@ -1153,6 +1154,43 @@ class Global {
 				} catch (Exception exc) {
 					machNichts
 				}
+			}
+		}
+		return d
+	}
+
+	/**
+	 * Konvertierung eines Strings in LocalDate. Falls eine Exception auftritt, wird sie abgefangen und null geliefert.
+	 * @param str Beliebiger String.
+	 * @return Konvertiertes LocalDate.
+	 */
+	def public static LocalDate stringDateIso(String str) {
+
+		var LocalDate d
+		if (str !== null) {
+			try {
+				d = LocalDate.parse(str, DateTimeFormatter.ofPattern("y-M-d"))
+			} catch (Exception ex) {
+				machNichts
+			}
+		}
+		return d
+	}
+
+	/**
+	 * Konvertierung eines Strings in LocalDateTime. Falls eine Exception auftritt, wird sie abgefangen und null geliefert.
+	 * @param str Beliebiger String.
+	 * @return Konvertiertes LocalDateTime.
+	 */
+	def public static LocalDateTime stringDateTimeIso(String str) {
+
+		var LocalDateTime d
+		if (str !== null) {
+			try {
+				var in = Instant.parse(str)
+				d = LocalDateTime.ofInstant(in, ZoneId.systemDefault)
+			} catch (Exception ex) {
+				machNichts
 			}
 		}
 		return d
