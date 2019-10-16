@@ -1048,7 +1048,7 @@ class Global {
 	}
 
 	/**
-	 * Liefert Datum im ISO 8601-Format yyyy-MM-ddTHH:mm:ss+hh:mm.
+	 * Liefert Datum im ISO 8601-Format yyyy-MM-ddTHH:mm:ssZ.
 	 * @param d Zu konvertierendes Datum mit Uhrzeit.
 	 * @return Datums-String.
 	 */
@@ -1057,7 +1057,8 @@ class Global {
 		if (d === null) {
 			return null
 		}
-		var str = d.atZone(ZoneId.systemDefault).format(DateTimeFormatter.ISO_OFFSET_DATE_TIME)
+		//var str = d.atZone(ZoneId.systemDefault).format(DateTimeFormatter.ISO_OFFSET_DATE_TIME)
+		var str = d.atZone(ZoneId.systemDefault).format(DateTimeFormatter.ISO_INSTANT)
 		return str
 	}
 
