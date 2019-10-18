@@ -165,7 +165,7 @@ public class WkHttpsHandler implements HttpHandler {
 	        	//var qmap = parse(request)
 	        	//var table = if (qmap !== null && qmap.containsKey('table')) qmap.get('table') else ''
 	        	//var mode = if (qmap !== null && qmap.containsKey('mode')) qmap.get('mode') else 'read'
-	        	var r1 = FactoryService::replikationService.getJsonDaten(Jhh6::serviceDaten, table, mode, data)
+	        	var r1 = FactoryService::replikationService.replicateTable(Jhh6::serviceDaten, table, mode, data)
 	        	if (r.get(r1))
 	        		response = r1.ergebnis
 	        	//response = '''[{"a":"abc äöüÄÖÜß xyz", "body":"«body»"}]'''

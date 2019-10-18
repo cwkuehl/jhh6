@@ -282,7 +282,6 @@ import de.cwkuehl.jhh6.server.service.impl.ReplTabelle
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardOpenOption
-import java.util.ArrayList
 import java.util.List
 import java.util.regex.Pattern
 import org.json.JSONArray
@@ -1104,24 +1103,56 @@ class ReplikationService {
 
     private Pattern pread = Pattern.compile("^([a-z]+)(_([0-9]+m?))?$");
 
-	@Transaction(false)
-	override public ServiceErgebnis<String> getJsonDaten(ServiceDaten daten, String tab, String modus, String json) {
+	@Transaction(true)
+	override public ServiceErgebnis<String> replicateTable(ServiceDaten daten, String tab, String modus, String json) {
 
 		var ja = new JSONArray
 		if (tab == 'TB_Eintrag' && modus !== null) {
 			var jr = new JSONObject(if (Global.nes(json)) '' else json)
 			var jarr = jr.getJSONArray(tab)
-			var lc = new ArrayList<TbEintrag>
+			//var lc = new ArrayList<TbEintrag>
 			for (a : jarr) {
 				var obj = a as JSONObject
 				var e = new TbEintrag
+				e.mandantNr = daten.mandantNr
 				e.datum = Global.stringDateIso(obj.getString('datum'))
 				e.eintrag = obj.getString('eintrag')
 				e.angelegtAm = Global.stringDateTimeIso(obj.optString('angelegtAm', null))
 				e.angelegtVon = obj.optString('angelegtVon', null)
 				e.geaendertAm = Global.stringDateTimeIso(obj.optString('geaendertAm', null))
 				e.geaendertVon = obj.optString('geaendertVon', null)
-				lc.add(e)
+				var es = tagebuchRep.get(daten, new TbEintragKey(e.mandantNr, e.datum))
+				if (es === null)
+					tagebuchRep.insert(daten, e, false)
+				else if (es.eintrag !== e.eintrag) {
+					// Wenn es.angelegtAm != e.angelegtAm, Einträge zusammenkopieren
+					// Wenn es.angelegtAm == e.angelegtAm und es.geaendertAm <= e.geaendertAm, Eintrag überschreiben
+					// Wenn es.angelegtAm == e.angelegtAm und (e.geaendertAm == null oder es.geaendertAm > e.geaendertAm), Eintrag lassen
+					if (e.angelegtAm !== null && (es.angelegtAm === null || !es.angelegtAm.isEqual(e.angelegtAm))) {
+						// Zusammenkopieren
+						var eu = new TbEintragUpdate(es)
+						eu.eintrag = '''Server: «es.eintrag»
+Lokal: «e.eintrag»'''
+						eu.angelegtAm = e.angelegtAm
+						eu.angelegtVon = e.angelegtVon
+						eu.geaendertAm = e.geaendertAm
+						eu.geaendertVon = e.geaendertVon
+						tagebuchRep.update(daten, eu, false)
+					} else if (es.angelegtAm !== null && e.angelegtAm !== null && es.angelegtAm.isEqual(e.angelegtAm)
+					    && es.geaendertAm !== null && (e.geaendertAm === null || es.geaendertAm.isAfter(e.geaendertAm))) {
+						// Lassen
+					} else {
+						// Überschreiben
+						var eu = new TbEintragUpdate(es)
+						eu.eintrag = e.eintrag
+						eu.angelegtAm = e.angelegtAm
+						eu.angelegtVon = e.angelegtVon
+						eu.geaendertAm = e.geaendertAm
+						eu.geaendertVon = e.geaendertVon
+						tagebuchRep.update(daten, eu, false)
+					}
+				}
+				//lc.add(e)
 			}
             var m = pread.matcher(modus)
 			var monate = Math.max(if (m.find) Global.strInt(m.group(3)) else 1, 1)
@@ -1140,6 +1171,7 @@ class ReplikationService {
 				j.put('geaendertAm', Global.dateTimeIso(e.geaendertAm))
 				j.put('geaendertVon', e.geaendertVon)
 				ja.put(j)
+				// throw new Exception('xxxxx')
 			}
 			
 		} else if (tab == 'FZ_Notiz') {
