@@ -273,7 +273,7 @@ class TB100TagebuchController extends BaseController<String> {
 			// alten Eintrag von vorher merken
 			var str = eintragAlt.eintrag
 			// nur speichern, wenn etwas geändert ist.
-			if (str === null || Global.compString(str, eintrag.text) !== 0) {
+			if (Global.compString(str, eintrag.text) !== 0) {
 				get(FactoryService::tagebuchService.speichereEintrag(daten, eintragAlt.datum, eintrag.text))
 			}
 		}
