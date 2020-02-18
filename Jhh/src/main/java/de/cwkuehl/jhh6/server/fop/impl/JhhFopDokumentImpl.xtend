@@ -27,7 +27,7 @@ import java.util.List
 import java.util.Map
 
 /** 
- * Diese Klasse die Erzeugung aller möglichen Dokumente bereit.
+ * Diese Klasse stellt die Erzeugung aller möglichen Dokumente bereit.
  */
 class JhhFopDokumentImpl {
 

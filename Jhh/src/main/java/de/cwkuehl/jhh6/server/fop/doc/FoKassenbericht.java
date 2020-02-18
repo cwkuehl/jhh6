@@ -69,7 +69,7 @@ public class FoKassenbericht extends FoGeneratorDocument {
             d.startTable(true, "35mm", "20mm", "30mm");
             d.startTag("fo:table-row");
             d.startTag("fo:table-cell");
-            d.startBlock("Saldovortrag", true);
+            d.startBlock(Meldungen.HH076(), true);
             d.endTag("fo:table-cell");
             d.startTag("fo:table-cell");
             d.startBlock(FoUtils.getDatum(dVon.minusDays(1)), true);
@@ -144,7 +144,7 @@ public class FoKassenbericht extends FoGeneratorDocument {
                 d.startTag("fo:table-row");
                 d.startTag("fo:table-cell", "border-before-style", "solid", "border-before-width", "0.7pt",
                         "padding-top", "1mm");
-                d.startBlock("Datum", true);
+                d.startBlock(Meldungen.HH077(), true);
                 if (i == 0) {
                     d.addNewLine(0, 3);
                 }
@@ -341,22 +341,22 @@ public class FoKassenbericht extends FoGeneratorDocument {
             d.endTag("fo:table-row");
             d.startTag("fo:table-row", null, false, null, 7, "bold", null);
             d.startTag("fo:table-cell");
-            d.startBlock("Datum", true);
+            d.startBlock(Meldungen.HH077(), true);
             d.endTag("fo:table-cell");
             d.startTag("fo:table-cell");
-            d.startBlock("Beleg", true);
+            d.startBlock(Meldungen.HH081(), true);
             d.endTag("fo:table-cell");
             d.startTag("fo:table-cell");
-            d.startBlock("Text", true);
+            d.startBlock(Meldungen.HH082(), true);
             d.endTag("fo:table-cell");
             d.startTag("fo:table-cell", "text-align", "right");
-            d.startBlock("Einnahme", true);
+            d.startBlock(Meldungen.HH078(), true);
             d.endTag("fo:table-cell");
             d.startTag("fo:table-cell", "text-align", "right");
-            d.startBlock("Ausgabe", true);
+            d.startBlock(Meldungen.HH079(), true);
             d.endTag("fo:table-cell");
             d.startTag("fo:table-cell");
-            d.startBlock("Konto", true);
+            d.startBlock(Meldungen.HH080(), true);
             d.endTag("fo:table-cell");
             d.endTag("fo:table-row");
             for (HhBuchungLang b : bListe2) {

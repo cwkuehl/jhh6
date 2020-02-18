@@ -1486,22 +1486,15 @@ class HaushaltService {
 		var periode = Global.getPeriodeString(dVon, dBis, false)
 		var euro = isEuroIntern
 		var ueberschrift = Meldungen::HH046(periode, titel, daten.jetzt)
-		var HhBilanzDruck z
 		if (eb) {
-			z = new HhBilanzDruck
-			z.setName(Constant.KZBI_EROEFFNUNG)
 			liste = getBilanzZeilenIntern(daten, Constant.KZBI_EROEFFNUNG, dVon, dVon)
 			ebListe = getBilanzDruckListe(liste, euro)
 		}
 		if (gv) {
-			z = new HhBilanzDruck
-			z.setName(Constant.KZBI_GV)
 			liste = getBilanzZeilenIntern(daten, Constant.KZBI_GV, dVon, dBis)
 			gvListe = getBilanzDruckListe(liste, euro)
 		}
 		if (sb) {
-			z = new HhBilanzDruck
-			z.setName(Constant.KZBI_SCHLUSS)
 			liste = getBilanzZeilenIntern(daten, Constant.KZBI_SCHLUSS, dBis, dBis)
 			sbListe = getBilanzDruckListe(liste, euro)
 		}
@@ -1855,7 +1848,7 @@ class HaushaltService {
 			}
 			var btext = getWertM(werte, BuchungSpalten.TEXT, h)
 			var belegnr = getWertM(werte, BuchungSpalten.BELEGNR, h)
-			wert = getWertM(werte, BuchungSpalten.VALUTA, h)
+			wert = getWertM(werte, BuchungSpalten.BELEGDATUM, h)
 			var LocalDate belegdatum
 			if (wert !== null) {
 				var d = new SbDatum
