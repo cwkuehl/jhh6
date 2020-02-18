@@ -330,8 +330,10 @@ class RemoteDb extends RepositoryBase {
 					if (obj === null) {
 						ins.append('NULL')
 					} else {
-						if (obj instanceof String || obj instanceof Timestamp) {
+						if (obj instanceof String) {
 							ins.append("'").append(obj.toString.replace("'", "''")).append("'")
+						} else if (obj instanceof Timestamp) {
+							ins.append("'").append(obj.toString.replace(".0", "")).append("'") // keine Millisekunden
 						} else if (obj instanceof Date) {
 							ins.append("'").append(obj).append(" 00:00:00'")
 						} else if (obj instanceof Boolean) {
