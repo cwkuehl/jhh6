@@ -79,7 +79,7 @@
 		<items>
 			<AnchorPane minHeight="0.0" minWidth="0.0">
 				<children>
-					<GridPane alignment="center" hgap="10" vgap="10">
+					<GridPane alignment="center" hgap="10" vgap="10" GridPane.columnIndex="0">
 						<TableView fx:id="daten" accessibleText="%WP100.daten.tt" prefHeight="200.0" GridPane.columnIndex="0"
 							GridPane.columnSpan="4" GridPane.hgrow="ALWAYS" GridPane.rowSpan="1" GridPane.vgrow="ALWAYS">
 							<tooltip>

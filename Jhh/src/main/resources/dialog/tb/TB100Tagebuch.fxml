@@ -136,7 +136,7 @@
 		<Label fx:id="angelegt0" text="%Creation" GridPane.columnIndex="0" GridPane.rowIndex="4" />
 		<TextField fx:id="angelegt" accessibleText="%Creation.tt"
 			editable="false" promptText="%Creation.tt" GridPane.columnIndex="1"
-			GridPane.columnSpan="3" GridPane.rowIndex="4">
+			GridPane.columnSpan="1" GridPane.rowIndex="4">
 			<tooltip>
 				<Tooltip text="%Creation.tt" />
 			</tooltip>
@@ -144,7 +144,7 @@
 		<Label fx:id="geaendert0" text="%Change" GridPane.columnIndex="0" GridPane.rowIndex="5" />
 		<TextField fx:id="geaendert" accessibleText="%Change.tt"
 			editable="false" promptText="%Change.tt" GridPane.columnIndex="1"
-			GridPane.columnSpan="3" GridPane.rowIndex="5">
+			GridPane.columnSpan="1" GridPane.rowIndex="5">
 			<tooltip>
 				<Tooltip text="%Change.tt" />
 			</tooltip>
