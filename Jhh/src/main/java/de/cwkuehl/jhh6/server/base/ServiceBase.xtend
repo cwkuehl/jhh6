@@ -74,6 +74,7 @@ class ServiceBase {
 						db.con.commit
 						if (d.rbListe.liste.length > 0) {
 							rbStack.add(d.rbListe)
+							redoStack.clear // Alle Redos sind durch das neue Commit ungültig.
 						}
 					} else {
 						// System.out.println("rollback")
